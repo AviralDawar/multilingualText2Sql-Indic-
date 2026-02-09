@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Environment
+.env
+*.env.local
+
+# Credentials (keep templates, ignore actual credentials)
+config/*_credential.json
+!config/*_credential.template.json
+
+# Database data files - ignore all except INDIA_VILLAGE_AMENITIES (example dataset)
+databases/*/*
+!databases/INDIA_VILLAGE_AMENITIES/INDIA_VILLAGE_AMENITIES
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs
+*.log

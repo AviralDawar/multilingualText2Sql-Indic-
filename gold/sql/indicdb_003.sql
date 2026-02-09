@@ -1,0 +1,6 @@
+-- Complexity: Level 1 (Simple)
+-- Category: Population Analytics
+SELECT LOCATION_LEVEL, COUNT(*) AS COUNT
+FROM LOCATIONS
+GROUP BY LOCATION_LEVEL
+ORDER BY COUNT DESC;

@@ -1,0 +1,36 @@
+STATE,DISTRICT,LITERACY_RATE,SC_ST_PCT,LITERACY_CATEGORY,SC_ST_CATEGORY
+Andaman And Nicobar Islands,South Andamans,74.54,1.25,High Literacy,Low SC/ST
+Andaman And Nicobar Islands,North And Middle Andaman,67.41,0.29,High Literacy,Low SC/ST
+Andhra Pradesh,West Godavari,64.26,22.28,High Literacy,Below Average SC/ST
+Andaman And Nicobar Islands,Nicobars,63.08,63.15,High Literacy,Above Average SC/ST
+Andhra Pradesh,Krishna,60.61,20.4,High Literacy,Low SC/ST
+Andhra Pradesh,Chittoor,58.07,22.24,High Literacy,Below Average SC/ST
+Arunachal Pradesh,Papum Pare,57.36,57.71,High Literacy,Above Average SC/ST
+Andhra Pradesh,Spsr Nellore,57.1,31.11,High Literacy,Below Average SC/ST
+Arunachal Pradesh,Dibang Valley,56.89,53.08,Above Average Literacy,Above Average SC/ST
+Andhra Pradesh,East Godavari,56.67,23.34,Above Average Literacy,Below Average SC/ST
+Arunachal Pradesh,Lower Subansiri,56.05,71.83,Above Average Literacy,Above Average SC/ST
+Andhra Pradesh,Guntur,54.96,23.09,Above Average Literacy,Below Average SC/ST
+Andhra Pradesh,Y.S.R.,53.21,18.73,Above Average Literacy,Low SC/ST
+Arunachal Pradesh,East Siang,52.78,72.12,Above Average Literacy,Above Average SC/ST
+Arunachal Pradesh,Leparada,52.09,82.95,Above Average Literacy,High SC/ST
+Andhra Pradesh,Visakhapatanam,50.46,24.03,Above Average Literacy,Below Average SC/ST
+Andhra Pradesh,Prakasam,50.05,25.17,Above Average Literacy,Below Average SC/ST
+Arunachal Pradesh,Lower Siang,49.33,75.73,Below Average Literacy,High SC/ST
+Andhra Pradesh,Anantapur,48.8,17.59,Below Average Literacy,Low SC/ST
+Andhra Pradesh,Srikakulam,47.99,15.03,Below Average Literacy,Low SC/ST
+Arunachal Pradesh,Lower Dibang Valley,46.37,44.26,Below Average Literacy,Above Average SC/ST
+Arunachal Pradesh,Namsai,45.68,38.04,Below Average Literacy,Above Average SC/ST
+Arunachal Pradesh,Lohit,45.66,35.06,Below Average Literacy,Below Average SC/ST
+Andhra Pradesh,Kurnool,44.69,19.82,Below Average Literacy,Low SC/ST
+Andhra Pradesh,Vizianagaram,44.23,20.15,Below Average Literacy,Low SC/ST
+Arunachal Pradesh,Kra Daadi,41.99,63.42,Below Average Literacy,Above Average SC/ST
+Arunachal Pradesh,Siang,41.89,90.28,Low Literacy,High SC/ST
+Arunachal Pradesh,Changlang,41.77,37.26,Low Literacy,Below Average SC/ST
+Arunachal Pradesh,Pakke Kessang,36.99,77.12,Low Literacy,High SC/ST
+Arunachal Pradesh,Kamle,35.46,94.32,Low Literacy,High SC/ST
+Arunachal Pradesh,Kurung Kumey,33.82,74.0,Low Literacy,Above Average SC/ST
+Arunachal Pradesh,Shi Yomi,31.04,93.81,Low Literacy,High SC/ST
+Arunachal Pradesh,Anjaw,30.95,77.49,Low Literacy,High SC/ST
+Arunachal Pradesh,East Kameng,30.92,89.17,Low Literacy,High SC/ST
+Arunachal Pradesh,Longding,22.84,91.68,Low Literacy,High SC/ST

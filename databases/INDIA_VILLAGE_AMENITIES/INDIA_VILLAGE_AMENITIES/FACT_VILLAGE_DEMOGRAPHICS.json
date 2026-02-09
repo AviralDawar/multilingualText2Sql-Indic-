@@ -1,0 +1,32 @@
+[
+  {
+    "DEMOGRAPHICS_ID": 1,
+    "GEOGRAPHY_ID": 1,
+    "TIME_ID": 1,
+    "RURAL_POPULATION": "1234"
+  },
+  {
+    "DEMOGRAPHICS_ID": 2,
+    "GEOGRAPHY_ID": 2,
+    "TIME_ID": 1,
+    "RURAL_POPULATION": "732"
+  },
+  {
+    "DEMOGRAPHICS_ID": 3,
+    "GEOGRAPHY_ID": 3,
+    "TIME_ID": 1,
+    "RURAL_POPULATION": "753"
+  },
+  {
+    "DEMOGRAPHICS_ID": 4,
+    "GEOGRAPHY_ID": 4,
+    "TIME_ID": 1,
+    "RURAL_POPULATION": "513"
+  },
+  {
+    "DEMOGRAPHICS_ID": 5,
+    "GEOGRAPHY_ID": 5,
+    "TIME_ID": 1,
+    "RURAL_POPULATION": "476"
+  }
+]

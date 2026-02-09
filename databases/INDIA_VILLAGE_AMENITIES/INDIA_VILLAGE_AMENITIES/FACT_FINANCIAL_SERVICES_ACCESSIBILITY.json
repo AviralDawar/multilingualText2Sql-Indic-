@@ -1,0 +1,47 @@
+[
+  {
+    "FINANCIAL_SERVICES_ID": 1,
+    "GEOGRAPHY_ID": 1,
+    "DISTANCE_TO_ATM": "Between 5-10 Kms",
+    "DISTANCE_TO_COMMERCIAL_BANK": "Between 5-10 Kms",
+    "DISTANCE_TO_COOPERATIVE_BANK": "Between 5-10 Kms",
+    "DISTANCE_TO_AGRICULTURAL_CREDIT_SOCIETIES": "Not Available",
+    "DISTANCE_TO_SELF_HELP_GROUP": "Not Available"
+  },
+  {
+    "FINANCIAL_SERVICES_ID": 2,
+    "GEOGRAPHY_ID": 2,
+    "DISTANCE_TO_ATM": "Greater than 10 Kms",
+    "DISTANCE_TO_COMMERCIAL_BANK": "Greater than 10 Kms",
+    "DISTANCE_TO_COOPERATIVE_BANK": "Greater than 10 Kms",
+    "DISTANCE_TO_AGRICULTURAL_CREDIT_SOCIETIES": "Greater than 10 Kms",
+    "DISTANCE_TO_SELF_HELP_GROUP": "Not Available"
+  },
+  {
+    "FINANCIAL_SERVICES_ID": 3,
+    "GEOGRAPHY_ID": 3,
+    "DISTANCE_TO_ATM": "Between 5-10 Kms",
+    "DISTANCE_TO_COMMERCIAL_BANK": "Not Available",
+    "DISTANCE_TO_COOPERATIVE_BANK": "Less than 5 Kms",
+    "DISTANCE_TO_AGRICULTURAL_CREDIT_SOCIETIES": "Not Available",
+    "DISTANCE_TO_SELF_HELP_GROUP": "Not Available"
+  },
+  {
+    "FINANCIAL_SERVICES_ID": 4,
+    "GEOGRAPHY_ID": 4,
+    "DISTANCE_TO_ATM": "Greater than 10 Kms",
+    "DISTANCE_TO_COMMERCIAL_BANK": "Greater than 10 Kms",
+    "DISTANCE_TO_COOPERATIVE_BANK": "Greater than 10 Kms",
+    "DISTANCE_TO_AGRICULTURAL_CREDIT_SOCIETIES": "Greater than 10 Kms",
+    "DISTANCE_TO_SELF_HELP_GROUP": "Not Available"
+  },
+  {
+    "FINANCIAL_SERVICES_ID": 5,
+    "GEOGRAPHY_ID": 5,
+    "DISTANCE_TO_ATM": "Between 5-10 Kms",
+    "DISTANCE_TO_COMMERCIAL_BANK": "Not Available",
+    "DISTANCE_TO_COOPERATIVE_BANK": "Less than 5 Kms",
+    "DISTANCE_TO_AGRICULTURAL_CREDIT_SOCIETIES": "Not Available",
+    "DISTANCE_TO_SELF_HELP_GROUP": "Not Available"
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "RECREATION_ID": 1,
+    "GEOGRAPHY_ID": 1,
+    "DISTANCE_TO_COMMUNITY_CENTRE": "Not Available",
+    "DISTANCE_TO_SPORTS_FIELD": "Not Available",
+    "DISTANCE_TO_SPORTS_CLUB_RECREATION_CENTRE": "Not Available",
+    "DISTANCE_TO_CINEMA_VIDEO_HALL": "Greater than 10 Kms"
+  },
+  {
+    "RECREATION_ID": 2,
+    "GEOGRAPHY_ID": 2,
+    "DISTANCE_TO_COMMUNITY_CENTRE": "Not Available",
+    "DISTANCE_TO_SPORTS_FIELD": "Between 5-10 Kms",
+    "DISTANCE_TO_SPORTS_CLUB_RECREATION_CENTRE": "Between 5-10 Kms",
+    "DISTANCE_TO_CINEMA_VIDEO_HALL": "Greater than 10 Kms"
+  },
+  {
+    "RECREATION_ID": 3,
+    "GEOGRAPHY_ID": 3,
+    "DISTANCE_TO_COMMUNITY_CENTRE": "Not Available",
+    "DISTANCE_TO_SPORTS_FIELD": "Not Available",
+    "DISTANCE_TO_SPORTS_CLUB_RECREATION_CENTRE": "Not Available",
+    "DISTANCE_TO_CINEMA_VIDEO_HALL": "Greater than 10 Kms"
+  },
+  {
+    "RECREATION_ID": 4,
+    "GEOGRAPHY_ID": 4,
+    "DISTANCE_TO_COMMUNITY_CENTRE": "Not Available",
+    "DISTANCE_TO_SPORTS_FIELD": "Not Available",
+    "DISTANCE_TO_SPORTS_CLUB_RECREATION_CENTRE": "Not Available",
+    "DISTANCE_TO_CINEMA_VIDEO_HALL": "Greater than 10 Kms"
+  },
+  {
+    "RECREATION_ID": 5,
+    "GEOGRAPHY_ID": 5,
+    "DISTANCE_TO_COMMUNITY_CENTRE": "Less than 5 Kms",
+    "DISTANCE_TO_SPORTS_FIELD": "Not Available",
+    "DISTANCE_TO_SPORTS_CLUB_RECREATION_CENTRE": "Not Available",
+    "DISTANCE_TO_CINEMA_VIDEO_HALL": "Greater than 10 Kms"
+  }
+]

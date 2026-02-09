@@ -1,0 +1,835 @@
+STATE,DISTRICT,SUB_DISTRICT,VILLAGE_COUNT,TOTAL_POP,AVG_VILLAGE_POP,PCT_OF_DISTRICT,RANK_IN_DISTRICT
+Andaman And Nicobar Islands,Nicobars,Car Nicobar,16,20292.0,1268.0,48.24,1
+Andaman And Nicobar Islands,Nicobars,Nancowry,95,13562.0,143.0,32.24,2
+Andaman And Nicobar Islands,Nicobars,Great Nicobar,58,8214.0,142.0,19.53,3
+Andaman And Nicobar Islands,North And Middle Andaman,Diglipur,74,42877.0,579.0,40.6,1
+Andaman And Nicobar Islands,North And Middle Andaman,Rangat,87,38824.0,446.0,36.76,2
+Andaman And Nicobar Islands,North And Middle Andaman,Mayabunder,47,23912.0,509.0,22.64,3
+Andaman And Nicobar Islands,South Andamans,Ferrargunj,70,41839.0,598.0,45.34,1
+Andaman And Nicobar Islands,South Andamans,Port Blair,34,32906.0,968.0,35.66,2
+Andaman And Nicobar Islands,South Andamans,Little Andaman,18,17528.0,974.0,19.0,3
+Andhra Pradesh,Anantapur,Madakasira,19,73222.0,3854.0,2.69,1
+Andhra Pradesh,Anantapur,Gorantla,18,69714.0,3873.0,2.56,2
+Andhra Pradesh,Anantapur,Mudigubba,26,58212.0,2239.0,2.14,3
+Andhra Pradesh,Anantapur,Kanekal,17,57559.0,3386.0,2.12,4
+Andhra Pradesh,Anantapur,Anantapur,17,55930.0,3290.0,2.06,5
+Andhra Pradesh,Anantapur,Bukkaraya Samudram,14,52985.0,3785.0,1.95,6
+Andhra Pradesh,Anantapur,Parigi,16,52852.0,3303.0,1.94,7
+Andhra Pradesh,Anantapur,Amarapuram,8,52717.0,6590.0,1.94,8
+Andhra Pradesh,Anantapur,Kalyandurg,15,51820.0,3455.0,1.9,9
+Andhra Pradesh,Anantapur,Narpala,12,51728.0,4311.0,1.9,10
+Andhra Pradesh,Anantapur,Tadpatri,27,50968.0,1888.0,1.87,11
+Andhra Pradesh,Anantapur,Penukonda,16,50796.0,3175.0,1.87,12
+Andhra Pradesh,Anantapur,Bommanahal,16,50128.0,3133.0,1.84,13
+Andhra Pradesh,Anantapur,Puttaparthi,12,50091.0,4174.0,1.84,14
+Andhra Pradesh,Anantapur,Yadiki,14,49780.0,3556.0,1.83,15
+Andhra Pradesh,Anantapur,Pamidi,22,49292.0,2241.0,1.81,16
+Andhra Pradesh,Anantapur,Garladinne,18,49140.0,2730.0,1.81,17
+Andhra Pradesh,Anantapur,Vidapanakal,14,48353.0,3454.0,1.78,18
+Andhra Pradesh,Anantapur,Vajrakarur,16,48252.0,3016.0,1.77,19
+Andhra Pradesh,Anantapur,Kundurpi,10,48205.0,4821.0,1.77,20
+Andhra Pradesh,Anantapur,Gudibanda,13,47838.0,3680.0,1.76,21
+Andhra Pradesh,Anantapur,Tanakal,18,47812.0,2656.0,1.76,22
+Andhra Pradesh,Anantapur,Kambadur,12,46740.0,3895.0,1.72,23
+Andhra Pradesh,Anantapur,Chilamathur,15,46399.0,3093.0,1.71,24
+Andhra Pradesh,Anantapur,Roddam,21,45903.0,2186.0,1.69,25
+Andhra Pradesh,Anantapur,Hindupur,14,45569.0,3255.0,1.67,26
+Andhra Pradesh,Anantapur,Obuladevaracheruvu,14,44243.0,3160.0,1.63,27
+Andhra Pradesh,Anantapur,Dharmavaram,12,43819.0,3652.0,1.61,28
+Andhra Pradesh,Anantapur,Guntakal,18,42432.0,2357.0,1.56,29
+Andhra Pradesh,Anantapur,Chennekothapalle,11,42308.0,3846.0,1.55,30
+Andhra Pradesh,Anantapur,Gummagatta,11,42266.0,3842.0,1.55,31
+Andhra Pradesh,Anantapur,Uravakonda,21,42249.0,2012.0,1.55,32
+Andhra Pradesh,Anantapur,Lepakshi,10,42101.0,4210.0,1.55,33
+Andhra Pradesh,Anantapur,Talupula,11,42019.0,3820.0,1.54,34
+Andhra Pradesh,Anantapur,Peddavadugur,24,42012.0,1751.0,1.54,35
+Andhra Pradesh,Anantapur,Singanamala,19,41186.0,2168.0,1.51,36
+Andhra Pradesh,Anantapur,Bukkapatnam,8,40701.0,5088.0,1.5,37
+Andhra Pradesh,Anantapur,Beluguppa,14,40546.0,2896.0,1.49,38
+Andhra Pradesh,Anantapur,Somandepalle,20,40219.0,2011.0,1.48,39
+Andhra Pradesh,Anantapur,Brahmasamudram,13,39518.0,3040.0,1.45,40
+Andhra Pradesh,Anantapur,D.Hirehal,17,39394.0,2317.0,1.45,41
+Andhra Pradesh,Anantapur,Nallamada,10,39152.0,3915.0,1.44,42
+Andhra Pradesh,Anantapur,Kothacheruvu,21,38665.0,1841.0,1.42,43
+Andhra Pradesh,Anantapur,Rayadurg,14,38365.0,2740.0,1.41,44
+Andhra Pradesh,Anantapur,Settur,9,38281.0,4253.0,1.41,45
+Andhra Pradesh,Anantapur,Kanaganapalle,10,36864.0,3686.0,1.35,46
+Andhra Pradesh,Anantapur,Putlur,17,36814.0,2166.0,1.35,47
+Andhra Pradesh,Anantapur,Atmakur,8,35995.0,4499.0,1.32,48
+Andhra Pradesh,Anantapur,Kudair,13,35819.0,2755.0,1.32,49
+Andhra Pradesh,Anantapur,Bathalapalle,11,35318.0,3211.0,1.3,50
+Andhra Pradesh,Anantapur,Rolla,7,34888.0,4984.0,1.28,51
+Andhra Pradesh,Anantapur,Gooty,22,34710.0,1578.0,1.28,52
+Andhra Pradesh,Anantapur,Raptadu,11,34139.0,3104.0,1.25,53
+Andhra Pradesh,Anantapur,Yellanur,19,33739.0,1776.0,1.24,54
+Andhra Pradesh,Anantapur,Peddapappur,17,33556.0,1974.0,1.23,55
+Andhra Pradesh,Anantapur,Kadiri,16,31970.0,1998.0,1.17,56
+Andhra Pradesh,Anantapur,Agali,8,31886.0,3986.0,1.17,57
+Andhra Pradesh,Anantapur,Tadimarri,11,31731.0,2885.0,1.17,58
+Andhra Pradesh,Anantapur,Ramagiri,10,31474.0,3147.0,1.16,59
+Andhra Pradesh,Anantapur,Nallacheruvu,11,30186.0,2744.0,1.11,60
+Andhra Pradesh,Anantapur,Nambulipulikunta,12,30134.0,2511.0,1.11,61
+Andhra Pradesh,Anantapur,Amadagur,13,26093.0,2007.0,0.96,62
+Andhra Pradesh,Anantapur,Gandlapenta,12,24118.0,2010.0,0.89,63
+Andhra Pradesh,Chittoor,Kuppam,61,84089.0,1379.0,2.89,1
+Andhra Pradesh,Chittoor,Madanapalle,14,74987.0,5356.0,2.58,2
+Andhra Pradesh,Chittoor,Venkatagirikota,31,74919.0,2417.0,2.58,3
+Andhra Pradesh,Chittoor,Bangarupalem,27,69253.0,2565.0,2.38,4
+Andhra Pradesh,Chittoor,Gangadhara Nellore,33,64831.0,1965.0,2.23,5
+Andhra Pradesh,Chittoor,Pileru,15,61824.0,4122.0,2.13,6
+Andhra Pradesh,Chittoor,Pakala,15,56802.0,3787.0,1.95,7
+Andhra Pradesh,Chittoor,Chittoor,33,54765.0,1660.0,1.88,8
+Andhra Pradesh,Chittoor,B.Kothakota,9,54688.0,6076.0,1.88,9
+Andhra Pradesh,Chittoor,Srikalahasti,61,54064.0,886.0,1.86,10
+Andhra Pradesh,Chittoor,Chandragiri,23,53051.0,2307.0,1.82,11
+Andhra Pradesh,Chittoor,Yerpedu,33,53001.0,1606.0,1.82,12
+Andhra Pradesh,Chittoor,Peddapanjani,22,52371.0,2381.0,1.8,13
+Andhra Pradesh,Chittoor,Thavanampalle,24,51927.0,2164.0,1.79,14
+Andhra Pradesh,Chittoor,Pedda Thippasamudram,18,51040.0,2836.0,1.76,15
+Andhra Pradesh,Chittoor,Santhipuram,60,50952.0,849.0,1.75,16
+Andhra Pradesh,Chittoor,Ramakuppam,37,50874.0,1375.0,1.75,17
+Andhra Pradesh,Chittoor,Punganur,18,50470.0,2804.0,1.74,18
+Andhra Pradesh,Chittoor,Baireddipalle,24,50094.0,2087.0,1.72,19
+Andhra Pradesh,Chittoor,Yadamarri,24,49437.0,2060.0,1.7,20
+Andhra Pradesh,Chittoor,Nagari,20,49192.0,2460.0,1.69,21
+Andhra Pradesh,Chittoor,Satyavedu,30,48992.0,1633.0,1.69,22
+Andhra Pradesh,Chittoor,Irala,18,48891.0,2716.0,1.68,23
+Andhra Pradesh,Chittoor,Gangavaram,16,48879.0,3055.0,1.68,24
+Andhra Pradesh,Chittoor,Tirupati (Rural),26,46625.0,1793.0,1.6,25
+Andhra Pradesh,Chittoor,Kalikiri,14,46413.0,3315.0,1.6,26
+Andhra Pradesh,Chittoor,Unknown Subdistricts Of India,2,45799.0,22900.0,1.58,27
+Andhra Pradesh,Chittoor,Ramasamudram,15,45078.0,3005.0,1.55,28
+Andhra Pradesh,Chittoor,Vedurukuppam,30,44995.0,1500.0,1.55,29
+Andhra Pradesh,Chittoor,Karvetinagar,25,44735.0,1789.0,1.54,30
+Andhra Pradesh,Chittoor,Valmikipuram,17,44725.0,2631.0,1.54,31
+Andhra Pradesh,Chittoor,Puthalapattu,20,44676.0,2234.0,1.54,32
+Andhra Pradesh,Chittoor,Kambhamvaripalle,20,43353.0,2168.0,1.49,33
+Andhra Pradesh,Chittoor,Somala,13,42987.0,3307.0,1.48,34
+Andhra Pradesh,Chittoor,Renigunta,31,42701.0,1377.0,1.47,35
+Andhra Pradesh,Chittoor,Gudipala,29,42387.0,1462.0,1.46,36
+Andhra Pradesh,Chittoor,Gurramkonda,17,41769.0,2457.0,1.44,37
+Andhra Pradesh,Chittoor,Mulakalacheruvu,16,41711.0,2607.0,1.43,38
+Andhra Pradesh,Chittoor,Varadaiahpalem,30,41547.0,1385.0,1.43,39
+Andhra Pradesh,Chittoor,Thottambedu,40,41290.0,1032.0,1.42,40
+Andhra Pradesh,Chittoor,Chowdepalle,15,40410.0,2694.0,1.39,41
+Andhra Pradesh,Chittoor,K.V.B.Puram,37,39432.0,1066.0,1.36,42
+Andhra Pradesh,Chittoor,Penumuru,17,38912.0,2289.0,1.34,43
+Andhra Pradesh,Chittoor,Thamballapalle,16,38693.0,2418.0,1.33,44
+Andhra Pradesh,Chittoor,Pulicherla,15,38554.0,2570.0,1.33,45
+Andhra Pradesh,Chittoor,Gudupalle,47,38480.0,819.0,1.32,46
+Andhra Pradesh,Chittoor,Kurabalakota,7,37686.0,5384.0,1.3,47
+Andhra Pradesh,Chittoor,Peddamandyam,9,34453.0,3828.0,1.18,48
+Andhra Pradesh,Chittoor,Kalakada,16,34279.0,2142.0,1.18,49
+Andhra Pradesh,Chittoor,Nagalapuram,12,33886.0,2824.0,1.17,50
+Andhra Pradesh,Chittoor,Sodam,13,33771.0,2598.0,1.16,51
+Andhra Pradesh,Chittoor,Srirangarajapuram,34,33762.0,993.0,1.16,52
+Andhra Pradesh,Chittoor,Pichatur,17,31389.0,1846.0,1.08,53
+Andhra Pradesh,Chittoor,Vadamalapeta,19,31291.0,1647.0,1.08,54
+Andhra Pradesh,Chittoor,Nimmanapalle,10,31166.0,3117.0,1.07,55
+Andhra Pradesh,Chittoor,Buchinaidu Kandriga,24,30885.0,1287.0,1.06,56
+Andhra Pradesh,Chittoor,Ramachandrapuram,17,30533.0,1796.0,1.05,57
+Andhra Pradesh,Chittoor,Puttur,11,29522.0,2684.0,1.02,58
+Andhra Pradesh,Chittoor,Vijayapuram,17,29317.0,1725.0,1.01,59
+Andhra Pradesh,Chittoor,Nindra,15,27905.0,1860.0,0.96,60
+Andhra Pradesh,Chittoor,Rompicherla,7,27359.0,3908.0,0.94,61
+Andhra Pradesh,Chittoor,Palamaner,14,27309.0,1951.0,0.94,62
+Andhra Pradesh,Chittoor,Yerravaripalem,10,25173.0,2517.0,0.87,63
+Andhra Pradesh,Chittoor,Chinnagottigallu,10,24910.0,2491.0,0.86,64
+Andhra Pradesh,Chittoor,Narayanavanam,15,24778.0,1652.0,0.85,65
+Andhra Pradesh,Chittoor,Palasamudram,19,20948.0,1103.0,0.72,66
+Andhra Pradesh,Chittoor,Tirupati (Urban),3,12447.0,4149.0,0.43,67
+Andhra Pradesh,East Godavari,Rajanagaram,17,92916.0,5466.0,2.4,1
+Andhra Pradesh,East Godavari,Kadiam,7,83857.0,11980.0,2.17,2
+Andhra Pradesh,East Godavari,Thondangi,15,82005.0,5467.0,2.12,3
+Andhra Pradesh,East Godavari,Thallarevu,13,79912.0,6147.0,2.07,4
+Andhra Pradesh,East Godavari,Prathipadu,35,78914.0,2255.0,2.04,5
+Andhra Pradesh,East Godavari,Samalkota,17,77946.0,4585.0,2.01,6
+Andhra Pradesh,East Godavari,Kothapalle,16,77366.0,4835.0,2.0,7
+Andhra Pradesh,East Godavari,Tuni,20,77089.0,3854.0,1.99,8
+Andhra Pradesh,East Godavari,Ravulapalem,11,76944.0,6995.0,1.99,9
+Andhra Pradesh,East Godavari,Kothapeta,10,76866.0,7687.0,1.99,10
+Andhra Pradesh,East Godavari,Korukonda,18,76645.0,4258.0,1.98,11
+Andhra Pradesh,East Godavari,Gollaprolu,10,76352.0,7635.0,1.97,12
+Andhra Pradesh,East Godavari,Yeleswaram,12,76285.0,6357.0,1.97,13
+Andhra Pradesh,East Godavari,Mandapeta,13,76229.0,5864.0,1.97,14
+Andhra Pradesh,East Godavari,Jaggampeta,18,74239.0,4124.0,1.92,15
+Andhra Pradesh,East Godavari,Karapa,19,73851.0,3887.0,1.91,16
+Andhra Pradesh,East Godavari,P.Gannavaram,18,73739.0,4097.0,1.91,17
+Andhra Pradesh,East Godavari,Pithapuram,26,73706.0,2835.0,1.9,18
+Andhra Pradesh,East Godavari,Katrenikona,14,73685.0,5263.0,1.9,19
+Andhra Pradesh,East Godavari,Malikipuram,11,73517.0,6683.0,1.9,20
+Andhra Pradesh,East Godavari,Sakhinetipalle,8,73323.0,9165.0,1.89,21
+Andhra Pradesh,East Godavari,Kirlampudi,17,72868.0,4286.0,1.88,22
+Andhra Pradesh,East Godavari,Peddapuram,20,72525.0,3626.0,1.87,23
+Andhra Pradesh,East Godavari,Amalapuram,16,71648.0,4478.0,1.85,24
+Andhra Pradesh,East Godavari,Alamuru,15,71472.0,4765.0,1.85,25
+Andhra Pradesh,East Godavari,Razole,13,71061.0,5466.0,1.84,26
+Andhra Pradesh,East Godavari,Seethanagaram,17,70454.0,4144.0,1.82,27
+Andhra Pradesh,East Godavari,Kajuluru,20,70085.0,3504.0,1.81,28
+Andhra Pradesh,East Godavari,Pedapudi,17,69175.0,4069.0,1.79,29
+Andhra Pradesh,East Godavari,Ramachandrapuram,20,68792.0,3440.0,1.78,30
+Andhra Pradesh,East Godavari,Anaparthy,9,68519.0,7613.0,1.77,31
+Andhra Pradesh,East Godavari,Mamidikuduru,17,68158.0,4009.0,1.76,32
+Andhra Pradesh,East Godavari,Allavaram,14,68079.0,4863.0,1.76,33
+Andhra Pradesh,East Godavari,Biccavolu,14,67717.0,4837.0,1.75,34
+Andhra Pradesh,East Godavari,Gokavaram,14,67557.0,4826.0,1.75,35
+Andhra Pradesh,East Godavari,I. Polavaram,11,67454.0,6132.0,1.74,36
+Andhra Pradesh,East Godavari,Kapileswarapuram,15,66535.0,4436.0,1.72,37
+Andhra Pradesh,East Godavari,Mummidivaram,11,66180.0,6016.0,1.71,38
+Andhra Pradesh,East Godavari,K Gangavaram,24,66136.0,2756.0,1.71,39
+Andhra Pradesh,East Godavari,Rayavaram,10,66106.0,6611.0,1.71,40
+Andhra Pradesh,East Godavari,Ainavilli,16,65253.0,4078.0,1.69,41
+Andhra Pradesh,East Godavari,Ambajipeta,13,65006.0,5000.0,1.68,42
+Andhra Pradesh,East Godavari,Atreyapuram,15,63059.0,4204.0,1.63,43
+Andhra Pradesh,East Godavari,Uppalaguptam,14,61446.0,4389.0,1.59,44
+Andhra Pradesh,East Godavari,Rangampeta,15,54623.0,3642.0,1.41,45
+Andhra Pradesh,East Godavari,Sankhavaram,30,53539.0,1785.0,1.38,46
+Andhra Pradesh,East Godavari,Gandepalle,13,52462.0,4036.0,1.36,47
+Andhra Pradesh,East Godavari,Rowthulapudi,38,51400.0,1353.0,1.33,48
+Andhra Pradesh,East Godavari,Kotananduru,14,47404.0,3386.0,1.23,49
+Andhra Pradesh,East Godavari,Kakinada (Rural),9,43226.0,4803.0,1.12,50
+Andhra Pradesh,East Godavari,Rajavommangi,61,40033.0,656.0,1.03,51
+Andhra Pradesh,East Godavari,Rajahmundry Rural,4,39347.0,9837.0,1.02,52
+Andhra Pradesh,East Godavari,Addateegala,88,38387.0,436.0,0.99,53
+Andhra Pradesh,East Godavari,Chintur,79,36763.0,465.0,0.95,54
+Andhra Pradesh,East Godavari,Nellipaka,61,35311.0,579.0,0.91,55
+Andhra Pradesh,East Godavari,Rampachodavaram,76,28743.0,378.0,0.74,56
+Andhra Pradesh,East Godavari,Y. Ramavaram,124,27950.0,225.0,0.72,57
+Andhra Pradesh,East Godavari,Devipatnam,45,27898.0,620.0,0.72,58
+Andhra Pradesh,East Godavari,Gangavaram,55,25938.0,472.0,0.67,59
+Andhra Pradesh,East Godavari,Kunavaram,48,24597.0,512.0,0.64,60
+Andhra Pradesh,East Godavari,Vararamachandrapuram,54,23411.0,434.0,0.6,61
+Andhra Pradesh,East Godavari,Maredumilli,67,18010.0,269.0,0.47,62
+Andhra Pradesh,East Godavari,Unknown Subdistricts Of India,1,9904.0,9904.0,0.26,63
+Andhra Pradesh,Guntur,Piduguralla,10,105870.0,10587.0,3.34,1
+Andhra Pradesh,Guntur,Narasaraopet,15,84339.0,5623.0,2.66,2
+Andhra Pradesh,Guntur,Sattenapalle,17,72293.0,4253.0,2.28,3
+Andhra Pradesh,Guntur,Tenali,11,70351.0,6396.0,2.22,4
+Andhra Pradesh,Guntur,Bapatla,18,69125.0,3840.0,2.18,5
+Andhra Pradesh,Guntur,Chebrolu,10,68814.0,6881.0,2.17,6
+Andhra Pradesh,Guntur,Dachepalle,12,68062.0,5672.0,2.15,7
+Andhra Pradesh,Guntur,Mangalagiri,10,66812.0,6681.0,2.11,8
+Andhra Pradesh,Guntur,Ponnur,18,65427.0,3635.0,2.07,9
+Andhra Pradesh,Guntur,Tadikonda,12,65306.0,5442.0,2.06,10
+Andhra Pradesh,Guntur,Pedakakani,10,64693.0,6469.0,2.04,11
+Andhra Pradesh,Guntur,Amaravathi,16,64221.0,4014.0,2.03,12
+Andhra Pradesh,Guntur,Gurazala,10,62246.0,6225.0,1.97,13
+Andhra Pradesh,Guntur,Nadendla,10,61906.0,6191.0,1.96,14
+Andhra Pradesh,Guntur,Nekarikallu,10,61859.0,6186.0,1.95,15
+Andhra Pradesh,Guntur,Repalle,16,61655.0,3853.0,1.95,16
+Andhra Pradesh,Guntur,Nizampatnam,8,60929.0,7616.0,1.92,17
+Andhra Pradesh,Guntur,Phirangipuram,14,60869.0,4348.0,1.92,18
+Andhra Pradesh,Guntur,Duggirala,14,60420.0,4316.0,1.91,19
+Andhra Pradesh,Guntur,Rompicherla,14,60270.0,4305.0,1.9,20
+Andhra Pradesh,Guntur,Cherukupalle H/O Arumbaka,10,58484.0,5848.0,1.85,21
+Andhra Pradesh,Guntur,Kollipara,14,57510.0,4108.0,1.82,22
+Andhra Pradesh,Guntur,Medikonduru,12,56094.0,4675.0,1.77,23
+Andhra Pradesh,Guntur,Kollur,11,55942.0,5086.0,1.77,24
+Andhra Pradesh,Guntur,Krosuru,15,55782.0,3719.0,1.76,25
+Andhra Pradesh,Guntur,Atchampet,18,55722.0,3096.0,1.76,26
+Andhra Pradesh,Guntur,Chilakaluripet H/O.Purushotha Patnam,13,55523.0,4271.0,1.75,27
+Andhra Pradesh,Guntur,Bollapalle,14,55378.0,3956.0,1.75,28
+Andhra Pradesh,Guntur,Thullur,19,54492.0,2868.0,1.72,29
+Andhra Pradesh,Guntur,Nuzendla,20,52130.0,2607.0,1.65,30
+Andhra Pradesh,Guntur,Nagaram,12,51388.0,4282.0,1.62,31
+Andhra Pradesh,Guntur,Bhattiprolu,12,51385.0,4282.0,1.62,32
+Andhra Pradesh,Guntur,Karempudi,10,50317.0,5032.0,1.59,33
+Andhra Pradesh,Guntur,Edlapadu,12,49492.0,4124.0,1.56,34
+Andhra Pradesh,Guntur,Karlapalem,5,49243.0,9849.0,1.56,35
+Andhra Pradesh,Guntur,Prathipadu,10,49077.0,4908.0,1.55,36
+Andhra Pradesh,Guntur,Machavaram,9,48808.0,5423.0,1.54,37
+Andhra Pradesh,Guntur,Pedakurapadu,14,48569.0,3469.0,1.53,38
+Andhra Pradesh,Guntur,Guntur,6,48157.0,8026.0,1.52,39
+Andhra Pradesh,Guntur,Vinukonda,21,47219.0,2249.0,1.49,40
+Andhra Pradesh,Guntur,Amruthalur,13,46960.0,3612.0,1.48,41
+Andhra Pradesh,Guntur,Tsundur,12,46824.0,3902.0,1.48,42
+Andhra Pradesh,Guntur,Rentachintala,9,46622.0,5180.0,1.47,43
+Andhra Pradesh,Guntur,Veldurthi,9,45927.0,5103.0,1.45,44
+Andhra Pradesh,Guntur,Vatticherukuru,13,44952.0,3458.0,1.42,45
+Andhra Pradesh,Guntur,Durgi,10,44640.0,4464.0,1.41,46
+Andhra Pradesh,Guntur,Vemuru,12,44079.0,3673.0,1.39,47
+Andhra Pradesh,Guntur,Pedanandipadu,12,44042.0,3670.0,1.39,48
+Andhra Pradesh,Guntur,Kakumanu,11,43871.0,3988.0,1.39,49
+Andhra Pradesh,Guntur,Ipur,13,43453.0,3343.0,1.37,50
+Andhra Pradesh,Guntur,Macherla,10,42873.0,4287.0,1.35,51
+Andhra Pradesh,Guntur,Rajupalem,8,42345.0,5293.0,1.34,52
+Andhra Pradesh,Guntur,Muppalla,9,41507.0,4612.0,1.31,53
+Andhra Pradesh,Guntur,Pittalavanipalem,6,38892.0,6482.0,1.23,54
+Andhra Pradesh,Guntur,Savalyapuram H/O Kanamarlapudi,7,36857.0,5265.0,1.16,55
+Andhra Pradesh,Guntur,Tadepalle,8,35418.0,4427.0,1.12,56
+Andhra Pradesh,Guntur,Guntur East,4,31326.0,7832.0,0.99,57
+Andhra Pradesh,Guntur,Bellamkonda,13,30791.0,2369.0,0.97,58
+Andhra Pradesh,Guntur,Unknown Subdistricts Of India,1,8124.0,8124.0,0.26,59
+Andhra Pradesh,Krishna,Ibrahimpatnam,15,91254.0,6084.0,3.26,1
+Andhra Pradesh,Krishna,Nandigama,25,85405.0,3416.0,3.05,2
+Andhra Pradesh,Krishna,Bapulapadu,28,83286.0,2975.0,2.97,3
+Andhra Pradesh,Krishna,Gannavaram,23,80404.0,3496.0,2.87,4
+Andhra Pradesh,Krishna,Kaikalur,23,75125.0,3266.0,2.68,5
+Andhra Pradesh,Krishna,Vuyyuru,12,73767.0,6147.0,2.63,6
+Andhra Pradesh,Krishna,Kalidindi,14,73003.0,5215.0,2.6,7
+Andhra Pradesh,Krishna,Tiruvuru,19,71411.0,3758.0,2.55,8
+Andhra Pradesh,Krishna,Machilipatnam,28,71168.0,2542.0,2.54,9
+Andhra Pradesh,Krishna,Mudinepalle,32,68235.0,2132.0,2.43,10
+Andhra Pradesh,Krishna,Gampalagudem,21,68108.0,3243.0,2.43,11
+Andhra Pradesh,Krishna,Kanchikacherla,15,67662.0,4511.0,2.41,12
+Andhra Pradesh,Krishna,Jaggayyapeta,23,66917.0,2909.0,2.39,13
+Andhra Pradesh,Krishna,Nuzvid,25,66311.0,2652.0,2.37,14
+Andhra Pradesh,Krishna,Kankipadu,19,63243.0,3329.0,2.26,15
+Andhra Pradesh,Krishna,Penamaluru,7,61799.0,8828.0,2.2,16
+Andhra Pradesh,Krishna,Mylavaram,17,61461.0,3615.0,2.19,17
+Andhra Pradesh,Krishna,Pamarru,25,58827.0,2353.0,2.1,18
+Andhra Pradesh,Krishna,Vatsavai,23,58282.0,2534.0,2.08,19
+Andhra Pradesh,Krishna,Agiripalle,21,57900.0,2757.0,2.07,20
+Andhra Pradesh,Krishna,Chandarlapadu,20,56885.0,2844.0,2.03,21
+Andhra Pradesh,Krishna,Vissannapet,10,56732.0,5673.0,2.02,22
+Andhra Pradesh,Krishna,Movva,17,56529.0,3325.0,2.02,23
+Andhra Pradesh,Krishna,Pamidimukkala,27,55713.0,2063.0,1.99,24
+Andhra Pradesh,Krishna,Gudlavalleru,22,55592.0,2527.0,1.98,25
+Andhra Pradesh,Krishna,Musunuru,16,55036.0,3440.0,1.96,26
+Andhra Pradesh,Krishna,Unguturu,27,54347.0,2013.0,1.94,27
+Andhra Pradesh,Krishna,Challapalle,11,53813.0,4892.0,1.92,28
+Andhra Pradesh,Krishna,G.Konduru,23,53499.0,2326.0,1.91,29
+Andhra Pradesh,Krishna,Guduru,25,53250.0,2130.0,1.9,30
+Andhra Pradesh,Krishna,Kruthivennu,15,52632.0,3509.0,1.88,31
+Andhra Pradesh,Krishna,Bantumilli,18,52257.0,2903.0,1.86,32
+Andhra Pradesh,Krishna,Chatrai,16,51558.0,3222.0,1.84,33
+Andhra Pradesh,Krishna,Nagayalanka,11,51479.0,4680.0,1.84,34
+Andhra Pradesh,Krishna,Mandavalli,31,51161.0,1650.0,1.83,35
+Andhra Pradesh,Krishna,Penuganchiprolu,13,50695.0,3900.0,1.81,36
+Andhra Pradesh,Krishna,Veerullapadu,24,49985.0,2083.0,1.78,37
+Andhra Pradesh,Krishna,Koduru,9,49571.0,5508.0,1.77,38
+Andhra Pradesh,Krishna,A.Konduru,13,44930.0,3456.0,1.6,39
+Andhra Pradesh,Krishna,Ghantasala,20,43869.0,2193.0,1.57,40
+Andhra Pradesh,Krishna,Reddigudem,11,42976.0,3907.0,1.53,41
+Andhra Pradesh,Krishna,Avanigadda,7,41839.0,5977.0,1.49,42
+Andhra Pradesh,Krishna,Nandivada,22,40989.0,1863.0,1.46,43
+Andhra Pradesh,Krishna,Thotlavalluru,16,39685.0,2480.0,1.42,44
+Andhra Pradesh,Krishna,Gudivada,27,39157.0,1450.0,1.4,45
+Andhra Pradesh,Krishna,Pedana,29,38754.0,1336.0,1.38,46
+Andhra Pradesh,Krishna,Mopidevi,17,36012.0,2118.0,1.28,47
+Andhra Pradesh,Krishna,Pedaparupudi,18,33099.0,1839.0,1.18,48
+Andhra Pradesh,Krishna,Vijayawada (Rural),8,19316.0,2415.0,0.69,49
+Andhra Pradesh,Krishna,Unknown Subdistricts Of India,1,17845.0,17845.0,0.64,50
+Andhra Pradesh,Kurnool,Dhone,16,102005.0,6375.0,3.8,1
+Andhra Pradesh,Kurnool,Banaganapalle,38,89030.0,2343.0,3.31,2
+Andhra Pradesh,Kurnool,Adoni,37,76751.0,2074.0,2.86,3
+Andhra Pradesh,Kurnool,Nandikotkur,11,74199.0,6745.0,2.76,4
+Andhra Pradesh,Kurnool,Allagadda,20,71576.0,3579.0,2.66,5
+Andhra Pradesh,Kurnool,Kodumur,10,68395.0,6840.0,2.54,6
+Andhra Pradesh,Kurnool,Atmakur,12,68131.0,5678.0,2.53,7
+Andhra Pradesh,Kurnool,Kurnool,19,67827.0,3570.0,2.52,8
+Andhra Pradesh,Kurnool,Kowthalam,33,67808.0,2055.0,2.52,9
+Andhra Pradesh,Kurnool,Peapally,18,67080.0,3727.0,2.5,10
+Andhra Pradesh,Kurnool,Yemmiganur,18,65708.0,3650.0,2.44,11
+Andhra Pradesh,Kurnool,Gonegandla,16,63584.0,3974.0,2.37,12
+Andhra Pradesh,Kurnool,Devanakonda,14,61923.0,4423.0,2.3,13
+Andhra Pradesh,Kurnool,Pattikonda,11,60951.0,5541.0,2.27,14
+Andhra Pradesh,Kurnool,Kosigi,23,58316.0,2535.0,2.17,15
+Andhra Pradesh,Kurnool,Sirvel,12,56042.0,4670.0,2.09,16
+Andhra Pradesh,Kurnool,Veldurthi,16,55649.0,3478.0,2.07,17
+Andhra Pradesh,Kurnool,Aspari,20,55115.0,2756.0,2.05,18
+Andhra Pradesh,Kurnool,Nandyal,18,55115.0,3062.0,2.05,18
+Andhra Pradesh,Kurnool,Tuggali,12,51931.0,4328.0,1.93,20
+Andhra Pradesh,Kurnool,Nandavaram,19,51767.0,2725.0,1.93,21
+Andhra Pradesh,Kurnool,Mantralayam,20,51620.0,2581.0,1.92,22
+Andhra Pradesh,Kurnool,Orvakal,20,50199.0,2510.0,1.87,23
+Andhra Pradesh,Kurnool,Owk,18,49428.0,2746.0,1.84,24
+Andhra Pradesh,Kurnool,Alur,18,49066.0,2726.0,1.83,25
+Andhra Pradesh,Kurnool,Kolimigundla,21,48318.0,2301.0,1.8,26
+Andhra Pradesh,Kurnool,C.Belagal,9,48139.0,5349.0,1.79,27
+Andhra Pradesh,Kurnool,Pedda Kadubur,18,47984.0,2666.0,1.79,28
+Andhra Pradesh,Kurnool,Chagalamarri,19,47076.0,2478.0,1.75,29
+Andhra Pradesh,Kurnool,Holagunda,20,46359.0,2318.0,1.72,30
+Andhra Pradesh,Kurnool,Kallur,18,45194.0,2511.0,1.68,31
+Andhra Pradesh,Kurnool,Bandi Atmakur,15,43988.0,2933.0,1.64,32
+Andhra Pradesh,Kurnool,Rudravaram,19,43877.0,2309.0,1.63,33
+Andhra Pradesh,Kurnool,Koilkuntla,17,42937.0,2526.0,1.6,34
+Andhra Pradesh,Kurnool,Velgode,7,41909.0,5987.0,1.56,35
+Andhra Pradesh,Kurnool,Krishnagiri,15,41666.0,2778.0,1.55,36
+Andhra Pradesh,Kurnool,Gudur,11,41228.0,3748.0,1.53,37
+Andhra Pradesh,Kurnool,Panyam,18,41096.0,2283.0,1.53,38
+Andhra Pradesh,Kurnool,Pamulapadu,11,39630.0,3603.0,1.47,39
+Andhra Pradesh,Kurnool,Gadivemula,14,39337.0,2810.0,1.46,40
+Andhra Pradesh,Kurnool,Midthur,17,38938.0,2290.0,1.45,41
+Andhra Pradesh,Kurnool,Gospadu,15,38614.0,2574.0,1.44,42
+Andhra Pradesh,Kurnool,Halaharvi,24,37024.0,1543.0,1.38,43
+Andhra Pradesh,Kurnool,Sanjamala,20,35431.0,1772.0,1.32,44
+Andhra Pradesh,Kurnool,Bethamcherla,9,34927.0,3881.0,1.3,45
+Andhra Pradesh,Kurnool,Jupadu Bungalow,10,34193.0,3419.0,1.27,46
+Andhra Pradesh,Kurnool,Maddikera (East),6,33601.0,5600.0,1.25,47
+Andhra Pradesh,Kurnool,Mahanandi,9,33572.0,3730.0,1.25,48
+Andhra Pradesh,Kurnool,Pagidyala,6,32892.0,5482.0,1.22,49
+Andhra Pradesh,Kurnool,Chippagiri,14,31465.0,2248.0,1.17,50
+Andhra Pradesh,Kurnool,Kothapalle,13,29126.0,2240.0,1.08,51
+Andhra Pradesh,Kurnool,Uyyalawada,19,28098.0,1479.0,1.05,52
+Andhra Pradesh,Kurnool,Dornipadu,9,25447.0,2827.0,0.95,53
+Andhra Pradesh,Kurnool,Unknown Subdistricts Of India,3,6345.0,2115.0,0.24,54
+Andhra Pradesh,Prakasam,Kanigiri,34,82491.0,2426.0,3.18,1
+Andhra Pradesh,Prakasam,Giddalur,18,78462.0,4359.0,3.03,2
+Andhra Pradesh,Prakasam,Addanki,18,74904.0,4161.0,2.89,3
+Andhra Pradesh,Prakasam,Darsi,32,74862.0,2339.0,2.89,4
+Andhra Pradesh,Prakasam,Naguluppala Padu,18,68911.0,3828.0,2.66,5
+Andhra Pradesh,Prakasam,Martur,13,63954.0,4920.0,2.47,6
+Andhra Pradesh,Prakasam,Tangutur,14,58871.0,4205.0,2.27,7
+Andhra Pradesh,Prakasam,Podili,31,57424.0,1852.0,2.22,8
+Andhra Pradesh,Prakasam,Santhanuthala Padu,16,57104.0,3569.0,2.2,9
+Andhra Pradesh,Prakasam,Parchur,14,55840.0,3989.0,2.15,10
+Andhra Pradesh,Prakasam,Tripuranthakam,15,55061.0,3671.0,2.12,11
+Andhra Pradesh,Prakasam,Yerragondapalem,24,53874.0,2245.0,2.08,12
+Andhra Pradesh,Prakasam,Santhamaguluru,10,53608.0,5361.0,2.07,13
+Andhra Pradesh,Prakasam,Mundlamuru,28,53132.0,1898.0,2.05,14
+Andhra Pradesh,Prakasam,Ulavapadu,11,50375.0,4580.0,1.94,15
+Andhra Pradesh,Prakasam,Ballikurava,14,49713.0,3551.0,1.92,16
+Andhra Pradesh,Prakasam,Maddipadu,19,49473.0,2604.0,1.91,17
+Andhra Pradesh,Prakasam,Inkollu,9,48565.0,5396.0,1.87,18
+Andhra Pradesh,Prakasam,Markapur,21,48401.0,2305.0,1.87,19
+Andhra Pradesh,Prakasam,Pullalacheruvu,16,48369.0,3023.0,1.87,20
+Andhra Pradesh,Prakasam,Kotha Patnam,7,47573.0,6796.0,1.84,21
+Andhra Pradesh,Prakasam,Konakanamitla,33,47426.0,1437.0,1.83,22
+Andhra Pradesh,Prakasam,Ongole,15,45809.0,3054.0,1.77,23
+Andhra Pradesh,Prakasam,Cumbum,14,45131.0,3224.0,1.74,24
+Andhra Pradesh,Prakasam,Tallur,13,44881.0,3452.0,1.73,25
+Andhra Pradesh,Prakasam,Janakavarampanguluru,15,44753.0,2984.0,1.73,26
+Andhra Pradesh,Prakasam,Korisapadu,10,43844.0,4384.0,1.69,27
+Andhra Pradesh,Prakasam,Chimakurthi,23,42548.0,1850.0,1.64,28
+Andhra Pradesh,Prakasam,Gudluru,18,42382.0,2355.0,1.64,29
+Andhra Pradesh,Prakasam,Bestawaripeta,18,42089.0,2338.0,1.62,30
+Andhra Pradesh,Prakasam,Donakonda,27,42002.0,1556.0,1.62,31
+Andhra Pradesh,Prakasam,Zarugumalli,20,41224.0,2061.0,1.59,32
+Andhra Pradesh,Prakasam,Pamur,26,40712.0,1566.0,1.57,33
+Andhra Pradesh,Prakasam,Chinaganjam,7,40668.0,5810.0,1.57,34
+Andhra Pradesh,Prakasam,Komarolu,20,40331.0,2017.0,1.56,35
+Andhra Pradesh,Prakasam,Singarayakonda,8,39704.0,4963.0,1.53,36
+Andhra Pradesh,Prakasam,Karamchedu,7,39356.0,5622.0,1.52,37
+Andhra Pradesh,Prakasam,Dornala,19,39149.0,2060.0,1.51,38
+Andhra Pradesh,Prakasam,Chandra Sekhara Puram,36,38815.0,1078.0,1.5,39
+Andhra Pradesh,Prakasam,Marripudi,24,38229.0,1593.0,1.47,40
+Andhra Pradesh,Prakasam,Kurichedu,17,38110.0,2242.0,1.47,41
+Andhra Pradesh,Prakasam,Peda Araveedu,16,37854.0,2366.0,1.46,42
+Andhra Pradesh,Prakasam,Ardhaveedu,12,36688.0,3057.0,1.42,43
+Andhra Pradesh,Prakasam,Chirala,2,36530.0,18265.0,1.41,44
+Andhra Pradesh,Prakasam,Kondapi,17,36412.0,2142.0,1.4,45
+Andhra Pradesh,Prakasam,Ponnaluru,22,35161.0,1598.0,1.36,46
+Andhra Pradesh,Prakasam,Pedacherlo Palle,19,34395.0,1810.0,1.33,47
+Andhra Pradesh,Prakasam,Racherla,12,34335.0,2861.0,1.32,48
+Andhra Pradesh,Prakasam,Veligandla,22,33628.0,1529.0,1.3,49
+Andhra Pradesh,Prakasam,Voletivaripalem,20,33613.0,1681.0,1.3,50
+Andhra Pradesh,Prakasam,Lingasamudram,18,33082.0,1838.0,1.28,51
+Andhra Pradesh,Prakasam,Tarlupadu,25,32386.0,1295.0,1.25,52
+Andhra Pradesh,Prakasam,Hanumanthuni Padu,25,30436.0,1217.0,1.17,53
+Andhra Pradesh,Prakasam,Yeddana Pudi,8,29585.0,3698.0,1.14,54
+Andhra Pradesh,Prakasam,Kandukur,16,29570.0,1848.0,1.14,55
+Andhra Pradesh,Prakasam,Vetapalem,4,28063.0,7016.0,1.08,56
+Andhra Pradesh,Prakasam,Unknown Subdistricts Of India,2,22187.0,11094.0,0.86,57
+Andhra Pradesh,Spsr Nellore,Sullurpeta,40,75928.0,1898.0,3.69,1
+Andhra Pradesh,Spsr Nellore,Nellore,28,75415.0,2693.0,3.67,2
+Andhra Pradesh,Spsr Nellore,Buchireddipalem,14,72566.0,5183.0,3.53,3
+Andhra Pradesh,Spsr Nellore,Kovur,10,72051.0,7205.0,3.5,4
+Andhra Pradesh,Spsr Nellore,Naidupet,33,68631.0,2080.0,3.34,5
+Andhra Pradesh,Spsr Nellore,Podalakur,36,62742.0,1743.0,3.05,6
+Andhra Pradesh,Spsr Nellore,Atmakur,21,59242.0,2821.0,2.88,7
+Andhra Pradesh,Spsr Nellore,Indukurpet,16,57460.0,3591.0,2.79,8
+Andhra Pradesh,Spsr Nellore,Venkatachalam,20,55592.0,2780.0,2.7,9
+Andhra Pradesh,Spsr Nellore,Kavali,15,54837.0,3656.0,2.67,10
+Andhra Pradesh,Spsr Nellore,Allur,14,52990.0,3785.0,2.58,11
+Andhra Pradesh,Spsr Nellore,Kota,19,51172.0,2693.0,2.49,12
+Andhra Pradesh,Spsr Nellore,Muthukur,15,50712.0,3381.0,2.47,13
+Andhra Pradesh,Spsr Nellore,Thotapalligudur,20,49545.0,2477.0,2.41,14
+Andhra Pradesh,Spsr Nellore,Vidavalur,10,46793.0,4679.0,2.28,15
+Andhra Pradesh,Spsr Nellore,Kodavalur,15,46563.0,3104.0,2.26,16
+Andhra Pradesh,Spsr Nellore,Chillakur,28,46475.0,1660.0,2.26,17
+Andhra Pradesh,Spsr Nellore,Rapur,34,44424.0,1307.0,2.16,18
+Andhra Pradesh,Spsr Nellore,Jaladanki,12,44059.0,3672.0,2.14,19
+Andhra Pradesh,Spsr Nellore,Sydapuram,32,43292.0,1353.0,2.11,20
+Andhra Pradesh,Spsr Nellore,Tada,22,42018.0,1910.0,2.04,21
+Andhra Pradesh,Spsr Nellore,Kaluvoya,20,41668.0,2083.0,2.03,22
+Andhra Pradesh,Spsr Nellore,Gudur,21,41474.0,1975.0,2.02,23
+Andhra Pradesh,Spsr Nellore,Sangam,16,41368.0,2586.0,2.01,24
+Andhra Pradesh,Spsr Nellore,Kaligiri,20,40589.0,2029.0,1.97,25
+Andhra Pradesh,Spsr Nellore,Bogole,11,40406.0,3673.0,1.96,26
+Andhra Pradesh,Spsr Nellore,Ananthasagaram,18,39908.0,2217.0,1.94,27
+Andhra Pradesh,Spsr Nellore,Marripadu,21,39129.0,1863.0,1.9,28
+Andhra Pradesh,Spsr Nellore,Dakkili,43,38684.0,900.0,1.88,29
+Andhra Pradesh,Spsr Nellore,Kondapuram,24,37283.0,1553.0,1.81,30
+Andhra Pradesh,Spsr Nellore,Chittamur,33,37246.0,1129.0,1.81,31
+Andhra Pradesh,Spsr Nellore,Vinjamur,15,36351.0,2423.0,1.77,32
+Andhra Pradesh,Spsr Nellore,Manubolu,18,35828.0,1990.0,1.74,33
+Andhra Pradesh,Spsr Nellore,Dagadarthi,22,35742.0,1625.0,1.74,34
+Andhra Pradesh,Spsr Nellore,Ojili,44,34966.0,795.0,1.7,35
+Andhra Pradesh,Spsr Nellore,Venkatagiri,53,34318.0,648.0,1.67,36
+Andhra Pradesh,Spsr Nellore,Vakadu,32,33927.0,1060.0,1.65,37
+Andhra Pradesh,Spsr Nellore,Chejerla,18,33755.0,1875.0,1.64,38
+Andhra Pradesh,Spsr Nellore,Pellakur,28,33746.0,1205.0,1.64,39
+Andhra Pradesh,Spsr Nellore,Udayagiri,16,33413.0,2088.0,1.62,40
+Andhra Pradesh,Spsr Nellore,Anumasamudrampeta,23,32681.0,1421.0,1.59,41
+Andhra Pradesh,Spsr Nellore,Balayapalle,46,32653.0,710.0,1.59,42
+Andhra Pradesh,Spsr Nellore,Doravarisatram,42,32243.0,768.0,1.57,43
+Andhra Pradesh,Spsr Nellore,Varikuntapadu,28,28160.0,1006.0,1.37,44
+Andhra Pradesh,Spsr Nellore,Duttalur,15,23633.0,1576.0,1.15,45
+Andhra Pradesh,Spsr Nellore,Seetharamapuram,21,22342.0,1064.0,1.09,46
+Andhra Pradesh,Spsr Nellore,Unknown Subdistricts Of India,1,2388.0,2388.0,0.12,47
+Andhra Pradesh,Srikakulam,Etcherla,27,82051.0,3039.0,3.65,1
+Andhra Pradesh,Srikakulam,Ranastalam,55,77436.0,1408.0,3.44,2
+Andhra Pradesh,Srikakulam,Mandasa,76,76402.0,1005.0,3.4,3
+Andhra Pradesh,Srikakulam,Gara,24,75017.0,3126.0,3.34,4
+Andhra Pradesh,Srikakulam,Narasannapeta,45,74284.0,1651.0,3.3,5
+Andhra Pradesh,Srikakulam,Palakonda,45,73592.0,1635.0,3.27,6
+Andhra Pradesh,Srikakulam,Ponduru,38,73175.0,1926.0,3.25,7
+Andhra Pradesh,Srikakulam,Kaviti,21,70945.0,3378.0,3.15,8
+Andhra Pradesh,Srikakulam,Tekkali,49,70872.0,1446.0,3.15,9
+Andhra Pradesh,Srikakulam,Kotabommali,43,69906.0,1626.0,3.11,10
+Andhra Pradesh,Srikakulam,Vajrapukothuru,58,69398.0,1197.0,3.09,11
+Andhra Pradesh,Srikakulam,Regidi Amadalavalasa,51,68422.0,1342.0,3.04,12
+Andhra Pradesh,Srikakulam,Laveru,41,67344.0,1643.0,2.99,13
+Andhra Pradesh,Srikakulam,Polaki,42,65734.0,1565.0,2.92,14
+Andhra Pradesh,Srikakulam,Santhabommali,39,64845.0,1663.0,2.88,15
+Andhra Pradesh,Srikakulam,Srikakulam,24,64291.0,2679.0,2.86,16
+Andhra Pradesh,Srikakulam,Veeraghattam,39,63882.0,1638.0,2.84,17
+Andhra Pradesh,Srikakulam,Santhakaviti,50,62752.0,1255.0,2.79,18
+Andhra Pradesh,Srikakulam,Kothuru,34,60876.0,1790.0,2.71,19
+Andhra Pradesh,Srikakulam,Jalumuru,52,60200.0,1158.0,2.68,20
+Andhra Pradesh,Srikakulam,Kanchili,52,59845.0,1151.0,2.66,21
+Andhra Pradesh,Srikakulam,Pathapatnam,41,58381.0,1424.0,2.6,22
+Andhra Pradesh,Srikakulam,Rajam,28,57172.0,2042.0,2.54,23
+Andhra Pradesh,Srikakulam,Sompeta,32,56715.0,1772.0,2.52,24
+Andhra Pradesh,Srikakulam,Ganguvarisigadam,42,55087.0,1312.0,2.45,25
+Andhra Pradesh,Srikakulam,Nandigam,100,53192.0,532.0,2.37,26
+Andhra Pradesh,Srikakulam,Seethampeta,113,52282.0,463.0,2.32,27
+Andhra Pradesh,Srikakulam,Meliaputti,65,50490.0,777.0,2.25,28
+Andhra Pradesh,Srikakulam,Saravakota,41,48793.0,1190.0,2.17,29
+Andhra Pradesh,Srikakulam,Vangara,35,46266.0,1322.0,2.06,30
+Andhra Pradesh,Srikakulam,Hiramandalam,36,46204.0,1283.0,2.05,31
+Andhra Pradesh,Srikakulam,Amadalavalasa,36,46014.0,1278.0,2.05,32
+Andhra Pradesh,Srikakulam,Ichchapuram,24,44085.0,1837.0,1.96,33
+Andhra Pradesh,Srikakulam,Burja,59,42749.0,725.0,1.9,34
+Andhra Pradesh,Srikakulam,Bhamini,22,41058.0,1866.0,1.83,35
+Andhra Pradesh,Srikakulam,Palasa,49,37951.0,775.0,1.69,36
+Andhra Pradesh,Srikakulam,Sarubujjili,38,31733.0,835.0,1.41,37
+Andhra Pradesh,Srikakulam,Lakshminarsupeta,40,27141.0,679.0,1.21,38
+Andhra Pradesh,Srikakulam,Unknown Subdistricts Of India,1,2228.0,2228.0,0.1,39
+Andhra Pradesh,Visakhapatanam,Anakapalle,32,91336.0,2854.0,4.1,1
+Andhra Pradesh,Visakhapatanam,Chodavaram,31,83801.0,2703.0,3.76,2
+Andhra Pradesh,Visakhapatanam,Payakaraopeta,19,83727.0,4407.0,3.75,3
+Andhra Pradesh,Visakhapatanam,Nakkapalle,31,74050.0,2389.0,3.32,4
+Andhra Pradesh,Visakhapatanam,S.Rayavaram,22,69460.0,3157.0,3.11,5
+Andhra Pradesh,Visakhapatanam,Madugula,49,68552.0,1399.0,3.07,6
+Andhra Pradesh,Visakhapatanam,Yelamanchili,14,68480.0,4891.0,3.07,7
+Andhra Pradesh,Visakhapatanam,Ravikamatham,33,66951.0,2029.0,3.0,8
+Andhra Pradesh,Visakhapatanam,Chintapalle,231,64360.0,279.0,2.89,9
+Andhra Pradesh,Visakhapatanam,Kasimkota,26,62259.0,2395.0,2.79,10
+Andhra Pradesh,Visakhapatanam,Nathavaram,35,62140.0,1775.0,2.79,11
+Andhra Pradesh,Visakhapatanam,Butchayyapeta,38,61751.0,1625.0,2.77,12
+Andhra Pradesh,Visakhapatanam,K.Kotapadu,32,59498.0,1859.0,2.67,13
+Andhra Pradesh,Visakhapatanam,Atchutapuram,33,58899.0,1785.0,2.64,14
+Andhra Pradesh,Visakhapatanam,Devarapalle,36,57536.0,1598.0,2.58,15
+Andhra Pradesh,Visakhapatanam,Sabbavaram,29,55818.0,1925.0,2.5,16
+Andhra Pradesh,Visakhapatanam,Anandapuram,32,55525.0,1735.0,2.49,17
+Andhra Pradesh,Visakhapatanam,Makavarapalem,25,54622.0,2185.0,2.45,18
+Andhra Pradesh,Visakhapatanam,Narsipatnam,12,53351.0,4446.0,2.39,19
+Andhra Pradesh,Visakhapatanam,Kotauratla,20,52653.0,2633.0,2.36,20
+Andhra Pradesh,Visakhapatanam,Koyyuru,139,52437.0,377.0,2.35,21
+Andhra Pradesh,Visakhapatanam,Gudem Kotha Veedhi,164,51348.0,313.0,2.3,22
+Andhra Pradesh,Visakhapatanam,Bheemunipatnam,19,50956.0,2682.0,2.29,23
+Andhra Pradesh,Visakhapatanam,Golugonda,34,50949.0,1499.0,2.28,24
+Andhra Pradesh,Visakhapatanam,Peda Bayalu,259,50831.0,196.0,2.28,25
+Andhra Pradesh,Visakhapatanam,Munagapaka,26,50669.0,1949.0,2.27,26
+Andhra Pradesh,Visakhapatanam,G.Madugula,284,50617.0,178.0,2.27,27
+Andhra Pradesh,Visakhapatanam,Hukumpeta,162,50115.0,309.0,2.25,28
+Andhra Pradesh,Visakhapatanam,Rambilli,30,50015.0,1667.0,2.24,29
+Andhra Pradesh,Visakhapatanam,Padmanabham,24,49622.0,2068.0,2.23,30
+Andhra Pradesh,Visakhapatanam,Araku Valley,152,49619.0,326.0,2.23,31
+Andhra Pradesh,Visakhapatanam,Paravada,18,48404.0,2689.0,2.17,32
+Andhra Pradesh,Visakhapatanam,Paderu,190,45947.0,242.0,2.06,33
+Andhra Pradesh,Visakhapatanam,Cheedikada,30,45630.0,1521.0,2.05,34
+Andhra Pradesh,Visakhapatanam,Rolugunta,28,45545.0,1627.0,2.04,35
+Andhra Pradesh,Visakhapatanam,Dumbriguda,87,44873.0,516.0,2.01,36
+Andhra Pradesh,Visakhapatanam,Ananthagiri,253,44192.0,175.0,1.98,37
+Andhra Pradesh,Visakhapatanam,Munchingi Puttu,284,43918.0,155.0,1.97,38
+Andhra Pradesh,Visakhapatanam,Pendurthi,14,32716.0,2337.0,1.47,39
+Andhra Pradesh,Visakhapatanam,Unknown Subdistricts Of India,9,16774.0,1864.0,0.75,40
+Andhra Pradesh,Vizianagaram,Srungavarapukota,39,74500.0,1910.0,4.06,1
+Andhra Pradesh,Vizianagaram,Pusapatirega,36,68945.0,1915.0,3.75,2
+Andhra Pradesh,Vizianagaram,Gantyada,45,67546.0,1501.0,3.68,3
+Andhra Pradesh,Vizianagaram,Bobbili,38,66117.0,1740.0,3.6,4
+Andhra Pradesh,Vizianagaram,Balijipeta,32,64400.0,2013.0,3.51,5
+Andhra Pradesh,Vizianagaram,Gurla,39,62251.0,1596.0,3.39,6
+Andhra Pradesh,Vizianagaram,Therlam,46,59691.0,1298.0,3.25,7
+Andhra Pradesh,Vizianagaram,Cheepurupalle,30,58968.0,1966.0,3.21,8
+Andhra Pradesh,Vizianagaram,Parvathipuram,46,58575.0,1273.0,3.19,9
+Andhra Pradesh,Vizianagaram,Jami,27,58191.0,2155.0,3.17,10
+Andhra Pradesh,Vizianagaram,Merakamudidam,39,56996.0,1461.0,3.1,11
+Andhra Pradesh,Vizianagaram,Seethanagaram,42,56331.0,1341.0,3.07,12
+Andhra Pradesh,Vizianagaram,Dattirajeru,44,54786.0,1245.0,2.98,13
+Andhra Pradesh,Vizianagaram,Jiyyammavalasa,56,53810.0,961.0,2.93,14
+Andhra Pradesh,Vizianagaram,Salur,81,53032.0,655.0,2.89,15
+Andhra Pradesh,Vizianagaram,Bhogapuram,19,52572.0,2767.0,2.86,16
+Andhra Pradesh,Vizianagaram,Garugubilli,31,50833.0,1640.0,2.77,17
+Andhra Pradesh,Vizianagaram,Gajapathinagaram,33,50812.0,1540.0,2.77,18
+Andhra Pradesh,Vizianagaram,Lakkavarapukota,32,50673.0,1584.0,2.76,19
+Andhra Pradesh,Vizianagaram,Kothavalasa,27,50595.0,1874.0,2.75,20
+Andhra Pradesh,Vizianagaram,Bondapalle,31,50531.0,1630.0,2.75,21
+Andhra Pradesh,Vizianagaram,Vepada,37,50342.0,1361.0,2.74,22
+Andhra Pradesh,Vizianagaram,Mentada,37,49153.0,1328.0,2.68,23
+Andhra Pradesh,Vizianagaram,Komarada,91,48995.0,538.0,2.67,24
+Andhra Pradesh,Vizianagaram,Nellimarla,31,48869.0,1576.0,2.66,25
+Andhra Pradesh,Vizianagaram,Makkuva,48,48344.0,1007.0,2.63,26
+Andhra Pradesh,Vizianagaram,Badangi,27,48219.0,1786.0,2.63,27
+Andhra Pradesh,Vizianagaram,Ramabhadrapuram,31,47723.0,1539.0,2.6,28
+Andhra Pradesh,Vizianagaram,Gummalakshmipuram,116,47265.0,407.0,2.57,29
+Andhra Pradesh,Vizianagaram,Kurupam,90,46714.0,519.0,2.54,30
+Andhra Pradesh,Vizianagaram,Denkada,27,46486.0,1722.0,2.53,31
+Andhra Pradesh,Vizianagaram,Vizianagaram,16,45274.0,2830.0,2.46,32
+Andhra Pradesh,Vizianagaram,Garividi,34,45194.0,1329.0,2.46,33
+Andhra Pradesh,Vizianagaram,Pachipenta,52,43975.0,846.0,2.39,34
+Andhra Pradesh,West Godavari,Jangareddigudem,20,95251.0,4763.0,3.07,1
+Andhra Pradesh,West Godavari,Chintalapudi,36,84929.0,2359.0,2.73,2
+Andhra Pradesh,West Godavari,Pedavegi,27,81355.0,3013.0,2.62,3
+Andhra Pradesh,West Godavari,Tadepalligudem,17,80779.0,4752.0,2.6,4
+Andhra Pradesh,West Godavari,Narasapuram,15,80480.0,5365.0,2.59,5
+Andhra Pradesh,West Godavari,Unguturu,17,77239.0,4543.0,2.49,6
+Andhra Pradesh,West Godavari,Bhimavaram,14,77148.0,5511.0,2.48,7
+Andhra Pradesh,West Godavari,Nallajerla,14,75031.0,5359.0,2.41,8
+Andhra Pradesh,West Godavari,Akividu,15,74766.0,4984.0,2.41,9
+Andhra Pradesh,West Godavari,Yelamanchili,15,74101.0,4940.0,2.39,10
+Andhra Pradesh,West Godavari,Mogalthur,6,73136.0,12189.0,2.35,11
+Andhra Pradesh,West Godavari,Devarapalle,13,72324.0,5563.0,2.33,12
+Andhra Pradesh,West Godavari,Undrajavaram,15,71580.0,4772.0,2.3,13
+Andhra Pradesh,West Godavari,Koyyalagudem,18,71249.0,3958.0,2.29,14
+Andhra Pradesh,West Godavari,Pentapadu,21,71164.0,3389.0,2.29,15
+Andhra Pradesh,West Godavari,Eluru,18,70096.0,3894.0,2.26,16
+Andhra Pradesh,West Godavari,Peravali,14,69312.0,4951.0,2.23,17
+Andhra Pradesh,West Godavari,Kalla,13,68867.0,5297.0,2.22,18
+Andhra Pradesh,West Godavari,Kovvur,15,68787.0,4586.0,2.21,19
+Andhra Pradesh,West Godavari,Nidadavole,22,68765.0,3126.0,2.21,20
+Andhra Pradesh,West Godavari,Penugonda,14,68755.0,4911.0,2.21,21
+Andhra Pradesh,West Godavari,Pedapadu,23,68547.0,2980.0,2.21,22
+Andhra Pradesh,West Godavari,Attili,14,68196.0,4871.0,2.19,23
+Andhra Pradesh,West Godavari,Tanuku,8,67211.0,8401.0,2.16,24
+Andhra Pradesh,West Godavari,Ganapavaram,25,66656.0,2666.0,2.15,25
+Andhra Pradesh,West Godavari,Poduru,14,66560.0,4754.0,2.14,26
+Andhra Pradesh,West Godavari,Iragavaram,21,66292.0,3157.0,2.13,27
+Andhra Pradesh,West Godavari,Undi,20,65898.0,3295.0,2.12,28
+Andhra Pradesh,West Godavari,Denduluru,26,65768.0,2530.0,2.12,29
+Andhra Pradesh,West Godavari,Palacoderu,14,65648.0,4689.0,2.11,30
+Andhra Pradesh,West Godavari,Chagallu,11,64371.0,5852.0,2.07,31
+Andhra Pradesh,West Godavari,Veeravasaram,14,64142.0,4582.0,2.06,32
+Andhra Pradesh,West Godavari,Dwarakatirumala,31,63399.0,2045.0,2.04,33
+Andhra Pradesh,West Godavari,Achanta,10,63358.0,6336.0,2.04,34
+Andhra Pradesh,West Godavari,Bhimadole,11,62579.0,5689.0,2.01,35
+Andhra Pradesh,West Godavari,Penumantra,16,62190.0,3887.0,2.0,36
+Andhra Pradesh,West Godavari,Gopalapuram,18,59728.0,3318.0,1.92,37
+Andhra Pradesh,West Godavari,Lingapalem,24,54844.0,2285.0,1.77,38
+Andhra Pradesh,West Godavari,Tallapudi,16,54477.0,3405.0,1.75,39
+Andhra Pradesh,West Godavari,Kamavarapukota,13,53592.0,4122.0,1.72,40
+Andhra Pradesh,West Godavari,T.Narasapuram,22,51881.0,2358.0,1.67,41
+Andhra Pradesh,West Godavari,Buttayagudem,50,51878.0,1038.0,1.67,42
+Andhra Pradesh,West Godavari,Palacole,16,49992.0,3125.0,1.61,43
+Andhra Pradesh,West Godavari,Nidamarru,21,48098.0,2290.0,1.55,44
+Andhra Pradesh,West Godavari,Polavaram,21,42726.0,2035.0,1.38,45
+Andhra Pradesh,West Godavari,Kukunoor,25,32789.0,1312.0,1.06,46
+Andhra Pradesh,West Godavari,Jeelugu Milli,26,28501.0,1096.0,0.92,47
+Andhra Pradesh,West Godavari,Velairpadu,20,21462.0,1073.0,0.69,48
+Andhra Pradesh,West Godavari,Unknown Subdistricts Of India,1,984.0,984.0,0.03,49
+Andhra Pradesh,Y.S.R.,Rajampet,22,91417.0,4155.0,4.65,1
+Andhra Pradesh,Y.S.R.,Kodur,14,79517.0,5680.0,4.05,2
+Andhra Pradesh,Y.S.R.,S.Mydukur,16,72356.0,4522.0,3.68,3
+Andhra Pradesh,Y.S.R.,Proddatur,15,60182.0,4012.0,3.06,4
+Andhra Pradesh,Y.S.R.,Porumamilla,26,53879.0,2072.0,2.74,5
+Andhra Pradesh,Y.S.R.,T Sundupalle,12,53013.0,4418.0,2.7,6
+Andhra Pradesh,Y.S.R.,Pulivendla,8,51783.0,6473.0,2.64,7
+Andhra Pradesh,Y.S.R.,Duvvur,19,49983.0,2631.0,2.54,8
+Andhra Pradesh,Y.S.R.,Obulavaripalle,14,49947.0,3568.0,2.54,9
+Andhra Pradesh,Y.S.R.,Kamalapuram,23,49093.0,2134.0,2.5,10
+Andhra Pradesh,Y.S.R.,Khajipet,15,48784.0,3252.0,2.48,11
+Andhra Pradesh,Y.S.R.,Vempalle,11,46582.0,4235.0,2.37,12
+Andhra Pradesh,Y.S.R.,Galiveedu,14,46168.0,3298.0,2.35,13
+Andhra Pradesh,Y.S.R.,Unknown Subdistricts Of India,17,45476.0,2675.0,2.31,14
+Andhra Pradesh,Y.S.R.,Chitvel,18,43042.0,2391.0,2.19,15
+Andhra Pradesh,Y.S.R.,Penagalur,23,42126.0,1832.0,2.14,16
+Andhra Pradesh,Y.S.R.,Pendlimarri,22,41011.0,1864.0,2.09,17
+Andhra Pradesh,Y.S.R.,Chapad,17,39153.0,2303.0,1.99,18
+Andhra Pradesh,Y.S.R.,Kondapuram,34,38864.0,1143.0,1.98,19
+Andhra Pradesh,Y.S.R.,Pullampeta,24,38754.0,1615.0,1.97,20
+Andhra Pradesh,Y.S.R.,Yerraguntla,15,38416.0,2561.0,1.96,21
+Andhra Pradesh,Y.S.R.,Nandalur,19,36298.0,1910.0,1.85,22
+Andhra Pradesh,Y.S.R.,Chennur,14,35331.0,2524.0,1.8,23
+Andhra Pradesh,Y.S.R.,Sidhout,18,35261.0,1959.0,1.79,24
+Andhra Pradesh,Y.S.R.,Peddamudium,25,35221.0,1409.0,1.79,25
+Andhra Pradesh,Y.S.R.,Sambepalle,11,35131.0,3194.0,1.79,26
+Andhra Pradesh,Y.S.R.,Lakkireddipalle,11,34475.0,3134.0,1.75,27
+Andhra Pradesh,Y.S.R.,Brahmamgarimattam,18,34396.0,1911.0,1.75,28
+Andhra Pradesh,Y.S.R.,Ramapuram,12,33271.0,2773.0,1.69,29
+Andhra Pradesh,Y.S.R.,Chinthakommadinne,16,33066.0,2067.0,1.68,30
+Andhra Pradesh,Y.S.R.,Chinnamandem,9,32750.0,3639.0,1.67,31
+Andhra Pradesh,Y.S.R.,Muddanur,22,32545.0,1479.0,1.66,32
+Andhra Pradesh,Y.S.R.,Veeraballe,8,32439.0,4055.0,1.65,33
+Andhra Pradesh,Y.S.R.,Rajupalem,17,31944.0,1879.0,1.63,34
+Andhra Pradesh,Y.S.R.,Kalasapadu,23,31922.0,1388.0,1.62,35
+Andhra Pradesh,Y.S.R.,Simhadripuram,20,31654.0,1583.0,1.61,36
+Andhra Pradesh,Y.S.R.,Veerapunayunipalle,18,30939.0,1719.0,1.57,37
+Andhra Pradesh,Y.S.R.,Chakrayapet,16,30682.0,1918.0,1.56,38
+Andhra Pradesh,Y.S.R.,Vontimitta,12,29790.0,2483.0,1.52,39
+Andhra Pradesh,Y.S.R.,Rayachoti,15,29158.0,1944.0,1.48,40
+Andhra Pradesh,Y.S.R.,Lingala,16,28832.0,1802.0,1.47,41
+Andhra Pradesh,Y.S.R.,Sri Avadhutha Kasinayana,16,27842.0,1740.0,1.42,42
+Andhra Pradesh,Y.S.R.,Vallur,17,27577.0,1622.0,1.4,43
+Andhra Pradesh,Y.S.R.,Vemula,12,25578.0,2132.0,1.3,44
+Andhra Pradesh,Y.S.R.,Mylavaram,24,25254.0,1052.0,1.29,45
+Andhra Pradesh,Y.S.R.,Jammalamadugu,16,22933.0,1433.0,1.17,46
+Andhra Pradesh,Y.S.R.,Thondur,16,22213.0,1388.0,1.13,47
+Andhra Pradesh,Y.S.R.,Atlur,15,20185.0,1346.0,1.03,48
+Andhra Pradesh,Y.S.R.,Badvel,18,19819.0,1101.0,1.01,49
+Andhra Pradesh,Y.S.R.,B.Kodur,15,19450.0,1297.0,0.99,50
+Andhra Pradesh,Y.S.R.,Gopavaram,6,15528.0,2588.0,0.79,51
+Andhra Pradesh,Y.S.R.,Kadapa,1,3402.0,3402.0,0.17,52
+Arunachal Pradesh,Anjaw,Hayuliang Adc,58,5097.0,88.0,27.5,1
+Arunachal Pradesh,Anjaw,Hawai Hq,52,3954.0,76.0,21.33,2
+Arunachal Pradesh,Anjaw,Manchal Circle,56,3032.0,54.0,16.36,3
+Arunachal Pradesh,Anjaw,Goiliang Circle,31,1645.0,53.0,8.87,4
+Arunachal Pradesh,Anjaw,Metengliang Circle,28,1410.0,50.0,7.61,5
+Arunachal Pradesh,Anjaw,Walong Circle,19,1279.0,67.0,6.9,6
+Arunachal Pradesh,Anjaw,Kibithoo Circle,9,953.0,106.0,5.14,7
+Arunachal Pradesh,Anjaw,Chaglagam Circle,14,949.0,68.0,5.12,8
+Arunachal Pradesh,Anjaw,Unknown Subdistricts Of India,5,217.0,43.0,1.17,9
+Arunachal Pradesh,Changlang,Unknown Subdistricts Of India,38,40379.0,1063.0,35.79,1
+Arunachal Pradesh,Changlang,Bordumsa Adc,37,19544.0,528.0,17.32,2
+Arunachal Pradesh,Changlang,Miao Adc,29,9862.0,340.0,8.74,3
+Arunachal Pradesh,Changlang,Kharsang Circle,28,9509.0,340.0,8.43,4
+Arunachal Pradesh,Changlang,Diyun Eac,13,5181.0,399.0,4.59,5
+Arunachal Pradesh,Changlang,Changlang Hq,29,3692.0,127.0,3.27,6
+Arunachal Pradesh,Changlang,Vijoynagar Eac,12,3564.0,297.0,3.16,7
+Arunachal Pradesh,Changlang,Namtok Eac,15,3242.0,216.0,2.87,8
+Arunachal Pradesh,Changlang,Nampong Sdo,23,3145.0,137.0,2.79,9
+Arunachal Pradesh,Changlang,Khimiyang Eac,15,2956.0,197.0,2.62,10
+Arunachal Pradesh,Changlang,Kantang Circle,28,2921.0,104.0,2.59,11
+Arunachal Pradesh,Changlang,Yatdam Circle,15,2256.0,150.0,2.0,12
+Arunachal Pradesh,Changlang,Manmao Eac,15,2026.0,135.0,1.8,13
+Arunachal Pradesh,Changlang,Jairampur Adc,13,1917.0,147.0,1.7,14
+Arunachal Pradesh,Changlang,Tikhak Rima Putok Circle,13,1279.0,98.0,1.13,15
+Arunachal Pradesh,Changlang,Renuk Circle,5,718.0,144.0,0.64,16
+Arunachal Pradesh,Changlang,Lyngok Longtoi Circle,6,643.0,107.0,0.57,17
+Arunachal Pradesh,Dibang Valley,Anini,13,2925.0,225.0,40.22,1
+Arunachal Pradesh,Dibang Valley,Etalin,28,1575.0,56.0,21.66,2
+Arunachal Pradesh,Dibang Valley,Dambuen Circle,14,1086.0,78.0,14.93,3
+Arunachal Pradesh,Dibang Valley,Kronli (Arzoo Circle),19,789.0,42.0,10.85,4
+Arunachal Pradesh,Dibang Valley,Anelih,15,564.0,38.0,7.76,5
+Arunachal Pradesh,Dibang Valley,Mipi,11,333.0,30.0,4.58,6
+Arunachal Pradesh,East Kameng,Bameng Adc,28,4474.0,160.0,14.27,1
+Arunachal Pradesh,East Kameng,Chayangtajo Adc,30,4184.0,139.0,13.34,2
+Arunachal Pradesh,East Kameng,Seppa Hq,23,3367.0,146.0,10.74,3
+Arunachal Pradesh,East Kameng,Khenawa Circle,24,3151.0,131.0,10.05,4
+Arunachal Pradesh,East Kameng,Pakoti Circle,22,3025.0,138.0,9.65,5
+Arunachal Pradesh,East Kameng,Pipu Dipu Circle,29,2927.0,101.0,9.33,6
+Arunachal Pradesh,East Kameng,Sawa Circle,25,2174.0,87.0,6.93,7
+Arunachal Pradesh,East Kameng,Debeyar Co Circle,8,2133.0,267.0,6.8,8
+Arunachal Pradesh,East Kameng,Richukrong Circle,15,2093.0,140.0,6.67,9
+Arunachal Pradesh,East Kameng,Lada Circle,25,1931.0,77.0,6.16,10
+Arunachal Pradesh,East Kameng,Gyawe Purang Circle,14,1432.0,102.0,4.57,11
+Arunachal Pradesh,East Kameng,Bana Eac,4,470.0,118.0,1.5,12
+Arunachal Pradesh,East Siang,Pasighat Hq,25,9650.0,386.0,23.05,1
+Arunachal Pradesh,East Siang,Oyan Circle,12,8661.0,722.0,20.69,2
+Arunachal Pradesh,East Siang,Namsing Circle,8,6544.0,818.0,15.63,3
+Arunachal Pradesh,East Siang,Mebo Adc,10,6436.0,644.0,15.38,4
+Arunachal Pradesh,East Siang,Ruksin Adc,11,5806.0,528.0,13.87,5
+Arunachal Pradesh,East Siang,Bilat Circle,8,4762.0,595.0,11.38,6
+Arunachal Pradesh,Kamle,Kamporijo Circle,36,5955.0,165.0,39.48,1
+Arunachal Pradesh,Kamle,Raga Adc,23,3863.0,168.0,25.61,2
+Arunachal Pradesh,Kamle,Puchi Geko Circle,25,2708.0,108.0,17.96,3
+Arunachal Pradesh,Kamle,Gepen Circle,9,1476.0,164.0,9.79,4
+Arunachal Pradesh,Kamle,Dollungmukh Circle,9,1080.0,120.0,7.16,5
+Arunachal Pradesh,Kra Daadi,Palin Circle,38,5657.0,149.0,30.66,1
+Arunachal Pradesh,Kra Daadi,Tali Adc,33,3591.0,109.0,19.46,2
+Arunachal Pradesh,Kra Daadi,Chambang Circle,30,2322.0,77.0,12.58,3
+Arunachal Pradesh,Kra Daadi,Pipsorang Circle,32,2206.0,69.0,11.96,4
+Arunachal Pradesh,Kra Daadi,Gangte Circle,22,1805.0,82.0,9.78,5
+Arunachal Pradesh,Kra Daadi,Yangte Circle,22,1732.0,79.0,9.39,6
+Arunachal Pradesh,Kra Daadi,Tarak Lengdi Cicle,23,1138.0,49.0,6.17,7
+Arunachal Pradesh,Kurung Kumey,Sangram Sdo,39,5264.0,135.0,21.33,1
+Arunachal Pradesh,Kurung Kumey,Nyapin Adc,24,4968.0,207.0,20.13,2
+Arunachal Pradesh,Kurung Kumey,Koloriang Hq,52,4798.0,92.0,19.44,3
+Arunachal Pradesh,Kurung Kumey,Patuk Adc,34,2891.0,85.0,11.72,4
+Arunachal Pradesh,Kurung Kumey,Damin Circle,32,2785.0,87.0,11.29,5
+Arunachal Pradesh,Kurung Kumey,Phassang Circle,13,1565.0,120.0,6.34,6
+Arunachal Pradesh,Kurung Kumey,Sarli Circle,21,1299.0,62.0,5.26,7
+Arunachal Pradesh,Kurung Kumey,Polosang Circle,16,673.0,42.0,2.73,8
+Arunachal Pradesh,Kurung Kumey,Nyobia Circle,5,433.0,87.0,1.75,9
+Arunachal Pradesh,Leparada,Basar Adc,20,6692.0,335.0,43.47,1
+Arunachal Pradesh,Leparada,Tirbin Eac,30,5015.0,167.0,32.58,2
+Arunachal Pradesh,Leparada,Daring Circle,12,2724.0,227.0,17.69,3
+Arunachal Pradesh,Leparada,Sago,4,964.0,241.0,6.26,4
+Arunachal Pradesh,Lohit,Tezu Hq,30,16277.0,543.0,58.54,1
+Arunachal Pradesh,Lohit,Wakro Circle,39,6678.0,171.0,24.02,2
+Arunachal Pradesh,Lohit,Sunpura Circle,10,4815.0,482.0,17.32,3
+Arunachal Pradesh,Lohit,Unknown Subdistricts Of India,1,36.0,36.0,0.13,4
+Arunachal Pradesh,Longding,Longding Hq,14,15703.0,1122.0,30.78,1
+Arunachal Pradesh,Longding,Pangchao Sdo,11,10421.0,947.0,20.42,2
+Arunachal Pradesh,Longding,Wakka Sdo,12,9246.0,771.0,18.12,3
+Arunachal Pradesh,Longding,Kanubari Adc,12,6633.0,553.0,13.0,4
+Arunachal Pradesh,Longding,Lawnu Circle,13,4707.0,362.0,9.23,5
+Arunachal Pradesh,Longding,Pumao Circle,5,4312.0,862.0,8.45,6
+Arunachal Pradesh,Lower Dibang Valley,Roing Hq,44,23973.0,545.0,59.43,1
+Arunachal Pradesh,Lower Dibang Valley,Dambuk Adc,12,5280.0,440.0,13.09,2
+Arunachal Pradesh,Lower Dibang Valley,Tinali Paglam Circle,6,5163.0,861.0,12.8,3
+Arunachal Pradesh,Lower Dibang Valley,Koronu Circle,9,3525.0,392.0,8.74,4
+Arunachal Pradesh,Lower Dibang Valley,Hunli Sdo,20,1030.0,52.0,2.55,5
+Arunachal Pradesh,Lower Dibang Valley,Desali Circle,21,823.0,39.0,2.04,6
+Arunachal Pradesh,Lower Dibang Valley,Parbuk Sdo,1,547.0,547.0,1.36,7
+Arunachal Pradesh,Lower Siang,Likabali Sdo,20,6272.0,314.0,30.27,1
+Arunachal Pradesh,Lower Siang,Kangku Circle,21,3010.0,143.0,14.53,2
+Arunachal Pradesh,Lower Siang,Nari Adc,5,2836.0,567.0,13.69,3
+Arunachal Pradesh,Lower Siang,New Seren Circle,8,2548.0,319.0,12.3,4
+Arunachal Pradesh,Lower Siang,Sibe Circle,16,2007.0,125.0,9.69,5
+Arunachal Pradesh,Lower Siang,Gensi Eac,10,1937.0,194.0,9.35,6
+Arunachal Pradesh,Lower Siang,Koyu Eac,8,1322.0,165.0,6.38,7
+Arunachal Pradesh,Lower Siang,Kora Circle,7,790.0,113.0,3.81,8
+Arunachal Pradesh,Lower Subansiri,Yazali Circle,30,8375.0,279.0,26.31,1
+Arunachal Pradesh,Lower Subansiri,Old Ziro Sdo,25,8004.0,320.0,25.14,2
+Arunachal Pradesh,Lower Subansiri,Yachuli Adc,33,5557.0,168.0,17.46,3
+Arunachal Pradesh,Lower Subansiri,Pistana Circle,27,4322.0,160.0,13.58,4
+Arunachal Pradesh,Lower Subansiri,Ziro Hq,24,4239.0,177.0,13.32,5
+Arunachal Pradesh,Lower Subansiri,Deed Circle,5,829.0,166.0,2.6,6
+Arunachal Pradesh,Lower Subansiri,Unknown Subdistricts Of India,4,509.0,127.0,1.6,7
+Arunachal Pradesh,Namsai,Lekang Mahadevpur Circle,43,23758.0,553.0,33.74,1
+Arunachal Pradesh,Namsai,Chongkham Eac,35,15636.0,447.0,22.21,2
+Arunachal Pradesh,Namsai,Namsai Hq,24,9557.0,398.0,13.57,3
+Arunachal Pradesh,Namsai,Piyong Circle,19,9055.0,477.0,12.86,4
+Arunachal Pradesh,Namsai,Lathao Circle,13,6848.0,527.0,9.73,5
+Arunachal Pradesh,Namsai,Unknown Subdistricts Of India,6,5557.0,926.0,7.89,6
+Arunachal Pradesh,Pakke Kessang,Seijosa Adc,16,3739.0,234.0,34.57,1
+Arunachal Pradesh,Pakke Kessang,Pizirang Veo Circle,16,2437.0,152.0,22.53,2
+Arunachal Pradesh,Pakke Kessang,Pakke Kessang Eac,15,2007.0,134.0,18.56,3
+Arunachal Pradesh,Pakke Kessang,Dissing Passo Circle,11,1480.0,135.0,13.68,4
+Arunachal Pradesh,Pakke Kessang,Passa Valley Circle,5,1153.0,231.0,10.66,5
+Arunachal Pradesh,Papum Pare,Doimukh Sdo,21,8623.0,411.0,14.38,1
+Arunachal Pradesh,Papum Pare,Naharlagun Eac,4,6911.0,1728.0,11.53,2
+Arunachal Pradesh,Papum Pare,Banderdewa Circle,18,6078.0,338.0,10.14,3
+Arunachal Pradesh,Papum Pare,Sagalee Adc,29,5657.0,195.0,9.43,4
+Arunachal Pradesh,Papum Pare,Balijan Adc,28,5638.0,201.0,9.4,5
+Arunachal Pradesh,Papum Pare,Kimin Sdo,18,5465.0,304.0,9.11,6
+Arunachal Pradesh,Papum Pare,Itanagar Eac,5,3756.0,751.0,6.26,7
+Arunachal Pradesh,Papum Pare,Toru Circle,23,2857.0,124.0,4.76,8
+Arunachal Pradesh,Papum Pare,Mengio Eac,25,2544.0,102.0,4.24,9
+Arunachal Pradesh,Papum Pare,Sangdupota Basar Nello Circle,27,2493.0,92.0,4.16,10
+Arunachal Pradesh,Papum Pare,Leporiang Circle,18,2103.0,117.0,3.51,11
+Arunachal Pradesh,Papum Pare,Taraso Circle,16,1896.0,119.0,3.16,12
+Arunachal Pradesh,Papum Pare,Borum,6,1435.0,239.0,2.39,13
+Arunachal Pradesh,Papum Pare,Silsango Circle,9,1301.0,145.0,2.17,14
+Arunachal Pradesh,Papum Pare,Gumto Circle,5,1267.0,253.0,2.11,15
+Arunachal Pradesh,Papum Pare,Parang Circle,8,894.0,112.0,1.49,16
+Arunachal Pradesh,Papum Pare,Kakoi Circle,6,803.0,134.0,1.34,17
+Arunachal Pradesh,Papum Pare,Unknown Subdistricts Of India,1,240.0,240.0,0.4,18
+Arunachal Pradesh,Shi Yomi,Mechuka Adc,33,4446.0,135.0,43.3,1
+Arunachal Pradesh,Shi Yomi,Monigong Eac,34,3025.0,89.0,29.46,2
+Arunachal Pradesh,Shi Yomi,Tato Eac,14,2175.0,155.0,21.18,3
+Arunachal Pradesh,Shi Yomi,Pidi Circle,9,623.0,69.0,6.07,4
+Arunachal Pradesh,Siang,Boleng Adc,11,4985.0,453.0,17.6,1
+Arunachal Pradesh,Siang,Kaying Eac,12,4084.0,340.0,14.42,2
+Arunachal Pradesh,Siang,Jomlo Mobuk Circle,16,3910.0,244.0,13.81,3
+Arunachal Pradesh,Siang,Riga Eac,7,3887.0,555.0,13.73,4
+Arunachal Pradesh,Siang,Pangin Eac,9,3029.0,337.0,10.7,5
+Arunachal Pradesh,Siang,Rumgong Adc,8,2777.0,347.0,9.81,6
+Arunachal Pradesh,Siang,Rebo Perging Circle,6,2421.0,404.0,8.55,7
+Arunachal Pradesh,Siang,Kebang Circle,9,1755.0,195.0,6.2,8
+Arunachal Pradesh,Siang,Payum Circle,13,1469.0,113.0,5.19,9
+Arunachal Pradesh,Tawang,Dudunghar Circle,21,2036.0,97.0,68.62,1
+Arunachal Pradesh,Tawang,Bongkhar Circle,3,931.0,310.0,31.38,2
