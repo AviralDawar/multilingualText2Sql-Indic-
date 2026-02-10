@@ -56,8 +56,8 @@ def insert_data_from_csv(cursor, table_name: str, headers: list[str], rows: list
         rows = rows[:limit]
         print(f"  Limiting to {limit} rows")
 
-    # Quote column names for case-sensitivity
-    columns_str = ", ".join(f'"{h}"' for h in headers)
+    # Use lowercase column names (PostgreSQL lowercases unquoted identifiers in DDL)
+    columns_str = ", ".join(h.lower() for h in headers)
 
     total_rows = len(rows)
     inserted = 0

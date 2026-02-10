@@ -136,7 +136,7 @@ python create_schema_llm_judge.py \
 
 
 #for example: 
-
+#will be run from the root directory only
 python3 create_schema_llm_judge.py ../databases/INDIA_UDISE_SCHOOL_PROFILES/INDIA_UDISE_SCHOOL_PROFILES/data/total_data.csv --backend openrouter --model deepseek/deepseek-v3.2 --reasoning
 
 ```
@@ -164,7 +164,7 @@ Convert the LLM-generated markdown to a machine-readable YAML config:
 python parse_schema_to_yaml.py \
   ../databases/YOUR_DATABASE_NAME/YOUR_DATABASE_NAME/schema_info.md
 
-#for example
+#for example (run from root dir)
 python3 scripts/parse_schema_to_yaml.py --schema databases/INDIA_VILLAGE_AMENITIES/INDIA_VILLAGE_AMENITIES/schema_info.md --csv databases/INDIA_VILLAGE_AMENITIES/INDIA_VILLAGE_AMENITIES/data/total_data.csv -v
 ```
 
@@ -199,10 +199,19 @@ fact_tables:
 Split the raw CSV into normalized tables using the YAML config:
 
 ```bash
-python generic_split.py \
+python3 generic_split.py \
   --config ../databases/YOUR_DATABASE_NAME/YOUR_DATABASE_NAME/schema_config.yaml \
   --input ../databases/YOUR_DATABASE_NAME/YOUR_DATABASE_NAME/data/total_data.csv \
   --output ../databases/YOUR_DATABASE_NAME/YOUR_DATABASE_NAME
+
+#run from scripts dir
+python3 generic_split.py \
+  --config ../databases/INDIA_UDISE_SCHOOL_PROFILES/INDIA_UDISE_SCHOOL_PROFILES/schema_config.yaml \
+  --input ../databases/INDIA_UDISE_SCHOOL_PROFILES/INDIA_UDISE_SCHOOL_PROFILES/data/total_data.csv \
+  --output ../databases/INDIA_UDISE_SCHOOL_PROFILES/INDIA_UDISE_SCHOOL_PROFILES
+
+
+
 ```
 
 **Output Generated:**
@@ -220,10 +229,17 @@ python generic_split.py \
 #### PostgreSQL
 
 ```bash
-python create_tables.py \
+python3 create_tables.py \
   --database YOUR_DATABASE_NAME \
   --use-database indicdb \
   --use-schema your_schema \
+  --create-schema
+
+# for example (run from scripts dir) -> 
+python3 create_tables.py \
+  --database INDIA_UDISE_SCHOOL_PROFILES \
+  --use-database indicdb \
+  --use-schema INDIA_UDISE_SCHOOL_PROFILES \
   --create-schema
 ```
 
@@ -242,10 +258,17 @@ python create_tables.py \
 #### PostgreSQL
 
 ```bash
-python load_data.py \
+python3 load_data.py \
   --database YOUR_DATABASE_NAME \
   --use-database indicdb \
   --use-schema your_schema \
+  --limit 20000
+
+# for example (run from scripts dir) -> 
+python3 load_data.py \
+  --database INDIA_UDISE_SCHOOL_PROFILES \
+  --use-database indicdb \
+  --use-schema INDIA_UDISE_SCHOOL_PROFILES \
   --limit 20000
 ```
 
@@ -671,6 +694,44 @@ GROUP BY s.STATE_NAME;
 ```
 
 ---
+
+
+## Connecting to the Server DB and running SQL
+
+ubuntu@instance-20260203-1921:~$ psql -h 140.245.244.234 -U postgres -d indicdb
+Password for user postgres: 
+psql (14.20 (Ubuntu 14.20-0ubuntu0.22.04.1))
+SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384, bits: 256, compression: off)
+Type "help" for help.
+
+indicdb=# \dn
+           List of schemas
+           Name            |  Owner   
+---------------------------+----------
+ india_capital_expenditure | postgres
+ india_census_2001         | postgres
+ india_employment          | postgres
+ public                    | postgres
+(4 rows)
+
+indicdb=# \dt india_employment.*
+                            List of relations
+      Schema      |                Name                | Type  |  Owner   
+------------------+------------------------------------+-------+----------
+ india_employment | employment_by_demographics         | table | postgres
+ india_employment | employment_by_firm_characteristics | table | postgres
+ india_employment | employment_by_industry             | table | postgres
+ india_employment | employment_by_ownership            | table | postgres
+ india_employment | employment_fact                    | table | postgres
+ india_employment | locations                          | table | postgres
+ india_employment | time_period                        | table | postgres
+(7 rows)
+
+indicdb=# select count(*) from india_employment.time_period;
+ count 
+-------
+     1
+(1 row)
 
 ## License
 
