@@ -133,7 +133,15 @@ cd scripts
 
 python create_schema_llm_judge.py \
   ../databases/YOUR_DATABASE_NAME/YOUR_DATABASE_NAME/data/total_data.csv
+
+
+#for example: 
+
+python3 create_schema_llm_judge.py ../databases/INDIA_UDISE_SCHOOL_PROFILES/INDIA_UDISE_SCHOOL_PROFILES/data/total_data.csv --backend openrouter --model deepseek/deepseek-v3.2 --reasoning
+
 ```
+
+
 
 **What it does:**
 - Uses a 3-agent pattern (Architect → Auditor → Refiner)
@@ -155,6 +163,9 @@ Convert the LLM-generated markdown to a machine-readable YAML config:
 ```bash
 python parse_schema_to_yaml.py \
   ../databases/YOUR_DATABASE_NAME/YOUR_DATABASE_NAME/schema_info.md
+
+#for example
+python3 scripts/parse_schema_to_yaml.py --schema databases/INDIA_VILLAGE_AMENITIES/INDIA_VILLAGE_AMENITIES/schema_info.md --csv databases/INDIA_VILLAGE_AMENITIES/INDIA_VILLAGE_AMENITIES/data/total_data.csv -v
 ```
 
 **Output:** `schema_config.yaml` with structured table definitions:
@@ -210,25 +221,14 @@ python generic_split.py \
 
 ```bash
 python create_tables.py \
-  --backend postgres \
   --database YOUR_DATABASE_NAME \
   --use-database indicdb \
   --use-schema your_schema \
   --create-schema
 ```
 
-#### Snowflake
-
-```bash
-python create_tables.py \
-  --backend snowflake \
-  --database YOUR_DATABASE_NAME \
-  --create-database \
-  --create-schema
-```
 
 **Flags:**
-- `--backend` : Database backend (`postgres` or `snowflake`)
 - `--database` : Source database folder name
 - `--use-database` : Target database name
 - `--use-schema` : Target schema name
@@ -243,21 +243,12 @@ python create_tables.py \
 
 ```bash
 python load_data.py \
-  --backend postgres \
   --database YOUR_DATABASE_NAME \
   --use-database indicdb \
   --use-schema your_schema \
   --limit 20000
 ```
 
-#### Snowflake
-
-```bash
-python load_data.py \
-  --backend snowflake \
-  --database YOUR_DATABASE_NAME \
-  --limit 20000
-```
 
 **Flags:**
 - `--limit` : Number of rows to load (optional, for testing)
@@ -267,6 +258,8 @@ python load_data.py \
 ---
 
 ## Troubleshooting
+
+There might be some errors in which data is not getting loaded into the tables properly, in that case you will have to alter the datatypes of the created schema manually - Do remove the already added data in this case.
 
 ### Error: String Too Long
 
@@ -383,6 +376,298 @@ python scripts/execute_queries.py --backend snowflake --database INDIA_POPULATIO
 # PostgreSQL
 python scripts/validate_queries.py --backend postgres --queries-dir ../gold/sql \
   --database indicdb --schema public
+```
+
+---
+
+
+
+
+---
+
+## Appendix: Pipeline Walkthrough (Toy Example)
+
+This section demonstrates the complete pipeline using a simple 5-column CSV.
+
+### Input: `total_data.csv`
+
+```csv
+Country,State,City,Population,GDP_Billions
+India,Maharashtra,Mumbai,20000000,310
+India,Maharashtra,Pune,5000000,69
+India,Karnataka,Bangalore,12000000,110
+India,Karnataka,Mysore,1200000,15
+India,Tamil Nadu,Chennai,10000000,78
+```
+
+---
+
+### Step 1: LLM Schema Design → `schema_info.md`
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                     create_schema_llm_judge.py                   │
+│                                                                  │
+│  Architect → Auditor → Refiner (3-agent LLM pattern)            │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+```
+
+**Output: `schema_info.md`**
+
+```markdown
+## DIMENSION TABLES
+
+### **DIM_COUNTRY**
+**Purpose:** Country-level geographic dimension
+**Columns (2):**
+- `COUNTRY_ID` (PK, INT)
+- `COUNTRY_NAME` (VARCHAR 100)
+
+### **DIM_STATE**
+**Purpose:** State-level geographic dimension
+**Columns (3):**
+- `STATE_ID` (PK, INT)
+- `STATE_NAME` (VARCHAR 100)
+- `COUNTRY_ID` (FK → DIM_COUNTRY)
+
+## FACT TABLES
+
+### **FACT_CITY_METRICS**
+**Purpose:** City-level population and economic metrics
+**Columns (4):**
+- `METRICS_ID` (PK, BIGINT)
+- `STATE_ID` (FK → DIM_STATE)
+- `CITY_NAME` (VARCHAR 100)
+- `POPULATION` (INT)
+- `GDP_BILLIONS` (DOUBLE PRECISION)
+
+## COLUMN MAPPING
+
+| Original Column | Source Index | Data Type | Mapped To Table | Mapped Column(s) |
+|---|---|---|---|---|
+| Country | 0 | VARCHAR | DIM_COUNTRY | COUNTRY_NAME |
+| State | 1 | VARCHAR | DIM_STATE | STATE_NAME |
+| City | 2 | VARCHAR | FACT_CITY_METRICS | CITY_NAME |
+| Population | 3 | INT | FACT_CITY_METRICS | POPULATION |
+| GDP_Billions | 4 | DOUBLE PRECISION | FACT_CITY_METRICS | GDP_BILLIONS |
+```
+
+---
+
+### Step 2: Parse to YAML → `schema_config.yaml`
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                     parse_schema_to_yaml.py                      │
+│                                                                  │
+│  Extracts table definitions & column mappings from markdown     │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+```
+
+**Output: `schema_config.yaml`**
+
+```yaml
+database_name: INDIA_CITY_ECONOMICS
+source_file: total_data.csv
+
+dimension_tables:
+  DIM_COUNTRY:
+    key_column: COUNTRY_ID
+    dedup_columns: [0]
+    columns:
+      - source_index: 0
+        target_name: COUNTRY_NAME
+
+  DIM_STATE:
+    key_column: STATE_ID
+    dedup_columns: [1]
+    columns:
+      - source_index: 1
+        target_name: STATE_NAME
+    foreign_keys:
+      - column: COUNTRY_ID
+        references: DIM_COUNTRY
+
+fact_tables:
+  FACT_CITY_METRICS:
+    key_column: METRICS_ID
+    foreign_keys:
+      - column: STATE_ID
+        references: DIM_STATE
+    columns:
+      - source_index: 2
+        target_name: CITY_NAME
+      - source_index: 3
+        target_name: POPULATION
+      - source_index: 4
+        target_name: GDP_BILLIONS
+```
+
+---
+
+### Step 3: Split Data → CSVs, JSONs, DDL
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                       generic_split.py                           │
+│                                                                  │
+│  Reads schema_config.yaml + total_data.csv                      │
+│  Outputs: Normalized CSVs, Sample JSONs, DDL.csv                │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+              ┌───────────────┼───────────────┐
+              ▼               ▼               ▼
+```
+
+**Output Files:**
+
+#### `data/DIM_COUNTRY.csv`
+```csv
+COUNTRY_ID,COUNTRY_NAME
+1,India
+```
+
+#### `data/DIM_STATE.csv`
+```csv
+STATE_ID,STATE_NAME,COUNTRY_ID
+1,Maharashtra,1
+2,Karnataka,1
+3,Tamil Nadu,1
+```
+
+#### `data/FACT_CITY_METRICS.csv`
+```csv
+METRICS_ID,STATE_ID,CITY_NAME,POPULATION,GDP_BILLIONS
+1,1,Mumbai,20000000,310
+2,1,Pune,5000000,69
+3,2,Bangalore,12000000,110
+4,2,Mysore,1200000,15
+5,3,Chennai,10000000,78
+```
+
+#### `DIM_COUNTRY.json` (sample for LLM context)
+```json
+[
+  {"COUNTRY_ID": 1, "COUNTRY_NAME": "India"}
+]
+```
+
+#### `DDL.csv`
+```csv
+table_name,ddl
+DIM_COUNTRY,"CREATE TABLE DIM_COUNTRY (COUNTRY_ID INT PRIMARY KEY, COUNTRY_NAME VARCHAR(100))"
+DIM_STATE,"CREATE TABLE DIM_STATE (STATE_ID INT PRIMARY KEY, STATE_NAME VARCHAR(100), COUNTRY_ID INT REFERENCES DIM_COUNTRY(COUNTRY_ID))"
+FACT_CITY_METRICS,"CREATE TABLE FACT_CITY_METRICS (METRICS_ID BIGINT PRIMARY KEY, STATE_ID INT REFERENCES DIM_STATE(STATE_ID), CITY_NAME VARCHAR(100), POPULATION INT, GDP_BILLIONS DOUBLE PRECISION)"
+```
+
+---
+
+### Step 4: Create Tables & Load Data
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                       create_tables.py                           │
+│                                                                  │
+│  Reads DDL.csv → Executes CREATE TABLE statements               │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                        load_data.py                              │
+│                                                                  │
+│  Reads CSVs → INSERTs into PostgreSQL/Snowflake                 │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+```
+
+**Final Database Schema:**
+
+```
+┌──────────────────┐       ┌──────────────────┐       ┌─────────────────────────┐
+│   DIM_COUNTRY    │       │    DIM_STATE     │       │   FACT_CITY_METRICS     │
+├──────────────────┤       ├──────────────────┤       ├─────────────────────────┤
+│ COUNTRY_ID (PK)  │◄──────│ COUNTRY_ID (FK)  │       │ METRICS_ID (PK)         │
+│ COUNTRY_NAME     │       │ STATE_ID (PK)    │◄──────│ STATE_ID (FK)           │
+└──────────────────┘       │ STATE_NAME       │       │ CITY_NAME               │
+                           └──────────────────┘       │ POPULATION              │
+                                                      │ GDP_BILLIONS            │
+                                                      └─────────────────────────┘
+```
+
+**Sample Query (requires JOIN):**
+
+```sql
+-- "What is the total GDP of cities in Maharashtra?"
+SELECT
+    s.STATE_NAME,
+    SUM(f.GDP_BILLIONS) as TOTAL_GDP
+FROM FACT_CITY_METRICS f
+JOIN DIM_STATE s ON f.STATE_ID = s.STATE_ID
+WHERE s.STATE_NAME = 'Maharashtra'
+GROUP BY s.STATE_NAME;
+
+-- Result: Maharashtra | 379
+```
+
+---
+
+### Complete Pipeline Flow
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                            COMPLETE PIPELINE                                 │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+    total_data.csv (5 cols, 5 rows)
+           │
+           ▼
+    ┌──────────────────────────────┐
+    │  create_schema_llm_judge.py  │  ← LLM designs normalized schema
+    └──────────────────────────────┘
+           │
+           ▼
+    schema_info.md (markdown)
+           │
+           ▼
+    ┌──────────────────────────────┐
+    │   parse_schema_to_yaml.py    │  ← Parse to machine-readable format
+    └──────────────────────────────┘
+           │
+           ▼
+    schema_config.yaml
+           │
+           ▼
+    ┌──────────────────────────────┐
+    │      generic_split.py        │  ← Split into normalized tables
+    └──────────────────────────────┘
+           │
+           ├──► data/DIM_COUNTRY.csv      (1 row)
+           ├──► data/DIM_STATE.csv        (3 rows)
+           ├──► data/FACT_CITY_METRICS.csv (5 rows)
+           ├──► *.json                    (sample rows)
+           └──► DDL.csv                   (CREATE statements)
+           │
+           ▼
+    ┌──────────────────────────────┐
+    │      create_tables.py        │  ← Execute DDL
+    └──────────────────────────────┘
+           │
+           ▼
+    ┌──────────────────────────────┐
+    │       load_data.py           │  ← Load CSVs into DB
+    └──────────────────────────────┘
+           │
+           ▼
+    ┌──────────────────────────────┐
+    │     PostgreSQL / Snowflake   │  ← Ready for Text-to-SQL queries!
+    │                              │
+    │  DIM_COUNTRY ◄── DIM_STATE ◄── FACT_CITY_METRICS
+    └──────────────────────────────┘
 ```
 
 ---
