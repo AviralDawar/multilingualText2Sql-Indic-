@@ -315,6 +315,23 @@ python load_data.py --backend postgres --database YOUR_DB --table FACT_METRICS
 
 ---
 
+### Error: Datatype mismatch when loading data
+
+**Error Message:**
+```
+Error inserting into DIM_TIME: invalid input syntax for type integer: "Calendar Year (Jan - Dec), 2013"
+```
+
+**Solution:** Datatype mismatch when loading data into the table, can be fixed in any of the two ways, (1) Update the DDL, to the correct datatype, or (2) Change the data to correct datatype. When updating the DDL, we need to create the schema again.
+
+```bash
+# PostgreSQL
+python run_query.py --backend postgres \
+  --use-database indicdb --use-schema public \
+  --query "DROP SCHEMA IF EXISTS YOUR_SCHEMA CASCADE"
+
+---
+
 ## Available Databases
 
 ### 1. INDIA_POPULATION_CENSUS
