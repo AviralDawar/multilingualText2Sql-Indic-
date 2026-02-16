@@ -750,6 +750,33 @@ indicdb=# select count(*) from india_employment.time_period;
      1
 (1 row)
 
+## Creating a Knowledge File
+
+Generate a `Knowledge_file.md` from an existing `schema_info.md` and `external_knowledge.md` using the 3-step LLM pipeline (generate -> audit -> refine). 
+
+### Run Command
+
+Run from the `scripts/` directory:
+
+```bash
+python3 create_knowledge_file.py ../databases/INDIA_PRIMARY_POPULATION_CENSUS_1991/INDIA_PRIMARY_POPULATION_CENSUS_1991/schema_info.md --reasoning
+```
+
+### What this does
+
+1. Reads:
+   - `schema_info.md` (required)
+   - `external_knowledge.md` (optional, if present in same folder)
+2. Calls OpenRouter with the configured model.
+3. Writes output to:
+   - `../databases/INDIA_PRIMARY_POPULATION_CENSUS_1991/INDIA_PRIMARY_POPULATION_CENSUS_1991/Knowledge_file.md`
+
+### Optional arguments
+
+- `--model <model_name>` to override default model.
+- `--openrouter-key <key>` to pass API key directly instead of env var.
+- `--backend openrouter` (default).
+
 ## License
 
 This project is for research and educational purposes.
