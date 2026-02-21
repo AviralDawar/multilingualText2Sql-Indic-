@@ -19,8 +19,9 @@ A collection of normalized Indian datasets designed for testing complex SQL reas
    - [Step 4: Run Generic Data Splitter](#step-4-run-generic-data-splitter)
    - [Step 5: Create Tables](#step-5-create-tables)
    - [Step 6: Load Data](#step-6-load-data)
-6. [Troubleshooting](#troubleshooting)
-7. [Available Databases](#available-databases)
+6. [Generate SEED Knowledge File](#generate-seed-knowledge-file)
+7. [Troubleshooting](#troubleshooting)
+8. [Available Databases](#available-databases)
 
 ---
 
@@ -776,6 +777,38 @@ python3 create_knowledge_file.py ../databases/INDIA_PRIMARY_POPULATION_CENSUS_19
 - `--model <model_name>` to override default model.
 - `--openrouter-key <key>` to pass API key directly instead of env var.
 - `--backend openrouter` (default).
+
+---
+
+## Generate SEED Knowledge File
+
+Use `scripts/SEED.py` to generate evidence (knowledge) for Text-to-SQL prompts using:
+- PostgreSQL schema + live sampled values
+- Optional few-shot examples from a train evidence file
+
+
+### Example command
+
+```bash
+# Run from root dir
+python3 scripts/SEED.py \
+  --dataset knowledge_files/INDIA_PRIMARY_POPULATION_CENSUS_1991/sample_seed_primary_population_1991.json \
+  --output knowledge_files/INDIA_PRIMARY_POPULATION_CENSUS_1991/sample_seed_primary_population_1991_output.json \
+  --config config/postgres_credential.json \
+  --use-database indicdb \
+  --use-schema india_primary_population_census_1991 \
+  --train-data knowledge_files/train_fewshot_bird_dev_gold_evi.json \
+  --use-embeddings \
+```
+### Useful flags
+- `--top-k`: number of primary few-shot DB samples
+- `--top-n-same-db`: number of few-shot samples from each selected DB
+- `--max-samples-per-column`: number of sampled DB values per schema-value pair
+
+- To not use the sentence transformer, get rid of the use-embeddings flag
+
+---
+
 
 ## License
 
