@@ -1,0 +1,1502 @@
+[
+  {
+    "question": "What is the highest eligible free rate for K-12 students in the schools in Alameda County?",
+    "db_id": "california_schools",
+    "evidence": "Eligible free rate for K-12 = `Free Meal Count (K-12)` / `Enrollment (K-12)`"
+  },
+  {
+    "question": "Please list the lowest three eligible free rates for students aged 5-17 in continuation schools.",
+    "db_id": "california_schools",
+    "evidence": "Eligible free rates for students aged 5-17 = `Free Meal Count (Ages 5-17)` / `Enrollment (Ages 5-17)`"
+  },
+  {
+    "question": "Please list the zip code of all the charter schools in Fresno County Office of Education.",
+    "db_id": "california_schools",
+    "evidence": "Charter schools refers to `Charter School (Y/N)` = 1 in the table fprm"
+  },
+  {
+    "question": "Please list the phone numbers of the direct charter-funded schools that are opened after 2000/1/1.",
+    "db_id": "california_schools",
+    "evidence": "Charter schools refers to `Charter School (Y/N)` = 1 in the frpm"
+  },
+  {
+    "question": "How many schools with an average score in Math greater than 400 in the SAT test are exclusively virtual?",
+    "db_id": "california_schools",
+    "evidence": "Exclusively virtual refers to Virtual = 'F'"
+  },
+  {
+    "question": "Among the schools with the SAT test takers of over 500, please list the schools that are magnet schools or offer a magnet program.",
+    "db_id": "california_schools",
+    "evidence": "Magnet schools or offer a magnet program means that Magnet = 1"
+  },
+  {
+    "question": "Please list the codes of the schools with a total enrollment of over 500.",
+    "db_id": "california_schools",
+    "evidence": "Total enrollment can be represented by `Enrollment (K-12)` + `Enrollment (Ages 5-17)`"
+  },
+  {
+    "question": "Among the schools with an SAT excellence rate of over 0.3, what is the highest eligible free rate for students aged 5-17?",
+    "db_id": "california_schools",
+    "evidence": "Excellence rate = NumGE1500 / NumTstTakr; Eligible free rates for students aged 5-17 = `Free Meal Count (Ages 5-17)` / `Enrollment (Ages 5-17)`"
+  },
+  {
+    "question": "Please list the phone numbers of the schools with the top 3 SAT excellence rate.",
+    "db_id": "california_schools",
+    "evidence": "Excellence rate = NumGE1500 / NumTstTakr"
+  },
+  {
+    "question": "Rank schools by their average score in Writing where the score is greater than 499, showing their charter numbers.",
+    "db_id": "california_schools",
+    "evidence": "Valid charter number means the number is not null"
+  },
+  {
+    "question": "List the names of schools with more than 30 difference in enrollements between K-12 and ages 5-17? Please also give the full street adress of the schools.",
+    "db_id": "california_schools",
+    "evidence": "Diffrence in enrollement = `Enrollment (K-12)` - `Enrollment (Ages 5-17)`"
+  },
+  {
+    "question": "Give the names of the schools with the percent eligible for free meals in K-12 is more than 0.1 and test takers whose test score is greater than or equal to 1500?",
+    "db_id": "california_schools",
+    "evidence": "Percent eligible for free meals = Free Meal Count (K-12) / Total (Enrollment (K-12)"
+  },
+  {
+    "question": "Name schools in Riverside which the average of average math score for SAT is grater than 400, what is the funding type of these schools?",
+    "db_id": "california_schools",
+    "evidence": "Average of average math = sum(average math scores) / count(schools)."
+  },
+  {
+    "question": "State the names and full communication address of high schools in Monterey which has more than 800 free or reduced price meals for ages 15-17?",
+    "db_id": "california_schools",
+    "evidence": "Full communication address should include Street, City, State and zip code if any."
+  },
+  {
+    "question": "What is the average score in writing for the schools that were opened after 1991 or closed before 2000? List the school names along with the score. Also, list the communication number of the schools if there is any.",
+    "db_id": "california_schools",
+    "evidence": "Communication number refers to phone number."
+  },
+  {
+    "question": "Consider the average difference between K-12 enrollment and 15-17 enrollment of schools that are locally funded, list the names and DOC type of schools which has a difference above this average.",
+    "db_id": "california_schools",
+    "evidence": "Difference between K-12 enrollment and 15-17 enrollment can be computed by `Enrollment (K-12)` - `Enrollment (Ages 5-17)`"
+  },
+  {
+    "question": "When did the first-through-twelfth-grade school with the largest enrollment open?",
+    "db_id": "california_schools",
+    "evidence": "K-12 means First-through-twelfth-grade"
+  },
+  {
+    "question": "Which cities have the top 5 lowest enrollment number for students in grades 1 through 12?",
+    "db_id": "california_schools",
+    "evidence": "K-12 refers to students in grades 1 through 12."
+  },
+  {
+    "question": "What is the eligible free rate of the 10th and 11th schools with the highest enrolment for students in grades 1 through 12?",
+    "db_id": "california_schools",
+    "evidence": "K-12 refers to students in grades 1 through 12; Eligible free rate for K-12 = `Free Meal Count (K-12)` / `Enrollment (K-12)`"
+  },
+  {
+    "question": "What is the eligible free or reduced price meal rate for the top 5 schools in grades 1-12 with the highest free or reduced price meal count of the schools with the ownership code 66?",
+    "db_id": "california_schools",
+    "evidence": "grades 1-12 means K-12; Eligible free or reduced price meal rate for K-12 = `FRPM Count (K-12)` / `Enrollment (K-12)`"
+  },
+  {
+    "question": "What is the free rate for students between the ages of 5 and 17 at the school run by Kacey Gibson?",
+    "db_id": "california_schools",
+    "evidence": "Eligible free rates for students aged 5-17 = `Free Meal Count (Ages 5-17)` / `Enrollment (Ages 5-17)`"
+  },
+  {
+    "question": "What is the administrator's email address of the chartered school with the fewest students enrolled in grades 1 through 12?",
+    "db_id": "california_schools",
+    "evidence": "Charted school means `Charter School (Y/N)` = 1 in the table frpm; Students enrolled in grades 1 through 12 refers to `Enrollment (K-12)`"
+  },
+  {
+    "question": "Under whose administration is the school with the highest number of students scoring 1500 or more on the SAT? Indicate their full names.",
+    "db_id": "california_schools",
+    "evidence": "full name means first name, last name; There are at most 3 administrators for each school; SAT Scores are greater or equal to 1500 refers to NumGE1500"
+  },
+  {
+    "question": "What is the complete address of the school with the lowest excellence rate? Indicate the Street, City, Zip and State.",
+    "db_id": "california_schools",
+    "evidence": "Execellence Rate = NumGE1500 / NumTstTakr; complete address has Street, City, State, Zip code"
+  },
+  {
+    "question": "What is the average number of test takers from Fresno schools that opened between 1/1/1980 and 12/31/1980?",
+    "db_id": "california_schools",
+    "evidence": "between 1/1/1980 and 12/31/1980 means the year = 1980"
+  },
+  {
+    "question": "What is the telephone number for the school with the lowest average score in reading in Fresno Unified?",
+    "db_id": "california_schools",
+    "evidence": "Fresno Unified is a name of district;"
+  },
+  {
+    "question": "List the names of virtual schools that are among the top 5 in their respective counties based on average reading scores.",
+    "db_id": "california_schools",
+    "evidence": "Exclusively virtual refers to Virtual = 'F'; respective counties means PARTITION BY County"
+  },
+  {
+    "question": "What is the average math score of the school with the lowest average score for all subjects, and in which county is it located?",
+    "db_id": "california_schools",
+    "evidence": "Average score for all subjects can be computed by AvgScrMath + AvgScrRead + AvgScrWrite"
+  },
+  {
+    "question": "What is the average writing score of each of the schools managed by Ricci Ulrich? List the schools and the corresponding average writing scores.",
+    "db_id": "california_schools",
+    "evidence": "Usually, administrators manage the school stuff."
+  },
+  {
+    "question": "Which state special schools have the highest number of enrollees from grades 1 through 12?",
+    "db_id": "california_schools",
+    "evidence": "State Special Schools refers to DOC = 31; Grades 1 through 12 means K-12"
+  },
+  {
+    "question": "What is the monthly average number of schools that opened in Alameda County under the jurisdiction of the Elementary School District in 1980?",
+    "db_id": "california_schools",
+    "evidence": "Elementary School District refers to DOC = 52; Monthly average number of schools that opened in 1980 = count(schools that opened in 1980) / 12"
+  },
+  {
+    "question": "What is the ratio of merged Unified School District schools in Orange County to merged Elementary School District schools?",
+    "db_id": "california_schools",
+    "evidence": "Elementary School District refers to DOC = 52; Unified School District refers to DOC = 54."
+  },
+  {
+    "question": "Which different county has the most number of closed schools? Please provide the name of each school as well as the closure date.",
+    "db_id": "california_schools",
+    "evidence": "Closure date and closed date are synonyms; 'Closed' was mentioned in schools.StatusType."
+  },
+  {
+    "question": "What is the postal street address for the school with the 7th highest Math average? Indicate the school's name.",
+    "db_id": "california_schools",
+    "evidence": "Postal street and mailing street are synonyms."
+  },
+  {
+    "question": "What is the total number of schools whose total SAT scores are greater or equal to 1500 whose mailing city is Lakeport?",
+    "db_id": "california_schools",
+    "evidence": "Total SAT scores can be computed by AvgScrRead + AvgScrMath + AvgScrWrite"
+  },
+  {
+    "question": "Of the schools with a mailing state address in California, what is the ratio of the schools located in the county of Colusa against the school located in the county of Humboldt?",
+    "db_id": "california_schools",
+    "evidence": "Ratio = count(schools in Colusa) / count(schools in Humboldt)"
+  },
+  {
+    "question": "What are the websites for all the partially virtual chartered schools located in San Joaquin?",
+    "db_id": "california_schools",
+    "evidence": "Virtual = 'P' means partially virtual; Charter schools refers to Charter = 1 in the table schools"
+  },
+  {
+    "question": "How many chartered schools located in the city of Hickman are owned by the Elementary School District?",
+    "db_id": "california_schools",
+    "evidence": "Elementary School District refers to DOC = 52; Chartered schools refer to Charter = 1 in the table schools"
+  },
+  {
+    "question": "What is the total number of non-chartered schools in the county of Los Angeles with a percent (%) of eligible free meals for grades 1 through 12 that is less than 0.18%?",
+    "db_id": "california_schools",
+    "evidence": "non-chartered schools refer to schools whose Charter = 0; K-12 means grades 1 through 12; percent of eligible free rate for K-12 = `Free Meal Count (K-12)` * 100 / `Enrollment (K-12)`"
+  },
+  {
+    "question": "In chartered schools with charter number 00D2, what are the names of all the administrators? Include the name of the school and the city to which it belongs",
+    "db_id": "california_schools",
+    "evidence": "Chartered schools refer to Charter = 1 in the table schools; Full name refers to first name, last name"
+  },
+  {
+    "question": "What is the ratio in percentage of Santa Clara County schools that are locally funded compared to all other types of charter school funding?",
+    "db_id": "california_schools",
+    "evidence": "Ratio in percentage = (count(locally funded schools in Santa Clara) / count(all funding type schools in Santa Clara) * 100%"
+  },
+  {
+    "question": "Between 1/1/2000 to 12/31/2005, how many directly funded schools opened in the county of Stanislaus?",
+    "db_id": "california_schools",
+    "evidence": "Directly funded schools refers to FundingType = 'Directly Funded'"
+  },
+  {
+    "question": "Which county reported the most number of school closure in the 1980s with school wonership code belonging to Youth Authority Facilities (CEA)?",
+    "db_id": "california_schools",
+    "evidence": "Youth Authority Facilities (CEA) refers to SOC = 11; 1980s = years between 1980 and 1989"
+  },
+  {
+    "question": "Please provide the National Center for Educational Statistics school district identification number for all schools with a School Ownership Code that are part of the State Special Schools.",
+    "db_id": "california_schools",
+    "evidence": "State Special Schools means that SOC = 31."
+  },
+  {
+    "question": "What is the district code for the School that does not offer a magnet program in the city of Fresno?",
+    "db_id": "california_schools",
+    "evidence": "When magent is equal to 0 in the database, it means ths school doesn't offer a magnet program."
+  },
+  {
+    "question": "How many students from the ages of 5 to 17 are enrolled at the State Special School school in Fremont for the 2014-2015 academic year?",
+    "db_id": "california_schools",
+    "evidence": "State Special School means EdOpsCode = 'SSS'"
+  },
+  {
+    "question": "What is the lowest grade for the District Special Education Consortia School with National Center for Educational Statistics school district identification number of 0613360?",
+    "db_id": "california_schools",
+    "evidence": "District Special Education Consortia School refers to EdOpsCode = 'SPECON'."
+  },
+  {
+    "question": "What is the city location of the high school level school with Lunch Provision 2 whose lowest grade is 9 and the highest grade is 12 in the county of Merced?",
+    "db_id": "california_schools",
+    "evidence": "High school can be represented as EILCode = 'HS'"
+  },
+  {
+    "question": "Which schools served a grade span of Kindergarten to 9th grade in the county of Los Angeles and what is its Percent (%) Eligible FRPM (Ages 5-17)?",
+    "db_id": "california_schools",
+    "evidence": "Percent (%) Eligible FRPM (Ages 5-17) can be acquired by `FRPM Count (Ages 5-17)` / `Enrollment (Ages 5-17)` * 100"
+  },
+  {
+    "question": "Between San Diego and Santa Barbara, which county offers the most number of schools that does not offer physical building? Indicate the amount.",
+    "db_id": "california_schools",
+    "evidence": "'Does not offer physical building' means Virtual = F in the database."
+  },
+  {
+    "question": "In which city can you find the school in the state of California with the lowest latitude coordinates and what is its lowest grade? Indicate the school name.",
+    "db_id": "california_schools",
+    "evidence": "State of California refers to state = 'CA'"
+  },
+  {
+    "question": "What is the grade span offered in the school with the highest longitude?",
+    "db_id": "california_schools",
+    "evidence": "the highest longitude refers to the school with the maximum absolute longitude value."
+  },
+  {
+    "question": "Of the schools that offers a magnet program serving a grade span of Kindergarten to 8th grade, how many offers Multiple Provision Types? List the number of cities that offers a Kindergarten to 8th grade span and indicate how many schools are there serving such grade span for each city.",
+    "db_id": "california_schools",
+    "evidence": "Kindergarten to 8th grade refers to K-8; 'Offers a magnet program' means Magnet = 1; Multiple Provision Types refers to `NSLP Provision Status` = 'Multiple Provision Types'"
+  },
+  {
+    "question": "What is the Percent (%) Eligible Free (K-12) in the school administered by an administrator whose first name is Alusine. List the district code of the school.",
+    "db_id": "california_schools",
+    "evidence": "Percent (%) Eligible Free (K-12) = `Free Meal Count (K-12)` / `Enrollment (K-12)` * 100%"
+  },
+  {
+    "question": "What are the valid e-mail addresses of the administrator of the school located in the San Bernardino county, City of San Bernardino City Unified that opened between 1/1/2009 to 12/31/2010 whose school types are public Intermediate/Middle Schools and Unified Schools?",
+    "db_id": "california_schools",
+    "evidence": "Intermediate/Middle Schools refers to SOC = 62; Unified School refers to DOC = 54; years between 2009 and 2010 can refer to 'between 1/1/2009 to 12/31/2010'"
+  },
+  {
+    "question": "How many accounts who choose issuance after transaction are staying in East Bohemia region?",
+    "db_id": "financial",
+    "evidence": "A3 contains the data of region; 'POPLATEK PO OBRATU' represents for 'issuance after transaction'."
+  },
+  {
+    "question": "How many accounts who have region in Prague are eligible for loans?",
+    "db_id": "financial",
+    "evidence": "A3 contains the data of region"
+  },
+  {
+    "question": "The average unemployment ratio of 1995 and 1996, which one has higher percentage?",
+    "db_id": "financial",
+    "evidence": "A12 refers to unemploymant rate 1995; A13 refers to unemploymant rate 1996"
+  },
+  {
+    "question": "List out the no. of districts that have female average salary is more than 6000 but less than 10000?",
+    "db_id": "financial",
+    "evidence": "A11 refers to average salary; Female mapps to gender = 'F'"
+  },
+  {
+    "question": "How many male customers who are living in North Bohemia have average salary greater than 8000?",
+    "db_id": "financial",
+    "evidence": "Male means that gender = 'M'; A3 refers to region; A11 pertains to average salary."
+  },
+  {
+    "question": "List out the account numbers of female clients who are oldest and has lowest average salary, calculate the gap between this lowest average salary with the highest average salary?",
+    "db_id": "financial",
+    "evidence": "Female means gender = 'F'; A11 refers to average salary; Gap = highest average salary - lowest average salary; If the person A's birthdate > B's birthdate, it means that person B is order than person A."
+  },
+  {
+    "question": "List out the account numbers of clients who are youngest and have highest average salary?",
+    "db_id": "financial",
+    "evidence": "If the person A's birthdate < B's birthdate, it means that person B is younger than person A; A11 refers to average salary"
+  },
+  {
+    "question": "How many customers who choose statement of weekly issuance are Owner?",
+    "db_id": "financial",
+    "evidence": "'POPLATEK TYDNE' stands for weekly issuance"
+  },
+  {
+    "question": "List out the id number of client who choose statement of issuance after transaction are Disponent?",
+    "db_id": "financial",
+    "evidence": "'POPLATEK PO OBRATU' stands for issuance after transaction"
+  },
+  {
+    "question": "Among the accounts who have approved loan date in 1997, list out the accounts that have the lowest approved amount and choose weekly issuance statement.",
+    "db_id": "financial",
+    "evidence": "'POPLATEK TYDNE' stands for weekly issuance"
+  },
+  {
+    "question": "Among the accounts who have loan validity more than 12 months, list out the accounts that have the highest approved amount and have account opening date in 1993.",
+    "db_id": "financial",
+    "evidence": "Loan validity more than 12 months refers to duration > 12"
+  },
+  {
+    "question": "Among the account opened, how many female customers who were born before 1950 and stayed in Sokolov?",
+    "db_id": "financial",
+    "evidence": "Customers refer to clients; Female refers to gender = 'F'; Names of districts appear in column A2"
+  },
+  {
+    "question": "What is the gender of the oldest client who opened his/her account in the highest average salary branch?",
+    "db_id": "financial",
+    "evidence": "Earlier birthdate refers to older age; A11 refers to average salary"
+  },
+  {
+    "question": "How many clients opened their accounts in Jesenik branch were women?",
+    "db_id": "financial",
+    "evidence": "A2 has region names; Woman and female share the same meaning; female refers to gender = 'F'"
+  },
+  {
+    "question": "How many accounts were opened in Litomerice in 1996?",
+    "db_id": "financial",
+    "evidence": "A2 refers to district name; Litomerice is one of district names."
+  },
+  {
+    "question": "For the female client who was born in 1976/1/29, which district did she opened her account?",
+    "db_id": "financial",
+    "evidence": "Female refers to gender = 'F'; A2 refers to district names"
+  },
+  {
+    "question": "For the first client who opened his/her account in Prague, what is his/her account ID?",
+    "db_id": "financial",
+    "evidence": "A3 stands for region names"
+  },
+  {
+    "question": "For the branch which located in the south Bohemia with biggest number of inhabitants, what is the percentage of the male clients?",
+    "db_id": "financial",
+    "evidence": "Percentage of the male clients = DIVIDE(COUNT(male clients), COUNT(clients)) * 100; Male refers to gender = 'M', A3 is the region name. A4 contains the information about inhabitants."
+  },
+  {
+    "question": "For the client whose loan was approved first in 1993/7/5, what is the increase rate of his/her account balance from 1993/3/22 to 1998/12/27?",
+    "db_id": "financial",
+    "evidence": "Increase rate of his/her account balance = [(balance of date A - balance of date B) / balance of Date B] * 100%"
+  },
+  {
+    "question": "What is the percentage of loan amount that has been fully paid with no issue.",
+    "db_id": "financial",
+    "evidence": "Loan paid with no issue means contract finished, no problems; status = 'A' means contract finished, no problems; Percentage of accounts by condition = [(total(amount) & condition) / (total amount)] * 100%"
+  },
+  {
+    "question": "For loan amount less than USD100,000, what is the percentage of accounts that is still running with no issue.",
+    "db_id": "financial",
+    "evidence": "Status = 'C' stands for running contract, ok so far; Percentage of accounts by condition = [(total(amount) & condition) / (total amount)] * 100."
+  },
+  {
+    "question": "For accounts in 1993 with statement issued after transaction, list the account ID, district name and district region.",
+    "db_id": "financial",
+    "evidence": "Records about district names could be found in A2; A3 contains the information about regions. 'POPLATEK PO OBRATU' stands for issuance after transaction"
+  },
+  {
+    "question": "From Year 1995 to 2000, who are the accounts holders from 'east Bohemia'. State the account ID the frequency of statement issuance.",
+    "db_id": "financial",
+    "evidence": "Accounts holder refers to the person who own this account."
+  },
+  {
+    "question": "List account ID and account opening date for accounts from 'Prachatice'.",
+    "db_id": "financial",
+    "evidence": "A2 refers to the names of districts."
+  },
+  {
+    "question": "State the district and region for loan ID '4990'.",
+    "db_id": "financial",
+    "evidence": "A2, A3 contains the information about district and region respectively."
+  },
+  {
+    "question": "Provide the account ID, district and region for loan amount greater than USD300,000.",
+    "db_id": "financial",
+    "evidence": "A2 contains district names and A3 contains region names."
+  },
+  {
+    "question": "List the loan ID, district and average salary for loan with duration of 60 months.",
+    "db_id": "financial",
+    "evidence": "A3 refers to regions; A11 refers to average salary"
+  },
+  {
+    "question": "For loans contracts which are still running where client are in debt, list the district of the and the state the percentage unemployment rate increment from year 1995 to 1996.",
+    "db_id": "financial",
+    "evidence": "Unemployment increment rate in percentage = [(unemployment rate 2016 - unemployment rate 2015) / unemployment rate 2015] * 100; unemployment rate 2015 appears in the A12; unemployment rate 2016 appears in the A13; Loan contracts which are still running where client are in debt can be presented as status = 'D'"
+  },
+  {
+    "question": "Calculate the percentage of account from 'Decin' district for all accounts are opened in 1993.",
+    "db_id": "financial",
+    "evidence": "A2 contains the information about district."
+  },
+  {
+    "question": "List the account IDs with monthly issuance of statements.",
+    "db_id": "financial",
+    "evidence": "'POPLATEK MESICNE' stands for monthly issuance"
+  },
+  {
+    "question": "List the top nine districts, by descending order, from the highest to the lowest, the number of female account holders.",
+    "db_id": "financial",
+    "evidence": "A2 refers to districts; Female refers to gender = 'F'"
+  },
+  {
+    "question": "Which are the top ten withdrawals (non-credit card) by district names for the month of January 1996?",
+    "db_id": "financial",
+    "evidence": "Non-credit card withdraws refers to type = 'VYDAJ'; January 1996 can be found by date LIKE '1996-01%' in the database; A2 means district names"
+  },
+  {
+    "question": "How many of the account holders in South Bohemia still do not own credit cards?",
+    "db_id": "financial",
+    "evidence": "A3 contains the region names; South Bohemia is one of region names."
+  },
+  {
+    "question": "Which district has highest active loan?",
+    "db_id": "financial",
+    "evidence": "A3 refers to district names; Active loan refers to running contracts; Status = 'C' stands for running contract, OK so far; Status = 'D' stands for running contract, client in debt"
+  },
+  {
+    "question": "What is the average loan amount by male borrowers?",
+    "db_id": "financial",
+    "evidence": "Male refers to gender = 'M'"
+  },
+  {
+    "question": "In 1996, which districts have the highest unemployment rate? List their branch location and district name.",
+    "db_id": "financial",
+    "evidence": "A2 refers to district names; A13 refers to unemploymant rate in 1996"
+  },
+  {
+    "question": "In the branch where the largest number of crimes were committed in 1996, how many accounts were opened?",
+    "db_id": "financial",
+    "evidence": "A16 stands for no. of committed crimes 1996"
+  },
+  {
+    "question": "After making a credit card withdrawal, how many account/s with monthly issuance has a negative balance?",
+    "db_id": "financial",
+    "evidence": "Negative balance means balance < 0; Operation = 'VYBER KARTOU' stands for credit card withdraw. Frequency = 'POPLATEK MESICNE' stands for monthly issurance"
+  },
+  {
+    "question": "Between 1/1/1995 and 12/31/1997, how many loans in the amount of at least 250,000 per account that chose monthly statement issuance were approved?",
+    "db_id": "financial",
+    "evidence": "Frequency = 'POPLATEK MESICNE' stands for monthly issurance"
+  },
+  {
+    "question": "How many accounts have running contracts in Branch location 1?",
+    "db_id": "financial",
+    "evidence": "Status = 'C' stands for running contract, OK so far; Status = 'D' stands for running contract, client in debt"
+  },
+  {
+    "question": "In the branch where the second-highest number of crimes were committed in 1995 occurred, how many male clients are there?",
+    "db_id": "financial",
+    "evidence": "Male refers to gender = 'M'; A15 stands for no. of commited crimes 1995"
+  },
+  {
+    "question": "How many high-level credit cards have \"OWNER\" type of disposition?",
+    "db_id": "financial",
+    "evidence": "High-level credit cards refers to the cards with the gold type."
+  },
+  {
+    "question": "How many accounts are there in the district of \"Pisek\"?",
+    "db_id": "financial",
+    "evidence": "A2 refers to district name"
+  },
+  {
+    "question": "Which accounts placed orders for household payment in Pisek?",
+    "db_id": "financial",
+    "evidence": "k_symbol = 'SIPO' refers to household payment"
+  },
+  {
+    "question": "How much is the average amount in credit card made by account holders in a month, in year 2021?",
+    "db_id": "financial",
+    "evidence": "Operation = 'VYBER KARTOU' refers to credit card withdrawn"
+  },
+  {
+    "question": "Who are the account holder identification numbers whose who have transactions on the credit card with the amount is less than the average, in 1998?",
+    "db_id": "financial",
+    "evidence": "Operation = 'VYBER KARTOU' refers to credit card withdrawal"
+  },
+  {
+    "question": "Who are the female account holders who own credit cards and also have loans?",
+    "db_id": "financial",
+    "evidence": "Female refers to gender = 'F'"
+  },
+  {
+    "question": "How many female clients' accounts are in the region of South Bohemia?",
+    "db_id": "financial",
+    "evidence": "Female refers to gender = 'F'; A3 contains the region 'south Bohemia'"
+  },
+  {
+    "question": "Please list the accounts whose district is Tabor that are eligible for loans.",
+    "db_id": "financial",
+    "evidence": "District refers to column A2; when the account type = 'OWNER', it's eligible for loans"
+  },
+  {
+    "question": "Please list the account types that are not eligible for loans, and the average income of residents in the district where the account is located exceeds $8000 but is no more than $9000.",
+    "db_id": "financial",
+    "evidence": "A11 represents the average salary; Salary and income share the similar meanings; when the account type = 'OWNER', it's eligible for loans"
+  },
+  {
+    "question": "How many accounts in North Bohemia has made a transaction with the partner's bank being AB?",
+    "db_id": "financial",
+    "evidence": "A3 contains the region names; North Bohemia is a region."
+  },
+  {
+    "question": "Please list the name of the districts with accounts that made withdrawal transactions.",
+    "db_id": "financial",
+    "evidence": "A2 refers to district name; type = 'VYDAJ' stands for withdrawal transactions"
+  },
+  {
+    "question": "What is the average number of crimes committed in 1995 in regions where the number exceeds 4000 and the region has accounts that are opened starting from the year 1997?",
+    "db_id": "financial",
+    "evidence": "A3 refers to region names; A15 stands for the average number of crimes commited in 1995."
+  },
+  {
+    "question": "How many 'classic' cards are eligible for loan?",
+    "db_id": "financial",
+    "evidence": "when the account type = 'OWNER', it's eligible for loan"
+  },
+  {
+    "question": "How many male clients in 'Hl.m. Praha' district?",
+    "db_id": "financial",
+    "evidence": "District data appears in the A2; Male means that gender = 'M'"
+  },
+  {
+    "question": "How many percent of 'Gold' cards were issued prior to 1998?",
+    "db_id": "financial",
+    "evidence": "Percent of Gold = [ count(type = 'gold' and issued date < 1998) / count(all cards)] * 100%"
+  },
+  {
+    "question": "What is the number of committed crimes in 1995 in the district of the account with the id 532?",
+    "db_id": "financial",
+    "evidence": "A15 contains information about number of committed crimes in 1995"
+  },
+  {
+    "question": "List all the withdrawals in cash transactions that the client with the id 3356 makes.",
+    "db_id": "financial",
+    "evidence": "operation = 'VYBER' refers to withdrawal in cash"
+  },
+  {
+    "question": "Among the weekly issuance accounts, how many have a loan of under 200000?",
+    "db_id": "financial",
+    "evidence": "frequency = 'POPLATEK TYDNE' stands for weekly issuance"
+  },
+  {
+    "question": "What is the region of the client with the id 3541 from?",
+    "db_id": "financial",
+    "evidence": "A3 refers to region"
+  },
+  {
+    "question": "Which district has the most accounts with loan contracts finished with no problems?",
+    "db_id": "financial",
+    "evidence": "status = 'A' refers to loan contracts finished with no problems"
+  },
+  {
+    "question": "List all the clients' IDs whose junior credit cards were issued after 1996.",
+    "db_id": "financial",
+    "evidence": "After 1996 means date > = '1997-01-01"
+  },
+  {
+    "question": "What percentage of clients who opened their accounts in the district with an average salary of over 10000 are women?",
+    "db_id": "financial",
+    "evidence": "Female refers to gender = 'F'; Woman and female are closed; Average salary can be found in A11"
+  },
+  {
+    "question": "What was the growth rate of the total amount of loans across all accounts for a male client between 1996 and 1997?",
+    "db_id": "financial",
+    "evidence": "Growth rate = (sum of amount_1997 - sum of amount_1996) / (sum of amount_1996) * 100%; Male refers to gender = 'M'"
+  },
+  {
+    "question": "How many credit card withdrawals were recorded after 1995?",
+    "db_id": "financial",
+    "evidence": "Operation = 'VYBER KARTOU' means credit card withdrawals"
+  },
+  {
+    "question": "What was the difference in the number of crimes committed in East and North Bohemia in 1996?",
+    "db_id": "financial",
+    "evidence": "Difference in no. of committed crimes between 2 regions = Total no. of committed crimes in 1996 in north Bohemia - Total no. of committed crimes in 1996 in e ast Bohemia. A3 refers to region. Data about no. of committed crimes 1996 appears in A16"
+  },
+  {
+    "question": "How often does account number 3 request an account statement to be released? What was the aim of debiting 3539 in total?",
+    "db_id": "financial",
+    "evidence": "k_symbol refers to the purpose of payments"
+  },
+  {
+    "question": "How many accounts have an owner disposition and request for a statement to be generated upon a transaction?",
+    "db_id": "financial",
+    "evidence": "Frequency = 'POPLATEK PO OBRATU' stands for issuance after transaction"
+  },
+  {
+    "question": "Please provide the IDs of the 3 female clients with the largest loans.",
+    "db_id": "financial",
+    "evidence": "Female refers to gender = 'F'"
+  },
+  {
+    "question": "How many male customers who were born between 1974 and 1976 have made a payment on their home in excess of $4000?",
+    "db_id": "financial",
+    "evidence": "Man and male refers to gender = 'M'; 'SIPO' stands for household payment"
+  },
+  {
+    "question": "How many female customers have a junior credit card?",
+    "db_id": "financial",
+    "evidence": "Female refers to gender = 'F'"
+  },
+  {
+    "question": "What proportion of customers who have accounts at the Prague branch are female?",
+    "db_id": "financial",
+    "evidence": "Female refers to gender = 'F'; Percentage of female clients in Prague branch = count[female clients with accounts in Prague branch / count(clients with accounts in Prague branch)] * 100%; A3 may contain information about Prague"
+  },
+  {
+    "question": "What percentage of male clients request for weekly statements to be issued?",
+    "db_id": "financial",
+    "evidence": "Percentage of male clients = [count(male clients who requested weekly statements / count(clients who requested weekly statements)] * 100%; Male means gender = 'M'; 'POPLATEK TYDNE' stands for weekly issuance"
+  },
+  {
+    "question": "How many clients who choose statement of weekly issuance are Owner?",
+    "db_id": "financial",
+    "evidence": "Frequency = 'POPLATEK TYDNE' refers to weekly issuance"
+  },
+  {
+    "question": "Name the account numbers of female clients who are oldest and have lowest average salary?",
+    "db_id": "financial",
+    "evidence": "Female refers to 'F' in the gender; A11 contains information about average salary"
+  },
+  {
+    "question": "How many clients who were born in 1920 stay in east Bohemia?",
+    "db_id": "financial",
+    "evidence": "East Bohemia appears in the column A3, which refers to the region."
+  },
+  {
+    "question": "How many loan accounts are for pre-payment of duration of 24 months with weekly issuance of statement.",
+    "db_id": "financial",
+    "evidence": "Frequency = 'POPLATEK TYDNE' referes to weekly statement"
+  },
+  {
+    "question": "What is the average amount of loan which are still on running contract with statement issuance after each transaction?",
+    "db_id": "financial",
+    "evidence": "status = 'C' stands for running contract, OK so far; status = 'D' stands for running contract, client in debt. 'POPLATEK PO OBRATU' stands for issuance after transaction"
+  },
+  {
+    "question": "List all ID and district for clients that can only have the right to issue permanent orders or apply for loans.",
+    "db_id": "financial",
+    "evidence": "Only the owner accounts have the right to issue permanent orders or apply for loans"
+  },
+  {
+    "question": "Provide the IDs and age of the client with high level credit card, which is eligible for loans.",
+    "db_id": "financial",
+    "evidence": "the credit card is high-level refers to card.type = 'gold'; eligible for loans refers to disp.type = 'OWNER'"
+  },
+  {
+    "question": "What is the most common bond type?",
+    "db_id": "toxicology",
+    "evidence": "most common bond type refers MAX(COUNT(bond_type))"
+  },
+  {
+    "question": "In the non-carcinogenic molecules, how many contain chlorine atoms?",
+    "db_id": "toxicology",
+    "evidence": "non-carcinogenic molecules refers to label = '-'; chlorine atoms refers to element = 'cl'"
+  },
+  {
+    "question": "Calculate the average number of oxygen atoms in single-bonded molecules.",
+    "db_id": "toxicology",
+    "evidence": "single-bonded molecules refers to bond_type = '-' ; average number of oxygen atom = AVG(element = 'o')"
+  },
+  {
+    "question": "On average how many carcinogenic molecules are single bonded?",
+    "db_id": "toxicology",
+    "evidence": "carcinogenic molecules refers to label = '+'; single-bonded refers to bond_type = '-'; average = DIVIDE(SUM(bond_type = '-'), COUNT(atom_id))"
+  },
+  {
+    "question": "In the molecule containing sodium atoms, how many are non-carcinogenic?",
+    "db_id": "toxicology",
+    "evidence": "non-carcinogenic refers to label = '-'; sodium atoms refers to element = 'na'"
+  },
+  {
+    "question": "Find the triple-bonded molecules which are carcinogenic.",
+    "db_id": "toxicology",
+    "evidence": "triple-bonded molecules refers to bond_type = '#'; carcinogenic refers to label = '+'"
+  },
+  {
+    "question": "What is the percentage of carbon in double-bond molecules?",
+    "db_id": "toxicology",
+    "evidence": "carbon refers to element = 'c'; double-bond molecules refers to bond_type = '='; percentage = DIVIDE(SUM(element = 'c'), COUNT(atom_id))"
+  },
+  {
+    "question": "How many triple type bonds are there?",
+    "db_id": "toxicology",
+    "evidence": "triple type bonds refers to bond_type = '#'"
+  },
+  {
+    "question": "In how many atoms is there no bromine?",
+    "db_id": "toxicology",
+    "evidence": "atoms with no bromine refers to element ! = 'br'"
+  },
+  {
+    "question": "Of the first 100 molecules in number order, how many are carcinogenic?",
+    "db_id": "toxicology",
+    "evidence": "first 100 molecules in number order refers to molecule_id between 'TR000' and 'TR099'; label = '+' means molecules are carcinogenic"
+  },
+  {
+    "question": "Identify by their ID the molecules in which there is carbon.",
+    "db_id": "toxicology",
+    "evidence": "carbon refers to element = 'c';"
+  },
+  {
+    "question": "What elements are in the TR004_8_9 bond atoms?",
+    "db_id": "toxicology",
+    "evidence": "TR004_8_9 bond atoms refers to bond_id = 'TR004_8_9';"
+  },
+  {
+    "question": "What elements are in a double type bond?",
+    "db_id": "toxicology",
+    "evidence": "double type bond refers to bond_type = '=';"
+  },
+  {
+    "question": "Which type of label is the most numerous in atoms with hydrogen?",
+    "db_id": "toxicology",
+    "evidence": "with hydrogen refers to element = 'h'; label most numerous in atoms refers to MAX(COUNT(label));"
+  },
+  {
+    "question": "Chlorine is in what type of bond?",
+    "db_id": "toxicology",
+    "evidence": "type of bond refers to bond_type; chlorine refers to element = 'cl'"
+  },
+  {
+    "question": "What atoms are connected in single type bonds?",
+    "db_id": "toxicology",
+    "evidence": "single type bond refers to bond_type = '-';"
+  },
+  {
+    "question": "Indicate which atoms are connected in non-carcinogenic type molecules.",
+    "db_id": "toxicology",
+    "evidence": "label = '-' means molecules are non-carcinogenic"
+  },
+  {
+    "question": "Which element is the least numerous in non-carcinogenic molecules?",
+    "db_id": "toxicology",
+    "evidence": "label = '-' means molecules are non-carcinogenic; least numerous refers to MIN(COUNT(element));"
+  },
+  {
+    "question": "What type of bond is there between the atoms TR004_8 and TR004_20?",
+    "db_id": "toxicology",
+    "evidence": "type of bond refers to bond_type; between the atoms TR004_8 and TR004_20 refers to atom_id = 'TR004_8' AND atom_id2 = 'TR004_20' OR another way around"
+  },
+  {
+    "question": "What type of label is not on molecules with atoms with tin?",
+    "db_id": "toxicology",
+    "evidence": "tin refers to element ! = 'sn'; label = '+' mean molecules are carcinogenic; label = '-' means molecules are non-carcinogenic"
+  },
+  {
+    "question": "How many atoms with iodine and with sulfur type elements are there in single bond molecules?",
+    "db_id": "toxicology",
+    "evidence": "with iodine element refer to element = 'i'; with sulfur element refers to element = 's'; single type bond refers to bond_type = '-'; Should consider the distinct atoms when counting;"
+  },
+  {
+    "question": "Identify all connected atoms with a triple bond.",
+    "db_id": "toxicology",
+    "evidence": "triple bond refers to bond_type = '#';"
+  },
+  {
+    "question": "Identify all the atoms that are connected to the atoms of the TR181 molecule.",
+    "db_id": "toxicology",
+    "evidence": "TR181 molecule refers to molecule_id = 'TR181'"
+  },
+  {
+    "question": "What percentage of carcinogenic-type molecules does not contain fluorine?",
+    "db_id": "toxicology",
+    "evidence": "label = '+' mean molecules are carcinogenic; contain fluorine refers to element = 'f'; percentage = DIVIDE(SUM(element = 'f') * 100, COUNT(molecule_id)) where label = '+'; Should consider the distinct atoms when counting;"
+  },
+  {
+    "question": "What is the percentage of carcinogenic molecules in triple type bonds?",
+    "db_id": "toxicology",
+    "evidence": "label = '+' mean molecules are carcinogenic; triple bond refers to bond_type = '#'; percentage = DIVIDE(SUM(bond_type = '#') * 100, COUNT(bond_id)) as percent where label = '+'"
+  },
+  {
+    "question": "Please list top three elements of the toxicology of the molecule TR000 in alphabetical order.",
+    "db_id": "toxicology",
+    "evidence": "TR000 is the molecule id;"
+  },
+  {
+    "question": "What are the atoms that are bonded in the molecule TR001 with the bond ID of TR001_2_6?",
+    "db_id": "toxicology",
+    "evidence": "TR001 is the molecule id; TR001_2_6 is the bond id"
+  },
+  {
+    "question": "What is the difference between the number of molecules that are carcinogenic and those that are not?",
+    "db_id": "toxicology",
+    "evidence": "label = '+' means molecules are carcinogenic; label = '-' means molecules are non-carcinogenic; difference = SUBTRACT(SUM(label = '+'), SUM(label = '-'))"
+  },
+  {
+    "question": "What are the atom IDs of the bond TR000_2_5?",
+    "db_id": "toxicology",
+    "evidence": "TR000_2_5 is the bond id"
+  },
+  {
+    "question": "What are the bond IDs that have the same atom ID 2 of TR000_2?",
+    "db_id": "toxicology",
+    "evidence": "TR000_2 is the atom id; atom ID 2 refers to atom_id2"
+  },
+  {
+    "question": "Please list top five molecules that have double bonds in alphabetical order.",
+    "db_id": "toxicology",
+    "evidence": "double bond refers to bond_type = ' = ';"
+  },
+  {
+    "question": "What is the percentage of double bonds in the molecule TR008? Please provide your answer as a percentage with five decimal places.",
+    "db_id": "toxicology",
+    "evidence": "double bond refers to bond_type = '='; TR008 is the molecule id; percentage = DIVIDE(SUM(bond_type = '='), COUNT(bond_id)) as percent where molecule_id = 'TR008'"
+  },
+  {
+    "question": "What is the percentage of molecules that are carcinogenic? Please provide your answer as a percentage with three decimal places.",
+    "db_id": "toxicology",
+    "evidence": "label = '+' mean molecules are carcinogenic; percentage = DIVIDE(SUM(label = '+'), COUNT(molecule_id)) as percent"
+  },
+  {
+    "question": "How much of the hydrogen in molecule TR206 is accounted for? Please provide your answer as a percentage with four decimal places.",
+    "db_id": "toxicology",
+    "evidence": "hydrogen refers to element = 'h'; TR206 is the molecule id; percentage = DIVIDE(SUM(element = 'h'), COUNT(atom_id)) as percent where molecule_id = 'TR206'"
+  },
+  {
+    "question": "What is the type of bond that molecule TR000 has when involved in any bonds?",
+    "db_id": "toxicology",
+    "evidence": "type of bond refers to bond_type; TR000 is the molecule id"
+  },
+  {
+    "question": "What are the elements of the toxicology and label of molecule TR060?",
+    "db_id": "toxicology",
+    "evidence": "TR060 is the molecule id;"
+  },
+  {
+    "question": "Which bond type accounted for the majority of the bonds found in molecule TR010 and state whether or not this molecule is carcinogenic?",
+    "db_id": "toxicology",
+    "evidence": "TR010 is the molecule id; majority of the bond found refers to MAX(COUNT(bond_type));"
+  },
+  {
+    "question": "Please list top three molecules that have single bonds between two atoms and are not carcinogenic in alphabetical order.",
+    "db_id": "toxicology",
+    "evidence": "label = '-' means molecules are not carcinogenic; single type bond refers to bond_type = '-'; list top three molecules refers to return molecule_id and order by molecule_id;"
+  },
+  {
+    "question": "Please list top two bonds that happened with the molecule TR006 in alphabetical order.",
+    "db_id": "toxicology",
+    "evidence": "TR006 is the molecule id"
+  },
+  {
+    "question": "How many bonds which involved atom 12 does molecule TR009 have?",
+    "db_id": "toxicology",
+    "evidence": "TR009 is the molecule id;  involved atom 12 refers to atom_id = 'TR009_12' or atom_id2 = 'TR009_12'"
+  },
+  {
+    "question": "How many molecules are carcinogenic and have the bromine element?",
+    "db_id": "toxicology",
+    "evidence": "label = '+' mean molecules are carcinogenic; have bromine element refers to element = 'br'"
+  },
+  {
+    "question": "What are the bond type and the atoms of the bond ID of TR001_6_9?",
+    "db_id": "toxicology",
+    "evidence": "atoms refer to atom_id or atom_id2"
+  },
+  {
+    "question": "Which molecule does the atom TR001_10 belong to? Please state whether this molecule is carcinogenic or not.",
+    "db_id": "toxicology",
+    "evidence": "TR001_10 is the atom id; label = '+' mean molecules are carcinogenic"
+  },
+  {
+    "question": "How many molecules have a triple bond type?",
+    "db_id": "toxicology",
+    "evidence": "triple bond refers to bond_type = '#';"
+  },
+  {
+    "question": "How many connections does the atom 19 have?",
+    "db_id": "toxicology",
+    "evidence": "connections refers to bond_id; atom 19 refers to atom_id like 'TR%_19';"
+  },
+  {
+    "question": "List all the elements of the toxicology of the molecule \"TR004\".",
+    "db_id": "toxicology",
+    "evidence": "TR004 is the molecule id;"
+  },
+  {
+    "question": "How many of the molecules are not carcinogenic?",
+    "db_id": "toxicology",
+    "evidence": "label = '-' means molecules are non-carcinogenic"
+  },
+  {
+    "question": "Among all the atoms from 21 to 25, list all the molecules that are carcinogenic.",
+    "db_id": "toxicology",
+    "evidence": "atoms from 21 to 25 refers to SUBSTR(atom_id, 7, 2) between '21' and '25'; label = '+' mean molecules are carcinogenic"
+  },
+  {
+    "question": "What are the bonds that have phosphorus and nitrogen as their atom elements?",
+    "db_id": "toxicology",
+    "evidence": "have phosphorus as atom elements refers to element = 'p'; have nitrogen as atom elements refers to element = 'n'"
+  },
+  {
+    "question": "Is the molecule with the most double bonds carcinogenic?",
+    "db_id": "toxicology",
+    "evidence": "double bond refers to bond_type = ' = '; label = '+' mean molecules are carcinogenic"
+  },
+  {
+    "question": "What is the average number of bonds the atoms with the element iodine have?",
+    "db_id": "toxicology",
+    "evidence": "atoms with the element iodine refers to element = 'i'; average = DIVIDE(COUND(bond_id), COUNT(atom_id)) where element = 'i'"
+  },
+  {
+    "question": "List the bond type and the bond ID of the atom 45.",
+    "db_id": "toxicology",
+    "evidence": "bond ID of atom 45 refers to SUBSTR(atom_id, 7, 2) + 0 = 45; double bond refers to bond_type = ' = '; single bond refers to bond_type = '-'; triple bond refers to bond_type = '#';"
+  },
+  {
+    "question": "List all the elements of atoms that can not bond with any other atoms.",
+    "db_id": "toxicology",
+    "evidence": "atoms cannot bond with other atoms means atom_id NOT in connected table;"
+  },
+  {
+    "question": "What are the atoms of the triple bond with the molecule \"TR041\"?",
+    "db_id": "toxicology",
+    "evidence": "TR041 is the molecule id; triple bond refers to bond_type = '#';"
+  },
+  {
+    "question": "What are the elements of the atoms of TR144_8_19?",
+    "db_id": "toxicology",
+    "evidence": "TR144_8_19 is the bond id;"
+  },
+  {
+    "question": "Of all the carcinogenic molecules, which one has the most double bonds?",
+    "db_id": "toxicology",
+    "evidence": "label = '+' mean molecules are carcinogenic; double bond refers to bond_type = ' = ';"
+  },
+  {
+    "question": "What is the least common element of all carcinogenic molecules?",
+    "db_id": "toxicology",
+    "evidence": "label = '+' mean molecules are carcinogenic"
+  },
+  {
+    "question": "What are the atoms that can bond with the atom that has the element lead?",
+    "db_id": "toxicology",
+    "evidence": "atom that has the element lead refers to atom_id where element = 'pb'"
+  },
+  {
+    "question": "List the elements of all the triple bonds.",
+    "db_id": "toxicology",
+    "evidence": "triple bond refers to bond_type = '#';"
+  },
+  {
+    "question": "What percentage of bonds have the most common combination of atoms' elements?",
+    "db_id": "toxicology",
+    "evidence": "DIVIDE(COUNT(bond_id), COUNT(atom_id where MAX(COUNT(atom_id)) ))"
+  },
+  {
+    "question": "What proportion of single bonds are carcinogenic? Please provide your answer as a percentage with five decimal places.",
+    "db_id": "toxicology",
+    "evidence": "single bond refers to bond_type = '-'; label = '+' mean molecules are carcinogenic; proportion = DIVIDE(SUM(label = '+') * 100, COUNT(bond_id)) where bond_type = '-'"
+  },
+  {
+    "question": "Calculate the total atoms consisting of the element carbon and hydrogen.",
+    "db_id": "toxicology",
+    "evidence": "consisting of element carbon and hydrogen refers to element in('c', 'h')"
+  },
+  {
+    "question": "List down atom id2 for atoms with element sulfur.",
+    "db_id": "toxicology",
+    "evidence": "element sulfur refers to element = 's'"
+  },
+  {
+    "question": "What are the bond type for atoms with element Tin?",
+    "db_id": "toxicology",
+    "evidence": "element Tin refers to element = 'sn'; double bond refers to bond_type = ' = '; single bond refers to bond_type = '-'; triple bond refers to bond_type = '#'"
+  },
+  {
+    "question": "How many elements are there for single bond molecules?",
+    "db_id": "toxicology",
+    "evidence": "single bond refers to bond_type = '-';"
+  },
+  {
+    "question": "Calculate the total atoms with triple-bond molecules containing the element phosphorus or bromine.",
+    "db_id": "toxicology",
+    "evidence": "triple bond refers to bond_type = '#'; phosphorus refers to element = 'p'; bromine refers to element = 'br'"
+  },
+  {
+    "question": "Write down bond id for molecules that are carcinogenic.",
+    "db_id": "toxicology",
+    "evidence": "label = '+' mean molecules are carcinogenic"
+  },
+  {
+    "question": "Among the single bond molecule id, which molecules are not carcinogenic?",
+    "db_id": "toxicology",
+    "evidence": "label = '-' means molecules are non-carcinogenic; single bond refers to bond_type = '-';"
+  },
+  {
+    "question": "What is the composition of element chlorine in percentage among the single bond molecules?",
+    "db_id": "toxicology",
+    "evidence": "element chlorine refers to element = 'cl'; single bond refers to bond_type = '-'; percentage = DIVIDE(SUM(element = 'cl'), COUNT(atom_id)) as percent where bond_type = '-'"
+  },
+  {
+    "question": "What are the labels for TR000, TR001 and TR002?",
+    "db_id": "toxicology",
+    "evidence": "TR000, TR001 and TR002 are molecule id; label = '+' mean molecules are carcinogenic; label = '-' means molecules are non-carcinogenic"
+  },
+  {
+    "question": "List down the molecule id for non carcinogenic molecules.",
+    "db_id": "toxicology",
+    "evidence": "label = '-' means molecules are non-carcinogenic"
+  },
+  {
+    "question": "Calculate the total carcinogenic molecules for molecule id from TR000 to TR030.",
+    "db_id": "toxicology",
+    "evidence": "label = '+' mean molecules are carcinogenic"
+  },
+  {
+    "question": "List down the bond type for molecules from molecule id TR000 to TR050.",
+    "db_id": "toxicology",
+    "evidence": "double bond refers to bond_type = ' = '; single bond refers to bond_type = '-'; triple bond refers to bond_type = '#';"
+  },
+  {
+    "question": "What are the elements for bond id TR001_10_11?",
+    "db_id": "toxicology",
+    "evidence": "TR001_10_11 is the bond id;"
+  },
+  {
+    "question": "How many bond id have element iodine?",
+    "db_id": "toxicology",
+    "evidence": "iodine refers to element = 'i'"
+  },
+  {
+    "question": "Among the molecules with element Calcium, are they mostly carcinogenic or non carcinogenic?",
+    "db_id": "toxicology",
+    "evidence": "calcium refers to element = 'ca'; label = '+' mean molecules are carcinogenic; label = '-' means molecules are non-carcinogenic; MAX(label)"
+  },
+  {
+    "question": "Does bond id TR001_1_8 have both element of chlorine and carbon?",
+    "db_id": "toxicology",
+    "evidence": "chlorine refers to element = 'cl'; carbon refers to element = 'c'"
+  },
+  {
+    "question": "List down two molecule id of triple bond non carcinogenic molecules with element carbon.",
+    "db_id": "toxicology",
+    "evidence": "carbon refers to element = 'c'; triple bond refers to bond_type = '#'; label = '-' means molecules are non-carcinogenic"
+  },
+  {
+    "question": "What is the percentage of element chlorine in carcinogenic molecules?",
+    "db_id": "toxicology",
+    "evidence": "chlorine refers to element = 'cl'; label = '+' mean molecules are carcinogenic; percentage = DIVIDE(SUM(element = 'pb'); COUNT(molecule_id)) as percentage where label = '+'"
+  },
+  {
+    "question": "List the toxicology elements associated with molecule TR001.",
+    "db_id": "toxicology",
+    "evidence": "TR001 is the molecule id"
+  },
+  {
+    "question": "Give me the molecule ID of the double bond type.",
+    "db_id": "toxicology",
+    "evidence": "double bond refers to bond_type = ' = ';"
+  },
+  {
+    "question": "Write down the atom IDs of the first and second atoms of triple bond type molecules.",
+    "db_id": "toxicology",
+    "evidence": "first atom refers to atom_id; second atom refers to atom_id2; triple bond refers to bond_type = '#';"
+  },
+  {
+    "question": "What are the toxicology elements associated with bond ID TR000_1_2?",
+    "db_id": "toxicology",
+    "evidence": "TR000_1_2 is the bond id;"
+  },
+  {
+    "question": "How many of the single bond type molecules are non-carcinogenic?",
+    "db_id": "toxicology",
+    "evidence": "label = '-' means molecules are non-carcinogenic; single bond refers to bond_type = '-';"
+  },
+  {
+    "question": "What is the label for bond ID TR001_10_11?",
+    "db_id": "toxicology",
+    "evidence": "label = '+' mean molecules are carcinogenic; label = '-' means molecules are non-carcinogenic"
+  },
+  {
+    "question": "Enumerate the bond ID of triple bond type molecules and tell me if they are carcinogenic or not.",
+    "db_id": "toxicology",
+    "evidence": "triple bond refers to bond_type = '#'; label = '+' mean molecules are carcinogenic; label = '-' means molecules are non-carcinogenic"
+  },
+  {
+    "question": "Tally the toxicology element of the 4th atom of each molecule that was carcinogenic.",
+    "db_id": "toxicology",
+    "evidence": "label = '+' means molecules are carcinogenic; 4th atom of each molecule refers to substr(atom_id, 7, 1) = '4';"
+  },
+  {
+    "question": "What is the ratio of Hydrogen elements in molecule ID TR006? List the ratio with its label.",
+    "db_id": "toxicology",
+    "evidence": "hydrogen refers to element = 'h'; ratio = DIVIDE(SUM(element = 'h'), count(element)) where molecule_id = 'TR006' ; label = '+' mean molecules are carcinogenic; label = '-' means molecules are non-carcinogenic"
+  },
+  {
+    "question": "Identify whether the chemical compound that contains Calcium is carcinogenic.",
+    "db_id": "toxicology",
+    "evidence": "calcium refers to element = 'ca'; label = '+' mean molecules are carcinogenic; label = '-' means molecules are non-carcinogenic;"
+  },
+  {
+    "question": "Determine the bond type that is formed in the chemical compound containing element Carbon.",
+    "db_id": "toxicology",
+    "evidence": "Carbon refers to element = 'c'; double bond refers to bond_type = ' = '; single bond refers to bond_type = '-'; triple bond refers to bond_type = '#';"
+  },
+  {
+    "question": "Name chemical elements that form a bond TR001_10_11.",
+    "db_id": "toxicology",
+    "evidence": "element = 'cl' means Chlorine; element = 'c' means Carbon; element = 'h' means Hydrogen; element = 'o' means Oxygen, element = 's' means Sulfur; element = 'n' means Nitrogen, element = 'p' means Phosphorus, element = 'na' means Sodium, element = 'br' means Bromine, element = 'f' means Fluorine; element = 'i' means Iodine; element = 'sn' means Tin; element = 'pb' means Lead; element = 'te' means Tellurium; element = 'ca' means Calcium; TR001_10_11 is the bond id; molecule id refers to SUBSTR(bond_id, 1, 5); atom 1 refers to SUBSTR(bond_id, 7, 2); atom 2 refers to SUBSTR(bond_id, 10, 2)"
+  },
+  {
+    "question": "Among all chemical compounds identified in the database, what percent of compounds form a triple-bond.",
+    "db_id": "toxicology",
+    "evidence": "triple bond refers to bond_type = '#';"
+  },
+  {
+    "question": "Among all chemical compounds that contain molecule TR047, identify the percent that form a double-bond.",
+    "db_id": "toxicology",
+    "evidence": "TR047 is the molecule id; double bond refers to bond_type = ' = '; percentage = DIVIDE(SUM(bond_type = ' = '), COUNT(all bond_id)) as percent where molecule_id = 'TR047'"
+  },
+  {
+    "question": "Identify whether the molecule that contains atom TR001_1 is carcinogenic.",
+    "db_id": "toxicology",
+    "evidence": "label = '+' mean molecules are carcinogenic;"
+  },
+  {
+    "question": "Is molecule TR151 carcinogenic?",
+    "db_id": "toxicology",
+    "evidence": "label = '+' mean molecules are carcinogenic;"
+  },
+  {
+    "question": "Which toxic element can be found in the molecule TR151?",
+    "db_id": "toxicology",
+    "evidence": "element = 'cl' means Chlorine; element = 'c' means Carbon; element = 'h' means Hydrogen; element = 'o' means Oxygen, element = 's' means Sulfur; element = 'n' means Nitrogen, element = 'p' means Phosphorus, element = 'na' means Sodium, element = 'br' means Bromine, element = 'f' means Fluorine; element = 'i' means Iodine; element = 'sn' means Tin; element = 'pb' means Lead; element = 'te' means Tellurium; element = 'ca' means Calcium"
+  },
+  {
+    "question": "How many chemical compounds in the database are identified as carcinogenic.",
+    "db_id": "toxicology",
+    "evidence": "label = '+' mean molecules are carcinogenic;"
+  },
+  {
+    "question": "Identify the atoms belong to the molecule with ID between TR010 to TR050 that contain the element carbon.",
+    "db_id": "toxicology",
+    "evidence": "carbon refers to element = 'c'; between TR010 to TR050 refers to substr(molecule_id, 3, 3)>=10 AND substr(molecule_id, 3, 3) <= 50"
+  },
+  {
+    "question": "How many atoms belong to the molecule labeled with carcinogenic compounds?",
+    "db_id": "toxicology",
+    "evidence": "label = '+' mean molecules are carcinogenic;"
+  },
+  {
+    "question": "Which bond ids are double-bond with carcinogenic compound?",
+    "db_id": "toxicology",
+    "evidence": "label = '+' mean molecules are carcinogenic; double bond refers to bond_type = ' = ';"
+  },
+  {
+    "question": "How many atoms belong to the molecule that element is hydrogen and labeled with carcinogenic compound?",
+    "db_id": "toxicology",
+    "evidence": "label = '+' mean molecules are carcinogenic; hydrogen refers to element = h'"
+  },
+  {
+    "question": "Among the atoms that contain element carbon, which one does not contain compound carcinogenic?",
+    "db_id": "toxicology",
+    "evidence": "label = '-' means molecules are non-carcinogenic; carbon refers to element = 'c'"
+  },
+  {
+    "question": "Calculate the percentage of molecules containing carcinogenic compounds that element is hydrogen.",
+    "db_id": "toxicology",
+    "evidence": "hydrogen refers to element = 'h'; label = '+' mean molecules are carcinogenic; percentage = DIVIDE(SUM(label = '+' and element = 'h'), COUNT(molecule_id)) * 100.0"
+  },
+  {
+    "question": "Is molecule TR124 carcinogenic?",
+    "db_id": "toxicology",
+    "evidence": "label = '+' mean molecules are carcinogenic;"
+  },
+  {
+    "question": "What atoms comprise TR186?",
+    "db_id": "toxicology",
+    "evidence": "TR186 is a molecule id"
+  },
+  {
+    "question": "What is the bond type of TR007_4_19?",
+    "db_id": "toxicology",
+    "evidence": "double bond refers to bond_type = ' = '; single bond refers to bond_type = '-'; triple bond refers to bond_type = '#';"
+  },
+  {
+    "question": "Name the elements that comprise the atoms of bond TR001_2_4.",
+    "db_id": "toxicology",
+    "evidence": "element = 'cl' means Chlorine; element = 'c' means Carbon; element = 'h' means Hydrogen; element = 'o' means Oxygen, element = 's' means Sulfur; element = 'n' means Nitrogen, element = 'p' means Phosphorus, element = 'na' means Sodium, element = 'br' means Bromine, element = 'f' means Fluorine; element = 'i' means Iodine; element = 'sn' means Tin; element = 'pb' means Lead; element = 'te' means Tellurium; element = 'ca' means Calcium"
+  },
+  {
+    "question": "How many double bonds does TR006 have and is it carcinogenic?",
+    "db_id": "toxicology",
+    "evidence": "label = '+' mean molecules are carcinogenic; label = '-' means molecules are non-carcinogenic; double bond refers to bond_type = ' = ';"
+  },
+  {
+    "question": "List all carcinogenic molecules and their elements.",
+    "db_id": "toxicology",
+    "evidence": "label = '+' mean molecules are carcinogenic; element = 'cl' means Chlorine; element = 'c' means Carbon; element = 'h' means Hydrogen; element = 'o' means Oxygen, element = 's' means Sulfur; element = 'n' means Nitrogen, element = 'p' means Phosphorus, element = 'na' means Sodium, element = 'br' means Bromine, element = 'f' means Fluorine; element = 'i' means Iodine; element = 'sn' means Tin; element = 'pb' means Lead; element = 'te' means Tellurium; element = 'ca' means Calcium"
+  },
+  {
+    "question": "Name all bonds with single bond types and what atoms are connected to the molecules.",
+    "db_id": "toxicology",
+    "evidence": "single bond refers to bond_type = '-';"
+  },
+  {
+    "question": "Which molecules have triple bonds and list all the elements they contain.",
+    "db_id": "toxicology",
+    "evidence": "triple bond refers to bond_type = '#'; element = 'cl' means Chlorine; element = 'c' means Carbon; element = 'h' means Hydrogen; element = 'o' means Oxygen, element = 's' means Sulfur; element = 'n' means Nitrogen, element = 'p' means Phosphorus, element = 'na' means Sodium, element = 'br' means Bromine, element = 'f' means Fluorine; element = 'i' means Iodine; element = 'sn' means Tin; element = 'pb' means Lead; element = 'te' means Tellurium; element = 'ca' means Calcium"
+  },
+  {
+    "question": "Name the atoms' elements that form bond TR000_2_3.",
+    "db_id": "toxicology",
+    "evidence": "element = 'cl' means Chlorine; element = 'c' means Carbon; element = 'h' means Hydrogen; element = 'o' means Oxygen, element = 's' means Sulfur; element = 'n' means Nitrogen, element = 'p' means Phosphorus, element = 'na' means Sodium, element = 'br' means Bromine, element = 'f' means Fluorine; element = 'i' means Iodine; element = 'sn' means Tin; element = 'pb' means Lead; element = 'te' means Tellurium; element = 'ca' means Calcium"
+  },
+  {
+    "question": "How many bonds are created by bonding atoms with chlorine element?",
+    "db_id": "toxicology",
+    "evidence": "chlorine refers to element = 'cl'"
+  },
+  {
+    "question": "How many molecules have a double bond type and among these molecule, how many are labeled as carcinogenic compound?",
+    "db_id": "toxicology",
+    "evidence": "double bond refers to bond_type = ' = '; label = '+' mean molecules are carcinogenic;"
+  },
+  {
+    "question": "How many molecules without sulphur element is not having double bond?",
+    "db_id": "toxicology",
+    "evidence": "double bond refers to bond_type = ' = '; bond_type ! = ' = '; sulphur refers to element = 's'"
+  },
+  {
+    "question": "What is the carcinogenic label for bond TR001_2_4?",
+    "db_id": "toxicology",
+    "evidence": "label = '+' mean molecules are carcinogenic"
+  },
+  {
+    "question": "How many single bonds are there in the list?",
+    "db_id": "toxicology",
+    "evidence": "single bond refers to bond_type = '-';"
+  },
+  {
+    "question": "Among the molecules which contain \"cl\" element, which of them are carcinogenic?",
+    "db_id": "toxicology",
+    "evidence": "label = '+' mean molecules are carcinogenic;"
+  },
+  {
+    "question": "Among the molecules which contain \"c\" element, which of them are not carcinogenic?",
+    "db_id": "toxicology",
+    "evidence": "label = '-' means molecules are non-carcinogenic"
+  },
+  {
+    "question": "Calculate the percentage of carcinogenic molecules which contain the Chlorine element.",
+    "db_id": "toxicology",
+    "evidence": "label = '+' mean molecules are carcinogenic; percentage = DIVIDE(SUM(label = '+' and element = 'cl'), COUNT(molecule_id)) as percentage"
+  },
+  {
+    "question": "How many elements are contained in bond_id TR001_3_4?",
+    "db_id": "toxicology",
+    "evidence": "element = 'cl' means Chlorine; element = 'c' means Carbon; element = 'h' means Hydrogen; element = 'o' means Oxygen, element = 's' means Sulfur; element = 'n' means Nitrogen, element = 'p' means Phosphorus, element = 'na' means Sodium, element = 'br' means Bromine, element = 'f' means Fluorine; element = 'i' means Iodine; element = 'sn' means Tin; element = 'pb' means Lead; element = 'te' means Tellurium; element = 'ca' means Calcium"
+  },
+  {
+    "question": "What is the type of the bond which is presenting the connection between two atoms TR000_1 and TR000_2?",
+    "db_id": "toxicology",
+    "evidence": "type of bond refers to bond_type; double bond refers to bond_type = ' = '; single bond refers to bond_type = '-'; triple bond refers to bond_type = '#';"
+  },
+  {
+    "question": "What is the element of toxicology for the atom with the ID of TR000_1?",
+    "db_id": "toxicology",
+    "evidence": "atom with ID refers to atom_id; element = 'cl' means Chlorine; element = 'c' means Carbon; element = 'h' means Hydrogen; element = 'o' means Oxygen, element = 's' means Sulfur; element = 'n' means Nitrogen, element = 'p' means Phosphorus, element = 'na' means Sodium, element = 'br' means Bromine, element = 'f' means Fluorine; element = 'i' means Iodine; element = 'sn' means Tin; element = 'pb' means Lead; element = 'te' means Tellurium; element = 'ca' means Calcium"
+  },
+  {
+    "question": "Is molecule TR000 is carcinogenic or not?",
+    "db_id": "toxicology",
+    "evidence": "label = '+' mean molecules are carcinogenic; label = '-' means molecules are non-carcinogenic"
+  },
+  {
+    "question": "Find the percentage of atoms with single bond.",
+    "db_id": "toxicology",
+    "evidence": "single bond refers to bond_type = '-'; percentage = DIVIDE(SUM(bond_type = '-'), COUNT(bond_id)) as percentage"
+  },
+  {
+    "question": "How many carcinogenic molecules that consisted of Nitrogen?",
+    "db_id": "toxicology",
+    "evidence": "nitrogen refers to element = 'n'; label = '+' mean molecules are carcinogenic;"
+  },
+  {
+    "question": "Which molecule consisted of Sulphur atom with double bond?",
+    "db_id": "toxicology",
+    "evidence": "sulphur refers to element - 's'; double bond refers to bond_type = ' = ';"
+  },
+  {
+    "question": "Which non-carcinogenic molecules consisted more than 5 atoms?",
+    "db_id": "toxicology",
+    "evidence": "label = '-' means molecules are non-carcinogenic; molecules consisted more than 5 atoms refers to COUNT(molecule_id) > 5"
+  },
+  {
+    "question": "List all the elements with double bond, consisted in molecule TR024.",
+    "db_id": "toxicology",
+    "evidence": "double bond refers to bond_type = '='; element = 'cl' means Chlorine; element = 'c' means Carbon; element = 'h' means Hydrogen; element = 'o' means Oxygen, element = 's' means Sulfur; element = 'n' means Nitrogen, element = 'p' means Phosphorus, element = 'na' means Sodium, element = 'br' means Bromine, element = 'f' means Fluorine; element = 'i' means Iodine; element = 'sn' means Tin; element = 'pb' means Lead; element = 'te' means Tellurium; element = 'ca' means Calcium"
+  },
+  {
+    "question": "Which carcinogenic molecule have the highest number of atoms consisted in it?",
+    "db_id": "toxicology",
+    "evidence": "label = '+' mean molecules are carcinogenic; molecule that have the highest number of atoms consisted in in refers to MAX(COUNT(atom.molecule_id))"
+  },
+  {
+    "question": "Calculate the percentage of carcinogenic molecules with triple bonded Hidrogen atoms.",
+    "db_id": "toxicology",
+    "evidence": "hydrogen refers to element = 'h'; label = '+' mean molecules are carcinogenic; triple bond refers to bond_type = '#'; percentage = DIVIDE(SUM(label = '+'), COUNT(molecule_id)) * 100.0 where element = 'h' AND bond_type = '#';"
+  },
+  {
+    "question": "How many of the molecules are carcinogenic?",
+    "db_id": "toxicology",
+    "evidence": "label = '+' mean molecules are carcinogenic;"
+  },
+  {
+    "question": "Among the molecules between TR004 to TR010, how many of them has single bonds?",
+    "db_id": "toxicology",
+    "evidence": "single bond refers to bond_type = '-'; molecules between TR004 to TR010 refers molecule_id BETWEEN 'TR004' and 'TR010';"
+  },
+  {
+    "question": "In the molecule TR008, how many carbons are present?",
+    "db_id": "toxicology",
+    "evidence": "carbon refers to element = 'c'"
+  },
+  {
+    "question": "What is the element with the atom ID of TR004_7 in molecule that is not carcinogenic?",
+    "db_id": "toxicology",
+    "evidence": "label = '-' means molecules are non-carcinogenic; element = 'cl' means Chlorine; element = 'c' means Carbon; element = 'h' means Hydrogen; element = 'o' means Oxygen, element = 's' means Sulfur; element = 'n' means Nitrogen, element = 'p' means Phosphorus, element = 'na' means Sodium, element = 'br' means Bromine, element = 'f' means Fluorine; element = 'i' means Iodine; element = 'sn' means Tin; element = 'pb' means Lead; element = 'te' means Tellurium; element = 'ca' means Calcium"
+  },
+  {
+    "question": "What is the total number of molecules with double bonded oxygen?",
+    "db_id": "toxicology",
+    "evidence": "oxygen refers to element = 'o'; double bond refers to bond_type = ' = ';"
+  },
+  {
+    "question": "in molecules with triple bonds, how many of them are not carcinogenic?",
+    "db_id": "toxicology",
+    "evidence": "triple bond refers to bond_type = '#'; label = '-' means molecules are non-carcinogenic"
+  },
+  {
+    "question": "List the element and bond type included in the molecule with molecule ID of TR002.",
+    "db_id": "toxicology",
+    "evidence": "TR002 is the molecule id"
+  },
+  {
+    "question": "What is the atom ID of double bonded carbon in TR012 molecule?",
+    "db_id": "toxicology",
+    "evidence": "carbon refers to element = 'c'; double bond refers to bond_type = ' = ';"
+  },
+  {
+    "question": "List the atom ID of the carcinogenic molecule that contains oxygen?",
+    "db_id": "toxicology",
+    "evidence": "label = '+' mean molecules are carcinogenic; oxygen refers to element = 'o'"
+  },
+  {
+    "question": "Which are the cards that have incredibly powerful foils.",
+    "db_id": "card_games",
+    "evidence": "incredibly poweful foils refers to cardKingdomFoilId is not null AND cardKingdomId is not null"
+  },
+  {
+    "question": "What are the borderless cards available without powerful foils?",
+    "db_id": "card_games",
+    "evidence": "borderless' refers to borderColor; poweful foils refers to cardKingdomFoilId paired with cardKingdomId AND cardKingdomId is not null"
+  },
+  {
+    "question": "List the card names with value that cost more converted mana for the face.",
+    "db_id": "card_games",
+    "evidence": "more converted mana for the face refers to Max(faceConvertedManaCost);"
+  },
+  {
+    "question": "Name all cards with 2015 frame style ranking below 100 on EDHRec.",
+    "db_id": "card_games",
+    "evidence": "below 100 on EDHRec refers to EDHRec <100; with 2015 frame style refers to frameVersion = 2015;"
+  },
+  {
+    "question": "List all the mythic rarity print cards banned in gladiator format.",
+    "db_id": "card_games",
+    "evidence": "mythic rarity printing refers to rarity = 'mythic'; card banned refers to status = 'Banned'; in gladiator format refers to format = 'gladiator';"
+  },
+  {
+    "question": "For artifact type of cards that do not have multiple faces on the same card, state its legalities status for vintage play format.",
+    "db_id": "card_games",
+    "evidence": "Artifact type of cards refers to types = 'Artifact'; card does not have multiple faces on the same card refers to side is NULL'; vintage play format refers to format = 'vintage';"
+  },
+  {
+    "question": "List all the card id and artist with unknown power which are legal for commander play format.",
+    "db_id": "card_games",
+    "evidence": "unknown power refers to power = '*' or POWER IS NULL; commander play format refers to format = 'commander'; legal for commander play format refers to format = 'commander' where status = 'Legal'"
+  },
+  {
+    "question": "Find all cards illustrated by Stephen Daniel and describe the text of the ruling of these cards. State if these cards have missing or degraded properties and values.",
+    "db_id": "card_games",
+    "evidence": "cards have missing or degraded properties and value refers to hasContentWarning = 1; 'Stephen Daniele' is artist; Find all cards refers to return card id"
+  },
+  {
+    "question": "Describe the information about rulings for card named 'Sublime Epiphany' with number 74s.",
+    "db_id": "card_games",
+    "evidence": "Sublime Epiphany' is name of cards; number 74s refers to number = '74s'; information refers to text;"
+  },
+  {
+    "question": "Name the card and artist with the most ruling information. Also state if the card is a promotional printing.",
+    "db_id": "card_games",
+    "evidence": "with the most ruling information refers to Max(count(rulings.uuid)); the card is the promotional printing refers to isPromo = 1;"
+  },
+  {
+    "question": "State the alternative languages available for card named Annul numbered 29.",
+    "db_id": "card_games",
+    "evidence": "annul refers to name = 'annul'; numbered 29 refers to number = '29';"
+  },
+  {
+    "question": "Name all the cards which have alternative language in Japanese.",
+    "db_id": "card_games",
+    "evidence": "Japanese' is the language;"
+  },
+  {
+    "question": "Calculate the percentage of the cards availabe in Chinese Simplified.",
+    "db_id": "card_games",
+    "evidence": "Chinese Simplified' is the language; percentage = Divide(Sum(id where language = 'Chinese Simplified'), Count(id)) *100"
+  },
+  {
+    "question": "List all the sets available in Italian translation. State the total number of cards per set.",
+    "db_id": "card_games",
+    "evidence": "Italian translation refers to language = 'Italian'; total number of card per set refers to totalSetSize;"
+  },
+  {
+    "question": "How many types of cards does the artist Aaron Boyd illustrated about card art?",
+    "db_id": "card_games",
+    "evidence": "Aaron Boyd' is artist;"
+  },
+  {
+    "question": "What is the keyword found on card 'Angel of Mercy'?",
+    "db_id": "card_games",
+    "evidence": "Angel of Mercy' is the name of card;"
+  },
+  {
+    "question": "How many cards have infinite power?",
+    "db_id": "card_games",
+    "evidence": "infinite power refers to power = '*';"
+  },
+  {
+    "question": "What type of promotion is of card 'Duress'?",
+    "db_id": "card_games",
+    "evidence": "card Duress refers to name = 'Duress'; type of promotion refers to promoTypes;"
+  },
+  {
+    "question": "What is the border color of card \"Ancestor's Chosen\"?",
+    "db_id": "card_games",
+    "evidence": "name of card  = 'Ancestor''s Chosen' ;"
+  },
+  {
+    "question": "What is the type of the card \"Ancestor's Chosen\" as originally printed?",
+    "db_id": "card_games",
+    "evidence": "Ancestor's Chosen' is the name of card; type of the card as originally printed refers to originaltype;"
+  },
+  {
+    "question": "cards are not directly linked to language but through table 'set'. you need to add set in covered table & rephrase your question\nWhat are the languages available for the set that card 'Angel of Mercy' is in?",
+    "db_id": "card_games",
+    "evidence": "Angel of Mercy' is the name of card;"
+  },
+  {
+    "question": "How many cards of legalities whose status is restricted have text boxes?",
+    "db_id": "card_games",
+    "evidence": "restricted refers to status = 'restricted'; have text boxes refers to is Textless = 0;"
+  },
+  {
+    "question": "What is the description about the ruling of card \"Condemn\"?",
+    "db_id": "card_games",
+    "evidence": "Ancestor's Chosen' is the name of card; description about the ruling refers to text;"
+  },
+  {
+    "question": "How many cards of legalities whose status is restricted are found in a starter deck?",
+    "db_id": "card_games",
+    "evidence": "restricted refers to status = 'restricted'; found in the starter deck refers to isStarter = 1;"
+  },
+  {
+    "question": "What is the status of card \"Cloudchaser Eagle\"?",
+    "db_id": "card_games",
+    "evidence": "Cloudchaser Eagle is the name of card;"
+  }
+]

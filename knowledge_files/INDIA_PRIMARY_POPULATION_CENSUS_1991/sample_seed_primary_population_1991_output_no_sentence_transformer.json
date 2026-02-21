@@ -1,0 +1,32 @@
+[
+  {
+    "instance_id": "seed_primary_1991_001",
+    "db_id": "INDIA_PRIMARY_POPULATION_CENSUS_1991",
+    "question": "Which state has the highest total population in census year 1991?",
+    "evidence": "`dim_geography_hierarchy`.`state` contains state names; `fact_population_core`.`total_population` stores population values; Filter for `fact_population_core`.`census_year` = 1991; Find state with MAX(SUM(`fact_population_core`.`total_population`)) grouped by state."
+  },
+  {
+    "instance_id": "seed_primary_1991_002",
+    "db_id": "INDIA_PRIMARY_POPULATION_CENSUS_1991",
+    "question": "For each state, what is the sum of male and female illiterate population in 1991?",
+    "evidence": "Group by `dim_geography_hierarchy`.`state`; sum = SUM(`fact_population_literacy`.`male_illiterate_population`) + SUM(`fact_population_literacy`.`female_illiterate_population`) where `fact_population_literacy`.`census_year` = '1991'; join tables via `hierarchy_id`."
+  },
+  {
+    "instance_id": "seed_primary_1991_003",
+    "db_id": "INDIA_PRIMARY_POPULATION_CENSUS_1991",
+    "question": "List the top 10 districts by number of households in 1991.",
+    "evidence": "Top 10 `dim_geography_hierarchy`.`district` by descending sum of `fact_housing`.`number_of_households` where `fact_housing`.`census_year` = 1991."
+  },
+  {
+    "instance_id": "seed_primary_1991_004",
+    "db_id": "INDIA_PRIMARY_POPULATION_CENSUS_1991",
+    "question": "Which locations have female population aged 0 to 6 years greater than male population aged 0 to 6 years in 1991?",
+    "evidence": "Female population aged 0 to 6 years refers to `fact_population_age_cohort`.`female_population_0_to_6_years`; Male population aged 0 to 6 years refers to `fact_population_age_cohort`.`male_population_0_to_6_years`; Locations are mapped via `dim_geography_hierarchy`.`location_name`; 1991 corresponds to `fact_population_age_cohort`.`census_year`."
+  },
+  {
+    "instance_id": "seed_primary_1991_005",
+    "db_id": "INDIA_PRIMARY_POPULATION_CENSUS_1991",
+    "question": "Show the top 5 states by female working population in census year 1991.",
+    "evidence": "Sum `fact_workforce_status`.`female_working_population` grouped by `dim_geography_hierarchy`.`state` where `fact_workforce_status`.`census_year` = 1991, then order descending and limit 5."
+  }
+]
