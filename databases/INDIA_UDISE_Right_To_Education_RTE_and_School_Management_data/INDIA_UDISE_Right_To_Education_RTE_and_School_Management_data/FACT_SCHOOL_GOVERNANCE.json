@@ -1,0 +1,42 @@
+[
+  {
+    "GOVERNANCE_ID": 1,
+    "SCHOOL_ID": 1,
+    "YEAR_ID": 1,
+    "CONSTITUTION_OF_SMC": "1 - Yes",
+    "SMC_AND_SDMC_SAME": "9 - not applicable",
+    "SDMC_CONSTITUTED": "9 - not applicable"
+  },
+  {
+    "GOVERNANCE_ID": 2,
+    "SCHOOL_ID": 2,
+    "YEAR_ID": 1,
+    "CONSTITUTION_OF_SMC": "1 - Yes",
+    "SMC_AND_SDMC_SAME": "9 - not applicable",
+    "SDMC_CONSTITUTED": "9 - not applicable"
+  },
+  {
+    "GOVERNANCE_ID": 3,
+    "SCHOOL_ID": 3,
+    "YEAR_ID": 1,
+    "CONSTITUTION_OF_SMC": "1 - Yes",
+    "SMC_AND_SDMC_SAME": "2 - No",
+    "SDMC_CONSTITUTED": "1 - Yes"
+  },
+  {
+    "GOVERNANCE_ID": 4,
+    "SCHOOL_ID": 4,
+    "YEAR_ID": 1,
+    "CONSTITUTION_OF_SMC": "1 - Yes",
+    "SMC_AND_SDMC_SAME": "1 - Yes",
+    "SDMC_CONSTITUTED": "1 - Yes"
+  },
+  {
+    "GOVERNANCE_ID": 5,
+    "SCHOOL_ID": 5,
+    "YEAR_ID": 1,
+    "CONSTITUTION_OF_SMC": "1 - Yes",
+    "SMC_AND_SDMC_SAME": "2 - No",
+    "SDMC_CONSTITUTED": "1 - Yes"
+  }
+]

@@ -1,0 +1,170 @@
+database_name: INDIA_Village_Amenities_Directory _2001
+source_file: total_data.csv
+dimension_tables:
+  DIM_COUNTRY:
+    key_column: COUNTRY_ID
+    dedup_columns:
+    - 0
+    columns:
+    - source_index: 0
+      target_name: COUNTRY_NAME
+  DIM_STATE:
+    key_column: STATE_ID
+    dedup_columns:
+    - 1
+    columns:
+    - source_index: 1
+      target_name: STATE_NAME
+    foreign_keys:
+    - column: COUNTRY_ID
+      references: DIM_COUNTRY
+  DIM_DISTRICT:
+    key_column: DISTRICT_ID
+    dedup_columns:
+    - 2
+    columns:
+    - source_index: 2
+      target_name: DISTRICT_NAME
+    foreign_keys:
+    - column: STATE_ID
+      references: DIM_STATE
+  DIM_SUB_DISTRICT:
+    key_column: SUB_DISTRICT_ID
+    dedup_columns:
+    - 3
+    columns:
+    - source_index: 3
+      target_name: SUB_DISTRICT_NAME
+    foreign_keys:
+    - column: DISTRICT_ID
+      references: DIM_DISTRICT
+fact_tables:
+  FACT_POPULATION:
+    key_column: SUB_DISTRICT_ID
+    columns:
+    - source_index: 4
+      target_name: NUMBER_OF_HOUSEHOLDS
+    - source_index: 5
+      target_name: RURAL_POPULATION
+    - source_index: 6
+      target_name: MALE_RURAL_POPULATION
+    - source_index: 7
+      target_name: FEMALE_RURAL_POPULATION
+    - source_index: 8
+      target_name: SCHEDULED_CASTES_RURAL_POPULATION
+    - source_index: 9
+      target_name: MALE_SCHEDULED_CASTE_RURAL_POPULATION
+    - source_index: 10
+      target_name: FEMALE_SCHEDULED_CASTE_RURAL_POPULATION
+    - source_index: 11
+      target_name: SCHEDULED_TRIBES_RURAL_POPULATION
+    - source_index: 12
+      target_name: MALE_SCHEDULED_TRIBES_RURAL_POPULATION
+    - source_index: 13
+      target_name: FEMALE_SCHEDULED_TRIBES_RURAL_POPULATION
+  FACT_EDUCATION:
+    key_column: SUB_DISTRICT_ID
+    columns:
+    - source_index: 14
+      target_name: NUMBER_OF_PRIMARY_SCHOOLS
+    - source_index: 15
+      target_name: NUMBER_OF_MIDDLE_SCHOOLS
+    - source_index: 16
+      target_name: NUMBER_OF_SECONDARY_SCHOOLS
+    - source_index: 17
+      target_name: NUMBER_OF_SENIOR_SECONDARY_SCHOOLS
+    - source_index: 18
+      target_name: NUMBER_OF_INDUSTRIAL_SCHOOLS
+    - source_index: 19
+      target_name: NUMBER_OF_ADULT_LITERACY_CLASS_CENTRES
+    - source_index: 20
+      target_name: NUMBER_OF_OTHER_EDUCATIONAL_FACILITIES
+  FACT_HEALTHCARE_FACILITIES:
+    key_column: SUB_DISTRICT_ID
+    columns:
+    - source_index: 21
+      target_name: NUMBER_OF_ALLOPATHIC_HOSPITALS
+    - source_index: 22
+      target_name: NUMBER_OF_ALLOPATHIC_DISPENSARIES
+    - source_index: 23
+      target_name: NUMBER_OF_AYURVEDIC_DISPENSARY
+    - source_index: 24
+      target_name: NUMBER_OF_UNANI_DISPENSARIES
+    - source_index: 25
+      target_name: NUMBER_OF_HOMEOPATHIC_DISPENSARIES
+    - source_index: 33
+      target_name: NUMBER_OF_NURSING_HOMES
+    - source_index: 37
+      target_name: NUMBER_OF_OTHER_MEDICAL_FACILITIES
+  FACT_MATERNITY_CHILD_CARE:
+    key_column: SUB_DISTRICT_ID
+    columns:
+    - source_index: 26
+      target_name: NUMBER_OF_MATERNITY_AND_CHILD_WELFARE_CENTRES
+    - source_index: 27
+      target_name: NUMBER_OF_MATERNITY_HOMES
+    - source_index: 28
+      target_name: NUMBER_OF_CHILD_WELFARE_CENTRES
+    - source_index: 29
+      target_name: NUMBER_OF_HEALTH_CENTRES
+    - source_index: 30
+      target_name: NUMBER_OF_PRIMARY_HEALTH_CENTRES
+    - source_index: 31
+      target_name: NUMBER_OF_PRIMARY_HEALTH_SUB_CENTRES
+    - source_index: 32
+      target_name: NUMBER_OF_FAMILY_WELFARE_CENTRES
+  FACT_MEDICAL_PERSONNEL:
+    key_column: SUB_DISTRICT_ID
+    columns:
+    - source_index: 34
+      target_name: NUMBER_OF_REGISTERED_PRIVATE_MEDICAL_PRACTITIONERS
+    - source_index: 35
+      target_name: NUMBER_OF_SUBSIDED_MEDICAL_PRACTITIONERS
+    - source_index: 36
+      target_name: NUMBER_OF_COMMUNITY_HEALTH_WORKERS
+  FACT_COMMUNICATIONS:
+    key_column: SUB_DISTRICT_ID
+    columns:
+    - source_index: 38
+      target_name: NUMBER_OF_POST_OFFICES
+    - source_index: 39
+      target_name: NUMBER_OF_TELEGRAPH_OFFICES
+    - source_index: 40
+      target_name: NUMBER_OF_POST_AND_TELEGRAPH_OFFICES
+    - source_index: 41
+      target_name: NUMBER_OF_TELEPHONE_CONNECTIONS
+  FACT_FINANCIAL_SERVICES:
+    key_column: SUB_DISTRICT_ID
+    columns:
+    - source_index: 42
+      target_name: NUMBER_OF_COMMERCIAL_BANKS
+    - source_index: 43
+      target_name: NUMBER_OF_CO_OPERATIVE_COMMERCIAL_BANKS
+    - source_index: 44
+      target_name: NUMBER_OF_AGRICULTURAL_CREDIT_SOCIETIES
+    - source_index: 45
+      target_name: NUMBER_OF_NON_AGRICULTURAL_CREDIT_SOCIETIES
+    - source_index: 46
+      target_name: NUMBER_OF_OTHER_CREDIT_SOCIETIES
+  FACT_RECREATION_SPORTS:
+    key_column: SUB_DISTRICT_ID
+    columns:
+    - source_index: 47
+      target_name: NUMBER_OF_CINEMA_VIDEO_HALLS
+    - source_index: 48
+      target_name: NUMBER_OF_SPORTS_CLUBS
+    - source_index: 49
+      target_name: NUMBER_OF_STADIUMS_OR_AUDITORIUMS
+table_descriptions:
+  DIM_COUNTRY: Country-level geographic dimension
+  DIM_STATE: State-level geographic dimension
+  DIM_DISTRICT: District-level geographic dimension
+  DIM_SUB_DISTRICT: Sub-district-level geographic dimension
+  FACT_POPULATION: Demographic population statistics
+  FACT_EDUCATION: Educational facilities and infrastructure
+  FACT_HEALTHCARE_FACILITIES: Healthcare infrastructure and medical facilities
+  FACT_MATERNITY_CHILD_CARE: Maternity, child welfare, and primary healthcare centers
+  FACT_MEDICAL_PERSONNEL: Healthcare workforce and medical practitioners
+  FACT_COMMUNICATIONS: Postal, telegraph, and telecommunication services
+  FACT_FINANCIAL_SERVICES: Banking and credit society infrastructure
+  FACT_RECREATION_SPORTS: Entertainment and sports facilities

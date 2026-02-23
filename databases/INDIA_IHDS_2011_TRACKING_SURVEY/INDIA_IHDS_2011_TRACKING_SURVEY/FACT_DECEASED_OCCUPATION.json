@@ -1,0 +1,32 @@
+[
+  {
+    "DECEASED_OCCUPATION_ID": 1,
+    "DECEASED_ID": 1,
+    "OCCUPATION_ID": 1,
+    "EMPLOYED_AT_DEATH": "No"
+  },
+  {
+    "DECEASED_OCCUPATION_ID": 2,
+    "DECEASED_ID": 2,
+    "OCCUPATION_ID": 2,
+    "EMPLOYED_AT_DEATH": "No"
+  },
+  {
+    "DECEASED_OCCUPATION_ID": 3,
+    "DECEASED_ID": 3,
+    "OCCUPATION_ID": 3,
+    "EMPLOYED_AT_DEATH": "No"
+  },
+  {
+    "DECEASED_OCCUPATION_ID": 4,
+    "DECEASED_ID": 4,
+    "OCCUPATION_ID": 2,
+    "EMPLOYED_AT_DEATH": "No"
+  },
+  {
+    "DECEASED_OCCUPATION_ID": 5,
+    "DECEASED_ID": 5,
+    "OCCUPATION_ID": 2,
+    "EMPLOYED_AT_DEATH": "No"
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "DRIVER_ID": 1,
+    "AGE_BAND_OF_DRIVER": "18-30",
+    "SEX_OF_DRIVER": "Male",
+    "EDUCATIONAL_LEVEL": "Above high school",
+    "VEHICLE_DRIVER_RELATION": "Employee",
+    "DRIVING_EXPERIENCE": "1-2yr"
+  },
+  {
+    "DRIVER_ID": 2,
+    "AGE_BAND_OF_DRIVER": "31-50",
+    "SEX_OF_DRIVER": "Male",
+    "EDUCATIONAL_LEVEL": "Junior high school",
+    "VEHICLE_DRIVER_RELATION": "Employee",
+    "DRIVING_EXPERIENCE": "Above 10yr"
+  },
+  {
+    "DRIVER_ID": 3,
+    "AGE_BAND_OF_DRIVER": "18-30",
+    "SEX_OF_DRIVER": "Male",
+    "EDUCATIONAL_LEVEL": "Junior high school",
+    "VEHICLE_DRIVER_RELATION": "Employee",
+    "DRIVING_EXPERIENCE": "1-2yr"
+  },
+  {
+    "DRIVER_ID": 4,
+    "AGE_BAND_OF_DRIVER": "18-30",
+    "SEX_OF_DRIVER": "Male",
+    "EDUCATIONAL_LEVEL": "Junior high school",
+    "VEHICLE_DRIVER_RELATION": "Employee",
+    "DRIVING_EXPERIENCE": "5-10yr"
+  },
+  {
+    "DRIVER_ID": 5,
+    "AGE_BAND_OF_DRIVER": "18-30",
+    "SEX_OF_DRIVER": "Male",
+    "EDUCATIONAL_LEVEL": "Junior high school",
+    "VEHICLE_DRIVER_RELATION": "Employee",
+    "DRIVING_EXPERIENCE": "2-5yr"
+  }
+]

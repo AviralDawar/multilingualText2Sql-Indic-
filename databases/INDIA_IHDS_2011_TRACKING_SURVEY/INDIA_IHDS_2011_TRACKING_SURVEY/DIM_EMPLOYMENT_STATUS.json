@@ -1,0 +1,27 @@
+[
+  {
+    "EMPLOYMENT_STATUS_ID": 1,
+    "ACTIVITY_STATUS": "Nonaglab",
+    "EMPLOYMENT_TYPE": "Self employed"
+  },
+  {
+    "EMPLOYMENT_STATUS_ID": 2,
+    "ACTIVITY_STATUS": "HH work",
+    "EMPLOYMENT_TYPE": "Pvt casual"
+  },
+  {
+    "EMPLOYMENT_STATUS_ID": 3,
+    "ACTIVITY_STATUS": "Student",
+    "EMPLOYMENT_TYPE": "Pvt casual"
+  },
+  {
+    "EMPLOYMENT_STATUS_ID": 4,
+    "ACTIVITY_STATUS": "Salaried",
+    "EMPLOYMENT_TYPE": "Pvt job"
+  },
+  {
+    "EMPLOYMENT_STATUS_ID": 5,
+    "ACTIVITY_STATUS": "Cultivation",
+    "EMPLOYMENT_TYPE": "Self employed"
+  }
+]

@@ -1,0 +1,67 @@
+[
+  {
+    "ACCIDENT_ID": 1,
+    "TIME_ID": 1,
+    "DRIVER_ID": 1,
+    "VEHICLE_ID": 1,
+    "GEOGRAPHY_ID": 1,
+    "ROAD_CHAR_ID": 1,
+    "ENVIRONMENT_ID": 1,
+    "ACCIDENT_EVENT_ID": 1,
+    "NUMBER_OF_VEHICLES_INVOLVED": "2",
+    "NUMBER_OF_CASUALTIES": "2",
+    "ACCIDENT_SEVERITY": "Slight Injury"
+  },
+  {
+    "ACCIDENT_ID": 2,
+    "TIME_ID": 1,
+    "DRIVER_ID": 2,
+    "VEHICLE_ID": 2,
+    "GEOGRAPHY_ID": 2,
+    "ROAD_CHAR_ID": 2,
+    "ENVIRONMENT_ID": 1,
+    "ACCIDENT_EVENT_ID": 2,
+    "NUMBER_OF_VEHICLES_INVOLVED": "2",
+    "NUMBER_OF_CASUALTIES": "2",
+    "ACCIDENT_SEVERITY": "Slight Injury"
+  },
+  {
+    "ACCIDENT_ID": 3,
+    "TIME_ID": 1,
+    "DRIVER_ID": 3,
+    "VEHICLE_ID": 3,
+    "GEOGRAPHY_ID": 3,
+    "ROAD_CHAR_ID": 3,
+    "ENVIRONMENT_ID": 1,
+    "ACCIDENT_EVENT_ID": 3,
+    "NUMBER_OF_VEHICLES_INVOLVED": "2",
+    "NUMBER_OF_CASUALTIES": "2",
+    "ACCIDENT_SEVERITY": "Serious Injury"
+  },
+  {
+    "ACCIDENT_ID": 4,
+    "TIME_ID": 2,
+    "DRIVER_ID": 4,
+    "VEHICLE_ID": 4,
+    "GEOGRAPHY_ID": 2,
+    "ROAD_CHAR_ID": 4,
+    "ENVIRONMENT_ID": 2,
+    "ACCIDENT_EVENT_ID": 4,
+    "NUMBER_OF_VEHICLES_INVOLVED": "2",
+    "NUMBER_OF_CASUALTIES": "2",
+    "ACCIDENT_SEVERITY": "Slight Injury"
+  },
+  {
+    "ACCIDENT_ID": 5,
+    "TIME_ID": 2,
+    "DRIVER_ID": 5,
+    "VEHICLE_ID": 5,
+    "GEOGRAPHY_ID": 4,
+    "ROAD_CHAR_ID": 5,
+    "ENVIRONMENT_ID": 2,
+    "ACCIDENT_EVENT_ID": 2,
+    "NUMBER_OF_VEHICLES_INVOLVED": "2",
+    "NUMBER_OF_CASUALTIES": "2",
+    "ACCIDENT_SEVERITY": "Slight Injury"
+  }
+]

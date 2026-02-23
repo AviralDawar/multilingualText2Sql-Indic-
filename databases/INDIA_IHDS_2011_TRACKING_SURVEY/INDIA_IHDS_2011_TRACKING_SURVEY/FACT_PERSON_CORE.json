@@ -1,0 +1,47 @@
+[
+  {
+    "PERSON_ID": 1,
+    "HOUSEHOLD_ID": 1,
+    "PERSON_STATUS_ID": 1,
+    "DEMOGRAPHIC_CODE_ID": 1,
+    "CURRENT_LOCATION_ID": 1,
+    "PERSON_NUMBER": "3",
+    "AGE": "22"
+  },
+  {
+    "PERSON_ID": 2,
+    "HOUSEHOLD_ID": 2,
+    "PERSON_STATUS_ID": 2,
+    "DEMOGRAPHIC_CODE_ID": 1,
+    "CURRENT_LOCATION_ID": 1,
+    "PERSON_NUMBER": "1",
+    "AGE": "46"
+  },
+  {
+    "PERSON_ID": 3,
+    "HOUSEHOLD_ID": 3,
+    "PERSON_STATUS_ID": 3,
+    "DEMOGRAPHIC_CODE_ID": 2,
+    "CURRENT_LOCATION_ID": 1,
+    "PERSON_NUMBER": "16",
+    "AGE": "1"
+  },
+  {
+    "PERSON_ID": 4,
+    "HOUSEHOLD_ID": 4,
+    "PERSON_STATUS_ID": 4,
+    "DEMOGRAPHIC_CODE_ID": 3,
+    "CURRENT_LOCATION_ID": 1,
+    "PERSON_NUMBER": "4",
+    "AGE": "21"
+  },
+  {
+    "PERSON_ID": 5,
+    "HOUSEHOLD_ID": 5,
+    "PERSON_STATUS_ID": 5,
+    "DEMOGRAPHIC_CODE_ID": 2,
+    "CURRENT_LOCATION_ID": 1,
+    "PERSON_NUMBER": "5",
+    "AGE": "13"
+  }
+]

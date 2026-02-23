@@ -1,0 +1,164 @@
+database_name: INDIA_UDISE_Right_To_Education_RTE_and_School_Management_data
+source_file: total_data.csv
+dimension_tables:
+  DIM_COUNTRY:
+    key_column: COUNTRY_ID
+    dedup_columns:
+    - 0
+    columns:
+    - source_index: 0
+      target_name: COUNTRY_NAME
+  DIM_STATE:
+    key_column: STATE_ID
+    dedup_columns:
+    - 1
+    columns:
+    - source_index: 1
+      target_name: STATE_NAME
+    foreign_keys:
+    - column: COUNTRY_ID
+      references: DIM_COUNTRY
+  DIM_DISTRICT:
+    key_column: DISTRICT_ID
+    dedup_columns:
+    - 2
+    columns:
+    - source_index: 2
+      target_name: DISTRICT_NAME
+    foreign_keys:
+    - column: STATE_ID
+      references: DIM_STATE
+  DIM_SCHOOL:
+    key_column: SCHOOL_ID
+    dedup_columns:
+    - 3
+    columns:
+    - source_index: 3
+      target_name: UNIQUE_SCHOOL_ID
+    foreign_keys:
+    - column: DISTRICT_ID
+      references: DIM_DISTRICT
+  DIM_YEAR:
+    key_column: YEAR_ID
+    dedup_columns:
+    - 4
+    columns:
+    - source_index: 4
+      target_name: ACADEMIC_YEAR
+fact_tables:
+  FACT_SCHOOL_GOVERNANCE:
+    key_column: GOVERNANCE_ID
+    foreign_keys:
+    - column: SCHOOL_ID
+      references: DIM_SCHOOL
+    - column: YEAR_ID
+      references: DIM_YEAR
+    columns:
+    - source_index: 8
+      target_name: CONSTITUTION_OF_SMC
+    - source_index: 9
+      target_name: SMC_AND_SDMC_SAME
+    - source_index: 10
+      target_name: SDMC_CONSTITUTED
+  FACT_SCHOOL_RESOURCES:
+    key_column: RESOURCE_ID
+    foreign_keys:
+    - column: SCHOOL_ID
+      references: DIM_SCHOOL
+    - column: YEAR_ID
+      references: DIM_YEAR
+    columns:
+    - source_index: 6
+      target_name: SCHOOLS_RECEIVED_FULL_SET_OF_TEXTBOOKS_IN_CURRENT_ACADEMIC_YEAR
+    - source_index: 7
+      target_name: SCHOOLS_RECEIVED_GRADED_SUPPLEMENTARY_MATERIAL_IN_PREVIOUS_ACADEMIC_YEAR
+  FACT_STUDENT_ENROLLMENT:
+    key_column: ENROLLMENT_ID
+    foreign_keys:
+    - column: SCHOOL_ID
+      references: DIM_SCHOOL
+    - column: YEAR_ID
+      references: DIM_YEAR
+    columns:
+    - source_index: 54
+      target_name: STUDENT_COUNT
+  FACT_SPECIAL_TRAINING:
+    key_column: TRAINING_ID
+    foreign_keys:
+    - column: SCHOOL_ID
+      references: DIM_SCHOOL
+    - column: YEAR_ID
+      references: DIM_YEAR
+    columns:
+    - source_index: 5
+      target_name: STUDENTS_ATTENDING_SPECIAL_TRAINING
+  FACT_SCHOOL_MONITORING:
+    key_column: MONITORING_ID
+    foreign_keys:
+    - column: SCHOOL_ID
+      references: DIM_SCHOOL
+    - column: YEAR_ID
+      references: DIM_YEAR
+    columns:
+    - source_index: 55
+      target_name: ACADEMIC_INSPECTIONS_IN_THE_PREVIOUS_ACADEMIC_YEAR
+    - source_index: 56
+      target_name: VISITS_MADE_BY_CRC_COORDINATOR
+    - source_index: 57
+      target_name: VISITS_MADE_BY_BLOCK_LEVEL_OFFICERS
+    - source_index: 58
+      target_name: VISITS_MADE_BY_DISTRICT_OR_STATE_LEVEL_OFFICERS
+  FACT_STUDENT_SUPPORT_PRIMARY:
+    key_column: SUPPORT_PRIMARY_ID
+    foreign_keys:
+    - column: SCHOOL_ID
+      references: DIM_SCHOOL
+    - column: YEAR_ID
+      references: DIM_YEAR
+    columns:
+    - source_index: 59
+      target_name: PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_TEXTBOOKS
+    - source_index: 60
+      target_name: PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_TRANSPORT_FACILITY
+    - source_index: 61
+      target_name: PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_UNIFORMS
+  FACT_STUDENT_SUPPORT_UPPER_PRIMARY:
+    key_column: SUPPORT_UPPER_PRIMARY_ID
+    foreign_keys:
+    - column: SCHOOL_ID
+      references: DIM_SCHOOL
+    - column: YEAR_ID
+      references: DIM_YEAR
+    columns:
+    - source_index: 62
+      target_name: UPPER_PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_TEXTBOOKS
+    - source_index: 63
+      target_name: UPPER_PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_TRANSPORT_FACILITY
+    - source_index: 64
+      target_name: UPPER_PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_UNIFORMS
+  FACT_SCHOOL_FINANCES:
+    key_column: FINANCE_ID
+    foreign_keys:
+    - column: SCHOOL_ID
+      references: DIM_SCHOOL
+    - column: YEAR_ID
+      references: DIM_YEAR
+    columns:
+    - source_index: 65
+      target_name: SCHOOL_GRANT_RECEIVED
+    - source_index: 66
+      target_name: UTILIZATION_OF_SCHOOL_GRANT
+table_descriptions:
+  DIM_COUNTRY: Master list of countries
+  DIM_STATE: Master list of states with country relationships
+  DIM_DISTRICT: Master list of districts with state relationships
+  DIM_SCHOOL: Master list of schools with geographic hierarchy
+  DIM_YEAR: Academic year dimension
+  FACT_SCHOOL_GOVERNANCE: School management committee data
+  FACT_SCHOOL_RESOURCES: Textbook and material resources received
+  FACT_STUDENT_ENROLLMENT: Normalized enrollment data across all categories and grades
+  FACT_SPECIAL_TRAINING: Special training program data
+  FACT_SCHOOL_MONITORING: School inspection and official visit data
+  FACT_STUDENT_SUPPORT_PRIMARY: Primary grade student support programs
+  FACT_STUDENT_SUPPORT_UPPER_PRIMARY: Upper primary grade student support programs
+  FACT_SCHOOL_FINANCES: School grant funding data

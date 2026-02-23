@@ -1,0 +1,37 @@
+[
+  {
+    "FINANCE_ID": 1,
+    "SCHOOL_ID": 1,
+    "YEAR_ID": 1,
+    "SCHOOL_GRANT_RECEIVED": "25000",
+    "UTILIZATION_OF_SCHOOL_GRANT": "25000"
+  },
+  {
+    "FINANCE_ID": 2,
+    "SCHOOL_ID": 2,
+    "YEAR_ID": 1,
+    "SCHOOL_GRANT_RECEIVED": "12500",
+    "UTILIZATION_OF_SCHOOL_GRANT": "12500"
+  },
+  {
+    "FINANCE_ID": 3,
+    "SCHOOL_ID": 3,
+    "YEAR_ID": 1,
+    "SCHOOL_GRANT_RECEIVED": "18000",
+    "UTILIZATION_OF_SCHOOL_GRANT": "18000"
+  },
+  {
+    "FINANCE_ID": 4,
+    "SCHOOL_ID": 4,
+    "YEAR_ID": 1,
+    "SCHOOL_GRANT_RECEIVED": "50000",
+    "UTILIZATION_OF_SCHOOL_GRANT": "50000"
+  },
+  {
+    "FINANCE_ID": 5,
+    "SCHOOL_ID": 5,
+    "YEAR_ID": 1,
+    "SCHOOL_GRANT_RECEIVED": "75000",
+    "UTILIZATION_OF_SCHOOL_GRANT": "75000"
+  }
+]

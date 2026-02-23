@@ -1,0 +1,27 @@
+[
+  {
+    "HOUSEHOLD_STATUS_ID": 1,
+    "COMPLETION_STATUS": "Located",
+    "COMPLETION_STATUS_OTHER": "unknown"
+  },
+  {
+    "HOUSEHOLD_STATUS_ID": 2,
+    "COMPLETION_STATUS": "Moved out",
+    "COMPLETION_STATUS_OTHER": "unknown"
+  },
+  {
+    "HOUSEHOLD_STATUS_ID": 3,
+    "COMPLETION_STATUS": "All dead",
+    "COMPLETION_STATUS_OTHER": "unknown"
+  },
+  {
+    "HOUSEHOLD_STATUS_ID": 4,
+    "COMPLETION_STATUS": "Not found",
+    "COMPLETION_STATUS_OTHER": "unknown"
+  },
+  {
+    "HOUSEHOLD_STATUS_ID": 5,
+    "COMPLETION_STATUS": "Non-contact",
+    "COMPLETION_STATUS_OTHER": "unknown"
+  }
+]

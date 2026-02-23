@@ -1,0 +1,169 @@
+database_name: INDIA_IHDS_2011_HOUSEHOLD_SURVEY
+source_file: total_data.csv
+dimension_tables:
+  DIM_GEOGRAPHY:
+    key_column: GEOGRAPHY_ID
+    dedup_columns:
+    - 0
+    - 1
+    - 2
+    - 5
+    - 3
+    - 4
+    - 6
+    columns:
+    - source_index: 0
+      target_name: STATE
+    - source_index: 1
+      target_name: DISTRICT
+    - source_index: 2
+      target_name: PSU_VILLAGE_OR_NEIGHBORHOOD_CODE
+    - source_index: 5
+      target_name: UNIQUE_PSU_ID_CLUSTER
+    - source_index: 3
+      target_name: HOUSEHOLD_ID_3_DIGIT
+    - source_index: 4
+      target_name: SPLIT_HOUSEHOLD_ID
+    - source_index: 6
+      target_name: UNIQUE_HOUSEHOLD_ID
+fact_tables:
+  FACT_BUSINESS_TYPE_A:
+    key_column: BUSINESS_TYPE_A_ID
+    foreign_keys:
+    - column: GEOGRAPHY_ID
+      references: DIM_GEOGRAPHY
+    columns:
+    - source_index: 7
+      target_name: GROSS_RECEIPTS_RUPEES
+    - source_index: 8
+      target_name: PAID_WORKERS_COST_RUPEES
+    - source_index: 9
+      target_name: RAW_MATERIALS_AND_INPUTS_COST_RUPEES
+    - source_index: 10
+      target_name: OTHER_COSTS_INCLUDING_TAXES_RUPEES
+    - source_index: 11
+      target_name: TOTAL_EXPENSES_RUPEES
+    - source_index: 12
+      target_name: NET_INCOME_RUPEES
+    - source_index: 13
+      target_name: INVESTMENTS_RUPEES
+    - source_index: 14
+      target_name: TOTAL_LOSS_RUPEES
+  FACT_BUSINESS_TYPE_B:
+    key_column: BUSINESS_TYPE_B_ID
+    foreign_keys:
+    - column: GEOGRAPHY_ID
+      references: DIM_GEOGRAPHY
+    columns:
+    - source_index: 15
+      target_name: GROSS_RECEIPTS_RUPEES
+    - source_index: 16
+      target_name: PAID_WORKERS_COST_RUPEES
+    - source_index: 17
+      target_name: RAW_MATERIALS_AND_INPUTS_COST_RUPEES
+    - source_index: 18
+      target_name: TOTAL_EXPENSES_RUPEES
+    - source_index: 19
+      target_name: NET_INCOME_RUPEES
+    - source_index: 20
+      target_name: INVESTMENTS_RUPEES
+  FACT_BUSINESS_TYPE_C:
+    key_column: BUSINESS_TYPE_C_ID
+    foreign_keys:
+    - column: GEOGRAPHY_ID
+      references: DIM_GEOGRAPHY
+    columns:
+    - source_index: 21
+      target_name: GROSS_RECEIPTS_RUPEES
+    - source_index: 22
+      target_name: RENT_COST_RUPEES
+    - source_index: 23
+      target_name: PAID_WORKERS_COST_RUPEES
+    - source_index: 24
+      target_name: RAW_MATERIALS_AND_INPUTS_COST_RUPEES
+    - source_index: 25
+      target_name: TOTAL_EXPENSES_RUPEES
+    - source_index: 26
+      target_name: NET_INCOME_RUPEES
+    - source_index: 27
+      target_name: INVESTMENTS_RUPEES
+  FACT_AGRICULTURE_OPERATIONS:
+    key_column: AGRICULTURE_OPERATIONS_ID
+    foreign_keys:
+    - column: GEOGRAPHY_ID
+      references: DIM_GEOGRAPHY
+    columns:
+    - source_index: 40
+      target_name: CROP_INCOME_HOUSEHOLD_RUPEES
+    - source_index: 41
+      target_name: INCOME_FROM_CROPS_MINUS_EXPENSES
+    - source_index: 42
+      target_name: INCOME_FROM_LAND_RENTED_OR_SHARECROPPED_OUT_RUPEES
+    - source_index: 43
+      target_name: INCOME_FROM_AGRICULTURE_MINUS_EXPENSES
+  FACT_HOUSEHOLD_CONSUMPTION_DEBT:
+    key_column: HOUSEHOLD_CONSUMPTION_DEBT_ID
+    foreign_keys:
+    - column: GEOGRAPHY_ID
+      references: DIM_GEOGRAPHY
+    columns:
+    - source_index: 30
+      target_name: TOTAL_HOUSEHOLD_CONSUMPTION_EXPENDITURE
+    - source_index: 31
+      target_name: LARGEST_LOAN_AMOUNT_RUPEES
+    - source_index: 32
+      target_name: OUTSTANDING_HOUSEHOLD_DEBT_RUPEES
+    - source_index: 33
+      target_name: CREDIT_DUE_TO_HOUSEHOLD
+  FACT_CEREMONIAL_EXPENSES:
+    key_column: CEREMONIAL_EXPENSES_ID
+    foreign_keys:
+    - column: GEOGRAPHY_ID
+      references: DIM_GEOGRAPHY
+    columns:
+    - source_index: 34
+      target_name: BOYS_FAMILY_WEDDING_EXPENSE_LOW_RUPEES
+    - source_index: 35
+      target_name: BOYS_FAMILY_WEDDING_EXPENSE_HIGH_RUPEES
+    - source_index: 36
+      target_name: GIRLS_FAMILY_WEDDING_EXPENSE_LOW_RUPEES
+    - source_index: 37
+      target_name: GIRLS_FAMILY_WEDDING_EXPENSE_HIGH_RUPEES
+    - source_index: 38
+      target_name: COMMUNITY_WEDDING_CASH_GIFT_LOW_RUPEES
+    - source_index: 39
+      target_name: COMMUNITY_WEDDING_CASH_GIFT_HIGH_RUPEES
+  FACT_WAGE_REMITTANCE_INCOME:
+    key_column: WAGE_REMITTANCE_INCOME_ID
+    foreign_keys:
+    - column: GEOGRAPHY_ID
+      references: DIM_GEOGRAPHY
+    columns:
+    - source_index: 45
+      target_name: ANNUAL_HOUSEHOLD_WAGE_INCOME_RUPEES
+    - source_index: 46
+      target_name: REMITTANCES_RECEIVED_FROM_NONRESIDENT_RELATIVES_RUPEES
+    - source_index: 49
+      target_name: INCOME_FROM_SALARY_POSITION
+  FACT_CAPITAL_TRANSACTIONS:
+    key_column: CAPITAL_TRANSACTIONS_ID
+    foreign_keys:
+    - column: GEOGRAPHY_ID
+      references: DIM_GEOGRAPHY
+    columns:
+    - source_index: 28
+      target_name: INCOME_SALE_NON_AGRICULTURAL_LAND_RUPEES
+    - source_index: 29
+      target_name: INCOME_SALE_AGRICULTURAL_LAND_RUPEES
+table_descriptions:
+  DIM_GEOGRAPHY: Geographic and household identification data
+  FACT_BUSINESS_TYPE_A: Detailed business operations with complete expense breakdown
+    (Business 1)
+  FACT_BUSINESS_TYPE_B: Simplified business operations without rent or other costs
+    (Business 2)
+  FACT_BUSINESS_TYPE_C: Business operations with rent expenses (Business 3)
+  FACT_AGRICULTURE_OPERATIONS: Agricultural operational income and expenses
+  FACT_HOUSEHOLD_CONSUMPTION_DEBT: Household consumption, debt, and credit metrics
+  FACT_CEREMONIAL_EXPENSES: Wedding and ceremonial expense ranges
+  FACT_WAGE_REMITTANCE_INCOME: Wage, salary, and remittance income streams
+  FACT_CAPITAL_TRANSACTIONS: Income from sale of land assets

@@ -1,0 +1,37 @@
+[
+  {
+    "GEOGRAPHY_ID": 1,
+    "DIST_CODE": "1",
+    "STATE_CODE": "14",
+    "STATE_NAME": "Chhattisgarh",
+    "DIST_NAME": "Durg"
+  },
+  {
+    "GEOGRAPHY_ID": 2,
+    "DIST_CODE": "2",
+    "STATE_CODE": "14",
+    "STATE_NAME": "Chhattisgarh",
+    "DIST_NAME": "Bastar"
+  },
+  {
+    "GEOGRAPHY_ID": 3,
+    "DIST_CODE": "3",
+    "STATE_CODE": "14",
+    "STATE_NAME": "Chhattisgarh",
+    "DIST_NAME": "Raipur"
+  },
+  {
+    "GEOGRAPHY_ID": 4,
+    "DIST_CODE": "4",
+    "STATE_CODE": "14",
+    "STATE_NAME": "Chhattisgarh",
+    "DIST_NAME": "Bilaspur"
+  },
+  {
+    "GEOGRAPHY_ID": 5,
+    "DIST_CODE": "5",
+    "STATE_CODE": "14",
+    "STATE_NAME": "Chhattisgarh",
+    "DIST_NAME": "Raigarh"
+  }
+]

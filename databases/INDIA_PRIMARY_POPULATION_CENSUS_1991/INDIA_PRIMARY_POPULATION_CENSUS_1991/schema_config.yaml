@@ -1,0 +1,206 @@
+database_name: INDIA_PRIMARY_POPULATION_CENSUS_1991
+source_file: total_data.csv
+dimension_tables:
+  DIM_GEOGRAPHY_HIERARCHY:
+    key_column: HIERARCHY_ID
+    dedup_columns:
+    - 4
+    - 6
+    - 0
+    - 1
+    - 2
+    - 3
+    columns:
+    - source_index: 4
+      target_name: LOCATION_NAME
+    - source_index: 6
+      target_name: LOCATION_TYPE
+    - source_index: 0
+      target_name: COUNTRY
+    - source_index: 1
+      target_name: STATE
+    - source_index: 2
+      target_name: DISTRICT
+    - source_index: 3
+      target_name: SUB_DISTRICT
+    foreign_keys:
+    - column: PARENT_ID
+      references: DIM_GEOGRAPHY_HIERARCHY
+fact_tables:
+  FACT_HOUSING:
+    key_column: HOUSING_ID
+    foreign_keys:
+    - column: HIERARCHY_ID
+      references: DIM_GEOGRAPHY_HIERARCHY
+    columns:
+    - source_index: 5
+      target_name: CENSUS_YEAR
+    - source_index: 7
+      target_name: NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES
+    - source_index: 8
+      target_name: NUMBER_OF_HOUSEHOLDS
+  FACT_POPULATION_CORE:
+    key_column: POPULATION_CORE_ID
+    foreign_keys:
+    - column: HIERARCHY_ID
+      references: DIM_GEOGRAPHY_HIERARCHY
+    columns:
+    - source_index: 5
+      target_name: CENSUS_YEAR
+    - source_index: 9
+      target_name: TOTAL_POPULATION
+    - source_index: 10
+      target_name: TOTAL_MALE_POPULATION
+    - source_index: 11
+      target_name: TOTAL_FEMALE_POPULATION
+  FACT_POPULATION_AGE_COHORT:
+    key_column: POPULATION_AGE_ID
+    foreign_keys:
+    - column: HIERARCHY_ID
+      references: DIM_GEOGRAPHY_HIERARCHY
+    columns:
+    - source_index: 5
+      target_name: CENSUS_YEAR
+    - source_index: 12
+      target_name: MALE_POPULATION_0_TO_6_YEARS
+    - source_index: 13
+      target_name: FEMALE_POPULATION_0_TO_6_YEARS
+  FACT_POPULATION_SOCIAL_CATEGORY:
+    key_column: POPULATION_SOCIAL_ID
+    foreign_keys:
+    - column: HIERARCHY_ID
+      references: DIM_GEOGRAPHY_HIERARCHY
+    columns:
+    - source_index: 5
+      target_name: CENSUS_YEAR
+    - source_index: 14
+      target_name: MALE_SCHEDULED_CASTE_POPULATION
+    - source_index: 15
+      target_name: FEMALE_SCHEDULED_CASTE_POPULATION
+    - source_index: 16
+      target_name: MALE_SCHEDULED_TRIBE_POPULATION
+    - source_index: 17
+      target_name: FEMALE_SCHEDULED_TRIBE_POPULATION
+  FACT_POPULATION_LITERACY:
+    key_column: POPULATION_LITERACY_ID
+    foreign_keys:
+    - column: HIERARCHY_ID
+      references: DIM_GEOGRAPHY_HIERARCHY
+    columns:
+    - source_index: 5
+      target_name: CENSUS_YEAR
+    - source_index: 18
+      target_name: MALE_ILLITERATE_POPULATION
+    - source_index: 19
+      target_name: FEMALE_ILLITERATE_POPULATION
+  FACT_WORKFORCE_STATUS:
+    key_column: WORKFORCE_STATUS_ID
+    foreign_keys:
+    - column: HIERARCHY_ID
+      references: DIM_GEOGRAPHY_HIERARCHY
+    columns:
+    - source_index: 5
+      target_name: CENSUS_YEAR
+    - source_index: 20
+      target_name: MALE_WORKING_POPULATION
+    - source_index: 21
+      target_name: FEMALE_WORKING_POPULATION
+  FACT_WORKFORCE_DETAIL:
+    key_column: WORKFORCE_DETAIL_ID
+    foreign_keys:
+    - column: HIERARCHY_ID
+      references: DIM_GEOGRAPHY_HIERARCHY
+    columns:
+    - source_index: 5
+      target_name: CENSUS_YEAR
+    - source_index: 42
+      target_name: MALE_MARGINAL_WORKERS
+    - source_index: 43
+      target_name: FEMALE_MARGINAL_WORKERS
+    - source_index: 44
+      target_name: MALE_NON_WORKERS
+    - source_index: 45
+      target_name: FEMALE_NON_WORKERS
+  FACT_WORKERS_PRIMARY_SECTOR:
+    key_column: WORKERS_PRIMARY_ID
+    foreign_keys:
+    - column: HIERARCHY_ID
+      references: DIM_GEOGRAPHY_HIERARCHY
+    columns:
+    - source_index: 5
+      target_name: CENSUS_YEAR
+    - source_index: 22
+      target_name: MALE_MAIN_WORKERS_CULTIVATORS
+    - source_index: 23
+      target_name: FEMALE_MAIN_WORKERS_CULTIVATORS
+    - source_index: 24
+      target_name: MALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS
+    - source_index: 25
+      target_name: FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS
+    - source_index: 26
+      target_name: MALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING
+    - source_index: 27
+      target_name: FEMALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING
+    - source_index: 28
+      target_name: MALE_MAIN_WORKERS_MINING_QUARRYING
+    - source_index: 29
+      target_name: FEMALE_MAIN_WORKERS_MINING_QUARRYING
+  FACT_WORKERS_SECONDARY_SECTOR:
+    key_column: WORKERS_SECONDARY_ID
+    foreign_keys:
+    - column: HIERARCHY_ID
+      references: DIM_GEOGRAPHY_HIERARCHY
+    columns:
+    - source_index: 5
+      target_name: CENSUS_YEAR
+    - source_index: 30
+      target_name: MALE_MAIN_WORKERS_MANUFACTURING_HOUSEHOLD
+    - source_index: 31
+      target_name: FEMALE_MAIN_WORKERS_MANUFACTURING_HOUSEHOLD
+    - source_index: 32
+      target_name: MALE_MAIN_WORKERS_MANUFACTURING_OTHER
+    - source_index: 33
+      target_name: FEMALE_MAIN_WORKERS_MANUFACTURING_OTHER
+    - source_index: 34
+      target_name: MALE_CONSTRUCTION_WORKERS
+    - source_index: 35
+      target_name: FEMALE_CONSTRUCTION_WORKERS
+  FACT_WORKERS_TERTIARY_SECTOR:
+    key_column: WORKERS_TERTIARY_ID
+    foreign_keys:
+    - column: HIERARCHY_ID
+      references: DIM_GEOGRAPHY_HIERARCHY
+    columns:
+    - source_index: 5
+      target_name: CENSUS_YEAR
+    - source_index: 36
+      target_name: MALE_WORKERS_TRADE_COMMERCE
+    - source_index: 37
+      target_name: FEMALE_WORKERS_TRADE_COMMERCE
+    - source_index: 38
+      target_name: MALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION
+    - source_index: 39
+      target_name: FEMALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION
+    - source_index: 40
+      target_name: MALE_WORKERS_OTHER_SERVICES
+    - source_index: 41
+      target_name: FEMALE_WORKERS_OTHER_SERVICES
+table_descriptions:
+  DIM_GEOGRAPHY_HIERARCHY: Master table for all location hierarchy data, normalized
+    to avoid redundancy.
+  FACT_HOUSING: Housing and household statistics.
+  FACT_POPULATION_CORE: Core population counts (Total, Male, Female).
+  FACT_POPULATION_AGE_COHORT: Population breakdown by key age groups (starting with
+    0-6).
+  FACT_POPULATION_SOCIAL_CATEGORY: Population categorized as Scheduled Caste or Scheduled
+    Tribe.
+  FACT_POPULATION_LITERACY: Counts of illiterate population.
+  FACT_WORKFORCE_STATUS: Broad categorization of population as Working or Non-Working.
+  FACT_WORKFORCE_DETAIL: Detailed breakdown of working population by participation
+    type (Main, Marginal, Non-Worker).
+  FACT_WORKERS_PRIMARY_SECTOR: Main workers engaged in agriculture, livestock, forestry,
+    fishing, mining, and quarrying (Primary Sector).
+  FACT_WORKERS_SECONDARY_SECTOR: Main workers in manufacturing and construction (Secondary
+    Sector).
+  FACT_WORKERS_TERTIARY_SECTOR: Main workers in trade/commerce, transport/storage/communication,
+    and other services (Tertiary Sector).

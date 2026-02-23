@@ -1,0 +1,246 @@
+database_name: INDIA_ICRISAT_District_Level_Agricultural_Data
+source_file: total_data.csv
+dimension_tables:
+  DIM_GEOGRAPHY:
+    key_column: GEOGRAPHY_ID
+    dedup_columns:
+    - 0
+    - 2
+    - 3
+    - 4
+    columns:
+    - source_index: 0
+      target_name: DIST_CODE
+    - source_index: 2
+      target_name: STATE_CODE
+    - source_index: 3
+      target_name: STATE_NAME
+    - source_index: 4
+      target_name: DIST_NAME
+  DIM_YEAR:
+    key_column: YEAR_ID
+    dedup_columns:
+    - 1
+    columns:
+    - source_index: 1
+      target_name: YEAR
+fact_tables:
+  FACT_CEREALS_MAJOR:
+    key_column: CEREAL_MAJOR_ID
+    foreign_keys:
+    - column: GEOGRAPHY_ID
+      references: DIM_GEOGRAPHY
+    - column: YEAR_ID
+      references: DIM_YEAR
+    columns:
+    - source_index: 5
+      target_name: RICE_AREA_1000HA
+    - source_index: 6
+      target_name: RICE_PRODUCTION_1000TONS
+    - source_index: 7
+      target_name: RICE_YIELD_KG_PER_HA
+    - source_index: 8
+      target_name: WHEAT_AREA_1000HA
+    - source_index: 9
+      target_name: WHEAT_PRODUCTION_1000TONS
+    - source_index: 10
+      target_name: WHEAT_YIELD_KG_PER_HA
+  FACT_CEREALS_MINOR:
+    key_column: CEREAL_MINOR_ID
+    foreign_keys:
+    - column: GEOGRAPHY_ID
+      references: DIM_GEOGRAPHY
+    - column: YEAR_ID
+      references: DIM_YEAR
+    columns:
+    - source_index: 23
+      target_name: MAIZE_AREA_1000HA
+    - source_index: 24
+      target_name: MAIZE_PRODUCTION_1000TONS
+    - source_index: 25
+      target_name: MAIZE_YIELD_KG_PER_HA
+    - source_index: 29
+      target_name: BARLEY_AREA_1000HA
+    - source_index: 30
+      target_name: BARLEY_PRODUCTION_1000TONS
+    - source_index: 31
+      target_name: BARLEY_YIELD_KG_PER_HA
+  FACT_MILLETS:
+    key_column: MILLET_ID
+    foreign_keys:
+    - column: GEOGRAPHY_ID
+      references: DIM_GEOGRAPHY
+    - column: YEAR_ID
+      references: DIM_YEAR
+    columns:
+    - source_index: 20
+      target_name: PEARL_MILLET_AREA_1000HA
+    - source_index: 21
+      target_name: PEARL_MILLET_PRODUCTION_1000TONS
+    - source_index: 22
+      target_name: PEARL_MILLET_YIELD_KG_PER_HA
+    - source_index: 26
+      target_name: FINGER_MILLET_AREA_1000HA
+    - source_index: 27
+      target_name: FINGER_MILLET_PRODUCTION_1000TONS
+    - source_index: 28
+      target_name: FINGER_MILLET_YIELD_KG_PER_HA
+  FACT_SORGHUM:
+    key_column: SORGHUM_ID
+    foreign_keys:
+    - column: GEOGRAPHY_ID
+      references: DIM_GEOGRAPHY
+    - column: YEAR_ID
+      references: DIM_YEAR
+    columns:
+    - source_index: 11
+      target_name: KHARIF_SORGHUM_AREA_1000HA
+    - source_index: 12
+      target_name: KHARIF_SORGHUM_PRODUCTION_1000TONS
+    - source_index: 13
+      target_name: KHARIF_SORGHUM_YIELD_KG_PER_HA
+    - source_index: 14
+      target_name: RABI_SORGHUM_AREA_1000HA
+    - source_index: 15
+      target_name: RABI_SORGHUM_PRODUCTION_1000TONS
+    - source_index: 16
+      target_name: RABI_SORGHUM_YIELD_KG_PER_HA
+  FACT_PULSES_MAJOR:
+    key_column: PULSE_MAJOR_ID
+    foreign_keys:
+    - column: GEOGRAPHY_ID
+      references: DIM_GEOGRAPHY
+    - column: YEAR_ID
+      references: DIM_YEAR
+    columns:
+    - source_index: 32
+      target_name: CHICKPEA_AREA_1000HA
+    - source_index: 33
+      target_name: CHICKPEA_PRODUCTION_1000TONS
+    - source_index: 34
+      target_name: CHICKPEA_YIELD_KG_PER_HA
+    - source_index: 35
+      target_name: PIGEONPEA_AREA_1000HA
+    - source_index: 36
+      target_name: PIGEONPEA_PRODUCTION_1000TONS
+    - source_index: 37
+      target_name: PIGEONPEA_YIELD_KG_PER_HA
+  FACT_PULSES_MINOR:
+    key_column: PULSE_MINOR_ID
+    foreign_keys:
+    - column: GEOGRAPHY_ID
+      references: DIM_GEOGRAPHY
+    - column: YEAR_ID
+      references: DIM_YEAR
+    columns:
+    - source_index: 38
+      target_name: MINOR_PULSES_AREA_1000HA
+    - source_index: 39
+      target_name: MINOR_PULSES_PRODUCTION_1000TONS
+    - source_index: 40
+      target_name: MINOR_PULSES_YIELD_KG_PER_HA
+  FACT_OILSEEDS_MAJOR:
+    key_column: OILSEED_MAJOR_ID
+    foreign_keys:
+    - column: GEOGRAPHY_ID
+      references: DIM_GEOGRAPHY
+    - column: YEAR_ID
+      references: DIM_YEAR
+    columns:
+    - source_index: 41
+      target_name: GROUNDNUT_AREA_1000HA
+    - source_index: 42
+      target_name: GROUNDNUT_PRODUCTION_1000TONS
+    - source_index: 43
+      target_name: GROUNDNUT_YIELD_KG_PER_HA
+    - source_index: 62
+      target_name: SOYABEAN_AREA_1000HA
+    - source_index: 63
+      target_name: SOYABEAN_PRODUCTION_1000TONS
+    - source_index: 64
+      target_name: SOYABEAN_YIELD_KG_PER_HA
+    - source_index: 47
+      target_name: RAPESEED_MUSTARD_AREA_1000HA
+    - source_index: 48
+      target_name: RAPESEED_MUSTARD_PRODUCTION_1000TONS
+    - source_index: 49
+      target_name: RAPESEED_MUSTARD_YIELD_KG_PER_HA
+  FACT_OILSEEDS_MINOR:
+    key_column: OILSEED_MINOR_ID
+    foreign_keys:
+    - column: GEOGRAPHY_ID
+      references: DIM_GEOGRAPHY
+    - column: YEAR_ID
+      references: DIM_YEAR
+    columns:
+    - source_index: 44
+      target_name: SESAMUM_AREA_1000HA
+    - source_index: 45
+      target_name: SESAMUM_PRODUCTION_1000TONS
+    - source_index: 46
+      target_name: SESAMUM_YIELD_KG_PER_HA
+    - source_index: 50
+      target_name: SAFFLOWER_AREA_1000HA
+    - source_index: 51
+      target_name: SAFFLOWER_PRODUCTION_1000TONS
+    - source_index: 52
+      target_name: SAFFLOWER_YIELD_KG_PER_HA
+    - source_index: 53
+      target_name: CASTOR_AREA_1000HA
+    - source_index: 54
+      target_name: CASTOR_PRODUCTION_1000TONS
+    - source_index: 55
+      target_name: CASTOR_YIELD_KG_PER_HA
+    - source_index: 56
+      target_name: LINSEED_AREA_1000HA
+    - source_index: 57
+      target_name: LINSEED_PRODUCTION_1000TONS
+    - source_index: 58
+      target_name: LINSEED_YIELD_KG_PER_HA
+  FACT_OILSEEDS_SUNFLOWER:
+    key_column: OILSEED_SUNFLOWER_ID
+    foreign_keys:
+    - column: GEOGRAPHY_ID
+      references: DIM_GEOGRAPHY
+    - column: YEAR_ID
+      references: DIM_YEAR
+    columns:
+    - source_index: 59
+      target_name: SUNFLOWER_AREA_1000HA
+    - source_index: 60
+      target_name: SUNFLOWER_PRODUCTION_1000TONS
+    - source_index: 61
+      target_name: SUNFLOWER_YIELD_KG_PER_HA
+  FACT_COMMERCIAL_CROPS:
+    key_column: COMMERCIAL_CROP_ID
+    foreign_keys:
+    - column: GEOGRAPHY_ID
+      references: DIM_GEOGRAPHY
+    - column: YEAR_ID
+      references: DIM_YEAR
+    columns:
+    - source_index: 68
+      target_name: SUGARCANE_AREA_1000HA
+    - source_index: 69
+      target_name: SUGARCANE_PRODUCTION_1000TONS
+    - source_index: 70
+      target_name: SUGARCANE_YIELD_KG_PER_HA
+    - source_index: 71
+      target_name: COTTON_AREA_1000HA
+    - source_index: 72
+      target_name: COTTON_PRODUCTION_1000TONS
+    - source_index: 73
+      target_name: COTTON_YIELD_KG_PER_HA
+table_descriptions:
+  DIM_GEOGRAPHY: Geographic hierarchy for states and districts
+  DIM_YEAR: Time dimension for agricultural years
+  FACT_CEREALS_MAJOR: Production metrics for major cereal crops
+  FACT_CEREALS_MINOR: Production metrics for minor cereal crops
+  FACT_MILLETS: Production metrics for millet crops
+  FACT_SORGHUM: Production metrics for sorghum crops by season
+  FACT_PULSES_MAJOR: Production metrics for major pulse crops
+  FACT_PULSES_MINOR: Production metrics for minor/aggregated pulses
+  FACT_OILSEEDS_MAJOR: Production metrics for major oilseed crops
+  FACT_OILSEEDS_MINOR: Production metrics for minor oilseed crops
+  FACT_OILSEEDS_SUNFLOWER: Production metrics for sunflower oilseed crop
+  FACT_COMMERCIAL_CROPS: Production metrics for commercial/fiber crops

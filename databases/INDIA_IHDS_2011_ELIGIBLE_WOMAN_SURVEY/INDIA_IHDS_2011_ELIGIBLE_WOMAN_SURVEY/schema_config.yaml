@@ -1,0 +1,152 @@
+database_name: INDIA_IHDS_2011_ELIGIBLE_WOMAN_SURVEY
+source_file: total_data.csv
+dimension_tables:
+  DIM_GEOGRAPHY:
+    key_column: GEOGRAPHY_ID
+    dedup_columns:
+    - 0
+    - 1
+    - 2
+    - 6
+    - 20
+    columns:
+    - source_index: 0
+      target_name: STATE
+    - source_index: 1
+      target_name: DISTRICT
+    - source_index: 2
+      target_name: PSU_VILLAGE_OR_NEIGHBORHOOD_CODE
+    - source_index: 6
+      target_name: UNIQUE_PSU_ID_CLUSTER
+    - source_index: 20
+      target_name: DISTRICT_2001_CENSUS_LABELED_CODE
+  DIM_HOUSEHOLD:
+    key_column: UNIQUE_HOUSEHOLD_ID
+    dedup_columns:
+    - 3
+    - 4
+    columns:
+    - source_index: 3
+      target_name: HOUSEHOLD_ID_3_DIGIT
+    - source_index: 4
+      target_name: SPLIT_HOUSEHOLD_ID
+    foreign_keys:
+    - column: GEOGRAPHY_ID
+      references: DIM_GEOGRAPHY
+  DIM_PERSON:
+    key_column: UNIQUE_PERSON_ID
+    dedup_columns:
+    - 5
+    - 9
+    - 48
+    columns:
+    - source_index: 5
+      target_name: ELIGIBLE_WOMAN_ROSTER_ID
+    - source_index: 9
+      target_name: DATE_OF_BIRTH_INTEGER
+    - source_index: 48
+      target_name: ELIGIBLE_WOMEN_WEIGHT_15_TO_49
+    foreign_keys:
+    - column: UNIQUE_HOUSEHOLD_ID
+      references: DIM_HOUSEHOLD
+fact_tables:
+  FACT_IMMUNIZATION:
+    key_column: IMMUNIZATION_ID
+    foreign_keys:
+    - column: UNIQUE_PERSON_ID
+      references: DIM_PERSON
+    columns:
+    - source_index: 10
+      target_name: GOVERNMENT_MONEY_FOR_HOSPITAL_DELIVERY_RUPEES
+    - source_index: 11
+      target_name: BCG_IMMUNIZATION_DATE_INTEGER
+    - source_index: 12
+      target_name: POLIO0_IMMUNIZATION_DATE_INTEGER
+    - source_index: 13
+      target_name: DPT1_IMMUNIZATION_DATE_INTEGER
+    - source_index: 14
+      target_name: DPT2_IMMUNIZATION_DATE_INTEGER
+    - source_index: 15
+      target_name: DPT3_IMMUNIZATION_DATE_INTEGER
+    - source_index: 16
+      target_name: POLIO1_IMMUNIZATION_DATE_INTEGER
+    - source_index: 17
+      target_name: POLIO2_IMMUNIZATION_DATE_INTEGER
+    - source_index: 18
+      target_name: POLIO3_IMMUNIZATION_DATE_INTEGER
+    - source_index: 19
+      target_name: MEASLES_IMMUNIZATION_DATE_INTEGER
+  FACT_HOUSEHOLD_CONSUMPTION:
+    key_column: HOUSEHOLD_CONSUMPTION_ID
+    foreign_keys:
+    - column: UNIQUE_HOUSEHOLD_ID
+      references: DIM_HOUSEHOLD
+    columns:
+    - source_index: 21
+      target_name: TOTAL_HOUSEHOLD_CONSUMPTION_EXPENDITURE
+    - source_index: 23
+      target_name: INCOME_FROM_CROPS_MINUS_EXPENSES
+    - source_index: 24
+      target_name: INCOME_FROM_RENTED_LAND_AND_OTHER_PROPERTY
+    - source_index: 26
+      target_name: INCOME_FROM_AGRICULTURE_MINUS_EXPENSES_RUPEES
+  FACT_HOUSEHOLD_INCOME_SOURCES:
+    key_column: INCOME_SOURCE_ID
+    foreign_keys:
+    - column: UNIQUE_HOUSEHOLD_ID
+      references: DIM_HOUSEHOLD
+    columns:
+    - source_index: 25
+      target_name: INCOME_FROM_ANIMALS_MARKET_PLUS_HOME_MINUS_COST_RUPEES
+    - source_index: 27
+      target_name: ALL_BUSINESSES_NET_INCOME_RUPEES
+    - source_index: 28
+      target_name: ALL_BUSINESSES_NET_CALCULATED_INCOME_RUPEES
+    - source_index: 29
+      target_name: INCOME_FROM_PROPERTY_AND_PENSIONS_RUPEES
+    - source_index: 30
+      target_name: ANNUAL_HOUSEHOLD_WAGE_AND_SALARY_EARNINGS_WITH_BONUSES_RUPEES
+    - source_index: 31
+      target_name: ALL_GOVERNMENT_BENEFITS_INCOME_RUPEES
+    - source_index: 32
+      target_name: REMITTANCES_RECEIVED_FROM_NON_RESIDENTS_LAST_YEAR_RUPEES
+    - source_index: 35
+      target_name: INCOME_NON_AGRICULTURAL_WAGE_RUPEES
+    - source_index: 36
+      target_name: INCOME_FARM_WAGE_RUPEES
+    - source_index: 37
+      target_name: INCOME_SALARY_POSITION_RUPEES
+    - source_index: 38
+      target_name: INCOME_NREGA_RUPEES
+    - source_index: 46
+      target_name: INDIVIDUAL_OTHER_HOUSEHOLD_INCOME_RUPEES
+  FACT_INDIVIDUAL_WORK_HOURS:
+    key_column: WORK_HOURS_ID
+    foreign_keys:
+    - column: UNIQUE_PERSON_ID
+      references: DIM_PERSON
+    columns:
+    - source_index: 39
+      target_name: TOTAL_WORK_HOURS_PER_YEAR
+    - source_index: 40
+      target_name: FARM_WORK_HOURS_PER_YEAR
+    - source_index: 41
+      target_name: NONFARM_BUSINESS_HOURS_PER_YEAR_ALL_BUSINESSES
+    - source_index: 42
+      target_name: AGRICULTURAL_LABOR_HOURS_PER_YEAR
+    - source_index: 43
+      target_name: NON_AGRICULTURAL_LABOR_HOURS_PER_YEAR
+    - source_index: 44
+      target_name: SALARY_POSITION_HOURS_PER_YEAR
+    - source_index: 45
+      target_name: NON_NREGA_LABOR_HOURS_PER_YEAR
+    - source_index: 47
+      target_name: SPOUSE_TOTAL_WORK_HOURS_PER_YEAR
+table_descriptions:
+  DIM_GEOGRAPHY: Geographic hierarchy and administrative codes
+  DIM_HOUSEHOLD: Household identification and basic structure
+  DIM_PERSON: Core individual identification and demographic data
+  FACT_IMMUNIZATION: Child immunization dates for eligible women's last birth
+  FACT_HOUSEHOLD_CONSUMPTION: Household expenditure and consumption metrics
+  FACT_HOUSEHOLD_INCOME_SOURCES: Detailed breakdown of household income sources
+  FACT_INDIVIDUAL_WORK_HOURS: Individual labor hours by work category

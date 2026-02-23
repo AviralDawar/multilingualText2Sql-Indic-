@@ -1,0 +1,22 @@
+[
+  {
+    "GEOGRAPHY_ID": 1,
+    "AREA_ACCIDENT_OCCURRED": "Residential areas"
+  },
+  {
+    "GEOGRAPHY_ID": 2,
+    "AREA_ACCIDENT_OCCURRED": "Office areas"
+  },
+  {
+    "GEOGRAPHY_ID": 3,
+    "AREA_ACCIDENT_OCCURRED": "Recreational areas"
+  },
+  {
+    "GEOGRAPHY_ID": 4,
+    "AREA_ACCIDENT_OCCURRED": "Industrial areas"
+  },
+  {
+    "GEOGRAPHY_ID": 5,
+    "AREA_ACCIDENT_OCCURRED": "Outside rural areas"
+  }
+]

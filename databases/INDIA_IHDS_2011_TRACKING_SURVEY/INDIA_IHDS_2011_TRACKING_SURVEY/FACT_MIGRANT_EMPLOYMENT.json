@@ -1,0 +1,32 @@
+[
+  {
+    "MIGRANT_EMPLOYMENT_ID": 1,
+    "MIGRANT_ID": 1,
+    "EMPLOYMENT_STATUS_ID": 1,
+    "OCCUPATION_ID": 1
+  },
+  {
+    "MIGRANT_EMPLOYMENT_ID": 2,
+    "MIGRANT_ID": 2,
+    "EMPLOYMENT_STATUS_ID": 2,
+    "OCCUPATION_ID": 2
+  },
+  {
+    "MIGRANT_EMPLOYMENT_ID": 3,
+    "MIGRANT_ID": 3,
+    "EMPLOYMENT_STATUS_ID": 3,
+    "OCCUPATION_ID": 3
+  },
+  {
+    "MIGRANT_EMPLOYMENT_ID": 4,
+    "MIGRANT_ID": 4,
+    "EMPLOYMENT_STATUS_ID": 2,
+    "OCCUPATION_ID": 2
+  },
+  {
+    "MIGRANT_EMPLOYMENT_ID": 5,
+    "MIGRANT_ID": 5,
+    "EMPLOYMENT_STATUS_ID": 2,
+    "OCCUPATION_ID": 2
+  }
+]

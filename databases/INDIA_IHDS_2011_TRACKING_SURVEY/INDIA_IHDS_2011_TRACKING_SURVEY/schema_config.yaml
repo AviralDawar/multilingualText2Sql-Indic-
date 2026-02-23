@@ -1,0 +1,220 @@
+database_name: INDIA_IHDS_2011_TRACKING_SURVEY
+source_file: total_data.csv
+dimension_tables:
+  DIM_GEOGRAPHY_HIERARCHY:
+    key_column: GEOGRAPHY_ID
+    dedup_columns:
+    - 0
+    - 1
+    - 2
+    columns:
+    - source_index: 0
+      target_name: STATE_CODE
+    - source_index: 1
+      target_name: DISTRICT_CODE
+    - source_index: 2
+      target_name: PSU_CODE
+  DIM_GEOGRAPHY_DETAIL:
+    key_column: LOCATION_ID
+    dedup_columns:
+    - 33
+    columns:
+    - source_index: 33
+      target_name: LOCATION_NAME
+  DIM_HOUSEHOLD_STATUS:
+    key_column: HOUSEHOLD_STATUS_ID
+    dedup_columns:
+    - 14
+    - 15
+    columns:
+    - source_index: 14
+      target_name: COMPLETION_STATUS
+    - source_index: 15
+      target_name: COMPLETION_STATUS_OTHER
+  DIM_PERSON_STATUS:
+    key_column: PERSON_STATUS_ID
+    dedup_columns:
+    - 6
+    - 8
+    columns:
+    - source_index: 6
+      target_name: TRACKING_STATUS
+    - source_index: 8
+      target_name: RELATIONSHIP_TO_HEAD
+  DIM_DEMOGRAPHIC_CODES:
+    key_column: DEMOGRAPHIC_CODE_ID
+    dedup_columns:
+    - 7
+    - 10
+    columns:
+    - source_index: 7
+      target_name: SEX_CODE
+    - source_index: 10
+      target_name: MARITAL_STATUS_CODE
+  DIM_OCCUPATION_CODES:
+    key_column: OCCUPATION_ID
+    dedup_columns:
+    - 31
+    - 30
+    columns:
+    - source_index: 31
+      target_name: OCCUPATION_CODE
+    - source_index: 30
+      target_name: OCCUPATION_DESCRIPTION
+  DIM_EMPLOYMENT_STATUS:
+    key_column: EMPLOYMENT_STATUS_ID
+    dedup_columns:
+    - 28
+    - 29
+    columns:
+    - source_index: 28
+      target_name: ACTIVITY_STATUS
+    - source_index: 29
+      target_name: EMPLOYMENT_TYPE
+  DIM_MIGRATION_REASONS:
+    key_column: MIGRATION_REASON_ID
+    dedup_columns:
+    - 36
+    columns:
+    - source_index: 36
+      target_name: REASON_DESCRIPTION
+fact_tables:
+  FACT_HOUSEHOLD_CORE:
+    key_column: HOUSEHOLD_ID
+    foreign_keys:
+    - column: GEOGRAPHY_ID
+      references: DIM_GEOGRAPHY_HIERARCHY
+    - column: HOUSEHOLD_STATUS_ID
+      references: DIM_HOUSEHOLD_STATUS
+    columns:
+    - source_index: 3
+      target_name: HOUSEHOLD_NUMBER
+    - source_index: 4
+      target_name: HOUSEHOLD_SPLIT_NUMBER
+    - source_index: 12
+      target_name: NEW_HOUSEHOLD_SPLIT_NUMBER
+  FACT_PERSON_CORE:
+    key_column: PERSON_ID
+    foreign_keys:
+    - column: HOUSEHOLD_ID
+      references: FACT_HOUSEHOLD_CORE
+    - column: PERSON_STATUS_ID
+      references: DIM_PERSON_STATUS
+    - column: DEMOGRAPHIC_CODE_ID
+      references: DIM_DEMOGRAPHIC_CODES
+    - column: CURRENT_LOCATION_ID
+      references: DIM_GEOGRAPHY_DETAIL
+    columns:
+    - source_index: 5
+      target_name: PERSON_NUMBER
+    - source_index: 9
+      target_name: AGE
+  FACT_HOUSEHOLD_TRACKING:
+    key_column: HOUSEHOLD_TRACKING_ID
+    foreign_keys:
+    - column: HOUSEHOLD_ID
+      references: FACT_HOUSEHOLD_CORE
+    columns:
+    - source_index: 13
+      target_name: SAME_ADDRESS_INDICATOR
+  FACT_DECEASED_PERSON_DETAILS:
+    key_column: DECEASED_ID
+    foreign_keys:
+    - column: PERSON_ID
+      references: FACT_PERSON_CORE
+    - column: PLACE_OF_DEATH_ID
+      references: DIM_GEOGRAPHY_DETAIL
+    columns:
+    - source_index: 17
+      target_name: YEARS_SINCE_DEATH
+    - source_index: 19
+      target_name: MARITAL_STATUS_AT_DEATH_CODE
+    - source_index: 20
+      target_name: EDUCATION_AT_DEATH_CODE
+  FACT_DECEASED_OCCUPATION:
+    key_column: DECEASED_OCCUPATION_ID
+    foreign_keys:
+    - column: DECEASED_ID
+      references: FACT_DECEASED_PERSON_DETAILS
+    - column: OCCUPATION_ID
+      references: DIM_OCCUPATION_CODES
+    columns:
+    - source_index: 21
+      target_name: EMPLOYED_AT_DEATH
+  FACT_MIGRANT_PERSONAL:
+    key_column: MIGRANT_ID
+    foreign_keys:
+    - column: PERSON_ID
+      references: FACT_PERSON_CORE
+    columns:
+    - source_index: 26
+      target_name: MARITAL_STATUS_AT_MIGRATION_CODE
+    - source_index: 27
+      target_name: EDUCATION_AT_MIGRATION_CODE
+    - source_index: 38
+      target_name: MARRIED_WHEN_MIGRATED_INDICATOR
+  FACT_MIGRANT_EMPLOYMENT:
+    key_column: MIGRANT_EMPLOYMENT_ID
+    foreign_keys:
+    - column: MIGRANT_ID
+      references: FACT_MIGRANT_PERSONAL
+    - column: EMPLOYMENT_STATUS_ID
+      references: DIM_EMPLOYMENT_STATUS
+    - column: OCCUPATION_ID
+      references: DIM_OCCUPATION_CODES
+    columns: []
+  FACT_MIGRATION_GEOGRAPHY:
+    key_column: MIGRATION_GEOGRAPHY_ID
+    foreign_keys:
+    - column: MIGRANT_ID
+      references: FACT_MIGRANT_PERSONAL
+    - column: CURRENT_LOCATION_ID
+      references: DIM_GEOGRAPHY_DETAIL
+    - column: MIGRANT_RESIDENCE_ID
+      references: DIM_GEOGRAPHY_DETAIL
+    columns:
+    - source_index: 34
+      target_name: STATE_OF_RESIDENCE_CODE
+  FACT_MIGRATION_BEHAVIOR:
+    key_column: MIGRATION_BEHAVIOR_ID
+    foreign_keys:
+    - column: MIGRANT_ID
+      references: FACT_MIGRANT_PERSONAL
+    - column: MIGRATION_REASON_ID
+      references: DIM_MIGRATION_REASONS
+    columns:
+    - source_index: 32
+      target_name: YEARS_SINCE_MIGRATION
+    - source_index: 35
+      target_name: FREQUENCY_OF_VISITING
+    - source_index: 37
+      target_name: PERMANENTLY_MOVED_INDICATOR
+  FACT_MIGRATION_LOGISTICS:
+    key_column: MIGRATION_LOGISTICS_ID
+    foreign_keys:
+    - column: MIGRANT_ID
+      references: FACT_MIGRANT_PERSONAL
+    columns:
+    - source_index: 40
+      target_name: MIGRATION_FACILITATED_BY
+    - source_index: 39
+      target_name: SPOUSE_LOCATION
+table_descriptions:
+  DIM_GEOGRAPHY_HIERARCHY: Normalized geographic hierarchy with proper 3NF structure
+  DIM_GEOGRAPHY_DETAIL: Geographic location details for various contexts
+  DIM_HOUSEHOLD_STATUS: Household completion and tracking status codes
+  DIM_PERSON_STATUS: Person tracking and relationship status codes
+  DIM_DEMOGRAPHIC_CODES: Standardized codes for demographic attributes
+  DIM_OCCUPATION_CODES: Standardized occupation classification system
+  DIM_EMPLOYMENT_STATUS: Employment and activity status classification
+  DIM_MIGRATION_REASONS: Standardized migration reason codes
+  FACT_HOUSEHOLD_CORE: Core household identification and structure
+  FACT_PERSON_CORE: Core person demographic information
+  FACT_HOUSEHOLD_TRACKING: Household tracking and address indicators
+  FACT_DECEASED_PERSON_DETAILS: Details about deceased household members
+  FACT_DECEASED_OCCUPATION: Occupation information for deceased persons
+  FACT_MIGRANT_PERSONAL: Personal characteristics of migrant/split members
+  FACT_MIGRANT_EMPLOYMENT: Employment details of migrant/split members
+  FACT_MIGRATION_GEOGRAPHY: Geographic details of migrant locations
+  FACT_MIGRATION_BEHAVIOR: Behavioral patterns of migration
+  FACT_MIGRATION_LOGISTICS: Migration facilitation and spouse details

@@ -1,0 +1,27 @@
+[
+  {
+    "ENVIRONMENT_ID": 1,
+    "LIGHT_CONDITIONS": "Daylight",
+    "WEATHER_CONDITIONS": "Normal"
+  },
+  {
+    "ENVIRONMENT_ID": 2,
+    "LIGHT_CONDITIONS": "Darkness - lights lit",
+    "WEATHER_CONDITIONS": "Normal"
+  },
+  {
+    "ENVIRONMENT_ID": 3,
+    "LIGHT_CONDITIONS": "Darkness - lights lit",
+    "WEATHER_CONDITIONS": "Raining"
+  },
+  {
+    "ENVIRONMENT_ID": 4,
+    "LIGHT_CONDITIONS": "Daylight",
+    "WEATHER_CONDITIONS": "Raining"
+  },
+  {
+    "ENVIRONMENT_ID": 5,
+    "LIGHT_CONDITIONS": "Darkness - no lighting",
+    "WEATHER_CONDITIONS": "Normal"
+  }
+]

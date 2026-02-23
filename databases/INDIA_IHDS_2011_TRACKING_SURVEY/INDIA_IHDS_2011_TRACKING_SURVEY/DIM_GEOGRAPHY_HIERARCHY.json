@@ -1,0 +1,32 @@
+[
+  {
+    "GEOGRAPHY_ID": 1,
+    "STATE_CODE": "Rajasthan",
+    "DISTRICT_CODE": "20",
+    "PSU_CODE": "1"
+  },
+  {
+    "GEOGRAPHY_ID": 2,
+    "STATE_CODE": "Maharashtra",
+    "DISTRICT_CODE": "5",
+    "PSU_CODE": "1"
+  },
+  {
+    "GEOGRAPHY_ID": 3,
+    "STATE_CODE": "Rajasthan",
+    "DISTRICT_CODE": "9",
+    "PSU_CODE": "1"
+  },
+  {
+    "GEOGRAPHY_ID": 4,
+    "STATE_CODE": "Andhra Pradesh",
+    "DISTRICT_CODE": "7",
+    "PSU_CODE": "1"
+  },
+  {
+    "GEOGRAPHY_ID": 5,
+    "STATE_CODE": "Jammu & Kashmir",
+    "DISTRICT_CODE": "2",
+    "PSU_CODE": "1"
+  }
+]

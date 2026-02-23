@@ -1,0 +1,32 @@
+[
+  {
+    "MIGRATION_LOGISTICS_ID": 1,
+    "MIGRANT_ID": 1,
+    "MIGRATION_FACILITATED_BY": "Relative",
+    "SPOUSE_LOCATION": "With respondent"
+  },
+  {
+    "MIGRATION_LOGISTICS_ID": 2,
+    "MIGRANT_ID": 2,
+    "MIGRATION_FACILITATED_BY": "Relative",
+    "SPOUSE_LOCATION": "With respondent"
+  },
+  {
+    "MIGRATION_LOGISTICS_ID": 3,
+    "MIGRANT_ID": 3,
+    "MIGRATION_FACILITATED_BY": "Relative",
+    "SPOUSE_LOCATION": "With respondent"
+  },
+  {
+    "MIGRATION_LOGISTICS_ID": 4,
+    "MIGRANT_ID": 4,
+    "MIGRATION_FACILITATED_BY": "Relative",
+    "SPOUSE_LOCATION": "With respondent"
+  },
+  {
+    "MIGRATION_LOGISTICS_ID": 5,
+    "MIGRANT_ID": 5,
+    "MIGRATION_FACILITATED_BY": "Relative",
+    "SPOUSE_LOCATION": "With respondent"
+  }
+]

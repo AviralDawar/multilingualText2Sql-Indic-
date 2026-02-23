@@ -1,0 +1,42 @@
+[
+  {
+    "GEOGRAPHY_ID": 1,
+    "STATE": "Jammu & Kashmir",
+    "DISTRICT": "Baramula",
+    "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE": "1",
+    "UNIQUE_PSU_ID_CLUSTER": "10201",
+    "DISTRICT_2001_CENSUS_LABELED_CODE": "Baramula"
+  },
+  {
+    "GEOGRAPHY_ID": 2,
+    "STATE": "Jammu & Kashmir",
+    "DISTRICT": "Baramula",
+    "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE": "2",
+    "UNIQUE_PSU_ID_CLUSTER": "10202",
+    "DISTRICT_2001_CENSUS_LABELED_CODE": "Baramula"
+  },
+  {
+    "GEOGRAPHY_ID": 3,
+    "STATE": "Jammu & Kashmir",
+    "DISTRICT": "Baramula",
+    "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE": "3",
+    "UNIQUE_PSU_ID_CLUSTER": "10203",
+    "DISTRICT_2001_CENSUS_LABELED_CODE": "Baramula"
+  },
+  {
+    "GEOGRAPHY_ID": 4,
+    "STATE": "Jammu & Kashmir",
+    "DISTRICT": "Baramula",
+    "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE": "4",
+    "UNIQUE_PSU_ID_CLUSTER": "10204",
+    "DISTRICT_2001_CENSUS_LABELED_CODE": "Baramula"
+  },
+  {
+    "GEOGRAPHY_ID": 5,
+    "STATE": "Jammu & Kashmir",
+    "DISTRICT": "Baramula",
+    "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE": "5",
+    "UNIQUE_PSU_ID_CLUSTER": "10205",
+    "DISTRICT_2001_CENSUS_LABELED_CODE": "Baramula"
+  }
+]

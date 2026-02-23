@@ -1,0 +1,32 @@
+[
+  {
+    "BRIDGE_ACCIDENT_CASUALTY_ID": 1,
+    "ACCIDENT_ID": 1,
+    "CASUALTY_ID": 1,
+    "CASUALTY_SEVERITY": "2"
+  },
+  {
+    "BRIDGE_ACCIDENT_CASUALTY_ID": 2,
+    "ACCIDENT_ID": 2,
+    "CASUALTY_ID": 2,
+    "CASUALTY_SEVERITY": "2"
+  },
+  {
+    "BRIDGE_ACCIDENT_CASUALTY_ID": 3,
+    "ACCIDENT_ID": 3,
+    "CASUALTY_ID": 3,
+    "CASUALTY_SEVERITY": "3"
+  },
+  {
+    "BRIDGE_ACCIDENT_CASUALTY_ID": 4,
+    "ACCIDENT_ID": 4,
+    "CASUALTY_ID": 4,
+    "CASUALTY_SEVERITY": "3"
+  },
+  {
+    "BRIDGE_ACCIDENT_CASUALTY_ID": 5,
+    "ACCIDENT_ID": 5,
+    "CASUALTY_ID": 5,
+    "CASUALTY_SEVERITY": "3"
+  }
+]

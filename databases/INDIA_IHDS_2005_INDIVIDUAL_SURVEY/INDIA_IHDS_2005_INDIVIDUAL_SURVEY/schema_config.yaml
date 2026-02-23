@@ -1,0 +1,174 @@
+database_name: INDIA_IHDS_2005_HOUSEHOLD_SURVEY
+source_file: total_data.csv
+dimension_tables:
+  DIM_GEOGRAPHY:
+    key_column: GEOGRAPHY_ID
+    dedup_columns:
+    - 0
+    - 1
+    - 2
+    - 3
+    columns:
+    - source_index: 0
+      target_name: STATE
+    - source_index: 1
+      target_name: DISTRICT
+    - source_index: 2
+      target_name: PSU_VILLAGE_OR_NEIGHBORHOOD_CODE
+    - source_index: 3
+      target_name: CENSUS_2001_URBAN_RURAL_FLAG
+  DIM_SURVEY_METHODOLOGY:
+    key_column: SURVEY_METHODOLOGY_ID
+    dedup_columns:
+    - 4
+    - 13
+    columns:
+    - source_index: 4
+      target_name: SURVEY_DESIGN_WEIGHT
+    - source_index: 13
+      target_name: IS_REINTERVIEW_HOUSEHOLD
+  DIM_HOUSEHOLD_SOCIOECONOMIC:
+    key_column: SOCIOECONOMIC_ID
+    dedup_columns:
+    - 12
+    - 14
+    columns:
+    - source_index: 12
+      target_name: CASTE_RELIGION_GROUP_8_CATEGORY
+    - source_index: 14
+      target_name: HOUSEHOLD_ASSETS_INDEX
+  DIM_EDUCATION_ATTAINMENT_ADULTS:
+    key_column: EDUCATION_ADULTS_ID
+    dedup_columns:
+    - 15
+    - 16
+    - 17
+    columns:
+    - source_index: 15
+      target_name: HIGHEST_EDUCATION_LEVEL_AMONG_ADULTS_21_PLUS
+    - source_index: 16
+      target_name: HIGHEST_EDUCATION_LEVEL_AMONG_FEMALES_21_PLUS
+    - source_index: 17
+      target_name: HIGHEST_EDUCATION_LEVEL_AMONG_MALES_21_PLUS
+fact_tables:
+  FACT_HOUSEHOLD_COMPOSITION:
+    key_column: HOUSEHOLD_ID
+    foreign_keys:
+    - column: GEOGRAPHY_ID
+      references: DIM_GEOGRAPHY
+    - column: SURVEY_METHODOLOGY_ID
+      references: DIM_SURVEY_METHODOLOGY
+    - column: SOCIOECONOMIC_ID
+      references: DIM_HOUSEHOLD_SOCIOECONOMIC
+    columns:
+    - source_index: 5
+      target_name: HOUSEHOLD_MEMBER_COUNT
+    - source_index: 6
+      target_name: HOUSEHOLD_CHILDREN_0_TO_14_COUNT
+    - source_index: 7
+      target_name: HOUSEHOLD_YOUTH_15_TO_21_COUNT
+    - source_index: 8
+      target_name: HOUSEHOLD_ADULTS_22_PLUS_COUNT
+    - source_index: 9
+      target_name: HOUSEHOLD_MARRIED_WOMEN_COUNT
+    - source_index: 10
+      target_name: HOUSEHOLD_MARRIED_MEN_COUNT
+  FACT_HOUSEHOLD_INCOME_SOURCES:
+    key_column: HOUSEHOLD_INCOME_SOURCES_ID
+    foreign_keys:
+    - column: HOUSEHOLD_ID
+      references: FACT_HOUSEHOLD_COMPOSITION
+    columns:
+    - source_index: 21
+      target_name: HOUSEHOLD_TOTAL_INCOME
+    - source_index: 22
+      target_name: HOUSEHOLD_FAMILY_FARM_INCOME
+    - source_index: 23
+      target_name: HOUSEHOLD_AGRICULTURAL_WAGE_INCOME
+    - source_index: 24
+      target_name: HOUSEHOLD_NON_AGRICULTURAL_WAGE_INCOME
+    - source_index: 25
+      target_name: HOUSEHOLD_SALARY_INCOME
+    - source_index: 26
+      target_name: HOUSEHOLD_NET_BUSINESS_INCOME
+    - source_index: 27
+      target_name: HOUSEHOLD_REMITTANCE_INCOME
+    - source_index: 28
+      target_name: HOUSEHOLD_GOVERNMENT_BENEFIT_INCOME
+    - source_index: 29
+      target_name: HOUSEHOLD_OTHER_INCOME_PROPERTY_PENSION_ETC
+  FACT_HOUSEHOLD_POVERTY_METRICS:
+    key_column: HOUSEHOLD_POVERTY_METRICS_ID
+    foreign_keys:
+    - column: HOUSEHOLD_ID
+      references: FACT_HOUSEHOLD_COMPOSITION
+    columns:
+    - source_index: 11
+      target_name: MONTHLY_CONSUMPTION_PER_CAPITA
+    - source_index: 30
+      target_name: PER_CAPITA_POVERTY_LINE
+    - source_index: 31
+      target_name: BELOW_POVERTY_LINE_INDICATOR
+  FACT_PERSON_DEMOGRAPHICS:
+    key_column: PERSON_ID
+    foreign_keys:
+    - column: HOUSEHOLD_ID
+      references: FACT_HOUSEHOLD_COMPOSITION
+    columns:
+    - source_index: 33
+      target_name: PERSON_ROSTER_SEQUENCE_NUMBER
+    - source_index: 34
+      target_name: PERSON_GENDER
+    - source_index: 35
+      target_name: PERSON_RELATIONSHIP_TO_HOUSEHOLD_HEAD
+    - source_index: 36
+      target_name: PERSON_AGE_YEARS
+    - source_index: 37
+      target_name: PERSON_MARITAL_STATUS
+    - source_index: 38
+      target_name: NUMBER_OF_JOBS_HELD
+    - source_index: 18
+      target_name: WORKED_ANY_JOB_INDICATOR
+    - source_index: 19
+      target_name: WORKED_ON_FAMILY_FARM_INDICATOR
+    - source_index: 20
+      target_name: WORKED_IN_ANIMAL_CARE_INDICATOR
+    - source_index: 47
+      target_name: HEIGHT_MEASUREMENT
+    - source_index: 48
+      target_name: HEIGHT_MEASUREMENT_POSITION
+    - source_index: 49
+      target_name: WEIGHT_FIRST_MEASUREMENT
+  FACT_PERSON_EDUCATION:
+    key_column: PERSON_EDUCATION_ID
+    foreign_keys:
+    - column: PERSON_ID
+      references: FACT_PERSON_DEMOGRAPHICS
+    columns:
+    - source_index: 39
+      target_name: EDUCATION_LITERACY_STATUS
+    - source_index: 40
+      target_name: EDUCATION_EVER_ATTENDED_SCHOOL
+    - source_index: 41
+      target_name: EDUCATION_CURRENTLY_ENROLLED
+    - source_index: 42
+      target_name: EDUCATION_YEARS_COMPLETED
+    - source_index: 43
+      target_name: EDUCATION_EVER_REPEATED_GRADE
+    - source_index: 44
+      target_name: EDUCATION_SECONDARY_CLASS_LEVEL
+    - source_index: 45
+      target_name: EDUCATION_POST_SECONDARY_SUBJECT
+    - source_index: 46
+      target_name: EDUCATION_COLLEGE_OR_VOCATIONAL_STATUS
+table_descriptions:
+  DIM_GEOGRAPHY: Geographic hierarchy and location identifiers
+  DIM_SURVEY_METHODOLOGY: Survey design and methodology parameters
+  DIM_HOUSEHOLD_SOCIOECONOMIC: Household socioeconomic classification and assets
+  DIM_EDUCATION_ATTAINMENT_ADULTS: Highest education levels among adults 21+ at household
+    level
+  FACT_HOUSEHOLD_COMPOSITION: Household demographic composition and member counts
+  FACT_HOUSEHOLD_INCOME_SOURCES: Detailed household income from various sources
+  FACT_HOUSEHOLD_POVERTY_METRICS: Household consumption and poverty indicators
+  FACT_PERSON_DEMOGRAPHICS: Individual person demographic and employment information
+  FACT_PERSON_EDUCATION: Individual education details, enrollment, and attainment

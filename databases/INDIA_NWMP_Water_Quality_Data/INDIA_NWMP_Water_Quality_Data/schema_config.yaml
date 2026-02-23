@@ -1,0 +1,174 @@
+database_name: INDIA_NWMP_Water_Quality_Data
+source_file: total_data.csv
+dimension_tables:
+  DIM_COUNTRY:
+    key_column: COUNTRY_ID
+    dedup_columns:
+    - 0
+    columns:
+    - source_index: 0
+      target_name: COUNTRY
+  DIM_STATE:
+    key_column: STATE_ID
+    dedup_columns:
+    - 1
+    columns:
+    - source_index: 1
+      target_name: STATE
+    foreign_keys:
+    - column: COUNTRY_ID
+      references: DIM_COUNTRY
+  DIM_STATION:
+    key_column: STATION_ID
+    dedup_columns:
+    - 3
+    - 4
+    - 5
+    columns:
+    - source_index: 3
+      target_name: STATION_CODE
+    - source_index: 4
+      target_name: STATION_NAME
+    - source_index: 5
+      target_name: TYPE_OF_WATER_BODY
+    foreign_keys:
+    - column: STATE_ID
+      references: DIM_STATE
+  DIM_TIME:
+    key_column: YEAR
+    dedup_columns: []
+    columns: []
+fact_tables:
+  FACT_THERMAL:
+    key_column: FACT_THERMAL_ID
+    foreign_keys:
+    - column: STATION_ID
+      references: DIM_STATION
+    - column: YEAR
+      references: DIM_TIME
+    columns:
+    - source_index: 6
+      target_name: MIN_TEMPERATURE_C
+    - source_index: 7
+      target_name: MAX_TEMPERATURE_C
+  FACT_OXYGEN_DEMAND:
+    key_column: FACT_OXYGEN_DEMAND_ID
+    foreign_keys:
+    - column: STATION_ID
+      references: DIM_STATION
+    - column: YEAR
+      references: DIM_TIME
+    columns:
+    - source_index: 8
+      target_name: MIN_DISSOLVED_OXYGEN_MG_PER_L
+    - source_index: 9
+      target_name: MAX_DISSOLVED_OXYGEN_MG_PER_L
+    - source_index: 14
+      target_name: MIN_BOD_MG_PER_L
+    - source_index: 15
+      target_name: MAX_BOD_MG_PER_L
+  FACT_WATER_CHEMISTRY:
+    key_column: FACT_WATER_CHEMISTRY_ID
+    foreign_keys:
+    - column: STATION_ID
+      references: DIM_STATION
+    - column: YEAR
+      references: DIM_TIME
+    columns:
+    - source_index: 10
+      target_name: MIN_PH
+    - source_index: 11
+      target_name: MAX_PH
+    - source_index: 12
+      target_name: MIN_CONDUCTIVITY_UMHOS_PER_CM
+    - source_index: 13
+      target_name: MAX_CONDUCTIVITY_UMHOS_PER_CM
+  FACT_PARTICULATES:
+    key_column: FACT_PARTICULATES_ID
+    foreign_keys:
+    - column: STATION_ID
+      references: DIM_STATION
+    - column: YEAR
+      references: DIM_TIME
+    columns:
+    - source_index: 28
+      target_name: MIN_TOTAL_DISSOLVED_SOLIDS_MG_PER_L
+    - source_index: 29
+      target_name: MAX_TOTAL_DISSOLVED_SOLIDS_MG_PER_L
+  FACT_NUTRIENTS:
+    key_column: FACT_NUTRIENTS_ID
+    foreign_keys:
+    - column: STATION_ID
+      references: DIM_STATION
+    - column: YEAR
+      references: DIM_TIME
+    columns:
+    - source_index: 16
+      target_name: MIN_NITRATE_N_NITRITE_N_MG_PER_L
+    - source_index: 17
+      target_name: MAX_NITRATE_N_NITRITE_N_MG_PER_L
+    - source_index: 18
+      target_name: MIN_NITRATE_N_MG_PER_L
+    - source_index: 19
+      target_name: MAX_NITRATE_N_MG_PER_L
+  FACT_COLIFORMS:
+    key_column: FACT_COLIFORMS_ID
+    foreign_keys:
+    - column: STATION_ID
+      references: DIM_STATION
+    - column: YEAR
+      references: DIM_TIME
+    columns:
+    - source_index: 20
+      target_name: MIN_FECAL_COLIFORM_MPN_PER_100ML
+    - source_index: 21
+      target_name: MAX_FECAL_COLIFORM_MPN_PER_100ML
+    - source_index: 22
+      target_name: MIN_TOTAL_COLIFORM_MPN_PER_100ML
+    - source_index: 23
+      target_name: MAX_TOTAL_COLIFORM_MPN_PER_100ML
+    - source_index: 26
+      target_name: MIN_FAECAL_COLIFORM_FAECAL_MATTER_MPN_PER_100ML
+    - source_index: 27
+      target_name: MAX_FAECAL_COLIFORM_FAECAL_MATTER_MPN_PER_100ML
+  FACT_STREPTOCOCCI:
+    key_column: FACT_STREPTOCOCCI_ID
+    foreign_keys:
+    - column: STATION_ID
+      references: DIM_STATION
+    - column: YEAR
+      references: DIM_TIME
+    columns:
+    - source_index: 24
+      target_name: MIN_FECAL_STREPTOCOCCI_MPN_PER_100ML
+    - source_index: 25
+      target_name: MAX_FECAL_STREPTOCOCCI_MPN_PER_100ML
+  FACT_CHEMICAL_CONTAMINANTS:
+    key_column: FACT_CHEMICAL_CONTAMINANTS_ID
+    foreign_keys:
+    - column: STATION_ID
+      references: DIM_STATION
+    - column: YEAR
+      references: DIM_TIME
+    columns:
+    - source_index: 30
+      target_name: MIN_FLUORIDE_MG_PER_L
+    - source_index: 31
+      target_name: MAX_FLUORIDE_MG_PER_L
+    - source_index: 32
+      target_name: MIN_ARSENIC_MG_PER_L
+    - source_index: 33
+      target_name: MAX_ARSENIC_MG_PER_L
+table_descriptions:
+  DIM_COUNTRY: Geographic hierarchy - countries
+  DIM_STATE: Geographic hierarchy - states/provinces within countries
+  DIM_STATION: Water monitoring stations with their location and type of water body
+  DIM_TIME: Time dimension (year granularity)
+  FACT_THERMAL: Temperature measurements at each station by year
+  FACT_OXYGEN_DEMAND: Dissolved oxygen and biochemical oxygen demand measurements
+  FACT_WATER_CHEMISTRY: pH and conductivity measurements
+  FACT_PARTICULATES: Total dissolved solids measurements
+  FACT_NUTRIENTS: Nitrogen-based nutrient measurements
+  FACT_COLIFORMS: Coliform bacteria measurements (fecal and total)
+  FACT_STREPTOCOCCI: Fecal streptococci measurements
+  FACT_CHEMICAL_CONTAMINANTS: Chemical contaminant measurements (fluoride and arsenic)

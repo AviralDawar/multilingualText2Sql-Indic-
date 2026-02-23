@@ -1,0 +1,32 @@
+[
+  {
+    "UNIQUE_PSU_ID_CLUSTER": 1,
+    "STATE": "Jammu & Kashmir",
+    "DISTRICT": "Baramula",
+    "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE": "1"
+  },
+  {
+    "UNIQUE_PSU_ID_CLUSTER": 2,
+    "STATE": "Jharkhand",
+    "DISTRICT": "Dhanbad",
+    "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE": "2"
+  },
+  {
+    "UNIQUE_PSU_ID_CLUSTER": 3,
+    "STATE": "Uttar Pradesh",
+    "DISTRICT": "Saharanpur",
+    "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE": "2"
+  },
+  {
+    "UNIQUE_PSU_ID_CLUSTER": 4,
+    "STATE": "Madhya Pradesh",
+    "DISTRICT": "Ratlam",
+    "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE": "3"
+  },
+  {
+    "UNIQUE_PSU_ID_CLUSTER": 5,
+    "STATE": "Gujarat",
+    "DISTRICT": "Vadodara",
+    "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE": "8"
+  }
+]

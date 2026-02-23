@@ -1,0 +1,218 @@
+database_name: INDIA_IHDS_2011_INDIVIDUAL_SURVEY
+source_file: total_data.csv
+dimension_tables:
+  DIM_GEOGRAPHY:
+    key_column: UNIQUE_PSU_ID_CLUSTER
+    dedup_columns:
+    - 0
+    - 1
+    - 2
+    columns:
+    - source_index: 0
+      target_name: STATE
+    - source_index: 1
+      target_name: DISTRICT
+    - source_index: 2
+      target_name: PSU_VILLAGE_OR_NEIGHBORHOOD_CODE
+  DIM_HOUSEHOLD:
+    key_column: UNIQUE_HOUSEHOLD_ID
+    dedup_columns:
+    - 3
+    - 4
+    - 5
+    columns:
+    - source_index: 3
+      target_name: HOUSEHOLD_ID_3_DIGIT
+    - source_index: 4
+      target_name: SPLIT_HOUSEHOLD_ID
+    - source_index: 5
+      target_name: ROSTER_ID_WITHIN_2012_HOUSEHOLD
+    foreign_keys:
+    - column: UNIQUE_PSU_ID_CLUSTER
+      references: DIM_GEOGRAPHY
+  DIM_PERSON:
+    key_column: UNIQUE_PERSON_ID
+    dedup_columns: []
+    columns: []
+    foreign_keys:
+    - column: UNIQUE_HOUSEHOLD_ID
+      references: DIM_HOUSEHOLD
+  DIM_STATISTICAL_WEIGHTS:
+    key_column: WEIGHT_ID
+    dedup_columns:
+    - 9
+    - 10
+    columns:
+    - source_index: 9
+      target_name: PERSON_WEIGHT_2012
+    - source_index: 10
+      target_name: INTEGER_PERSON_WEIGHT_2012
+    foreign_keys:
+    - column: UNIQUE_PERSON_ID
+      references: DIM_PERSON
+fact_tables:
+  FACT_EDUCATION_EXPENDITURE:
+    key_column: EDUCATION_EXPENDITURE_ID
+    foreign_keys:
+    - column: UNIQUE_PERSON_ID
+      references: DIM_PERSON
+    columns:
+    - source_index: 11
+      target_name: SCHOOL_FEES_RUPEES
+    - source_index: 12
+      target_name: BOOKS_UNIFORM_COST_RUPEES
+    - source_index: 13
+      target_name: BUS_COST_RUPEES
+    - source_index: 14
+      target_name: PRIVATE_TUITION_COST_RUPEES
+  FACT_HEALTH_EXPENDITURE:
+    key_column: HEALTH_EXPENDITURE_ID
+    foreign_keys:
+    - column: UNIQUE_PERSON_ID
+      references: DIM_PERSON
+    columns:
+    - source_index: 15
+      target_name: MAJOR_MORBIDITY_DOCTOR_HOSPITAL_COST_RUPEES
+    - source_index: 16
+      target_name: MAJOR_MORBIDITY_MEDICINE_COST_RUPEES
+    - source_index: 17
+      target_name: MAJOR_MORBIDITY_INSURANCE_COVERED_EXPENDITURE_RUPEES
+  FACT_HOUSEHOLD_CONSUMPTION:
+    key_column: HOUSEHOLD_CONSUMPTION_ID
+    foreign_keys:
+    - column: UNIQUE_HOUSEHOLD_ID
+      references: DIM_HOUSEHOLD
+    columns:
+    - source_index: 21
+      target_name: TOTAL_HOUSEHOLD_CONSUMPTION_EXPENDITURE
+    - source_index: 22
+      target_name: HOUSEHOLD_CONSUMPTION_EXPENDITURE_PER_CAPITA
+  FACT_AGRICULTURAL_INCOME:
+    key_column: AGRICULTURAL_INCOME_ID
+    foreign_keys:
+    - column: UNIQUE_HOUSEHOLD_ID
+      references: DIM_HOUSEHOLD
+    columns:
+    - source_index: 23
+      target_name: INCOME_FROM_CROPS_MINUS_EXPENSES
+    - source_index: 24
+      target_name: INCOME_FROM_RENTED_LAND_AND_OTHER_PROPERTY
+    - source_index: 25
+      target_name: INCOME_FROM_ANIMALS_MARKET_PLUS_HOME_MINUS_COST
+    - source_index: 26
+      target_name: TOTAL_AGRICULTURAL_INCOME_MINUS_EXPENSES
+  FACT_BUSINESS_INCOME:
+    key_column: BUSINESS_INCOME_ID
+    foreign_keys:
+    - column: UNIQUE_HOUSEHOLD_ID
+      references: DIM_HOUSEHOLD
+    columns:
+    - source_index: 18
+      target_name: BUSINESS1_NET_INCOME_RUPEES
+    - source_index: 19
+      target_name: BUSINESS2_NET_INCOME_RUPEES
+    - source_index: 20
+      target_name: BUSINESS3_NET_INCOME_RUPEES
+    - source_index: 27
+      target_name: TOTAL_BUSINESS_NET_INCOME
+  FACT_PROPERTY_PENSION_INCOME:
+    key_column: PROPERTY_PENSION_INCOME_ID
+    foreign_keys:
+    - column: UNIQUE_HOUSEHOLD_ID
+      references: DIM_HOUSEHOLD
+    columns:
+    - source_index: 28
+      target_name: INCOME_FROM_PROPERTY_AND_PENSIONS
+  FACT_HOUSEHOLD_TRANSFERS:
+    key_column: HOUSEHOLD_TRANSFERS_ID
+    foreign_keys:
+    - column: UNIQUE_HOUSEHOLD_ID
+      references: DIM_HOUSEHOLD
+    columns:
+    - source_index: 30
+      target_name: TOTAL_GOVERNMENT_BENEFITS_INCOME
+    - source_index: 31
+      target_name: REMITTANCES_RECEIVED_LAST_YEAR
+  FACT_HOUSEHOLD_WAGE_INCOME:
+    key_column: HOUSEHOLD_WAGE_INCOME_ID
+    foreign_keys:
+    - column: UNIQUE_HOUSEHOLD_ID
+      references: DIM_HOUSEHOLD
+    columns:
+    - source_index: 29
+      target_name: ANNUAL_HOUSEHOLD_WAGE_AND_SALARY_EARNINGS_WITH_BONUSES
+  FACT_HOUSEHOLD_INCOME_SUMMARY:
+    key_column: HOUSEHOLD_INCOME_SUMMARY_ID
+    foreign_keys:
+    - column: UNIQUE_HOUSEHOLD_ID
+      references: DIM_HOUSEHOLD
+    columns:
+    - source_index: 32
+      target_name: TOTAL_HOUSEHOLD_INCOME
+    - source_index: 33
+      target_name: HOUSEHOLD_PER_CAPITA_INCOME
+  FACT_INDIVIDUAL_WAGE_EARNINGS:
+    key_column: INDIVIDUAL_WAGE_EARNINGS_ID
+    foreign_keys:
+    - column: UNIQUE_PERSON_ID
+      references: DIM_PERSON
+    columns:
+    - source_index: 34
+      target_name: PAY_RATE_JOB1_RUPEES
+    - source_index: 36
+      target_name: ANNUAL_CASH_WAGES
+    - source_index: 37
+      target_name: ANNUAL_HOUSING_BENEFIT_RUPEES
+    - source_index: 38
+      target_name: ANNUAL_BONUS_RUPEES
+    - source_index: 43
+      target_name: TOTAL_WORK_HOURS_PER_YEAR
+  FACT_INDIVIDUAL_OCCUPATION_EARNINGS:
+    key_column: INDIVIDUAL_OCCUPATION_EARNINGS_ID
+    foreign_keys:
+    - column: UNIQUE_PERSON_ID
+      references: DIM_PERSON
+    columns:
+    - source_index: 39
+      target_name: ANNUAL_EARNINGS_AGRICULTURAL_LABOR
+    - source_index: 40
+      target_name: ANNUAL_EARNINGS_NON_AGRICULTURAL_LABOR
+    - source_index: 41
+      target_name: ANNUAL_EARNINGS_SALARY_POSITION
+    - source_index: 42
+      target_name: ANNUAL_EARNINGS_NREGA_POSITION
+  FACT_INDIVIDUAL_INCOME_COMPONENTS:
+    key_column: INDIVIDUAL_INCOME_COMPONENTS_ID
+    foreign_keys:
+    - column: UNIQUE_PERSON_ID
+      references: DIM_PERSON
+    columns:
+    - source_index: 44
+      target_name: INDIVIDUAL_OTHER_HOUSEHOLD_INCOME
+    - source_index: 45
+      target_name: INCOME_NON_AGRICULTURAL_WAGE
+    - source_index: 46
+      target_name: INCOME_FARM_WAGE
+    - source_index: 47
+      target_name: INCOME_SALARY_POSITION
+    - source_index: 48
+      target_name: INCOME_NREGA
+    - source_index: 49
+      target_name: INCOME_NON_AGRICULTURAL_WAGE_NOT_NREGA
+table_descriptions:
+  DIM_GEOGRAPHY: Geographic hierarchy and location identifiers
+  DIM_HOUSEHOLD: Household identification and structure
+  DIM_PERSON: Individual person identification
+  DIM_STATISTICAL_WEIGHTS: Statistical weighting factors for survey data
+  FACT_EDUCATION_EXPENDITURE: Education-related costs at individual level
+  FACT_HEALTH_EXPENDITURE: Healthcare costs and insurance coverage
+  FACT_HOUSEHOLD_CONSUMPTION: Household consumption and expenditure metrics
+  FACT_AGRICULTURAL_INCOME: Income from agricultural activities
+  FACT_BUSINESS_INCOME: Income from business operations
+  FACT_PROPERTY_PENSION_INCOME: Income from property, pensions, and passive sources
+  FACT_HOUSEHOLD_TRANSFERS: Government benefits, remittances, and transfers
+  FACT_HOUSEHOLD_WAGE_INCOME: Household-level wage and salary earnings
+  FACT_HOUSEHOLD_INCOME_SUMMARY: Aggregated household income metrics
+  FACT_INDIVIDUAL_WAGE_EARNINGS: Individual wage and salary components
+  FACT_INDIVIDUAL_OCCUPATION_EARNINGS: Earnings by occupation type
+  FACT_INDIVIDUAL_INCOME_COMPONENTS: Detailed income components at individual level

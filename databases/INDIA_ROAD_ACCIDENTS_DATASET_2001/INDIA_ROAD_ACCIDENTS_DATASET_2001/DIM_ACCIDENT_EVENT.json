@@ -1,0 +1,32 @@
+[
+  {
+    "ACCIDENT_EVENT_ID": 1,
+    "TYPE_OF_COLLISION": "Collision with roadside-parked vehicles",
+    "PEDESTRIAN_MOVEMENT": "Not a Pedestrian",
+    "CAUSE_OF_ACCIDENT": "Moving Backward"
+  },
+  {
+    "ACCIDENT_EVENT_ID": 2,
+    "TYPE_OF_COLLISION": "Vehicle with vehicle collision",
+    "PEDESTRIAN_MOVEMENT": "Not a Pedestrian",
+    "CAUSE_OF_ACCIDENT": "Overtaking"
+  },
+  {
+    "ACCIDENT_EVENT_ID": 3,
+    "TYPE_OF_COLLISION": "Collision with roadside objects",
+    "PEDESTRIAN_MOVEMENT": "Not a Pedestrian",
+    "CAUSE_OF_ACCIDENT": "Changing lane to the left"
+  },
+  {
+    "ACCIDENT_EVENT_ID": 4,
+    "TYPE_OF_COLLISION": "Vehicle with vehicle collision",
+    "PEDESTRIAN_MOVEMENT": "Not a Pedestrian",
+    "CAUSE_OF_ACCIDENT": "Changing lane to the right"
+  },
+  {
+    "ACCIDENT_EVENT_ID": 5,
+    "TYPE_OF_COLLISION": "Vehicle with vehicle collision",
+    "PEDESTRIAN_MOVEMENT": "Not a Pedestrian",
+    "CAUSE_OF_ACCIDENT": "Overloading"
+  }
+]

@@ -1,0 +1,185 @@
+database_name: INDIA_HMIS_Sub_District_Report_Facility_wise
+source_file: total_data.csv
+dimension_tables:
+  DIM_GEOGRAPHY:
+    key_column: GEOGRAPHY_ID
+    dedup_columns:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 6
+    columns:
+    - source_index: 0
+      target_name: COUNTRY
+    - source_index: 1
+      target_name: STATE
+    - source_index: 2
+      target_name: DISTRICT
+    - source_index: 3
+      target_name: SUB_DISTRICT
+    - source_index: 6
+      target_name: TYPE_OF_AREA
+  DIM_TIME:
+    key_column: TIME_ID
+    dedup_columns:
+    - 4
+    - 5
+    columns:
+    - source_index: 4
+      target_name: YEAR
+    - source_index: 5
+      target_name: MONTH
+fact_tables:
+  FACT_OUTPATIENT_SERVICES:
+    key_column: OUTPATIENT_ID
+    foreign_keys:
+    - column: GEOGRAPHY_ID
+      references: DIM_GEOGRAPHY
+    - column: TIME_ID
+      references: DIM_TIME
+    columns:
+    - source_index: 7
+      target_name: OUTPATIENT_ATTENDANCE_ALLOPATHIC
+  FACT_CHILD_IMMUNIZATION_ROUTINE:
+    key_column: IMMUNIZATION_ROUTINE_ID
+    foreign_keys:
+    - column: GEOGRAPHY_ID
+      references: DIM_GEOGRAPHY
+    - column: TIME_ID
+      references: DIM_TIME
+    columns:
+    - source_index: 9
+      target_name: BCG_VACCINE
+    - source_index: 14
+      target_name: OPV_0_BIRTH_DOSE
+    - source_index: 16
+      target_name: OPV_1
+    - source_index: 17
+      target_name: OPV_2
+    - source_index: 18
+      target_name: OPV_3
+    - source_index: 15
+      target_name: OPV_BOOSTER
+    - source_index: 19
+      target_name: PENTAVALENT_1
+    - source_index: 20
+      target_name: PENTAVALENT_2
+    - source_index: 21
+      target_name: PENTAVALENT_3
+  FACT_CHILD_IMMUNIZATION_SPECIALIZED:
+    key_column: IMMUNIZATION_SPECIALIZED_ID
+    foreign_keys:
+    - column: GEOGRAPHY_ID
+      references: DIM_GEOGRAPHY
+    - column: TIME_ID
+      references: DIM_TIME
+    columns:
+    - source_index: 22
+      target_name: ROTAVIRUS_1
+    - source_index: 23
+      target_name: ROTAVIRUS_2
+    - source_index: 24
+      target_name: ROTAVIRUS_3
+    - source_index: 11
+      target_name: IPV_1
+    - source_index: 12
+      target_name: IPV_2
+    - source_index: 8
+      target_name: MEASLES_RUBELLA_MCV_1ST_DOSE_9_11_MONTHS
+    - source_index: 13
+      target_name: MR_2ND_DOSE_16_24_MONTHS
+    - source_index: 25
+      target_name: VITAMIN_A_DOSE_1
+  FACT_CHILD_IMMUNIZATION_COVERAGE:
+    key_column: IMMUNIZATION_COVERAGE_ID
+    foreign_keys:
+    - column: GEOGRAPHY_ID
+      references: DIM_GEOGRAPHY
+    - column: TIME_ID
+      references: DIM_TIME
+    columns:
+    - source_index: 26
+      target_name: FEMALE_FULLY_IMMUNIZED_CHILDREN_9_11_MONTHS
+    - source_index: 27
+      target_name: MALE_FULLY_IMMUNIZED_CHILDREN_9_11_MONTHS
+    - source_index: 10
+      target_name: DPT_1ST_BOOSTER
+    - source_index: 30
+      target_name: CHILDREN_MORE_THAN_5_YEARS_DPT_5_2ND_BOOSTER
+    - source_index: 28
+      target_name: CHILDREN_MORE_THAN_10_YEARS_TT10_TD10
+    - source_index: 29
+      target_name: CHILDREN_MORE_THAN_16_YEARS_TT16_TD16
+  FACT_MATERNAL_REGISTRATION_TESTING:
+    key_column: MATERNAL_REGISTRATION_ID
+    foreign_keys:
+    - column: GEOGRAPHY_ID
+      references: DIM_GEOGRAPHY
+    - column: TIME_ID
+      references: DIM_TIME
+    columns:
+    - source_index: 49
+      target_name: PREGNANT_WOMEN_REGISTERED_FOR_ANC
+    - source_index: 48
+      target_name: ANC_REGISTERED_WITHIN_1ST_TRIMESTER
+    - source_index: 44
+      target_name: PREGNANCY_WOMEN_RECEIVED_4_OR_MORE_ANC_CHECKUPS
+    - source_index: 45
+      target_name: PREGNANCY_WOMEN_TESTED_HB_4_OR_MORE_TIMES
+    - source_index: 41
+      target_name: PREGNANCY_WOMEN_HB_LEVEL_LESS_11
+    - source_index: 35
+      target_name: NUMBER_OF_HB_TESTS_CONDUCTED
+    - source_index: 46
+      target_name: NUMBER_OF_PREGNANCY_TEST_KITS_USED
+  FACT_MATERNAL_TREATMENT_SUPPLEMENTS:
+    key_column: MATERNAL_TREATMENT_ID
+    foreign_keys:
+    - column: GEOGRAPHY_ID
+      references: DIM_GEOGRAPHY
+    - column: TIME_ID
+      references: DIM_TIME
+    columns:
+    - source_index: 38
+      target_name: PREGNANCY_WOMEN_TT1_TD1
+    - source_index: 39
+      target_name: PREGNANCY_WOMEN_TT2_TD2
+    - source_index: 37
+      target_name: PREGNANCY_WOMEN_TT_BOOSTER_TD_BOOSTER
+    - source_index: 40
+      target_name: PREGNANCY_WOMEN_ALBENDAZOLE_TABLET_AFTER_1ST_TRIMESTER
+    - source_index: 42
+      target_name: PREGNANCY_WOMEN_PROVIDED_FULL_COURSE_180_IFA_TABLETS
+    - source_index: 43
+      target_name: PREGNANCY_WOMEN_PROVIDED_FULL_COURSE_360_CALCIUM_TABLETS
+    - source_index: 47
+      target_name: MOTHERS_PROVIDED_FULL_COURSE_180_IFA_TABLETS_AFTER_DELIVERY
+  FACT_PROGRAM_MANAGEMENT:
+    key_column: PROGRAM_MANAGEMENT_ID
+    foreign_keys:
+    - column: GEOGRAPHY_ID
+      references: DIM_GEOGRAPHY
+    - column: TIME_ID
+      references: DIM_TIME
+    columns:
+    - source_index: 32
+      target_name: IMMUNISATION_SESSIONS_PLANNED
+    - source_index: 31
+      target_name: IMMUNISATION_SESSIONS_HELD
+    - source_index: 36
+      target_name: IMMUNISATION_SESSIONS_WITH_ASHA_PRESENT
+    - source_index: 33
+      target_name: COMBINED_ORAL_PILL_CYCLES_DISTRIBUTED
+    - source_index: 34
+      target_name: CONDOM_PIECES_DISTRIBUTED
+table_descriptions:
+  DIM_GEOGRAPHY: Geographic hierarchy with surrogate key for efficient joins
+  DIM_TIME: Time dimension with surrogate key
+  FACT_OUTPATIENT_SERVICES: General outpatient healthcare services
+  FACT_CHILD_IMMUNIZATION_ROUTINE: Routine child vaccination doses
+  FACT_CHILD_IMMUNIZATION_SPECIALIZED: Specialized vaccines and booster doses
+  FACT_CHILD_IMMUNIZATION_COVERAGE: Immunization coverage and completion metrics
+  FACT_MATERNAL_REGISTRATION_TESTING: Maternal registration and diagnostic testing
+  FACT_MATERNAL_TREATMENT_SUPPLEMENTS: Maternal treatments, vaccines, and supplements
+  FACT_PROGRAM_MANAGEMENT: Program planning and session management

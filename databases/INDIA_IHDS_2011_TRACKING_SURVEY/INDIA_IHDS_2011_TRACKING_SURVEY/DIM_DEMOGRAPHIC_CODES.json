@@ -1,0 +1,27 @@
+[
+  {
+    "DEMOGRAPHIC_CODE_ID": 1,
+    "SEX_CODE": "Male",
+    "MARITAL_STATUS_CODE": "Married"
+  },
+  {
+    "DEMOGRAPHIC_CODE_ID": 2,
+    "SEX_CODE": "Male",
+    "MARITAL_STATUS_CODE": "Single"
+  },
+  {
+    "DEMOGRAPHIC_CODE_ID": 3,
+    "SEX_CODE": "Female",
+    "MARITAL_STATUS_CODE": "Single"
+  },
+  {
+    "DEMOGRAPHIC_CODE_ID": 4,
+    "SEX_CODE": "Male",
+    "MARITAL_STATUS_CODE": "Widowed"
+  },
+  {
+    "DEMOGRAPHIC_CODE_ID": 5,
+    "SEX_CODE": "Female",
+    "MARITAL_STATUS_CODE": "Married"
+  }
+]

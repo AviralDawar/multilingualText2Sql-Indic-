@@ -1,0 +1,27 @@
+[
+  {
+    "SUB_DISTRICT_ID": 1,
+    "SUB_DISTRICT_NAME": "Car Nicobar",
+    "TYPE_OF_AREA": "Rural"
+  },
+  {
+    "SUB_DISTRICT_ID": 2,
+    "SUB_DISTRICT_NAME": "Nancowry",
+    "TYPE_OF_AREA": "Rural"
+  },
+  {
+    "SUB_DISTRICT_ID": 3,
+    "SUB_DISTRICT_NAME": "Great Nicobar",
+    "TYPE_OF_AREA": "Urban"
+  },
+  {
+    "SUB_DISTRICT_ID": 4,
+    "SUB_DISTRICT_NAME": "Car Nicobar",
+    "TYPE_OF_AREA": "Urban"
+  },
+  {
+    "SUB_DISTRICT_ID": 5,
+    "SUB_DISTRICT_NAME": "Diglipur",
+    "TYPE_OF_AREA": "Urban"
+  }
+]

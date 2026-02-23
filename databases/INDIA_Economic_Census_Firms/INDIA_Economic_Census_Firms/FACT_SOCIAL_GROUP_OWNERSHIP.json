@@ -1,0 +1,52 @@
+[
+  {
+    "FACT_SOCIAL_GROUP_OWNERSHIP_ID": 1,
+    "LOCATION_ID": 1,
+    "TIME_ID": 1,
+    "SECTOR_ID": 1,
+    "EST_OWNED_BY_SC": "0.000",
+    "EST_OWNED_BY_ST": "0.000",
+    "EST_OWNED_BY_OBC": "0.000",
+    "EST_OWNED_BY_OTHER_SOCIAL_GROUP": "3.000"
+  },
+  {
+    "FACT_SOCIAL_GROUP_OWNERSHIP_ID": 2,
+    "LOCATION_ID": 2,
+    "TIME_ID": 1,
+    "SECTOR_ID": 1,
+    "EST_OWNED_BY_SC": "0.000",
+    "EST_OWNED_BY_ST": "0.000",
+    "EST_OWNED_BY_OBC": "0.000",
+    "EST_OWNED_BY_OTHER_SOCIAL_GROUP": "3.000"
+  },
+  {
+    "FACT_SOCIAL_GROUP_OWNERSHIP_ID": 3,
+    "LOCATION_ID": 3,
+    "TIME_ID": 1,
+    "SECTOR_ID": 1,
+    "EST_OWNED_BY_SC": "0.000",
+    "EST_OWNED_BY_ST": "14.000",
+    "EST_OWNED_BY_OBC": "0.000",
+    "EST_OWNED_BY_OTHER_SOCIAL_GROUP": "0.000"
+  },
+  {
+    "FACT_SOCIAL_GROUP_OWNERSHIP_ID": 4,
+    "LOCATION_ID": 4,
+    "TIME_ID": 1,
+    "SECTOR_ID": 1,
+    "EST_OWNED_BY_SC": "0.000",
+    "EST_OWNED_BY_ST": "0.000",
+    "EST_OWNED_BY_OBC": "0.000",
+    "EST_OWNED_BY_OTHER_SOCIAL_GROUP": "0.000"
+  },
+  {
+    "FACT_SOCIAL_GROUP_OWNERSHIP_ID": 5,
+    "LOCATION_ID": 5,
+    "TIME_ID": 1,
+    "SECTOR_ID": 1,
+    "EST_OWNED_BY_SC": "0.000",
+    "EST_OWNED_BY_ST": "0.000",
+    "EST_OWNED_BY_OBC": "0.000",
+    "EST_OWNED_BY_OTHER_SOCIAL_GROUP": "0.000"
+  }
+]
