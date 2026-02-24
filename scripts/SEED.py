@@ -332,6 +332,13 @@ def resolve_target_schema(config: SeedConfig, db_id: str) -> str:
     return db_id.lower()
 
 
+def load_knowledge_schema(db_id: str) -> str:
+    schema_path = Path("knowledge_files") / f"{db_id}.sql"
+    if not schema_path.exists():
+        return ""
+    return schema_path.read_text(encoding="utf-8").strip()
+
+
 def open_pg_connection(config: SeedConfig):
     pg_cfg = load_config(str(config.pg_config_path))
     target_db = config.use_database.lower() if config.use_database else None
@@ -727,10 +734,20 @@ def generate_evidence_for_item(
     )
 
     for i, (q0, shot_db_id, ev0, extras) in enumerate(fewshots, start=1):
+        shot_schema = load_knowledge_schema(shot_db_id)
         shot_text = [
             f"### few-shot sample {i} ####################################################",
-            f'{{"db_id":"{shot_db_id}","question":"{safe_string(q0)}","evidence":"{safe_string(ev0)}"}}',
         ]
+        if shot_schema:
+            shot_text.extend([
+                "schema of few-shot example",
+                "{",
+                shot_schema,
+                "}",
+            ])
+        shot_text.extend([
+            f'{{"db_id":"{shot_db_id}","question":"{safe_string(q0)}","evidence":"{safe_string(ev0)}"}}',
+        ])
         for eq, ee in extras:
             shot_text.append(f'{{"question":"{safe_string(eq)}","evidence":"{safe_string(ee)}"}}')
         shot_text.append("##################################################################")
@@ -738,6 +755,8 @@ def generate_evidence_for_item(
 
     prompt_messages.append({"role": "user", "content": render_sample_sql_prompt(sample_results)})
     prompt_messages.append({"role": "user", "content": evidence_user})
+    
+    print(json.dumps(prompt_messages, indent=2, ensure_ascii=False))
 
     evidence_client = OpenRouterClient(model=config.llm_model, api_key=api_key)
     evidence_resp = evidence_client.chat(prompt_messages, temperature=0.0, max_tokens=3000)

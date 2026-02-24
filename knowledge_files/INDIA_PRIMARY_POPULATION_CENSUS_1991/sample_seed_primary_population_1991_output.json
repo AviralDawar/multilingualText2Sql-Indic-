@@ -3,30 +3,30 @@
     "instance_id": "seed_primary_1991_001",
     "db_id": "INDIA_PRIMARY_POPULATION_CENSUS_1991",
     "question": "Which state has the highest total population in census year 1991?",
-    "evidence": "Sum `fact_population_core`.`total_population` grouped by `dim_geography_hierarchy`.`state` where `fact_population_core`.`census_year` = 1991, then select the state with the highest sum."
+    "evidence": "Aggregate `fact_population_core`.`total_population` using SUM, grouped by `dim_geography_hierarchy`.`state`, filtered for `fact_population_core`.`census_year = 1991`. Return the state with the highest sum."
   },
   {
     "instance_id": "seed_primary_1991_002",
     "db_id": "INDIA_PRIMARY_POPULATION_CENSUS_1991",
     "question": "For each state, what is the sum of male and female illiterate population in 1991?",
-    "evidence": "Group by `dim_geography_hierarchy.state`; Sum `fact_population_literacy.male_illiterate_population` + `fact_population_literacy.female_illiterate_population`; Filter `fact_population_literacy.census_year = 1991` (integer); Join `dim_geography_hierarchy` and `fact_population_literacy` on `hierarchy_id`."
+    "evidence": "Group by `dim_geography_hierarchy`.`state`; Sum = SUM(`fact_population_literacy`.`male_illiterate_population` + `fact_population_literacy`.`female_illiterate_population`); Join on `hierarchy_id`; Filter `fact_population_literacy`.`census_year = '1991'`."
   },
   {
     "instance_id": "seed_primary_1991_003",
     "db_id": "INDIA_PRIMARY_POPULATION_CENSUS_1991",
     "question": "List the top 10 districts by number of households in 1991.",
-    "evidence": "`dim_geography_hierarchy.district` refers to districts; `fact_housing.number_of_households` refers to number of households; filter by `fact_housing.census_year = 1991`; top 10 by descending `number_of_households`"
+    "evidence": "Sum `fact_housing`.`number_of_households` grouped by `dim_geography_hierarchy`.`district` where `fact_housing`.`census_year` = 1991. Order by sum descending and limit to 10."
   },
   {
     "instance_id": "seed_primary_1991_004",
     "db_id": "INDIA_PRIMARY_POPULATION_CENSUS_1991",
     "question": "Which locations have female population aged 0 to 6 years greater than male population aged 0 to 6 years in 1991?",
-    "evidence": "Locations map to `dim_geography_hierarchy`.`location_name`; Female population aged 0-6 years = `fact_population_age_cohort`.`female_population_0_to_6_years`; Male population aged 0-6 years = `fact_population_age_cohort`.`male_population_0_to_6_years`; Year 1991 = `fact_population_age_cohort`.`census_year = 1991`; Condition: `female_population_0_to_6_years > male_population_0_to_6_years`."
+    "evidence": "`dim_geography_hierarchy`.`location_name` identifies locations; compare `fact_population_age_cohort`.`female_population_0_to_6_years` > `fact_population_age_cohort`.`male_population_0_to_6_years` for `fact_population_age_cohort`.`census_year = '1991'`."
   },
   {
     "instance_id": "seed_primary_1991_005",
     "db_id": "INDIA_PRIMARY_POPULATION_CENSUS_1991",
     "question": "Show the top 5 states by female working population in census year 1991.",
-    "evidence": "Sum `fact_workforce_status`.`female_working_population` for `fact_workforce_status`.`census_year = 1991`, grouped by `dim_geography_hierarchy`.`state`. Order descending and return top 5 states."
+    "evidence": "Join `fact_workforce_status` and `dim_geography_hierarchy` using `hierarchy_id`. Filter `fact_workforce_status`.`census_year = 1991`. Group by `dim_geography_hierarchy`.`state`, sum `fact_workforce_status`.`female_working_population`, order by sum descending, limit 5."
   }
 ]
