@@ -1,5 +1,0 @@
--- Complexity: Level 1 (Simple)
--- Category: Employment Statistics
-SELECT SUM(WORKING_TOTAL) AS TOTAL_WORKERS,
-       SUM(NON_WORKERS_TOTAL) AS TOTAL_NON_WORKERS
-FROM CENSUS_WORKERS_SUMMARY;

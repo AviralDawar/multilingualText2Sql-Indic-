@@ -15,14 +15,26 @@ import argparse
 from pathlib import Path
 from tabulate import tabulate
 
-from db_utils import (
-    load_config, get_connection, get_default_config_path,
-    execute_use_schema, get_show_databases_query, get_show_schemas_query, get_show_tables_query,
-    create_database
-)
+try:
+    from scripts.db_utils import (
+        load_config, get_connection, get_default_config_path,
+        execute_use_schema, get_show_databases_query, get_show_schemas_query, get_show_tables_query,
+        create_database
+    )
+except ImportError:
+    from db_utils import (
+        load_config, get_connection, get_default_config_path,
+        execute_use_schema, get_show_databases_query, get_show_schemas_query, get_show_tables_query,
+        create_database
+    )
 
 
-def execute_query(cursor, query: str, show_results: bool = True) -> dict:
+def execute_query(
+    cursor,
+    query: str,
+    show_results: bool = True,
+    fetch_one: bool = False
+) -> dict:
     """Execute a query and return results."""
     try:
         cursor.execute(query)
@@ -30,12 +42,19 @@ def execute_query(cursor, query: str, show_results: bool = True) -> dict:
         if cursor.description:
             # Query returned results
             columns = [col[0] for col in cursor.description]
-            rows = cursor.fetchall()
+            if fetch_one:
+                first_row = cursor.fetchone()
+                rows = [first_row] if first_row is not None else []
+            else:
+                rows = cursor.fetchall()
 
             if show_results:
                 if rows:
                     print(tabulate(rows, headers=columns, tablefmt='grid'))
-                    print(f"\n({len(rows)} rows returned)")
+                    if fetch_one:
+                        print("\n(Showing up to 1 row)")
+                    else:
+                        print(f"\n({len(rows)} rows returned)")
                 else:
                     print("Query executed successfully. No rows returned.")
 
