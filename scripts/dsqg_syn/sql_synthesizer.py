@@ -574,15 +574,23 @@ Output JSON:
             print("skeletons...", end=" ", flush=True)
 
             # Step 2: Generate SQL skeletons
+            print("[start]", end=" ", flush=True)
             skeletons = self.generate_sql_skeletons(
                 question,
                 linked_schema,
                 self.config.skeletons_per_question
             )
+            print(f"[done: {len(skeletons)}]", end=" ", flush=True)
 
             pairs_for_question = 0
-            for skeleton in skeletons:
+            total_skeletons = len(skeletons)
+            for sk_idx, skeleton in enumerate(skeletons, 1):
                 # Step 3: Generate SQL from skeleton
+                print(
+                    f"\n        [SQL Gen] skeleton {sk_idx}/{total_skeletons} ({skeleton.skeleton_id}, difficulty={skeleton.difficulty}) start...",
+                    end=" ",
+                    flush=True
+                )
                 sqls = self.generate_sql_from_skeleton(
                     question,
                     skeleton,
@@ -590,10 +598,18 @@ Output JSON:
                     schema,
                     self.config.sqls_per_skeleton
                 )
+                print(f"done ({len(sqls)} SQLs)", flush=True)
 
-                for sql in sqls:
+                total_sqls = len(sqls)
+                for sql_idx, sql in enumerate(sqls, 1):
                     # Step 4: Synthesize NLQ from SQL
+                    print(
+                        f"        [NLQ Gen] skeleton {sk_idx}/{total_skeletons}, sql {sql_idx}/{total_sqls} start...",
+                        end=" ",
+                        flush=True
+                    )
                     nlq = self.synthesize_nlq_from_sql(sql, schema)
+                    print("done", flush=True)
 
                     if nlq and sql:
                         pair = NLQSQLPair(

@@ -12,6 +12,7 @@ to ensure comprehensive coverage of all tables.
 
 import json
 import uuid
+import random
 from typing import List, Dict, Optional, Set, Tuple
 from dataclasses import dataclass
 import networkx as nx
@@ -274,12 +275,18 @@ For example:
                 self.config.max_join_depth
             )
 
+            # Select question types for this table.
+            if questions_per_table >= len(question_types):
+                selected_question_types = question_types
+            else:
+                selected_question_types = random.sample(question_types, questions_per_table)
+
             # Generate questions for this table group
             questions = self.generate_questions_for_tables(
                 connected_tables,
                 schema,
                 keywords,
-                question_types[:questions_per_table]
+                selected_question_types
             )
 
             all_questions.extend(questions)

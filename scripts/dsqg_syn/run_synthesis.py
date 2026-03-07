@@ -44,6 +44,7 @@ class OpenRouterLLM:
         self.temperature = temperature
         self.max_tokens = max_tokens
         self.base_url = "https://openrouter.ai/api/v1/chat/completions"
+        self.request_timeout = (15, 180)  # (connect timeout, read timeout)
 
     def _make_request(
         self,
@@ -64,7 +65,12 @@ class OpenRouterLLM:
             "max_tokens": self.max_tokens if max_tokens is None else max_tokens,
         }
 
-        response = requests.post(self.base_url, headers=headers, data=json.dumps(payload))
+        response = requests.post(
+            self.base_url,
+            headers=headers,
+            data=json.dumps(payload),
+            timeout=self.request_timeout
+        )
 
         if response.status_code != 200:
             raise RuntimeError(f"OpenRouter API error: {response.status_code} - {response.text}")
