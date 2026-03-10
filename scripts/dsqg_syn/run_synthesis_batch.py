@@ -4,7 +4,7 @@ Run DSQG-Syn synthesis for multiple schemas in parallel batches.
 
 Default behavior:
 - Discovers schema files under databases/*/*/schema_config.yaml
-- Excludes INDIA_SCHOOL_INFRASTRUCTURE and INDIA_POPULATION_CENSUS
+- Runs only the currently missing-output datasets
 - Runs up to 6 synthesis jobs concurrently
 - Uses model google/gemini-3-flash-preview
 """
@@ -18,8 +18,14 @@ from typing import List
 
 
 DEFAULT_EXCLUDES = {
-    "india_school_infrastructure",
+}
+
+DEFAULT_INCLUDES = {
+    "india_ihds_2005_individual_survey",
+    "india_ihds_2011_individual_survey",
     "india_population_census",
+    "india_school_infrastructure",
+    "india_village_amenities_directory_2001",
 }
 
 
@@ -39,6 +45,11 @@ def dataset_name_from_schema(schema_path: Path) -> str:
 def should_exclude(schema_path: Path, exclude_names: set) -> bool:
     dataset_name = dataset_name_from_schema(schema_path).lower()
     return dataset_name in exclude_names
+
+
+def should_include(schema_path: Path, include_names: set) -> bool:
+    dataset_name = dataset_name_from_schema(schema_path).lower()
+    return dataset_name in include_names
 
 
 def run_one(schema_path: Path, model: str, extra_args: List[str]) -> int:
@@ -79,6 +90,13 @@ def main() -> int:
         help="Maximum number of parallel jobs (default: 6)",
     )
     parser.add_argument(
+        "--include",
+        type=str,
+        nargs="*",
+        default=list(DEFAULT_INCLUDES),
+        help="Dataset directory names to include (case-insensitive)",
+    )
+    parser.add_argument(
         "--exclude",
         type=str,
         nargs="*",
@@ -94,10 +112,15 @@ def main() -> int:
 
     root = Path(__file__).resolve().parents[2]
     all_schemas = discover_schema_paths(root)
+    include_names = {x.lower() for x in args.include}
     exclude_names = {x.lower() for x in args.exclude}
-    selected = [s for s in all_schemas if not should_exclude(s, exclude_names)]
+    selected = [
+        s for s in all_schemas
+        if should_include(s, include_names) and not should_exclude(s, exclude_names)
+    ]
 
     print(f"Discovered schemas: {len(all_schemas)}")
+    print(f"Included datasets: {sorted(include_names)}")
     print(f"Excluded datasets: {sorted(exclude_names)}")
     print(f"Selected schemas : {len(selected)}")
 
@@ -127,4 +150,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
