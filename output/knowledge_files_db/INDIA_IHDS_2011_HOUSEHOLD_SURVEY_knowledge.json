@@ -1,0 +1,719 @@
+[
+  {
+    "question": "List the unique household IDs and the net income in rupees for all records in the state of 'Jammu & Kashmir' where the total expenses in rupees exceed 45,000.",
+    "sql": "SELECT DISTINCT T1.UNIQUE_HOUSEHOLD_ID, T2.NET_INCOME_RUPEES FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.STATE = 'Jammu & Kashmir' AND T2.TOTAL_EXPENSES_RUPEES > 45000",
+    "pair_id": "4da18817",
+    "original_question_id": "11e6a1b7",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "State filter: `dim_geography`.`state` = 'Jammu & Kashmir'. Total expenses > 45000 refers to columns: `fact_business_type_a`.`total_expenses_rupees`, `fact_business_type_b`.`total_expenses_rupees`, `fact_business_type_c`.`total_expenses_rupees`. Net income refers to columns: `fact_business_type_a`.`net_income_rupees`, `fact_business_type_b`.`net_income_rupees`, `fact_business_type_c`.`net_income_rupees`. Unique household ID is `dim_geography`.`unique_household_id`. Join each business table with `dim_geography` on `geography_id`."
+  },
+  {
+    "question": "List the unique household IDs and the net income in rupees for all distinct records in the Baramula district where the total expenses in rupees exceed 45,000.",
+    "sql": "SELECT DISTINCT T1.UNIQUE_HOUSEHOLD_ID, T2.NET_INCOME_RUPEES FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.DISTRICT = 'Baramula' AND T2.TOTAL_EXPENSES_RUPEES > 45000",
+    "pair_id": "e658d5e4",
+    "original_question_id": "11e6a1b7",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Baramula is a value in `dim_geography`.`district`. Total expenses > 45000 refers to `fact_business_type_a`.`total_expenses_rupees` > 45000 or `fact_business_type_b`.`total_expenses_rupees` > 45000 or `fact_business_type_c`.`total_expenses_rupees` > 45000. Net income refers to corresponding `net_income_rupees` from the same business table. Unique household ID is `dim_geography`.`unique_household_id`. Join `dim_geography` with business tables on `geography_id`."
+  },
+  {
+    "question": "List the unique household IDs and their corresponding net income in rupees for households located in the state of 'Jammu & Kashmir' where the sum of total expenses in rupees exceeds 45,000, ordered by net income in descending order.",
+    "sql": "SELECT DISTINCT T1.UNIQUE_HOUSEHOLD_ID, T2.NET_INCOME_RUPEES FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.STATE = 'Jammu & Kashmir' GROUP BY T1.UNIQUE_HOUSEHOLD_ID, T2.NET_INCOME_RUPEES HAVING SUM(T2.TOTAL_EXPENSES_RUPEES) > 45000 ORDER BY T2.NET_INCOME_RUPEES DESC",
+    "pair_id": "443c8d18",
+    "original_question_id": "11e6a1b7",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_geography.state` = 'Jammu & Kashmir'; sum of (`fact_business_type_a.total_expenses_rupees` + `fact_business_type_b.total_expenses_rupees` + `fact_business_type_c.total_expenses_rupees`) > 45000; net income = sum of (`fact_business_type_a.net_income_rupees` + `fact_business_type_b.net_income_rupees` + `fact_business_type_c.net_income_rupees`); group by `dim_geography.unique_household_id`; order by net income descending."
+  },
+  {
+    "question": "Show the distinct unique household IDs and their net income in rupees for households located in the 'Baramula' district, specifically for those where the average total expenses in rupees are at least 45,000, and list the results in descending order of net income.",
+    "sql": "SELECT DISTINCT T1.UNIQUE_HOUSEHOLD_ID, T2.NET_INCOME_RUPEES FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.DISTRICT = 'Baramula' GROUP BY T1.UNIQUE_HOUSEHOLD_ID, T2.NET_INCOME_RUPEES HAVING AVG(T2.TOTAL_EXPENSES_RUPEES) >= 45000 ORDER BY T2.NET_INCOME_RUPEES DESC",
+    "pair_id": "adf0099f",
+    "original_question_id": "11e6a1b7",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.district` = 'Baramula'. Compute average total expenses per household as AVG across `fact_business_type_a.total_expenses_rupees`, `fact_business_type_b.total_expenses_rupees`, `fact_business_type_c.total_expenses_rupees` (ignoring NULLs). Keep households where average >= 45000. Compute net income per household as SUM of `fact_business_type_a.net_income_rupees`, `fact_business_type_b.net_income_rupees`, `fact_business_type_c.net_income_rupees`. Output distinct `dim_geography.unique_household_id` and the net income, ordered by net income descending."
+  },
+  {
+    "question": "List the unique household IDs and their net income in rupees for households in the PSU cluster '10201' where the maximum total expenses in rupees are at least 45,000, and order the results by net income in descending order.",
+    "sql": "SELECT DISTINCT T1.UNIQUE_HOUSEHOLD_ID, T2.NET_INCOME_RUPEES FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.UNIQUE_PSU_ID_CLUSTER = '10201' GROUP BY T1.UNIQUE_HOUSEHOLD_ID, T2.NET_INCOME_RUPEES HAVING MAX(T2.TOTAL_EXPENSES_RUPEES) >= 45000 ORDER BY T2.NET_INCOME_RUPEES DESC",
+    "pair_id": "3d0456f2",
+    "original_question_id": "11e6a1b7",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_geography.unique_psu_id_cluster` = 10201; total expenses columns: `fact_business_type_a.total_expenses_rupees`, `fact_business_type_b.total_expenses_rupees`, `fact_business_type_c.total_expenses_rupees`; net income columns similarly; for each household, compute MAX(total_expenses_rupees) across all business fact tables; filter households where MAX(total_expenses_rupees) >= 45000; for each household, select the net_income_rupees from the business fact table row that has the maximum total expenses; output `dim_geography.unique_household_id` and that net_income_rupees; order by net_income_rupees DESC."
+  },
+  {
+    "question": "List the unique household IDs and their net income in rupees for households located in the state of 'Jammu & Kashmir' where the sum of total expenses in rupees exceeds 45,000, grouped by these IDs and net income, and ordered by net income in descending order.",
+    "sql": "SELECT DISTINCT T1.UNIQUE_HOUSEHOLD_ID, T2.NET_INCOME_RUPEES FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.STATE = 'Jammu & Kashmir' GROUP BY T1.UNIQUE_HOUSEHOLD_ID, T2.NET_INCOME_RUPEES HAVING SUM(T2.TOTAL_EXPENSES_RUPEES) > 45000 ORDER BY T2.NET_INCOME_RUPEES DESC",
+    "pair_id": "b0e406d6",
+    "original_question_id": "11e6a1b7",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "State filter: `dim_geography.state` = 'Jammu & Kashmir'; Household ID: `dim_geography.unique_household_id`; Net income: `fact_business_type_a.net_income_rupees`; Total expenses: sum of `fact_business_type_a.total_expenses_rupees`, `fact_business_type_b.total_expenses_rupees`, `fact_business_type_c.total_expenses_rupees`; Group by `dim_geography.unique_household_id`, `fact_business_type_a.net_income_rupees`; Order by `fact_business_type_a.net_income_rupees` descending."
+  },
+  {
+    "question": "List the unique household IDs and their net income in rupees for households in the 'Baramula' district where the sum of total expenses in rupees is at least 45,000, and sort the results by net income in rupees in descending order.",
+    "sql": "SELECT DISTINCT T1.UNIQUE_HOUSEHOLD_ID, T2.NET_INCOME_RUPEES FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.DISTRICT = 'Baramula' GROUP BY T1.UNIQUE_HOUSEHOLD_ID, T2.NET_INCOME_RUPEES HAVING SUM(T2.TOTAL_EXPENSES_RUPEES) >= 45000 ORDER BY T2.NET_INCOME_RUPEES DESC",
+    "pair_id": "75fcb50e",
+    "original_question_id": "11e6a1b7",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter households where `dim_geography`.`district` = 'Baramula'. For each household, sum `fact_business_type_a`.`net_income_rupees` + `fact_business_type_b`.`net_income_rupees` + `fact_business_type_c`.`net_income_rupees` as total_net_income, and sum `fact_business_type_a`.`total_expenses_rupees` + `fact_business_type_b`.`total_expenses_rupees` + `fact_business_type_c`.`total_expenses_rupees` as total_expenses. Keep only those where total_expenses >= 45000. Sort by total_net_income descending."
+  },
+  {
+    "question": "List the unique household IDs and their corresponding net income in rupees for all records associated with the PSU cluster ID '10201', specifically where the sum of total expenses in rupees is greater than zero, and display the results in descending order of net income.",
+    "sql": "SELECT DISTINCT T1.UNIQUE_HOUSEHOLD_ID, T2.NET_INCOME_RUPEES FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.UNIQUE_PSU_ID_CLUSTER = '10201' GROUP BY T1.UNIQUE_HOUSEHOLD_ID, T2.NET_INCOME_RUPEES HAVING SUM(T2.TOTAL_EXPENSES_RUPEES) > 0 ORDER BY T2.NET_INCOME_RUPEES DESC",
+    "pair_id": "8d862c92",
+    "original_question_id": "11e6a1b7",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "PSU cluster ID '10201' refers to `dim_geography`.`unique_psu_id_cluster` = 10201; unique household ID is `dim_geography`.`unique_household_id`; net income in rupees is the sum of `fact_business_type_a`.`net_income_rupees`, `fact_business_type_b`.`net_income_rupees`, and `fact_business_type_c`.`net_income_rupees`; total expenses in rupees is the sum of `fact_business_type_a`.`total_expenses_rupees`, `fact_business_type_b`.`total_expenses_rupees`, and `fact_business_type_c`.`total_expenses_rupees` from fact_business_type_a, fact_business_type_b, fact_business_type_c for each geography/household. Sum of total expenses > 0. Net income is the sum of net_income_rupees from the three business tables. Order by net income descending."
+  },
+  {
+    "question": "For each state, provide the state name, the average net income in rupees, the total sum of investments in rupees, and the count of unique household IDs.",
+    "sql": "SELECT T1.STATE, AVG(T2.NET_INCOME_RUPEES), SUM(T2.INVESTMENTS_RUPEES), COUNT(DISTINCT T1.UNIQUE_HOUSEHOLD_ID) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE;",
+    "pair_id": "283e1a42",
+    "original_question_id": "9f2cecfc",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A",
+      "FACT_CAPITAL_TRANSACTIONS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "State name from (`dim_geography`.`state`). Average net income = AVG(`net_income_rupees`) from combined rows of (`fact_business_type_a`.`net_income_rupees`), (`fact_business_type_b`.`net_income_rupees`), (`fact_business_type_c`.`net_income_rupees`). Total investments = SUM(`investments_rupees`) from combined rows of (`fact_business_type_a`.`investments_rupees`), (`fact_business_type_b`.`investments_rupees`), (`fact_business_type_c`.`investments_rupees`). Count of unique household IDs = COUNT(DISTINCT `dim_geography`.`unique_household_id`). Join `dim_geography` with business fact tables on `geography_id`."
+  },
+  {
+    "question": "For the state of Jammu & Kashmir, list the state name and calculate the average net income in rupees, the total sum of investments in rupees, and the count of unique household IDs.",
+    "sql": "SELECT T1.STATE, AVG(T2.NET_INCOME_RUPEES), SUM(T2.INVESTMENTS_RUPEES), COUNT(DISTINCT T1.UNIQUE_HOUSEHOLD_ID) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.STATE = 'Jammu & Kashmir' GROUP BY T1.STATE;",
+    "pair_id": "ef6ff83d",
+    "original_question_id": "9f2cecfc",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A",
+      "FACT_CAPITAL_TRANSACTIONS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.state` = 'Jammu & Kashmir'. Average net income = average of (`fact_business_type_a.net_income_rupees`, `fact_business_type_b.net_income_rupees`, `fact_business_type_c.net_income_rupees`). Total investments = sum of (`fact_business_type_a.investments_rupees`, `fact_business_type_b.investments_rupees`, `fact_business_type_c.investments_rupees`). Count unique household IDs = count distinct `dim_geography.unique_household_id`."
+  },
+  {
+    "question": "For the district of 'Baramula', list the state, the average net income in rupees, the total sum of investments in rupees, and the count of unique household IDs, grouped by state.",
+    "sql": "SELECT T1.STATE, AVG(T2.NET_INCOME_RUPEES), SUM(T2.INVESTMENTS_RUPEES), COUNT(DISTINCT T1.UNIQUE_HOUSEHOLD_ID) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.DISTRICT = 'Baramula' GROUP BY T1.STATE;",
+    "pair_id": "20a3266d",
+    "original_question_id": "9f2cecfc",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A",
+      "FACT_CAPITAL_TRANSACTIONS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "'Baramula' is a value in `dim_geography.district`. State is from `dim_geography.state`. Average net income is computed from `fact_business_type_a.net_income_rupees`, `fact_business_type_b.net_income_rupees`, `fact_business_type_c.net_income_rupees`. Total sum of investments is computed from `fact_business_type_a.investments_rupees`, `fact_business_type_b.investments_rupees`, `fact_business_type_c.investments_rupees`. Count of unique household IDs is from `dim_geography.unique_household_id`. Group by `dim_geography.state`."
+  },
+  {
+    "question": "For each state, provide the state name, the average net income in rupees, the total sum of investments in rupees, and the count of distinct unique household IDs, ordered by the average net income in descending order.",
+    "sql": "SELECT T1.STATE, AVG(T2.NET_INCOME_RUPEES), SUM(T2.INVESTMENTS_RUPEES), COUNT(DISTINCT T1.UNIQUE_HOUSEHOLD_ID) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE ORDER BY AVG(T2.NET_INCOME_RUPEES) DESC",
+    "pair_id": "cb2e2a79",
+    "original_question_id": "9f2cecfc",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A",
+      "FACT_CAPITAL_TRANSACTIONS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Average net income = AVG(`net_income_rupees`) from union of `fact_business_type_a`, `fact_business_type_b`, `fact_business_type_c`. Total investments = SUM(`investments_rupees`) from same union. Count distinct households = COUNT(DISTINCT `dim_geography.unique_household_id`). Group by `dim_geography.state`. Order by average net income descending."
+  },
+  {
+    "question": "For the state of Jammu & Kashmir, list the state name, the average net income in rupees, the total sum of investments in rupees, and the count of unique household IDs, ordered by the average net income in descending order.",
+    "sql": "SELECT T1.STATE, AVG(T2.NET_INCOME_RUPEES), SUM(T2.INVESTMENTS_RUPEES), COUNT(DISTINCT T1.UNIQUE_HOUSEHOLD_ID) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.STATE = 'Jammu & Kashmir' GROUP BY T1.STATE ORDER BY AVG(T2.NET_INCOME_RUPEES) DESC",
+    "pair_id": "f127bdbd",
+    "original_question_id": "9f2cecfc",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A",
+      "FACT_CAPITAL_TRANSACTIONS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "State filter: `dim_geography`.`state` = 'Jammu & Kashmir'. Net income from `fact_business_type_a`.`net_income_rupees`, `fact_business_type_b`.`net_income_rupees`, `fact_business_type_c`.`net_income_rupees`. Investments from `fact_business_type_a`.`investments_rupees`, `fact_business_type_b`.`investments_rupees`, `fact_business_type_c`.`investments_rupees`. Count distinct `dim_geography`.`unique_household_id`. Aggregate (avg, sum) across all business records for the state."
+  },
+  {
+    "question": "For the district of Baramula, list each state along with the average net income in rupees, the total sum of investments in rupees, and the count of unique household IDs, ordered by the average net income in descending order.",
+    "sql": "SELECT T1.STATE, AVG(T2.NET_INCOME_RUPEES), SUM(T2.INVESTMENTS_RUPEES), COUNT(DISTINCT T1.UNIQUE_HOUSEHOLD_ID) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.DISTRICT = 'Baramula' GROUP BY T1.STATE ORDER BY AVG(T2.NET_INCOME_RUPEES) DESC",
+    "pair_id": "7764c1b4",
+    "original_question_id": "9f2cecfc",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A",
+      "FACT_CAPITAL_TRANSACTIONS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.district` = 'Baramula'. For each `dim_geography.state`, compute: average net income = AVG(`net_income_rupees`) from `fact_business_type_a`, `fact_business_type_b`, `fact_business_type_c`; total investments = SUM(`investments_rupees`) from same tables; count of unique households = COUNT(DISTINCT `dim_geography.unique_household_id`). Group by `dim_geography.state`. Order by average net income DESC."
+  },
+  {
+    "question": "For each state, show the state name, the average net income in rupees, the total investments in rupees, and the count of unique household IDs, considering only those records where the total expenses in rupees match the total expenses of any business with gross receipts of 100,000 rupees, ensuring at least one business ID is present per state, and order the results by total investments in descending order.",
+    "sql": "SELECT T1.STATE, AVG(T2.NET_INCOME_RUPEES) AS AVG_NET_INCOME, SUM(T2.INVESTMENTS_RUPEES) AS TOTAL_INVESTMENTS, COUNT(DISTINCT T1.UNIQUE_HOUSEHOLD_ID) AS UNIQUE_HOUSEHOLDS_COUNT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.TOTAL_EXPENSES_RUPEES IN (SELECT TOTAL_EXPENSES_RUPEES FROM FACT_BUSINESS_TYPE_A WHERE GROSS_RECEIPTS_RUPEES = '100000') GROUP BY T1.STATE HAVING COUNT(T2.BUSINESS_TYPE_A_ID) > 0 ORDER BY TOTAL_INVESTMENTS DESC",
+    "pair_id": "047112b9",
+    "original_question_id": "9f2cecfc",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A",
+      "FACT_CAPITAL_TRANSACTIONS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Per state, compute: state name from `dim_geography.state`, average of `net_income_rupees` from all business tables (fact_business_type_a, fact_business_type_b, fact_business_type_c), sum of `investments_rupees` from all business tables, and count distinct `dim_geography.unique_household_id`. Filter business records where `total_expenses_rupees` matches any `total_expenses_rupees` from businesses (any type) with `gross_receipts_rupees` = 100000. Join business tables to `dim_geography` via `geography_id`. Group by state. Order by total investments descending."
+  },
+  {
+    "question": "For each state, calculate the average net income in rupees, the total investments in rupees, and the count of unique household IDs, considering only those records where the raw materials and inputs cost matches that of businesses with zero paid workers cost; display the state name alongside these metrics for all states with at least one record, and order the results by total investments in descending order.",
+    "sql": "SELECT T1.STATE, AVG(T2.NET_INCOME_RUPEES) AS AVG_NET_INCOME, SUM(T2.INVESTMENTS_RUPEES) AS TOTAL_INVESTMENTS, COUNT(DISTINCT T1.UNIQUE_HOUSEHOLD_ID) AS UNIQUE_HOUSEHOLDS_COUNT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.RAW_MATERIALS_AND_INPUTS_COST_RUPEES IN (SELECT RAW_MATERIALS_AND_INPUTS_COST_RUPEES FROM FACT_BUSINESS_TYPE_A WHERE PAID_WORKERS_COST_RUPEES = '0') GROUP BY T1.STATE HAVING COUNT(T2.GEOGRAPHY_ID) > 0 ORDER BY TOTAL_INVESTMENTS DESC",
+    "pair_id": "c217552f",
+    "original_question_id": "9f2cecfc",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A",
+      "FACT_CAPITAL_TRANSACTIONS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Zero paid workers cost means `fact_business_type_a.paid_workers_cost_rupees = 0` OR `fact_business_type_b.paid_workers_cost_rupees = 0` OR `fact_business_type_c.paid_workers_cost_rupees = 0`. First, find all distinct `raw_materials_and_inputs_cost_rupees` from these tables where the corresponding `paid_workers_cost_rupees = 0`. Then, from all three business tables, select records where `raw_materials_and_inputs_cost_rupees` matches any of those distinct values. Join with `dim_geography` on `geography_id`. For each `dim_geography.state`, compute: average(`net_income_rupees`) across all three tables, sum(`investments_rupees`) across all three tables, count(distinct `dim_geography.unique_household_id`). Include only states with at least one matching record. Order by total investments descending."
+  },
+  {
+    "question": "For each state, show the state name, the average net income in rupees, the total sum of investments in rupees, and the count of unique household IDs, specifically for records where the net income matches those that had a total loss of 3000 rupees; only include states with at least one business type A record and order the results by total investments in descending order.",
+    "sql": "SELECT T1.STATE, AVG(T2.NET_INCOME_RUPEES) AS AVG_NET_INCOME, SUM(T2.INVESTMENTS_RUPEES) AS TOTAL_INVESTMENTS, COUNT(DISTINCT T1.UNIQUE_HOUSEHOLD_ID) AS UNIQUE_HOUSEHOLDS_COUNT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.NET_INCOME_RUPEES IN (SELECT NET_INCOME_RUPEES FROM FACT_BUSINESS_TYPE_A WHERE TOTAL_LOSS_RUPEES = '3000') GROUP BY T1.STATE HAVING COUNT(T2.BUSINESS_TYPE_A_ID) > 0 ORDER BY TOTAL_INVESTMENTS DESC",
+    "pair_id": "1c0bb938",
+    "original_question_id": "9f2cecfc",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A",
+      "FACT_CAPITAL_TRANSACTIONS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `fact_business_type_a` where `fact_business_type_a.net_income_rupees` IN (SELECT `fact_business_type_a.net_income_rupees` FROM `fact_business_type_a` WHERE `fact_business_type_a.total_loss_rupees` = 3000). Join with `dim_geography` on `geography_id`. Group by `dim_geography.state`. Compute AVG(`fact_business_type_a.net_income_rupees`), SUM(`fact_business_type_a.investments_rupees`), COUNT(DISTINCT `dim_geography.unique_household_id`). Order by SUM(`fact_business_type_a.investments_rupees`) DESC."
+  },
+  {
+    "question": "For the geography cluster with unique PSU ID '10201', list each state along with the average net income in rupees and the total sum of investments in rupees, grouped by state.",
+    "sql": "SELECT T1.STATE, AVG(T2.NET_INCOME_RUPEES), SUM(T2.INVESTMENTS_RUPEES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.UNIQUE_PSU_ID_CLUSTER = '10201' GROUP BY T1.STATE;",
+    "pair_id": "f22fc910",
+    "original_question_id": "d9760b6f",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.unique_psu_id_cluster = '10201'`. State is `dim_geography.state`. Average net income is computed from `fact_business_type_a.net_income_rupees`, `fact_business_type_b.net_income_rupees`, and `fact_business_type_c.net_income_rupees`. Total investments is the sum from `fact_business_type_a.investments_rupees`, `fact_business_type_b.investments_rupees`, and `fact_business_type_c.investments_rupees`. Group by state."
+  },
+  {
+    "question": "For the state of Jammu & Kashmir, list the state name and calculate both the average net income in rupees and the total sum of investments in rupees.",
+    "sql": "SELECT T1.STATE, AVG(T2.NET_INCOME_RUPEES), SUM(T2.INVESTMENTS_RUPEES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.STATE = 'Jammu & Kashmir' GROUP BY T1.STATE;",
+    "pair_id": "7fde47b3",
+    "original_question_id": "d9760b6f",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "State name is from `dim_geography.state`. Filter for `dim_geography.state` = 'Jammu & Kashmir'. Net income values are from `fact_business_type_a.net_income_rupees`, `fact_business_type_b.net_income_rupees`, and `fact_business_type_c.net_income_rupees`. Investments values are from `fact_business_type_a.investments_rupees`, `fact_business_type_b.investments_rupees`, and `fact_business_type_c.investments_rupees`. Calculate average net income across all net income values and total sum across all investments values."
+  },
+  {
+    "question": "For the district of Baramula, list the state and calculate both the average net income in rupees and the total sum of investments in rupees, grouped by state.",
+    "sql": "SELECT T1.STATE, AVG(T2.NET_INCOME_RUPEES), SUM(T2.INVESTMENTS_RUPEES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.DISTRICT = 'Baramula' GROUP BY T1.STATE;",
+    "pair_id": "2f36f055",
+    "original_question_id": "d9760b6f",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter: `dim_geography.district` = 'Baramula'. Group by `dim_geography.state`. Average net income = AVG(`fact_business_type_a.net_income_rupees`) + AVG(`fact_business_type_b.net_income_rupees`) + AVG(`fact_business_type_c.net_income_rupees`) across all business types per state. Total investments = SUM(`fact_business_type_a.investments_rupees`) + SUM(`fact_business_type_b.investments_rupees`) + SUM(`fact_business_type_c.investments_rupees`) across all business types per state. Join `dim_geography` with `fact_business_type_a`, `fact_business_type_b`, `fact_business_type_c` on `geography_id`."
+  },
+  {
+    "question": "For the geography cluster with unique PSU ID '10201', list each state along with the average net income in rupees and the total sum of investments in rupees, grouped by state and ordered by the average net income from highest to lowest.",
+    "sql": "SELECT T1.STATE, AVG(T2.NET_INCOME_RUPEES), SUM(T2.INVESTMENTS_RUPEES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.UNIQUE_PSU_ID_CLUSTER = '10201' GROUP BY T1.STATE ORDER BY AVG(T2.NET_INCOME_RUPEES) DESC;",
+    "pair_id": "3245358b",
+    "original_question_id": "d9760b6f",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter: `dim_geography`.`unique_psu_id_cluster` = '10201'. Net income columns: `fact_business_type_a`.`net_income_rupees`, `fact_business_type_b`.`net_income_rupees`, `fact_business_type_c`.`net_income_rupees`. Investment columns: `fact_business_type_a`.`investments_rupees`, `fact_business_type_b`.`investments_rupees`, `fact_business_type_c`.`investments_rupees`. Group by `dim_geography`.`state`. Order by average net income descending."
+  },
+  {
+    "question": "For the state of Jammu & Kashmir, list the state name and calculate the average net income in rupees and the total sum of investments in rupees, grouped by the state and ordered by the average net income in descending order.",
+    "sql": "SELECT T1.STATE, AVG(T2.NET_INCOME_RUPEES), SUM(T2.INVESTMENTS_RUPEES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.STATE = 'Jammu & Kashmir' GROUP BY T1.STATE ORDER BY AVG(T2.NET_INCOME_RUPEES) DESC;",
+    "pair_id": "179cef9c",
+    "original_question_id": "d9760b6f",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": ""
+  },
+  {
+    "question": "For the district of 'Baramula', list each state along with the average net income in rupees and the total sum of investments in rupees, grouped by state and ordered by the average net income in descending order.",
+    "sql": "SELECT T1.STATE, AVG(T2.NET_INCOME_RUPEES), SUM(T2.INVESTMENTS_RUPEES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.DISTRICT = 'Baramula' GROUP BY T1.STATE ORDER BY AVG(T2.NET_INCOME_RUPEES) DESC;",
+    "pair_id": "1b21fa0c",
+    "original_question_id": "d9760b6f",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "District 'Baramula' is in `dim_geography`.`district`. Average net income is computed from `fact_business_type_a`.`net_income_rupees`, `fact_business_type_b`.`net_income_rupees`, and `fact_business_type_c`.`net_income_rupees`. Total investments is the sum of `fact_business_type_a`.`investments_rupees`, `fact_business_type_b`.`investments_rupees`, and `fact_business_type_c`.`investments_rupees`. Group by `dim_geography`.`state` and order by average net income descending."
+  },
+  {
+    "question": "For the state associated with the unique PSU ID cluster '10201', and considering only states that have at least one distinct unique PSU ID cluster, list the state name, the average net income in rupees, and the total sum of investments in rupees, ordered by the total investments in descending order.",
+    "sql": "SELECT T1.STATE, AVG(T2.NET_INCOME_RUPEES), SUM(T2.INVESTMENTS_RUPEES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.STATE IN (SELECT STATE FROM DIM_GEOGRAPHY GROUP BY STATE HAVING COUNT(DISTINCT UNIQUE_PSU_ID_CLUSTER) > 0) AND T1.UNIQUE_PSU_ID_CLUSTER = '10201' GROUP BY T1.STATE ORDER BY SUM(T2.INVESTMENTS_RUPEES) DESC",
+    "pair_id": "6117c59a",
+    "original_question_id": "d9760b6f",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "State associated with '10201' is `dim_geography.state` where `dim_geography.unique_psu_id_cluster` = '10201'. For each state, average net income = AVG(net_income_rupees) from `fact_business_type_a`, `fact_business_type_b`, `fact_business_type_c`. Total investments = SUM(investments_rupees) from same three tables. Include only states with COUNT(DISTINCT `dim_geography.unique_psu_id_cluster`) >= 1. Order by total investments DESC."
+  },
+  {
+    "question": "For states that contain more than one distinct unique household ID, list each state along with the average net income in rupees and the total sum of investments in rupees for businesses located in the 'Baramula' district, and order the results by the total investments in descending order.",
+    "sql": "SELECT T1.STATE, AVG(T2.NET_INCOME_RUPEES), SUM(T2.INVESTMENTS_RUPEES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.STATE IN (SELECT STATE FROM DIM_GEOGRAPHY GROUP BY STATE HAVING COUNT(DISTINCT UNIQUE_HOUSEHOLD_ID) > 1) AND T1.DISTRICT = 'Baramula' GROUP BY T1.STATE ORDER BY SUM(T2.INVESTMENTS_RUPEES) DESC",
+    "pair_id": "002a4a1d",
+    "original_question_id": "d9760b6f",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "States with more than one distinct unique household ID: COUNT(DISTINCT `dim_geography`.`unique_household_id`) > 1 per state. Filter district = 'Baramula'. Business net income and investments are from three tables: `fact_business_type_a`.`net_income_rupees`, `fact_business_type_b`.`net_income_rupees`, `fact_business_type_c`.`net_income_rupees` for average; `fact_business_type_a`.`investments_rupees`, `fact_business_type_b`.`investments_rupees`, `fact_business_type_c`.`investments_rupees` for total sum. Join each business table with `dim_geography` on `geography_id`. Order by total investments DESC."
+  },
+  {
+    "question": "For the state of Jammu & Kashmir, provided that it belongs to the group of states with more than two distinct 3-digit household IDs, list the state name, the average net income in rupees, and the total sum of investments in rupees, and order the results by the total sum of investments in descending order.",
+    "sql": "SELECT T1.STATE, AVG(T2.NET_INCOME_RUPEES), SUM(T2.INVESTMENTS_RUPEES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.STATE IN (SELECT STATE FROM DIM_GEOGRAPHY GROUP BY STATE HAVING COUNT(DISTINCT HOUSEHOLD_ID_3_DIGIT) > 2) AND T1.STATE = 'Jammu & Kashmir' GROUP BY T1.STATE ORDER BY SUM(T2.INVESTMENTS_RUPEES) DESC",
+    "pair_id": "e1d9800c",
+    "original_question_id": "d9760b6f",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "State = 'Jammu & Kashmir' from `dim_geography.state`. Condition: Jammu & Kashmir must be in states with COUNT(DISTINCT `dim_geography.household_id_3_digit`) > 2. Compute per geography_id: total_net_income = SUM(`fact_business_type_a.net_income_rupees` + `fact_business_type_b.net_income_rupees` + `fact_business_type_c.net_income_rupees`), total_investments = SUM(`fact_business_type_a.investments_rupees` + `fact_business_type_b.investments_rupees` + `fact_business_type_c.investments_rupees`). Then for state Jammu & Kashmir: AVG(total_net_income) as average net income, SUM(total_investments) as total sum of investments. Order by total sum of investments DESC."
+  },
+  {
+    "question": "For each state, show the state name and the average net income in rupees, grouped by state and ordered from highest to lowest average net income.",
+    "sql": "SELECT T1.STATE, AVG(T2.NET_INCOME_RUPEES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE ORDER BY AVG(T2.NET_INCOME_RUPEES) DESC;",
+    "pair_id": "7baf6d45",
+    "original_question_id": "9dc90cd2",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "State name is from `dim_geography.state`. Net income refers to `net_income_rupees` from `fact_business_type_a`, `fact_business_type_b`, and `fact_business_type_c`. Average net income per state is computed by averaging all net income values from these three tables after joining on `geography_id`. Order by average net income descending."
+  },
+  {
+    "question": "For the state of 'Jammu & Kashmir', list the state name and the average net income in rupees, grouped by state and ordered by the average net income in descending order.",
+    "sql": "SELECT T1.STATE, AVG(T2.NET_INCOME_RUPEES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.STATE = 'Jammu & Kashmir' GROUP BY T1.STATE ORDER BY AVG(T2.NET_INCOME_RUPEES) DESC;",
+    "pair_id": "ae8a04ea",
+    "original_question_id": "9dc90cd2",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "State name is in `dim_geography.state`. Net income is in `fact_business_type_a.net_income_rupees`, `fact_business_type_b.net_income_rupees`, `fact_business_type_c.net_income_rupees`. For state 'Jammu & Kashmir', average net income should be computed across all net income values from all three business tables."
+  },
+  {
+    "question": "Show the state and the average net income in rupees for each state, specifically for the district of 'Baramula', and list the results in descending order of the average net income.",
+    "sql": "SELECT T1.STATE, AVG(T2.NET_INCOME_RUPEES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.DISTRICT = 'Baramula' GROUP BY T1.STATE ORDER BY AVG(T2.NET_INCOME_RUPEES) DESC;",
+    "pair_id": "93606f9e",
+    "original_question_id": "9dc90cd2",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.district` = 'Baramula'. Join `dim_geography` with `fact_business_type_a`, `fact_business_type_b`, `fact_business_type_c` on `geography_id`. Compute average of `net_income_rupees` from all three tables combined (treat each row as a separate net income value). Group by `dim_geography.state`. Order by average net income descending."
+  },
+  {
+    "question": "For each state, what is the state name and the average net income in rupees, sorted from the highest average net income to the lowest?",
+    "sql": "SELECT T1.STATE, AVG(T2.NET_INCOME_RUPEES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE ORDER BY AVG(T2.NET_INCOME_RUPEES) DESC",
+    "pair_id": "33b3c455",
+    "original_question_id": "9dc90cd2",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "State name is `dim_geography.state`. Net income in rupees is `fact_business_type_a.net_income_rupees`, `fact_business_type_b.net_income_rupees`, and `fact_business_type_c.net_income_rupees`. Average net income per state is the average of all net income values from these three tables. Sort results by average net income descending."
+  },
+  {
+    "question": "Show the state and the average net income in rupees for the state of 'Jammu & Kashmir', grouped by state and ordered by the average net income in descending order.",
+    "sql": "SELECT T1.STATE, AVG(T2.NET_INCOME_RUPEES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.STATE = 'Jammu & Kashmir' GROUP BY T1.STATE ORDER BY AVG(T2.NET_INCOME_RUPEES) DESC",
+    "pair_id": "46d0aa2c",
+    "original_question_id": "9dc90cd2",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "State filter: `dim_geography`.`state` = 'Jammu & Kashmir'. Net income columns: `fact_business_type_a`.`net_income_rupees`, `fact_business_type_b`.`net_income_rupees`, `fact_business_type_c`.`net_income_rupees`. Combine all net income values from these tables for the state to compute average."
+  },
+  {
+    "question": "For the district of 'Baramula', list each state and the average net income in rupees, grouped by state and ordered from the highest average net income to the lowest.",
+    "sql": "SELECT T1.STATE, AVG(T2.NET_INCOME_RUPEES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.DISTRICT = 'Baramula' GROUP BY T1.STATE ORDER BY AVG(T2.NET_INCOME_RUPEES) DESC",
+    "pair_id": "19f0d7d6",
+    "original_question_id": "9dc90cd2",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "District 'Baramula' maps to `dim_geography.district` = 'Baramula'. State is `dim_geography.state`. Net income refers to `fact_business_type_a.net_income_rupees`, `fact_business_type_b.net_income_rupees`, and `fact_business_type_c.net_income_rupees`. Compute average net income per state by taking all net income values from these three tables for geographies in district 'Baramula', group by state, and order by average net income descending."
+  },
+  {
+    "question": "Show the state and the average net income in rupees for each state that has at least one business type A record, and order the results by the average net income in descending order.",
+    "sql": "SELECT T1.STATE, AVG(T2.NET_INCOME_RUPEES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE HAVING COUNT(T2.BUSINESS_TYPE_A_ID) > 0 ORDER BY AVG(T2.NET_INCOME_RUPEES) DESC",
+    "pair_id": "67f746e7",
+    "original_question_id": "9dc90cd2",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_geography` and `fact_business_type_a` on `geography_id`. Compute `AVG(fact_business_type_a.net_income_rupees)` per `dim_geography.state`. Filter states that have at least one record in `fact_business_type_a` (implicitly done by inner join). Order by average net income descending."
+  },
+  {
+    "question": "For the state of Jammu & Kashmir, list the state name and the average net income in rupees, considering only cases where the state appears more than once, and order the results by the average net income in descending order.",
+    "sql": "SELECT T1.STATE, AVG(T2.NET_INCOME_RUPEES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.STATE = 'Jammu & Kashmir' GROUP BY T1.STATE HAVING COUNT(T2.GEOGRAPHY_ID) > 1 ORDER BY AVG(T2.NET_INCOME_RUPEES) DESC",
+    "pair_id": "789a84f6",
+    "original_question_id": "9dc90cd2",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "`dim_geography`.`state` = 'Jammu & Kashmir'; net income refers to `fact_business_type_a`.`net_income_rupees`, `fact_business_type_b`.`net_income_rupees`, or `fact_business_type_c`.`net_income_rupees`; state appears more than once means COUNT(`dim_geography`.`state`) > 1 for that state after joining with the relevant business fact table."
+  },
+  {
+    "question": "For the district of 'Baramula', list each state and the average net income in rupees, ensuring only states with at least one business type A record are included, and order the results by the average net income in descending order.",
+    "sql": "SELECT T1.STATE, AVG(T2.NET_INCOME_RUPEES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.DISTRICT = 'Baramula' GROUP BY T1.STATE HAVING COUNT(T2.BUSINESS_TYPE_A_ID) >= 1 ORDER BY AVG(T2.NET_INCOME_RUPEES) DESC",
+    "pair_id": "26729a40",
+    "original_question_id": "9dc90cd2",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.district` = 'Baramula'; join `dim_geography` with `fact_business_type_a` on `dim_geography.geography_id` = `fact_business_type_a.geography_id`; group by `dim_geography.state`; compute average(`fact_business_type_a.net_income_rupees`); order by average net income descending."
+  },
+  {
+    "question": "Provide a distinct list of the unique household IDs that are associated with either business type A or business type B, found by joining the geography dimension with the respective business type fact tables.",
+    "sql": "SELECT DISTINCT T1.UNIQUE_HOUSEHOLD_ID FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID UNION SELECT DISTINCT T1.UNIQUE_HOUSEHOLD_ID FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_B AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID;",
+    "pair_id": "f23bba61",
+    "original_question_id": "0a988b13",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A",
+      "FACT_BUSINESS_TYPE_B"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_geography` with `fact_business_type_a` on `dim_geography`.`geography_id` = `fact_business_type_a`.`geography_id` to get households for type A; similarly join with `fact_business_type_b` for type B; then UNION the results to get distinct `dim_geography`.`unique_household_id`."
+  },
+  {
+    "question": "List the unique household IDs for households located in the state of 'Jammu & Kashmir' that are associated with either business type A or business type B.",
+    "sql": "SELECT DISTINCT T1.UNIQUE_HOUSEHOLD_ID FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.STATE = 'Jammu & Kashmir' UNION SELECT DISTINCT T1.UNIQUE_HOUSEHOLD_ID FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_B AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T1.STATE = 'Jammu & Kashmir';",
+    "pair_id": "2f41ce14",
+    "original_question_id": "0a988b13",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A",
+      "FACT_BUSINESS_TYPE_B"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter (`dim_geography`.`state`) = 'Jammu & Kashmir' and (`dim_geography`.`geography_id`) IN (SELECT (`fact_business_type_a`.`geography_id`) FROM `fact_business_type_a` UNION SELECT (`fact_business_type_b`.`geography_id`) FROM `fact_business_type_b`); select (`dim_geography`.`unique_household_id`)"
+  },
+  {
+    "question": "List the unique household IDs for households located in the 'Baramula' district that are associated with either business type A or business type B.",
+    "sql": "SELECT DISTINCT T1.UNIQUE_HOUSEHOLD_ID FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.DISTRICT = 'Baramula' UNION SELECT DISTINCT T1.UNIQUE_HOUSEHOLD_ID FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_B AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T1.DISTRICT = 'Baramula';",
+    "pair_id": "0fa4e135",
+    "original_question_id": "0a988b13",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A",
+      "FACT_BUSINESS_TYPE_B"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_geography.district` = 'Baramula'; join `dim_geography` with `fact_business_type_a` or `fact_business_type_b` on `geography_id`; output `dim_geography.unique_household_id`"
+  },
+  {
+    "question": "List the unique household IDs in ascending order for households that have business types with gross receipts in rupees greater than zero, ensuring each ID is distinct.",
+    "sql": "SELECT DISTINCT T1.UNIQUE_HOUSEHOLD_ID FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.GROSS_RECEIPTS_RUPEES > 0 GROUP BY T1.UNIQUE_HOUSEHOLD_ID ORDER BY T1.UNIQUE_HOUSEHOLD_ID ASC",
+    "pair_id": "b3a0185f",
+    "original_question_id": "0a988b13",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A",
+      "FACT_BUSINESS_TYPE_B"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "unique household IDs refers to `dim_geography`.`unique_household_id`; business types refer to tables `fact_business_type_a`, `fact_business_type_b`, `fact_business_type_c`; gross receipts in rupees greater than zero refers to `fact_business_type_a`.`gross_receipts_rupees` > 0 OR `fact_business_type_b`.`gross_receipts_rupees` > 0 OR `fact_business_type_c`.`gross_receipts_rupees` > 0; distinct and ascending order required."
+  },
+  {
+    "question": "List the unique household IDs in ascending order for all households associated with a business that has a net income in rupees greater than zero.",
+    "sql": "SELECT DISTINCT T1.UNIQUE_HOUSEHOLD_ID FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_B AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.NET_INCOME_RUPEES > 0 GROUP BY T1.UNIQUE_HOUSEHOLD_ID ORDER BY T1.UNIQUE_HOUSEHOLD_ID ASC",
+    "pair_id": "e7af0d4b",
+    "original_question_id": "0a988b13",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A",
+      "FACT_BUSINESS_TYPE_B"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_geography.unique_household_id` is the household ID; business tables `fact_business_type_a`, `fact_business_type_b`, `fact_business_type_c` each have `net_income_rupees`; condition: net_income_rupees > 0; link via geography_id."
+  },
+  {
+    "question": "List the distinct unique household IDs, ordered ascending by the household ID, for households associated with business type A that have total expenses in rupees greater than zero.",
+    "sql": "SELECT DISTINCT T1.UNIQUE_HOUSEHOLD_ID FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.TOTAL_EXPENSES_RUPEES > 0 GROUP BY T1.UNIQUE_HOUSEHOLD_ID ORDER BY T1.UNIQUE_HOUSEHOLD_ID ASC",
+    "pair_id": "09931752",
+    "original_question_id": "0a988b13",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A",
+      "FACT_BUSINESS_TYPE_B"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_geography` and `fact_business_type_a` on `dim_geography.geography_id` = `fact_business_type_a.geography_id`. Filter where `fact_business_type_a.total_expenses_rupees` > 0. Select distinct `dim_geography.unique_household_id` and order by `dim_geography.unique_household_id` ascending."
+  },
+  {
+    "question": "List the distinct unique household IDs, ordered ascending, for households associated with geography IDs where either a type A business has gross receipts of 100,000 rupees or a type B business has gross receipts of 90,000 rupees, ensuring each household is linked to at least one such geography record.",
+    "sql": "SELECT DISTINCT T1.UNIQUE_HOUSEHOLD_ID FROM DIM_GEOGRAPHY AS T1 JOIN (SELECT GEOGRAPHY_ID FROM FACT_BUSINESS_TYPE_A WHERE GROSS_RECEIPTS_RUPEES = 100000 UNION SELECT GEOGRAPHY_ID FROM FACT_BUSINESS_TYPE_B WHERE GROSS_RECEIPTS_RUPEES = 90000) AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.UNIQUE_HOUSEHOLD_ID HAVING COUNT(T2.GEOGRAPHY_ID) >= 1 ORDER BY T1.UNIQUE_HOUSEHOLD_ID ASC",
+    "pair_id": "226c4252",
+    "original_question_id": "0a988b13",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A",
+      "FACT_BUSINESS_TYPE_B"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Households are identified by `dim_geography`.`unique_household_id`; Geography IDs are `dim_geography`.`geography_id`; Type A business gross receipts = `fact_business_type_a`.`gross_receipts_rupees` = 100000; Type B business gross receipts = `fact_business_type_b`.`gross_receipts_rupees` = 90000; The condition is 'either a type A business has gross receipts of 100,000 rupees or a type B business has gross receipts of 90,000 rupees' which means `fact_business_type_a`.`gross_receipts_rupees` = 100000 OR `fact_business_type_b`.`gross_receipts_rupees` = 90000; Ensure each household is linked to at least one such geography record implies joining `dim_geography` with either `fact_business_type_a` or `fact_business_type_b` on `geography_id` and filtering by the gross receipts condition; Then select distinct `dim_geography`.`unique_household_id` ordered ascending."
+  },
+  {
+    "question": "List the unique household IDs in ascending order for households associated with geography IDs where either the net income in business type A is 50,000 rupees or the net income in business type B is 40,000 rupees, ensuring that each household is linked to at least one such geography record.",
+    "sql": "SELECT DISTINCT T1.UNIQUE_HOUSEHOLD_ID FROM DIM_GEOGRAPHY AS T1 JOIN (SELECT GEOGRAPHY_ID FROM FACT_BUSINESS_TYPE_A WHERE NET_INCOME_RUPEES = 50000 UNION SELECT GEOGRAPHY_ID FROM FACT_BUSINESS_TYPE_B WHERE NET_INCOME_RUPEES = 40000) AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.UNIQUE_HOUSEHOLD_ID HAVING COUNT(T2.GEOGRAPHY_ID) >= 1 ORDER BY T1.UNIQUE_HOUSEHOLD_ID ASC",
+    "pair_id": "72e3048e",
+    "original_question_id": "0a988b13",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A",
+      "FACT_BUSINESS_TYPE_B"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "unique household IDs refer to `dim_geography`.`unique_household_id`; net income in business type A is 50,000 rupees means `fact_business_type_a`.`net_income_rupees` = 50000; net income in business type B is 40,000 rupees means `fact_business_type_b`.`net_income_rupees` = 40000; geography IDs link via `dim_geography`.`geography_id` = `fact_business_type_a`.`geography_id` or `dim_geography`.`geography_id` = `fact_business_type_b`.`geography_id`; ascending order means ORDER BY `dim_geography`.`unique_household_id` ASC; ensure each household is linked to at least one such geography record means join the tables and filter by the income conditions."
+  },
+  {
+    "question": "For each state and district, list the state name, the district name, and the total sum of net income in rupees where that total sum exceeds 50,000.",
+    "sql": "SELECT T1.STATE, T1.DISTRICT, SUM(T2.NET_INCOME_RUPEES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE, T1.DISTRICT HAVING SUM(T2.NET_INCOME_RUPEES) > 50000",
+    "pair_id": "158e442b",
+    "original_question_id": "96ea7c46",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Net income refers to `fact_business_type_a.net_income_rupees`, `fact_business_type_b.net_income_rupees`, `fact_business_type_c.net_income_rupees`, and `fact_agriculture_operations.income_from_agriculture_minus_expenses`. Sum these four columns for each `dim_geography.state` and `dim_geography.district` where the total sum exceeds 50000."
+  },
+  {
+    "question": "For the state of Jammu & Kashmir, list each state, each district, and the total net income in rupees, but only for those districts where the sum of net income exceeds 50,000.",
+    "sql": "SELECT T1.STATE, T1.DISTRICT, SUM(T2.NET_INCOME_RUPEES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.STATE = 'Jammu & Kashmir' GROUP BY T1.STATE, T1.DISTRICT HAVING SUM(T2.NET_INCOME_RUPEES) > 50000",
+    "pair_id": "90e02309",
+    "original_question_id": "96ea7c46",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.state` = 'Jammu & Kashmir'; group by `dim_geography.state` and `dim_geography.district`; sum `fact_business_type_a.net_income_rupees`, `fact_business_type_b.net_income_rupees`, `fact_business_type_c.net_income_rupees` as total net income; keep districts where sum > 50000."
+  },
+  {
+    "question": "For the district of Baramula, list the state, the district name, and the total net income in rupees, but only for those state and district combinations where the total net income exceeds 50,000.",
+    "sql": "SELECT T1.STATE, T1.DISTRICT, SUM(T2.NET_INCOME_RUPEES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.DISTRICT = 'Baramula' GROUP BY T1.STATE, T1.DISTRICT HAVING SUM(T2.NET_INCOME_RUPEES) > 50000",
+    "pair_id": "adbfe776",
+    "original_question_id": "96ea7c46",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.district` = 'Baramula'. Compute total net income as SUM(`fact_business_type_a.net_income_rupees` + `fact_business_type_b.net_income_rupees` + `fact_business_type_c.net_income_rupees` + `fact_agriculture_operations.income_from_agriculture_minus_expenses`). Then filter where total net income > 50000. Output `dim_geography.state`, `dim_geography.district`, and total net income."
+  },
+  {
+    "question": "List the state and the district, along with the total net income in rupees, for each state and district combination where the sum of net income exceeds 50,000, and sort the results by state in ascending order.",
+    "sql": "SELECT T1.STATE, T1.DISTRICT, SUM(T2.NET_INCOME_RUPEES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE, T1.DISTRICT HAVING SUM(T2.NET_INCOME_RUPEES) > 50000 ORDER BY T1.STATE ASC",
+    "pair_id": "443dc4d9",
+    "original_question_id": "96ea7c46",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Total net income = SUM(`fact_business_type_a`.`net_income_rupees` + `fact_business_type_b`.`net_income_rupees` + `fact_business_type_c`.`net_income_rupees` + `fact_agriculture_operations`.`income_from_agriculture_minus_expenses`) per (`dim_geography`.`state`, `dim_geography`.`district`). Filter where sum > 50000."
+  },
+  {
+    "question": "Show the state, the district, and the total net income in rupees for all records in the state of 'Jammu & Kashmir', grouped by state and district, where the sum of net income exceeds 50,000, and order the results alphabetically by state.",
+    "sql": "SELECT T1.STATE, T1.DISTRICT, SUM(T2.NET_INCOME_RUPEES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.STATE = 'Jammu & Kashmir' GROUP BY T1.STATE, T1.DISTRICT HAVING SUM(T2.NET_INCOME_RUPEES) > 50000 ORDER BY T1.STATE ASC",
+    "pair_id": "f2f35b06",
+    "original_question_id": "96ea7c46",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Total net income = sum(fact_business_type_a.net_income_rupees + fact_business_type_b.net_income_rupees + fact_business_type_c.net_income_rupees). Filter dim_geography.state = 'Jammu & Kashmir'. Group by dim_geography.state, dim_geography.district. Having sum > 50000. Order by dim_geography.state."
+  },
+  {
+    "question": "List the state and the district, along with the total net income in rupees, for the district of 'Baramula', where the sum of net income exceeds 50,000, and order the results alphabetically by state.",
+    "sql": "SELECT T1.STATE, T1.DISTRICT, SUM(T2.NET_INCOME_RUPEES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.DISTRICT = 'Baramula' GROUP BY T1.STATE, T1.DISTRICT HAVING SUM(T2.NET_INCOME_RUPEES) > 50000 ORDER BY T1.STATE ASC",
+    "pair_id": "016c401a",
+    "original_question_id": "96ea7c46",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Total net income = SUM(`fact_business_type_a.net_income_rupees` + `fact_business_type_b.net_income_rupees` + `fact_business_type_c.net_income_rupees`); Filter by `dim_geography.district` = 'Baramula'; Group by `dim_geography.state`, `dim_geography.district`; Having SUM > 50000; Order by `dim_geography.state`."
+  },
+  {
+    "question": "List the state and district along with the total net income in rupees for all records where the individual net income is greater than 50,000, grouped by state and district, ensuring the total net income per group also exceeds 50,000, and sorted by the total net income in descending order.",
+    "sql": "SELECT T1.STATE, T1.DISTRICT, SUM(T2.NET_INCOME_RUPEES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_BUSINESS_TYPE_A AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.NET_INCOME_RUPEES > 50000 GROUP BY T1.STATE, T1.DISTRICT HAVING SUM(T2.NET_INCOME_RUPEES) > 50000 ORDER BY SUM(T2.NET_INCOME_RUPEES) DESC",
+    "pair_id": "3dd64d0c",
+    "original_question_id": "96ea7c46",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_BUSINESS_TYPE_A"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Net income refers to `fact_business_type_a.net_income_rupees`, `fact_business_type_b.net_income_rupees`, `fact_business_type_c.net_income_rupees`. Individual net income > 50000 means `net_income_rupees > 50000`. Total net income is SUM(`net_income_rupees`). Group by `dim_geography.state` and `dim_geography.district`. Having SUM(`net_income_rupees`) > 50000. Sort by SUM(`net_income_rupees`) DESC."
+  }
+]

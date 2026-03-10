@@ -1,0 +1,739 @@
+[
+  {
+    "question": "What is the district name for the district with the ID of 1?",
+    "sql": "SELECT DISTRICT_NAME FROM DIM_DISTRICT WHERE DISTRICT_ID = 1;",
+    "pair_id": "c619cadd",
+    "original_question_id": "68190e49",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "district with ID of 1 refers to `dim_district`.`district_id` = 1; district name refers to `dim_district`.`district_name`"
+  },
+  {
+    "question": "What is the district name for the district with the ID 3?",
+    "sql": "SELECT DISTRICT_NAME FROM DIM_DISTRICT WHERE DISTRICT_ID = 3;",
+    "pair_id": "71e9e62c",
+    "original_question_id": "68190e49",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "district name refers to `dim_district`.`district_name`; district with ID 3 refers to `dim_district`.`district_id` = 3"
+  },
+  {
+    "question": "What is the district name for the district with the district ID of 5?",
+    "sql": "SELECT DISTRICT_NAME FROM DIM_DISTRICT WHERE DISTRICT_ID = 5;",
+    "pair_id": "a20b6c89",
+    "original_question_id": "68190e49",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "district name refers to `dim_district`.`district_name`; district ID of 5 refers to `dim_district`.`district_id` = '5'"
+  },
+  {
+    "question": "List the district names for all districts located in the country of India, grouped by their district name, where the count of district IDs is greater than zero, and sort the results alphabetically by the district name.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.DISTRICT_ID = T2.STATE_ID JOIN DIM_COUNTRY AS T3 ON T2.STATE_ID = T3.COUNTRY_ID WHERE T3.COUNTRY_NAME = 'India' GROUP BY T1.DISTRICT_NAME HAVING COUNT(T1.DISTRICT_ID) > 0 ORDER BY T1.DISTRICT_NAME ASC",
+    "pair_id": "2e8e05fb",
+    "original_question_id": "68190e49",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "All districts in the database are located in India (since `dim_country.country_name` is 'India'). List distinct `dim_district.district_name` sorted alphabetically. The condition 'count of district IDs > 0' is always true but implies selecting districts that exist."
+  },
+  {
+    "question": "List the district names, grouped by name, for all districts associated with the country ID of 1, ensuring that only districts with a count of district IDs greater than zero are included, and order the results alphabetically by district name.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.DISTRICT_ID = T2.STATE_ID JOIN DIM_COUNTRY AS T3 ON T2.STATE_ID = T3.COUNTRY_ID WHERE T3.COUNTRY_ID = 1 GROUP BY T1.DISTRICT_NAME HAVING COUNT(T1.DISTRICT_ID) > 0 ORDER BY T1.DISTRICT_NAME ASC",
+    "pair_id": "affd911b",
+    "original_question_id": "68190e49",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "All districts belong to country_id 1 (India). Group by dim_district.district_name, count dim_district.district_id, and filter for count > 0. Order by dim_district.district_name alphabetically."
+  },
+  {
+    "question": "List the district names for all districts located in the country of India, ensuring that each district name is displayed only if it appears at least once, and sort the resulting list of district names in ascending alphabetical order.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.DISTRICT_ID = T2.STATE_ID JOIN DIM_COUNTRY AS T3 ON T2.STATE_ID = T3.COUNTRY_ID WHERE T3.COUNTRY_NAME = 'India' GROUP BY T1.DISTRICT_NAME HAVING COUNT(T1.DISTRICT_NAME) > 0 ORDER BY T1.DISTRICT_NAME ASC",
+    "pair_id": "c4d27823",
+    "original_question_id": "68190e49",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "The database contains only one country: 'India' in `dim_country`.`country_name`. Therefore, all districts in `dim_district` are located in India. List distinct `dim_district`.`district_name` and order by `dim_district`.`district_name` ASC."
+  },
+  {
+    "question": "Show the district name and the total number of pregnant women registered for ANC for the district named 'Spsr Nellore', grouped by district name and ordered by the total registrations in descending order, limited to the top 5 results.",
+    "sql": "SELECT d.DISTRICT_NAME, SUM(f.PREGNANT_WOMEN_REGISTERED_FOR_ANC) FROM DIM_DISTRICT d JOIN FACT_MATERNAL_ANC_REGISTRATION f ON d.DISTRICT_ID = f.SUB_DISTRICT_ID WHERE d.DISTRICT_NAME = 'Spsr Nellore' GROUP BY d.DISTRICT_NAME ORDER BY SUM(f.PREGNANT_WOMEN_REGISTERED_FOR_ANC) DESC LIMIT 5",
+    "pair_id": "07451c32",
+    "original_question_id": "eb04cb4d",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_MATERNAL_ANC_REGISTRATION"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "District named 'Spsr Nellore' refers to `dim_district`.`district_name` = 'Spsr Nellore'; total number of pregnant women registered for ANC is SUM(`fact_maternal_anc_registration`.`pregnant_women_registered_for_anc`); group by `dim_district`.`district_name`."
+  },
+  {
+    "question": "Show the district name and the total number of ANC registrations within the first trimester for the district named 'West Godavari', grouping the results by district name and ordering them by the sum of registrations in descending order for the top 5 records.",
+    "sql": "SELECT d.DISTRICT_NAME, SUM(f.ANC_REGISTERED_WITHIN_1ST_TRIMESTER) FROM DIM_DISTRICT d JOIN FACT_MATERNAL_ANC_REGISTRATION f ON d.DISTRICT_ID = f.SUB_DISTRICT_ID WHERE d.DISTRICT_NAME = 'West Godavari' GROUP BY d.DISTRICT_NAME ORDER BY SUM(f.ANC_REGISTERED_WITHIN_1ST_TRIMESTER) DESC LIMIT 5",
+    "pair_id": "b9022827",
+    "original_question_id": "eb04cb4d",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_MATERNAL_ANC_REGISTRATION"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "ANC registrations within the first trimester refers to `fact_maternal_anc_registration`.`anc_registered_within_1st_trimester`; district name 'West Godavari' refers to `dim_district`.`district_name` = 'West Godavari'; total number means SUM(); ordering by sum descending for top 5 records."
+  },
+  {
+    "question": "Show the district name and the total number of pregnant women who received 4 or more ANC checkups for the district named 'South Andamans', grouped by district name and ordered by the total checkups in descending order, limiting the results to the top 5.",
+    "sql": "SELECT d.DISTRICT_NAME, SUM(f.PW_RECEIVED_4_OR_MORE_ANC_CHECKUPS) FROM DIM_DISTRICT d JOIN FACT_MATERNAL_ANC_REGISTRATION f ON d.DISTRICT_ID = f.SUB_DISTRICT_ID WHERE d.DISTRICT_NAME = 'South Andamans' GROUP BY d.DISTRICT_NAME ORDER BY SUM(f.PW_RECEIVED_4_OR_MORE_ANC_CHECKUPS) DESC LIMIT 5",
+    "pair_id": "257720bf",
+    "original_question_id": "eb04cb4d",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_MATERNAL_ANC_REGISTRATION"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Total number of pregnant women who received 4 or more ANC checkups = SUM(`fact_maternal_anc_registration`.`pw_received_4_or_more_anc_checkups`). Filter by `dim_district`.`district_name` = 'South Andamans'. Group by `dim_district`.`district_name`, order by total descending, limit 5."
+  },
+  {
+    "question": "List the district name and the total number of pregnant women registered for ANC for each district, focusing only on urban sub-districts, and display the top 5 districts with the highest registration counts.",
+    "sql": "SELECT T1.DISTRICT_NAME, SUM(T2.PREGNANT_WOMEN_REGISTERED_FOR_ANC) FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T3 ON T1.DISTRICT_ID = T3.SUB_DISTRICT_ID JOIN FACT_MATERNAL_ANC_REGISTRATION AS T2 ON T3.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T3.TYPE_OF_AREA = 'Urban' GROUP BY T1.DISTRICT_NAME ORDER BY SUM(T2.PREGNANT_WOMEN_REGISTERED_FOR_ANC) DESC LIMIT 5",
+    "pair_id": "d3fbec15",
+    "original_question_id": "eb04cb4d",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_MATERNAL_ANC_REGISTRATION"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Urban sub-districts: `dim_sub_district`.`type_of_area` = 'Urban'. Total ANC registrations: SUM(`fact_maternal_anc_registration`.`pregnant_women_registered_for_anc`). Group by `dim_district`.`district_name`. Order by total DESC, limit 5."
+  },
+  {
+    "question": "List the district names and the total number of ANC registrations within the first trimester for districts located in rural areas, grouped by district name, and show the top 5 districts with the highest registration counts.",
+    "sql": "SELECT T1.DISTRICT_NAME, SUM(T2.ANC_REGISTERED_WITHIN_1ST_TRIMESTER) FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T3 ON T1.DISTRICT_ID = T3.SUB_DISTRICT_ID JOIN FACT_MATERNAL_ANC_REGISTRATION AS T2 ON T3.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T3.TYPE_OF_AREA = 'Rural' GROUP BY T1.DISTRICT_NAME ORDER BY SUM(T2.ANC_REGISTERED_WITHIN_1ST_TRIMESTER) DESC LIMIT 5",
+    "pair_id": "e847d501",
+    "original_question_id": "eb04cb4d",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_MATERNAL_ANC_REGISTRATION"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "ANC registrations within first trimester refers to `fact_maternal_anc_registration`.`anc_registered_within_1st_trimester`. Rural areas refers to `dim_sub_district`.`type_of_area` = 'Rural'. District names refers to `dim_district`.`district_name`. Join `fact_maternal_anc_registration` to `dim_sub_district` on `sub_district_id`, then join to `dim_district` using `district_id` (assuming `dim_sub_district` has `district_id`). Group by `dim_district`.`district_name`, sum ANC registrations, order by sum DESC limit 5."
+  },
+  {
+    "question": "List the district names and the total sum of pregnant women who received 4 or more ANC checkups for sub-districts located in urban areas, grouped by district name, and show only the top 5 districts with the highest sums.",
+    "sql": "SELECT T1.DISTRICT_NAME, SUM(T2.PW_RECEIVED_4_OR_MORE_ANC_CHECKUPS) FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T3 ON T1.DISTRICT_ID = T3.SUB_DISTRICT_ID JOIN FACT_MATERNAL_ANC_REGISTRATION AS T2 ON T3.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T3.TYPE_OF_AREA = 'Urban' GROUP BY T1.DISTRICT_NAME ORDER BY SUM(T2.PW_RECEIVED_4_OR_MORE_ANC_CHECKUPS) DESC LIMIT 5",
+    "pair_id": "da17e781",
+    "original_question_id": "eb04cb4d",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_MATERNAL_ANC_REGISTRATION"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`fact_maternal_anc_registration.pw_received_4_or_more_anc_checkups` is the column for pregnant women who received 4 or more ANC checkups; urban areas means `dim_sub_district.type_of_area` = 'Urban'; need to join `fact_maternal_anc_registration` to `dim_sub_district` on `sub_district_id`, then join `dim_sub_district` to `dim_district` on `district_id` (assuming `dim_sub_district` has `district_id` column); group by `dim_district.district_name`; sum the checkups; order by sum descending; limit 5."
+  },
+  {
+    "question": "List the district name and the state name for all records where the state name is 'Bihar'.",
+    "sql": "SELECT T1.DISTRICT_NAME, T2.STATE_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.DISTRICT_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Bihar';",
+    "pair_id": "91d181c9",
+    "original_question_id": "80e6b1e7",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "State name is stored in `dim_state.state_name`; district name is stored in `dim_district.district_name`. The value 'Bihar' exists in `dim_state.state_name`. The join condition between `dim_state` and `dim_district` is not defined in the provided schema."
+  },
+  {
+    "question": "List the district name and the state name for all records where the state name is 'Andhra Pradesh'.",
+    "sql": "SELECT T1.DISTRICT_NAME, T2.STATE_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.DISTRICT_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Andhra Pradesh';",
+    "pair_id": "792c2dc5",
+    "original_question_id": "80e6b1e7",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "(`dim_state`.`state_name`) must equal 'Andhra Pradesh'. (`dim_district`.`district_name`) is required. A join between `dim_district` and `dim_state` is needed, but the join condition is not defined in the given schema; likely via `dim_sub_district` or an implicit relationship."
+  },
+  {
+    "question": "Show the district name and the state name for the district named 'South Andamans'.",
+    "sql": "SELECT T1.DISTRICT_NAME, T2.STATE_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.DISTRICT_ID = T2.STATE_ID WHERE T1.DISTRICT_NAME = 'South Andamans';",
+    "pair_id": "b8713807",
+    "original_question_id": "80e6b1e7",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "district name refers to `dim_district`.`district_name`; state name refers to `dim_state`.`state_name`; district named 'South Andamans' refers to `dim_district`.`district_name` = 'South Andamans'; the state for South Andamans is 'Andaman And Nicobar Islands'."
+  },
+  {
+    "question": "List the district names and their corresponding state names for all districts located in the state of 'Bihar', sorted alphabetically by district name.",
+    "sql": "SELECT T1.DISTRICT_NAME, T2.STATE_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.DISTRICT_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Bihar' ORDER BY T1.DISTRICT_NAME ASC;",
+    "pair_id": "547f4aff",
+    "original_question_id": "80e6b1e7",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_district`.`district_name` and `dim_state`.`state_name` are needed. Join `dim_district` and `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id`. Filter where `dim_state`.`state_name` = 'Bihar'. Sort by `dim_district`.`district_name` alphabetically."
+  },
+  {
+    "question": "List the district name and the state name for all records where the state name is 'Andhra Pradesh', and sort the results alphabetically by the district name.",
+    "sql": "SELECT T1.DISTRICT_NAME, T2.STATE_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.DISTRICT_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Andhra Pradesh' ORDER BY T1.DISTRICT_NAME ASC;",
+    "pair_id": "c78ff73c",
+    "original_question_id": "80e6b1e7",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_district.district_name` contains district names; `dim_state.state_name` contains state names; condition: `dim_state.state_name` = 'Andhra Pradesh'; sort by `dim_district.district_name` alphabetically."
+  },
+  {
+    "question": "List the district name and the state name for the district named 'South Andamans', and sort the results by the district name in ascending order.",
+    "sql": "SELECT T1.DISTRICT_NAME, T2.STATE_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.DISTRICT_ID = T2.STATE_ID WHERE T1.DISTRICT_NAME = 'South Andamans' ORDER BY T1.DISTRICT_NAME ASC;",
+    "pair_id": "93c43277",
+    "original_question_id": "80e6b1e7",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "'South Andamans' is a value in `dim_district`.`district_name`. The schema does not link `dim_district` to `dim_state`, so state name cannot be retrieved."
+  },
+  {
+    "question": "List the district names for all districts that do not have a corresponding state record, grouped and ordered by the district name.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 LEFT JOIN DIM_STATE AS T2 ON T1.DISTRICT_ID = T2.STATE_ID WHERE T2.STATE_ID IS NULL GROUP BY T1.DISTRICT_NAME ORDER BY T1.DISTRICT_NAME",
+    "pair_id": "30830fe1",
+    "original_question_id": "4a6bc9b0",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Find districts where `dim_district`.`district_name` is not in `dim_state`.`state_name`. Group by and order by `dim_district`.`district_name`."
+  },
+  {
+    "question": "List the district names that do not share a name with any state, ensuring each district name appears at least once in the records, and sort the results alphabetically by district name.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 WHERE T1.DISTRICT_NAME NOT IN (SELECT T2.STATE_NAME FROM DIM_STATE AS T2) GROUP BY T1.DISTRICT_NAME HAVING COUNT(T1.DISTRICT_ID) >= 1 ORDER BY T1.DISTRICT_NAME ASC",
+    "pair_id": "d9e505a8",
+    "original_question_id": "4a6bc9b0",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_district`.`district_name` where it is not found in `dim_state`.`state_name`. Sort alphabetically by `dim_district`.`district_name`."
+  },
+  {
+    "question": "List the district names in ascending order for all districts whose name is not 'Andhra Pradesh' (as verified against the state names), ensuring that each district name is included only if it has at least one associated district ID.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 WHERE T1.DISTRICT_NAME NOT IN (SELECT T2.STATE_NAME FROM DIM_STATE AS T2 WHERE T2.STATE_NAME = 'Andhra Pradesh') GROUP BY T1.DISTRICT_NAME HAVING COUNT(T1.DISTRICT_ID) >= 1 ORDER BY T1.DISTRICT_NAME ASC",
+    "pair_id": "131b72ce",
+    "original_question_id": "4a6bc9b0",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "District names are stored in `dim_district`.`district_name`. 'Andhra Pradesh' is a state name in `dim_state`.`state_name`, not a district name. List all distinct district names in ascending order, excluding any district named 'Andhra Pradesh' (though none exist). Each district has a `district_id` (primary key), so all districts have an associated district ID."
+  },
+  {
+    "question": "List the district names from the district dimension table, excluding any districts that share a name with the states of Bihar or Assam, where the count of district IDs is at least one, and order the results alphabetically by district name.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 WHERE T1.DISTRICT_NAME NOT IN (SELECT T2.STATE_NAME FROM DIM_STATE AS T2 WHERE T2.STATE_NAME IN ('Bihar', 'Assam')) GROUP BY T1.DISTRICT_NAME HAVING COUNT(T1.DISTRICT_ID) >= 1 ORDER BY T1.DISTRICT_NAME ASC",
+    "pair_id": "16e7d79d",
+    "original_question_id": "4a6bc9b0",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_district`.`district_name` where `dim_district`.`district_name` NOT IN ('Bihar', 'Assam'), ordered alphabetically by `dim_district`.`district_name`."
+  },
+  {
+    "question": "List the sub-district names for areas where the type of area is rural, sorted by the sub-district name in descending order, and show only the first five results.",
+    "sql": "SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Rural' ORDER BY SUB_DISTRICT_NAME DESC LIMIT 5;",
+    "pair_id": "9786555e",
+    "original_question_id": "9f369fd6",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Sub-district names are in `dim_sub_district.sub_district_name`. Rural areas correspond to `dim_sub_district.type_of_area = 'Rural'`. Sort by `dim_sub_district.sub_district_name` DESC and limit to 5."
+  },
+  {
+    "question": "List the sub district IDs for areas where the type of area is 'Rural', ordered by the sub district name in descending order, and show only the first five results.",
+    "sql": "SELECT SUB_DISTRICT_ID FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Rural' ORDER BY SUB_DISTRICT_NAME DESC LIMIT 5;",
+    "pair_id": "4414606d",
+    "original_question_id": "9f369fd6",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_sub_district.type_of_area` = 'Rural'; order by `dim_sub_district.sub_district_name` DESC; limit to first 5 results."
+  },
+  {
+    "question": "List the sub-district names for areas classified as 'Rural', ordered by their sub-district ID in descending order, and show only the first 5 results.",
+    "sql": "SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Rural' ORDER BY SUB_DISTRICT_ID DESC LIMIT 5;",
+    "pair_id": "48b9ca72",
+    "original_question_id": "9f369fd6",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_sub_district`.`type_of_area` = 'Rural', select `dim_sub_district`.`sub_district_name`, order by `dim_sub_district`.`sub_district_id` DESC, limit 5"
+  },
+  {
+    "question": "List the sub-district names for areas where the type of area is 'Rural', ordered by the sub-district name in descending order, and show only the first five results.",
+    "sql": "SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Rural' ORDER BY SUB_DISTRICT_NAME DESC LIMIT 5;",
+    "pair_id": "4fcb6a35",
+    "original_question_id": "9f369fd6",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_sub_district.sub_district_name` for areas where `dim_sub_district.type_of_area` = 'Rural', ordered by `dim_sub_district.sub_district_name` DESC, limit 5."
+  },
+  {
+    "question": "List the sub-district names for areas where the type of area is 'Rural' and the sub-district ID is greater than 0, sorted by the sub-district name in descending order, and limited to the first 5 results.",
+    "sql": "SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Rural' AND SUB_DISTRICT_ID > 0 ORDER BY SUB_DISTRICT_NAME DESC LIMIT 5;",
+    "pair_id": "941d9efd",
+    "original_question_id": "9f369fd6",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_sub_district`.`type_of_area` = 'Rural'; `dim_sub_district`.`sub_district_id` > 0; ORDER BY `dim_sub_district`.`sub_district_name` DESC; LIMIT 5"
+  },
+  {
+    "question": "List the sub-district names for the first five records where the area type is 'Rural' and the sub-district name is not null, sorted by the sub-district name in descending order.",
+    "sql": "SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Rural' AND SUB_DISTRICT_NAME IS NOT NULL ORDER BY SUB_DISTRICT_NAME DESC LIMIT 5;",
+    "pair_id": "ca9516cb",
+    "original_question_id": "9f369fd6",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_sub_district` where `dim_sub_district.type_of_area` = 'Rural' and `dim_sub_district.sub_district_name` IS NOT NULL, then order by `dim_sub_district.sub_district_name` DESC and return first five records."
+  },
+  {
+    "question": "List the sub-district names for areas classified as 'Rural' that have at least one sub-district ID recorded, grouped by their name, and provide the top 5 results sorted in descending order by the sub-district name.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN DIM_DISTRICT AS T2 ON T1.SUB_DISTRICT_ID = T2.DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Rural' GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(T1.SUB_DISTRICT_ID) >= 1 ORDER BY T1.SUB_DISTRICT_NAME DESC LIMIT 5",
+    "pair_id": "5e688a8f",
+    "original_question_id": "9f369fd6",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_sub_district.type_of_area = 'Rural'`, group by `dim_sub_district.sub_district_name`, order by `dim_sub_district.sub_district_name` DESC, limit 5."
+  },
+  {
+    "question": "List the sub-district names for sub-districts located in rural areas that are associated with at least one district name, ordered by the sub-district name in descending order, and show only the first five results.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN DIM_DISTRICT AS T2 ON T1.SUB_DISTRICT_ID = T2.DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Rural' GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(T2.DISTRICT_NAME) >= 1 ORDER BY T1.SUB_DISTRICT_NAME DESC LIMIT 5",
+    "pair_id": "f4ef09ed",
+    "original_question_id": "9f369fd6",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Rural areas refers to `dim_sub_district`.`type_of_area` = 'Rural'; sub-district names are in `dim_sub_district`.`sub_district_name`; order by sub-district name descending and limit 5."
+  },
+  {
+    "question": "List the sub-district names for areas classified as 'Rural', ensuring the count of area types is zero or more, and display the first five sub-district names in descending alphabetical order.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN DIM_DISTRICT AS T2 ON T1.SUB_DISTRICT_ID = T2.DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Rural' GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(T1.TYPE_OF_AREA) >= 0 ORDER BY T1.SUB_DISTRICT_NAME DESC LIMIT 5",
+    "pair_id": "56d93e58",
+    "original_question_id": "9f369fd6",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Rural refers to `dim_sub_district`.`type_of_area` = 'Rural'; sub-district names refer to `dim_sub_district`.`sub_district_name`; first five in descending alphabetical order means ORDER BY `sub_district_name` DESC LIMIT 5."
+  },
+  {
+    "question": "What is the sub-district name for the sub-district with ID 3 that is classified as an urban area?",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT T1 JOIN FACT_OUTPATIENT_SERVICES T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Urban' AND T2.SUB_DISTRICT_ID = 3;",
+    "pair_id": "fe2ec875",
+    "original_question_id": "b9414879",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_OUTPATIENT_SERVICES",
+      "FACT_PREGNANCY_TESTING"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "sub-district with ID 3 refers to dim_sub_district.sub_district_id = 3; urban area refers to dim_sub_district.type_of_area = 'Urban'; need dim_sub_district.sub_district_name"
+  },
+  {
+    "question": "List the sub-district names for all sub-districts categorized as urban, grouped and ordered alphabetically by their sub-district name.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Urban' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "188bf7c7",
+    "original_question_id": "b9414879",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_OUTPATIENT_SERVICES",
+      "FACT_PREGNANCY_TESTING"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_sub_district.sub_district_name` refers to sub-district names; `dim_sub_district.type_of_area` = 'Urban' refers to urban categorization; ORDER BY `dim_sub_district.sub_district_name` ASC for alphabetical ordering."
+  },
+  {
+    "question": "List the sub district names for areas classified as 'Urban', grouped and ordered alphabetically by the sub district name.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_PREGNANCY_TESTING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Urban' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "3af0e41b",
+    "original_question_id": "b9414879",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_OUTPATIENT_SERVICES",
+      "FACT_PREGNANCY_TESTING"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "",
+    "evidence_error": "Response ended prematurely"
+  },
+  {
+    "question": "List the sub-district names for urban areas that have recorded more than zero allopathic outpatient attendances, grouped and ordered alphabetically by the sub-district name.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Urban' AND T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC > 0 GROUP BY T1.SUB_DISTRICT_NAME ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "b9f6490b",
+    "original_question_id": "b9414879",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_OUTPATIENT_SERVICES",
+      "FACT_PREGNANCY_TESTING"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Urban areas refers to `dim_sub_district`.`type_of_area` = 'Urban'. More than zero allopathic outpatient attendances refers to `fact_outpatient_services`.`outpatient_attendance_allopathic` > 0. Join `dim_sub_district` and `fact_outpatient_services` on `sub_district_id`. Select DISTINCT `dim_sub_district`.`sub_district_name` and order by `dim_sub_district`.`sub_district_name` alphabetically."
+  },
+  {
+    "question": "List the sub-district names for areas classified as 'Urban' that have more than one distinct outpatient ID, ensuring the results are sorted alphabetically by sub-district name.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN FACT_PREGNANCY_TESTING AS T3 ON T1.SUB_DISTRICT_ID = T3.SUB_DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Urban' GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(DISTINCT T2.OUTPATIENT_ID) > 1 ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "bad7ebd0",
+    "original_question_id": "b9414879",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_OUTPATIENT_SERVICES",
+      "FACT_PREGNANCY_TESTING"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "",
+    "evidence_error": "Response ended prematurely"
+  },
+  {
+    "question": "List the sub-district names for areas classified as 'Urban' that have recorded outpatient services in more than two distinct months, and display the results in ascending order by the sub-district name.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN FACT_PREGNANCY_TESTING AS T3 ON T1.SUB_DISTRICT_ID = T3.SUB_DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Urban' GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(DISTINCT T2.MONTH_ID) > 2 ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "c1e8e5cd",
+    "original_question_id": "b9414879",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_OUTPATIENT_SERVICES",
+      "FACT_PREGNANCY_TESTING"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Urban areas refers to `dim_sub_district`.`type_of_area` = 'Urban'; recorded outpatient services means join `dim_sub_district` with `fact_outpatient_services` on `sub_district_id`; more than two distinct months means COUNT(DISTINCT `fact_outpatient_services`.`month_id`) > 2; ascending order by sub-district name means ORDER BY `dim_sub_district`.`sub_district_name` ASC."
+  },
+  {
+    "question": "List the sub district names for urban areas that have at least one recorded pregnancy testing ID, ensuring the results are ordered alphabetically by sub district name.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN FACT_PREGNANCY_TESTING AS T3 ON T1.SUB_DISTRICT_ID = T3.SUB_DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Urban' GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(DISTINCT T3.PREGNANCY_TESTING_ID) > 0 ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "56eb4c2f",
+    "original_question_id": "b9414879",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_OUTPATIENT_SERVICES",
+      "FACT_PREGNANCY_TESTING"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Urban areas refer to `dim_sub_district.type_of_area` = 'Urban'; at least one recorded pregnancy testing ID means there is at least one row in `fact_pregnancy_testing` for that sub-district; sub district names are in `dim_sub_district.sub_district_name`; order alphabetically by `dim_sub_district.sub_district_name`."
+  },
+  {
+    "question": "List the sub-district names that are associated with a rural area type, excluding any sub-district names that are also associated with an urban area type.",
+    "sql": "SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Rural' EXCEPT SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Urban';",
+    "pair_id": "3a3ff1f5",
+    "original_question_id": "2b80c3a9",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "rural area type refers to `dim_sub_district`.`type_of_area` = 'Rural'; excluding sub-district names also associated with urban area type means `dim_sub_district`.`sub_district_name` NOT IN (SELECT `dim_sub_district`.`sub_district_name` FROM `dim_sub_district` WHERE `dim_sub_district`.`type_of_area` = 'Urban');"
+  },
+  {
+    "question": "Which sub-district IDs are associated with a rural area type, excluding those sub-district IDs that are also associated with an urban area type?",
+    "sql": "SELECT SUB_DISTRICT_ID FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Rural' EXCEPT SELECT SUB_DISTRICT_ID FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Urban';",
+    "pair_id": "ecaa6698",
+    "original_question_id": "2b80c3a9",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "rural area type refers to `dim_sub_district`.`type_of_area` = 'Rural'; excluding those also associated with urban area type is redundant because each sub-district ID has exactly one type_of_area value."
+  },
+  {
+    "question": "List the distinct sub-district names that are associated with a rural area type, excluding any sub-district names that are also associated with an urban area type.",
+    "sql": "SELECT DISTINCT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Rural' EXCEPT SELECT DISTINCT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Urban';",
+    "pair_id": "0873df54",
+    "original_question_id": "2b80c3a9",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "rural area type refers to `dim_sub_district`.`type_of_area` = 'Rural'; excluding any sub-district names that are also associated with an urban area type means sub-district_id not in (select sub_district_id from dim_sub_district where `dim_sub_district`.`type_of_area` = 'Urban'); distinct sub-district names refers to SELECT DISTINCT `dim_sub_district`.`sub_district_name`"
+  },
+  {
+    "question": "List the sub-district names for those sub-districts that are categorized as 'Rural' and do not have any corresponding entries categorized as 'Urban', based on outpatient services data, and order the results alphabetically by the sub-district name.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T1.SUB_DISTRICT_NAME NOT IN (SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Urban') GROUP BY T1.SUB_DISTRICT_NAME ORDER BY T1.SUB_DISTRICT_NAME",
+    "pair_id": "437059ca",
+    "original_question_id": "2b80c3a9",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_sub_district.type_of_area = 'Rural'` and join with `fact_outpatient_services` on `sub_district_id` to ensure outpatient data exists. Order by `dim_sub_district.sub_district_name` alphabetically."
+  },
+  {
+    "question": "List the sub-district names for areas classified as 'Rural' that do not have any corresponding sub-district name classified as 'Urban', and where the outpatient allopathic attendance is greater than zero, grouped and ordered by the sub-district name.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T1.SUB_DISTRICT_NAME NOT IN (SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Urban') AND T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC > 0 GROUP BY T1.SUB_DISTRICT_NAME ORDER BY T1.SUB_DISTRICT_NAME",
+    "pair_id": "17dbcf21",
+    "original_question_id": "2b80c3a9",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_sub_district.type_of_area` = 'Rural'; outpatient allopathic attendance refers to `fact_outpatient_services.outpatient_attendance_allopathic` > 0; grouping by sub-district name means SELECT DISTINCT `dim_sub_district.sub_district_name`."
+  },
+  {
+    "question": "List the sub-district names for rural areas that do not have any corresponding sub-district name classified as urban, specifically for records associated with the first month, and order the results alphabetically by the sub-district name.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T1.SUB_DISTRICT_NAME NOT IN (SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Urban') AND T2.MONTH_ID = 1 GROUP BY T1.SUB_DISTRICT_NAME ORDER BY T1.SUB_DISTRICT_NAME",
+    "pair_id": "80e89774",
+    "original_question_id": "2b80c3a9",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "",
+    "evidence_error": "Response ended prematurely"
+  },
+  {
+    "question": "List the sub-district names for areas classified as 'Rural' that do not have any corresponding sub-district names classified as 'Urban', specifically for those sub-districts that have more than one outpatient record, and sort the results alphabetically by sub-district name.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T1.SUB_DISTRICT_NAME NOT IN (SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Urban') GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(T2.OUTPATIENT_ID) > 1 ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "73bcfedf",
+    "original_question_id": "2b80c3a9",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "`dim_sub_district.type_of_area` = 'Rural' for rural classification; 'Urban' for urban classification; 'do not have any corresponding sub-district names classified as Urban' means no other sub-district with same `sub_district_name` has `type_of_area` = 'Urban'; 'more than one outpatient record' means COUNT(`fact_outpatient_services.outpatient_id`) > 1 per `sub_district_id`; sort by `dim_sub_district.sub_district_name` alphabetically."
+  },
+  {
+    "question": "List the sub-district names for areas categorized as 'Rural' that do not have any corresponding 'Urban' entries, specifically for those sub-districts that appear in the outpatient services records more than twice, and sort the results alphabetically by sub-district name.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T1.SUB_DISTRICT_NAME NOT IN (SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Urban') GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(T2.MONTH_ID) > 2 ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "c0d1e81c",
+    "original_question_id": "2b80c3a9",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "`dim_sub_district.type_of_area` = 'Rural' for rural areas; 'Urban' entries refer to `dim_sub_district.type_of_area` = 'Urban'; 'appear in the outpatient services records more than twice' means count(`fact_outpatient_services.outpatient_id`) > 2 for that sub-district; 'do not have any corresponding Urban entries' means the sub-district name does not appear in `dim_sub_district` with `type_of_area` = 'Urban'."
+  },
+  {
+    "question": "List the sub-district names for areas classified as 'Rural' that do not have any corresponding 'Urban' entries, specifically for those sub-districts that have recorded at least one instance of allopathic outpatient attendance, and sort the results alphabetically by the sub-district name.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T1.SUB_DISTRICT_NAME NOT IN (SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Urban') GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 0 ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "f997bb19",
+    "original_question_id": "2b80c3a9",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "`dim_sub_district.type_of_area` = 'Rural' and no other row in `dim_sub_district` for same `sub_district_id` has `type_of_area` = 'Urban'; join `fact_outpatient_services` on `sub_district_id` where `fact_outpatient_services.outpatient_attendance_allopathic` > 0; order by `dim_sub_district.sub_district_name`."
+  },
+  {
+    "question": "List the sub-district names for areas where the type of area is either 'Urban' or 'Rural'.",
+    "sql": "SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Urban' OR TYPE_OF_AREA = 'Rural';",
+    "pair_id": "29cdd4e8",
+    "original_question_id": "d23ab409",
+    "schema_used": [
+      "DIM_SUB_DISTRICT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_sub_district.sub_district_name` contains the sub-district names; `dim_sub_district.type_of_area` contains 'Urban' or 'Rural'; condition: `type_of_area` IN ('Urban', 'Rural')"
+  },
+  {
+    "question": "List the unique sub-district names for areas where the type of area is either rural or urban.",
+    "sql": "SELECT DISTINCT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Rural' OR TYPE_OF_AREA = 'Urban';",
+    "pair_id": "b461cb07",
+    "original_question_id": "d23ab409",
+    "schema_used": [
+      "DIM_SUB_DISTRICT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "sub-district names refers to `dim_sub_district`.`sub_district_name`; type of area refers to `dim_sub_district`.`type_of_area`; rural corresponds to 'Rural'; urban corresponds to 'Urban'"
+  },
+  {
+    "question": "List the sub-district names for the first 10 records where the type of area is either urban or rural.",
+    "sql": "SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Urban' OR TYPE_OF_AREA = 'Rural' LIMIT 10;",
+    "pair_id": "82919a12",
+    "original_question_id": "d23ab409",
+    "schema_used": [
+      "DIM_SUB_DISTRICT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "sub-district names refer to `dim_sub_district`.`sub_district_name`; type of area is either urban or rural refers to `dim_sub_district`.`type_of_area` IN ('Urban', 'Rural'); first 10 records implies LIMIT 10."
+  }
+]

@@ -1,0 +1,737 @@
+[
+  {
+    "question": "For the state of 'Andaman And Nicobar Islands' and the census year 1991, list each district along with its corresponding total population.",
+    "sql": "SELECT T1.DISTRICT, T2.TOTAL_POPULATION FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991;",
+    "pair_id": "6a0bdf0e",
+    "original_question_id": "3d8442af",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' filters state; `fact_population_core`.`census_year` = 1991 filters year; `dim_geography_hierarchy`.`district` provides district names; `fact_population_core`.`total_population` provides total population; join `dim_geography_hierarchy` and `fact_population_core` on `hierarchy_id`."
+  },
+  {
+    "question": "List the district and the total population for locations categorized as 'Rural' based on the 1991 census year.",
+    "sql": "SELECT T1.DISTRICT, T2.TOTAL_POPULATION FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.LOCATION_TYPE = 'Rural' AND T2.CENSUS_YEAR = 1991;",
+    "pair_id": "a77a2e6b",
+    "original_question_id": "3d8442af",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_geography_hierarchy.district` and `fact_population_core.total_population` are needed. Filter: `dim_geography_hierarchy.location_type` = 'Rural' and `fact_population_core.census_year` = 1991. Join on `hierarchy_id`."
+  },
+  {
+    "question": "For the country of India and the census year 1991, list each district along with its corresponding total population.",
+    "sql": "SELECT T1.DISTRICT, T2.TOTAL_POPULATION FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.COUNTRY = 'India' AND T2.CENSUS_YEAR = 1991;",
+    "pair_id": "5cf5c1fc",
+    "original_question_id": "3d8442af",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_geography_hierarchy.district` gives district names; `fact_population_core.total_population` gives total population; Filter: `dim_geography_hierarchy.country` = 'India' and `fact_population_core.census_year` = 1991"
+  },
+  {
+    "question": "List each district and the sum of their total populations for the state of 'Andaman And Nicobar Islands' during the 1991 census year, ordered by the total population in descending order.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.TOTAL_POPULATION) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT ORDER BY SUM(T2.TOTAL_POPULATION) DESC",
+    "pair_id": "92920cf1",
+    "original_question_id": "3d8442af",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter (`dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands') and (`fact_population_core`.`census_year` = 1991); Join on `hierarchy_id`; Group by `dim_geography_hierarchy`.`district`; Sum(`fact_population_core`.`total_population`); Order by sum descending."
+  },
+  {
+    "question": "Show the district and the total sum of the population for the district 'South Andamans' during the 1991 census year, grouped by the district and ordered by the sum of the total population in descending order.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.TOTAL_POPULATION) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.DISTRICT = 'South Andamans' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT ORDER BY SUM(T2.TOTAL_POPULATION) DESC",
+    "pair_id": "548b91e2",
+    "original_question_id": "3d8442af",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_geography_hierarchy` and `fact_population_core` on `hierarchy_id`. Filter where `dim_geography_hierarchy.district` = 'South Andamans' and `fact_population_core.census_year` = 1991. Sum `fact_population_core.total_population` grouped by `dim_geography_hierarchy.district` and order by sum descending."
+  },
+  {
+    "question": "For the census year 1991, list the district and the sum of the total population for the 'North And Middle Andaman' district, grouped by district and ordered by the total population sum in descending order.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.TOTAL_POPULATION) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.DISTRICT = 'North And Middle Andaman' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT ORDER BY SUM(T2.TOTAL_POPULATION) DESC",
+    "pair_id": "0e9a267b",
+    "original_question_id": "3d8442af",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_geography_hierarchy` and `fact_population_core` on `hierarchy_id`. Filter by `fact_population_core`.`census_year` = 1991 and `dim_geography_hierarchy`.`district` = 'North And Middle Andaman'. Sum `fact_population_core`.`total_population` grouped by `dim_geography_hierarchy`.`district`. Order by sum descending."
+  },
+  {
+    "question": "For the census year 1991 in the state of Andaman And Nicobar Islands in India, list each district along with the sum of its total population, filtering for districts where that total population sum is greater than 500 and ordering the results by the total population sum in descending order.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.TOTAL_POPULATION) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T1.COUNTRY = 'India' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT HAVING SUM(T2.TOTAL_POPULATION) > 500 ORDER BY SUM(T2.TOTAL_POPULATION) DESC",
+    "pair_id": "a1b8bf53",
+    "original_question_id": "3d8442af",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter by `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands', `dim_geography_hierarchy`.`country` = 'India', and `fact_population_core`.`census_year` = 1991. Join `dim_geography_hierarchy` and `fact_population_core` on `hierarchy_id`. Group by `dim_geography_hierarchy`.`district` and sum(`fact_population_core`.`total_population`). Keep districts where sum > 500. Order by sum descending."
+  },
+  {
+    "question": "Show the district and the total population for each district in the state of 'Andaman And Nicobar Islands' that have a rural location type, specifically for the 1991 census year, where the sum of the total population exceeds 1,000, and order the results by the total population in descending order.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.TOTAL_POPULATION) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T1.LOCATION_TYPE = 'Rural' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT HAVING SUM(T2.TOTAL_POPULATION) > 1000 ORDER BY SUM(T2.TOTAL_POPULATION) DESC",
+    "pair_id": "77620119",
+    "original_question_id": "3d8442af",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter by `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `dim_geography_hierarchy`.`location_type` = 'Rural' and `fact_population_core`.`census_year` = 1991. Join `dim_geography_hierarchy` and `fact_population_core` on `hierarchy_id`. Group by `dim_geography_hierarchy`.`district`. Sum `fact_population_core`.`total_population` as total_population_sum. Keep only groups where total_population_sum > 1000. Order by total_population_sum DESC."
+  },
+  {
+    "question": "For the state of 'Andaman And Nicobar Islands' and the district of 'South Andamans' during the 1991 census year, list the district name and the total sum of the population, provided that the total population is greater than zero, and order the results by the total population in descending order.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.TOTAL_POPULATION) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T1.DISTRICT = 'South Andamans' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT HAVING SUM(T2.TOTAL_POPULATION) > 0 ORDER BY SUM(T2.TOTAL_POPULATION) DESC",
+    "pair_id": "154d74d9",
+    "original_question_id": "3d8442af",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_geography_hierarchy` and `fact_population_core` on `hierarchy_id`. Filter where `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands', `dim_geography_hierarchy`.`district` = 'South Andamans', and `fact_population_core`.`census_year` = 1991. Group by `dim_geography_hierarchy`.`district`. Sum `fact_population_core`.`total_population` as total_population_sum. Keep only groups where total_population_sum > 0. Order by total_population_sum DESC."
+  },
+  {
+    "question": "For the district of 'South Andamans' during the 1991 census year, list the district name and the ratio of the number of households to the total population, ordered by this ratio in descending order.",
+    "sql": "SELECT T1.DISTRICT, (CAST(T2.NUMBER_OF_HOUSEHOLDS AS REAL) / T3.TOTAL_POPULATION) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.DISTRICT = 'South Andamans' AND T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 ORDER BY (CAST(T2.NUMBER_OF_HOUSEHOLDS AS REAL) / T3.TOTAL_POPULATION) DESC",
+    "pair_id": "a1d53d75",
+    "original_question_id": "d6d1389e",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Ratio = (`fact_housing`.`number_of_households` / `fact_population_core`.`total_population`); Filter by `dim_geography_hierarchy`.`district` = 'South Andamans' and `fact_housing`.`census_year` = 1991 and `fact_population_core`.`census_year` = 1991; Order by ratio DESC."
+  },
+  {
+    "question": "For the district of 'North And Middle Andaman' during the 1991 census year, list the district name and the ratio of the number of households to the total population, ordered from highest to lowest ratio.",
+    "sql": "SELECT T1.DISTRICT, (CAST(T2.NUMBER_OF_HOUSEHOLDS AS REAL) / T3.TOTAL_POPULATION) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.DISTRICT = 'North And Middle Andaman' AND T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 ORDER BY (CAST(T2.NUMBER_OF_HOUSEHOLDS AS REAL) / T3.TOTAL_POPULATION) DESC",
+    "pair_id": "3f8344b0",
+    "original_question_id": "d6d1389e",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "District name is in `dim_geography_hierarchy.district`; Filter `dim_geography_hierarchy.district` = 'North And Middle Andaman' and `fact_housing.census_year` = 1991 and `fact_population_core.census_year` = 1991; Ratio = `fact_housing.number_of_households` / `fact_population_core.total_population`; Order by ratio DESC."
+  },
+  {
+    "question": "For the census year 1991, list each district along with its household density, calculated as the sum of the number of households divided by the total population, for all districts where the total population exceeds 500, and order the results by household density in descending order.",
+    "sql": "SELECT T1.DISTRICT, (CAST(SUM(T2.NUMBER_OF_HOUSEHOLDS) AS FLOAT) / SUM(T3.TOTAL_POPULATION)) AS household_density FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT HAVING SUM(T3.TOTAL_POPULATION) > 500 ORDER BY household_density DESC",
+    "pair_id": "182080f8",
+    "original_question_id": "d6d1389e",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Household density = SUM(fact_housing.number_of_households) / SUM(fact_population_core.total_population); Filter by fact_housing.census_year = 1991 and fact_population_core.census_year = 1991; Condition: SUM(fact_population_core.total_population) > 500; Group by dim_geography_hierarchy.district; Order by household density DESC."
+  },
+  {
+    "question": "For the census year 1991, list each district along with its household density—calculated as the sum of the number of households divided by the total population—for districts where the total population exceeds 100, and order the results by household density in descending order.",
+    "sql": "SELECT T1.DISTRICT, (CAST(SUM(T2.NUMBER_OF_HOUSEHOLDS) AS FLOAT) / SUM(T3.TOTAL_POPULATION)) AS household_density FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT HAVING SUM(T3.TOTAL_POPULATION) > 100 ORDER BY household_density DESC",
+    "pair_id": "cade1a3f",
+    "original_question_id": "d6d1389e",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Household density = SUM(fact_housing.number_of_households) / SUM(fact_population_core.total_population); Filter: fact_population_core.total_population > 100 AND fact_housing.census_year = 1991 AND fact_population_core.census_year = 1991; Group by dim_geography_hierarchy.district; Order by household density DESC."
+  },
+  {
+    "question": "For the census year 1991, list each district along with its household density, calculated as the sum of the number of households divided by the total population, ensuring only districts with a total population greater than zero are included and sorting the results by household density in descending order.",
+    "sql": "SELECT T1.DISTRICT, (CAST(SUM(T2.NUMBER_OF_HOUSEHOLDS) AS FLOAT) / SUM(T3.TOTAL_POPULATION)) AS household_density FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT HAVING SUM(T3.TOTAL_POPULATION) > 0 ORDER BY household_density DESC",
+    "pair_id": "3bcd1396",
+    "original_question_id": "d6d1389e",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Household density = SUM(`fact_housing`.`number_of_households`) / SUM(`fact_population_core`.`total_population`); filter by `fact_housing`.`census_year` = 1991 and `fact_population_core`.`census_year` = 1991 and `fact_population_core`.`total_population` > 0; group by `dim_geography_hierarchy`.`district`; order by household density DESC."
+  },
+  {
+    "question": "List the districts where the census year is 1991, the total population is greater than 1000, and the number of households exceeds 200.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_HOUSING AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T2.TOTAL_POPULATION > 1000 AND T3.NUMBER_OF_HOUSEHOLDS > 200;",
+    "pair_id": "42a33e8f",
+    "original_question_id": "48f7a15e",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_geography_hierarchy`.`district` refers to districts; census year 1991 maps to `fact_population_core`.`census_year` = 1991 and `fact_housing`.`census_year` = 1991; total population > 1000 maps to `fact_population_core`.`total_population` > 1000; number of households > 200 maps to `fact_housing`.`number_of_households` > 200."
+  },
+  {
+    "question": "List the districts located in the state of 'Andaman And Nicobar Islands' where the total population is greater than 500 and the number of households exceeds 100.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_HOUSING AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.TOTAL_POPULATION > 500 AND T3.NUMBER_OF_HOUSEHOLDS > 100;",
+    "pair_id": "91071fe0",
+    "original_question_id": "48f7a15e",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "State = 'Andaman And Nicobar Islands' in `dim_geography_hierarchy.state`; total population > 500 refers to `fact_population_core.total_population` > 500; number of households > 100 refers to `fact_housing.number_of_households` > 100; output `dim_geography_hierarchy.district`."
+  },
+  {
+    "question": "List the districts where the location type is 'Rural', the total population is greater than 800, and the number of households exceeds 150.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_HOUSING AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.LOCATION_TYPE = 'Rural' AND T2.TOTAL_POPULATION > 800 AND T3.NUMBER_OF_HOUSEHOLDS > 150;",
+    "pair_id": "5b3a520b",
+    "original_question_id": "48f7a15e",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Districts are in `dim_geography_hierarchy.district`. Filter: `dim_geography_hierarchy.location_type` = 'Rural', `fact_population_core.total_population` > 800, `fact_housing.number_of_households` > 150. Join `dim_geography_hierarchy` with `fact_population_core` and `fact_housing` on `hierarchy_id` and `census_year`."
+  },
+  {
+    "question": "List the districts, ordered alphabetically, for which the census year is 1991, the total population is greater than 1152.000, and the number of households exceeds 214.000.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_HOUSING AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T2.TOTAL_POPULATION > 1152.000 AND T3.NUMBER_OF_HOUSEHOLDS > 214.000 GROUP BY T1.DISTRICT ORDER BY T1.DISTRICT ASC",
+    "pair_id": "776ea621",
+    "original_question_id": "48f7a15e",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_geography_hierarchy.district` contains district names. Conditions: `fact_population_core.census_year` = 1991 AND `fact_housing.census_year` = 1991 AND `fact_population_core.total_population` > 1152.000 AND `fact_housing.number_of_households` > 214.000. Order by `dim_geography_hierarchy.district` alphabetically (ASC). Join tables on `hierarchy_id`."
+  },
+  {
+    "question": "List the districts located in the state of 'Andaman And Nicobar Islands' where the total population is greater than 847.000 and the number of households exceeds 172.000, grouped and ordered alphabetically by district.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_HOUSING AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.TOTAL_POPULATION > 847.000 AND T3.NUMBER_OF_HOUSEHOLDS > 172.000 GROUP BY T1.DISTRICT ORDER BY T1.DISTRICT ASC",
+    "pair_id": "514432c0",
+    "original_question_id": "48f7a15e",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List distinct `dim_geography_hierarchy`.`district` where `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands', `fact_population_core`.`total_population` > 847.000, and `fact_housing`.`number_of_households` > 172.000. Join `dim_geography_hierarchy` with `fact_population_core` and `fact_housing` on `hierarchy_id` and `census_year`. Order by district alphabetically."
+  },
+  {
+    "question": "List the districts for locations where the location type is 'Rural', the total population is greater than 564.000, and the number of households exceeds 128.000, ordered alphabetically by district.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_HOUSING AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.LOCATION_TYPE = 'Rural' AND T2.TOTAL_POPULATION > 564.000 AND T3.NUMBER_OF_HOUSEHOLDS > 128.000 GROUP BY T1.DISTRICT ORDER BY T1.DISTRICT ASC",
+    "pair_id": "579f5baa",
+    "original_question_id": "48f7a15e",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "location type = 'Rural' maps to `dim_geography_hierarchy.location_type` = 'Rural'; total population > 564.000 maps to `fact_population_core.total_population` > 564.000; number of households > 128.000 maps to `fact_housing.number_of_households` > 128.000; list districts from `dim_geography_hierarchy.district`; order alphabetically by district."
+  },
+  {
+    "question": "For the state of 'Andaman And Nicobar Islands' during the 1991 census year, list the districts ranked by the highest ratio of the total number of households to the total population, and return the top 10 results.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT ORDER BY SUM(T2.NUMBER_OF_HOUSEHOLDS) / SUM(T3.TOTAL_POPULATION) DESC LIMIT 10",
+    "pair_id": "221e09bf",
+    "original_question_id": "ecbf6041",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Ratio = `fact_housing.number_of_households` / `fact_population_core.total_population`; Filter by `dim_geography_hierarchy.state` = 'Andaman And Nicobar Islands' and `fact_housing.census_year` = 1991 and `fact_population_core.census_year` = 1991; Rank districts by ratio descending; Return top 10 districts (`dim_geography_hierarchy.district`)."
+  },
+  {
+    "question": "For the district of 'South Andamans' during the 1991 census year, list the district name for the top 10 records having the highest ratio of the sum of households to the total population, grouped by the district.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.DISTRICT = 'South Andamans' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT ORDER BY SUM(T2.NUMBER_OF_HOUSEHOLDS) / SUM(T3.TOTAL_POPULATION) DESC LIMIT 10",
+    "pair_id": "b7407267",
+    "original_question_id": "ecbf6041",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Ratio = `fact_housing`.`number_of_households` / `fact_population_core`.`total_population`; Filter: `dim_geography_hierarchy`.`district` = 'South Andamans' and `fact_housing`.`census_year` = 1991 and `fact_population_core`.`census_year` = 1991; Group by `dim_geography_hierarchy`.`hierarchy_id`; Order by ratio DESC limit 10"
+  },
+  {
+    "question": "For the census year 1991 in the state of 'Andaman And Nicobar Islands', list the districts ranked by the top 10 highest ratios of total number of households to total population.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT ORDER BY (SUM(T2.NUMBER_OF_HOUSEHOLDS) / SUM(T3.TOTAL_POPULATION)) DESC LIMIT 10",
+    "pair_id": "895c44c6",
+    "original_question_id": "ecbf6041",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Ratio = `fact_housing.number_of_households` / `fact_population_core.total_population`; Filter by `dim_geography_hierarchy.state` = 'Andaman And Nicobar Islands' and `fact_housing.census_year` = 1991 and `fact_population_core.census_year` = 1991; Group by `dim_geography_hierarchy.district`; Order by ratio DESC limit 10."
+  },
+  {
+    "question": "Identify the district name for the 'South Andamans' district, considering data from the 1991 census year for both housing and population, and list this district while ordering the results by the ratio of the total number of households to the total population in descending order, limited to the top 10 records.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.DISTRICT = 'South Andamans' AND T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT ORDER BY (SUM(T2.NUMBER_OF_HOUSEHOLDS) / SUM(T3.TOTAL_POPULATION)) DESC LIMIT 10",
+    "pair_id": "5b7c32e5",
+    "original_question_id": "ecbf6041",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter: `dim_geography_hierarchy.district` = 'South Andamans', `fact_housing.census_year` = 1991, `fact_population_core.census_year` = 1991. Ratio = `fact_housing.number_of_households` / `fact_population_core.total_population`. Order by ratio DESC limit 10."
+  },
+  {
+    "question": "For the state of 'Andaman And Nicobar Islands' during the 1991 census year, list the district and the household density—calculated as the number of households divided by the total population—for districts where the total population is greater than 500, showing the top 10 results ordered by density from highest to lowest.",
+    "sql": "SELECT T1.DISTRICT, (CAST(T2.NUMBER_OF_HOUSEHOLDS AS FLOAT) / T3.TOTAL_POPULATION) AS HOUSEHOLD_DENSITY FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT, T2.NUMBER_OF_HOUSEHOLDS, T3.TOTAL_POPULATION HAVING T3.TOTAL_POPULATION > 500 ORDER BY HOUSEHOLD_DENSITY DESC LIMIT 10",
+    "pair_id": "56076d02",
+    "original_question_id": "ecbf6041",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Household density = `fact_housing`.`number_of_households` / `fact_population_core`.`total_population`; filter by `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `fact_housing`.`census_year` = 1991 and `fact_population_core`.`census_year` = 1991 and `fact_population_core`.`total_population` > 500; output `dim_geography_hierarchy`.`district` and density; order by density descending limit 10."
+  },
+  {
+    "question": "List the district and the household density—calculated as the number of households divided by the total population—for districts in the state of 'Andaman And Nicobar Islands' during the 1991 census year, filtering for those with a total population greater than 800, and show the top 10 results with the highest household density.",
+    "sql": "SELECT T1.DISTRICT, (CAST(T2.NUMBER_OF_HOUSEHOLDS AS FLOAT) / T3.TOTAL_POPULATION) AS HOUSEHOLD_DENSITY FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT, T2.NUMBER_OF_HOUSEHOLDS, T3.TOTAL_POPULATION HAVING T3.TOTAL_POPULATION > 800 ORDER BY HOUSEHOLD_DENSITY DESC LIMIT 10",
+    "pair_id": "afdbc97f",
+    "original_question_id": "ecbf6041",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Household density = `fact_housing`.`number_of_households` / `fact_population_core`.`total_population`. Filter: `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands', `fact_housing`.`census_year` = 1991, `fact_population_core`.`census_year` = 1991, `fact_population_core`.`total_population` > 800. Output top 10 districts by density descending."
+  },
+  {
+    "question": "For the state of 'Andaman And Nicobar Islands' during the 1991 census year, list the district and the household density—calculated as the number of households divided by the total population—for districts where the total population is greater than 1000, showing the top 10 results ordered by household density in descending order.",
+    "sql": "SELECT T1.DISTRICT, (CAST(T2.NUMBER_OF_HOUSEHOLDS AS FLOAT) / T3.TOTAL_POPULATION) AS HOUSEHOLD_DENSITY FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT, T2.NUMBER_OF_HOUSEHOLDS, T3.TOTAL_POPULATION HAVING T3.TOTAL_POPULATION > 1000 ORDER BY HOUSEHOLD_DENSITY DESC LIMIT 10",
+    "pair_id": "0aa6d608",
+    "original_question_id": "ecbf6041",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Household density = `fact_housing`.`number_of_households` / `fact_population_core`.`total_population`; filter by `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `fact_housing`.`census_year` = 1991 and `fact_population_core`.`census_year` = 1991 and `fact_population_core`.`total_population` > 1000; order by household density descending limit 10."
+  },
+  {
+    "question": "List the districts located in the state of 'Andaman And Nicobar Islands' where the total population is greater than 1000.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.TOTAL_POPULATION > 1000;",
+    "pair_id": "6a00d678",
+    "original_question_id": "de7467c5",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "State 'Andaman And Nicobar Islands' maps to `dim_geography_hierarchy.state` = 'Andaman And Nicobar Islands'; total population > 1000 maps to `fact_population_core.total_population` > 1000; districts are in `dim_geography_hierarchy.district`; join `dim_geography_hierarchy` and `fact_population_core` on `hierarchy_id`."
+  },
+  {
+    "question": "List the districts located in the country of India where the total population is greater than 500.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.COUNTRY = 'India' AND T2.TOTAL_POPULATION > 500;",
+    "pair_id": "290e8044",
+    "original_question_id": "de7467c5",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "List (`dim_geography_hierarchy`.`district`) where (`dim_geography_hierarchy`.`country`) = 'India' and (`fact_population_core`.`total_population`) > 500, joining on `hierarchy_id`."
+  },
+  {
+    "question": "List the districts for locations categorized as 'Rural' where the total population is greater than 800.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.LOCATION_TYPE = 'Rural' AND T2.TOTAL_POPULATION > 800;",
+    "pair_id": "9a1c89c1",
+    "original_question_id": "de7467c5",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "District refers to `dim_geography_hierarchy.district`; 'Rural' maps to `dim_geography_hierarchy.location_type` = 'Rural'; total population > 800 refers to `fact_population_core.total_population` > 800; join `dim_geography_hierarchy` and `fact_population_core` on `hierarchy_id`."
+  },
+  {
+    "question": "List the districts located in the state of 'Andaman And Nicobar Islands' that had a total population greater than 1000 during the 1991 census year, and order the results by the total population in descending order.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT HAVING SUM(T2.TOTAL_POPULATION) > 1000 ORDER BY SUM(T2.TOTAL_POPULATION) DESC",
+    "pair_id": "0fec0e89",
+    "original_question_id": "de7467c5",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "State of 'Andaman And Nicobar Islands' refers to `dim_geography_hierarchy.state` = 'Andaman And Nicobar Islands'; total population greater than 1000 refers to `fact_population_core.total_population` > 1000; 1991 census year refers to `fact_population_core.census_year` = 1991; order by total population descending refers to ORDER BY `fact_population_core.total_population` DESC; list districts refers to select `dim_geography_hierarchy.district`."
+  },
+  {
+    "question": "List the districts in India where the sum of the total population in the 1991 census year was greater than 500, and order the results by the total population in descending order.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.COUNTRY = 'India' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT HAVING SUM(T2.TOTAL_POPULATION) > 500 ORDER BY SUM(T2.TOTAL_POPULATION) DESC",
+    "pair_id": "a3fafa8c",
+    "original_question_id": "de7467c5",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter: `dim_geography_hierarchy`.`country` = 'India' and `fact_population_core`.`census_year` = 1991. Join on `hierarchy_id`. Group by `dim_geography_hierarchy`.`district`. Sum(`fact_population_core`.`total_population`) > 500. Order by sum descending."
+  },
+  {
+    "question": "List the districts with a rural location type where the sum of the total population for the census year 1991 is greater than 800, and order the results by the sum of the total population in descending order.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.LOCATION_TYPE = 'Rural' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT HAVING SUM(T2.TOTAL_POPULATION) > 800 ORDER BY SUM(T2.TOTAL_POPULATION) DESC",
+    "pair_id": "a7384d58",
+    "original_question_id": "de7467c5",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_geography_hierarchy` and `fact_population_core` on `hierarchy_id`. Filter: `dim_geography_hierarchy.location_type` = 'Rural' and `fact_population_core.census_year` = 1991. Group by `dim_geography_hierarchy.district`. Compute SUM(`fact_population_core.total_population`) as total_population_sum. Keep groups where total_population_sum > 800. Order by total_population_sum DESC."
+  },
+  {
+    "question": "For the census year 1991, list each state along with the average number of households and the total sum of the male population, grouped by state.",
+    "sql": "SELECT T1.STATE, AVG(T2.NUMBER_OF_HOUSEHOLDS), SUM(T3.TOTAL_MALE_POPULATION) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.STATE;",
+    "pair_id": "5d245cee",
+    "original_question_id": "e6239226",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "For census_year = 1991, join `dim_geography_hierarchy` with `fact_housing` and `fact_population_core` on `hierarchy_id`. Group by `dim_geography_hierarchy`.`state`. Compute AVG(`fact_housing`.`number_of_households`) as average households and SUM(`fact_population_core`.`total_male_population`) as total male population."
+  },
+  {
+    "question": "For the country of India and the census year 1991, list each state along with the average number of households and the total sum of the male population, grouped by state.",
+    "sql": "SELECT T1.STATE, AVG(T2.NUMBER_OF_HOUSEHOLDS), SUM(T3.TOTAL_MALE_POPULATION) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.COUNTRY = 'India' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.STATE;",
+    "pair_id": "c5503e88",
+    "original_question_id": "e6239226",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter: `dim_geography_hierarchy`.`country` = 'India', `fact_housing`.`census_year` = 1991, `fact_population_core`.`census_year` = 1991. Group by `dim_geography_hierarchy`.`state`. Compute AVG(`fact_housing`.`number_of_households`) and SUM(`fact_population_core`.`total_male_population`). Join tables on `hierarchy_id`."
+  },
+  {
+    "question": "For the census year 1991 and locations categorized as rural, list each state along with the average number of households and the total sum of the male population, grouped by state.",
+    "sql": "SELECT T1.STATE, AVG(T2.NUMBER_OF_HOUSEHOLDS), SUM(T3.TOTAL_MALE_POPULATION) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.LOCATION_TYPE = 'Rural' AND T3.CENSUS_YEAR = 1991 GROUP BY T1.STATE;",
+    "pair_id": "5fee853e",
+    "original_question_id": "e6239226",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter: `dim_geography_hierarchy.location_type` = 'Rural' and `fact_housing.census_year` = 1991 and `fact_population_core.census_year` = 1991. Join `dim_geography_hierarchy` with `fact_housing` and `fact_population_core` on `hierarchy_id`. Group by `dim_geography_hierarchy.state`. Compute AVG(`fact_housing.number_of_households`) and SUM(`fact_population_core.total_male_population`)."
+  },
+  {
+    "question": "For the census year 1991, list each state along with the average number of households and the total male population, grouped and ordered by state.",
+    "sql": "SELECT T1.STATE, AVG(T2.NUMBER_OF_HOUSEHOLDS), SUM(T3.TOTAL_MALE_POPULATION) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.STATE ORDER BY T1.STATE",
+    "pair_id": "a4161784",
+    "original_question_id": "e6239226",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "State is `dim_geography_hierarchy`.`state`. Average number of households = AVG(`fact_housing`.`number_of_households`). Total male population = SUM(`fact_population_core`.`total_male_population`). Filter `fact_housing`.`census_year` = 1991 and `fact_population_core`.`census_year` = 1991. Join tables on `hierarchy_id`. Group by state and order by state."
+  },
+  {
+    "question": "For the census year 1991 in the country of India, list each state along with the average number of households and the total male population, grouped and ordered by state.",
+    "sql": "SELECT T1.STATE, AVG(T2.NUMBER_OF_HOUSEHOLDS), SUM(T3.TOTAL_MALE_POPULATION) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T1.COUNTRY = 'India' GROUP BY T1.STATE ORDER BY T1.STATE",
+    "pair_id": "871c1126",
+    "original_question_id": "e6239226",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Average households = AVG(fact_housing.number_of_households); total male population = SUM(fact_population_core.total_male_population); group by dim_geography_hierarchy.state; order by state; filter: dim_geography_hierarchy.country = 'India', fact_housing.census_year = 1991, fact_population_core.census_year = 1991."
+  },
+  {
+    "question": "For the state of 'Andaman And Nicobar Islands' during the 1991 census year, list the state name, the average number of households, and the sum of the total male population, grouped by state and ordered alphabetically by state.",
+    "sql": "SELECT T1.STATE, AVG(T2.NUMBER_OF_HOUSEHOLDS), SUM(T3.TOTAL_MALE_POPULATION) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T3.CENSUS_YEAR = 1991 AND T1.STATE = 'Andaman And Nicobar Islands' GROUP BY T1.STATE ORDER BY T1.STATE",
+    "pair_id": "84fa2aa9",
+    "original_question_id": "e6239226",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `fact_housing`.`census_year` = 1991 and `fact_population_core`.`census_year` = 1991. Join `dim_geography_hierarchy` with `fact_housing` and `fact_population_core` on `hierarchy_id`. Compute AVG(`fact_housing`.`number_of_households`) and SUM(`fact_population_core`.`total_male_population`). Group by `dim_geography_hierarchy`.`state` and order by `dim_geography_hierarchy`.`state` alphabetically."
+  },
+  {
+    "question": "For the census year 1991, list each state along with the average number of households and the total male population, ensuring only states with at least one hierarchy record are included, and order the results by the total male population in descending order.",
+    "sql": "SELECT T1.STATE, AVG(T2.NUMBER_OF_HOUSEHOLDS), SUM(T3.TOTAL_MALE_POPULATION) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.STATE HAVING COUNT(T1.HIERARCHY_ID) > 0 ORDER BY SUM(T3.TOTAL_MALE_POPULATION) DESC",
+    "pair_id": "d2da6e56",
+    "original_question_id": "e6239226",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_geography_hierarchy` with `fact_housing` and `fact_population_core` on `hierarchy_id`. Filter by `fact_housing.census_year = 1991` and `fact_population_core.census_year = 1991`. Group by `dim_geography_hierarchy.state`. Compute average households as `AVG(fact_housing.number_of_households)` and total male population as `SUM(fact_population_core.total_male_population)`. Order by total male population descending."
+  },
+  {
+    "question": "For the census year 1991 in the country of India, list each state along with the average number of households and the total sum of the male population, ensuring that each state has at least one hierarchy record, and order the results by the total male population in descending order.",
+    "sql": "SELECT T1.STATE, AVG(T2.NUMBER_OF_HOUSEHOLDS), SUM(T3.TOTAL_MALE_POPULATION) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 AND T1.COUNTRY = 'India' GROUP BY T1.STATE HAVING COUNT(T1.HIERARCHY_ID) >= 1 ORDER BY SUM(T3.TOTAL_MALE_POPULATION) DESC",
+    "pair_id": "6ed458ce",
+    "original_question_id": "e6239226",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter: `dim_geography_hierarchy.country` = 'India', `fact_housing.census_year` = 1991, `fact_population_core.census_year` = 1991. Group by `dim_geography_hierarchy.state`. Compute AVG(`fact_housing.number_of_households`) and SUM(`fact_population_core.total_male_population`). Join `dim_geography_hierarchy` with `fact_housing` and `fact_population_core` on `hierarchy_id`. Order by SUM(`fact_population_core.total_male_population`) DESC."
+  },
+  {
+    "question": "For the census year 1991, list the state, the average number of households, and the total sum of the male population for the state of 'Andaman And Nicobar Islands', ensuring the count of hierarchy records is greater than zero and ordering the results by the total male population in descending order.",
+    "sql": "SELECT T1.STATE, AVG(T2.NUMBER_OF_HOUSEHOLDS), SUM(T3.TOTAL_MALE_POPULATION) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 AND T1.STATE = 'Andaman And Nicobar Islands' GROUP BY T1.STATE HAVING COUNT(T1.HIERARCHY_ID) > 0 ORDER BY SUM(T3.TOTAL_MALE_POPULATION) DESC",
+    "pair_id": "7a726f2d",
+    "original_question_id": "e6239226",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "You need to join `dim_geography_hierarchy` with `fact_housing` and `fact_population_core` on `hierarchy_id`. Filter `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `fact_housing`.`census_year` = 1991 and `fact_population_core`.`census_year` = 1991. Group by `dim_geography_hierarchy`.`state`. Compute AVG(`fact_housing`.`number_of_households`) and SUM(`fact_population_core`.`total_male_population`). Order by SUM(`fact_population_core`.`total_male_population`) DESC."
+  },
+  {
+    "question": "For the state of 'Andaman And Nicobar Islands' during the 1991 census year, list each district along with the ratio calculated by dividing the total number of households by the total population.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.NUMBER_OF_HOUSEHOLDS) / SUM(T3.TOTAL_POPULATION) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT;",
+    "pair_id": "2d1b87aa",
+    "original_question_id": "8b1a3c6b",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter by `dim_geography_hierarchy.state` = 'Andaman And Nicobar Islands' and `fact_housing.census_year` = 1991 and `fact_population_core.census_year` = 1991. Ratio = `fact_housing.number_of_households` / `fact_population_core.total_population`. Output `dim_geography_hierarchy.district` and the ratio."
+  },
+  {
+    "question": "For the district of 'South Andamans' during the 1991 census year, display the district name and the ratio calculated by dividing the total number of households by the total population.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.NUMBER_OF_HOUSEHOLDS) / SUM(T3.TOTAL_POPULATION) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.DISTRICT = 'South Andamans' AND T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT;",
+    "pair_id": "d7a29191",
+    "original_question_id": "8b1a3c6b",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Ratio = `fact_housing`.`number_of_households` / `fact_population_core`.`total_population` for `dim_geography_hierarchy`.`district` = 'South Andamans' and `census_year` = 1991."
+  },
+  {
+    "question": "For the district of 'North And Middle Andaman' in the census year 1991, list the district name and calculate the ratio of the total number of households to the total population.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.NUMBER_OF_HOUSEHOLDS) / SUM(T3.TOTAL_POPULATION) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.DISTRICT = 'North And Middle Andaman' AND T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT;",
+    "pair_id": "361a6761",
+    "original_question_id": "8b1a3c6b",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "District name is `dim_geography_hierarchy.district`. Ratio = `fact_housing.number_of_households` / `fact_population_core.total_population`. Filter: `dim_geography_hierarchy.district` = 'North And Middle Andaman' and `fact_housing.census_year` = 1991 and `fact_population_core.census_year` = 1991. Join via `hierarchy_id`."
+  },
+  {
+    "question": "For the state of 'Andaman And Nicobar Islands' during the 1991 census year, list each district and the result of dividing the total number of households by the total population, grouped and ordered by district.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.NUMBER_OF_HOUSEHOLDS) / SUM(T3.TOTAL_POPULATION) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT ORDER BY T1.DISTRICT",
+    "pair_id": "761b525b",
+    "original_question_id": "8b1a3c6b",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `fact_housing`.`census_year` = 1991 and `fact_population_core`.`census_year` = 1991. Join `dim_geography_hierarchy` with `fact_housing` and `fact_population_core` on `hierarchy_id`. Compute `fact_housing`.`number_of_households` / `fact_population_core`.`total_population`. Group by `dim_geography_hierarchy`.`district`. Order by `dim_geography_hierarchy`.`district`."
+  },
+  {
+    "question": "For the district of 'South Andamans' during the 1991 census year, list the district name and calculate the ratio of the total number of households to the total population.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.NUMBER_OF_HOUSEHOLDS) / SUM(T3.TOTAL_POPULATION) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.DISTRICT = 'South Andamans' AND T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT ORDER BY T1.DISTRICT",
+    "pair_id": "2d6b32c7",
+    "original_question_id": "8b1a3c6b",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "District name is `dim_geography_hierarchy.district`. Total households = `fact_housing.number_of_households`. Total population = `fact_population_core.total_population`. Ratio = `fact_housing.number_of_households` / `fact_population_core.total_population`. Filter: `dim_geography_hierarchy.district` = 'South Andamans' and `fact_housing.census_year` = 1991."
+  },
+  {
+    "question": "For the state of 'Andaman And Nicobar Islands' during the 1991 census year, list each district and its calculated household density (the sum of households divided by the total population), considering only those districts with a total population greater than 500, and sort the results by household density in descending order.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.NUMBER_OF_HOUSEHOLDS) / SUM(T3.TOTAL_POPULATION) AS HOUSEHOLD_DENSITY FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT HAVING SUM(T3.TOTAL_POPULATION) > 500 ORDER BY HOUSEHOLD_DENSITY DESC",
+    "pair_id": "620a9d08",
+    "original_question_id": "8b1a3c6b",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Household density = SUM(`fact_housing`.`number_of_households`) / SUM(`fact_population_core`.`total_population`). Filter `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `fact_population_core`.`census_year` = 1991. Group by `dim_geography_hierarchy`.`district`. Keep only districts where `fact_population_core`.`total_population` > 500. Sort by household density descending."
+  },
+  {
+    "question": "For the state of 'Andaman And Nicobar Islands' during the 1991 census year, list each district and its calculated household density (the sum of households divided by the total population), considering only those districts where the total population exceeds 1000, and sort the results by household density in descending order.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.NUMBER_OF_HOUSEHOLDS) / SUM(T3.TOTAL_POPULATION) AS HOUSEHOLD_DENSITY FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT HAVING SUM(T3.TOTAL_POPULATION) > 1000 ORDER BY HOUSEHOLD_DENSITY DESC",
+    "pair_id": "4f7bebbc",
+    "original_question_id": "8b1a3c6b",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Household density = SUM(`fact_housing`.`number_of_households`) / SUM(`fact_population_core`.`total_population`). Filter: `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `fact_housing`.`census_year` = 1991 and `fact_population_core`.`census_year` = 1991. Group by `dim_geography_hierarchy`.`district`. Having SUM(`fact_population_core`.`total_population`) > 1000. Sort by household density DESC."
+  },
+  {
+    "question": "For the state of 'Andaman And Nicobar Islands' during the 1991 census year, list each district and its calculated household density, which is the sum of the number of households divided by the total population, ensuring only districts with a total population greater than zero are included and sorting the results by density in descending order.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.NUMBER_OF_HOUSEHOLDS) / SUM(T3.TOTAL_POPULATION) AS HOUSEHOLD_DENSITY FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT HAVING SUM(T3.TOTAL_POPULATION) > 0 ORDER BY HOUSEHOLD_DENSITY DESC",
+    "pair_id": "f4c89845",
+    "original_question_id": "8b1a3c6b",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Household density = SUM(`fact_housing`.`number_of_households`) / `fact_population_core`.`total_population`. Filter: `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands', `fact_housing`.`census_year` = 1991, `fact_population_core`.`census_year` = 1991, `fact_population_core`.`total_population` > 0. Group by `dim_geography_hierarchy`.`district`. Sort by density descending."
+  }
+]

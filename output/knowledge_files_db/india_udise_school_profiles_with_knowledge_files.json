@@ -1,0 +1,2265 @@
+[
+  {
+    "question": "What are the Gram Panchayat names, Municipality names, and school locations for all schools located in rural areas?",
+    "sql": "SELECT GRAM_PANCHAYAT_NAME, MUNICIPALITY_NAME, SCHOOL_LOCATION FROM DIM_LOCATION_ADDRESS WHERE SCHOOL_LOCATION = '1 - Rural';",
+    "pair_id": "78c917ef",
+    "original_question_id": "0c0ba970",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "rural areas refer to `dim_location_address`.`school_location` = '1 - Rural'"
+  },
+  {
+    "question": "What are the municipality name, and school location details for schools under the Gram Panchayat 'GP SUBHASHGRAM'?",
+    "sql": "SELECT GRAM_PANCHAYAT_NAME, MUNICIPALITY_NAME, SCHOOL_LOCATION FROM DIM_LOCATION_ADDRESS WHERE GRAM_PANCHAYAT_NAME = 'GP SUBHASHGRAM';",
+    "pair_id": "56bae052",
+    "original_question_id": "0c0ba970",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "GP SUBHASHGRAM is the value in `dim_location_address`.`gram_panchayat_name`; Municipality name refers to `dim_location_address`.`municipality_name`; School location refers to `dim_location_address`.`school_location`"
+  },
+  {
+    "question": "What are the Gram Panchayat names, municipality names, and school locations for schools where the municipality name is listed as 'Not Available'?",
+    "sql": "SELECT GRAM_PANCHAYAT_NAME, MUNICIPALITY_NAME, SCHOOL_LOCATION FROM DIM_LOCATION_ADDRESS WHERE MUNICIPALITY_NAME = 'Not Available';",
+    "pair_id": "a7cd20cb",
+    "original_question_id": "0c0ba970",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Schools where `dim_location_address`.`municipality_name` = 'Not Available' require selecting `dim_location_address`.`gram_panchayat_name`, `dim_location_address`.`municipality_name`, and `dim_location_address`.`school_location`."
+  },
+  {
+    "question": "List the Gram Panchayat names, municipality names, and school locations for all schools that belong to a Gram Panchayat, sorted alphabetically by municipality name.",
+    "sql": "SELECT GRAM_PANCHAYAT_NAME, MUNICIPALITY_NAME, SCHOOL_LOCATION FROM DIM_LOCATION_ADDRESS WHERE GRAM_PANCHAYAT_NAME IS NOT NULL ORDER BY MUNICIPALITY_NAME ASC;",
+    "pair_id": "123b7a5b",
+    "original_question_id": "0c0ba970",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Schools belong to a Gram Panchayat when `dim_location_address`.`school_location` = '1 - Rural'. Required columns are directly in `dim_location_address`."
+  },
+  {
+    "question": "What are the Gram Panchayat names, municipality names, and school locations for all rural schools that have a Gram Panchayat assigned, sorted alphabetically by municipality name?",
+    "sql": "SELECT GRAM_PANCHAYAT_NAME, MUNICIPALITY_NAME, SCHOOL_LOCATION FROM DIM_LOCATION_ADDRESS WHERE GRAM_PANCHAYAT_NAME IS NOT NULL AND SCHOOL_LOCATION = '1 - Rural' ORDER BY MUNICIPALITY_NAME ASC;",
+    "pair_id": "334db80b",
+    "original_question_id": "0c0ba970",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Rural schools refer to `dim_location_address`.`school_location` = '1 - Rural'; Gram Panchayat assigned implies `dim_location_address`.`gram_panchayat_name` is not null"
+  },
+  {
+    "question": "Which schools have a Gram Panchayat name listed but no municipality available, and what are their locations?",
+    "sql": "SELECT GRAM_PANCHAYAT_NAME, MUNICIPALITY_NAME, SCHOOL_LOCATION FROM DIM_LOCATION_ADDRESS WHERE GRAM_PANCHAYAT_NAME IS NOT NULL AND MUNICIPALITY_NAME = 'Not Available' ORDER BY MUNICIPALITY_NAME ASC;",
+    "pair_id": "dffeb001",
+    "original_question_id": "0c0ba970",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Gram Panchayat name listed implies `dim_location_address`.`gram_panchayat_name` is not null and not 'Not Available'; no municipality available refers to `dim_location_address`.`municipality_name` = 'Not Available'; locations are urban/rural from `dim_location_address`.`school_location` (1 - Rural, 2 - Urban)"
+  },
+  {
+    "question": "How many schools are there in each combination of Gram Panchayat, Municipality, and school location, for all entries where the Gram Panchayat name is available?",
+    "sql": "SELECT GRAM_PANCHAYAT_NAME, MUNICIPALITY_NAME, SCHOOL_LOCATION, COUNT(*) AS total FROM DIM_LOCATION_ADDRESS WHERE GRAM_PANCHAYAT_NAME IS NOT NULL GROUP BY GRAM_PANCHAYAT_NAME, MUNICIPALITY_NAME, SCHOOL_LOCATION;",
+    "pair_id": "3bd85073",
+    "original_question_id": "0c0ba970",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Group by `dim_location_address`.`gram_panchayat_name`, `dim_location_address`.`municipality_name`, `dim_location_address`.`school_location`; Filter where `dim_location_address`.`gram_panchayat_name` IS NOT NULL; Count distinct `dim_school_identity`.`school_id`"
+  },
+  {
+    "question": "How many rural schools are there in each Gram Panchayat, along with their associated municipality names?",
+    "sql": "SELECT GRAM_PANCHAYAT_NAME, MUNICIPALITY_NAME, SCHOOL_LOCATION, COUNT(*) AS total FROM DIM_LOCATION_ADDRESS WHERE GRAM_PANCHAYAT_NAME IS NOT NULL AND SCHOOL_LOCATION = '1 - Rural' GROUP BY GRAM_PANCHAYAT_NAME, MUNICIPALITY_NAME, SCHOOL_LOCATION;",
+    "pair_id": "f9a2b196",
+    "original_question_id": "0c0ba970",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "rural schools refer to `dim_location_address`.`school_location` = '1 - Rural'; group by `dim_location_address`.`gram_panchayat_name` and `dim_location_address`.`municipality_name`"
+  },
+  {
+    "question": "How many schools are there in each Gram Panchayat and school location for areas where a Gram Panchayat name is available but no Municipality is assigned, grouped by Gram Panchayat name and school location?",
+    "sql": "SELECT GRAM_PANCHAYAT_NAME, MUNICIPALITY_NAME, SCHOOL_LOCATION, COUNT(*) AS total FROM DIM_LOCATION_ADDRESS WHERE GRAM_PANCHAYAT_NAME IS NOT NULL AND MUNICIPALITY_NAME = 'Not Available' GROUP BY GRAM_PANCHAYAT_NAME, MUNICIPALITY_NAME, SCHOOL_LOCATION;",
+    "pair_id": "3dd6a1ac",
+    "original_question_id": "0c0ba970",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Gram Panchayat name is available refers to `dim_location_address`.`gram_panchayat_name` IS NOT NULL; no Municipality assigned refers to `dim_location_address`.`municipality_name` IS NULL. Schools are counted from `dim_school_identity` joined with `dim_location_address` via `fact_student_instruction_metrics` (linking `school_id` and `location_id`). Group by `dim_location_address`.`gram_panchayat_name` and `dim_location_address`.`school_location`."
+  },
+  {
+    "question": "List all school locations along with their municipality name, gram panchayat name, and location count, for locations that have a valid gram panchayat assigned, grouped and ordered by municipality and gram panchayat name?",
+    "sql": "WITH gp_location_cte AS (SELECT LOCATION_ID, MUNICIPALITY_NAME, GRAM_PANCHAYAT_NAME, SCHOOL_LOCATION FROM DIM_LOCATION_ADDRESS WHERE GRAM_PANCHAYAT_NAME IS NOT NULL AND GRAM_PANCHAYAT_NAME <> 'Not Available') SELECT t1.LOCATION_ID, t1.MUNICIPALITY_NAME, t1.GRAM_PANCHAYAT_NAME, t1.SCHOOL_LOCATION, COUNT(*) AS location_count FROM gp_location_cte t1 JOIN DIM_LOCATION_ADDRESS t2 ON t1.LOCATION_ID = t2.LOCATION_ID JOIN (SELECT MUNICIPALITY_NAME, SCHOOL_LOCATION, COUNT(GRAM_PANCHAYAT_NAME) AS gp_count FROM DIM_LOCATION_ADDRESS WHERE GRAM_PANCHAYAT_NAME IS NOT NULL GROUP BY MUNICIPALITY_NAME, SCHOOL_LOCATION HAVING COUNT(GRAM_PANCHAYAT_NAME) >= 1) t3 ON t1.MUNICIPALITY_NAME = t3.MUNICIPALITY_NAME AND t1.SCHOOL_LOCATION = t3.SCHOOL_LOCATION GROUP BY t1.LOCATION_ID, t1.MUNICIPALITY_NAME, t1.GRAM_PANCHAYAT_NAME, t1.SCHOOL_LOCATION ORDER BY t1.MUNICIPALITY_NAME ASC, t1.GRAM_PANCHAYAT_NAME ASC;",
+    "pair_id": "9a7e5c36",
+    "original_question_id": "0c0ba970",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "`dim_location_address`.`gram_panchayat_name` = 'Not Available' is invalid; Valid gram panchayat entries exclude 'Not Available'; school_location is stored in `dim_location_address`.`school_location`; Group by `dim_location_address`.`municipality_name`, `dim_location_address`.`gram_panchayat_name`; Order by same grouping columns"
+  },
+  {
+    "question": "Which rural school locations have gram panchayats in municipalities with at least 2 gram panchayats, and what are their details ordered by municipality and gram panchayat name?",
+    "sql": "WITH gp_location_cte AS (SELECT LOCATION_ID, MUNICIPALITY_NAME, GRAM_PANCHAYAT_NAME, SCHOOL_LOCATION FROM DIM_LOCATION_ADDRESS WHERE GRAM_PANCHAYAT_NAME IS NOT NULL AND GRAM_PANCHAYAT_NAME <> 'Not Available') SELECT t1.LOCATION_ID, t1.MUNICIPALITY_NAME, t1.GRAM_PANCHAYAT_NAME, t1.SCHOOL_LOCATION, COUNT(*) AS location_count FROM gp_location_cte t1 JOIN DIM_LOCATION_ADDRESS t2 ON t1.LOCATION_ID = t2.LOCATION_ID JOIN (SELECT MUNICIPALITY_NAME, SCHOOL_LOCATION, COUNT(GRAM_PANCHAYAT_NAME) AS gp_count FROM DIM_LOCATION_ADDRESS WHERE GRAM_PANCHAYAT_NAME IS NOT NULL GROUP BY MUNICIPALITY_NAME, SCHOOL_LOCATION HAVING COUNT(GRAM_PANCHAYAT_NAME) >= 2) t3 ON t1.MUNICIPALITY_NAME = t3.MUNICIPALITY_NAME AND t1.SCHOOL_LOCATION = t3.SCHOOL_LOCATION WHERE t1.SCHOOL_LOCATION = '1 - Rural' GROUP BY t1.LOCATION_ID, t1.MUNICIPALITY_NAME, t1.GRAM_PANCHAYAT_NAME, t1.SCHOOL_LOCATION ORDER BY t1.MUNICIPALITY_NAME ASC, t1.GRAM_PANCHAYAT_NAME ASC;",
+    "pair_id": "5039cb2b",
+    "original_question_id": "0c0ba970",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Rural school locations refer to `dim_location_address`.`school_location` = '1 - Rural'; Gram panchayats in municipalities implies grouping by `dim_location_address`.`municipality_name` and counting distinct `dim_location_address`.`gram_panchayat_name` (HAVING COUNT(DISTINCT gram_panchayat_name) >= 2). Details include `dim_location_address` columns ordered by `municipality_name`, `gram_panchayat_name`."
+  },
+  {
+    "question": "List all rural school locations with their Gram Panchayat details where the municipality name is 'Not Available', including only those locations that have at least one valid Gram Panchayat assigned, ordered by municipality and Gram Panchayat name?",
+    "sql": "WITH gp_location_cte AS (SELECT LOCATION_ID, MUNICIPALITY_NAME, GRAM_PANCHAYAT_NAME, SCHOOL_LOCATION FROM DIM_LOCATION_ADDRESS WHERE GRAM_PANCHAYAT_NAME IS NOT NULL AND GRAM_PANCHAYAT_NAME <> 'Not Available') SELECT t1.LOCATION_ID, t1.MUNICIPALITY_NAME, t1.GRAM_PANCHAYAT_NAME, t1.SCHOOL_LOCATION, COUNT(*) AS location_count FROM gp_location_cte t1 JOIN DIM_LOCATION_ADDRESS t2 ON t1.LOCATION_ID = t2.LOCATION_ID JOIN (SELECT MUNICIPALITY_NAME, SCHOOL_LOCATION, COUNT(GRAM_PANCHAYAT_NAME) AS gp_count FROM DIM_LOCATION_ADDRESS WHERE GRAM_PANCHAYAT_NAME IS NOT NULL GROUP BY MUNICIPALITY_NAME, SCHOOL_LOCATION HAVING COUNT(GRAM_PANCHAYAT_NAME) >= 1) t3 ON t1.MUNICIPALITY_NAME = t3.MUNICIPALITY_NAME AND t1.SCHOOL_LOCATION = t3.SCHOOL_LOCATION WHERE t1.MUNICIPALITY_NAME = 'Not Available' AND t1.SCHOOL_LOCATION = '1 - Rural' GROUP BY t1.LOCATION_ID, t1.MUNICIPALITY_NAME, t1.GRAM_PANCHAYAT_NAME, t1.SCHOOL_LOCATION ORDER BY t1.MUNICIPALITY_NAME ASC, t1.GRAM_PANCHAYAT_NAME ASC;",
+    "pair_id": "270b787c",
+    "original_question_id": "0c0ba970",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "`dim_location_address`.`school_location` = '1 - Rural'; `dim_location_address`.`municipality_name` = 'Not Available'; valid Gram Panchayat means `dim_location_address`.`gram_panchayat_name` IS NOT NULL"
+  },
+  {
+    "question": "What is the average number of instructional days for primary and upper primary levels, along with the total number of schools, grouped by school location for the most recent year available?",
+    "sql": "SELECT dla.SCHOOL_LOCATION, AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY), AVG(fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY), COUNT(fsim.SCHOOL_ID) FROM FACT_STUDENT_INSTRUCTION_METRICS fsim JOIN DIM_LOCATION_ADDRESS dla ON fsim.LOCATION_ID = dla.LOCATION_ID WHERE fsim.YEAR = (SELECT MAX(YEAR) FROM FACT_STUDENT_INSTRUCTION_METRICS) GROUP BY dla.SCHOOL_LOCATION;",
+    "pair_id": "a273a95a",
+    "original_question_id": "22c63082",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "average number of instructional days for primary = AVG(`fact_student_instruction_metrics`.`instructional_days_primary`); upper primary = AVG(`fact_student_instruction_metrics`.`instructional_days_upper_primary`); total schools = COUNT(DISTINCT `dim_school_identity`.`school_id`); school location values = '1 - Rural', '2 - Urban'; most recent year = 2018 (from `fact_student_instruction_metrics`.`year`)"
+  },
+  {
+    "question": "For the most recent year, what is the average number of instructional days for primary and upper primary levels, along with the total number of schools, grouped by city?",
+    "sql": "SELECT dla.CITY_NAME, AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY), AVG(fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY), COUNT(fsim.SCHOOL_ID) FROM FACT_STUDENT_INSTRUCTION_METRICS fsim JOIN DIM_LOCATION_ADDRESS dla ON fsim.LOCATION_ID = dla.LOCATION_ID WHERE fsim.YEAR = (SELECT MAX(YEAR) FROM FACT_STUDENT_INSTRUCTION_METRICS) GROUP BY dla.CITY_NAME;",
+    "pair_id": "d283a41a",
+    "original_question_id": "22c63082",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "most recent year = 2018; average instructional days for primary = AVG(`fact_student_instruction_metrics`.`instructional_days_primary`); average instructional days for upper primary = AVG(`fact_student_instruction_metrics`.`instructional_days_upper_primary`); total schools = COUNT(DISTINCT `fact_student_instruction_metrics`.`school_id`); group by `dim_location_address`.`city_name`"
+  },
+  {
+    "question": "For the most recent year, what is the average number of instructional days for primary and upper primary levels, along with the total number of schools, grouped by each Gram Panchayat?",
+    "sql": "SELECT dla.GRAM_PANCHAYAT_NAME, AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY), AVG(fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY), COUNT(fsim.SCHOOL_ID) FROM FACT_STUDENT_INSTRUCTION_METRICS fsim JOIN DIM_LOCATION_ADDRESS dla ON fsim.LOCATION_ID = dla.LOCATION_ID WHERE fsim.YEAR = (SELECT MAX(YEAR) FROM FACT_STUDENT_INSTRUCTION_METRICS) GROUP BY dla.GRAM_PANCHAYAT_NAME;",
+    "pair_id": "48b18daf",
+    "original_question_id": "22c63082",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "most recent year refers to `fact_student_instruction_metrics`.`year` = 2018; primary level uses `fact_student_instruction_metrics`.`instructional_days_primary`; upper primary uses `fact_student_instruction_metrics`.`instructional_days_upper_primary`; group by `dim_location_address`.`gram_panchayat_name`; total schools = COUNT(DISTINCT `fact_student_instruction_metrics`.`school_id`)"
+  },
+  {
+    "question": "For the most recent year, what is the average number of instructional days for primary and upper primary levels, along with the total number of schools, broken down by school location?",
+    "sql": "SELECT dla.SCHOOL_LOCATION, AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY) AS avg_primary_days, AVG(fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY) AS avg_upper_primary_days, COUNT(fsim.SCHOOL_ID) AS school_count FROM FACT_STUDENT_INSTRUCTION_METRICS fsim JOIN DIM_LOCATION_ADDRESS dla ON fsim.LOCATION_ID = dla.LOCATION_ID WHERE fsim.YEAR = (SELECT MAX(YEAR) FROM FACT_STUDENT_INSTRUCTION_METRICS) GROUP BY dla.SCHOOL_LOCATION;",
+    "pair_id": "78319b9b",
+    "original_question_id": "22c63082",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "most recent year refers to MAX(`fact_student_instruction_metrics`.`year`); instructional days for primary = AVG(`fact_student_instruction_metrics`.`instructional_days_primary`), upper primary = AVG(`fact_student_instruction_metrics`.`instructional_days_upper_primary`); total schools = COUNT(DISTINCT `fact_student_instruction_metrics`.`school_id`); breakdown by `dim_location_address`.`school_location` (values: '1 - Rural', '2 - Urban')"
+  },
+  {
+    "question": "What are the average number of instructional days for primary and upper primary levels, along with the total number of schools, in rural locations for the most recent year available?",
+    "sql": "SELECT dla.SCHOOL_LOCATION, AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY) AS avg_primary_days, AVG(fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY) AS avg_upper_primary_days, COUNT(fsim.SCHOOL_ID) AS school_count FROM FACT_STUDENT_INSTRUCTION_METRICS fsim JOIN DIM_LOCATION_ADDRESS dla ON fsim.LOCATION_ID = dla.LOCATION_ID WHERE fsim.YEAR = (SELECT MAX(YEAR) FROM FACT_STUDENT_INSTRUCTION_METRICS) AND dla.SCHOOL_LOCATION = '1 - Rural' GROUP BY dla.SCHOOL_LOCATION;",
+    "pair_id": "067bd7da",
+    "original_question_id": "22c63082",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "rural locations refer to `dim_location_address`.`school_location` = '1 - Rural'; most recent year available is 2018; average instructional days = AVG(`fact_student_instruction_metrics`.`instructional_days_primary`), AVG(`fact_student_instruction_metrics`.`instructional_days_upper_primary`); total number of schools = COUNT(DISTINCT `fact_student_instruction_metrics`.`school_id`)"
+  },
+  {
+    "question": "For the most recent year, what is the average number of instructional days for primary and upper primary levels, along with the total number of schools, broken down by city?",
+    "sql": "SELECT dla.CITY_NAME, AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY) AS avg_primary_days, AVG(fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY) AS avg_upper_primary_days, COUNT(fsim.SCHOOL_ID) AS school_count FROM FACT_STUDENT_INSTRUCTION_METRICS fsim JOIN DIM_LOCATION_ADDRESS dla ON fsim.LOCATION_ID = dla.LOCATION_ID WHERE fsim.YEAR = (SELECT MAX(YEAR) FROM FACT_STUDENT_INSTRUCTION_METRICS) GROUP BY dla.CITY_NAME;",
+    "pair_id": "9d799c7c",
+    "original_question_id": "22c63082",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "year = 2018; average instructional days for primary = AVG(`fact_student_instruction_metrics`.`instructional_days_primary`), upper primary = AVG(`fact_student_instruction_metrics`.`instructional_days_upper_primary`); total schools = COUNT(DISTINCT `fact_student_instruction_metrics`.`school_id`); group by `dim_location_address`.`city_name`"
+  },
+  {
+    "question": "For the year 2018, what is the average number of primary instructional days and the total number of schools in each school location, ordered by the number of schools from highest to lowest?",
+    "sql": "SELECT dla.SCHOOL_LOCATION, AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY) AS avg_instructional_days, COUNT(DISTINCT fsim.SCHOOL_ID) AS num_schools FROM DIM_LOCATION_ADDRESS dla JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dla.LOCATION_ID = fsim.LOCATION_ID WHERE fsim.YEAR = '2018' GROUP BY dla.SCHOOL_LOCATION ORDER BY num_schools DESC;",
+    "pair_id": "9991ea2e",
+    "original_question_id": "22c63082",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "year 2018 refers to `fact_student_instruction_metrics`.`year` = 2018; school location is mapped to `dim_location_address`.`school_location`; Average primary instructional days = AVG(`fact_student_instruction_metrics`.`instructional_days_primary`); Total schools per location = COUNT(DISTINCT `fact_student_instruction_metrics`.`school_id`); Join `fact_student_instruction_metrics` and `dim_location_address` via `location_id`"
+  },
+  {
+    "question": "For the year 2018, what is the average number of instructional days for upper primary schools and the total number of schools in each school location, ordered by the number of schools from highest to lowest?",
+    "sql": "SELECT dla.SCHOOL_LOCATION, AVG(fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY) AS avg_instructional_days, COUNT(DISTINCT fsim.SCHOOL_ID) AS num_schools FROM DIM_LOCATION_ADDRESS dla JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dla.LOCATION_ID = fsim.LOCATION_ID WHERE fsim.YEAR = '2018' GROUP BY dla.SCHOOL_LOCATION ORDER BY num_schools DESC;",
+    "pair_id": "1a96262a",
+    "original_question_id": "22c63082",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Year 2018 refers to `fact_student_instruction_metrics`.`year` = 2018; Upper primary schools refer to `dim_school_identity`.`school_category` containing 'Upper Primary'; Instructional days for upper primary schools refer to `fact_student_instruction_metrics`.`instructional_days_upper_primary`; School location refers to `dim_location_address`.`school_location`; Total number of schools = COUNT(`dim_school_identity`.`school_id`); Order by school count descending."
+  },
+  {
+    "question": "For the year 2018, what is the average number of instructional days (across primary and upper primary levels) and the total number of schools in each school location, ordered by the number of schools from highest to lowest?",
+    "sql": "SELECT dla.SCHOOL_LOCATION, AVG((fsim.INSTRUCTIONAL_DAYS_PRIMARY + fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY) / 2) AS avg_instructional_days, COUNT(DISTINCT fsim.SCHOOL_ID) AS num_schools FROM DIM_LOCATION_ADDRESS dla JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dla.LOCATION_ID = fsim.LOCATION_ID WHERE fsim.YEAR = '2018' GROUP BY dla.SCHOOL_LOCATION ORDER BY num_schools DESC;",
+    "pair_id": "9c626a5d",
+    "original_question_id": "22c63082",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "year 2018 refers to `fact_student_instruction_metrics`.`year` = 2018; school location = `dim_location_address`.`school_location`; average instructional days = AVG(`fact_student_instruction_metrics`.`instructional_days_primary` + `fact_student_instruction_metrics`.`instructional_days_upper_primary`); total schools = COUNT(DISTINCT `fact_student_instruction_metrics`.`school_id`) grouped by `dim_location_address`.`school_location` order by COUNT DESC"
+  },
+  {
+    "question": "For the most recent year available, what is the average number of instructional days for primary and upper primary grades, and how many schools are there in each school location across India, ordered by the number of schools?",
+    "sql": "WITH recent_year AS (SELECT MAX(year) AS max_year FROM fact_student_instruction_metrics) SELECT dla.school_location, AVG(fsim.instructional_days_primary) AS avg_instructional_days_primary, AVG(fsim.instructional_days_upper_primary) AS avg_instructional_days_upper_primary, COUNT(DISTINCT fsim.school_id) AS total_schools FROM fact_student_instruction_metrics fsim JOIN dim_location_address dla ON fsim.location_id = dla.location_id JOIN dim_school_identity dsi ON fsim.school_id = dsi.school_id JOIN recent_year ry ON fsim.year = ry.max_year GROUP BY dla.school_location HAVING COUNT(DISTINCT fsim.school_id) > 0 ORDER BY total_schools DESC;",
+    "pair_id": "bc0c97a7",
+    "original_question_id": "22c63082",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Most recent year = MAX(fact_student_instruction_metrics.year). Average instructional days = AVG(instructional_days_primary) & AVG(instructional_days_upper_primary) from fact_student_instruction_metrics. School locations = dim_location_address.school_location (values: '1 - Rural', '2 - Urban'). Count schools = COUNT(DISTINCT fact_student_instruction_metrics.school_id) grouped by school_location."
+  },
+  {
+    "question": "For the most recent year, what is the average number of instructional days for primary and upper primary levels, and how many Department of Education schools are there, broken down by school location?",
+    "sql": "WITH recent_year AS (SELECT MAX(year) AS max_year FROM fact_student_instruction_metrics) SELECT dla.school_location, AVG(fsim.instructional_days_primary) AS avg_instructional_days_primary, AVG(fsim.instructional_days_upper_primary) AS avg_instructional_days_upper_primary, COUNT(DISTINCT fsim.school_id) AS total_schools FROM fact_student_instruction_metrics fsim JOIN dim_location_address dla ON fsim.location_id = dla.location_id JOIN dim_school_identity dsi ON fsim.school_id = dsi.school_id JOIN recent_year ry ON fsim.year = ry.max_year WHERE dsi.management_of_the_school = '1 - Department of Education' GROUP BY dla.school_location HAVING COUNT(DISTINCT fsim.school_id) > 0 ORDER BY total_schools DESC;",
+    "pair_id": "f732db41",
+    "original_question_id": "22c63082",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Most recent year refers to `fact_student_instruction_metrics`.`year` = 2018; Average instructional days = AVG(`fact_student_instruction_metrics`.`instructional_days_primary`) and AVG(`fact_student_instruction_metrics`.`instructional_days_upper_primary`); Department of Education schools are `dim_school_identity`.`management_of_the_school` = '1 - Department of Education'; Breakdown by `dim_location_address`.`school_location` values ('1 - Rural', '2 - Urban')"
+  },
+  {
+    "question": "For the most recent year, what is the average number of instructional days for primary and upper primary levels, and how many co-educational schools offering classes 1 to 12 are there in each school location?",
+    "sql": "WITH recent_year AS (SELECT MAX(year) AS max_year FROM fact_student_instruction_metrics) SELECT dla.school_location, AVG(fsim.instructional_days_primary) AS avg_instructional_days_primary, AVG(fsim.instructional_days_upper_primary) AS avg_instructional_days_upper_primary, COUNT(DISTINCT fsim.school_id) AS total_schools FROM fact_student_instruction_metrics fsim JOIN dim_location_address dla ON fsim.location_id = dla.location_id JOIN dim_school_identity dsi ON fsim.school_id = dsi.school_id JOIN recent_year ry ON fsim.year = ry.max_year WHERE dsi.school_type = '3 - Co-educational' AND dsi.school_category = '3 - Primary with Upper Primary, Secondary and Higher Secondary ( Classes 1 to 12)' GROUP BY dla.school_location HAVING COUNT(DISTINCT fsim.school_id) > 0 ORDER BY total_schools DESC;",
+    "pair_id": "a75a1c81",
+    "original_question_id": "22c63082",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Most recent year = MAX(year); primary level = `fact_student_instruction_metrics`.`instructional_days_primary`, upper primary level = `fact_student_instruction_metrics`.`instructional_days_upper_primary`. Co-educational = `dim_school_identity`.`school_type` = '3 - Co-educational'. Classes 1-12 = `dim_academic_structure`.`lowest_class` LIKE '1%' AND `dim_academic_structure`.`highest_class` LIKE '12%'. School location = `dim_location_address`.`school_location`"
+  },
+  {
+    "question": "Which schools in rural areas had fewer than 180 primary instructional days in the year 2018?",
+    "sql": "SELECT f.SCHOOL_ID FROM FACT_STUDENT_INSTRUCTION_METRICS f JOIN DIM_LOCATION_ADDRESS d ON f.LOCATION_ID = d.LOCATION_ID WHERE d.SCHOOL_LOCATION = '1 - Rural' AND f.YEAR = '2018' AND f.INSTRUCTIONAL_DAYS_PRIMARY < 180;",
+    "pair_id": "bd5723b5",
+    "original_question_id": "a2384f62",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Rural areas correspond to `dim_location_address`.`school_location` = '1 - Rural'; primary instructional days are stored in `fact_student_instruction_metrics`.`instructional_days_primary`; filter schools where this value < 180 and `fact_student_instruction_metrics`.`year` = 2018."
+  },
+  {
+    "question": "Which Gram Panchayats in rural areas had fewer than 180 primary instructional days in the year 2018?",
+    "sql": "SELECT d.GRAM_PANCHAYAT_NAME FROM FACT_STUDENT_INSTRUCTION_METRICS f JOIN DIM_LOCATION_ADDRESS d ON f.LOCATION_ID = d.LOCATION_ID WHERE d.SCHOOL_LOCATION = '1 - Rural' AND f.YEAR = '2018' AND f.INSTRUCTIONAL_DAYS_PRIMARY < 180;",
+    "pair_id": "e7156323",
+    "original_question_id": "a2384f62",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "rural areas refers to `dim_location_address`.`school_location` = '1 - Rural'; fewer than 180 primary instructional days refers to `fact_student_instruction_metrics`.`instructional_days_primary` < 180; year 2018 is in `fact_student_instruction_metrics`.`year`"
+  },
+  {
+    "question": "Which rural schools in India had fewer than 220 primary instructional days in 2018, and what are their school IDs and locations?",
+    "sql": "SELECT f.SCHOOL_ID, d.SCHOOL_LOCATION FROM FACT_STUDENT_INSTRUCTION_METRICS f JOIN DIM_LOCATION_ADDRESS d ON f.LOCATION_ID = d.LOCATION_ID WHERE d.SCHOOL_LOCATION = '1 - Rural' AND f.INSTRUCTIONAL_DAYS_PRIMARY < 220 AND f.YEAR = '2018';",
+    "pair_id": "567790d3",
+    "original_question_id": "a2384f62",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Rural schools refer to `dim_location_address`.`school_location` = '1 - Rural'; Fewer than 220 primary instructional days in 2018 refers to `fact_student_instruction_metrics`.`instructional_days_primary` < 220 and `fact_student_instruction_metrics`.`year` = 2018; School IDs are from `dim_school_identity`.`school_id`; Locations include `dim_location_address`.`city_name`, `municipality_name`, or `gram_panchayat_name`."
+  },
+  {
+    "question": "What are the metric IDs and Gram Panchayat names for rural schools in 2018 where the number of instructional days at the primary level was less than 217?",
+    "sql": "SELECT f.METRIC_ID, d.GRAM_PANCHAYAT_NAME FROM FACT_STUDENT_INSTRUCTION_METRICS f JOIN DIM_LOCATION_ADDRESS d ON f.LOCATION_ID = d.LOCATION_ID WHERE d.SCHOOL_LOCATION = '1 - Rural' AND f.INSTRUCTIONAL_DAYS_PRIMARY < 217 AND f.YEAR = '2018';",
+    "pair_id": "511d3e84",
+    "original_question_id": "a2384f62",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "metric ID is `fact_student_instruction_metrics`.`metric_id`; Gram Panchayat names are in `dim_location_address`.`gram_panchayat_name`. Rural schools = `dim_location_address`.`school_location` = '1 - Rural'. Year filter uses `fact_student_instruction_metrics`.`year` = 2018. Instructional days condition: `fact_student_instruction_metrics`.`instructional_days_primary` < 217. Join via `fact_student_instruction_metrics`.`location_id` = `dim_location_address`.`location_id`."
+  },
+  {
+    "question": "Which schools in rural areas had fewer than 212 primary instructional days in 2018, and what cities are they located in?",
+    "sql": "SELECT f.SCHOOL_ID, d.CITY_NAME FROM FACT_STUDENT_INSTRUCTION_METRICS f JOIN DIM_LOCATION_ADDRESS d ON f.LOCATION_ID = d.LOCATION_ID WHERE d.SCHOOL_LOCATION = '1 - Rural' AND f.INSTRUCTIONAL_DAYS_PRIMARY < 212 AND f.YEAR = '2018';",
+    "pair_id": "6b07d2ff",
+    "original_question_id": "a2384f62",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "rural areas refers to `dim_location_address`.`school_location` = '1 - Rural'; primary instructional days refers to `fact_student_instruction_metrics`.`instructional_days_primary` < 212; year 2018 refers to `fact_student_instruction_metrics`.`year` = 2018; city names are stored in `dim_location_address`.`city_name`; schools are linked via `dim_school_identity`.`school_id` to fact table"
+  },
+  {
+    "question": "Which rural schools in 2018 had fewer than 215 primary instructional days, and what were their school IDs and number of instructional days?",
+    "sql": "SELECT f.SCHOOL_ID, d.SCHOOL_LOCATION, f.INSTRUCTIONAL_DAYS_PRIMARY FROM FACT_STUDENT_INSTRUCTION_METRICS f JOIN DIM_LOCATION_ADDRESS d ON f.LOCATION_ID = d.LOCATION_ID WHERE d.SCHOOL_LOCATION = '1 - Rural' AND f.YEAR = '2018' GROUP BY f.SCHOOL_ID, d.SCHOOL_LOCATION, f.INSTRUCTIONAL_DAYS_PRIMARY HAVING f.INSTRUCTIONAL_DAYS_PRIMARY < 215;",
+    "pair_id": "4e940993",
+    "original_question_id": "a2384f62",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Rural schools refer to `dim_location_address`.`school_location` = '1 - Rural'; 2018 refers to `fact_student_instruction_metrics`.`year` = 2018; <215 primary instructional days refers to `fact_student_instruction_metrics`.`instructional_days_primary` < 215; School IDs are in `fact_student_instruction_metrics`.`school_id`"
+  },
+  {
+    "question": "Which rural schools in 2018 had fewer than 217 instructional days at the primary level, and what are their school IDs and Gram Panchayat names?",
+    "sql": "SELECT f.SCHOOL_ID, d.GRAM_PANCHAYAT_NAME, f.INSTRUCTIONAL_DAYS_PRIMARY FROM FACT_STUDENT_INSTRUCTION_METRICS f JOIN DIM_LOCATION_ADDRESS d ON f.LOCATION_ID = d.LOCATION_ID WHERE d.SCHOOL_LOCATION = '1 - Rural' AND f.YEAR = '2018' GROUP BY f.SCHOOL_ID, d.GRAM_PANCHAYAT_NAME, f.INSTRUCTIONAL_DAYS_PRIMARY HAVING f.INSTRUCTIONAL_DAYS_PRIMARY < 217;",
+    "pair_id": "ab31e841",
+    "original_question_id": "a2384f62",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Rural schools refer to `dim_location_address`.`school_location` = '1 - Rural'; instructional days at primary level refers to `fact_student_instruction_metrics`.`instructional_days_primary`; 2018 refers to `fact_student_instruction_metrics`.`year` = 2018; fewer than 217 days = `< 217`"
+  },
+  {
+    "question": "Which rural schools in India had fewer than 212 primary instructional days in 2018, and what are their metric IDs, city names, and actual instructional day counts?",
+    "sql": "SELECT f.METRIC_ID, d.CITY_NAME, f.INSTRUCTIONAL_DAYS_PRIMARY FROM FACT_STUDENT_INSTRUCTION_METRICS f JOIN DIM_LOCATION_ADDRESS d ON f.LOCATION_ID = d.LOCATION_ID WHERE d.SCHOOL_LOCATION = '1 - Rural' AND f.YEAR = '2018' GROUP BY f.METRIC_ID, d.CITY_NAME, f.INSTRUCTIONAL_DAYS_PRIMARY HAVING f.INSTRUCTIONAL_DAYS_PRIMARY < 212;",
+    "pair_id": "4e222a49",
+    "original_question_id": "a2384f62",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Rural schools refer to `dim_location_address`.`school_location` = '1 - Rural'; Fewer than 212 primary instructional days refers to `fact_student_instruction_metrics`.`instructional_days_primary` < 212; Year 2018 refers to `fact_student_instruction_metrics`.`year` = 2018; India is implied by database context with `dim_political_geography`.`country` = 'India'"
+  },
+  {
+    "question": "Which rural Department of Education schools have fewer than 212 instructional days for primary classes, and what are their Gram Panchayat names? List them in ascending order of instructional days.",
+    "sql": "WITH rural_schools_cte AS ( SELECT t1.SCHOOL_ID, t1.UNIQUE_SCHOOL_ID, t2.GRAM_PANCHAYAT_NAME, t2.SCHOOL_LOCATION, t3.INSTRUCTIONAL_DAYS_PRIMARY FROM DIM_SCHOOL_IDENTITY t1 JOIN FACT_STUDENT_INSTRUCTION_METRICS t3 ON t1.SCHOOL_ID = t3.SCHOOL_ID JOIN DIM_LOCATION_ADDRESS t2 ON t1.SCHOOL_ID = t2.LOCATION_ID WHERE t2.SCHOOL_LOCATION = '1 - Rural' AND t1.MANAGEMENT_OF_THE_SCHOOL = '1 - Department of Education' ) SELECT SCHOOL_ID, UNIQUE_SCHOOL_ID, GRAM_PANCHAYAT_NAME, INSTRUCTIONAL_DAYS_PRIMARY FROM rural_schools_cte WHERE INSTRUCTIONAL_DAYS_PRIMARY < 212 GROUP BY SCHOOL_ID, UNIQUE_SCHOOL_ID, GRAM_PANCHAYAT_NAME, INSTRUCTIONAL_DAYS_PRIMARY HAVING COUNT(SCHOOL_ID) >= 1 ORDER BY INSTRUCTIONAL_DAYS_PRIMARY ASC;",
+    "pair_id": "68bba8d1",
+    "original_question_id": "a2384f62",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "",
+    "evidence_error": "Response ended prematurely"
+  },
+  {
+    "question": "Which rural primary schools (covering Classes 1 to 12) have fewer than 217 instructional days for primary classes, and what are their city names and instructional day counts, ordered from the fewest instructional days?",
+    "sql": "WITH rural_primary_cte AS ( SELECT t1.SCHOOL_ID, t1.UNIQUE_SCHOOL_ID, t2.CITY_NAME, t2.SCHOOL_LOCATION, t3.INSTRUCTIONAL_DAYS_PRIMARY FROM DIM_SCHOOL_IDENTITY t1 JOIN FACT_STUDENT_INSTRUCTION_METRICS t3 ON t1.SCHOOL_ID = t3.SCHOOL_ID JOIN DIM_LOCATION_ADDRESS t2 ON t1.SCHOOL_ID = t2.LOCATION_ID WHERE t2.SCHOOL_LOCATION = '1 - Rural' AND t1.SCHOOL_CATEGORY = '3 - Primary with Upper Primary, Secondary and Higher Secondary ( Classes 1 to 12)' ) SELECT SCHOOL_ID, UNIQUE_SCHOOL_ID, CITY_NAME, INSTRUCTIONAL_DAYS_PRIMARY FROM rural_primary_cte WHERE INSTRUCTIONAL_DAYS_PRIMARY < 217 GROUP BY SCHOOL_ID, UNIQUE_SCHOOL_ID, CITY_NAME, INSTRUCTIONAL_DAYS_PRIMARY HAVING COUNT(SCHOOL_ID) >= 1 ORDER BY INSTRUCTIONAL_DAYS_PRIMARY ASC;",
+    "pair_id": "bf77fd25",
+    "original_question_id": "a2384f62",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Rural schools refer to `dim_location_address`.`school_location` = '1 - Rural'; Classes 1 to 12 means `dim_academic_structure`.`lowest_class` = '1 - Class1' and `dim_academic_structure`.`highest_class` = '12 - Class12'; Fewer than 217 instructional days for primary classes is `fact_student_instruction_metrics`.`instructional_days_primary` < 217"
+  },
+  {
+    "question": "Which co-educational schools in rural areas have fewer than 220 instructional days for primary classes, and what are their municipality names and instructional day counts, ordered from least to most instructional days?",
+    "sql": "WITH rural_instruction_cte AS ( SELECT t1.SCHOOL_ID, t1.UNIQUE_SCHOOL_ID, t2.MUNICIPALITY_NAME, t2.SCHOOL_LOCATION, t3.INSTRUCTIONAL_DAYS_PRIMARY FROM DIM_SCHOOL_IDENTITY t1 JOIN FACT_STUDENT_INSTRUCTION_METRICS t3 ON t1.SCHOOL_ID = t3.SCHOOL_ID JOIN DIM_LOCATION_ADDRESS t2 ON t1.SCHOOL_ID = t2.LOCATION_ID WHERE t2.SCHOOL_LOCATION = '1 - Rural' AND t1.SCHOOL_TYPE = '3 - Co-educational' ) SELECT SCHOOL_ID, UNIQUE_SCHOOL_ID, MUNICIPALITY_NAME, INSTRUCTIONAL_DAYS_PRIMARY FROM rural_instruction_cte WHERE INSTRUCTIONAL_DAYS_PRIMARY < 220 GROUP BY SCHOOL_ID, UNIQUE_SCHOOL_ID, MUNICIPALITY_NAME, INSTRUCTIONAL_DAYS_PRIMARY HAVING COUNT(SCHOOL_ID) >= 1 ORDER BY INSTRUCTIONAL_DAYS_PRIMARY ASC;",
+    "pair_id": "540b6e51",
+    "original_question_id": "a2384f62",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Co-educational schools refer to `dim_school_identity`.`school_type` = '3 - Co-educational'; rural areas refer to `dim_location_address`.`school_location` = '1 - Rural'; instructional days for primary classes = `fact_student_instruction_metrics`.`instructional_days_primary`; fewer than 220 is `< 220`; municipality names are in `dim_location_address`.`municipality_name`; order by instructional day counts from least to most = ORDER BY `fact_student_instruction_metrics`.`instructional_days_primary` ASC"
+  },
+  {
+    "question": "Which Gram Panchayats in rural areas have the highest average number of instructional days for primary schools, ranked from highest to lowest?",
+    "sql": "SELECT d.GRAM_PANCHAYAT_NAME, AVG(f.INSTRUCTIONAL_DAYS_PRIMARY) AS avg_instructional_days FROM DIM_LOCATION_ADDRESS d JOIN FACT_STUDENT_INSTRUCTION_METRICS f ON d.LOCATION_ID = f.LOCATION_ID WHERE d.SCHOOL_LOCATION = '1 - Rural' GROUP BY d.GRAM_PANCHAYAT_NAME ORDER BY avg_instructional_days DESC",
+    "pair_id": "a8e72be1",
+    "original_question_id": "c5ada79d",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Gram Panchayats refers to `dim_location_address`.`gram_panchayat_name`; rural areas are `dim_location_address`.`school_location` = '1 - Rural'; instructional days for primary schools refers to `fact_student_instruction_metrics`.`instructional_days_primary`; average number = AVG(instructional_days_primary); ranked highest to lowest = ORDER BY AVG DESC"
+  },
+  {
+    "question": "What is the average number of primary instructional days for each Gram Panchayat in Port Blair, ranked from highest to lowest?",
+    "sql": "SELECT d.GRAM_PANCHAYAT_NAME, AVG(f.INSTRUCTIONAL_DAYS_PRIMARY) AS avg_instructional_days FROM DIM_LOCATION_ADDRESS d JOIN FACT_STUDENT_INSTRUCTION_METRICS f ON d.LOCATION_ID = f.LOCATION_ID WHERE d.CITY_NAME = 'Port Blair' GROUP BY d.GRAM_PANCHAYAT_NAME ORDER BY avg_instructional_days DESC",
+    "pair_id": "f385641a",
+    "original_question_id": "c5ada79d",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Port Blair refers to `dim_location_address`.`city_name` = 'Port Blair'; average primary instructional days = AVG(`fact_student_instruction_metrics`.`instructional_days_primary`) grouped by `dim_location_address`.`gram_panchayat_name`"
+  },
+  {
+    "question": "Which Gram Panchayats have the highest average number of instructional days at the primary level in areas where the municipality name is not available, and what are their average instructional days?",
+    "sql": "SELECT d.GRAM_PANCHAYAT_NAME, AVG(f.INSTRUCTIONAL_DAYS_PRIMARY) AS avg_instructional_days FROM DIM_LOCATION_ADDRESS d JOIN FACT_STUDENT_INSTRUCTION_METRICS f ON d.LOCATION_ID = f.LOCATION_ID WHERE d.MUNICIPALITY_NAME = 'Not Available' GROUP BY d.GRAM_PANCHAYAT_NAME ORDER BY avg_instructional_days DESC",
+    "pair_id": "17b469aa",
+    "original_question_id": "c5ada79d",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Municipality name is not available refers to `dim_location_address`.`municipality_name` = 'Not Available'; Average number of instructional days at primary level refers to AVG(`fact_student_instruction_metrics`.`instructional_days_primary`); Gram Panchayats = `dim_location_address`.`gram_panchayat_name`"
+  },
+  {
+    "question": "Which Gram Panchayats have the highest average number of instructional days for primary schools, and what are their average instructional days?",
+    "sql": "SELECT dla.GRAM_PANCHAYAT_NAME, AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY) AS avg_instructional_days FROM DIM_LOCATION_ADDRESS dla JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dla.LOCATION_ID = fsim.LOCATION_ID GROUP BY dla.GRAM_PANCHAYAT_NAME ORDER BY avg_instructional_days DESC;",
+    "pair_id": "ddb137bd",
+    "original_question_id": "c5ada79d",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Gram Panchayats are in `dim_location_address`.`gram_panchayat_name`; Instructional days for primary schools are in `fact_student_instruction_metrics`.`instructional_days_primary`. Join via `location_id` and aggregate AVG(instructional_days_primary) per gram_panchayat_name"
+  },
+  {
+    "question": "What is the average number of primary instructional days for schools in each Gram Panchayat in rural areas, ranked from highest to lowest?",
+    "sql": "SELECT dla.GRAM_PANCHAYAT_NAME, AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY) AS avg_instructional_days FROM DIM_LOCATION_ADDRESS dla JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dla.LOCATION_ID = fsim.LOCATION_ID WHERE dla.SCHOOL_LOCATION = '1 - Rural' GROUP BY dla.GRAM_PANCHAYAT_NAME ORDER BY avg_instructional_days DESC;",
+    "pair_id": "c55bbb7a",
+    "original_question_id": "c5ada79d",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "primary instructional days refers to `fact_student_instruction_metrics`.`instructional_days_primary`; rural areas = `dim_location_address`.`school_location` = '1 - Rural'; Average per Gram Panchayat = AVG(instructional_days_primary) grouped by `dim_location_address`.`gram_panchayat_name`"
+  },
+  {
+    "question": "What is the average number of instructional days for primary schools in the Gram Panchayats of GP Subhashgram, GP Uttara, GP Rampur, GP Bambooflat-01, and Beodnabad, ranked from highest to lowest?",
+    "sql": "SELECT dla.GRAM_PANCHAYAT_NAME, AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY) AS avg_instructional_days FROM DIM_LOCATION_ADDRESS dla JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dla.LOCATION_ID = fsim.LOCATION_ID WHERE dla.GRAM_PANCHAYAT_NAME IN ('GP SUBHASHGRAM', 'GP UTTARA', 'GP RAMPUR', 'GP BAMBOOFLAT -01', 'BEODNABAD') GROUP BY dla.GRAM_PANCHAYAT_NAME ORDER BY avg_instructional_days DESC;",
+    "pair_id": "b29daf4e",
+    "original_question_id": "c5ada79d",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Primary schools' instructional days are in `fact_student_instruction_metrics`.`instructional_days_primary`. Gram Panchayats are specified in `dim_location_address`.`gram_panchayat_name` (exact case matches: 'GP SUBHASHGRAM', 'GP UTTARA', 'GP RAMPUR', 'BEODNABAD', but 'GP Bambooflat-01' has no exact match). Average per GP = AVG(instructional_days_primary) grouped by gram_panchayat_name."
+  },
+  {
+    "question": "Which Gram Panchayats in rural areas have the highest average number of instructional days for primary schools, and what are their average instructional days?",
+    "sql": "SELECT dla.GRAM_PANCHAYAT_NAME, AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY) AS avg_instructional_days FROM DIM_LOCATION_ADDRESS dla JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dla.LOCATION_ID = fsim.LOCATION_ID WHERE dla.SCHOOL_LOCATION = '1 - Rural' GROUP BY dla.GRAM_PANCHAYAT_NAME ORDER BY avg_instructional_days DESC;",
+    "pair_id": "0fb5da33",
+    "original_question_id": "c5ada79d",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "rural areas refers to `dim_location_address`.`school_location` = '1 - Rural'; highest average number of instructional days for primary schools = MAX(AVG(`fact_student_instruction_metrics`.`instructional_days_primary`)) grouped by `dim_location_address`.`gram_panchayat_name`"
+  },
+  {
+    "question": "What is the average number of primary instructional days for each Gram Panchayat in Port Blair, ordered from highest to lowest?",
+    "sql": "SELECT dla.GRAM_PANCHAYAT_NAME, AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY) AS avg_instructional_days FROM DIM_LOCATION_ADDRESS dla JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dla.LOCATION_ID = fsim.LOCATION_ID WHERE dla.CITY_NAME = 'Port Blair' GROUP BY dla.GRAM_PANCHAYAT_NAME ORDER BY avg_instructional_days DESC;",
+    "pair_id": "3f76e836",
+    "original_question_id": "c5ada79d",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Port Blair refers to `dim_location_address`.`city_name` = 'Port Blair'; average number of primary instructional days is AVG(`fact_student_instruction_metrics`.`instructional_days_primary`) grouped by `dim_location_address`.`gram_panchayat_name`; order from highest to lowest"
+  },
+  {
+    "question": "Which Gram Panchayats have the highest average number of instructional days at the primary level, for locations where the municipality name is not available?",
+    "sql": "SELECT dla.GRAM_PANCHAYAT_NAME, AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY) AS avg_instructional_days FROM DIM_LOCATION_ADDRESS dla JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dla.LOCATION_ID = fsim.LOCATION_ID WHERE dla.MUNICIPALITY_NAME = 'Not Available' GROUP BY dla.GRAM_PANCHAYAT_NAME ORDER BY avg_instructional_days DESC;",
+    "pair_id": "a10fd8fd",
+    "original_question_id": "c5ada79d",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "municipality name is not available refers to `dim_location_address`.`municipality_name` = 'Not Available'; highest average number of instructional days at the primary level = MAX(AVG(`fact_student_instruction_metrics`.`instructional_days_primary`)) grouped by `dim_location_address`.`gram_panchayat_name`"
+  },
+  {
+    "question": "What is the average number of primary instructional days for co-educational schools in each Gram Panchayat, ranked from highest to lowest?",
+    "sql": "WITH instructional_days_avg AS ( SELECT loc.GRAM_PANCHAYAT_NAME, AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY) AS avg_instructional_days_primary FROM FACT_STUDENT_INSTRUCTION_METRICS fsim JOIN DIM_LOCATION_ADDRESS loc ON fsim.LOCATION_ID = loc.LOCATION_ID JOIN DIM_SCHOOL_IDENTITY si ON fsim.SCHOOL_ID = si.SCHOOL_ID WHERE si.SCHOOL_TYPE = '3 - Co-educational' GROUP BY loc.GRAM_PANCHAYAT_NAME HAVING COUNT(DISTINCT fsim.SCHOOL_ID) >= 1 ) SELECT GRAM_PANCHAYAT_NAME, avg_instructional_days_primary FROM instructional_days_avg ORDER BY avg_instructional_days_primary DESC",
+    "pair_id": "dcb4663b",
+    "original_question_id": "c5ada79d",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "co-educational schools refers to `dim_school_identity`.`school_type` = '3 - Co-educational'; primary instructional days refers to `fact_student_instruction_metrics`.`instructional_days_primary`; Gram Panchayat is stored in `dim_location_address`.`gram_panchayat_name`"
+  },
+  {
+    "question": "What is the average number of primary instructional days for schools managed by the Department of Education, grouped by Gram Panchayat, and ranked from highest to lowest?",
+    "sql": "WITH instructional_days_avg AS ( SELECT loc.GRAM_PANCHAYAT_NAME, AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY) AS avg_instructional_days_primary FROM FACT_STUDENT_INSTRUCTION_METRICS fsim JOIN DIM_LOCATION_ADDRESS loc ON fsim.LOCATION_ID = loc.LOCATION_ID JOIN DIM_SCHOOL_IDENTITY si ON fsim.SCHOOL_ID = si.SCHOOL_ID WHERE si.MANAGEMENT_OF_THE_SCHOOL = '1 - Department of Education' GROUP BY loc.GRAM_PANCHAYAT_NAME HAVING COUNT(DISTINCT fsim.SCHOOL_ID) >= 1 ) SELECT GRAM_PANCHAYAT_NAME, avg_instructional_days_primary FROM instructional_days_avg ORDER BY avg_instructional_days_primary DESC",
+    "pair_id": "9a5ce714",
+    "original_question_id": "c5ada79d",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "primary instructional days = `fact_student_instruction_metrics`.`instructional_days_primary`; managed by Department of Education refers to `dim_school_identity`.`management_of_the_school` = '1 - Department of Education'; Gram Panchayat is `dim_location_address`.`gram_panchayat_name`; average calculation uses AVG() grouped by Gram Panchayat with ORDER BY DESC"
+  },
+  {
+    "question": "What is the average number of primary instructional days for schools categorized as 'Primary with Upper Primary, Secondary and Higher Secondary (Classes 1 to 12)' in each Gram Panchayat, ordered from highest to lowest?",
+    "sql": "WITH instructional_days_avg AS ( SELECT loc.GRAM_PANCHAYAT_NAME, AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY) AS avg_instructional_days_primary FROM FACT_STUDENT_INSTRUCTION_METRICS fsim JOIN DIM_LOCATION_ADDRESS loc ON fsim.LOCATION_ID = loc.LOCATION_ID JOIN DIM_SCHOOL_IDENTITY si ON fsim.SCHOOL_ID = si.SCHOOL_ID WHERE si.SCHOOL_CATEGORY = '3 - Primary with Upper Primary, Secondary and Higher Secondary ( Classes 1 to 12)' GROUP BY loc.GRAM_PANCHAYAT_NAME HAVING COUNT(DISTINCT fsim.SCHOOL_ID) >= 1 ) SELECT GRAM_PANCHAYAT_NAME, avg_instructional_days_primary FROM instructional_days_avg ORDER BY avg_instructional_days_primary DESC",
+    "pair_id": "f420ec98",
+    "original_question_id": "c5ada79d",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "school category 'Primary with Upper Primary, Secondary and Higher Secondary (Classes 1 to 12)' corresponds to `dim_school_identity`.`school_category` = '3 - Primary with Upper Primary, Secondary and Higher Secondary ( Classes 1 to 12)'; primary instructional days are stored in `fact_student_instruction_metrics`.`instructional_days_primary`; Gram Panchayat name is `dim_location_address`.`gram_panchayat_name`; JOIN between fact_student_instruction_metrics (school_id), dim_school_identity (school_id) and dim_location_address (location_id)"
+  },
+  {
+    "question": "Which are the top 5 districts in India with the highest average number of primary instructional days?",
+    "sql": "SELECT dpg.DISTRICT, AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY) AS avg_instructional_days FROM DIM_POLITICAL_GEOGRAPHY dpg JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dpg.POLITICAL_GEO_ID = fsim.LOCATION_ID WHERE dpg.COUNTRY = 'India' GROUP BY dpg.DISTRICT ORDER BY avg_instructional_days DESC LIMIT 5;",
+    "pair_id": "49ce4cbd",
+    "original_question_id": "7f4e6129",
+    "schema_used": [
+      "DIM_POLITICAL_GEOGRAPHY",
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "",
+    "evidence_error": "Response ended prematurely"
+  },
+  {
+    "question": "Which are the top 5 districts in Andhra Pradesh with the highest average number of instructional days in primary schools?",
+    "sql": "SELECT dpg.DISTRICT, AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY) AS avg_instructional_days FROM DIM_POLITICAL_GEOGRAPHY dpg JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dpg.POLITICAL_GEO_ID = fsim.LOCATION_ID WHERE dpg.STATE = 'Andhra Pradesh' GROUP BY dpg.DISTRICT ORDER BY avg_instructional_days DESC LIMIT 5;",
+    "pair_id": "c82a1c4b",
+    "original_question_id": "7f4e6129",
+    "schema_used": [
+      "DIM_POLITICAL_GEOGRAPHY",
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Andhra Pradesh refers to `dim_political_geography`.`state` = 'Andhra Pradesh'; Highest average number of instructional days in primary schools = MAX(AVG(`fact_student_instruction_metrics`.`instructional_days_primary`)) grouped by `dim_political_geography`.`district`"
+  },
+  {
+    "question": "Which are the top 5 districts in Andaman and Nicobar Islands with the highest average number of instructional days in primary schools?",
+    "sql": "SELECT dpg.DISTRICT, AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY) AS avg_instructional_days FROM DIM_POLITICAL_GEOGRAPHY dpg JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dpg.POLITICAL_GEO_ID = fsim.LOCATION_ID WHERE dpg.STATE = 'Andaman And Nicobar Islands' GROUP BY dpg.DISTRICT ORDER BY avg_instructional_days DESC LIMIT 5;",
+    "pair_id": "773cba25",
+    "original_question_id": "7f4e6129",
+    "schema_used": [
+      "DIM_POLITICAL_GEOGRAPHY",
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Andaman and Nicobar Islands refers to `dim_political_geography`.`state` = 'Andaman And Nicobar Islands'; average number of instructional days in primary schools refers to AVG(`fact_student_instruction_metrics`.`instructional_days_primary`) grouped by `dim_political_geography`.`district`; TOP 5 sorted by highest average."
+  },
+  {
+    "question": "Which are the top 5 districts in India with the highest average number of primary instructional days, and what are their average instructional day counts?",
+    "sql": "SELECT dpg.DISTRICT, AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY) AS avg_instructional_days FROM DIM_POLITICAL_GEOGRAPHY dpg JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dpg.POLITICAL_GEO_ID = fsim.LOCATION_ID WHERE dpg.COUNTRY = 'India' GROUP BY dpg.DISTRICT ORDER BY avg_instructional_days DESC LIMIT 5;",
+    "pair_id": "83bebd7c",
+    "original_question_id": "7f4e6129",
+    "schema_used": [
+      "DIM_POLITICAL_GEOGRAPHY",
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Average primary instructional days = AVG(`fact_student_instruction_metrics`.`instructional_days_primary`). Districts are mapped via `dim_political_geography`.`district` with country='India'. Use location_id in fact_student_instruction_metrics to join dim_location_address and link to political_geography via shared district attributes."
+  },
+  {
+    "question": "Which are the top 5 districts in Andhra Pradesh with the highest average number of primary instructional days, and what are their average instructional day counts?",
+    "sql": "SELECT dpg.DISTRICT, AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY) AS avg_instructional_days FROM FACT_STUDENT_INSTRUCTION_METRICS fsim JOIN DIM_POLITICAL_GEOGRAPHY dpg ON fsim.LOCATION_ID = dpg.POLITICAL_GEO_ID WHERE dpg.STATE = 'Andhra Pradesh' GROUP BY dpg.DISTRICT ORDER BY avg_instructional_days DESC LIMIT 5;",
+    "pair_id": "b01c53f5",
+    "original_question_id": "7f4e6129",
+    "schema_used": [
+      "DIM_POLITICAL_GEOGRAPHY",
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Average number of primary instructional days is found in `fact_student_instruction_metrics`.`instructional_days_primary`. Andhra Pradesh refers to `dim_political_geography`.`state` = 'Andhra Pradesh'. Join `fact_student_instruction_metrics` with `dim_political_geography` via common keys (possibly via `location_id` or school linkage). Group by `dim_political_geography`.`district`, calculate AVG(`instructional_days_primary`), order descending, and LIMIT 5."
+  },
+  {
+    "question": "Which are the top 5 districts in Andaman and Nicobar Islands with the highest average number of instructional days in primary schools?",
+    "sql": "SELECT dpg.DISTRICT, AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY) AS avg_instructional_days FROM DIM_POLITICAL_GEOGRAPHY dpg JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dpg.POLITICAL_GEO_ID = fsim.LOCATION_ID WHERE dpg.STATE = 'Andaman And Nicobar Islands' GROUP BY dpg.DISTRICT ORDER BY avg_instructional_days DESC LIMIT 5;",
+    "pair_id": "20c2ab22",
+    "original_question_id": "7f4e6129",
+    "schema_used": [
+      "DIM_POLITICAL_GEOGRAPHY",
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Andaman and Nicobar Islands refers to `dim_political_geography`.`state` = 'Andaman And Nicobar Islands'; instructional days in primary schools comes from `fact_student_instruction_metrics`.`instructional_days_primary`; highest average = AVG(instructional_days_primary) GROUP BY `dim_political_geography`.`district` ORDER DESC LIMIT 5"
+  },
+  {
+    "question": "Which are the top 5 districts in India with the highest average number of primary instructional days, among those districts where the average exceeds 210 instructional days?",
+    "sql": "SELECT dpg.DISTRICT, AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY) AS avg_days FROM DIM_POLITICAL_GEOGRAPHY dpg JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dpg.POLITICAL_GEO_ID = fsim.LOCATION_ID GROUP BY dpg.DISTRICT HAVING AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY) > 210 ORDER BY avg_days DESC LIMIT 5;",
+    "pair_id": "3649f967",
+    "original_question_id": "7f4e6129",
+    "schema_used": [
+      "DIM_POLITICAL_GEOGRAPHY",
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Average number of primary instructional days = AVG(`fact_student_instruction_metrics`.`instructional_days_primary`); districts refer to `dim_political_geography`.`district`; filter `dim_political_geography`.`country` = 'India'; must have average > 210; select top 5 districts ordered by average descending"
+  },
+  {
+    "question": "Which are the top 5 districts in India with the highest average number of primary instructional days, among those districts where the average exceeds 212 days?",
+    "sql": "SELECT dpg.DISTRICT, AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY) AS avg_days FROM DIM_POLITICAL_GEOGRAPHY dpg JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dpg.POLITICAL_GEO_ID = fsim.LOCATION_ID WHERE dpg.COUNTRY = 'India' GROUP BY dpg.DISTRICT HAVING AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY) > 212 ORDER BY avg_days DESC LIMIT 5;",
+    "pair_id": "dcf96177",
+    "original_question_id": "7f4e6129",
+    "schema_used": [
+      "DIM_POLITICAL_GEOGRAPHY",
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Primary instructional days refers to `fact_student_instruction_metrics`.`instructional_days_primary`; districts are in `dim_political_geography`.`district`. Filter where AVG(instructional_days_primary) > 212. Use exact value 212 (no quotes as it's numeric). Country filter uses `dim_political_geography`.`country` = 'India' (case-sensitive). Sorting uses DESC on average days with LIMIT 5."
+  },
+  {
+    "question": "Which are the top 5 districts in Andhra Pradesh with the highest average number of primary instructional days, among those districts where the average exceeds 210 days?",
+    "sql": "SELECT dpg.DISTRICT, AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY) AS avg_days FROM DIM_POLITICAL_GEOGRAPHY dpg JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dpg.POLITICAL_GEO_ID = fsim.LOCATION_ID WHERE dpg.STATE = 'Andhra Pradesh' GROUP BY dpg.DISTRICT HAVING AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY) > 210 ORDER BY avg_days DESC LIMIT 5;",
+    "pair_id": "c2886160",
+    "original_question_id": "7f4e6129",
+    "schema_used": [
+      "DIM_POLITICAL_GEOGRAPHY",
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Andhra Pradesh refers to `dim_political_geography`.`state` = 'Andhra Pradesh'; primary instructional days are stored in `fact_student_instruction_metrics`.`instructional_days_primary`; districts are in `dim_political_geography`.`district`; average exceeding 210 implies HAVING AVG(instructional_days_primary) > 210"
+  },
+  {
+    "question": "Which are the top 5 districts in India with the highest average number of primary instructional days, considering only districts that have more than one school?",
+    "sql": "WITH district_avg AS ( SELECT pg.DISTRICT, AVG(f.INSTRUCTIONAL_DAYS_PRIMARY) AS avg_instructional_days_primary FROM FACT_STUDENT_INSTRUCTION_METRICS f JOIN DIM_SCHOOL_IDENTITY si ON f.SCHOOL_ID = si.SCHOOL_ID JOIN DIM_LOCATION_ADDRESS la ON f.LOCATION_ID = la.LOCATION_ID JOIN DIM_POLITICAL_GEOGRAPHY pg ON la.LOCATION_ID = pg.POLITICAL_GEO_ID WHERE pg.COUNTRY = 'India' AND f.INSTRUCTIONAL_DAYS_PRIMARY IS NOT NULL GROUP BY pg.DISTRICT HAVING COUNT(DISTINCT f.SCHOOL_ID) > 1 ) SELECT DISTRICT, avg_instructional_days_primary FROM district_avg ORDER BY avg_instructional_days_primary DESC LIMIT 5",
+    "pair_id": "5d2109ef",
+    "original_question_id": "7f4e6129",
+    "schema_used": [
+      "DIM_POLITICAL_GEOGRAPHY",
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Average number of primary instructional days refers to AVG(`fact_student_instruction_metrics`.`instructional_days_primary`); Districts in India = `dim_political_geography`.`country` = 'India'; Districts with more than one school = COUNT(DISTINCT `fact_student_instruction_metrics`.`school_id`) > 1 when grouped by `dim_political_geography`.`district`"
+  },
+  {
+    "question": "Which are the top 5 districts in Andhra Pradesh with the highest average number of primary instructional days, considering only districts with more than one school?",
+    "sql": "WITH district_avg AS ( SELECT pg.DISTRICT, AVG(f.INSTRUCTIONAL_DAYS_PRIMARY) AS avg_instructional_days_primary FROM FACT_STUDENT_INSTRUCTION_METRICS f JOIN DIM_SCHOOL_IDENTITY si ON f.SCHOOL_ID = si.SCHOOL_ID JOIN DIM_LOCATION_ADDRESS la ON f.LOCATION_ID = la.LOCATION_ID JOIN DIM_POLITICAL_GEOGRAPHY pg ON la.LOCATION_ID = pg.POLITICAL_GEO_ID WHERE pg.STATE = 'Andhra Pradesh' AND f.INSTRUCTIONAL_DAYS_PRIMARY IS NOT NULL GROUP BY pg.DISTRICT HAVING COUNT(DISTINCT f.SCHOOL_ID) > 1 ) SELECT DISTRICT, avg_instructional_days_primary FROM district_avg ORDER BY avg_instructional_days_primary DESC LIMIT 5",
+    "pair_id": "da984764",
+    "original_question_id": "7f4e6129",
+    "schema_used": [
+      "DIM_POLITICAL_GEOGRAPHY",
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Filter `dim_political_geography`.`state` = 'Andhra Pradesh'; Link schools via `fact_student_instruction_metrics`.`location_id` to `dim_political_geography`.`political_geo_id`; Compute average of `fact_student_instruction_metrics`.`instructional_days_primary` per district; Include only districts with COUNT(DISTINCT `fact_student_instruction_metrics`.`school_id`) > 1; Order by average DESC, limit 5."
+  },
+  {
+    "question": "What is the average number of instructional days for primary and upper primary levels for each school and its corresponding Gram Panchayat in rural areas?",
+    "sql": "SELECT f.SCHOOL_ID, d.GRAM_PANCHAYAT_NAME, AVG(f.INSTRUCTIONAL_DAYS_PRIMARY), AVG(f.INSTRUCTIONAL_DAYS_UPPER_PRIMARY) FROM FACT_STUDENT_INSTRUCTION_METRICS f JOIN DIM_LOCATION_ADDRESS d ON f.LOCATION_ID = d.LOCATION_ID WHERE d.SCHOOL_LOCATION = '1 - Rural' GROUP BY f.SCHOOL_ID, d.GRAM_PANCHAYAT_NAME;",
+    "pair_id": "69265529",
+    "original_question_id": "5ff58f51",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "School in rural areas refer to `dim_location_address`.`school_location` = '1 - Rural'; Instructional days for primary and upper primary are in `fact_student_instruction_metrics`.`instructional_days_primary` and `instructional_days_upper_primary`. Gram Panchayat names are stored in `dim_location_address`.`gram_panchayat_name`. Join `fact_student_instruction_metrics` and `dim_location_address` on `location_id`."
+  },
+  {
+    "question": "What is the average number of instructional days for primary and upper primary levels for each school and its municipality in rural areas of India?",
+    "sql": "SELECT f.SCHOOL_ID, d.MUNICIPALITY_NAME, AVG(f.INSTRUCTIONAL_DAYS_PRIMARY), AVG(f.INSTRUCTIONAL_DAYS_UPPER_PRIMARY) FROM FACT_STUDENT_INSTRUCTION_METRICS f JOIN DIM_LOCATION_ADDRESS d ON f.LOCATION_ID = d.LOCATION_ID WHERE d.SCHOOL_LOCATION = '1 - Rural' GROUP BY f.SCHOOL_ID, d.MUNICIPALITY_NAME;",
+    "pair_id": "c0547dca",
+    "original_question_id": "5ff58f51",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Average number of instructional days for primary is `fact_student_instruction_metrics`.`instructional_days_primary`, upper primary is `fact_student_instruction_metrics`.`instructional_days_upper_primary`. Rural areas filter: `dim_location_address`.`school_location` = '1 - Rural'. Municipality comes from `dim_location_address`.`municipality_name`. Group by `fact_student_instruction_metrics`.`school_id` and `dim_location_address`.`municipality_name`."
+  },
+  {
+    "question": "What is the average number of instructional days for primary and upper primary levels for each school in Port Blair?",
+    "sql": "SELECT f.SCHOOL_ID, d.CITY_NAME, AVG(f.INSTRUCTIONAL_DAYS_PRIMARY), AVG(f.INSTRUCTIONAL_DAYS_UPPER_PRIMARY) FROM FACT_STUDENT_INSTRUCTION_METRICS f JOIN DIM_LOCATION_ADDRESS d ON f.LOCATION_ID = d.LOCATION_ID WHERE d.CITY_NAME = 'Port Blair' GROUP BY f.SCHOOL_ID, d.CITY_NAME;",
+    "pair_id": "ee86d3f8",
+    "original_question_id": "5ff58f51",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Port Blair refers to `dim_location_address`.`city_name` = 'Port Blair'; Average instructional days computed as AVG(`fact_student_instruction_metrics`.`instructional_days_primary`) and AVG(`fact_student_instruction_metrics`.`instructional_days_upper_primary`), grouped by `fact_student_instruction_metrics`.`school_id`."
+  },
+  {
+    "question": "What is the average number of instructional days for primary and upper primary levels in each Gram Panchayat and city for rural schools in India?",
+    "sql": "SELECT d.GRAM_PANCHAYAT_NAME, d.CITY_NAME, AVG(f.INSTRUCTIONAL_DAYS_PRIMARY), AVG(f.INSTRUCTIONAL_DAYS_UPPER_PRIMARY) FROM FACT_STUDENT_INSTRUCTION_METRICS f JOIN DIM_LOCATION_ADDRESS d ON f.LOCATION_ID = d.LOCATION_ID WHERE d.SCHOOL_LOCATION = '1 - Rural' GROUP BY d.GRAM_PANCHAYAT_NAME, d.CITY_NAME;",
+    "pair_id": "d4b61d8e",
+    "original_question_id": "5ff58f51",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Rural schools are identified by `dim_location_address`.`school_location` = '1 - Rural'. Instructional days are in `fact_student_instruction_metrics`.`instructional_days_primary` and `fact_student_instruction_metrics`.`instructional_days_upper_primary`. Group by `dim_location_address`.`gram_panchayat_name` and `dim_location_address`.`city_name`."
+  },
+  {
+    "question": "What is the average number of instructional days for primary and upper primary levels in rural schools, grouped by Gram Panchayat and Municipality, ordered from highest to lowest average primary instructional days?",
+    "sql": "SELECT dla.GRAM_PANCHAYAT_NAME, dla.MUNICIPALITY_NAME, AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY), AVG(fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY) FROM FACT_STUDENT_INSTRUCTION_METRICS fsim JOIN DIM_LOCATION_ADDRESS dla ON fsim.LOCATION_ID = dla.LOCATION_ID WHERE dla.SCHOOL_LOCATION = '1 - Rural' GROUP BY dla.GRAM_PANCHAYAT_NAME, dla.MUNICIPALITY_NAME ORDER BY AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY) DESC;",
+    "pair_id": "3fbc65c2",
+    "original_question_id": "5ff58f51",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Average instructional days primary = AVG(`fact_student_instruction_metrics`.`instructional_days_primary`); Upper primary = AVG(`fact_student_instruction_metrics`.`instructional_days_upper_primary`). Rural schools = `dim_location_address`.`school_location` = '1 - Rural'. Group by `dim_location_address`.`gram_panchayat_name`, `dim_location_address`.`municipality_name`. Order by AVG(`fact_student_instruction_metrics`.`instructional_days_primary`) DESC"
+  },
+  {
+    "question": "What are the average number of instructional days for primary and upper primary levels across different Gram Panchayats and cities in rural areas, ordered from highest to lowest average primary instructional days?",
+    "sql": "SELECT dla.GRAM_PANCHAYAT_NAME, dla.CITY_NAME, AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY), AVG(fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY) FROM FACT_STUDENT_INSTRUCTION_METRICS fsim JOIN DIM_LOCATION_ADDRESS dla ON fsim.LOCATION_ID = dla.LOCATION_ID WHERE dla.SCHOOL_LOCATION = '1 - Rural' GROUP BY dla.GRAM_PANCHAYAT_NAME, dla.CITY_NAME ORDER BY AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY) DESC;",
+    "pair_id": "dd1b5af6",
+    "original_question_id": "5ff58f51",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Primary level refers to `fact_student_instruction_metrics`.`instructional_days_primary`; Upper primary level refers to `fact_student_instruction_metrics`.`instructional_days_upper_primary`; Gram Panchayats refer to `dim_location_address`.`gram_panchayat_name`; Cities refer to `dim_location_address`.`city_name`; Rural areas correspond to `dim_location_address`.`school_location` = '1 - Rural'; Order by average primary instructional days descending"
+  },
+  {
+    "question": "What is the average number of instructional days for primary and upper primary levels in rural schools, grouped by Gram Panchayat and Municipality, ordered by the highest average upper primary instructional days?",
+    "sql": "SELECT dla.GRAM_PANCHAYAT_NAME, dla.MUNICIPALITY_NAME, AVG(fsim.INSTRUCTIONAL_DAYS_PRIMARY), AVG(fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY) FROM FACT_STUDENT_INSTRUCTION_METRICS fsim JOIN DIM_LOCATION_ADDRESS dla ON fsim.LOCATION_ID = dla.LOCATION_ID WHERE dla.SCHOOL_LOCATION = '1 - Rural' GROUP BY dla.GRAM_PANCHAYAT_NAME, dla.MUNICIPALITY_NAME ORDER BY AVG(fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY) DESC;",
+    "pair_id": "8c9a0b5d",
+    "original_question_id": "5ff58f51",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "",
+    "evidence_error": "Response ended prematurely"
+  },
+  {
+    "question": "Which Gram Panchayats have schools with primary instructional days but no higher secondary instructional days at all?",
+    "sql": "SELECT d.GRAM_PANCHAYAT_NAME FROM DIM_LOCATION_ADDRESS d JOIN FACT_STUDENT_INSTRUCTION_METRICS f ON d.LOCATION_ID = f.LOCATION_ID WHERE f.INSTRUCTIONAL_DAYS_PRIMARY > 0 GROUP BY d.GRAM_PANCHAYAT_NAME HAVING SUM(f.INSTRUCTIONAL_DAYS_HIGHER_SECONDARY) = 0;",
+    "pair_id": "a021405f",
+    "original_question_id": "bfc7ce7d",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Primary instructional days refer to `fact_student_instruction_metrics`.`instructional_days_primary` > 0; No higher secondary instructional days at all implies `fact_student_instruction_metrics`.`instructional_days_higher_secondary` = 0; Gram Panchayat names are stored in `dim_location_address`.`gram_panchayat_name`"
+  },
+  {
+    "question": "Which Gram Panchayats have more than 200 primary instructional days but no instructional days at the higher secondary level?",
+    "sql": "SELECT d.GRAM_PANCHAYAT_NAME FROM DIM_LOCATION_ADDRESS d JOIN FACT_STUDENT_INSTRUCTION_METRICS f ON d.LOCATION_ID = f.LOCATION_ID WHERE f.INSTRUCTIONAL_DAYS_PRIMARY > 200 GROUP BY d.GRAM_PANCHAYAT_NAME HAVING SUM(f.INSTRUCTIONAL_DAYS_HIGHER_SECONDARY) = 0;",
+    "pair_id": "5cb04349",
+    "original_question_id": "bfc7ce7d",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Gram Panchayats refer to `dim_location_address`.`gram_panchayat_name`; more than 200 primary instructional days refers to `fact_student_instruction_metrics`.`instructional_days_primary` > 200; no instructional days at higher secondary level refers to `fact_student_instruction_metrics`.`instructional_days_higher_secondary` = 0"
+  },
+  {
+    "question": "Which Gram Panchayats have more than 210 primary instructional days but no higher secondary instructional days at all?",
+    "sql": "SELECT d.GRAM_PANCHAYAT_NAME FROM DIM_LOCATION_ADDRESS d JOIN FACT_STUDENT_INSTRUCTION_METRICS f ON d.LOCATION_ID = f.LOCATION_ID WHERE f.INSTRUCTIONAL_DAYS_PRIMARY > 210 GROUP BY d.GRAM_PANCHAYAT_NAME HAVING SUM(f.INSTRUCTIONAL_DAYS_HIGHER_SECONDARY) = 0;",
+    "pair_id": "ffb14434",
+    "original_question_id": "bfc7ce7d",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "`fact_student_instruction_metrics`.`instructional_days_primary` > 210 refers to more than 210 primary instructional days; `fact_student_instruction_metrics`.`instructional_days_higher_secondary` = 0 indicates no higher secondary instructional days; Gram Panchayats are in `dim_location_address`.`gram_panchayat_name`"
+  },
+  {
+    "question": "Which Gram Panchayats have more than 210 instructional days at the primary level but no instructional days at the higher secondary level?",
+    "sql": "SELECT dla.GRAM_PANCHAYAT_NAME FROM DIM_LOCATION_ADDRESS dla JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dla.LOCATION_ID = fsim.LOCATION_ID WHERE fsim.INSTRUCTIONAL_DAYS_PRIMARY > 210 GROUP BY dla.GRAM_PANCHAYAT_NAME HAVING SUM(fsim.INSTRUCTIONAL_DAYS_HIGHER_SECONDARY) = 0;",
+    "pair_id": "0240e578",
+    "original_question_id": "bfc7ce7d",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Gram Panchayats refer to `dim_location_address`.`gram_panchayat_name`; More than 210 instructional days at primary level refers to `fact_student_instruction_metrics`.`instructional_days_primary` > 210; No instructional days at higher secondary refers to `fact_student_instruction_metrics`.`instructional_days_higher_secondary` = 0"
+  },
+  {
+    "question": "Which Gram Panchayats have more than 212 primary instructional days but no instructional days at the higher secondary level?",
+    "sql": "SELECT dla.GRAM_PANCHAYAT_NAME FROM DIM_LOCATION_ADDRESS dla JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dla.LOCATION_ID = fsim.LOCATION_ID WHERE fsim.INSTRUCTIONAL_DAYS_PRIMARY > 212 GROUP BY dla.GRAM_PANCHAYAT_NAME HAVING SUM(fsim.INSTRUCTIONAL_DAYS_HIGHER_SECONDARY) = 0;",
+    "pair_id": "e7f1824f",
+    "original_question_id": "bfc7ce7d",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Gram Panchayats refer to `dim_location_address`.`gram_panchayat_name`; more than 212 primary instructional days refers to `fact_student_instruction_metrics`.`instructional_days_primary` > 212; no instructional days at higher secondary level refers to `fact_student_instruction_metrics`.`instructional_days_higher_secondary` = 0"
+  },
+  {
+    "question": "Which Gram Panchayats have more than 217 instructional days at the primary level but no instructional days at the higher secondary level?",
+    "sql": "SELECT dla.GRAM_PANCHAYAT_NAME FROM DIM_LOCATION_ADDRESS dla JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dla.LOCATION_ID = fsim.LOCATION_ID WHERE fsim.INSTRUCTIONAL_DAYS_PRIMARY > 217 GROUP BY dla.GRAM_PANCHAYAT_NAME HAVING SUM(fsim.INSTRUCTIONAL_DAYS_HIGHER_SECONDARY) = 0;",
+    "pair_id": "9f96ad62",
+    "original_question_id": "bfc7ce7d",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Gram Panchayats refer to `dim_location_address`.`gram_panchayat_name`; More than 217 instructional days at primary level refers to `fact_student_instruction_metrics`.`instructional_days_primary` > 217; No instructional days at higher secondary level refers to `fact_student_instruction_metrics`.`instructional_days_higher_secondary` = 0"
+  },
+  {
+    "question": "Which Gram Panchayats have schools with primary level instruction but no higher secondary level instruction?",
+    "sql": "WITH primary_schools AS (SELECT DISTINCT t2.LOCATION_ID FROM FACT_STUDENT_INSTRUCTION_METRICS t1 JOIN DIM_LOCATION_ADDRESS t2 ON t1.LOCATION_ID = t2.LOCATION_ID WHERE t1.INSTRUCTIONAL_DAYS_PRIMARY IS NOT NULL AND t1.INSTRUCTIONAL_DAYS_PRIMARY > 0), higher_secondary_schools AS (SELECT DISTINCT t2.LOCATION_ID FROM FACT_STUDENT_INSTRUCTION_METRICS t1 JOIN DIM_LOCATION_ADDRESS t2 ON t1.LOCATION_ID = t2.LOCATION_ID WHERE t1.INSTRUCTIONAL_DAYS_HIGHER_SECONDARY IS NOT NULL AND t1.INSTRUCTIONAL_DAYS_HIGHER_SECONDARY > 0) SELECT t3.GRAM_PANCHAYAT_NAME FROM DIM_LOCATION_ADDRESS t3 JOIN primary_schools ps ON t3.LOCATION_ID = ps.LOCATION_ID WHERE t3.LOCATION_ID NOT IN (SELECT LOCATION_ID FROM higher_secondary_schools) GROUP BY t3.GRAM_PANCHAYAT_NAME HAVING COUNT(DISTINCT t3.LOCATION_ID) > 0 ORDER BY t3.GRAM_PANCHAYAT_NAME",
+    "pair_id": "93aa28f1",
+    "original_question_id": "bfc7ce7d",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Primary level instruction refers to `dim_school_identity`.`school_category` containing primary classes (e.g., '1 - Primary Only ( Classes 1 to 5)'). No higher secondary instruction means excluding schools where `dim_school_identity`.`school_category` contains 'Higher Secondary' (e.g., '10 - Secondary with Higher Secondary')"
+  },
+  {
+    "question": "Which Gram Panchayats have schools with more than 200 primary instructional days but no schools with more than 200 higher secondary instructional days?",
+    "sql": "WITH primary_schools AS (SELECT DISTINCT t2.LOCATION_ID FROM FACT_STUDENT_INSTRUCTION_METRICS t1 JOIN DIM_LOCATION_ADDRESS t2 ON t1.LOCATION_ID = t2.LOCATION_ID WHERE t1.INSTRUCTIONAL_DAYS_PRIMARY IS NOT NULL AND t1.INSTRUCTIONAL_DAYS_PRIMARY > 200), higher_secondary_schools AS (SELECT DISTINCT t2.LOCATION_ID FROM FACT_STUDENT_INSTRUCTION_METRICS t1 JOIN DIM_LOCATION_ADDRESS t2 ON t1.LOCATION_ID = t2.LOCATION_ID WHERE t1.INSTRUCTIONAL_DAYS_HIGHER_SECONDARY IS NOT NULL AND t1.INSTRUCTIONAL_DAYS_HIGHER_SECONDARY > 200) SELECT t3.GRAM_PANCHAYAT_NAME FROM DIM_LOCATION_ADDRESS t3 JOIN primary_schools ps ON t3.LOCATION_ID = ps.LOCATION_ID WHERE t3.LOCATION_ID NOT IN (SELECT LOCATION_ID FROM higher_secondary_schools) AND t3.GRAM_PANCHAYAT_NAME != 'Not Available' GROUP BY t3.GRAM_PANCHAYAT_NAME HAVING COUNT(DISTINCT t3.LOCATION_ID) > 0 ORDER BY t3.GRAM_PANCHAYAT_NAME",
+    "pair_id": "ee2d3a61",
+    "original_question_id": "bfc7ce7d",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "`dim_location_address`.`gram_panchayat_name` contains Gram Panchayat names; More than 200 primary instructional days refers to `fact_student_instruction_metrics`.`instructional_days_primary` > 200; No schools with more than 200 higher secondary instructional days means `fact_student_instruction_metrics`.`instructional_days_higher_secondary` <= 200 across all schools in the Gram Panchayat"
+  },
+  {
+    "question": "Which Gram Panchayats in rural areas had schools with primary instructional days in 2018 but no schools with higher secondary instructional days in the same year?",
+    "sql": "WITH primary_schools AS (SELECT DISTINCT t2.LOCATION_ID FROM FACT_STUDENT_INSTRUCTION_METRICS t1 JOIN DIM_LOCATION_ADDRESS t2 ON t1.LOCATION_ID = t2.LOCATION_ID WHERE t1.INSTRUCTIONAL_DAYS_PRIMARY IS NOT NULL AND t1.INSTRUCTIONAL_DAYS_PRIMARY > 0 AND t1.YEAR = 2018), higher_secondary_schools AS (SELECT DISTINCT t2.LOCATION_ID FROM FACT_STUDENT_INSTRUCTION_METRICS t1 JOIN DIM_LOCATION_ADDRESS t2 ON t1.LOCATION_ID = t2.LOCATION_ID WHERE t1.INSTRUCTIONAL_DAYS_HIGHER_SECONDARY IS NOT NULL AND t1.INSTRUCTIONAL_DAYS_HIGHER_SECONDARY > 0 AND t1.YEAR = 2018) SELECT t3.GRAM_PANCHAYAT_NAME FROM DIM_LOCATION_ADDRESS t3 JOIN primary_schools ps ON t3.LOCATION_ID = ps.LOCATION_ID WHERE t3.LOCATION_ID NOT IN (SELECT LOCATION_ID FROM higher_secondary_schools) AND t3.SCHOOL_LOCATION = '1 - Rural' GROUP BY t3.GRAM_PANCHAYAT_NAME HAVING COUNT(DISTINCT t3.LOCATION_ID) > 0 ORDER BY t3.GRAM_PANCHAYAT_NAME",
+    "pair_id": "b0c74e50",
+    "original_question_id": "bfc7ce7d",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "",
+    "evidence_error": "HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError(\"HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno -3] Temporary failure in name resolution)\"))"
+  },
+  {
+    "question": "Which Gram Panchayats had schools with at least 200 instructional days for both primary and upper primary levels in the most recent year?",
+    "sql": "SELECT DISTINCT dla.GRAM_PANCHAYAT_NAME FROM DIM_LOCATION_ADDRESS dla JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dla.LOCATION_ID = fsim.LOCATION_ID WHERE fsim.YEAR = (SELECT MAX(YEAR) FROM FACT_STUDENT_INSTRUCTION_METRICS) AND fsim.INSTRUCTIONAL_DAYS_PRIMARY >= 200 AND fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY >= 200;",
+    "pair_id": "bd58fff5",
+    "original_question_id": "60f5a99c",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Gram Panchayats are in `dim_location_address`.`gram_panchayat_name`; Instructional days for primary = `fact_student_instruction_metrics`.`instructional_days_primary`; upper primary = `fact_student_instruction_metrics`.`instructional_days_upper_primary`; Most recent year = 2018 (from sample values); 'At least 200' implies >=200 for both metrics"
+  },
+  {
+    "question": "Which Gram Panchayats had schools with at least 210 instructional days for both primary and upper primary levels in the most recent year?",
+    "sql": "SELECT DISTINCT dla.GRAM_PANCHAYAT_NAME FROM DIM_LOCATION_ADDRESS dla JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dla.LOCATION_ID = fsim.LOCATION_ID WHERE fsim.YEAR = (SELECT MAX(YEAR) FROM FACT_STUDENT_INSTRUCTION_METRICS) AND fsim.INSTRUCTIONAL_DAYS_PRIMARY >= 210 AND fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY >= 210;",
+    "pair_id": "a3f444a6",
+    "original_question_id": "60f5a99c",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Gram Panchayats refers to `dim_location_address`.`gram_panchayat_name`; At least 210 instructional days for primary level = `fact_student_instruction_metrics`.`instructional_days_primary` >= 210; At least 210 instructional days for upper primary level = `fact_student_instruction_metrics`.`instructional_days_upper_primary` >= 210; Most recent year is MAX(`fact_student_instruction_metrics`.`year`) which is 2018 based on sample values"
+  },
+  {
+    "question": "Which Gram Panchayats had schools with at least 212 instructional days for both primary and upper primary levels in the most recent year?",
+    "sql": "SELECT DISTINCT dla.GRAM_PANCHAYAT_NAME FROM DIM_LOCATION_ADDRESS dla JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dla.LOCATION_ID = fsim.LOCATION_ID WHERE fsim.YEAR = (SELECT MAX(YEAR) FROM FACT_STUDENT_INSTRUCTION_METRICS) AND fsim.INSTRUCTIONAL_DAYS_PRIMARY >= 212 AND fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY >= 212;",
+    "pair_id": "ef6f5200",
+    "original_question_id": "60f5a99c",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Gram Panchayats are in `dim_location_address`.`gram_panchayat_name`; primary instructional days = `fact_student_instruction_metrics`.`instructional_days_primary`; upper primary instructional days = `fact_student_instruction_metrics`.`instructional_days_upper_primary`; most recent year is MAX(`fact_student_instruction_metrics`.`year`) which is 2018; 'at least 212' means both days >= 212"
+  },
+  {
+    "question": "Which Gram Panchayats had at least 200 instructional days for both primary and upper primary levels in the most recent year?",
+    "sql": "SELECT dla.GRAM_PANCHAYAT_NAME FROM DIM_LOCATION_ADDRESS dla JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dla.LOCATION_ID = fsim.LOCATION_ID WHERE fsim.YEAR = (SELECT MAX(YEAR) FROM FACT_STUDENT_INSTRUCTION_METRICS) AND fsim.INSTRUCTIONAL_DAYS_PRIMARY >= 200 AND fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY >= 200;",
+    "pair_id": "559fea21",
+    "original_question_id": "60f5a99c",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "`dim_location_address`.`gram_panchayat_name` refers to Gram Panchayats; 200 instructional days corresponds to `fact_student_instruction_metrics`.`instructional_days_primary` >= 200 AND `fact_student_instruction_metrics`.`instructional_days_upper_primary` >= 200; most recent year is MAX(year) = 2018 in `fact_student_instruction_metrics`"
+  },
+  {
+    "question": "Which Gram Panchayats had schools with at least 210 instructional days for both primary and upper primary levels in the most recent year?",
+    "sql": "SELECT DISTINCT dla.GRAM_PANCHAYAT_NAME FROM DIM_LOCATION_ADDRESS dla JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dla.LOCATION_ID = fsim.LOCATION_ID WHERE fsim.YEAR = (SELECT MAX(YEAR) FROM FACT_STUDENT_INSTRUCTION_METRICS) AND fsim.INSTRUCTIONAL_DAYS_PRIMARY >= 210 AND fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY >= 210;",
+    "pair_id": "ef75ba3c",
+    "original_question_id": "60f5a99c",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Gram Panchayats are found in `dim_location_address`.`gram_panchayat_name`; Instructional days for primary level = `fact_student_instruction_metrics`.`instructional_days_primary`; upper primary level = `fact_student_instruction_metrics`.`instructional_days_upper_primary`; most recent year = MAX(`fact_student_instruction_metrics`.`year`) which is 2018; 'at least 210' implies both columns >= 210; Schools linked via `fact_student_instruction_metrics`.`location_id` = `dim_location_address`.`location_id`"
+  },
+  {
+    "question": "Which Gram Panchayats had at least 212 instructional days for both primary and upper primary levels in the most recent year?",
+    "sql": "SELECT dla.GRAM_PANCHAYAT_NAME FROM DIM_LOCATION_ADDRESS dla JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dla.LOCATION_ID = fsim.LOCATION_ID WHERE fsim.YEAR = (SELECT MAX(YEAR) FROM FACT_STUDENT_INSTRUCTION_METRICS) AND fsim.INSTRUCTIONAL_DAYS_PRIMARY >= 212 AND fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY >= 212 GROUP BY dla.GRAM_PANCHAYAT_NAME;",
+    "pair_id": "972ea94d",
+    "original_question_id": "60f5a99c",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Gram Panchayats refers to `dim_location_address`.`gram_panchayat_name`; at least 212 instructional days for primary level is `fact_student_instruction_metrics`.`instructional_days_primary` >= 212; upper primary level is `fact_student_instruction_metrics`.`instructional_days_upper_primary` >= 212; most recent year is `fact_student_instruction_metrics`.`year` = 2018"
+  },
+  {
+    "question": "Which Gram Panchayats have more than one school that met at least 200 instructional days for both primary and upper primary levels in the most recent year?",
+    "sql": "SELECT dla.GRAM_PANCHAYAT_NAME, COUNT(fsim.SCHOOL_ID) FROM DIM_LOCATION_ADDRESS dla JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dla.LOCATION_ID = fsim.LOCATION_ID WHERE fsim.INSTRUCTIONAL_DAYS_PRIMARY >= 200 AND fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY >= 200 AND fsim.YEAR = (SELECT MAX(YEAR) FROM FACT_STUDENT_INSTRUCTION_METRICS) GROUP BY dla.GRAM_PANCHAYAT_NAME HAVING COUNT(fsim.SCHOOL_ID) > 1;",
+    "pair_id": "c70dbdaa",
+    "original_question_id": "60f5a99c",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "`dim_location_address`.`gram_panchayat_name` refers to Gram Panchayats; 'met at least 200 instructional days' means `fact_student_instruction_metrics`.`instructional_days_primary` >= 200 AND `instructional_days_upper_primary` >= 200; 'most recent year' refers to MAX(`fact_student_instruction_metrics`.`year`) which is 2018 per sample values; 'more than one school' requires COUNT(DISTINCT `fact_student_instruction_metrics`.`school_id`) > 1 per Gram Panchayat"
+  },
+  {
+    "question": "Which Gram Panchayats have schools that met the minimum requirement of 210 instructional days for both primary and upper primary levels in the most recent year?",
+    "sql": "SELECT dla.GRAM_PANCHAYAT_NAME, COUNT(fsim.SCHOOL_ID) FROM DIM_LOCATION_ADDRESS dla JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dla.LOCATION_ID = fsim.LOCATION_ID WHERE fsim.INSTRUCTIONAL_DAYS_PRIMARY >= 210 AND fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY >= 210 AND fsim.YEAR = (SELECT MAX(YEAR) FROM FACT_STUDENT_INSTRUCTION_METRICS) GROUP BY dla.GRAM_PANCHAYAT_NAME HAVING COUNT(fsim.SCHOOL_ID) > 0;",
+    "pair_id": "0de54596",
+    "original_question_id": "60f5a99c",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Minimum requirement of 210 instructional days for primary and upper primary refers to `fact_student_instruction_metrics`.`instructional_days_primary` >= 210 AND `fact_student_instruction_metrics`.`instructional_days_upper_primary` >= 210. Most recent year is MAX(`fact_student_instruction_metrics`.`year`) which is 2018. Gram Panchayat names are in `dim_location_address`.`gram_panchayat_name`; Join `fact_student_instruction_metrics` and `dim_location_address` on `location_id`."
+  },
+  {
+    "question": "Which Gram Panchayats have schools that met the minimum requirement of 212 instructional days for both primary and upper primary levels in the most recent year, and how many such schools are there in each?",
+    "sql": "SELECT dla.GRAM_PANCHAYAT_NAME, COUNT(fsim.SCHOOL_ID) FROM DIM_LOCATION_ADDRESS dla JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dla.LOCATION_ID = fsim.LOCATION_ID WHERE fsim.INSTRUCTIONAL_DAYS_PRIMARY >= 212 AND fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY >= 212 AND fsim.YEAR = (SELECT MAX(YEAR) FROM FACT_STUDENT_INSTRUCTION_METRICS) GROUP BY dla.GRAM_PANCHAYAT_NAME HAVING COUNT(fsim.SCHOOL_ID) > 0;",
+    "pair_id": "36327be0",
+    "original_question_id": "60f5a99c",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Gram Panchayats are in `dim_location_address`.`gram_panchayat_name`. Minimum requirement of 212 instructional days refers to `fact_student_instruction_metrics`.`instructional_days_primary` >= 212 AND `fact_student_instruction_metrics`.`instructional_days_upper_primary` >= 212. Most recent year is `fact_student_instruction_metrics`.`year` = 2018. Join `fact_student_instruction_metrics` with `dim_location_address` using `location_id`."
+  },
+  {
+    "question": "Which gram panchayats have schools that conducted at least 200 instructional days for both primary and upper primary levels in the most recent year?",
+    "sql": "WITH latest_year AS (SELECT MAX(year) AS max_year FROM fact_student_instruction_metrics), qualifying_schools AS (SELECT f.school_id FROM fact_student_instruction_metrics f JOIN latest_year ly ON f.year = ly.max_year WHERE f.instructional_days_primary >= 200 AND f.instructional_days_upper_primary >= 200 GROUP BY f.school_id HAVING COUNT(DISTINCT f.academic_structure_id) >= 1) SELECT DISTINCT la.gram_panchayat_name FROM dim_location_address la JOIN dim_school_identity si ON la.location_id = si.school_id JOIN qualifying_schools qs ON si.school_id = qs.school_id WHERE la.gram_panchayat_name IS NOT NULL ORDER BY la.gram_panchayat_name;",
+    "pair_id": "e9123ed3",
+    "original_question_id": "60f5a99c",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "`fact_student_instruction_metrics`.`instructional_days_primary` >= 200 and `fact_student_instruction_metrics`.`instructional_days_upper_primary` >= 200; Most recent year = MAX(`fact_student_instruction_metrics`.`year`) which is 2018; Gram panchayat names are in `dim_location_address`.`gram_panchayat_name` linked via `location_id`"
+  },
+  {
+    "question": "Which gram panchayats have schools that provided at least 210 instructional days for both primary and upper primary levels in the most recent year?",
+    "sql": "WITH latest_year AS (SELECT MAX(year) AS max_year FROM fact_student_instruction_metrics), qualifying_schools AS (SELECT f.school_id FROM fact_student_instruction_metrics f JOIN latest_year ly ON f.year = ly.max_year WHERE f.instructional_days_primary >= 210 AND f.instructional_days_upper_primary >= 210 GROUP BY f.school_id HAVING COUNT(DISTINCT f.academic_structure_id) >= 1) SELECT DISTINCT la.gram_panchayat_name FROM dim_location_address la JOIN dim_school_identity si ON la.location_id = si.school_id JOIN qualifying_schools qs ON si.school_id = qs.school_id WHERE la.gram_panchayat_name IS NOT NULL ORDER BY la.gram_panchayat_name;",
+    "pair_id": "9fb40f49",
+    "original_question_id": "60f5a99c",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "The most recent year in `fact_student_instruction_metrics`.`year` is 2018. 'At least 210 instructional days' requires filtering both `fact_student_instruction_metrics`.`instructional_days_primary` >= 210 AND `fact_student_instruction_metrics`.`instructional_days_upper_primary` >= 210. Gram panchayat names are stored in `dim_location_address`.`gram_panchayat_name`."
+  },
+  {
+    "question": "Which gram panchayats have schools that conducted at least 212 instructional days for both primary and upper primary levels in the most recent year?",
+    "sql": "WITH latest_year AS (SELECT MAX(year) AS max_year FROM fact_student_instruction_metrics), qualifying_schools AS (SELECT f.school_id FROM fact_student_instruction_metrics f JOIN latest_year ly ON f.year = ly.max_year WHERE f.instructional_days_primary >= 212 AND f.instructional_days_upper_primary >= 212 GROUP BY f.school_id HAVING COUNT(DISTINCT f.academic_structure_id) >= 1) SELECT DISTINCT la.gram_panchayat_name FROM dim_location_address la JOIN dim_school_identity si ON la.location_id = si.school_id JOIN qualifying_schools qs ON si.school_id = qs.school_id WHERE la.gram_panchayat_name IS NOT NULL ORDER BY la.gram_panchayat_name;",
+    "pair_id": "f57ee7e5",
+    "original_question_id": "60f5a99c",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "The most recent year in `fact_student_instruction_metrics`.`year` is 2018; 'conducted at least 212 instructional days for both primary and upper primary' translates to `fact_student_instruction_metrics`.`instructional_days_primary` >= 212 AND `fact_student_instruction_metrics`.`instructional_days_upper_primary` >= 212; gram panchayats are listed in `dim_location_address`.`gram_panchayat_name`; JOIN between `fact_student_instruction_metrics` and `dim_location_address` via `location_id`"
+  },
+  {
+    "question": "Which rural schools in India have fewer than 180 instructional days for either primary or upper primary grades?",
+    "sql": "SELECT DISTINCT f.LOCATION_ID FROM FACT_STUDENT_INSTRUCTION_METRICS f JOIN DIM_LOCATION_ADDRESS d ON f.LOCATION_ID = d.LOCATION_ID WHERE (d.SCHOOL_LOCATION = '1 - Rural' AND f.INSTRUCTIONAL_DAYS_PRIMARY < 180) OR (d.SCHOOL_LOCATION = '1 - Rural' AND f.INSTRUCTIONAL_DAYS_UPPER_PRIMARY < 180);",
+    "pair_id": "aba59726",
+    "original_question_id": "974a9b33",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Rural schools refer to `dim_location_address`.`school_location` = '1 - Rural'; fewer than 180 instructional days means `fact_student_instruction_metrics`.`instructional_days_primary` < 180 OR `fact_student_instruction_metrics`.`instructional_days_upper_primary` < 180; Country is India."
+  },
+  {
+    "question": "Which school locations in Port Blair have fewer than 180 instructional days at the primary level, or are in locations marked as 'Not Available' with fewer than 180 instructional days at the upper primary level?",
+    "sql": "SELECT DISTINCT f.LOCATION_ID FROM FACT_STUDENT_INSTRUCTION_METRICS f JOIN DIM_LOCATION_ADDRESS d ON f.LOCATION_ID = d.LOCATION_ID WHERE (d.CITY_NAME = 'Port Blair' AND f.INSTRUCTIONAL_DAYS_PRIMARY < 180) OR (d.CITY_NAME = 'Not Available' AND f.INSTRUCTIONAL_DAYS_UPPER_PRIMARY < 180);",
+    "pair_id": "274d6a08",
+    "original_question_id": "974a9b33",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Port Blair refers to `dim_location_address`.`city_name` = 'Port Blair'; fewer than 180 instructional days at primary level refers to `fact_student_instruction_metrics`.`instructional_days_primary` < 180; 'Not Available' locations refer to `dim_political_geography`.`parliamentary_constituency_name` = 'Not Available'; fewer than 180 upper primary days refers to `fact_student_instruction_metrics`.`instructional_days_upper_primary` < 180; require joining `fact_student_instruction_metrics` with `dim_location_address` and `dim_political_geography`"
+  },
+  {
+    "question": "Which school locations either have fewer than 180 instructional days at the primary level in rural areas, or have fewer than 180 instructional days at the upper primary level in Port Blair?",
+    "sql": "SELECT DISTINCT f.LOCATION_ID FROM FACT_STUDENT_INSTRUCTION_METRICS f JOIN DIM_LOCATION_ADDRESS d ON f.LOCATION_ID = d.LOCATION_ID WHERE (d.SCHOOL_LOCATION = '1 - Rural' AND f.INSTRUCTIONAL_DAYS_PRIMARY < 180) OR (d.CITY_NAME = 'Port Blair' AND f.INSTRUCTIONAL_DAYS_UPPER_PRIMARY < 180);",
+    "pair_id": "e4a427f3",
+    "original_question_id": "974a9b33",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Primary level instructional days are in `fact_student_instruction_metrics`.`instructional_days_primary`; Upper primary in `fact_student_instruction_metrics`.`instructional_days_upper_primary`. Rural areas = `dim_location_address`.`school_location` = '1 - Rural'. Port Blair refers to `dim_location_address`.`city_name` = 'Port Blair' (exact case). Combine conditions: (primary_days <180 AND rural_location) OR (upper_primary_days <180 AND city_name)."
+  },
+  {
+    "question": "Which rural schools have fewer than 180 instructional days in either their primary or upper primary classes?",
+    "sql": "SELECT DISTINCT f.LOCATION_ID FROM FACT_STUDENT_INSTRUCTION_METRICS f JOIN DIM_LOCATION_ADDRESS d ON f.LOCATION_ID = d.LOCATION_ID WHERE (d.SCHOOL_LOCATION = '1 - Rural' AND f.INSTRUCTIONAL_DAYS_PRIMARY < 180) OR (d.SCHOOL_LOCATION = '1 - Rural' AND f.INSTRUCTIONAL_DAYS_UPPER_PRIMARY < 180);",
+    "pair_id": "7e820199",
+    "original_question_id": "974a9b33",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Rural schools are identified by `dim_location_address`.`school_location` = '1 - Rural'; instructional days are in `fact_student_instruction_metrics`.`instructional_days_primary` and `fact_student_instruction_metrics`.`instructional_days_upper_primary`; fewer than 180 means < 180."
+  },
+  {
+    "question": "Which school locations in Port Blair have fewer than 180 instructional days at the primary level, or are in locations marked as 'Not Available' with fewer than 180 instructional days at the upper primary level?",
+    "sql": "SELECT DISTINCT f.LOCATION_ID FROM FACT_STUDENT_INSTRUCTION_METRICS f JOIN DIM_LOCATION_ADDRESS d ON f.LOCATION_ID = d.LOCATION_ID WHERE (d.CITY_NAME = 'Port Blair' AND f.INSTRUCTIONAL_DAYS_PRIMARY < 180) OR (d.CITY_NAME = 'Not Available' AND f.INSTRUCTIONAL_DAYS_UPPER_PRIMARY < 180);",
+    "pair_id": "a9e858d2",
+    "original_question_id": "974a9b33",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Port Blair refers to `dim_location_address`.`city_name` = 'Port Blair'; fewer than 180 instructional days at primary level refers to `fact_student_instruction_metrics`.`instructional_days_primary` < 180; 'Not Available' refers to `dim_political_geography`.`parliamentary_constituency_name` = 'Not Available'; fewer than 180 instructional days at upper primary level refers to `fact_student_instruction_metrics`.`instructional_days_upper_primary` < 180"
+  },
+  {
+    "question": "Which schools either have fewer than 180 instructional days at the primary level in rural areas, or fewer than 180 instructional days at the upper primary level in Port Blair?",
+    "sql": "SELECT DISTINCT f.LOCATION_ID FROM FACT_STUDENT_INSTRUCTION_METRICS f JOIN DIM_LOCATION_ADDRESS d ON f.LOCATION_ID = d.LOCATION_ID WHERE (d.SCHOOL_LOCATION = '1 - Rural' AND f.INSTRUCTIONAL_DAYS_PRIMARY < 180) OR (d.CITY_NAME = 'Port Blair' AND f.INSTRUCTIONAL_DAYS_UPPER_PRIMARY < 180);",
+    "pair_id": "4560ece5",
+    "original_question_id": "974a9b33",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Instructional days at primary level = `fact_student_instruction_metrics`.`instructional_days_primary`; rural areas = `dim_location_address`.`school_location` = '1 - Rural'; Port Blair = `dim_location_address`.`city_name` = 'Port Blair'; upper primary level instructional days = `fact_student_instruction_metrics`.`instructional_days_upper_primary` must be < 180"
+  },
+  {
+    "question": "For each rural school location, how many instruction metric records have fewer than 180 instructional days in either primary or upper primary grades?",
+    "sql": "SELECT dla.LOCATION_ID, COUNT(fsim.METRIC_ID) FROM DIM_LOCATION_ADDRESS dla JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dla.LOCATION_ID = fsim.LOCATION_ID WHERE dla.SCHOOL_LOCATION = '1 - Rural' AND (fsim.INSTRUCTIONAL_DAYS_PRIMARY < 180 OR fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY < 180) GROUP BY dla.LOCATION_ID ORDER BY dla.LOCATION_ID;",
+    "pair_id": "83d8b1ac",
+    "original_question_id": "974a9b33",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Rural school location is `dim_location_address`.`school_location` = '1 - Rural'; Instructional days are in `fact_student_instruction_metrics`.`instructional_days_primary` and `fact_student_instruction_metrics`.`instructional_days_upper_primary`; 'fewer than 180 days' means either column < 180."
+  },
+  {
+    "question": "For each school location where the city name is not available, how many instructional metric records have fewer than 180 instructional days in either primary or upper primary levels?",
+    "sql": "SELECT dla.LOCATION_ID, COUNT(fsim.METRIC_ID) FROM DIM_LOCATION_ADDRESS dla JOIN FACT_STUDENT_INSTRUCTION_METRICS fsim ON dla.LOCATION_ID = fsim.LOCATION_ID WHERE dla.CITY_NAME = 'Not Available' AND (fsim.INSTRUCTIONAL_DAYS_PRIMARY < 180 OR fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY < 180) GROUP BY dla.LOCATION_ID ORDER BY dla.LOCATION_ID;",
+    "pair_id": "c31bc5f8",
+    "original_question_id": "974a9b33",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "city name is not available refers to `dim_location_address`.`city_name` = 'Not Available'; fewer than 180 instructional days in either primary or upper primary levels means `fact_student_instruction_metrics`.`instructional_days_primary` < 180 OR `fact_student_instruction_metrics`.`instructional_days_upper_primary` < 180; school location is `dim_location_address`.`school_location` (values: 1 - Rural, 2 - Urban)"
+  },
+  {
+    "question": "Which school locations have rural schools with fewer than 180 primary instructional days, or schools in Port Blair with fewer than 180 upper primary instructional days?",
+    "sql": "WITH filtered_metrics AS (\n    SELECT\n        fsim.LOCATION_ID,\n        dla.SCHOOL_LOCATION,\n        fsim.INSTRUCTIONAL_DAYS_PRIMARY,\n        fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY\n    FROM FACT_STUDENT_INSTRUCTION_METRICS fsim\n    JOIN DIM_LOCATION_ADDRESS dla\n        ON fsim.LOCATION_ID = dla.LOCATION_ID\n    JOIN DIM_SCHOOL_IDENTITY dsi\n        ON fsim.SCHOOL_ID = dsi.SCHOOL_ID\n    WHERE (\n        dla.SCHOOL_LOCATION = '1 - Rural'\n        AND fsim.INSTRUCTIONAL_DAYS_PRIMARY < 180\n    )\n    OR (\n        dla.CITY_NAME = 'Port Blair'\n        AND fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY < 180\n    )\n)\nSELECT DISTINCT LOCATION_ID\nFROM filtered_metrics\nGROUP BY LOCATION_ID\nHAVING COUNT(*) >= 1\nORDER BY LOCATION_ID;",
+    "pair_id": "956f987a",
+    "original_question_id": "974a9b33",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "rural schools refers to `dim_location_address`.`school_location` = '1 - Rural'; Port Blair is a `dim_location_address`.`city_name`; fewer than 180 primary instructional days refers to `fact_student_instruction_metrics`.`instructional_days_primary` < 180; fewer than 180 upper primary instructional days refers to `fact_student_instruction_metrics`.`instructional_days_upper_primary` < 180"
+  },
+  {
+    "question": "Which school locations appear at least twice where either the school is in a rural area with fewer than 180 primary instructional days, or the municipality is listed as 'Not Available' with fewer than 180 upper primary instructional days?",
+    "sql": "WITH filtered_metrics AS (\n    SELECT\n        fsim.LOCATION_ID,\n        dla.SCHOOL_LOCATION,\n        fsim.INSTRUCTIONAL_DAYS_PRIMARY,\n        fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY\n    FROM FACT_STUDENT_INSTRUCTION_METRICS fsim\n    JOIN DIM_LOCATION_ADDRESS dla\n        ON fsim.LOCATION_ID = dla.LOCATION_ID\n    JOIN DIM_SCHOOL_IDENTITY dsi\n        ON fsim.SCHOOL_ID = dsi.SCHOOL_ID\n    WHERE (\n        dla.SCHOOL_LOCATION = '1 - Rural'\n        AND fsim.INSTRUCTIONAL_DAYS_PRIMARY < 180\n    )\n    OR (\n        dla.MUNICIPALITY_NAME = 'Not Available'\n        AND fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY < 180\n    )\n)\nSELECT DISTINCT LOCATION_ID\nFROM filtered_metrics\nGROUP BY LOCATION_ID\nHAVING COUNT(*) >= 2\nORDER BY LOCATION_ID;",
+    "pair_id": "5174e4c8",
+    "original_question_id": "974a9b33",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "school_location appears in `dim_location_address`.`school_location`; rural area = '1 - Rural'; municipality = 'Not Available' must match exact case; fewer than 180 primary instructional days = `fact_student_instruction_metrics`.`instructional_days_primary` < 180; upper primary days < 180 refers to `fact_student_instruction_metrics`.`instructional_days_upper_primary` < 180; locations must have COUNT(*) >= 2 under either condition"
+  },
+  {
+    "question": "Which school locations have rural schools with fewer than 180 primary instructional days, or schools in areas where the city name is not available with fewer than 180 upper primary instructional days?",
+    "sql": "WITH filtered_metrics AS (\n    SELECT\n        fsim.LOCATION_ID,\n        dla.SCHOOL_LOCATION,\n        fsim.INSTRUCTIONAL_DAYS_PRIMARY,\n        fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY\n    FROM FACT_STUDENT_INSTRUCTION_METRICS fsim\n    JOIN DIM_LOCATION_ADDRESS dla\n        ON fsim.LOCATION_ID = dla.LOCATION_ID\n    JOIN DIM_SCHOOL_IDENTITY dsi\n        ON fsim.SCHOOL_ID = dsi.SCHOOL_ID\n    WHERE (\n        dla.SCHOOL_LOCATION = '1 - Rural'\n        AND fsim.INSTRUCTIONAL_DAYS_PRIMARY < 180\n    )\n    OR (\n        dla.CITY_NAME = 'Not Available'\n        AND fsim.INSTRUCTIONAL_DAYS_UPPER_PRIMARY < 180\n    )\n)\nSELECT DISTINCT LOCATION_ID\nFROM filtered_metrics\nGROUP BY LOCATION_ID\nHAVING COUNT(*) >= 1\nORDER BY LOCATION_ID;",
+    "pair_id": "b90f9ea3",
+    "original_question_id": "974a9b33",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "FACT_STUDENT_INSTRUCTION_METRICS"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Rural schools refer to `dim_location_address`.`school_location` = '1 - Rural'; city name not available refers to `dim_location_address`.`city_name` IS NULL; primary instructional days are in `fact_student_instruction_metrics`.`instructional_days_primary`; upper primary instructional days are in `fact_student_instruction_metrics`.`instructional_days_upper_primary`. Combine (rural AND <180 primary) OR (city unavailable AND <180 upper primary)"
+  },
+  {
+    "question": "Which schools in India are residential and also provide special needs facilities for children?",
+    "sql": "SELECT OPERATIONS_ID, RESIDENTIAL_OR_NON_RESIDENTIAL, AVAILABILITY_OF_SPECIAL_NEEDS_FOR_CHILDREN FROM DIM_SCHOOL_OPERATIONS WHERE RESIDENTIAL_OR_NON_RESIDENTIAL = '1 - Yes' AND AVAILABILITY_OF_SPECIAL_NEEDS_FOR_CHILDREN = '1 - Yes';",
+    "pair_id": "160f61da",
+    "original_question_id": "d73e6f6c",
+    "schema_used": [
+      "DIM_POLITICAL_GEOGRAPHY",
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "residential refers to `dim_school_operations`.`residential_or_non_residential` = '1 - Yes'; special needs facilities for children refers to `dim_school_operations`.`availability_of_special_needs_for_children` = '1 - Yes'; schools in India refers to `dim_political_geography`.`country` = 'India'"
+  },
+  {
+    "question": "Which residential schools in India have special needs facilities available for children? Please provide their operations ID, residential school type, and special needs availability status.",
+    "sql": "SELECT OPERATIONS_ID, RESIDENTIAL_SCHOOL_TYPE, AVAILABILITY_OF_SPECIAL_NEEDS_FOR_CHILDREN FROM DIM_SCHOOL_OPERATIONS WHERE RESIDENTIAL_OR_NON_RESIDENTIAL = '1 - Yes' AND AVAILABILITY_OF_SPECIAL_NEEDS_FOR_CHILDREN = '1 - Yes';",
+    "pair_id": "c7dd13ac",
+    "original_question_id": "d73e6f6c",
+    "schema_used": [
+      "DIM_POLITICAL_GEOGRAPHY",
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Residential schools are indicated by `dim_school_operations`.`residential_or_non_residential` = '1 - Yes'. Schools with special needs for children are identified via `dim_school_operations`.`availability_of_special_needs_for_children` = '1 - Yes'. The country is always 'India' (`dim_political_geography`.`country` = 'India'), as per schema constraints."
+  },
+  {
+    "question": "Which residential schools in India have special needs facilities available for children, and what type of residential school are they?",
+    "sql": "SELECT RESIDENTIAL_SCHOOL_TYPE, RESIDENTIAL_OR_NON_RESIDENTIAL, AVAILABILITY_OF_SPECIAL_NEEDS_FOR_CHILDREN FROM DIM_SCHOOL_OPERATIONS WHERE AVAILABILITY_OF_SPECIAL_NEEDS_FOR_CHILDREN = '1 - Yes' AND RESIDENTIAL_OR_NON_RESIDENTIAL = '1 - Yes';",
+    "pair_id": "b99ec6ec",
+    "original_question_id": "d73e6f6c",
+    "schema_used": [
+      "DIM_POLITICAL_GEOGRAPHY",
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "db_id": "india_udise_school_profiles",
+    "evidence": "Residential schools refer to `dim_school_operations`.`residential_or_non_residential` = '1 - Yes'; Special needs availability = `dim_school_operations`.`availability_of_special_needs_for_children` = '1 - Yes'; Residential school type = `dim_school_operations`.`residential_school_type`; Country filter = `dim_political_geography`.`country` = 'India'"
+  },
+  {
+    "question": "List the unique school ID, the school category, and the school type for schools that are not managed by a minority community, ordered by their establishment year.",
+    "sql": "SELECT UNIQUE_SCHOOL_ID, SCHOOL_CATEGORY, SCHOOL_TYPE FROM DIM_SCHOOL_IDENTITY WHERE MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' ORDER BY ESTABLISHMENT_YEAR",
+    "pair_id": "0f5c093a",
+    "original_question_id": "64effb8b",
+    "schema_used": [
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS",
+      "DIM_ACADEMIC_STRUCTURE"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Schools not managed by a minority community are indicated by `dim_school_identity`.`management_by_minority_community` = '2 - No'. Required columns: `dim_school_identity`.`unique_school_id`, `dim_school_identity`.`school_category`, `dim_school_identity`.`school_type`, ordered by `dim_school_identity`.`establishment_year`."
+  },
+  {
+    "question": "List the school ID, school category, and school type for schools that are not managed by a minority community, ordered by their establishment year.",
+    "sql": "SELECT SCHOOL_ID, SCHOOL_CATEGORY, SCHOOL_TYPE FROM DIM_SCHOOL_IDENTITY WHERE MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' ORDER BY ESTABLISHMENT_YEAR",
+    "pair_id": "b2a1ac02",
+    "original_question_id": "64effb8b",
+    "schema_used": [
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS",
+      "DIM_ACADEMIC_STRUCTURE"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_school_identity`.`management_by_minority_community` = '2 - No' indicates schools not managed by minority community; Order by `dim_school_identity`.`establishment_year`"
+  },
+  {
+    "question": "List the unique school ID, the school type, and the establishment year for schools that are not managed by a minority community, ordered by their establishment year.",
+    "sql": "SELECT UNIQUE_SCHOOL_ID, SCHOOL_TYPE, ESTABLISHMENT_YEAR FROM DIM_SCHOOL_IDENTITY WHERE MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' ORDER BY ESTABLISHMENT_YEAR",
+    "pair_id": "dbaccead",
+    "original_question_id": "64effb8b",
+    "schema_used": [
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS",
+      "DIM_ACADEMIC_STRUCTURE"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Schools not managed by a minority community refers to `dim_school_identity`.`management_by_minority_community` = '2 - No'; unique_school_id, school_type, establishment_year are all columns from `dim_school_identity`; ordering by `dim_school_identity`.`establishment_year` ASC by default"
+  },
+  {
+    "question": "List the unique school ID, the school category, and the school type for schools that are not managed by a minority community, ordered by their establishment year from oldest to newest.",
+    "sql": "SELECT UNIQUE_SCHOOL_ID, SCHOOL_CATEGORY, SCHOOL_TYPE FROM DIM_SCHOOL_IDENTITY WHERE MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' ORDER BY ESTABLISHMENT_YEAR ASC;",
+    "pair_id": "15b0a7c7",
+    "original_question_id": "64effb8b",
+    "schema_used": [
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS",
+      "DIM_ACADEMIC_STRUCTURE"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "not managed by a minority community refers to `dim_school_identity`.`management_by_minority_community` = '2 - No'; ordered by establishment year from oldest to newest means ORDER BY `dim_school_identity`.`establishment_year` ASC"
+  },
+  {
+    "question": "List the school ID, the school category, and the school type for all schools that are not managed by a minority community, ordered by their establishment year from most recent to oldest.",
+    "sql": "SELECT SCHOOL_ID, SCHOOL_CATEGORY, SCHOOL_TYPE FROM DIM_SCHOOL_IDENTITY WHERE MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' ORDER BY ESTABLISHMENT_YEAR DESC;",
+    "pair_id": "b856460e",
+    "original_question_id": "64effb8b",
+    "schema_used": [
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS",
+      "DIM_ACADEMIC_STRUCTURE"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "management_by_minority_community = '2 - No' indicates schools not managed by a minority community; school_category represents categories like 'Secondary Only'; school_type values are 'Boys', 'Girls', or 'Co-educational'; establishment_year values are numeric years like 1941"
+  },
+  {
+    "question": "List the unique school ID, the school category, and the school type for schools that are not managed by a minority community and are co-educational, ordered by their establishment year.",
+    "sql": "SELECT UNIQUE_SCHOOL_ID, SCHOOL_CATEGORY, SCHOOL_TYPE FROM DIM_SCHOOL_IDENTITY WHERE MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' AND SCHOOL_TYPE = '3 - Co-educational' ORDER BY ESTABLISHMENT_YEAR;",
+    "pair_id": "2912f068",
+    "original_question_id": "64effb8b",
+    "schema_used": [
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS",
+      "DIM_ACADEMIC_STRUCTURE"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Schools not managed by a minority community means `dim_school_identity`.`management_by_minority_community` = '2 - No'; co-educational refers to `dim_school_identity`.`school_type` = '3 - Co-educational'; required columns are `dim_school_identity`.`unique_school_id`, `dim_school_identity`.`school_category`, and `dim_school_identity`.`school_type`."
+  },
+  {
+    "question": "List the unique school ID, the school category, and the school type for all schools not managed by a minority community, grouped by their unique school ID, category, type, and establishment year, ensuring at least one record exists for each and ordered chronologically by the year of establishment.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID, T1.SCHOOL_CATEGORY, T1.SCHOOL_TYPE FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_SCHOOL_OPERATIONS AS T2 ON T1.SCHOOL_ID = T2.OPERATIONS_ID JOIN DIM_ACADEMIC_STRUCTURE AS T3 ON T1.SCHOOL_ID = T3.ACADEMIC_STRUCTURE_ID WHERE T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' GROUP BY T1.UNIQUE_SCHOOL_ID, T1.SCHOOL_CATEGORY, T1.SCHOOL_TYPE, T1.ESTABLISHMENT_YEAR HAVING COUNT(T1.SCHOOL_ID) >= 1 ORDER BY T1.ESTABLISHMENT_YEAR ASC",
+    "pair_id": "bc2e4f4e",
+    "original_question_id": "64effb8b",
+    "schema_used": [
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS",
+      "DIM_ACADEMIC_STRUCTURE"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Schools not managed by a minority community are indicated by `dim_school_identity`.`management_by_minority_community` = '2 - No'. Values in `dim_school_identity`.`school_category` and `dim_school_identity`.`school_type` contain codes with descriptions (e.g., '3 - Co-educational'). Grouping by `dim_school_identity`.`unique_school_id`, category, type, and `dim_school_identity`.`establishment_year` ensures unique combinations. Ordered by `dim_school_identity`.`establishment_year` (integer) chronologically."
+  },
+  {
+    "question": "List the unique school ID, the school category, and the school type for schools that are not managed by a minority community, grouped by their unique school ID, category, type, and establishment year, and ordered chronologically by the year they were established.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID, T1.SCHOOL_CATEGORY, T1.SCHOOL_TYPE FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_SCHOOL_OPERATIONS AS T2 ON T1.SCHOOL_ID = T2.OPERATIONS_ID JOIN DIM_ACADEMIC_STRUCTURE AS T3 ON T1.SCHOOL_ID = T3.ACADEMIC_STRUCTURE_ID WHERE T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' GROUP BY T1.UNIQUE_SCHOOL_ID, T1.SCHOOL_CATEGORY, T1.SCHOOL_TYPE, T1.ESTABLISHMENT_YEAR HAVING COUNT(T1.SCHOOL_ID) >= 0 ORDER BY T1.ESTABLISHMENT_YEAR ASC",
+    "pair_id": "a836a5d7",
+    "original_question_id": "64effb8b",
+    "schema_used": [
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS",
+      "DIM_ACADEMIC_STRUCTURE"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Not managed by a minority community corresponds to `dim_school_identity`.`management_by_minority_community` = '2 - No'"
+  },
+  {
+    "question": "Provide the unique school IDs for schools that are not managed by a minority community, are residential, and are approachable by all-weather roads.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_SCHOOL_OPERATIONS AS T2 ON T1.SCHOOL_ID = T2.OPERATIONS_ID WHERE T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' AND T2.RESIDENTIAL_OR_NON_RESIDENTIAL = '1 - Yes' AND T2.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes'",
+    "pair_id": "87535a8f",
+    "original_question_id": "d90aefb9",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Not managed by a minority community refers to `dim_school_identity`.`management_by_minority_community` = '2 - No'; Are residential refers to `dim_school_operations`.`residential_or_non_residential` = '1 - Yes'; Approachable by all-weather roads refers to `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes'"
+  },
+  {
+    "question": "List the school IDs for schools that are not managed by a minority community, are classified as residential, and are approachable by all-weather roads.",
+    "sql": "SELECT T1.SCHOOL_ID FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_SCHOOL_OPERATIONS AS T2 ON T1.SCHOOL_ID = T2.OPERATIONS_ID WHERE T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' AND T2.RESIDENTIAL_OR_NON_RESIDENTIAL = '1 - Yes' AND T2.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes'",
+    "pair_id": "2c03d2f7",
+    "original_question_id": "d90aefb9",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Not managed by a minority community refers to `dim_school_identity`.`management_by_minority_community` = '2 - No'; classified as residential refers to `dim_school_operations`.`residential_or_non_residential` = '1 - Yes'; approachable by all-weather roads refers to `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes'"
+  },
+  {
+    "question": "List the unique school IDs for schools that are not managed by a minority community, are classified as non-ashram government residential school types, and are approachable by all-weather roads.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_SCHOOL_OPERATIONS AS T2 ON T1.SCHOOL_ID = T2.OPERATIONS_ID WHERE T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' AND T2.RESIDENTIAL_SCHOOL_TYPE = '2 - Non-ashram (Govt.)' AND T2.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes'",
+    "pair_id": "53f3d3bb",
+    "original_question_id": "d90aefb9",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "dim_school_identity.management_by_minority_community = '2 - No' means not managed by minority community; dim_school_operations.residential_school_type = '2 - Non-ashram (Govt.)' and dim_school_operations.residential_or_non_residential = '1 - Yes' define non-ashram government residential school type; dim_school_operations.approachability_by_all_weather_roads = '1 - Yes' indicates approachable by all-weather roads"
+  },
+  {
+    "question": "What is the unique school ID for schools that are not managed by a minority community, are residential, and are approachable by all-weather roads?",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_SCHOOL_OPERATIONS AS T2 ON T1.SCHOOL_ID = T2.OPERATIONS_ID WHERE T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' AND T2.RESIDENTIAL_OR_NON_RESIDENTIAL = '1 - Yes' AND T2.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes';",
+    "pair_id": "7be646b1",
+    "original_question_id": "d90aefb9",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_school_identity`.`management_by_minority_community` = '2 - No' indicates not managed by minority community; `dim_school_operations`.`residential_or_non_residential` = '1 - Yes' indicates residential schools; `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes' indicates accessible by all-weather roads. Join `dim_school_identity` and `dim_school_operations` via primary keys (school_id=operations_id) to get unique_school_id."
+  },
+  {
+    "question": "List the school category for schools that are not managed by a minority community, are residential, and are approachable by all-weather roads.",
+    "sql": "SELECT T1.SCHOOL_CATEGORY FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_SCHOOL_OPERATIONS AS T2 ON T1.SCHOOL_ID = T2.OPERATIONS_ID WHERE T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' AND T2.RESIDENTIAL_OR_NON_RESIDENTIAL = '1 - Yes' AND T2.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes';",
+    "pair_id": "7179121b",
+    "original_question_id": "d90aefb9",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_school_identity.management_by_minority_community` = '2 - No' indicates not managed by minority community; `dim_school_operations.residential_or_non_residential` = '1 - Yes' means residential; `dim_school_operations.approachability_by_all_weather_roads` = '1 - Yes' for approachable roads; school category is from `dim_school_identity.school_category`"
+  },
+  {
+    "question": "List the management type of the schools that are not managed by a minority community, are residential, and are approachable by all-weather roads.",
+    "sql": "SELECT T1.MANAGEMENT_OF_THE_SCHOOL FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_SCHOOL_OPERATIONS AS T2 ON T1.SCHOOL_ID = T2.OPERATIONS_ID WHERE T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' AND T2.RESIDENTIAL_OR_NON_RESIDENTIAL = '1 - Yes' AND T2.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes';",
+    "pair_id": "fdf62e15",
+    "original_question_id": "d90aefb9",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "not managed by minority community refers to `dim_school_identity`.`management_by_minority_community` = '2 - No'; residential schools have `dim_school_operations`.`residential_or_non_residential` = '1 - Yes'; approachable by all-weather roads means `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes'; management type is `dim_school_identity`.`management_of_the_school`"
+  },
+  {
+    "question": "List the unique school IDs for schools that are not managed by a minority community, are residential, and are approachable by all-weather roads, ensuring each unique school ID is shown at least once and ordered ascendingly by the ID.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_LOCATION_ADDRESS AS T2 ON T1.SCHOOL_ID = T2.LOCATION_ID JOIN DIM_SCHOOL_OPERATIONS AS T3 ON T1.SCHOOL_ID = T3.OPERATIONS_ID WHERE T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' AND T3.RESIDENTIAL_OR_NON_RESIDENTIAL = '1 - Yes' AND T3.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes' GROUP BY T1.UNIQUE_SCHOOL_ID HAVING COUNT(T1.UNIQUE_SCHOOL_ID) >= 1 ORDER BY T1.UNIQUE_SCHOOL_ID ASC",
+    "pair_id": "56f56761",
+    "original_question_id": "d90aefb9",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "`dim_school_identity`.`management_by_minority_community` = '2 - No'; `dim_school_operations`.`residential_or_non_residential` = '1 - Yes'; `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes'; JOIN tables via school_id and operations_id."
+  },
+  {
+    "question": "List the management types of the schools that are not managed by a minority community, are residential, and are approachable by all-weather roads, grouped by the management of the school and ordered alphabetically.",
+    "sql": "SELECT T1.MANAGEMENT_OF_THE_SCHOOL FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_LOCATION_ADDRESS AS T2 ON T1.SCHOOL_ID = T2.LOCATION_ID JOIN DIM_SCHOOL_OPERATIONS AS T3 ON T1.SCHOOL_ID = T3.OPERATIONS_ID WHERE T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' AND T3.RESIDENTIAL_OR_NON_RESIDENTIAL = '1 - Yes' AND T3.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes' GROUP BY T1.MANAGEMENT_OF_THE_SCHOOL HAVING COUNT(T1.MANAGEMENT_OF_THE_SCHOOL) >= 1 ORDER BY T1.MANAGEMENT_OF_THE_SCHOOL ASC",
+    "pair_id": "a4802cda",
+    "original_question_id": "d90aefb9",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "`dim_school_identity`.`management_by_minority_community` = '2 - No'; `dim_school_operations`.`residential_or_non_residential` = '1 - Yes'; `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes'; Group by `dim_school_identity`.`management_of_the_school`; Order alphabetically"
+  },
+  {
+    "question": "List the school categories for schools that are not managed by a minority community, are residential, and are approachable by all-weather roads, ensuring each category is shown only if it has at least one record, and sort the results alphabetically by school category.",
+    "sql": "SELECT T1.SCHOOL_CATEGORY FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_LOCATION_ADDRESS AS T2 ON T1.SCHOOL_ID = T2.LOCATION_ID JOIN DIM_SCHOOL_OPERATIONS AS T3 ON T1.SCHOOL_ID = T3.OPERATIONS_ID WHERE T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' AND T3.RESIDENTIAL_OR_NON_RESIDENTIAL = '1 - Yes' AND T3.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes' GROUP BY T1.SCHOOL_CATEGORY HAVING COUNT(T1.SCHOOL_CATEGORY) >= 1 ORDER BY T1.SCHOOL_CATEGORY ASC",
+    "pair_id": "b65c7ee2",
+    "original_question_id": "d90aefb9",
+    "schema_used": [
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "management_by_minority_community = '2 - No' (`dim_school_identity`.`management_by_minority_community`); residential means `dim_school_operations`.`residential_or_non_residential` = '1 - Yes'; approachability by all-weather roads means `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes'; school categories are stored in `dim_school_identity`.`school_category`; Use DISTINCT to ensure each category appears once; ORDER BY `dim_school_identity`.`school_category` alphabetically"
+  },
+  {
+    "question": "For schools that are approachable by all-weather roads, list each management type of the school along with the average number of working hours for primary teachers, grouped by the management type.",
+    "sql": "SELECT T1.MANAGEMENT_OF_THE_SCHOOL, AVG(T2.AVG_WORKING_HOURS_TEACHERS_PRIMARY) FROM DIM_SCHOOL_IDENTITY AS T1 JOIN FACT_TEACHER_OPERATIONAL_METRICS AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_SCHOOL_OPERATIONS AS T3 ON T1.SCHOOL_ID = T3.OPERATIONS_ID WHERE T3.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes' GROUP BY T1.MANAGEMENT_OF_THE_SCHOOL",
+    "pair_id": "d4993332",
+    "original_question_id": "a7c6e90b",
+    "schema_used": [
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS",
+      "FACT_TEACHER_OPERATIONAL_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Schools approachable by all-weather roads: `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes'. Management type is `dim_school_identity`.`management_of_the_school`. Average primary teacher hours: `fact_teacher_operational_metrics`.`avg_working_hours_teachers_primary`. Join `dim_school_identity` with `fact_teacher_operational_metrics` on `school_id` and `dim_school_operations` via shared identifier (e.g., operations_id = school_id if schema permits)."
+  },
+  {
+    "question": "For schools that are approachable by all-weather roads, list each school category along with the average working hours for primary teachers, grouped by the school category.",
+    "sql": "SELECT T1.SCHOOL_CATEGORY, AVG(T2.AVG_WORKING_HOURS_TEACHERS_PRIMARY) FROM DIM_SCHOOL_IDENTITY AS T1 JOIN FACT_TEACHER_OPERATIONAL_METRICS AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_SCHOOL_OPERATIONS AS T3 ON T1.SCHOOL_ID = T3.OPERATIONS_ID WHERE T3.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes' GROUP BY T1.SCHOOL_CATEGORY",
+    "pair_id": "494de284",
+    "original_question_id": "a7c6e90b",
+    "schema_used": [
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS",
+      "FACT_TEACHER_OPERATIONAL_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Approachable by all-weather roads refers to `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes'; School category is `dim_school_identity`.`school_category`; Average working hours for primary teachers are `fact_teacher_operational_metrics`.`avg_working_hours_teachers_primary`; Join `dim_school_identity`, `dim_school_operations`, and `fact_teacher_operational_metrics` on `dim_school_identity`.`school_id` = `fact_teacher_operational_metrics`.`school_id` and `dim_school_operations`.`operations_id` = `dim_school_identity`.`school_id` (assuming operations_id matches school_id). Group by `school_category`."
+  },
+  {
+    "question": "For schools that are approachable by all-weather roads, list the management by minority community status and the average working hours for primary teachers, grouped by the management by minority community.",
+    "sql": "SELECT T1.MANAGEMENT_BY_MINORITY_COMMUNITY, AVG(T2.AVG_WORKING_HOURS_TEACHERS_PRIMARY) FROM DIM_SCHOOL_IDENTITY AS T1 JOIN FACT_TEACHER_OPERATIONAL_METRICS AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_SCHOOL_OPERATIONS AS T3 ON T1.SCHOOL_ID = T3.OPERATIONS_ID WHERE T3.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes' GROUP BY T1.MANAGEMENT_BY_MINORITY_COMMUNITY",
+    "pair_id": "03d385fc",
+    "original_question_id": "a7c6e90b",
+    "schema_used": [
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS",
+      "FACT_TEACHER_OPERATIONAL_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes' filters schools accessible by all-weather roads. `dim_school_identity`.`management_by_minority_community` contains status values. `fact_teacher_operational_metrics`.`avg_working_hours_teachers_primary` stores teacher hours. Group by `dim_school_identity`.`management_by_minority_community`"
+  },
+  {
+    "question": "For schools that are approachable by all-weather roads, list each management type and the average working hours for primary teachers, grouped by the management of the school and ordered from the highest average working hours to the lowest.",
+    "sql": "SELECT T1.MANAGEMENT_OF_THE_SCHOOL, AVG(T2.AVG_WORKING_HOURS_TEACHERS_PRIMARY) FROM DIM_SCHOOL_IDENTITY AS T1 JOIN FACT_TEACHER_OPERATIONAL_METRICS AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_SCHOOL_OPERATIONS AS T3 ON T1.SCHOOL_ID = T3.OPERATIONS_ID WHERE T3.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes' GROUP BY T1.MANAGEMENT_OF_THE_SCHOOL ORDER BY AVG(T2.AVG_WORKING_HOURS_TEACHERS_PRIMARY) DESC",
+    "pair_id": "fc3a6a2f",
+    "original_question_id": "a7c6e90b",
+    "schema_used": [
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS",
+      "FACT_TEACHER_OPERATIONAL_METRICS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Approachable by all-weather roads is `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes'; average working hours for primary teachers is `fact_teacher_operational_metrics`.`avg_working_hours_teachers_primary`; management type is `dim_school_identity`.`management_of_the_school`; group by management type and order by average hours DESC"
+  },
+  {
+    "question": "Show the school category and the average working hours for primary teachers for each school category, focusing only on schools that are approachable by all-weather roads, and rank the results by the average working hours in descending order.",
+    "sql": "SELECT T1.SCHOOL_CATEGORY, AVG(T2.AVG_WORKING_HOURS_TEACHERS_PRIMARY) FROM DIM_SCHOOL_IDENTITY AS T1 JOIN FACT_TEACHER_OPERATIONAL_METRICS AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_SCHOOL_OPERATIONS AS T3 ON T1.SCHOOL_ID = T3.OPERATIONS_ID WHERE T3.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes' GROUP BY T1.SCHOOL_CATEGORY ORDER BY AVG(T2.AVG_WORKING_HOURS_TEACHERS_PRIMARY) DESC",
+    "pair_id": "62e3dc2b",
+    "original_question_id": "a7c6e90b",
+    "schema_used": [
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS",
+      "FACT_TEACHER_OPERATIONAL_METRICS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Approachable by all-weather roads is `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes'; Average working hours for primary teachers is `fact_teacher_operational_metrics`.`avg_working_hours_teachers_primary`; School categories are in `dim_school_identity`.`school_category`. Join `dim_school_identity`, `fact_teacher_operational_metrics`, and `dim_school_operations` using `school_id`."
+  },
+  {
+    "question": "For the year 2018, show the management type of the school and the average working hours for primary teachers, grouped by management type and ordered by the average working hours in descending order, specifically for schools that are approachable by all-weather roads.",
+    "sql": "SELECT T1.MANAGEMENT_OF_THE_SCHOOL, AVG(T2.AVG_WORKING_HOURS_TEACHERS_PRIMARY) FROM DIM_SCHOOL_IDENTITY AS T1 JOIN FACT_TEACHER_OPERATIONAL_METRICS AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_SCHOOL_OPERATIONS AS T3 ON T1.SCHOOL_ID = T3.OPERATIONS_ID WHERE T3.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes' AND T2.YEAR = 2018 GROUP BY T1.MANAGEMENT_OF_THE_SCHOOL ORDER BY AVG(T2.AVG_WORKING_HOURS_TEACHERS_PRIMARY) DESC",
+    "pair_id": "29e7af08",
+    "original_question_id": "a7c6e90b",
+    "schema_used": [
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS",
+      "FACT_TEACHER_OPERATIONAL_METRICS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Management type is in `dim_school_identity`.`management_of_the_school`; average working hours in `fact_teacher_operational_metrics`.`avg_working_hours_teachers_primary`; filter for year 2018 (`fact_teacher_operational_metrics`.`year` = 2018) and approachability (`dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes'); group by management type and order by average hours descending."
+  },
+  {
+    "question": "List each management type of the school and the average working hours for primary teachers, specifically for schools that are approachable by all-weather roads, where this average is greater than the overall average working hours for primary teachers across all schools.",
+    "sql": "SELECT T1.MANAGEMENT_OF_THE_SCHOOL, AVG(T3.AVG_WORKING_HOURS_TEACHERS_PRIMARY) FROM DIM_SCHOOL_IDENTITY AS T1 JOIN FACT_TEACHER_OPERATIONAL_METRICS AS T3 ON T1.SCHOOL_ID = T3.SCHOOL_ID JOIN DIM_SCHOOL_OPERATIONS AS T2 ON T1.SCHOOL_ID = T2.OPERATIONS_ID WHERE T2.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes' GROUP BY T1.MANAGEMENT_OF_THE_SCHOOL HAVING AVG(T3.AVG_WORKING_HOURS_TEACHERS_PRIMARY) > (SELECT AVG(AVG_WORKING_HOURS_TEACHERS_PRIMARY) FROM FACT_TEACHER_OPERATIONAL_METRICS);",
+    "pair_id": "4c0b79b2",
+    "original_question_id": "a7c6e90b",
+    "schema_used": [
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS",
+      "FACT_TEACHER_OPERATIONAL_METRICS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "`dim_school_identity`.`management_of_the_school` represents management types; `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes' filters approachable schools; `fact_teacher_operational_metrics`.`avg_working_hours_teachers_primary` must be compared against OVERALL_AVG (calculated from same column across all schools)"
+  },
+  {
+    "question": "For schools that are approachable by all-weather roads and are not managed by a minority community, list each school management type and its corresponding average teacher working hours for primary levels, but only for those management types where the average exceeds the overall average working hours of all primary teachers.",
+    "sql": "SELECT T1.MANAGEMENT_OF_THE_SCHOOL, AVG(T3.AVG_WORKING_HOURS_TEACHERS_PRIMARY) FROM DIM_SCHOOL_IDENTITY AS T1 JOIN FACT_TEACHER_OPERATIONAL_METRICS AS T3 ON T1.SCHOOL_ID = T3.SCHOOL_ID JOIN DIM_SCHOOL_OPERATIONS AS T2 ON T1.SCHOOL_ID = T2.OPERATIONS_ID WHERE T2.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes' AND T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' GROUP BY T1.MANAGEMENT_OF_THE_SCHOOL HAVING AVG(T3.AVG_WORKING_HOURS_TEACHERS_PRIMARY) > (SELECT AVG(AVG_WORKING_HOURS_TEACHERS_PRIMARY) FROM FACT_TEACHER_OPERATIONAL_METRICS);",
+    "pair_id": "530f96d8",
+    "original_question_id": "a7c6e90b",
+    "schema_used": [
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS",
+      "FACT_TEACHER_OPERATIONAL_METRICS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "approachability by all-weather roads = `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes'; not managed by minority community = `dim_school_identity`.`management_by_minority_community` = '2 - No'; school management type = `dim_school_identity`.`management_of_the_school`; average teacher working hours for primary levels = `fact_teacher_operational_metrics`.`avg_working_hours_teachers_primary`; overall average working hours = (SELECT AVG(`fact_teacher_operational_metrics`.`avg_working_hours_teachers_primary`) FROM `fact_teacher_operational_metrics`)"
+  },
+  {
+    "question": "For schools categorized as 'Primary with Upper Primary, Secondary and Higher Secondary (Classes 1 to 12)' that are approachable by all-weather roads, list each school management type and its corresponding average working hours for primary teachers, provided that this average is greater than the overall average working hours for primary teachers across all schools.",
+    "sql": "SELECT T1.MANAGEMENT_OF_THE_SCHOOL, AVG(T3.AVG_WORKING_HOURS_TEACHERS_PRIMARY) FROM DIM_SCHOOL_IDENTITY AS T1 JOIN FACT_TEACHER_OPERATIONAL_METRICS AS T3 ON T1.SCHOOL_ID = T3.SCHOOL_ID JOIN DIM_SCHOOL_OPERATIONS AS T2 ON T1.SCHOOL_ID = T2.OPERATIONS_ID WHERE T2.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes' AND T1.SCHOOL_CATEGORY = '3 - Primary with Upper Primary, Secondary and Higher Secondary ( Classes 1 to 12)' GROUP BY T1.MANAGEMENT_OF_THE_SCHOOL HAVING AVG(T3.AVG_WORKING_HOURS_TEACHERS_PRIMARY) > (SELECT AVG(AVG_WORKING_HOURS_TEACHERS_PRIMARY) FROM FACT_TEACHER_OPERATIONAL_METRICS);",
+    "pair_id": "54f07afd",
+    "original_question_id": "a7c6e90b",
+    "schema_used": [
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS",
+      "FACT_TEACHER_OPERATIONAL_METRICS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "School category 'Primary with Upper Primary, Secondary and Higher Secondary (Classes 1 to 12)' corresponds to `dim_school_identity`.`school_category` = '3 - Primary with Upper Primary, Secondary and Higher Secondary ( Classes 1 to 12)'; Approachable by all-weather roads = `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes'; School management type = `dim_school_identity`.`management_of_the_school`; Average working hours for primary teachers = `fact_teacher_operational_metrics`.`avg_working_hours_teachers_primary`; Compare group average against overall average using subquery for global AVG(`fact_teacher_operational_metrics`.`avg_working_hours_teachers_primary`)"
+  },
+  {
+    "question": "Provide the unique school ID for schools that are not managed by a minority community and are approachable by all-weather roads.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_SCHOOL_OPERATIONS AS T2 ON T1.SCHOOL_ID = T2.OPERATIONS_ID WHERE T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' AND T2.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes';",
+    "pair_id": "8108c856",
+    "original_question_id": "a88d2359",
+    "schema_used": [
+      "DIM_POLITICAL_GEOGRAPHY",
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Not managed by a minority community refers to `dim_school_identity`.`management_by_minority_community` = '2 - No'; approachable by all-weather roads refers to `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes'"
+  },
+  {
+    "question": "List the school IDs for schools that are not managed by a minority community and are approachable by all-weather roads.",
+    "sql": "SELECT T1.SCHOOL_ID FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_SCHOOL_OPERATIONS AS T2 ON T1.SCHOOL_ID = T2.OPERATIONS_ID WHERE T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' AND T2.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes';",
+    "pair_id": "b9bda413",
+    "original_question_id": "a88d2359",
+    "schema_used": [
+      "DIM_POLITICAL_GEOGRAPHY",
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_school_identity`.`management_by_minority_community` = '2 - No' refers to not managed by minority community; `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes' indicates approachable by all-weather roads; schools must meet both conditions."
+  },
+  {
+    "question": "Provide the unique school ID for schools that are classified as co-educational and are approachable by all-weather roads.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_SCHOOL_OPERATIONS AS T2 ON T1.SCHOOL_ID = T2.OPERATIONS_ID WHERE T1.SCHOOL_TYPE = '3 - Co-educational' AND T2.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes';",
+    "pair_id": "05caf124",
+    "original_question_id": "a88d2359",
+    "schema_used": [
+      "DIM_POLITICAL_GEOGRAPHY",
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Co-educational schools refers to `dim_school_identity`.`school_type` = '3 - Co-educational'; approachable by all-weather roads means `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes'"
+  },
+  {
+    "question": "List the unique school IDs for schools that are not managed by a minority community and are approachable by all-weather roads, grouped and ordered by their unique school ID.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_SCHOOL_OPERATIONS AS T2 ON T1.SCHOOL_ID = T2.OPERATIONS_ID WHERE T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' AND T2.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes' GROUP BY T1.UNIQUE_SCHOOL_ID ORDER BY T1.UNIQUE_SCHOOL_ID ASC",
+    "pair_id": "f63a8759",
+    "original_question_id": "a88d2359",
+    "schema_used": [
+      "DIM_POLITICAL_GEOGRAPHY",
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Not managed by minority community refers to `dim_school_identity`.`management_by_minority_community` = '2 - No'. Approachable by all-weather roads means `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes'. Join tables `dim_school_identity` and `dim_school_operations` via common key (e.g., foreign key relationship inferred via school_id)."
+  },
+  {
+    "question": "List the school categories for schools that are not managed by a minority community and are approachable by all-weather roads, grouped and ordered alphabetically by the school category.",
+    "sql": "SELECT T1.SCHOOL_CATEGORY FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_SCHOOL_OPERATIONS AS T2 ON T1.SCHOOL_ID = T2.OPERATIONS_ID WHERE T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' AND T2.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes' GROUP BY T1.SCHOOL_CATEGORY ORDER BY T1.SCHOOL_CATEGORY ASC",
+    "pair_id": "5bd317ad",
+    "original_question_id": "a88d2359",
+    "schema_used": [
+      "DIM_POLITICAL_GEOGRAPHY",
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "management_by_minority_community = '2 - No' refers to schools not managed by minority community in `dim_school_identity`; approachability_by_all_weather_roads = '1 - Yes' in `dim_school_operations` means accessible; group and order by `dim_school_identity`.`school_category` alphabetically"
+  },
+  {
+    "question": "List the school types for schools that are not managed by a minority community and are approachable by all-weather roads, grouped and ordered alphabetically by the school type.",
+    "sql": "SELECT T1.SCHOOL_TYPE FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_SCHOOL_OPERATIONS AS T2 ON T1.SCHOOL_ID = T2.OPERATIONS_ID WHERE T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' AND T2.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes' GROUP BY T1.SCHOOL_TYPE ORDER BY T1.SCHOOL_TYPE ASC",
+    "pair_id": "0b053b01",
+    "original_question_id": "a88d2359",
+    "schema_used": [
+      "DIM_POLITICAL_GEOGRAPHY",
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Not managed by a minority community refers to `dim_school_identity`.`management_by_minority_community` = '2 - No'; approachable by all-weather roads refers to `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes'; school types are stored in `dim_school_identity`.`school_type`"
+  },
+  {
+    "question": "Show the management by minority community status for schools that are not managed by a minority community and are approachable by all-weather roads, grouped by their minority management status, provided that there is at least one school in this category, and sort the results by the management by minority community in ascending order.",
+    "sql": "SELECT T1.MANAGEMENT_BY_MINORITY_COMMUNITY FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_POLITICAL_GEOGRAPHY AS T2 ON T1.SCHOOL_ID = T2.POLITICAL_GEO_ID JOIN DIM_SCHOOL_OPERATIONS AS T3 ON T1.SCHOOL_ID = T3.OPERATIONS_ID WHERE T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' AND T3.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes' GROUP BY T1.MANAGEMENT_BY_MINORITY_COMMUNITY HAVING COUNT(T1.SCHOOL_ID) >= 1 ORDER BY T1.MANAGEMENT_BY_MINORITY_COMMUNITY ASC",
+    "pair_id": "10ec7146",
+    "original_question_id": "a88d2359",
+    "schema_used": [
+      "DIM_POLITICAL_GEOGRAPHY",
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "`dim_school_identity`.`management_by_minority_community` values are '1 - Yes', '2 - No'; 'not managed by minority' = '2 - No'. `dim_school_operations`.`approachability_by_all_weather_roads` values: '1 - Yes', '2 - No'; 'approachable' = '1 - Yes'. Join via `school_id` (identity) and `operations_id` (operations). Group COUNT by `management_by_minority_community` with HAVING COUNT >=1."
+  },
+  {
+    "question": "List the unique school IDs for schools that are not managed by a minority community and are approachable by all-weather roads, ensuring each school ID appears at least once, and order the results by the unique school ID in ascending order.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_POLITICAL_GEOGRAPHY AS T2 ON T1.SCHOOL_ID = T2.POLITICAL_GEO_ID JOIN DIM_SCHOOL_OPERATIONS AS T3 ON T1.SCHOOL_ID = T3.OPERATIONS_ID WHERE T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' AND T3.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes' GROUP BY T1.UNIQUE_SCHOOL_ID HAVING COUNT(T1.SCHOOL_ID) >= 1 ORDER BY T1.UNIQUE_SCHOOL_ID ASC",
+    "pair_id": "5c8d6288",
+    "original_question_id": "a88d2359",
+    "schema_used": [
+      "DIM_POLITICAL_GEOGRAPHY",
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Schools not managed by a minority community are `dim_school_identity`.`management_by_minority_community` = '2 - No'; approachable by all-weather roads refers to `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes'; Join `dim_school_identity` and `dim_school_operations` via `school_id` = `operations_id` (assumed based on fact tables); List `dim_school_identity`.`unique_school_id` ordered ASC"
+  },
+  {
+    "question": "List the school categories for schools that are not managed by a minority community and are approachable by all-weather roads, grouped by their category and including only those categories with at least one school, ordered alphabetically by school category.",
+    "sql": "SELECT T1.SCHOOL_CATEGORY FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_POLITICAL_GEOGRAPHY AS T2 ON T1.SCHOOL_ID = T2.POLITICAL_GEO_ID JOIN DIM_SCHOOL_OPERATIONS AS T3 ON T1.SCHOOL_ID = T3.OPERATIONS_ID WHERE T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' AND T3.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes' GROUP BY T1.SCHOOL_CATEGORY HAVING COUNT(T1.SCHOOL_ID) >= 1 ORDER BY T1.SCHOOL_CATEGORY ASC",
+    "pair_id": "226b06fd",
+    "original_question_id": "a88d2359",
+    "schema_used": [
+      "DIM_POLITICAL_GEOGRAPHY",
+      "DIM_LOCATION_ADDRESS",
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Not managed by a minority community refers to `dim_school_identity`.`management_by_minority_community` = '2 - No'; approachable by all-weather roads refers to `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes'; school categories are in `dim_school_identity`.`school_category`"
+  },
+  {
+    "question": "Provide the unique school IDs for schools that are not managed by a minority community and are approachable by all-weather roads, based on data from the year 2018, ordered by the average working hours of primary teachers in descending order.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_SCHOOL_OPERATIONS AS T2 ON T1.SCHOOL_ID = T2.OPERATIONS_ID JOIN FACT_TEACHER_OPERATIONAL_METRICS AS T3 ON T1.SCHOOL_ID = T3.SCHOOL_ID WHERE T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' AND T2.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes' AND T3.YEAR = 2018 ORDER BY T3.AVG_WORKING_HOURS_TEACHERS_PRIMARY DESC",
+    "pair_id": "517c4740",
+    "original_question_id": "f51298a5",
+    "schema_used": [
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS",
+      "FACT_TEACHER_OPERATIONAL_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Not managed by minority community translates to `dim_school_identity`.`management_by_minority_community` = '2 - No'; approachable by all-weather roads means `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes'; year 2018 is in `fact_teacher_operational_metrics`.`year`; ordering uses `fact_teacher_operational_metrics`.`avg_working_hours_teachers_primary` DESC"
+  },
+  {
+    "question": "Provide the unique school IDs for schools that are not managed by a minority community, are approachable by all-weather roads, and are co-educational, sorted in descending order by the average working hours of primary teachers.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_SCHOOL_OPERATIONS AS T2 ON T1.SCHOOL_ID = T2.OPERATIONS_ID JOIN FACT_TEACHER_OPERATIONAL_METRICS AS T3 ON T1.SCHOOL_ID = T3.SCHOOL_ID WHERE T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' AND T2.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes' AND T1.SCHOOL_TYPE = '3 - Co-educational' ORDER BY T3.AVG_WORKING_HOURS_TEACHERS_PRIMARY DESC",
+    "pair_id": "cd154e25",
+    "original_question_id": "f51298a5",
+    "schema_used": [
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS",
+      "FACT_TEACHER_OPERATIONAL_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_school_identity`.`management_by_minority_community` = '2 - No' means not managed by minority community; `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes' means approachable by all-weather roads; `dim_school_identity`.`school_type` = '3 - Co-educational' refers to co-educational schools; sort by `fact_teacher_operational_metrics`.`avg_working_hours_teachers_primary` DESC"
+  },
+  {
+    "question": "Provide the unique school IDs for schools that are not managed by a minority community, are approachable by all-weather roads, and belong to the category of 'Primary with Upper Primary, Secondary and Higher Secondary (Classes 1 to 12)', sorted in descending order by the average working hours of primary teachers.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_SCHOOL_OPERATIONS AS T2 ON T1.SCHOOL_ID = T2.OPERATIONS_ID JOIN FACT_TEACHER_OPERATIONAL_METRICS AS T3 ON T1.SCHOOL_ID = T3.SCHOOL_ID WHERE T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' AND T2.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes' AND T1.SCHOOL_CATEGORY = '3 - Primary with Upper Primary, Secondary and Higher Secondary ( Classes 1 to 12)' ORDER BY T3.AVG_WORKING_HOURS_TEACHERS_PRIMARY DESC",
+    "pair_id": "731293a0",
+    "original_question_id": "f51298a5",
+    "schema_used": [
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS",
+      "FACT_TEACHER_OPERATIONAL_METRICS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Not managed by minority community refers to `dim_school_identity`.`management_by_minority_community` = '2 - No'; approachable by all-weather roads refers to `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes'; school category 'Primary with Upper Primary, Secondary and Higher Secondary (Classes 1 to 12)' maps to `dim_school_identity`.`school_category` = '3 - Primary with Upper Primary, Secondary and Higher Secondary ( Classes 1 to 12)'; average working hours of primary teachers is `fact_teacher_operational_metrics`.`avg_working_hours_teachers_primary`"
+  },
+  {
+    "question": "List the unique school IDs for schools that are not managed by a minority community and are approachable by all-weather roads, and order the results by the average working hours of primary teachers in descending order.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_SCHOOL_OPERATIONS AS T2 ON T1.SCHOOL_ID = T2.OPERATIONS_ID JOIN FACT_TEACHER_OPERATIONAL_METRICS AS T3 ON T1.SCHOOL_ID = T3.SCHOOL_ID WHERE T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' AND T2.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes' GROUP BY T1.UNIQUE_SCHOOL_ID ORDER BY AVG(T3.AVG_WORKING_HOURS_TEACHERS_PRIMARY) DESC;",
+    "pair_id": "b11698f7",
+    "original_question_id": "f51298a5",
+    "schema_used": [
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS",
+      "FACT_TEACHER_OPERATIONAL_METRICS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_school_identity`.`management_by_minority_community` = '2 - No' indicates not managed by minority community; `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes' indicates approachable by all-weather roads; Join `dim_school_identity`, `dim_school_operations` and `fact_teacher_operational_metrics` via school_id; Order by `fact_teacher_operational_metrics`.`avg_working_hours_teachers_primary` DESC"
+  },
+  {
+    "question": "For the year 2018, list the unique school IDs for schools that are not managed by a minority community and are approachable by all-weather roads, and order the results by the average working hours of primary teachers in descending order.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_SCHOOL_OPERATIONS AS T2 ON T1.SCHOOL_ID = T2.OPERATIONS_ID JOIN FACT_TEACHER_OPERATIONAL_METRICS AS T3 ON T1.SCHOOL_ID = T3.SCHOOL_ID WHERE T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' AND T2.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes' AND T3.YEAR = 2018 GROUP BY T1.UNIQUE_SCHOOL_ID ORDER BY AVG(T3.AVG_WORKING_HOURS_TEACHERS_PRIMARY) DESC;",
+    "pair_id": "897a71f5",
+    "original_question_id": "f51298a5",
+    "schema_used": [
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS",
+      "FACT_TEACHER_OPERATIONAL_METRICS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_school_identity`.`management_by_minority_community` = '2 - No' indicates non-minority management; `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes' indicates all-weather road access; Year filter uses `fact_teacher_operational_metrics`.`year` = 2018; Order by `fact_teacher_operational_metrics`.`avg_working_hours_teachers_primary` DESC"
+  },
+  {
+    "question": "List the unique school IDs for schools that are not managed by a minority community, are approachable by all-weather roads, and are co-educational, ordered by the average working hours of primary teachers in descending order.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_SCHOOL_OPERATIONS AS T2 ON T1.SCHOOL_ID = T2.OPERATIONS_ID JOIN FACT_TEACHER_OPERATIONAL_METRICS AS T3 ON T1.SCHOOL_ID = T3.SCHOOL_ID WHERE T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' AND T2.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes' AND T1.SCHOOL_TYPE = '3 - Co-educational' GROUP BY T1.UNIQUE_SCHOOL_ID ORDER BY AVG(T3.AVG_WORKING_HOURS_TEACHERS_PRIMARY) DESC;",
+    "pair_id": "2db8422b",
+    "original_question_id": "f51298a5",
+    "schema_used": [
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS",
+      "FACT_TEACHER_OPERATIONAL_METRICS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Not managed by minority community refers to `dim_school_identity`.`management_by_minority_community` = '2 - No'; Approachable by all-weather roads means `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes'; Co-educational corresponds to `dim_school_identity`.`school_type` = '3 - Co-educational'; Average working hours stored in `fact_teacher_operational_metrics`.`avg_working_hours_teachers_primary`"
+  },
+  {
+    "question": "For the most recent year available, list the unique school IDs for schools that are not managed by a minority community and are approachable by all-weather roads, where the average working hours for primary teachers is greater than 5.3, and order the results by this average in descending order.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_SCHOOL_OPERATIONS AS T2 ON T1.SCHOOL_ID = T2.OPERATIONS_ID JOIN FACT_TEACHER_OPERATIONAL_METRICS AS T3 ON T1.SCHOOL_ID = T3.SCHOOL_ID WHERE T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' AND T2.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes' AND T3.YEAR = (SELECT MAX(YEAR) FROM FACT_TEACHER_OPERATIONAL_METRICS) GROUP BY T1.UNIQUE_SCHOOL_ID HAVING AVG(T3.AVG_WORKING_HOURS_TEACHERS_PRIMARY) > 5.3 ORDER BY AVG(T3.AVG_WORKING_HOURS_TEACHERS_PRIMARY) DESC",
+    "pair_id": "4e0253bb",
+    "original_question_id": "f51298a5",
+    "schema_used": [
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS",
+      "FACT_TEACHER_OPERATIONAL_METRICS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Most recent year available = 2018; `dim_school_identity`.`management_by_minority_community` = '2 - No' for not managed by minority community; `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes' for approachable roads; Filter `fact_teacher_operational_metrics`.`avg_working_hours_teachers_primary` > 5.3; Use `dim_school_identity`.`unique_school_id` for result; Join tables on `school_id`"
+  },
+  {
+    "question": "For the most recent year available, list the unique school IDs for schools that are not managed by a minority community and are approachable by all-weather roads, where the average working hours for primary teachers is greater than 6, ordered from highest to lowest average working hours.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_SCHOOL_OPERATIONS AS T2 ON T1.SCHOOL_ID = T2.OPERATIONS_ID JOIN FACT_TEACHER_OPERATIONAL_METRICS AS T3 ON T1.SCHOOL_ID = T3.SCHOOL_ID WHERE T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' AND T2.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes' AND T3.YEAR = (SELECT MAX(YEAR) FROM FACT_TEACHER_OPERATIONAL_METRICS) GROUP BY T1.UNIQUE_SCHOOL_ID HAVING AVG(T3.AVG_WORKING_HOURS_TEACHERS_PRIMARY) > 6 ORDER BY AVG(T3.AVG_WORKING_HOURS_TEACHERS_PRIMARY) DESC",
+    "pair_id": "1eb838e5",
+    "original_question_id": "f51298a5",
+    "schema_used": [
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS",
+      "FACT_TEACHER_OPERATIONAL_METRICS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "unique_school_id is in `dim_school_identity`; management_by_minority_community = '2 - No' refers to not managed by minority; approachability_by_all_weather_roads = '1 - Yes'; latest year is 2018 in `fact_teacher_operational_metrics`; avg_working_hours_teachers_primary > 6"
+  },
+  {
+    "question": "Identify the unique school IDs for schools not managed by a minority community that are approachable by all-weather roads, considering only the most recent year of data, where the average working hours for primary teachers is greater than 6.3, and list these IDs in descending order of that average.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL_IDENTITY AS T1 JOIN DIM_SCHOOL_OPERATIONS AS T2 ON T1.SCHOOL_ID = T2.OPERATIONS_ID JOIN FACT_TEACHER_OPERATIONAL_METRICS AS T3 ON T1.SCHOOL_ID = T3.SCHOOL_ID WHERE T1.MANAGEMENT_BY_MINORITY_COMMUNITY = '2 - No' AND T2.APPROACHABILITY_BY_ALL_WEATHER_ROADS = '1 - Yes' AND T3.YEAR = (SELECT MAX(YEAR) FROM FACT_TEACHER_OPERATIONAL_METRICS) GROUP BY T1.UNIQUE_SCHOOL_ID HAVING AVG(T3.AVG_WORKING_HOURS_TEACHERS_PRIMARY) > 6.3 ORDER BY AVG(T3.AVG_WORKING_HOURS_TEACHERS_PRIMARY) DESC",
+    "pair_id": "4c2d6d8b",
+    "original_question_id": "f51298a5",
+    "schema_used": [
+      "DIM_SCHOOL_IDENTITY",
+      "DIM_SCHOOL_OPERATIONS",
+      "FACT_TEACHER_OPERATIONAL_METRICS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "`dim_school_identity`.`management_by_minority_community` = '2 - No' indicates not minority-managed; `dim_school_operations`.`approachability_by_all_weather_roads` = '1 - Yes' indicates approachable roads; Most recent year = 2018 in `fact_teacher_operational_metrics`.`year`; Criteria: `fact_teacher_operational_metrics`.`avg_working_hours_teachers_primary` > 6.3; Output: `dim_school_identity`.`unique_school_id` DESC by avg hours"
+  }
+]

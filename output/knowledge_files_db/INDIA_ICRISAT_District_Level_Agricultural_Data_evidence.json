@@ -1,0 +1,770 @@
+[
+  {
+    "question": "List the district names in the state of Chhattisgarh for the year 1967 where both the rice production was greater than 0 thousand tons and the barley production was greater than 0 thousand tons.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MINOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T4.YEAR = '1967' AND T2.RICE_PRODUCTION_1000TONS > 0 AND T3.BARLEY_PRODUCTION_1000TONS > 0;",
+    "pair_id": "ef6ef885",
+    "original_question_id": "e3773cd8",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography`.`state_name` = 'Chhattisgarh' and `dim_year`.`year` = 1967. Join `fact_cereals_major` and `fact_cereals_minor` on `geography_id` and `year_id`. Require `fact_cereals_major`.`rice_production_1000tons` > 0 and `fact_cereals_minor`.`barley_production_1000tons` > 0. Output `dim_geography`.`dist_name`."
+  },
+  {
+    "question": "List the district names located in the state of 'Chhattisgarh' for the year 1968 where both the rice production is greater than 0 thousand tons and the barley production is greater than 0 thousand tons.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MINOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T4.YEAR = '1968' AND T2.RICE_PRODUCTION_1000TONS > 0 AND T3.BARLEY_PRODUCTION_1000TONS > 0;",
+    "pair_id": "f200efa3",
+    "original_question_id": "e3773cd8",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter districts where `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1968, and both `fact_cereals_major.rice_production_1000tons` > 0 and `fact_cereals_minor.barley_production_1000tons` > 0 for the same geography and year."
+  },
+  {
+    "question": "List the district names located in the state of Chhattisgarh for the year 1966 where both the rice production is greater than 0 thousand tons and the barley production is greater than 0 thousand tons.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MINOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T4.YEAR = '1966' AND T2.RICE_PRODUCTION_1000TONS > 0 AND T3.BARLEY_PRODUCTION_1000TONS > 0;",
+    "pair_id": "03e9e650",
+    "original_question_id": "e3773cd8",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "State = 'Chhattisgarh' maps to `dim_geography.state_name` = 'Chhattisgarh'. Year 1966 maps to `dim_year.year` = 1966. Rice production > 0 means `fact_cereals_major.rice_production_1000tons` > 0. Barley production > 0 means `fact_cereals_minor.barley_production_1000tons` > 0. Join `dim_geography` and `dim_year` to `fact_cereals_major` and `fact_cereals_minor` on `geography_id` and `year_id` to get districts (`dim_geography.dist_name`) where both conditions are satisfied for the same district and year."
+  },
+  {
+    "question": "For the year 1967 in the state of Chhattisgarh, list the district names where both the rice production was greater than 0 thousand tons and the barley production was greater than 0 thousand tons, grouped and ordered by the district name.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MINOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T4.YEAR = '1967' AND T2.RICE_PRODUCTION_1000TONS > 0 AND T3.BARLEY_PRODUCTION_1000TONS > 0 GROUP BY T1.DIST_NAME ORDER BY T1.DIST_NAME",
+    "pair_id": "113ed2b0",
+    "original_question_id": "e3773cd8",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_geography.state_name` = 'Chhattisgarh'; `dim_year.year` = 1967; `fact_cereals_major.rice_production_1000tons` > 0; `fact_cereals_minor.barley_production_1000tons` > 0; Output `dim_geography.dist_name`; GROUP BY and ORDER BY `dim_geography.dist_name`; Join `dim_geography` to `fact_cereals_major` and `fact_cereals_minor` on `geography_id`; Join both fact tables to `dim_year` on `year_id`; Ensure same district and year for both conditions."
+  },
+  {
+    "question": "List the district names in the state of Chhattisgarh for the year 1968 where the rice area was greater than 0 thousand hectares and the barley area was also greater than 0 thousand hectares, ordered by district name.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MINOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T4.YEAR = '1968' AND T2.RICE_AREA_1000HA > 0 AND T3.BARLEY_AREA_1000HA > 0 GROUP BY T1.DIST_NAME ORDER BY T1.DIST_NAME",
+    "pair_id": "337f1902",
+    "original_question_id": "e3773cd8",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.state_name = 'Chhattisgarh'` and `dim_year.year = 1968`; require `fact_cereals_major.rice_area_1000ha > 0` and `fact_cereals_minor.barley_area_1000ha > 0`; output `dim_geography.dist_name` ordered by district name."
+  },
+  {
+    "question": "List the district names in the state of Chhattisgarh for the year 1966 where both the rice yield (in kg per ha) and the barley yield (in kg per ha) are greater than zero, grouped and ordered by district name.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MINOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T4.YEAR = '1966' AND T2.RICE_YIELD_KG_PER_HA > 0 AND T3.BARLEY_YIELD_KG_PER_HA > 0 GROUP BY T1.DIST_NAME ORDER BY T1.DIST_NAME",
+    "pair_id": "a6971361",
+    "original_question_id": "e3773cd8",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter: (`dim_geography`.`state_name` = 'Chhattisgarh') AND (`dim_year`.`year` = 1966) AND (`fact_cereals_major`.`rice_yield_kg_per_ha` > 0) AND (`fact_cereals_minor`.`barley_yield_kg_per_ha` > 0). Output `dim_geography`.`dist_name`. Group by `dim_geography`.`dist_name` and order by `dim_geography`.`dist_name`. Join `dim_geography` with `fact_cereals_major` and `fact_cereals_minor` on `geography_id`, and join both fact tables with `dim_year` on `year_id`."
+  },
+  {
+    "question": "For the state of Chhattisgarh and the year 1967, list the district names that have a total rice production greater than 0 thousand tons and a total barley production greater than 0 thousand tons, ordered alphabetically by district name.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MINOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID AND T3.YEAR_ID = T4.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T4.YEAR = '1967' GROUP BY T1.DIST_NAME HAVING SUM(T2.RICE_PRODUCTION_1000TONS) > 0 AND SUM(T3.BARLEY_PRODUCTION_1000TONS) > 0 ORDER BY T1.DIST_NAME ASC",
+    "pair_id": "0cf20473",
+    "original_question_id": "e3773cd8",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter by dim_geography.state_name = 'Chhattisgarh' and dim_year.year = 1967; require fact_cereals_major.rice_production_1000tons > 0 and fact_cereals_minor.barley_production_1000tons > 0; order by dim_geography.dist_name alphabetically."
+  },
+  {
+    "question": "List the district names in the state of 'Chhattisgarh' for the year 1968 where the total rice production is greater than 0.1 thousand tons and the total barley production is greater than 0.0 thousand tons, ordered alphabetically by district name.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MINOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID AND T3.YEAR_ID = T4.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T4.YEAR = '1968' GROUP BY T1.DIST_NAME HAVING SUM(T2.RICE_PRODUCTION_1000TONS) > 0.1 AND SUM(T3.BARLEY_PRODUCTION_1000TONS) > 0.0 ORDER BY T1.DIST_NAME ASC",
+    "pair_id": "81ce2455",
+    "original_question_id": "e3773cd8",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "State = 'Chhattisgarh' refers to `dim_geography.state_name` = 'Chhattisgarh'; year 1968 refers to `dim_year.year` = 1968; total rice production > 0.1 thousand tons means `fact_cereals_major.rice_production_1000tons` > 0.1; total barley production > 0.0 thousand tons means `fact_cereals_minor.barley_production_1000tons` > 0.0; output `dim_geography.dist_name` ordered by `dim_geography.dist_name`."
+  },
+  {
+    "question": "For the state of Chhattisgarh and the year 1966, list the district names where the total rice production exceeds 100,000 tons and the total barley production is greater than -1.0 thousand tons, grouped and ordered alphabetically by the district name.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MINOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID AND T3.YEAR_ID = T4.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T4.YEAR = '1966' GROUP BY T1.DIST_NAME HAVING SUM(T2.RICE_PRODUCTION_1000TONS) > 100.0 AND SUM(T3.BARLEY_PRODUCTION_1000TONS) > -1.0 ORDER BY T1.DIST_NAME ASC",
+    "pair_id": "dfb4c16d",
+    "original_question_id": "e3773cd8",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "`dim_geography.state_name` = 'Chhattisgarh'; `dim_year.year` = 1966; `fact_cereals_major.rice_production_1000tons` > 100 (means >100,000 tons); `fact_cereals_minor.barley_production_1000tons` > -1.0 (thousand tons); output `dim_geography.dist_name` grouped by `dim_geography.dist_name` and ordered alphabetically."
+  },
+  {
+    "question": "List the district names and their corresponding wheat yield in kilograms per hectare for the state of Chhattisgarh in the year 1967, ordered by the wheat yield from highest to lowest.",
+    "sql": "SELECT T1.DIST_NAME, T2.WHEAT_YIELD_KG_PER_HA FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1967' ORDER BY T2.WHEAT_YIELD_KG_PER_HA DESC",
+    "pair_id": "3b635794",
+    "original_question_id": "f87f4582",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_geography.state_name` = 'Chhattisgarh'; `dim_year.year` = 1967; wheat yield is `fact_cereals_major.wheat_yield_kg_per_ha`; district names are `dim_geography.dist_name`; order by `fact_cereals_major.wheat_yield_kg_per_ha` DESC."
+  },
+  {
+    "question": "List the district names and their corresponding wheat yield in kilograms per hectare for the state of Chhattisgarh in the year 1968, ordered by the wheat yield from highest to lowest.",
+    "sql": "SELECT T1.DIST_NAME, T2.WHEAT_YIELD_KG_PER_HA FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1968' ORDER BY T2.WHEAT_YIELD_KG_PER_HA DESC",
+    "pair_id": "1cd724ad",
+    "original_question_id": "f87f4582",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "State of Chhattisgarh refers to `dim_geography.state_name` = 'Chhattisgarh'; year 1968 refers to `dim_year.year` = 1968; wheat yield in kilograms per hectare refers to `fact_cereals_major.wheat_yield_kg_per_ha`; district names refer to `dim_geography.dist_name`."
+  },
+  {
+    "question": "For the state of Chhattisgarh in the year 1966, list the district names and their corresponding wheat yield in kilograms per hectare, ordered by the yield in descending order.",
+    "sql": "SELECT T1.DIST_NAME, T2.WHEAT_YIELD_KG_PER_HA FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1966' ORDER BY T2.WHEAT_YIELD_KG_PER_HA DESC",
+    "pair_id": "72556038",
+    "original_question_id": "f87f4582",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter: `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1966. Select `dim_geography.dist_name` and `fact_cereals_major.wheat_yield_kg_per_ha`. Join `fact_cereals_major` with `dim_geography` on `fact_cereals_major.geography_id` = `dim_geography.geography_id` and with `dim_year` on `fact_cereals_major.year_id` = `dim_year.year_id`. Order by `fact_cereals_major.wheat_yield_kg_per_ha` DESC."
+  },
+  {
+    "question": "For the state of Chhattisgarh in the year 1967, list the district names and the wheat yield in kilograms per hectare, sorted by the wheat yield in descending order.",
+    "sql": "SELECT T2.DIST_NAME, T1.WHEAT_YIELD_KG_PER_HA FROM FACT_CEREALS_MAJOR AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T2.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1967' ORDER BY T1.WHEAT_YIELD_KG_PER_HA DESC",
+    "pair_id": "fe3ea51d",
+    "original_question_id": "f87f4582",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter by (`dim_geography`.`state_name` = 'Chhattisgarh') and (`dim_year`.`year` = 1967). Select (`dim_geography`.`dist_name`, `fact_cereals_major`.`wheat_yield_kg_per_ha`). Join `fact_cereals_major` with `dim_geography` on (`fact_cereals_major`.`geography_id` = `dim_geography`.`geography_id`) and with `dim_year` on (`fact_cereals_major`.`year_id` = `dim_year`.`year_id`). Sort by `fact_cereals_major`.`wheat_yield_kg_per_ha` DESC."
+  },
+  {
+    "question": "For the state of Chhattisgarh in the year 1968, list the district names and the wheat yield in kilograms per hectare, sorted by the wheat yield in descending order.",
+    "sql": "SELECT T2.DIST_NAME, T1.WHEAT_YIELD_KG_PER_HA FROM FACT_CEREALS_MAJOR AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T2.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1968' ORDER BY T1.WHEAT_YIELD_KG_PER_HA DESC",
+    "pair_id": "90afd6e2",
+    "original_question_id": "f87f4582",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter by `dim_geography.state_name = 'Chhattisgarh'` and `dim_year.year = 1968`. Select `dim_geography.dist_name` and `fact_cereals_major.wheat_yield_kg_per_ha`. Join `fact_cereals_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`. Sort by `fact_cereals_major.wheat_yield_kg_per_ha` DESC."
+  },
+  {
+    "question": "For the year 1966 in the state of Chhattisgarh, list the district names and the wheat yield in kilograms per hectare, ordered from the highest yield to the lowest.",
+    "sql": "SELECT T2.DIST_NAME, T1.WHEAT_YIELD_KG_PER_HA FROM FACT_CEREALS_MAJOR AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T2.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1966' ORDER BY T1.WHEAT_YIELD_KG_PER_HA DESC",
+    "pair_id": "b2541284",
+    "original_question_id": "f87f4582",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Year 1966 refers to `dim_year`.`year` = 1966; State Chhattisgarh refers to `dim_geography`.`state_name` = 'Chhattisgarh'; District names are in `dim_geography`.`dist_name`; Wheat yield in kilograms per hectare is `fact_cereals_major`.`wheat_yield_kg_per_ha`; Order from highest to lowest yield means ORDER BY `fact_cereals_major`.`wheat_yield_kg_per_ha` DESC."
+  },
+  {
+    "question": "For the year 1967 and the state of Chhattisgarh, list the district names and the year for those districts where the average wheat yield in kilograms per hectare is greater than 400, ordered from the highest to lowest average yield.",
+    "sql": "SELECT T1.DIST_NAME, T3.YEAR FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR = '1967' AND T1.STATE_NAME = 'Chhattisgarh' GROUP BY T1.DIST_NAME, T3.YEAR HAVING AVG(T2.WHEAT_YIELD_KG_PER_HA) > 400 ORDER BY AVG(T2.WHEAT_YIELD_KG_PER_HA) DESC",
+    "pair_id": "859a41e0",
+    "original_question_id": "f87f4582",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "For year 1967: `dim_year.year` = 1967; for state Chhattisgarh: `dim_geography.state_name` = 'Chhattisgarh'; district names are in `dim_geography.dist_name`; wheat yield is `fact_cereals_major.wheat_yield_kg_per_ha`; filter where `fact_cereals_major.wheat_yield_kg_per_ha` > 400; order by `fact_cereals_major.wheat_yield_kg_per_ha` DESC."
+  },
+  {
+    "question": "For the year 1968 and the state of Chhattisgarh, list the district names and the year for those districts where the average wheat yield in kilograms per hectare is greater than 500, and order the results by the average wheat yield in descending order.",
+    "sql": "SELECT T1.DIST_NAME, T3.YEAR FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR = '1968' AND T1.STATE_NAME = 'Chhattisgarh' GROUP BY T1.DIST_NAME, T3.YEAR HAVING AVG(T2.WHEAT_YIELD_KG_PER_HA) > 500 ORDER BY AVG(T2.WHEAT_YIELD_KG_PER_HA) DESC",
+    "pair_id": "2f51a686",
+    "original_question_id": "f87f4582",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter: `dim_year`.`year` = 1968, `dim_geography`.`state_name` = 'Chhattisgarh', `fact_cereals_major`.`wheat_yield_kg_per_ha` > 500. Output: `dim_geography`.`dist_name`, `dim_year`.`year`. Order by `fact_cereals_major`.`wheat_yield_kg_per_ha` DESC."
+  },
+  {
+    "question": "For the state of Chhattisgarh in the year 1966, list the district names and the year for those districts where the average wheat yield in kilograms per hectare is greater than 300, and sort the results by the average wheat yield in descending order.",
+    "sql": "SELECT T1.DIST_NAME, T3.YEAR FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR = '1966' AND T1.STATE_NAME = 'Chhattisgarh' GROUP BY T1.DIST_NAME, T3.YEAR HAVING AVG(T2.WHEAT_YIELD_KG_PER_HA) > 300 ORDER BY AVG(T2.WHEAT_YIELD_KG_PER_HA) DESC",
+    "pair_id": "b7e6468e",
+    "original_question_id": "f87f4582",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter: `dim_geography`.`state_name` = 'Chhattisgarh' AND `dim_year`.`year` = 1966 AND `fact_cereals_major`.`wheat_yield_kg_per_ha` > 300; Output columns: `dim_geography`.`dist_name`, `dim_year`.`year`; Sort: `fact_cereals_major`.`wheat_yield_kg_per_ha` DESC."
+  },
+  {
+    "question": "List the unique district names for the year 1967 where either the rice yield in kilograms per hectare is greater than 3000 or the maize yield in kilograms per hectare is greater than 3000.",
+    "sql": "SELECT DISTINCT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MINOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR = '1967' AND (T2.RICE_YIELD_KG_PER_HA > 3000 OR T3.MAIZE_YIELD_KG_PER_HA > 3000);",
+    "pair_id": "1c8c4959",
+    "original_question_id": "30aa18c9",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Year 1967 maps to `dim_year.year` = 1967. Rice yield > 3000 refers to `fact_cereals_major.rice_yield_kg_per_ha` > 3000. Maize yield > 3000 refers to `fact_cereals_minor.maize_yield_kg_per_ha` > 3000. District names are in `dim_geography.dist_name`. Join `dim_year` and `dim_geography` to each fact table via `year_id` and `geography_id`. Use UNION to get districts satisfying either condition."
+  },
+  {
+    "question": "List the unique district names for the year 1968 where either the rice yield in kilograms per hectare is greater than 3000 or the maize yield in kilograms per hectare is greater than 3000.",
+    "sql": "SELECT DISTINCT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MINOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR = '1968' AND (T2.RICE_YIELD_KG_PER_HA > 3000 OR T3.MAIZE_YIELD_KG_PER_HA > 3000);",
+    "pair_id": "1c1b63a7",
+    "original_question_id": "30aa18c9",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_year.year` = 1968; rice yield > 3000 refers to `fact_cereals_major.rice_yield_kg_per_ha` > 3000; maize yield > 3000 refers to `fact_cereals_minor.maize_yield_kg_per_ha` > 3000; unique district names from `dim_geography.dist_name`."
+  },
+  {
+    "question": "List the unique district names for the year 1969 where either the rice yield in kilograms per hectare is greater than 3000 or the maize yield in kilograms per hectare is greater than 3000.",
+    "sql": "SELECT DISTINCT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MINOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR = '1969' AND (T2.RICE_YIELD_KG_PER_HA > 3000 OR T3.MAIZE_YIELD_KG_PER_HA > 3000);",
+    "pair_id": "46fce552",
+    "original_question_id": "30aa18c9",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Year 1969 is in `dim_year.year`. Rice yield > 3000 refers to `fact_cereals_major.rice_yield_kg_per_ha`. Maize yield > 3000 refers to `fact_cereals_minor.maize_yield_kg_per_ha`. Get unique `dim_geography.dist_name` by joining `dim_geography` with `fact_cereals_major` on `geography_id` and `dim_year` on `year_id` for rice condition, and similarly with `fact_cereals_minor` for maize condition, then combine with UNION."
+  },
+  {
+    "question": "List the unique district names for the year 1967 where either the rice yield was greater than 3000 kg per hectare or the maize yield was greater than 3000 kg per hectare, sorted alphabetically by district name.",
+    "sql": "SELECT DISTINCT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MINOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR = '1967' AND (T2.RICE_YIELD_KG_PER_HA > 3000 OR T3.MAIZE_YIELD_KG_PER_HA > 3000) ORDER BY T1.DIST_NAME",
+    "pair_id": "f8b6a889",
+    "original_question_id": "30aa18c9",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Year 1967 refers to `dim_year`.`year` = 1967. Rice yield > 3000 kg/ha refers to `fact_cereals_major`.`rice_yield_kg_per_ha` > 3000. Maize yield > 3000 kg/ha refers to `fact_cereals_minor`.`maize_yield_kg_per_ha` > 3000. Unique district names are from `dim_geography`.`dist_name`. Join `dim_geography` to `fact_cereals_major` and `fact_cereals_minor` via `geography_id`, and join `dim_year` via `year_id`. Use DISTINCT and ORDER BY `dim_geography`.`dist_name`."
+  },
+  {
+    "question": "List the unique district names for the year 1968 where either the rice yield in kilograms per hectare is greater than 3000 or the maize yield in kilograms per hectare is greater than 3000, and sort the results by district name.",
+    "sql": "SELECT DISTINCT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MINOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR = '1968' AND (T2.RICE_YIELD_KG_PER_HA > 3000 OR T3.MAIZE_YIELD_KG_PER_HA > 3000) ORDER BY T1.DIST_NAME",
+    "pair_id": "d1c0a8a6",
+    "original_question_id": "30aa18c9",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Need to join `dim_geography`, `dim_year`, `fact_cereals_major`, and `fact_cereals_minor`. Filter `dim_year`.`year` = 1968. Condition: (`fact_cereals_major`.`rice_yield_kg_per_ha` > 3000 OR `fact_cereals_minor`.`maize_yield_kg_per_ha` > 3000). Select DISTINCT `dim_geography`.`dist_name`. Sort by `dim_geography`.`dist_name`."
+  },
+  {
+    "question": "List the unique district names for the year 1970 where either the rice yield in kilograms per hectare is greater than 3000 or the maize yield in kilograms per hectare is greater than 3000, ordered alphabetically by district name.",
+    "sql": "SELECT DISTINCT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MINOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR = '1970' AND (T2.RICE_YIELD_KG_PER_HA > 3000 OR T3.MAIZE_YIELD_KG_PER_HA > 3000) ORDER BY T1.DIST_NAME",
+    "pair_id": "0a767909",
+    "original_question_id": "30aa18c9",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "District names are in `dim_geography.dist_name`. Filter for `dim_year.year` = 1970. Condition: `fact_cereals_major.rice_yield_kg_per_ha` > 3000 OR `fact_cereals_minor.maize_yield_kg_per_ha` > 3000. Output unique district names ordered alphabetically."
+  },
+  {
+    "question": "List the unique district names for the year 1967 where the maximum rice yield in kilograms per hectare or the maximum maize yield in kilograms per hectare exceeded 800, and show the results in ascending order of district name.",
+    "sql": "SELECT DISTINCT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MINOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR = '1967' GROUP BY T1.DIST_NAME HAVING MAX(T2.RICE_YIELD_KG_PER_HA) > 800 OR MAX(T3.MAIZE_YIELD_KG_PER_HA) > 800 ORDER BY T1.DIST_NAME ASC",
+    "pair_id": "b6f1b8f5",
+    "original_question_id": "30aa18c9",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter by `dim_year.year` = 1967; compute MAX(`fact_cereals_major.rice_yield_kg_per_ha`) and MAX(`fact_cereals_minor.maize_yield_kg_per_ha`) per district; keep districts where either max > 800; output unique `dim_geography.dist_name` sorted ascending."
+  },
+  {
+    "question": "List the unique district names, ordered alphabetically, where for the year 1968, the maximum rice yield in kilograms per hectare or the maximum maize yield in kilograms per hectare exceeded 300.",
+    "sql": "SELECT DISTINCT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MINOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR = '1968' GROUP BY T1.DIST_NAME HAVING MAX(T2.RICE_YIELD_KG_PER_HA) > 300 OR MAX(T3.MAIZE_YIELD_KG_PER_HA) > 300 ORDER BY T1.DIST_NAME ASC",
+    "pair_id": "22424880",
+    "original_question_id": "30aa18c9",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Year 1968 refers to `dim_year`.`year` = 1968; maximum rice yield refers to MAX(`fact_cereals_major`.`rice_yield_kg_per_ha`); maximum maize yield refers to MAX(`fact_cereals_minor`.`maize_yield_kg_per_ha`); exceeded 300 means > 300; unique district names are `dim_geography`.`dist_name`; order alphabetically means ORDER BY `dim_geography`.`dist_name`."
+  },
+  {
+    "question": "List the unique district names, ordered alphabetically, for the year 1966 where the maximum rice yield was greater than 700 kg per hectare or the maximum maize yield was greater than 700 kg per hectare.",
+    "sql": "SELECT DISTINCT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MINOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR = '1966' GROUP BY T1.DIST_NAME HAVING MAX(T2.RICE_YIELD_KG_PER_HA) > 700 OR MAX(T3.MAIZE_YIELD_KG_PER_HA) > 700 ORDER BY T1.DIST_NAME ASC",
+    "pair_id": "29bd4f22",
+    "original_question_id": "30aa18c9",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Year 1966 refers to `dim_year.year` = 1966. Maximum rice yield per district in that year is `fact_cereals_major.rice_yield_kg_per_ha`. Maximum maize yield per district in that year is `fact_cereals_minor.maize_yield_kg_per_ha`. Condition: `fact_cereals_major.rice_yield_kg_per_ha` > 700 OR `fact_cereals_minor.maize_yield_kg_per_ha` > 700. Select distinct `dim_geography.dist_name` and order by `dim_geography.dist_name`."
+  },
+  {
+    "question": "For the year 1967, list each state name along with the average rice yield in kg per hectare, the average wheat yield in kg per hectare, and the total combined production of rice and wheat in thousand tons, ordered alphabetically by state name.",
+    "sql": "SELECT T1.STATE_NAME, AVG(T2.RICE_YIELD_KG_PER_HA), AVG(T2.WHEAT_YIELD_KG_PER_HA), SUM(T2.RICE_PRODUCTION_1000TONS + T2.WHEAT_PRODUCTION_1000TONS) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR = '1967' GROUP BY T1.STATE_NAME ORDER BY T1.STATE_NAME",
+    "pair_id": "f6c805af",
+    "original_question_id": "4e641ce1",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter on (`dim_year`.`year`) = 1967. Join (`fact_cereals_major`.`geography_id`) = (`dim_geography`.`geography_id`) and (`fact_cereals_major`.`year_id`) = (`dim_year`.`year_id`). Group by (`dim_geography`.`state_name`). Compute AVG(`fact_cereals_major`.`rice_yield_kg_per_ha`) for average rice yield, AVG(`fact_cereals_major`.`wheat_yield_kg_per_ha`) for average wheat yield, SUM(`fact_cereals_major`.`rice_production_1000tons` + `fact_cereals_major`.`wheat_production_1000tons`) for total combined production. Order by (`dim_geography`.`state_name`) ASC."
+  },
+  {
+    "question": "For the year 1968, list each state name along with the average rice yield in kg per ha, the average wheat yield in kg per ha, and the total combined production of rice and wheat in 1000 tons, ordered alphabetically by the state name.",
+    "sql": "SELECT T1.STATE_NAME, AVG(T2.RICE_YIELD_KG_PER_HA), AVG(T2.WHEAT_YIELD_KG_PER_HA), SUM(T2.RICE_PRODUCTION_1000TONS + T2.WHEAT_PRODUCTION_1000TONS) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR = '1968' GROUP BY T1.STATE_NAME ORDER BY T1.STATE_NAME",
+    "pair_id": "e54d0d74",
+    "original_question_id": "4e641ce1",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter by dim_year.year = 1968. Group by dim_geography.state_name. Compute per state: AVG(fact_cereals_major.rice_yield_kg_per_ha), AVG(fact_cereals_major.wheat_yield_kg_per_ha), SUM(fact_cereals_major.rice_production_1000tons + fact_cereals_major.wheat_production_1000tons). Order by dim_geography.state_name."
+  },
+  {
+    "question": "For the year 1966, list each state name along with the average rice yield in kg per ha, the average wheat yield in kg per ha, and the total combined production of rice and wheat in thousands of tons, grouped and ordered by the state name.",
+    "sql": "SELECT T1.STATE_NAME, AVG(T2.RICE_YIELD_KG_PER_HA), AVG(T2.WHEAT_YIELD_KG_PER_HA), SUM(T2.RICE_PRODUCTION_1000TONS + T2.WHEAT_PRODUCTION_1000TONS) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR = '1966' GROUP BY T1.STATE_NAME ORDER BY T1.STATE_NAME",
+    "pair_id": "3d412837",
+    "original_question_id": "4e641ce1",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_year`.`year` = 1966. Select `dim_geography`.`state_name`, AVG(`fact_cereals_major`.`rice_yield_kg_per_ha`) as avg_rice_yield, AVG(`fact_cereals_major`.`wheat_yield_kg_per_ha`) as avg_wheat_yield, SUM(`fact_cereals_major`.`rice_production_1000tons` + `fact_cereals_major`.`wheat_production_1000tons`) as total_production. Group by `dim_geography`.`state_name` and order by `dim_geography`.`state_name`."
+  },
+  {
+    "question": "For the year 1967, list each state name along with the average rice yield in kg per hectare, the average wheat yield in kg per hectare, and the total combined production of rice and wheat in thousands of tons, ordered by the total production in descending order.",
+    "sql": "SELECT T1.STATE_NAME, AVG(T2.RICE_YIELD_KG_PER_HA), AVG(T2.WHEAT_YIELD_KG_PER_HA), SUM(T2.RICE_PRODUCTION_1000TONS + T2.WHEAT_PRODUCTION_1000TONS) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR = '1967' GROUP BY T1.STATE_NAME ORDER BY SUM(T2.RICE_PRODUCTION_1000TONS + T2.WHEAT_PRODUCTION_1000TONS) DESC",
+    "pair_id": "9333e98a",
+    "original_question_id": "4e641ce1",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Year 1967 refers to dim_year.year = 1967. Average rice yield = AVG(fact_cereals_major.rice_yield_kg_per_ha). Average wheat yield = AVG(fact_cereals_major.wheat_yield_kg_per_ha). Total combined production = SUM(fact_cereals_major.rice_production_1000tons + fact_cereals_major.wheat_production_1000tons). Group by dim_geography.state_name. Order by total production DESC."
+  },
+  {
+    "question": "For the year 1968, list each state name along with the average rice yield in kg per hectare, the average wheat yield in kg per hectare, and the total combined production of rice and wheat in thousands of tons, ordered from highest to lowest total production.",
+    "sql": "SELECT T1.STATE_NAME, AVG(T2.RICE_YIELD_KG_PER_HA), AVG(T2.WHEAT_YIELD_KG_PER_HA), SUM(T2.RICE_PRODUCTION_1000TONS + T2.WHEAT_PRODUCTION_1000TONS) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR = '1968' GROUP BY T1.STATE_NAME ORDER BY SUM(T2.RICE_PRODUCTION_1000TONS + T2.WHEAT_PRODUCTION_1000TONS) DESC",
+    "pair_id": "d7058a4c",
+    "original_question_id": "4e641ce1",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "State name is dim_geography.state_name; average rice yield = AVG(fact_cereals_major.rice_yield_kg_per_ha); average wheat yield = AVG(fact_cereals_major.wheat_yield_kg_per_ha); total combined production = SUM(fact_cereals_major.rice_production_1000tons + fact_cereals_major.wheat_production_1000tons); filter year = 1968 via dim_year.year = 1968; group by state; order by total combined production DESC."
+  },
+  {
+    "question": "For the year 1966, list each state name along with the average rice yield in kg per hectare, the average wheat yield in kg per hectare, and the total combined production of rice and wheat in thousands of tons, ordered by the total production in descending order.",
+    "sql": "SELECT T1.STATE_NAME, AVG(T2.RICE_YIELD_KG_PER_HA), AVG(T2.WHEAT_YIELD_KG_PER_HA), SUM(T2.RICE_PRODUCTION_1000TONS + T2.WHEAT_PRODUCTION_1000TONS) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR = '1966' GROUP BY T1.STATE_NAME ORDER BY SUM(T2.RICE_PRODUCTION_1000TONS + T2.WHEAT_PRODUCTION_1000TONS) DESC",
+    "pair_id": "594ad55b",
+    "original_question_id": "4e641ce1",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Year 1966 refers to `dim_year`.`year` = 1966. Average rice yield = AVG(`fact_cereals_major`.`rice_yield_kg_per_ha`). Average wheat yield = AVG(`fact_cereals_major`.`wheat_yield_kg_per_ha`). Total combined production = SUM(`fact_cereals_major`.`rice_production_1000tons` + `fact_cereals_major`.`wheat_production_1000tons`). Group by `dim_geography`.`state_name`. Order by total production DESC."
+  },
+  {
+    "question": "For the year 1967, list each state name along with the average rice yield in kg per hectare, the average wheat yield in kg per hectare, and the total combined production of rice and wheat in thousand tons, provided that this total combined production is greater than the overall average combined production of rice and wheat across all records, and order the results by the total combined production in descending order.",
+    "sql": "SELECT T1.STATE_NAME, AVG(T2.RICE_YIELD_KG_PER_HA), AVG(T2.WHEAT_YIELD_KG_PER_HA), SUM(T2.RICE_PRODUCTION_1000TONS + T2.WHEAT_PRODUCTION_1000TONS) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR = '1967' GROUP BY T1.STATE_NAME HAVING SUM(T2.RICE_PRODUCTION_1000TONS + T2.WHEAT_PRODUCTION_1000TONS) > (SELECT AVG(RICE_PRODUCTION_1000TONS + WHEAT_PRODUCTION_1000TONS) FROM FACT_CEREALS_MAJOR) ORDER BY SUM(T2.RICE_PRODUCTION_1000TONS + T2.WHEAT_PRODUCTION_1000TONS) DESC",
+    "pair_id": "452b7400",
+    "original_question_id": "4e641ce1",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_cereals_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`. Filter `dim_year.year` = '1967'. Group by `dim_geography.state_name`. Compute AVG(`fact_cereals_major.rice_yield_kg_per_ha`) as avg_rice_yield, AVG(`fact_cereals_major.wheat_yield_kg_per_ha`) as avg_wheat_yield, and SUM(`fact_cereals_major.rice_production_1000tons` + `fact_cereals_major.wheat_production_1000tons`) as total_combined_production. Filter where total_combined_production > (SELECT AVG(`fact_cereals_major.rice_production_1000tons` + `fact_cereals_major.wheat_production_1000tons`) FROM `fact_cereals_major`). Order by total_combined_production DESC."
+  },
+  {
+    "question": "For the year 1968, list each state name along with the average rice yield in kg per hectare, the average wheat yield in kg per hectare, and the total combined production of rice and wheat in thousands of tons, provided that this total production is greater than the overall average combined production of rice and wheat across the entire dataset, and order the results by the total combined production in descending order.",
+    "sql": "SELECT T1.STATE_NAME, AVG(T2.RICE_YIELD_KG_PER_HA), AVG(T2.WHEAT_YIELD_KG_PER_HA), SUM(T2.RICE_PRODUCTION_1000TONS + T2.WHEAT_PRODUCTION_1000TONS) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR = '1968' GROUP BY T1.STATE_NAME HAVING SUM(T2.RICE_PRODUCTION_1000TONS + T2.WHEAT_PRODUCTION_1000TONS) > (SELECT AVG(RICE_PRODUCTION_1000TONS + WHEAT_PRODUCTION_1000TONS) FROM FACT_CEREALS_MAJOR) ORDER BY SUM(T2.RICE_PRODUCTION_1000TONS + T2.WHEAT_PRODUCTION_1000TONS) DESC",
+    "pair_id": "7cdb6fea",
+    "original_question_id": "4e641ce1",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_year`.`year` = 1968. Join `dim_geography` on `dim_geography`.`geography_id` = `fact_cereals_major`.`geography_id` and `dim_year` on `dim_year`.`year_id` = `fact_cereals_major`.`year_id`. Group by `dim_geography`.`state_name`. Compute: average rice yield = AVG(`fact_cereals_major`.`rice_yield_kg_per_ha`), average wheat yield = AVG(`fact_cereals_major`.`wheat_yield_kg_per_ha`), total combined production = SUM(`fact_cereals_major`.`rice_production_1000tons` + `fact_cereals_major`.`wheat_production_1000tons`). Filter where total combined production > (SELECT AVG(`fact_cereals_major`.`rice_production_1000tons` + `fact_cereals_major`.`wheat_production_1000tons`) FROM `fact_cereals_major`). Order by total combined production DESC."
+  },
+  {
+    "question": "For the year 1966, list each state name along with the average rice yield in kg per hectare, the average wheat yield in kg per hectare, and the total combined production of rice and wheat in thousand tons; only include states where this total combined production is greater than the overall average combined production across the entire dataset, and sort the results by the total combined production in descending order.",
+    "sql": "SELECT T1.STATE_NAME, AVG(T2.RICE_YIELD_KG_PER_HA), AVG(T2.WHEAT_YIELD_KG_PER_HA), SUM(T2.RICE_PRODUCTION_1000TONS + T2.WHEAT_PRODUCTION_1000TONS) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR = '1966' GROUP BY T1.STATE_NAME HAVING SUM(T2.RICE_PRODUCTION_1000TONS + T2.WHEAT_PRODUCTION_1000TONS) > (SELECT AVG(RICE_PRODUCTION_1000TONS + WHEAT_PRODUCTION_1000TONS) FROM FACT_CEREALS_MAJOR) ORDER BY SUM(T2.RICE_PRODUCTION_1000TONS + T2.WHEAT_PRODUCTION_1000TONS) DESC",
+    "pair_id": "53ce35d1",
+    "original_question_id": "4e641ce1",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter year = 1966 from `dim_year.year`; Join `fact_cereals_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`; Group by `dim_geography.state_name`; Compute per-state: AVG(`fact_cereals_major.rice_yield_kg_per_ha`), AVG(`fact_cereals_major.wheat_yield_kg_per_ha`), SUM(`fact_cereals_major.rice_production_1000tons` + `fact_cereals_major.wheat_production_1000tons`) as total_combined_production; Compute overall average combined production as AVG(`fact_cereals_major.rice_production_1000tons` + `fact_cereals_major.wheat_production_1000tons`) from entire `fact_cereals_major`; Filter states where total_combined_production > overall average; Sort by total_combined_production DESC."
+  },
+  {
+    "question": "List the district names for the state of Chhattisgarh in the year 1967, ordered by their rice yield in kilograms per hectare from highest to lowest, and show only the top 10 results.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1967' ORDER BY T2.RICE_YIELD_KG_PER_HA DESC LIMIT 10",
+    "pair_id": "f7487114",
+    "original_question_id": "803656c8",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "State of Chhattisgarh refers to `dim_geography`.`state_name` = 'Chhattisgarh'; Year 1967 refers to `dim_year`.`year` = 1967; District names refer to `dim_geography`.`dist_name`; Rice yield in kilograms per hectare refers to `fact_cereals_major`.`rice_yield_kg_per_ha`; Order by highest to lowest means DESC; Top 10 results means LIMIT 10."
+  },
+  {
+    "question": "List the district names from the state of Chhattisgarh for the year 1968, ordered by the rice yield in kilograms per hectare in descending order, and show only the top 10 results.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1968' ORDER BY T2.RICE_YIELD_KG_PER_HA DESC LIMIT 10",
+    "pair_id": "07eaa07d",
+    "original_question_id": "803656c8",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_geography.dist_name` refers to district names; state of Chhattisgarh means `dim_geography.state_name` = 'Chhattisgarh'; year 1968 means `dim_year.year` = 1968; rice yield in kilograms per hectare refers to `fact_cereals_major.rice_yield_kg_per_ha`; order descending and show top 10."
+  },
+  {
+    "question": "List the district names for the state of Chhattisgarh during the year 1970, ordered by their rice yield in kilograms per hectare from highest to lowest, and show only the top 10 results.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' ORDER BY T2.RICE_YIELD_KG_PER_HA DESC LIMIT 10",
+    "pair_id": "7d2fb26a",
+    "original_question_id": "803656c8",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter by `dim_geography`.`state_name` = 'Chhattisgarh' and `dim_year`.`year` = 1970. Join `fact_cereals_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`. Order by `fact_cereals_major`.`rice_yield_kg_per_ha` DESC, limit 10. Output `dim_geography`.`dist_name`."
+  },
+  {
+    "question": "List the district names in the state of 'Chhattisgarh' for the year 1967 where the average rice yield in kg per hectare was greater than 300, ordered by the maximum rice yield in kg per hectare in descending order, and show only the top 10 results.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1967' GROUP BY T1.DIST_NAME HAVING AVG(T2.RICE_YIELD_KG_PER_HA) > 300 ORDER BY MAX(T2.RICE_YIELD_KG_PER_HA) DESC LIMIT 10",
+    "pair_id": "071165a4",
+    "original_question_id": "803656c8",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter records where `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1967 and `fact_cereals_major.rice_yield_kg_per_ha` > 300. Join `fact_cereals_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`. Select `dim_geography.dist_name` and order by `fact_cereals_major.rice_yield_kg_per_ha` DESC, limit 10."
+  },
+  {
+    "question": "List the district names in the state of 'Chhattisgarh' for the year 1968 that have an average rice yield greater than 500 kg per hectare, ordered by their maximum rice yield in descending order, and show only the top 10 results.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1968' GROUP BY T1.DIST_NAME HAVING AVG(T2.RICE_YIELD_KG_PER_HA) > 500 ORDER BY MAX(T2.RICE_YIELD_KG_PER_HA) DESC LIMIT 10",
+    "pair_id": "3c59bb15",
+    "original_question_id": "803656c8",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "State 'Chhattisgarh' maps to `dim_geography.state_name` = 'Chhattisgarh'. Year 1968 maps to `dim_year.year` = 1968. Average rice yield refers to `fact_cereals_major.rice_yield_kg_per_ha`. Need to filter where `fact_cereals_major.rice_yield_kg_per_ha` > 500. Group by `dim_geography.dist_name` and order by `MAX(fact_cereals_major.rice_yield_kg_per_ha)` DESC, limit 10."
+  },
+  {
+    "question": "For the state of Chhattisgarh, list the district names, the years, and the rice yield in kilograms per hectare.",
+    "sql": "SELECT T2.DIST_NAME, T3.YEAR, T1.RICE_YIELD_KG_PER_HA FROM FACT_CEREALS_MAJOR AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T2.STATE_NAME = 'Chhattisgarh';",
+    "pair_id": "7405def2",
+    "original_question_id": "fcddfb54",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter by `dim_geography.state_name` = 'Chhattisgarh'. Select `dim_geography.dist_name`, `dim_year.year`, `fact_cereals_major.rice_yield_kg_per_ha`. Join `fact_cereals_major` with `dim_geography` on `fact_cereals_major.geography_id` = `dim_geography.geography_id` and with `dim_year` on `fact_cereals_major.year_id` = `dim_year.year_id`."
+  },
+  {
+    "question": "For the district named 'Raipur', list the district name, the year, and the rice yield in kilograms per hectare.",
+    "sql": "SELECT T2.DIST_NAME, T3.YEAR, T1.RICE_YIELD_KG_PER_HA FROM FACT_CEREALS_MAJOR AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T2.DIST_NAME = 'Raipur';",
+    "pair_id": "02ae0e37",
+    "original_question_id": "fcddfb54",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter by `dim_geography`.`dist_name` = 'Raipur'; select `dim_geography`.`dist_name`, `dim_year`.`year`, `fact_cereals_major`.`rice_yield_kg_per_ha`; join `fact_cereals_major` with `dim_geography` on `fact_cereals_major`.`geography_id` = `dim_geography`.`geography_id` and with `dim_year` on `fact_cereals_major`.`year_id` = `dim_year`.`year_id`."
+  },
+  {
+    "question": "Show the district name, the year, and the rice yield in kilograms per hectare for the district of Bastar.",
+    "sql": "SELECT T2.DIST_NAME, T3.YEAR, T1.RICE_YIELD_KG_PER_HA FROM FACT_CEREALS_MAJOR AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T2.DIST_NAME = 'Bastar';",
+    "pair_id": "6e4bc84e",
+    "original_question_id": "fcddfb54",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_geography`.`dist_name` contains district names; `dim_year`.`year` contains the year; `fact_cereals_major`.`rice_yield_kg_per_ha` contains rice yield. Filter `dim_geography`.`dist_name` = 'Bastar'. Join `fact_cereals_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`."
+  },
+  {
+    "question": "List the district name, the year, and the rice yield in kilograms per hectare for all records in the state of Chhattisgarh, ordered by the year.",
+    "sql": "SELECT T1.DIST_NAME, T2.YEAR, T3.RICE_YIELD_KG_PER_HA FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T2 ON T3.YEAR_ID = T2.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' ORDER BY T2.YEAR",
+    "pair_id": "d40a332b",
+    "original_question_id": "fcddfb54",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "State of Chhattisgarh refers to `dim_geography`.`state_name` = 'Chhattisgarh'; district name is `dim_geography`.`dist_name`; year is `dim_year`.`year`; rice yield in kilograms per hectare is `fact_cereals_major`.`rice_yield_kg_per_ha`; ordered by year means ORDER BY `dim_year`.`year`; join `fact_cereals_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`."
+  },
+  {
+    "question": "For the state with code '14', list the district name, the year, and the rice yield in kilograms per hectare, sorted chronologically by year.",
+    "sql": "SELECT T1.DIST_NAME, T2.YEAR, T3.RICE_YIELD_KG_PER_HA FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T2 ON T3.YEAR_ID = T2.YEAR_ID WHERE T1.STATE_CODE = '14' ORDER BY T2.YEAR",
+    "pair_id": "123cb5cc",
+    "original_question_id": "fcddfb54",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter: `dim_geography.state_code` = '14'; Select: `dim_geography.dist_name`, `dim_year.year`, `fact_cereals_major.rice_yield_kg_per_ha`; Join: `fact_cereals_major.geography_id` = `dim_geography.geography_id` AND `fact_cereals_major.year_id` = `dim_year.year_id`; Order by: `dim_year.year` ASC."
+  },
+  {
+    "question": "For the district named 'Raipur', list the district name, the year, and the rice yield in kilograms per hectare, ordered chronologically by year.",
+    "sql": "SELECT T1.DIST_NAME, T2.YEAR, T3.RICE_YIELD_KG_PER_HA FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T2 ON T3.YEAR_ID = T2.YEAR_ID WHERE T1.DIST_NAME = 'Raipur' ORDER BY T2.YEAR",
+    "pair_id": "8992ac25",
+    "original_question_id": "fcddfb54",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter (`dim_geography`.`dist_name`) = 'Raipur'; join `dim_geography` with `fact_cereals_major` on (`dim_geography`.`geography_id`) = (`fact_cereals_major`.`geography_id`); join `dim_year` on (`fact_cereals_major`.`year_id`) = (`dim_year`.`year_id`); select (`dim_geography`.`dist_name`), (`dim_year`.`year`), (`fact_cereals_major`.`rice_yield_kg_per_ha`); order by (`dim_year`.`year`) ASC."
+  },
+  {
+    "question": "List the district names, the years, and the average rice yield in kilograms per hectare for districts in the state of 'Chhattisgarh', grouping the results by district and year, where the average rice yield is greater than 337.59, and order the final list by year in descending order.",
+    "sql": "SELECT T1.DIST_NAME, T2.YEAR, AVG(T3.RICE_YIELD_KG_PER_HA) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T2 ON T3.YEAR_ID = T2.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' GROUP BY T1.DIST_NAME, T2.YEAR HAVING AVG(T3.RICE_YIELD_KG_PER_HA) > 337.59 ORDER BY T2.YEAR DESC",
+    "pair_id": "1c398af2",
+    "original_question_id": "fcddfb54",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "State = 'Chhattisgarh' maps to `dim_geography.state_name`; average rice yield refers to `AVG(fact_cereals_major.rice_yield_kg_per_ha)`; group by `dim_geography.dist_name` and `dim_year.year`; filter where average rice yield > 337.59; order by `dim_year.year` DESC."
+  },
+  {
+    "question": "For the state of 'Chhattisgarh', list the district names and the years, along with the maximum rice yield in kilograms per hectare, for those records where the maximum rice yield exceeds 711.4, and sort the results by year in descending order.",
+    "sql": "SELECT T1.DIST_NAME, T2.YEAR, MAX(T3.RICE_YIELD_KG_PER_HA) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T2 ON T3.YEAR_ID = T2.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' GROUP BY T1.DIST_NAME, T2.YEAR HAVING MAX(T3.RICE_YIELD_KG_PER_HA) > 711.4 ORDER BY T2.YEAR DESC",
+    "pair_id": "4f1feb32",
+    "original_question_id": "fcddfb54",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "State filter: `dim_geography.state_name` = 'Chhattisgarh'; district column: `dim_geography.dist_name`; year column: `dim_year.year`; rice yield column: `fact_cereals_major.rice_yield_kg_per_ha`; compute max(rice_yield_kg_per_ha) per district per year; filter where max > 711.4; order by `dim_year.year` DESC."
+  },
+  {
+    "question": "For the state of Chhattisgarh, list the district names and years along with the total sum of rice yield in kilograms per hectare for each combination, where the total sum exceeds 747.71, and order the results by year in descending order.",
+    "sql": "SELECT T1.DIST_NAME, T2.YEAR, SUM(T3.RICE_YIELD_KG_PER_HA) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T2 ON T3.YEAR_ID = T2.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' GROUP BY T1.DIST_NAME, T2.YEAR HAVING SUM(T3.RICE_YIELD_KG_PER_HA) > 747.71 ORDER BY T2.YEAR DESC",
+    "pair_id": "5d701dee",
+    "original_question_id": "fcddfb54",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter by `dim_geography.state_name` = 'Chhattisgarh'; group by `dim_geography.dist_name` and `dim_year.year`; calculate SUM(`fact_cereals_major.rice_yield_kg_per_ha`) as total sum; keep only groups where sum > 747.71; order by `dim_year.year` DESC."
+  }
+]

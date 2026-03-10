@@ -1,0 +1,806 @@
+[
+  {
+    "question": "List each state name and the total count of district IDs, grouped by the state name.",
+    "sql": "SELECT STATE_NAME, COUNT(DISTRICT_ID) FROM DIM_STATE JOIN DIM_DISTRICT ON STATE_ID = DISTRICT_ID GROUP BY STATE_NAME;",
+    "pair_id": "b65b5bc4",
+    "original_question_id": "97b858fb",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "state name refers to `dim_state`.`state_name`; district IDs refers to `dim_district`.`district_id`; total count of district IDs refers to COUNT(`dim_district`.`district_id`); grouped by the state name refers to GROUP BY `dim_state`.`state_name`;"
+  },
+  {
+    "question": "List each state name and the total count of district names associated with it, grouped by the state name.",
+    "sql": "SELECT STATE_NAME, COUNT(DISTRICT_NAME) FROM DIM_STATE JOIN DIM_DISTRICT ON STATE_ID = DISTRICT_ID GROUP BY STATE_NAME;",
+    "pair_id": "3ce61387",
+    "original_question_id": "97b858fb",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_state.state_name` refers to state name; `dim_district.district_name` refers to district name; to get the total count of district names per state, group by `dim_state.state_name` and count `dim_district.district_name`."
+  },
+  {
+    "question": "List each state name along with the total count of records for that state, grouped by the state name.",
+    "sql": "SELECT STATE_NAME, COUNT(*) FROM DIM_STATE JOIN DIM_DISTRICT ON STATE_ID = DISTRICT_ID GROUP BY STATE_NAME;",
+    "pair_id": "604e8703",
+    "original_question_id": "97b858fb",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "state name refers to `dim_state.state_name`; total count of records likely refers to counting rows in fact tables per state, but no foreign key links fact tables to `dim_state`."
+  },
+  {
+    "question": "List each state name and the total count of district IDs associated with it, grouped by the state name and ordered from the highest count to the lowest.",
+    "sql": "SELECT T1.STATE_NAME, COUNT(T2.DISTRICT_ID) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.DISTRICT_ID GROUP BY T1.STATE_NAME ORDER BY COUNT(T2.DISTRICT_ID) DESC;",
+    "pair_id": "5cbd0c0c",
+    "original_question_id": "97b858fb",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "State name is in `dim_state`.`state_name`; district IDs are in `dim_district`.`district_id`. Count district IDs per state, group by state name, order by count descending. (Note: Relationship between state and district not explicit in schema; may require join on `state_id` if present in `dim_district`.)"
+  },
+  {
+    "question": "For the states of Assam, Bihar, and Andhra Pradesh, list each state name and the total count of district names associated with it, sorted by the count of districts in descending order.",
+    "sql": "SELECT T1.STATE_NAME, COUNT(T2.DISTRICT_NAME) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.DISTRICT_ID WHERE T1.STATE_NAME IN ('Assam', 'Bihar', 'Andhra Pradesh') GROUP BY T1.STATE_NAME ORDER BY COUNT(T2.DISTRICT_NAME) DESC;",
+    "pair_id": "9aa68e6e",
+    "original_question_id": "97b858fb",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "State names are in `dim_state.state_name`. District names are in `dim_district.district_name`. Filter for `dim_state.state_name` in ('Assam', 'Bihar', 'Andhra Pradesh'). Count distinct `dim_district.district_name` per state. Sort by count descending. Note: The schema does not show a direct link between states and districts; you may need to join via an intermediate table (not provided)."
+  },
+  {
+    "question": "For states with a state ID of 5 or less, list each state name and the total count of district IDs associated with it, sorted by the count of districts in descending order.",
+    "sql": "SELECT T1.STATE_NAME, COUNT(T2.DISTRICT_ID) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.DISTRICT_ID WHERE T1.STATE_ID <= 5 GROUP BY T1.STATE_NAME ORDER BY COUNT(T2.DISTRICT_ID) DESC;",
+    "pair_id": "c4d5d91b",
+    "original_question_id": "97b858fb",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter: `dim_state.state_id` ≤ 5. Count distinct `dim_district.district_id` per state (assuming `dim_district.state_id` references `dim_state.state_id`). Sort by count descending."
+  },
+  {
+    "question": "List the district names for districts that have a sector category of 'Urban' and contain both at least one government PSU establishment and at least one private self-help group establishment.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN FACT_OWNERSHIP_TYPE AS T2 ON T1.DISTRICT_ID = T2.LOCATION_ID JOIN DIM_SECTOR_CATEGORY AS T3 ON T2.SECTOR_ID = T3.SECTOR_ID WHERE T3.SECTOR_CATEGORY = 'Urban' AND T2.EST_GOVT_PSU > 0.000 AND T2.EST_PRIVATE_SELF_HELP_GROUP > 0.000 GROUP BY T1.DISTRICT_NAME",
+    "pair_id": "35de42cf",
+    "original_question_id": "067b5053",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_LOCATION",
+      "DIM_SECTOR_CATEGORY",
+      "FACT_TRADE_SECTOR",
+      "FACT_TRANSPORT_HOSPITALITY",
+      "FACT_TECHNOLOGY_FINANCE",
+      "FACT_EDUCATION_HEALTH",
+      "FACT_OWNERSHIP_TYPE",
+      "FACT_FINANCE_SOURCES"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_sector_category.sector_category` = 'Urban'; `fact_ownership_type.est_govt_psu` > 0; `fact_ownership_type.est_private_self_help_group` > 0; join `dim_district`, `dim_location` (assuming `dim_location.district_id` exists), `fact_ownership_type`, and `dim_sector_category`; select `dim_district.district_name`."
+  },
+  {
+    "question": "List the district names for districts that have a rural sector category and contain more than zero government PSU establishments as well as more than zero private self-help group establishments.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN FACT_OWNERSHIP_TYPE AS T2 ON T1.DISTRICT_ID = T2.LOCATION_ID JOIN DIM_SECTOR_CATEGORY AS T3 ON T2.SECTOR_ID = T3.SECTOR_ID WHERE T3.SECTOR_CATEGORY = 'Rural' AND T2.EST_GOVT_PSU > 0.000 AND T2.EST_PRIVATE_SELF_HELP_GROUP > 0.000 GROUP BY T1.DISTRICT_NAME",
+    "pair_id": "df5009bf",
+    "original_question_id": "067b5053",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_LOCATION",
+      "DIM_SECTOR_CATEGORY",
+      "FACT_TRADE_SECTOR",
+      "FACT_TRANSPORT_HOSPITALITY",
+      "FACT_TECHNOLOGY_FINANCE",
+      "FACT_EDUCATION_HEALTH",
+      "FACT_OWNERSHIP_TYPE",
+      "FACT_FINANCE_SOURCES"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Rural sector category maps to `dim_sector_category`.`sector_category` = 'Rural'. More than zero government PSU establishments maps to `fact_ownership_type`.`est_govt_psu` > 0. More than zero private self-help group establishments maps to `fact_ownership_type`.`est_private_self_help_group` > 0. To get district names, join `dim_district` with `dim_location` on `dim_location`.`sub_district_name` = `dim_district`.`district_name`, then join to `fact_ownership_type` on `fact_ownership_type`.`location_id` = `dim_location`.`location_id`, and join to `dim_sector_category` on `fact_ownership_type`.`sector_id` = `dim_sector_category`.`sector_id`."
+  },
+  {
+    "question": "List the district names for locations where the sector ID is 1 and there is a positive number of both government PSU establishments and private self-help group establishments, grouped by district name.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN FACT_OWNERSHIP_TYPE AS T2 ON T1.DISTRICT_ID = T2.LOCATION_ID JOIN DIM_SECTOR_CATEGORY AS T3 ON T2.SECTOR_ID = T3.SECTOR_ID WHERE T3.SECTOR_ID = 1 AND T2.EST_GOVT_PSU > 0.000 AND T2.EST_PRIVATE_SELF_HELP_GROUP > 0.000 GROUP BY T1.DISTRICT_NAME",
+    "pair_id": "0a133aa5",
+    "original_question_id": "067b5053",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_LOCATION",
+      "DIM_SECTOR_CATEGORY",
+      "FACT_TRADE_SECTOR",
+      "FACT_TRANSPORT_HOSPITALITY",
+      "FACT_TECHNOLOGY_FINANCE",
+      "FACT_EDUCATION_HEALTH",
+      "FACT_OWNERSHIP_TYPE",
+      "FACT_FINANCE_SOURCES"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`sector_id` = 1 refers to Urban sector; positive number means > 0; government PSU establishments refers to `fact_ownership_type`.`est_govt_psu`; private self-help group establishments refers to `fact_ownership_type`.`est_private_self_help_group`; district names are from `dim_district`.`district_name` via joining `fact_ownership_type` → `dim_location` → `dim_district`."
+  },
+  {
+    "question": "List the district names within the 'Urban' sector category that have more than 0.000 estimated government PSU and more than 0.000 estimated private self-help groups, ensuring each district name appears at least once in the results.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN FACT_OWNERSHIP_TYPE AS T2 ON T1.DISTRICT_ID = T2.LOCATION_ID JOIN DIM_SECTOR_CATEGORY AS T3 ON T2.SECTOR_ID = T3.SECTOR_ID WHERE T3.SECTOR_CATEGORY = 'Urban' AND T2.EST_GOVT_PSU > 0.000 AND T2.EST_PRIVATE_SELF_HELP_GROUP > 0.000 GROUP BY T1.DISTRICT_NAME HAVING COUNT(T1.DISTRICT_NAME) >= 1",
+    "pair_id": "3d5ebe88",
+    "original_question_id": "067b5053",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_LOCATION",
+      "DIM_SECTOR_CATEGORY",
+      "FACT_TRADE_SECTOR",
+      "FACT_TRANSPORT_HOSPITALITY",
+      "FACT_TECHNOLOGY_FINANCE",
+      "FACT_EDUCATION_HEALTH",
+      "FACT_OWNERSHIP_TYPE",
+      "FACT_FINANCE_SOURCES"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "'Urban' maps to `dim_sector_category`.`sector_category` = 'Urban'; more than 0.000 estimated government PSU refers to `fact_ownership_type`.`est_govt_psu` > 0; more than 0.000 estimated private self-help groups refers to `fact_ownership_type`.`est_private_self_help_group` > 0; district names are from `dim_district`.`district_name`; join `fact_ownership_type` with `dim_sector_category` on `sector_id`, with `dim_location` on `location_id`, and with `dim_district` on `district_id` (assuming `dim_location` has `district_id` foreign key); use DISTINCT to ensure each district appears once."
+  },
+  {
+    "question": "List the district names where the sector category is 'Rural', the number of government or PSU establishments is greater than zero, and the number of private self-help group establishments is also greater than zero, ensuring each district name is displayed at least once.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN FACT_OWNERSHIP_TYPE AS T2 ON T1.DISTRICT_ID = T2.LOCATION_ID JOIN DIM_SECTOR_CATEGORY AS T3 ON T2.SECTOR_ID = T3.SECTOR_ID WHERE T3.SECTOR_CATEGORY = 'Rural' AND T2.EST_GOVT_PSU > 0.000 AND T2.EST_PRIVATE_SELF_HELP_GROUP > 0.000 GROUP BY T1.DISTRICT_NAME HAVING COUNT(T1.DISTRICT_NAME) >= 1",
+    "pair_id": "7df2319f",
+    "original_question_id": "067b5053",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_LOCATION",
+      "DIM_SECTOR_CATEGORY",
+      "FACT_TRADE_SECTOR",
+      "FACT_TRANSPORT_HOSPITALITY",
+      "FACT_TECHNOLOGY_FINANCE",
+      "FACT_EDUCATION_HEALTH",
+      "FACT_OWNERSHIP_TYPE",
+      "FACT_FINANCE_SOURCES"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter: `dim_sector_category`.`sector_category` = 'Rural', `fact_ownership_type`.`est_govt_psu` > 0, `fact_ownership_type`.`est_private_self_help_group` > 0. Join `fact_ownership_type` to `dim_sector_category` on `sector_id`, and to `dim_location` on `location_id`, then to `dim_district` (assuming a foreign key relationship exists, e.g., `dim_location`.`district_id` = `dim_district`.`district_id`). Select distinct `dim_district`.`district_name`."
+  },
+  {
+    "question": "List the district names for sectors with an ID of 1 where the number of government PSU establishments is greater than 0 and the number of private self-help group establishments is greater than 0, grouped by district name where the count of the district name is at least 1.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN FACT_OWNERSHIP_TYPE AS T2 ON T1.DISTRICT_ID = T2.LOCATION_ID JOIN DIM_SECTOR_CATEGORY AS T3 ON T2.SECTOR_ID = T3.SECTOR_ID WHERE T3.SECTOR_ID = 1 AND T2.EST_GOVT_PSU > 0.000 AND T2.EST_PRIVATE_SELF_HELP_GROUP > 0.000 GROUP BY T1.DISTRICT_NAME HAVING COUNT(T1.DISTRICT_NAME) >= 1",
+    "pair_id": "40bdf4e9",
+    "original_question_id": "067b5053",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_LOCATION",
+      "DIM_SECTOR_CATEGORY",
+      "FACT_TRADE_SECTOR",
+      "FACT_TRANSPORT_HOSPITALITY",
+      "FACT_TECHNOLOGY_FINANCE",
+      "FACT_EDUCATION_HEALTH",
+      "FACT_OWNERSHIP_TYPE",
+      "FACT_FINANCE_SOURCES"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_district`.`district_name` for records where `fact_ownership_type`.`sector_id` = 1 (Urban), `fact_ownership_type`.`est_govt_psu` > 0, and `fact_ownership_type`.`est_private_self_help_group` > 0, grouped by `dim_district`.`district_name` having COUNT(*) >= 1."
+  },
+  {
+    "question": "List the district names for districts categorized under the 'Urban' sector where the sum of government PSU establishments is at least 0.000 and the sum of private self-help group establishments is at least 0.000, ordered alphabetically by district name.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN FACT_OWNERSHIP_TYPE AS T2 ON T1.DISTRICT_ID = T2.LOCATION_ID JOIN DIM_LOCATION AS T3 ON T2.LOCATION_ID = T3.LOCATION_ID JOIN DIM_SECTOR_CATEGORY AS T4 ON T2.SECTOR_ID = T4.SECTOR_ID WHERE T4.SECTOR_CATEGORY = 'Urban' GROUP BY T1.DISTRICT_NAME HAVING SUM(T2.EST_GOVT_PSU) >= 0.000 AND SUM(T2.EST_PRIVATE_SELF_HELP_GROUP) >= 0.000 ORDER BY T1.DISTRICT_NAME ASC",
+    "pair_id": "3360f4e7",
+    "original_question_id": "067b5053",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_LOCATION",
+      "DIM_SECTOR_CATEGORY",
+      "FACT_TRADE_SECTOR",
+      "FACT_TRANSPORT_HOSPITALITY",
+      "FACT_TECHNOLOGY_FINANCE",
+      "FACT_EDUCATION_HEALTH",
+      "FACT_OWNERSHIP_TYPE",
+      "FACT_FINANCE_SOURCES"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "`dim_district`.`district_name` is needed; filter by `dim_sector_category`.`sector_category` = 'Urban'; sum `fact_ownership_type`.`est_govt_psu` per district and sector and require sum >= 0; sum `fact_ownership_type`.`est_private_self_help_group` per district and sector and require sum >= 0; order by `dim_district`.`district_name`."
+  },
+  {
+    "question": "List the district names for districts categorized as 'Rural' where the sum of estimated government PSU establishments is at least 0.000 and the sum of estimated private self-help group establishments is at least 0.000, ordered alphabetically by district name.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN FACT_OWNERSHIP_TYPE AS T2 ON T1.DISTRICT_ID = T2.LOCATION_ID JOIN DIM_LOCATION AS T3 ON T2.LOCATION_ID = T3.LOCATION_ID JOIN DIM_SECTOR_CATEGORY AS T4 ON T2.SECTOR_ID = T4.SECTOR_ID WHERE T4.SECTOR_CATEGORY = 'Rural' GROUP BY T1.DISTRICT_NAME HAVING SUM(T2.EST_GOVT_PSU) >= 0.000 AND SUM(T2.EST_PRIVATE_SELF_HELP_GROUP) >= 0.000 ORDER BY T1.DISTRICT_NAME ASC",
+    "pair_id": "dcdb4030",
+    "original_question_id": "067b5053",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_LOCATION",
+      "DIM_SECTOR_CATEGORY",
+      "FACT_TRADE_SECTOR",
+      "FACT_TRANSPORT_HOSPITALITY",
+      "FACT_TECHNOLOGY_FINANCE",
+      "FACT_EDUCATION_HEALTH",
+      "FACT_OWNERSHIP_TYPE",
+      "FACT_FINANCE_SOURCES"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter Rural via `dim_sector_category`.`sector_category` = 'Rural'. Join `fact_ownership_type` with `dim_sector_category` on `sector_id`, with `dim_location` on `location_id`, and with `dim_district` on `district_id` (assuming `dim_location`.`district_id` exists). Group by `dim_district`.`district_name` and ensure SUM(`fact_ownership_type`.`est_govt_psu`) >= 0 and SUM(`fact_ownership_type`.`est_private_self_help_group`) >= 0. Order by `dim_district`.`district_name`."
+  },
+  {
+    "question": "List the district names for locations within the 'Nancowry' sub-district where the total number of government PSU establishments is at least 0.000 and the total number of private self-help group establishments is at least 0.000, ordered alphabetically by district name.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN FACT_OWNERSHIP_TYPE AS T2 ON T1.DISTRICT_ID = T2.LOCATION_ID JOIN DIM_LOCATION AS T3 ON T2.LOCATION_ID = T3.LOCATION_ID JOIN DIM_SECTOR_CATEGORY AS T4 ON T2.SECTOR_ID = T4.SECTOR_ID WHERE T3.SUB_DISTRICT_NAME = 'Nancowry' GROUP BY T1.DISTRICT_NAME HAVING SUM(T2.EST_GOVT_PSU) >= 0.000 AND SUM(T2.EST_PRIVATE_SELF_HELP_GROUP) >= 0.000 ORDER BY T1.DISTRICT_NAME ASC",
+    "pair_id": "27d280aa",
+    "original_question_id": "067b5053",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_LOCATION",
+      "DIM_SECTOR_CATEGORY",
+      "FACT_TRADE_SECTOR",
+      "FACT_TRANSPORT_HOSPITALITY",
+      "FACT_TECHNOLOGY_FINANCE",
+      "FACT_EDUCATION_HEALTH",
+      "FACT_OWNERSHIP_TYPE",
+      "FACT_FINANCE_SOURCES"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_location` where `dim_location.sub_district_name` = 'Nancowry'. Join to `fact_ownership_type` on `dim_location.location_id` = `fact_ownership_type.location_id`. Filter where `fact_ownership_type.est_govt_psu` >= 0.0 and `fact_ownership_type.est_private_self_help_group` >= 0.0. Then retrieve `dim_district.district_name`. However, there is no direct join between `dim_location` and `dim_district` in the schema; additional join logic may be required based on business rules not provided."
+  },
+  {
+    "question": "List the state names for the record where the state ID is 1, ordered alphabetically by state name, and limit the results to the first 5 entries.",
+    "sql": "SELECT STATE_NAME FROM DIM_STATE WHERE STATE_ID = 1 ORDER BY STATE_NAME ASC LIMIT 5",
+    "pair_id": "628ceafb",
+    "original_question_id": "407d3e85",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_state.state_id` = 1; select `dim_state.state_name` ordered by `dim_state.state_name` ascending limit 5."
+  },
+  {
+    "question": "List the state name for the state of Assam, ordered alphabetically by state name, and limit the results to the first 5 records.",
+    "sql": "SELECT STATE_NAME FROM DIM_STATE WHERE STATE_NAME = 'Assam' ORDER BY STATE_NAME ASC LIMIT 5",
+    "pair_id": "3b593dc4",
+    "original_question_id": "407d3e85",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_state`.`state_name` contains state names; filter where `dim_state`.`state_name` = 'Assam'; order by `dim_state`.`state_name` alphabetically (ascending); limit to 5 records."
+  },
+  {
+    "question": "List the state names for the state of 'Bihar', ordered alphabetically by state name, and limit the results to the first 5 records.",
+    "sql": "SELECT STATE_NAME FROM DIM_STATE WHERE STATE_NAME = 'Bihar' ORDER BY STATE_NAME ASC LIMIT 5",
+    "pair_id": "01a512a7",
+    "original_question_id": "407d3e85",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "State names refer to `dim_state.state_name`; 'Bihar' is a value in `dim_state.state_name`; order alphabetically by `dim_state.state_name`; limit to 5 records."
+  },
+  {
+    "question": "List the state names for the country named 'India', ordered alphabetically by state name, and show only the first five results.",
+    "sql": "SELECT T2.STATE_NAME FROM DIM_COUNTRY AS T1 JOIN DIM_STATE AS T2 ON T1.COUNTRY_ID = T2.STATE_ID WHERE T1.COUNTRY_NAME = 'India' ORDER BY T2.STATE_NAME ASC LIMIT 5",
+    "pair_id": "700ca976",
+    "original_question_id": "407d3e85",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Country 'India' is in `dim_country`.`country_name`. All states in `dim_state` belong to India. Order by `dim_state`.`state_name` alphabetically and limit to 5."
+  },
+  {
+    "question": "List the state names for the country with ID 1, ordered alphabetically by state name, and show only the first five results.",
+    "sql": "SELECT T2.STATE_NAME FROM DIM_COUNTRY AS T1 JOIN DIM_STATE AS T2 ON T1.COUNTRY_ID = T2.STATE_ID WHERE T1.COUNTRY_ID = 1 ORDER BY T2.STATE_NAME ASC LIMIT 5",
+    "pair_id": "82fa322a",
+    "original_question_id": "407d3e85",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "All states in `dim_state` belong to the country with (`dim_country`.`country_id`) = 1 (India). List (`dim_state`.`state_name`) ordered alphabetically and limit to 5."
+  },
+  {
+    "question": "List the state names for the country named 'India', specifically filtering for the states of Assam, Bihar, Andaman And Nicobar Islands, Andhra Pradesh, and Arunachal Pradesh, ordered alphabetically by state name and limited to the first five results.",
+    "sql": "SELECT T2.STATE_NAME FROM DIM_COUNTRY AS T1 JOIN DIM_STATE AS T2 ON T1.COUNTRY_ID = T2.STATE_ID WHERE T1.COUNTRY_NAME = 'India' AND T2.STATE_NAME IN ('Assam', 'Bihar', 'Andaman And Nicobar Islands', 'Andhra Pradesh', 'Arunachal Pradesh') ORDER BY T2.STATE_NAME ASC LIMIT 5",
+    "pair_id": "6eb0db26",
+    "original_question_id": "407d3e85",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state`.`state_name` for values in ('Assam', 'Bihar', 'Andaman And Nicobar Islands', 'Andhra Pradesh', 'Arunachal Pradesh'); order by `dim_state`.`state_name` ASC; limit 5; all states belong to India (`dim_country`.`country_name` = 'India') but no direct join needed as per schema."
+  },
+  {
+    "question": "List the state name and the district name for all entries, ordered alphabetically by state name and then by district name.",
+    "sql": "SELECT STATE_NAME, DISTRICT_NAME FROM DIM_STATE JOIN DIM_DISTRICT ON DIM_STATE.STATE_ID = DIM_DISTRICT.DISTRICT_ID ORDER BY STATE_NAME, DISTRICT_NAME",
+    "pair_id": "929f72b6",
+    "original_question_id": "3a8d0013",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "state name refers to `dim_state.state_name`; district name refers to `dim_district.district_name`; ordered alphabetically by state name then district name means ORDER BY `dim_state.state_name`, `dim_district.district_name`"
+  },
+  {
+    "question": "List the state name and the district name for all records where the state name is 'Assam', ordered by state name and district name.",
+    "sql": "SELECT STATE_NAME, DISTRICT_NAME FROM DIM_STATE JOIN DIM_DISTRICT ON DIM_STATE.STATE_ID = DIM_DISTRICT.DISTRICT_ID WHERE STATE_NAME = 'Assam' ORDER BY STATE_NAME, DISTRICT_NAME",
+    "pair_id": "c46999ad",
+    "original_question_id": "3a8d0013",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_state.state_name` refers to state name; `dim_district.district_name` refers to district name; 'Assam' is a value in `dim_state.state_name`."
+  },
+  {
+    "question": "List the state name and the district name for all records where the state name is 'Bihar', and sort the results by state name and then by district name.",
+    "sql": "SELECT STATE_NAME, DISTRICT_NAME FROM DIM_STATE JOIN DIM_DISTRICT ON DIM_STATE.STATE_ID = DIM_DISTRICT.DISTRICT_ID WHERE STATE_NAME = 'Bihar' ORDER BY STATE_NAME, DISTRICT_NAME",
+    "pair_id": "7a0a1866",
+    "original_question_id": "3a8d0013",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_state.state_name` contains state names; 'Bihar' is a valid value. `dim_district.district_name` contains district names. To get state and district for records where state is 'Bihar', join fact tables (e.g., `fact_education_health`) to `dim_location` on `fact_education_health.location_id` = `dim_location.location_id`, then join `dim_location.sub_district_name` to `dim_district.district_name`, then join `dim_district.state_id` (assumed column) to `dim_state.state_id`. Filter by `dim_state.state_name` = 'Bihar'. Sort by `dim_state.state_name` and `dim_district.district_name`."
+  },
+  {
+    "question": "List the state names and their corresponding district names, ordered alphabetically by state name and then by district name.",
+    "sql": "SELECT T1.STATE_NAME, T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.DISTRICT_ID ORDER BY T1.STATE_NAME ASC, T2.DISTRICT_NAME ASC",
+    "pair_id": "6f21eb89",
+    "original_question_id": "3a8d0013",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_state.state_name` refers to state names; `dim_district.district_name` refers to district names; order by `dim_state.state_name` alphabetically then by `dim_district.district_name` alphabetically."
+  },
+  {
+    "question": "List the state names and the district names for the states of Assam and Bihar, and sort the results alphabetically by state name and then by district name.",
+    "sql": "SELECT T1.STATE_NAME, T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.DISTRICT_ID WHERE T1.STATE_NAME IN ('Assam', 'Bihar') ORDER BY T1.STATE_NAME ASC, T2.DISTRICT_NAME ASC",
+    "pair_id": "35faa573",
+    "original_question_id": "3a8d0013",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state`.`state_name` IN ('Assam', 'Bihar'); join `dim_district` on `dim_district`.`state_id` = `dim_state`.`state_id`; sort by `dim_state`.`state_name` ASC, then `dim_district`.`district_name` ASC."
+  },
+  {
+    "question": "List the state names and the district names for the districts named 'Chittoor' and 'Prakasam', sorted alphabetically by state name and then by district name.",
+    "sql": "SELECT T1.STATE_NAME, T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.DISTRICT_ID WHERE T2.DISTRICT_NAME IN ('Chittoor', 'Prakasam') ORDER BY T1.STATE_NAME ASC, T2.DISTRICT_NAME ASC",
+    "pair_id": "a4cf4e06",
+    "original_question_id": "3a8d0013",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_district.district_name` contains district names; `dim_state.state_name` contains state names; filter `dim_district.district_name` IN ('Chittoor', 'Prakasam'); sort by `dim_state.state_name` then `dim_district.district_name`."
+  },
+  {
+    "question": "List the state names and district names, grouped by state and district, for districts that have at least one record and are not named 'Chittoor' or 'Prakasam', sorting the results alphabetically by state name and then by district name.",
+    "sql": "SELECT T1.STATE_NAME, T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.DISTRICT_ID JOIN DIM_COUNTRY AS T3 ON T1.STATE_ID = T3.COUNTRY_ID GROUP BY T1.STATE_NAME, T2.DISTRICT_NAME HAVING COUNT(T2.DISTRICT_ID) > 0 AND T2.DISTRICT_NAME NOT IN ('Chittoor', 'Prakasam') ORDER BY T1.STATE_NAME ASC, T2.DISTRICT_NAME ASC",
+    "pair_id": "f8990d2c",
+    "original_question_id": "3a8d0013",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "State names are from `dim_state.state_name`. District names are from `dim_district.district_name`. To associate districts with states, join `dim_district` and `dim_state` on `dim_district.state_id = dim_state.state_id` (assuming `dim_district` contains a `state_id` column not shown in schema). Exclude districts where `dim_district.district_name` is exactly 'Chittoor' or 'Prakasam'. Sort results alphabetically by `dim_state.state_name` then `dim_district.district_name`."
+  },
+  {
+    "question": "List the ULB RLB village name, the district name, and the state name for all locations where the state name is 'Assam'.",
+    "sql": "SELECT T1.ULB_RLB_VILLAGE_NAME, T2.DISTRICT_NAME, T3.STATE_NAME FROM DIM_LOCATION AS T1 JOIN DIM_DISTRICT AS T2 ON T1.LOCATION_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.DISTRICT_ID = T3.STATE_ID WHERE T3.STATE_NAME = 'Assam';",
+    "pair_id": "a010ee80",
+    "original_question_id": "62ee483b",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "ULB RLB village name refers to `dim_location`.`ulb_rlb_village_name`; district name refers to `dim_district`.`district_name`; state name refers to `dim_state`.`state_name`; state name is 'Assam' refers to `dim_state`.`state_name` = 'Assam'."
+  },
+  {
+    "question": "List the ULB RLB village name, the district name, and the state name for all records where the district name is 'Chittoor'.",
+    "sql": "SELECT T1.ULB_RLB_VILLAGE_NAME, T2.DISTRICT_NAME, T3.STATE_NAME FROM DIM_LOCATION AS T1 JOIN DIM_DISTRICT AS T2 ON T1.LOCATION_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.DISTRICT_ID = T3.STATE_ID WHERE T2.DISTRICT_NAME = 'Chittoor';",
+    "pair_id": "0962532c",
+    "original_question_id": "62ee483b",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_location`.`ulb_rlb_village_name` is the village name; `dim_district`.`district_name` is the district name; `dim_state`.`state_name` is the state name. Join `dim_location` to `dim_district` via `district_id` and to `dim_state` via `state_id` (these columns are present in the database but not shown in the schema). Filter where `dim_district`.`district_name` = 'Chittoor'."
+  },
+  {
+    "question": "Show the ULB/RLB village name, the district name, and the state name for the village named 'Pilpilow'.",
+    "sql": "SELECT T1.ULB_RLB_VILLAGE_NAME, T2.DISTRICT_NAME, T3.STATE_NAME FROM DIM_LOCATION AS T1 JOIN DIM_DISTRICT AS T2 ON T1.LOCATION_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.DISTRICT_ID = T3.STATE_ID WHERE T1.ULB_RLB_VILLAGE_NAME = 'Pilpilow';",
+    "pair_id": "598ad64a",
+    "original_question_id": "62ee483b",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "ULB/RLB village name is stored in `dim_location`.`ulb_rlb_village_name`; district name is stored in `dim_district`.`district_name`; state name is stored in `dim_state`.`state_name`; village named 'Pilpilow' refers to `dim_location`.`ulb_rlb_village_name` = 'Pilpilow'."
+  },
+  {
+    "question": "List the ULB RLB village name, the district name, and the state name for all locations where the state name is 'Andaman And Nicobar Islands', ordered alphabetically by the state name.",
+    "sql": "SELECT T1.ULB_RLB_VILLAGE_NAME, T2.DISTRICT_NAME, T3.STATE_NAME FROM DIM_LOCATION AS T1 JOIN DIM_DISTRICT AS T2 ON T1.LOCATION_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.DISTRICT_ID = T3.STATE_ID WHERE T3.STATE_NAME = 'Andaman And Nicobar Islands' ORDER BY T3.STATE_NAME ASC",
+    "pair_id": "4629dc01",
+    "original_question_id": "62ee483b",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "ULB RLB village name is `dim_location`.`ulb_rlb_village_name`; district name is `dim_district`.`district_name`; state name is `dim_state`.`state_name`. Filter where `dim_state`.`state_name` = 'Andaman And Nicobar Islands'. Join `dim_location` to `dim_district` on `dim_location`.`district_id` = `dim_district`.`district_id` and to `dim_state` on `dim_location`.`state_id` = `dim_state`.`state_id`. Order by `dim_state`.`state_name` alphabetically."
+  },
+  {
+    "question": "List the ULB RLB village name, the district name, and the state name for all entries where the district name is 'South Andamans', and sort the results by the state name in ascending order.",
+    "sql": "SELECT T1.ULB_RLB_VILLAGE_NAME, T2.DISTRICT_NAME, T3.STATE_NAME FROM DIM_LOCATION AS T1 JOIN DIM_DISTRICT AS T2 ON T1.LOCATION_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.DISTRICT_ID = T3.STATE_ID WHERE T2.DISTRICT_NAME = 'South Andamans' ORDER BY T3.STATE_NAME ASC",
+    "pair_id": "4fd89252",
+    "original_question_id": "62ee483b",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_location.ulb_rlb_village_name` is needed; `dim_district.district_name` is needed; `dim_state.state_name` is needed; Filter where `dim_district.district_name` = 'South Andamans'; Sort by `dim_state.state_name` ASC; Note: The schema does not define explicit joins between dim_location, dim_district, and dim_state; typical joins might involve location_id linking to fact tables, but no district_id or state_id in fact tables; consider if there are hidden relationships."
+  },
+  {
+    "question": "Show the ULB/RLB village name, the district name, and the state name for the village named 'Chouldari (Rv)', and sort the results alphabetically by the state name.",
+    "sql": "SELECT T1.ULB_RLB_VILLAGE_NAME, T2.DISTRICT_NAME, T3.STATE_NAME FROM DIM_LOCATION AS T1 JOIN DIM_DISTRICT AS T2 ON T1.LOCATION_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.DISTRICT_ID = T3.STATE_ID WHERE T1.ULB_RLB_VILLAGE_NAME = 'Chouldari (Rv)' ORDER BY T3.STATE_NAME ASC",
+    "pair_id": "c84dbd8f",
+    "original_question_id": "62ee483b",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter: `dim_location`.`ulb_rlb_village_name` = 'Chouldari (Rv)'. Select columns: `dim_location`.`ulb_rlb_village_name`, `dim_district`.`district_name`, `dim_state`.`state_name`. Join `dim_location` to `dim_district` on `dim_location`.`district_id` = `dim_district`.`district_id` and to `dim_state` on `dim_location`.`state_id` = `dim_state`.`state_id`. Sort by `dim_state`.`state_name` ASC."
+  },
+  {
+    "question": "List the ULB RLB village name, the sub-district name, the district name, and the state name for all locations within the state of 'Andaman And Nicobar Islands', ensuring each location entry is counted at least once, and sort the results alphabetically by state name and then by district name.",
+    "sql": "SELECT T1.ULB_RLB_VILLAGE_NAME, T1.SUB_DISTRICT_NAME, T2.DISTRICT_NAME, T3.STATE_NAME FROM DIM_LOCATION AS T1 JOIN DIM_DISTRICT AS T2 ON T1.LOCATION_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.DISTRICT_ID = T3.STATE_ID WHERE T3.STATE_NAME = 'Andaman And Nicobar Islands' GROUP BY T1.ULB_RLB_VILLAGE_NAME, T1.SUB_DISTRICT_NAME, T2.DISTRICT_NAME, T3.STATE_NAME HAVING COUNT(T1.LOCATION_ID) >= 1 ORDER BY T3.STATE_NAME ASC, T2.DISTRICT_NAME ASC",
+    "pair_id": "a40cabaa",
+    "original_question_id": "62ee483b",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter by `dim_state`.`state_name` = 'Andaman And Nicobar Islands'. Join `dim_location` to `dim_district` and `dim_state` to get district and state names. Select `dim_location`.`ulb_rlb_village_name`, `dim_location`.`sub_district_name`, `dim_district`.`district_name`, `dim_state`.`state_name`. Use DISTINCT to ensure each location entry appears at least once. Sort by `dim_state`.`state_name` ASC, then `dim_district`.`district_name` ASC."
+  },
+  {
+    "question": "List the ULB/RLB village name, the sub-district name, the district name, and the state name for locations within the 'South Andamans' or 'Nicobars' districts, ensuring each location appears at least once, and sort the results alphabetically by state name and then by district name.",
+    "sql": "SELECT T1.ULB_RLB_VILLAGE_NAME, T1.SUB_DISTRICT_NAME, T2.DISTRICT_NAME, T3.STATE_NAME FROM DIM_LOCATION AS T1 JOIN DIM_DISTRICT AS T2 ON T1.LOCATION_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.DISTRICT_ID = T3.STATE_ID WHERE T2.DISTRICT_NAME IN ('South Andamans', 'Nicobars') GROUP BY T1.ULB_RLB_VILLAGE_NAME, T1.SUB_DISTRICT_NAME, T2.DISTRICT_NAME, T3.STATE_NAME HAVING COUNT(T1.LOCATION_ID) >= 1 ORDER BY T3.STATE_NAME ASC, T2.DISTRICT_NAME ASC",
+    "pair_id": "5ce08597",
+    "original_question_id": "62ee483b",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "ULB/RLB village name is `dim_location`.`ulb_rlb_village_name`; sub-district name is `dim_location`.`sub_district_name`; district name is `dim_district`.`district_name`; state name is `dim_state`.`state_name`. Filter where `dim_district`.`district_name` IN ('South Andamans', 'Nicobars'). Sort by `dim_state`.`state_name` ASC, then `dim_district`.`district_name` ASC. Ensure unique locations (use DISTINCT on location columns)."
+  },
+  {
+    "question": "List the village name, sub-district name, district name, and state name for locations where the sub-district name is 'Nancowry' or the village name is 'Pilpilow', grouped by these four attributes and including only those with at least one location ID, sorted alphabetically by state and then by district.",
+    "sql": "SELECT T1.ULB_RLB_VILLAGE_NAME, T1.SUB_DISTRICT_NAME, T2.DISTRICT_NAME, T3.STATE_NAME FROM DIM_LOCATION AS T1 JOIN DIM_DISTRICT AS T2 ON T1.LOCATION_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.DISTRICT_ID = T3.STATE_ID WHERE T1.SUB_DISTRICT_NAME = 'Nancowry' OR T1.ULB_RLB_VILLAGE_NAME = 'Pilpilow' GROUP BY T1.ULB_RLB_VILLAGE_NAME, T1.SUB_DISTRICT_NAME, T2.DISTRICT_NAME, T3.STATE_NAME HAVING COUNT(T1.LOCATION_ID) >= 1 ORDER BY T3.STATE_NAME ASC, T2.DISTRICT_NAME ASC",
+    "pair_id": "f4812540",
+    "original_question_id": "62ee483b",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "`dim_location`.`ulb_rlb_village_name` is village name; `dim_location`.`sub_district_name` is sub-district name; `dim_district`.`district_name` is district name; `dim_state`.`state_name` is state name. Filter where `dim_location`.`sub_district_name` = 'Nancowry' OR `dim_location`.`ulb_rlb_village_name` = 'Pilpilow'. Group by these four columns. Ensure at least one location exists (location_id not null). Sort by `dim_state`.`state_name` ASC, then `dim_district`.`district_name` ASC."
+  },
+  {
+    "question": "What is the ULB/RLB village name for locations situated in the Nancowry sub-district?",
+    "sql": "SELECT ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION WHERE SUB_DISTRICT_NAME = 'Nancowry';",
+    "pair_id": "bfbcb4a3",
+    "original_question_id": "09df7d04",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "ULB/RLB village name refers to `dim_location`.`ulb_rlb_village_name`; Nancowry sub-district refers to `dim_location`.`sub_district_name` = 'Nancowry'"
+  },
+  {
+    "question": "What is the ULB RLB village name for locations situated in the sub-district named 'Mayabunder'?",
+    "sql": "SELECT ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION WHERE SUB_DISTRICT_NAME = 'Mayabunder';",
+    "pair_id": "c635e7fa",
+    "original_question_id": "09df7d04",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "(`dim_location`.`ulb_rlb_village_name`) for locations where (`dim_location`.`sub_district_name`) = 'Mayabunder'"
+  },
+  {
+    "question": "What is the ULB/RLB village name for locations where the sub-district name is 'Ferrargunj'?",
+    "sql": "SELECT ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION WHERE SUB_DISTRICT_NAME = 'Ferrargunj';",
+    "pair_id": "c78c5144",
+    "original_question_id": "09df7d04",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "ULB/RLB village name refers to `dim_location.ulb_rlb_village_name`; sub-district name 'Ferrargunj' refers to `dim_location.sub_district_name` = 'Ferrargunj'."
+  },
+  {
+    "question": "List the ULB RLB village names for all locations where the sub-district name is 'Nancowry', ordered alphabetically by village name.",
+    "sql": "SELECT l.ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION l JOIN DIM_DISTRICT d ON l.LOCATION_ID = d.DISTRICT_ID WHERE l.SUB_DISTRICT_NAME = 'Nancowry' ORDER BY l.ULB_RLB_VILLAGE_NAME;",
+    "pair_id": "d02dea33",
+    "original_question_id": "09df7d04",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_location.sub_district_name` must be 'Nancowry'; list `dim_location.ulb_rlb_village_name` ordered alphabetically."
+  },
+  {
+    "question": "List the ULB/RLB village names for the sub-district named 'Mayabunder', ordered alphabetically by the village name.",
+    "sql": "SELECT l.ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION l JOIN DIM_STATE s ON l.LOCATION_ID = s.STATE_ID WHERE l.SUB_DISTRICT_NAME = 'Mayabunder' ORDER BY l.ULB_RLB_VILLAGE_NAME;",
+    "pair_id": "d4f6cd21",
+    "original_question_id": "09df7d04",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_location.ulb_rlb_village_name` refers to ULB/RLB village names; 'Mayabunder' is a value in `dim_location.sub_district_name`; alphabetical order means ORDER BY `dim_location.ulb_rlb_village_name` ASC"
+  },
+  {
+    "question": "List the ULB RLB village names for all locations within the 'Ferrargunj' sub-district, ordered alphabetically by village name.",
+    "sql": "SELECT l.ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION l JOIN DIM_DISTRICT d ON l.LOCATION_ID = d.DISTRICT_ID WHERE l.SUB_DISTRICT_NAME = 'Ferrargunj' ORDER BY l.ULB_RLB_VILLAGE_NAME;",
+    "pair_id": "8e87a651",
+    "original_question_id": "09df7d04",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "ULB RLB village names refer to `dim_location`.`ulb_rlb_village_name`; filter where `dim_location`.`sub_district_name` = 'Ferrargunj'; order alphabetically by `dim_location`.`ulb_rlb_village_name`."
+  },
+  {
+    "question": "List the ULB RLB village names and the location IDs for all locations where the sub-district name is 'Nancowry', ensuring that each location ID appears at least once, and sort the results alphabetically by the village name.",
+    "sql": "SELECT T3.ULB_RLB_VILLAGE_NAME, T3.LOCATION_ID FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.DISTRICT_ID JOIN DIM_LOCATION AS T3 ON T2.DISTRICT_ID = T3.LOCATION_ID WHERE T3.SUB_DISTRICT_NAME = 'Nancowry' GROUP BY T3.ULB_RLB_VILLAGE_NAME, T3.LOCATION_ID HAVING COUNT(T3.LOCATION_ID) >= 1 ORDER BY T3.ULB_RLB_VILLAGE_NAME ASC",
+    "pair_id": "4a9d229e",
+    "original_question_id": "09df7d04",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "sub-district name refers to `dim_location`.`sub_district_name`; ULB RLB village names refers to `dim_location`.`ulb_rlb_village_name`; location IDs refers to `dim_location`.`location_id`; filter where `dim_location`.`sub_district_name` = 'Nancowry'; sort by `dim_location`.`ulb_rlb_village_name` alphabetically"
+  },
+  {
+    "question": "List the ULB RLB village names and the location IDs for locations where the sub-district name is 'Mayabunder', grouped by these village names and location IDs, ensuring only those with at least one location ID count are included, and order the results alphabetically by the village name.",
+    "sql": "SELECT T3.ULB_RLB_VILLAGE_NAME, T3.LOCATION_ID FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.DISTRICT_ID JOIN DIM_LOCATION AS T3 ON T2.DISTRICT_ID = T3.LOCATION_ID WHERE T3.SUB_DISTRICT_NAME = 'Mayabunder' GROUP BY T3.ULB_RLB_VILLAGE_NAME, T3.LOCATION_ID HAVING COUNT(T3.LOCATION_ID) >= 1 ORDER BY T3.ULB_RLB_VILLAGE_NAME ASC",
+    "pair_id": "f49b58eb",
+    "original_question_id": "09df7d04",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_location` where (`dim_location`.`sub_district_name`) = 'Mayabunder', then group by (`dim_location`.`ulb_rlb_village_name`) and (`dim_location`.`location_id`), and order by (`dim_location`.`ulb_rlb_village_name`) alphabetically."
+  },
+  {
+    "question": "List the ULB RLB village names and the location IDs for all locations within the 'Ferrargunj' sub-district, grouped by their village name and location ID, where the count of location IDs is at least one, and sort the results alphabetically by the village name.",
+    "sql": "SELECT T3.ULB_RLB_VILLAGE_NAME, T3.LOCATION_ID FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.DISTRICT_ID JOIN DIM_LOCATION AS T3 ON T2.DISTRICT_ID = T3.LOCATION_ID WHERE T3.SUB_DISTRICT_NAME = 'Ferrargunj' GROUP BY T3.ULB_RLB_VILLAGE_NAME, T3.LOCATION_ID HAVING COUNT(T3.LOCATION_ID) >= 1 ORDER BY T3.ULB_RLB_VILLAGE_NAME ASC",
+    "pair_id": "fec753b2",
+    "original_question_id": "09df7d04",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "ULB RLB village names = `dim_location`.`ulb_rlb_village_name`; location IDs = `dim_location`.`location_id`; sub-district 'Ferrargunj' = `dim_location`.`sub_district_name` = 'Ferrargunj'; group by `dim_location`.`ulb_rlb_village_name` and `dim_location`.`location_id`; count of location IDs >= 1 is always true; sort by `dim_location`.`ulb_rlb_village_name` alphabetically."
+  },
+  {
+    "question": "What is the ULB/RLB village name for locations situated in the sub-district named 'Nancowry'?",
+    "sql": "SELECT ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION WHERE SUB_DISTRICT_NAME = 'Nancowry';",
+    "pair_id": "5d84bff0",
+    "original_question_id": "0e9c6787",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "ULB/RLB village name refers to `dim_location`.`ulb_rlb_village_name`; sub-district named 'Nancowry' refers to `dim_location`.`sub_district_name` = 'Nancowry'."
+  },
+  {
+    "question": "What is the ULB/RLB village name for locations situated in the sub-district of Mayabunder?",
+    "sql": "SELECT ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION WHERE SUB_DISTRICT_NAME = 'Mayabunder';",
+    "pair_id": "87d18dba",
+    "original_question_id": "0e9c6787",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "ULB/RLB village name refers to (`dim_location`.`ulb_rlb_village_name`). Sub-district of Mayabunder refers to (`dim_location`.`sub_district_name`) = 'Mayabunder'."
+  },
+  {
+    "question": "Show the ULB/RLB village name for all records where the sub-district name is 'Ferrargunj'.",
+    "sql": "SELECT ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION WHERE SUB_DISTRICT_NAME = 'Ferrargunj';",
+    "pair_id": "71cf4a74",
+    "original_question_id": "0e9c6787",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "ULB/RLB village name refers to `dim_location`.`ulb_rlb_village_name`; sub-district name refers to `dim_location`.`sub_district_name`; 'Ferrargunj' is an exact value in `dim_location`.`sub_district_name`."
+  },
+  {
+    "question": "List the ULB RLB village names for the sub-district named 'Nancowry', grouped and sorted alphabetically by the village name.",
+    "sql": "SELECT T1.ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION AS T1 JOIN DIM_DISTRICT AS T2 ON T1.LOCATION_ID = T2.DISTRICT_ID WHERE T1.SUB_DISTRICT_NAME = 'Nancowry' GROUP BY T1.ULB_RLB_VILLAGE_NAME ORDER BY T1.ULB_RLB_VILLAGE_NAME ASC",
+    "pair_id": "ce42e104",
+    "original_question_id": "0e9c6787",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "ULB RLB village names refer to `dim_location`.`ulb_rlb_village_name`; sub-district named 'Nancowry' refers to `dim_location`.`sub_district_name` = 'Nancowry'; grouped implies DISTINCT; sorted alphabetically means ORDER BY `dim_location`.`ulb_rlb_village_name`."
+  }
+]
