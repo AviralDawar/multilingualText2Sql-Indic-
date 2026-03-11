@@ -1,22 +1,27 @@
 [
   {
     "STATE_ID": 1,
+    "COUNTRY_ID": 1,
     "STATE": "Andhra Pradesh"
   },
   {
     "STATE_ID": 2,
+    "COUNTRY_ID": 1,
     "STATE": "Assam"
   },
   {
     "STATE_ID": 3,
+    "COUNTRY_ID": 1,
     "STATE": "Bihar"
   },
   {
     "STATE_ID": 4,
+    "COUNTRY_ID": 1,
     "STATE": "Chandigarh"
   },
   {
     "STATE_ID": 5,
+    "COUNTRY_ID": 1,
     "STATE": "Chhattisgarh"
   }
 ]

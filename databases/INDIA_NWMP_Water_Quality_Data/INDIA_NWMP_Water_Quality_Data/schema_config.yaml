@@ -36,7 +36,10 @@ dimension_tables:
       references: DIM_STATE
   DIM_TIME:
     key_column: YEAR
-    dedup_columns: []
+    key_source_index: 2
+    key_transform: extract_year
+    dedup_columns:
+    - 2
     columns: []
 fact_tables:
   FACT_THERMAL:
