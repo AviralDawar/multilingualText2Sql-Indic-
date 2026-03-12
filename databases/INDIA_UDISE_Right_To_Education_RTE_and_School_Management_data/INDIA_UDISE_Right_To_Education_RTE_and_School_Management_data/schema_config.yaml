@@ -45,6 +45,7 @@ dimension_tables:
     columns:
     - source_index: 4
       target_name: ACADEMIC_YEAR
+      transform: extract_year
 fact_tables:
   FACT_SCHOOL_GOVERNANCE:
     key_column: GOVERNANCE_ID
