@@ -1,22 +1,46 @@
-[
-  {
-    "SUB_DISTRICT_ID": 1,
-    "SUB_DISTRICT_NAME": "Ferrargunj"
-  },
-  {
-    "SUB_DISTRICT_ID": 2,
-    "SUB_DISTRICT_NAME": "Diglipur"
-  },
-  {
-    "SUB_DISTRICT_ID": 3,
-    "SUB_DISTRICT_NAME": "Rangat"
-  },
-  {
-    "SUB_DISTRICT_ID": 4,
-    "SUB_DISTRICT_NAME": "Great Nicobar"
-  },
-  {
-    "SUB_DISTRICT_ID": 5,
-    "SUB_DISTRICT_NAME": "Mayabunder"
-  }
-]
+{
+    "table_name": "INDIA_Village_Amenities_Directory_2001.DIM_SUB_DISTRICT",
+    "table_fullname": "INDIA_Village_Amenities_Directory_2001.INDIA_Village_Amenities_Directory_2001.DIM_SUB_DISTRICT",
+    "column_names": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+    ],
+    "column_types": [
+        "NUMBER",
+        "NUMBER",
+        "TEXT"
+    ],
+    "description": [
+        null,
+        null,
+        null
+    ],
+    "sample_rows": [
+        {
+            "SUB_DISTRICT_ID": 1,
+            "DISTRICT_ID": 1,
+            "SUB_DISTRICT_NAME": "Ferrargunj"
+        },
+        {
+            "SUB_DISTRICT_ID": 2,
+            "DISTRICT_ID": 2,
+            "SUB_DISTRICT_NAME": "Diglipur"
+        },
+        {
+            "SUB_DISTRICT_ID": 3,
+            "DISTRICT_ID": 2,
+            "SUB_DISTRICT_NAME": "Rangat"
+        },
+        {
+            "SUB_DISTRICT_ID": 4,
+            "DISTRICT_ID": 3,
+            "SUB_DISTRICT_NAME": "Great Nicobar"
+        },
+        {
+            "SUB_DISTRICT_ID": 5,
+            "DISTRICT_ID": 2,
+            "SUB_DISTRICT_NAME": "Mayabunder"
+        }
+    ]
+}

@@ -1,32 +1,62 @@
-[
-  {
-    "SUB_DISTRICT_ID": 1,
-    "NUMBER_OF_CINEMA_VIDEO_HALLS": "0.000",
-    "NUMBER_OF_SPORTS_CLUBS": "0.000",
-    "NUMBER_OF_STADIUMS_OR_AUDITORIUMS": "0.000"
-  },
-  {
-    "SUB_DISTRICT_ID": 2,
-    "NUMBER_OF_CINEMA_VIDEO_HALLS": "0.000",
-    "NUMBER_OF_SPORTS_CLUBS": "1.000",
-    "NUMBER_OF_STADIUMS_OR_AUDITORIUMS": "0.000"
-  },
-  {
-    "SUB_DISTRICT_ID": 3,
-    "NUMBER_OF_CINEMA_VIDEO_HALLS": "0.000",
-    "NUMBER_OF_SPORTS_CLUBS": "0.000",
-    "NUMBER_OF_STADIUMS_OR_AUDITORIUMS": "0.000"
-  },
-  {
-    "SUB_DISTRICT_ID": 4,
-    "NUMBER_OF_CINEMA_VIDEO_HALLS": "0.000",
-    "NUMBER_OF_SPORTS_CLUBS": "0.000",
-    "NUMBER_OF_STADIUMS_OR_AUDITORIUMS": "0.000"
-  },
-  {
-    "SUB_DISTRICT_ID": 5,
-    "NUMBER_OF_CINEMA_VIDEO_HALLS": "0.000",
-    "NUMBER_OF_SPORTS_CLUBS": "1.000",
-    "NUMBER_OF_STADIUMS_OR_AUDITORIUMS": "0.000"
-  }
-]
+{
+    "table_name": "INDIA_Village_Amenities_Directory_2001.FACT_RECREATION_SPORTS",
+    "table_fullname": "INDIA_Village_Amenities_Directory_2001.INDIA_Village_Amenities_Directory_2001.FACT_RECREATION_SPORTS",
+    "column_names": [
+        "FACT_RECREATION_SPORTS_ID",
+        "SUB_DISTRICT_ID",
+        "NUMBER_OF_CINEMA_VIDEO_HALLS",
+        "NUMBER_OF_SPORTS_CLUBS",
+        "NUMBER_OF_STADIUMS_OR_AUDITORIUMS"
+    ],
+    "column_types": [
+        "NUMBER",
+        "NUMBER",
+        "NUMBER",
+        "NUMBER",
+        "NUMBER"
+    ],
+    "description": [
+        null,
+        null,
+        null,
+        null,
+        null
+    ],
+    "sample_rows": [
+        {
+            "FACT_RECREATION_SPORTS_ID": 1,
+            "SUB_DISTRICT_ID": 1,
+            "NUMBER_OF_CINEMA_VIDEO_HALLS": 0,
+            "NUMBER_OF_SPORTS_CLUBS": 0,
+            "NUMBER_OF_STADIUMS_OR_AUDITORIUMS": 0
+        },
+        {
+            "FACT_RECREATION_SPORTS_ID": 2,
+            "SUB_DISTRICT_ID": 2,
+            "NUMBER_OF_CINEMA_VIDEO_HALLS": 0,
+            "NUMBER_OF_SPORTS_CLUBS": 1,
+            "NUMBER_OF_STADIUMS_OR_AUDITORIUMS": 0
+        },
+        {
+            "FACT_RECREATION_SPORTS_ID": 3,
+            "SUB_DISTRICT_ID": 3,
+            "NUMBER_OF_CINEMA_VIDEO_HALLS": 0,
+            "NUMBER_OF_SPORTS_CLUBS": 0,
+            "NUMBER_OF_STADIUMS_OR_AUDITORIUMS": 0
+        },
+        {
+            "FACT_RECREATION_SPORTS_ID": 4,
+            "SUB_DISTRICT_ID": 4,
+            "NUMBER_OF_CINEMA_VIDEO_HALLS": 0,
+            "NUMBER_OF_SPORTS_CLUBS": 0,
+            "NUMBER_OF_STADIUMS_OR_AUDITORIUMS": 0
+        },
+        {
+            "FACT_RECREATION_SPORTS_ID": 5,
+            "SUB_DISTRICT_ID": 5,
+            "NUMBER_OF_CINEMA_VIDEO_HALLS": 0,
+            "NUMBER_OF_SPORTS_CLUBS": 1,
+            "NUMBER_OF_STADIUMS_OR_AUDITORIUMS": 0
+        }
+    ]
+}

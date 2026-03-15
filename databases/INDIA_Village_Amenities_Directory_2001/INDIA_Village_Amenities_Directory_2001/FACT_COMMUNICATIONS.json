@@ -1,37 +1,70 @@
-[
-  {
-    "SUB_DISTRICT_ID": 1,
-    "NUMBER_OF_POST_OFFICES": "0.000",
-    "NUMBER_OF_TELEGRAPH_OFFICES": "0.000",
-    "NUMBER_OF_POST_AND_TELEGRAPH_OFFICES": "0.000",
-    "NUMBER_OF_TELEPHONE_CONNECTIONS": "1.000"
-  },
-  {
-    "SUB_DISTRICT_ID": 2,
-    "NUMBER_OF_POST_OFFICES": "0.000",
-    "NUMBER_OF_TELEGRAPH_OFFICES": "0.000",
-    "NUMBER_OF_POST_AND_TELEGRAPH_OFFICES": "0.000",
-    "NUMBER_OF_TELEPHONE_CONNECTIONS": "40.000"
-  },
-  {
-    "SUB_DISTRICT_ID": 3,
-    "NUMBER_OF_POST_OFFICES": "1.000",
-    "NUMBER_OF_TELEGRAPH_OFFICES": "0.000",
-    "NUMBER_OF_POST_AND_TELEGRAPH_OFFICES": "0.000",
-    "NUMBER_OF_TELEPHONE_CONNECTIONS": "1.000"
-  },
-  {
-    "SUB_DISTRICT_ID": 4,
-    "NUMBER_OF_POST_OFFICES": "1.000",
-    "NUMBER_OF_TELEGRAPH_OFFICES": "0.000",
-    "NUMBER_OF_POST_AND_TELEGRAPH_OFFICES": "0.000",
-    "NUMBER_OF_TELEPHONE_CONNECTIONS": "0.000"
-  },
-  {
-    "SUB_DISTRICT_ID": 5,
-    "NUMBER_OF_POST_OFFICES": "1.000",
-    "NUMBER_OF_TELEGRAPH_OFFICES": "0.000",
-    "NUMBER_OF_POST_AND_TELEGRAPH_OFFICES": "1.000",
-    "NUMBER_OF_TELEPHONE_CONNECTIONS": "1.000"
-  }
-]
+{
+    "table_name": "INDIA_Village_Amenities_Directory_2001.FACT_COMMUNICATIONS",
+    "table_fullname": "INDIA_Village_Amenities_Directory_2001.INDIA_Village_Amenities_Directory_2001.FACT_COMMUNICATIONS",
+    "column_names": [
+        "FACT_COMMUNICATIONS_ID",
+        "SUB_DISTRICT_ID",
+        "NUMBER_OF_POST_OFFICES",
+        "NUMBER_OF_TELEGRAPH_OFFICES",
+        "NUMBER_OF_POST_AND_TELEGRAPH_OFFICES",
+        "NUMBER_OF_TELEPHONE_CONNECTIONS"
+    ],
+    "column_types": [
+        "NUMBER",
+        "NUMBER",
+        "NUMBER",
+        "NUMBER",
+        "NUMBER",
+        "NUMBER"
+    ],
+    "description": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+    ],
+    "sample_rows": [
+        {
+            "FACT_COMMUNICATIONS_ID": 1,
+            "SUB_DISTRICT_ID": 1,
+            "NUMBER_OF_POST_OFFICES": 0,
+            "NUMBER_OF_TELEGRAPH_OFFICES": 0,
+            "NUMBER_OF_POST_AND_TELEGRAPH_OFFICES": 0,
+            "NUMBER_OF_TELEPHONE_CONNECTIONS": 1
+        },
+        {
+            "FACT_COMMUNICATIONS_ID": 2,
+            "SUB_DISTRICT_ID": 2,
+            "NUMBER_OF_POST_OFFICES": 0,
+            "NUMBER_OF_TELEGRAPH_OFFICES": 0,
+            "NUMBER_OF_POST_AND_TELEGRAPH_OFFICES": 0,
+            "NUMBER_OF_TELEPHONE_CONNECTIONS": 40
+        },
+        {
+            "FACT_COMMUNICATIONS_ID": 3,
+            "SUB_DISTRICT_ID": 3,
+            "NUMBER_OF_POST_OFFICES": 1,
+            "NUMBER_OF_TELEGRAPH_OFFICES": 0,
+            "NUMBER_OF_POST_AND_TELEGRAPH_OFFICES": 0,
+            "NUMBER_OF_TELEPHONE_CONNECTIONS": 1
+        },
+        {
+            "FACT_COMMUNICATIONS_ID": 4,
+            "SUB_DISTRICT_ID": 4,
+            "NUMBER_OF_POST_OFFICES": 1,
+            "NUMBER_OF_TELEGRAPH_OFFICES": 0,
+            "NUMBER_OF_POST_AND_TELEGRAPH_OFFICES": 0,
+            "NUMBER_OF_TELEPHONE_CONNECTIONS": 0
+        },
+        {
+            "FACT_COMMUNICATIONS_ID": 5,
+            "SUB_DISTRICT_ID": 5,
+            "NUMBER_OF_POST_OFFICES": 1,
+            "NUMBER_OF_TELEGRAPH_OFFICES": 0,
+            "NUMBER_OF_POST_AND_TELEGRAPH_OFFICES": 1,
+            "NUMBER_OF_TELEPHONE_CONNECTIONS": 1
+        }
+    ]
+}

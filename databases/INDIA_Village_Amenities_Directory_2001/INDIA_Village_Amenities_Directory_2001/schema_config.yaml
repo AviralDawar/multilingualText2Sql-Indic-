@@ -1,4 +1,4 @@
-database_name: INDIA_Village_Amenities_Directory _2001
+database_name: INDIA_Village_Amenities_Directory_2001
 source_file: total_data.csv
 dimension_tables:
   DIM_COUNTRY:
@@ -40,7 +40,10 @@ dimension_tables:
       references: DIM_DISTRICT
 fact_tables:
   FACT_POPULATION:
-    key_column: SUB_DISTRICT_ID
+    key_column: FACT_POPULATION_ID
+    foreign_keys:
+    - column: SUB_DISTRICT_ID
+      references: DIM_SUB_DISTRICT
     columns:
     - source_index: 4
       target_name: NUMBER_OF_HOUSEHOLDS
@@ -63,7 +66,10 @@ fact_tables:
     - source_index: 13
       target_name: FEMALE_SCHEDULED_TRIBES_RURAL_POPULATION
   FACT_EDUCATION:
-    key_column: SUB_DISTRICT_ID
+    key_column: FACT_EDUCATION_ID
+    foreign_keys:
+    - column: SUB_DISTRICT_ID
+      references: DIM_SUB_DISTRICT
     columns:
     - source_index: 14
       target_name: NUMBER_OF_PRIMARY_SCHOOLS
@@ -80,7 +86,10 @@ fact_tables:
     - source_index: 20
       target_name: NUMBER_OF_OTHER_EDUCATIONAL_FACILITIES
   FACT_HEALTHCARE_FACILITIES:
-    key_column: SUB_DISTRICT_ID
+    key_column: FACT_HEALTHCARE_FACILITIES_ID
+    foreign_keys:
+    - column: SUB_DISTRICT_ID
+      references: DIM_SUB_DISTRICT
     columns:
     - source_index: 21
       target_name: NUMBER_OF_ALLOPATHIC_HOSPITALS
@@ -97,7 +106,10 @@ fact_tables:
     - source_index: 37
       target_name: NUMBER_OF_OTHER_MEDICAL_FACILITIES
   FACT_MATERNITY_CHILD_CARE:
-    key_column: SUB_DISTRICT_ID
+    key_column: FACT_MATERNITY_CHILD_CARE_ID
+    foreign_keys:
+    - column: SUB_DISTRICT_ID
+      references: DIM_SUB_DISTRICT
     columns:
     - source_index: 26
       target_name: NUMBER_OF_MATERNITY_AND_CHILD_WELFARE_CENTRES
@@ -114,7 +126,10 @@ fact_tables:
     - source_index: 32
       target_name: NUMBER_OF_FAMILY_WELFARE_CENTRES
   FACT_MEDICAL_PERSONNEL:
-    key_column: SUB_DISTRICT_ID
+    key_column: FACT_MEDICAL_PERSONNEL_ID
+    foreign_keys:
+    - column: SUB_DISTRICT_ID
+      references: DIM_SUB_DISTRICT
     columns:
     - source_index: 34
       target_name: NUMBER_OF_REGISTERED_PRIVATE_MEDICAL_PRACTITIONERS
@@ -123,7 +138,10 @@ fact_tables:
     - source_index: 36
       target_name: NUMBER_OF_COMMUNITY_HEALTH_WORKERS
   FACT_COMMUNICATIONS:
-    key_column: SUB_DISTRICT_ID
+    key_column: FACT_COMMUNICATIONS_ID
+    foreign_keys:
+    - column: SUB_DISTRICT_ID
+      references: DIM_SUB_DISTRICT
     columns:
     - source_index: 38
       target_name: NUMBER_OF_POST_OFFICES
@@ -134,7 +152,10 @@ fact_tables:
     - source_index: 41
       target_name: NUMBER_OF_TELEPHONE_CONNECTIONS
   FACT_FINANCIAL_SERVICES:
-    key_column: SUB_DISTRICT_ID
+    key_column: FACT_FINANCIAL_SERVICES_ID
+    foreign_keys:
+    - column: SUB_DISTRICT_ID
+      references: DIM_SUB_DISTRICT
     columns:
     - source_index: 42
       target_name: NUMBER_OF_COMMERCIAL_BANKS
@@ -147,7 +168,10 @@ fact_tables:
     - source_index: 46
       target_name: NUMBER_OF_OTHER_CREDIT_SOCIETIES
   FACT_RECREATION_SPORTS:
-    key_column: SUB_DISTRICT_ID
+    key_column: FACT_RECREATION_SPORTS_ID
+    foreign_keys:
+    - column: SUB_DISTRICT_ID
+      references: DIM_SUB_DISTRICT
     columns:
     - source_index: 47
       target_name: NUMBER_OF_CINEMA_VIDEO_HALLS
