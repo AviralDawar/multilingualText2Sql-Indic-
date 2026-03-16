@@ -1,0 +1,1520 @@
+[
+  {
+    "question": "List each state name along with the total count of district IDs associated with it, grouped by the state name and ordered by the district count in descending order.",
+    "sql": "SELECT T1.STATE_NAME, COUNT(T2.DISTRICT_ID) FROM DIM_STATE T1 JOIN DIM_DISTRICT T2 ON T1.STATE_ID = T2.STATE_ID GROUP BY T1.STATE_NAME ORDER BY COUNT(T2.DISTRICT_ID) DESC;",
+    "pair_id": "60a8bfa4",
+    "original_question_id": "219c8b27",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "State names are in `dim_state.state_name`. District IDs are in `dim_district.district_id`. Join `dim_state` and `dim_district` on `dim_state.state_id` = `dim_district.state_id`. Count distinct `dim_district.district_id` per state, group by `dim_state.state_name`, order by count descending."
+  },
+  {
+    "question": "List each state ID along with the count of district names associated with it, grouped by the state ID and ordered from the highest to lowest number of districts.",
+    "sql": "SELECT T1.STATE_ID, COUNT(T2.DISTRICT_NAME) FROM DIM_STATE T1 JOIN DIM_DISTRICT T2 ON T1.STATE_ID = T2.STATE_ID GROUP BY T1.STATE_ID ORDER BY COUNT(T2.DISTRICT_NAME) DESC;",
+    "pair_id": "8c5847cd",
+    "original_question_id": "219c8b27",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "State ID refers to `dim_state`.`state_id`; District names are in `dim_district`.`district_name`; Count the number of `dim_district`.`district_name` for each `dim_state`.`state_id` by joining `dim_state` and `dim_district` on `dim_state`.`state_id` = `dim_district`.`state_id`; Group by `dim_state`.`state_id`; Order by count of districts descending."
+  },
+  {
+    "question": "List each state name and the total count of district IDs associated with it, grouped by state name and ordered by the count of districts in descending order.",
+    "sql": "SELECT T1.STATE_NAME, COUNT(T2.DISTRICT_ID) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID GROUP BY T1.STATE_NAME ORDER BY COUNT(T2.DISTRICT_ID) DESC",
+    "pair_id": "95c9fdf7",
+    "original_question_id": "219c8b27",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "State name is (`dim_state`.`state_name`); District IDs are (`dim_district`.`district_id`); Count districts per state by joining (`dim_state`.`state_id`) = (`dim_district`.`state_id`); Group by (`dim_state`.`state_name`); Order by count(`dim_district`.`district_id`) DESC."
+  },
+  {
+    "question": "For the states of Bihar and Andhra Pradesh, list each state name and the total count of districts within them, ordered from the highest number of districts to the lowest.",
+    "sql": "SELECT T1.STATE_NAME, COUNT(T2.DISTRICT_NAME) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_NAME IN ('Bihar', 'Andhra Pradesh') GROUP BY T1.STATE_NAME ORDER BY COUNT(T2.DISTRICT_NAME) DESC",
+    "pair_id": "3e7c3112",
+    "original_question_id": "219c8b27",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "State names are stored in `dim_state.state_name`; filter for 'Bihar' and 'Andhra Pradesh'. Count districts in `dim_district` via `dim_district.district_id` grouped by state. Order by district count descending."
+  },
+  {
+    "question": "List the first five district names in alphabetical order for the state named 'Andhra Pradesh'.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Andhra Pradesh' ORDER BY T1.DISTRICT_NAME ASC LIMIT 5",
+    "pair_id": "256b0837",
+    "original_question_id": "6aeb4a49",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "State named 'Andhra Pradesh' refers to `dim_state`.`state_name` = 'Andhra Pradesh'; district names are in `dim_district`.`district_name`; join `dim_district` with `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id`; list first five in alphabetical order means ORDER BY `dim_district`.`district_name` LIMIT 5."
+  },
+  {
+    "question": "List the first five district names in alphabetical order for the state named 'Bihar'.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Bihar' ORDER BY T1.DISTRICT_NAME ASC LIMIT 5",
+    "pair_id": "5ba468aa",
+    "original_question_id": "6aeb4a49",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "state named 'Bihar' refers to `dim_state`.`state_name` = 'Bihar'; first five district names in alphabetical order refers to SELECT `dim_district`.`district_name` ORDER BY `dim_district`.`district_name` LIMIT 5; join `dim_district` with `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id`."
+  },
+  {
+    "question": "List the first five district names in alphabetical order for the state named 'Andhra Pradesh'.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Andhra Pradesh' ORDER BY T1.DISTRICT_NAME ASC LIMIT 5",
+    "pair_id": "a8f092f8",
+    "original_question_id": "6aeb4a49",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "state named 'Andhra Pradesh' refers to `dim_state`.`state_name` = 'Andhra Pradesh'; district names are in `dim_district`.`district_name`; first five in alphabetical order means ORDER BY `dim_district`.`district_name` LIMIT 5;"
+  },
+  {
+    "question": "List the first five district names in alphabetical order for districts located within the state named 'Bihar'.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Bihar' ORDER BY T1.DISTRICT_NAME ASC LIMIT 5",
+    "pair_id": "66b87cff",
+    "original_question_id": "6aeb4a49",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "state named 'Bihar' refers to `dim_state`.`state_name` = 'Bihar'; district names refers to `dim_district`.`district_name`; first five in alphabetical order means order by `dim_district`.`district_name` ASC limit 5;"
+  },
+  {
+    "question": "List the district names for all districts located in the state named 'Bihar'.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Bihar'",
+    "pair_id": "c59c4d60",
+    "original_question_id": "b89d2899",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_state`.`state_name` contains state names; 'Bihar' is a state name value. `dim_district`.`district_name` contains district names. Link via `dim_district`.`state_id` = `dim_state`.`state_id`."
+  },
+  {
+    "question": "List the district names for all districts located in the state named 'Andhra Pradesh'.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Andhra Pradesh'",
+    "pair_id": "610757bb",
+    "original_question_id": "b89d2899",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state.state_name` = 'Andhra Pradesh' to get its `state_id`. Then join with `dim_district` on `dim_district.state_id` = `dim_state.state_id` to get `dim_district.district_name`."
+  },
+  {
+    "question": "List the district names located in the state of 'Bihar', sorted alphabetically by district name.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Bihar' ORDER BY T1.DISTRICT_NAME ASC",
+    "pair_id": "1739fe4c",
+    "original_question_id": "b89d2899",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "State 'Bihar' refers to `dim_state`.`state_name` = 'Bihar'. District names are in `dim_district`.`district_name`. Join `dim_district` with `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id`."
+  },
+  {
+    "question": "List the district names located in the state of 'Andhra Pradesh', ordered alphabetically by their district name.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Andhra Pradesh' ORDER BY T1.DISTRICT_NAME ASC",
+    "pair_id": "daec2510",
+    "original_question_id": "b89d2899",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "State of 'Andhra Pradesh' refers to `dim_state`.`state_name` = 'Andhra Pradesh'; district names are in `dim_district`.`district_name`; join `dim_district` with `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id`; order by `dim_district`.`district_name` alphabetically."
+  },
+  {
+    "question": "List the state names and the district names, ordered alphabetically by state name and then by district name.",
+    "sql": "SELECT T2.STATE_NAME, T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID ORDER BY T2.STATE_NAME, T1.DISTRICT_NAME",
+    "pair_id": "c24f4e10",
+    "original_question_id": "08e00a4a",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SCHOOL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_state`.`state_name` contains state names; `dim_district`.`district_name` contains district names; join `dim_district` with `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id`; order alphabetically by `dim_state`.`state_name` then `dim_district`.`district_name`."
+  },
+  {
+    "question": "List the state name and the district name for all records where the state name is 'Andhra Pradesh', ordered by state name and district name.",
+    "sql": "SELECT T2.STATE_NAME, T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Andhra Pradesh' ORDER BY T2.STATE_NAME, T1.DISTRICT_NAME",
+    "pair_id": "be1ff58b",
+    "original_question_id": "08e00a4a",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SCHOOL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_state.state_name` = 'Andhra Pradesh'; join `dim_state` and `dim_district` on `dim_state.state_id` = `dim_district.state_id`; select `dim_state.state_name`, `dim_district.district_name`; order by `dim_state.state_name`, `dim_district.district_name`"
+  },
+  {
+    "question": "List the state name and the district name for all entries, ordered alphabetically by state name and then by district name.",
+    "sql": "SELECT T2.STATE_NAME, T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID ORDER BY T2.STATE_NAME, T1.DISTRICT_NAME",
+    "pair_id": "cb5daa53",
+    "original_question_id": "08e00a4a",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SCHOOL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "state name refers to `dim_state.state_name`; district name refers to `dim_district.district_name`; join `dim_state` and `dim_district` on `dim_district.state_id` = `dim_state.state_id`; order by `dim_state.state_name`, `dim_district.district_name`"
+  },
+  {
+    "question": "List the state names and the district names for the states of Bihar and Andhra Pradesh, ordered alphabetically by state name and then by district name.",
+    "sql": "SELECT T2.STATE_NAME, T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME IN ('Bihar', 'Andhra Pradesh') ORDER BY T2.STATE_NAME, T1.DISTRICT_NAME",
+    "pair_id": "c260f036",
+    "original_question_id": "08e00a4a",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SCHOOL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_state.state_name` and `dim_district.district_name` are needed; filter `dim_state.state_name` IN ('Bihar', 'Andhra Pradesh'); order by `dim_state.state_name` ASC, `dim_district.district_name` ASC."
+  },
+  {
+    "question": "List the unique district names for districts where the schools have a constituted School Management Committee (SMC) and exactly 35 primary grade children received free textbooks.",
+    "sql": "SELECT DISTINCT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_SCHOOL AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN FACT_SCHOOL_GOVERNANCE AS T3 ON T2.SCHOOL_ID = T3.SCHOOL_ID JOIN FACT_STUDENT_SUPPORT_PRIMARY AS T4 ON T2.SCHOOL_ID = T4.SCHOOL_ID WHERE T3.CONSTITUTION_OF_SMC = '1 - Yes' AND T4.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_TEXTBOOKS = '35'",
+    "pair_id": "56581dd0",
+    "original_question_id": "a2f609f9",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SCHOOL",
+      "FACT_SCHOOL_GOVERNANCE",
+      "FACT_STUDENT_SUPPORT_PRIMARY",
+      "FACT_STUDENT_SUPPORT_UPPER_PRIMARY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "constituted School Management Committee (SMC) means `fact_school_governance`.`constitution_of_smc` = '1 - Yes'; exactly 35 primary grade children received free textbooks means `fact_student_support_primary`.`primary_grade_children_who_received_free_textbooks` = 35; need to output unique `dim_district`.`district_name`"
+  },
+  {
+    "question": "List the unique district names for districts where schools have a constituted School Management Committee (SMC) and exactly 48 children in upper primary grades received free uniforms.",
+    "sql": "SELECT DISTINCT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_SCHOOL AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN FACT_SCHOOL_GOVERNANCE AS T3 ON T2.SCHOOL_ID = T3.SCHOOL_ID JOIN FACT_STUDENT_SUPPORT_UPPER_PRIMARY AS T4 ON T2.SCHOOL_ID = T4.SCHOOL_ID WHERE T3.CONSTITUTION_OF_SMC = '1 - Yes' AND T4.UPPER_PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_UNIFORMS = '48'",
+    "pair_id": "dcff4738",
+    "original_question_id": "a2f609f9",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SCHOOL",
+      "FACT_SCHOOL_GOVERNANCE",
+      "FACT_STUDENT_SUPPORT_PRIMARY",
+      "FACT_STUDENT_SUPPORT_UPPER_PRIMARY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "constituted School Management Committee (SMC) means `fact_school_governance`.`constitution_of_smc` = '1 - Yes'; exactly 48 children in upper primary grades received free uniforms means `fact_student_support_upper_primary`.`upper_primary_grade_children_who_received_free_uniforms` = 48; need unique `dim_district`.`district_name` for districts that have such schools."
+  },
+  {
+    "question": "List the district names for all districts that have schools where the School Management Committee (SMC) has been constituted, specifically filtering for records where the year ID is 1, and group the results by the district name.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_SCHOOL AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN FACT_SCHOOL_GOVERNANCE AS T3 ON T2.SCHOOL_ID = T3.SCHOOL_ID WHERE T3.CONSTITUTION_OF_SMC = '1 - Yes' AND T3.YEAR_ID = 1 GROUP BY T1.DISTRICT_NAME",
+    "pair_id": "5455c3e2",
+    "original_question_id": "a2f609f9",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SCHOOL",
+      "FACT_SCHOOL_GOVERNANCE",
+      "FACT_STUDENT_SUPPORT_PRIMARY",
+      "FACT_STUDENT_SUPPORT_UPPER_PRIMARY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "SMC constituted maps to `fact_school_governance`.`constitution_of_smc` = '1 - Yes'; year ID 1 maps to `fact_school_governance`.`year_id` = 1; district names come from `dim_district`.`district_name` via join: `fact_school_governance`.`school_id` → `dim_school`.`school_id` → `dim_school`.`district_id` → `dim_district`.`district_id`; group by `dim_district`.`district_name`."
+  },
+  {
+    "question": "List the district names for the year with ID 1 where exactly 98 primary grade children received free textbooks, grouping the results by the district name.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_SCHOOL AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN FACT_STUDENT_SUPPORT_PRIMARY AS T3 ON T2.SCHOOL_ID = T3.SCHOOL_ID WHERE T3.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_TEXTBOOKS = '98' AND T3.YEAR_ID = 1 GROUP BY T1.DISTRICT_NAME",
+    "pair_id": "dd0b2bf6",
+    "original_question_id": "a2f609f9",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SCHOOL",
+      "FACT_SCHOOL_GOVERNANCE",
+      "FACT_STUDENT_SUPPORT_PRIMARY",
+      "FACT_STUDENT_SUPPORT_UPPER_PRIMARY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `fact_student_support_primary`.`year_id` = 1 and `fact_student_support_primary`.`primary_grade_children_who_received_free_textbooks` = 98. Join `fact_student_support_primary` → `dim_school` (`school_id`) → `dim_district` (`district_id`). Group by `dim_district`.`district_name`."
+  },
+  {
+    "question": "List the unique school IDs for all schools located in the district named 'South Andamans'.",
+    "sql": "SELECT T2.UNIQUE_SCHOOL_ID FROM DIM_DISTRICT AS T1 JOIN DIM_SCHOOL AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T1.DISTRICT_NAME = 'South Andamans';",
+    "pair_id": "3751a9ce",
+    "original_question_id": "a7b40ad5",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SCHOOL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "district named 'South Andamans' refers to `dim_district`.`district_name` = 'South Andamans'; unique school IDs refers to `dim_school`.`unique_school_id`"
+  },
+  {
+    "question": "List the unique school IDs for all schools located in the district named 'Guntur'.",
+    "sql": "SELECT T2.UNIQUE_SCHOOL_ID FROM DIM_DISTRICT AS T1 JOIN DIM_SCHOOL AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T1.DISTRICT_NAME = 'Guntur';",
+    "pair_id": "dd169829",
+    "original_question_id": "a7b40ad5",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SCHOOL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_school`.`unique_school_id` is the unique school ID. Schools located in district 'Guntur' means `dim_district`.`district_name` = 'Guntur'. Join `dim_school` with `dim_district` on `dim_school`.`district_id` = `dim_district`.`district_id`."
+  },
+  {
+    "question": "List the unique school IDs for schools located in the 'South Andamans' district, grouped and ordered by their unique school ID in ascending order.",
+    "sql": "SELECT T2.UNIQUE_SCHOOL_ID FROM DIM_DISTRICT AS T1 JOIN DIM_SCHOOL AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T1.DISTRICT_NAME = 'South Andamans' GROUP BY T2.UNIQUE_SCHOOL_ID ORDER BY T2.UNIQUE_SCHOOL_ID ASC",
+    "pair_id": "7c073105",
+    "original_question_id": "a7b40ad5",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SCHOOL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Schools located in 'South Andamans' district means `dim_district`.`district_name` = 'South Andamans'. Join `dim_school` with `dim_district` on `dim_school`.`district_id` = `dim_district`.`district_id`. Select `dim_school`.`unique_school_id`, group by `dim_school`.`unique_school_id`, order by `dim_school`.`unique_school_id` ASC."
+  },
+  {
+    "question": "List the unique school IDs for schools located in the 'Guntur' district, grouped and ordered by their unique school ID in ascending order.",
+    "sql": "SELECT T2.UNIQUE_SCHOOL_ID FROM DIM_DISTRICT AS T1 JOIN DIM_SCHOOL AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T1.DISTRICT_NAME = 'Guntur' GROUP BY T2.UNIQUE_SCHOOL_ID ORDER BY T2.UNIQUE_SCHOOL_ID ASC",
+    "pair_id": "63502080",
+    "original_question_id": "a7b40ad5",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SCHOOL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter schools where `dim_district`.`district_name` = 'Guntur', then list `dim_school`.`unique_school_id` ordered ascending."
+  },
+  {
+    "question": "List the school ID and the unique school ID for all schools located in the 'South Andamans' district.",
+    "sql": "SELECT T1.SCHOOL_ID, T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T2.DISTRICT_NAME = 'South Andamans'",
+    "pair_id": "cda726d5",
+    "original_question_id": "1e4f4167",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SCHOOL",
+      "FACT_SCHOOL_GOVERNANCE",
+      "FACT_SCHOOL_MONITORING"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select (`dim_school`.`school_id`, `dim_school`.`unique_school_id`) from `dim_school` join `dim_district` on `dim_school`.`district_id` = `dim_district`.`district_id` where `dim_district`.`district_name` = 'South Andamans'"
+  },
+  {
+    "question": "List the school ID and the unique school ID for all schools located in the district named 'Guntur'.",
+    "sql": "SELECT T1.SCHOOL_ID, T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T2.DISTRICT_NAME = 'Guntur'",
+    "pair_id": "2d3863b9",
+    "original_question_id": "1e4f4167",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SCHOOL",
+      "FACT_SCHOOL_GOVERNANCE",
+      "FACT_SCHOOL_MONITORING"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Schools located in district named 'Guntur' means `dim_district`.`district_name` = 'Guntur'. Join `dim_school` with `dim_district` on `dim_school`.`district_id` = `dim_district`.`district_id`. Select `dim_school`.`school_id` and `dim_school`.`unique_school_id`."
+  },
+  {
+    "question": "List the unique school ID and the school ID for all schools located in the 'South Andamans' district, grouped by both their unique school ID and school ID, and ordered by the unique school ID in ascending order.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID, T1.SCHOOL_ID FROM DIM_SCHOOL AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T2.DISTRICT_NAME = 'South Andamans' GROUP BY T1.UNIQUE_SCHOOL_ID, T1.SCHOOL_ID ORDER BY T1.UNIQUE_SCHOOL_ID ASC",
+    "pair_id": "7ad02a73",
+    "original_question_id": "1e4f4167",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SCHOOL",
+      "FACT_SCHOOL_GOVERNANCE",
+      "FACT_SCHOOL_MONITORING"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter schools where `dim_district`.`district_name` = 'South Andamans'. Join `dim_school` and `dim_district` on `dim_school`.`district_id` = `dim_district`.`district_id`. Select `dim_school`.`unique_school_id` and `dim_school`.`school_id`. Group by both columns and order by `dim_school`.`unique_school_id` ASC."
+  },
+  {
+    "question": "List the unique school ID and the school ID for all schools located in the district named 'Guntur', grouped by their unique school ID and school ID, and ordered by the unique school ID in ascending order.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID, T1.SCHOOL_ID FROM DIM_SCHOOL AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T2.DISTRICT_NAME = 'Guntur' GROUP BY T1.UNIQUE_SCHOOL_ID, T1.SCHOOL_ID ORDER BY T1.UNIQUE_SCHOOL_ID ASC",
+    "pair_id": "045ace88",
+    "original_question_id": "1e4f4167",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SCHOOL",
+      "FACT_SCHOOL_GOVERNANCE",
+      "FACT_SCHOOL_MONITORING"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "District named 'Guntur' refers to `dim_district`.`district_name` = 'Guntur'. Schools located in that district are found via `dim_school`.`district_id` = `dim_district`.`district_id`."
+  },
+  {
+    "question": "List the unique school ID, the district name, and the state name for all schools located in the state of Bihar.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID, T2.DISTRICT_NAME, T3.STATE_NAME FROM DIM_SCHOOL AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T3.STATE_NAME = 'Bihar';",
+    "pair_id": "80035c80",
+    "original_question_id": "4915bd3d",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SCHOOL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_school`.`unique_school_id`, `dim_district`.`district_name`, `dim_state`.`state_name` by joining `dim_school` → `dim_district` → `dim_state` where `dim_state`.`state_name` = 'Bihar'."
+  },
+  {
+    "question": "Provide the unique school ID, the district name, and the state name for all schools located in the district named 'Guntur'.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID, T2.DISTRICT_NAME, T3.STATE_NAME FROM DIM_SCHOOL AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T2.DISTRICT_NAME = 'Guntur';",
+    "pair_id": "68af9232",
+    "original_question_id": "4915bd3d",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SCHOOL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_school.unique_school_id` is the unique school ID; `dim_district.district_name` is the district name; `dim_state.state_name` is the state name. Filter by `dim_district.district_name = 'Guntur'` and join `dim_school` → `dim_district` → `dim_state`."
+  },
+  {
+    "question": "List the unique school ID, the district name, and the state name for all schools located in the state of 'Andhra Pradesh', ordered by state name and then by district name.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID, T2.DISTRICT_NAME, T3.STATE_NAME FROM DIM_SCHOOL AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T3.STATE_NAME = 'Andhra Pradesh' ORDER BY T3.STATE_NAME, T2.DISTRICT_NAME",
+    "pair_id": "ad3f978a",
+    "original_question_id": "4915bd3d",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SCHOOL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter: `dim_state.state_name` = 'Andhra Pradesh'. Select `dim_school.unique_school_id`, `dim_district.district_name`, `dim_state.state_name`. Join `dim_school` → `dim_district` (`dim_school.district_id` = `dim_district.district_id`) → `dim_state` (`dim_district.state_id` = `dim_state.state_id`). Order by `dim_state.state_name`, `dim_district.district_name`."
+  },
+  {
+    "question": "List the unique school ID, the district name, and the state name for all schools located in the 'South Andamans' district, ordered by the state name and then by the district name.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID, T2.DISTRICT_NAME, T3.STATE_NAME FROM DIM_SCHOOL AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T2.DISTRICT_NAME = 'South Andamans' ORDER BY T3.STATE_NAME, T2.DISTRICT_NAME",
+    "pair_id": "7385b81e",
+    "original_question_id": "4915bd3d",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SCHOOL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter schools where `dim_district`.`district_name` = 'South Andamans'. Join `dim_school` → `dim_district` → `dim_state` to get `dim_school`.`unique_school_id`, `dim_district`.`district_name`, `dim_state`.`state_name`. Order by `dim_state`.`state_name`, then `dim_district`.`district_name`."
+  },
+  {
+    "question": "List the district names for all districts located in states other than 'Bihar', ensuring that each district name is displayed only if there is at least one district ID associated with it.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME != 'Bihar' GROUP BY T1.DISTRICT_NAME HAVING COUNT(T1.DISTRICT_ID) > 0",
+    "pair_id": "fef26eb5",
+    "original_question_id": "be9b3bfe",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SCHOOL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_district.district_name` where `dim_state.state_name` != 'Bihar' and there exists at least one `dim_school` record with `dim_school.district_id` = `dim_district.district_id`."
+  },
+  {
+    "question": "List the district names for all districts except for 'Guntur' that have more than one school associated with them.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_SCHOOL AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T1.DISTRICT_NAME != 'Guntur' GROUP BY T1.DISTRICT_NAME HAVING COUNT(T2.SCHOOL_ID) > 1",
+    "pair_id": "10ae2c8a",
+    "original_question_id": "be9b3bfe",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SCHOOL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "district names refers to `dim_district.district_name`; except for 'Guntur' means `dim_district.district_name` != 'Guntur'; more than one school associated means COUNT(`dim_school.school_id`) > 1 per district."
+  },
+  {
+    "question": "List the district names from the school and district records where, after grouping by district name, there are no schools associated with the state name 'Bihar'.",
+    "sql": "SELECT T2.DISTRICT_NAME FROM DIM_SCHOOL AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID GROUP BY T2.DISTRICT_NAME HAVING SUM(CASE WHEN T3.STATE_NAME = 'Bihar' THEN 1 ELSE 0 END) = 0",
+    "pair_id": "671ab15b",
+    "original_question_id": "be9b3bfe",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SCHOOL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Find `dim_district`.`district_name` where, after joining `dim_school` on `dim_school`.`district_id` = `dim_district`.`district_id` and `dim_district`.`state_id` = `dim_state`.`state_id`, there are zero schools with `dim_state`.`state_name` = 'Bihar' for that district."
+  },
+  {
+    "question": "List the district names from the district dimension table, grouped by district name, for those districts that do not contain any schools associated with the state name 'Andhra Pradesh'.",
+    "sql": "SELECT T2.DISTRICT_NAME FROM DIM_SCHOOL AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID GROUP BY T2.DISTRICT_NAME HAVING SUM(CASE WHEN T3.STATE_NAME = 'Andhra Pradesh' THEN 1 ELSE 0 END) = 0",
+    "pair_id": "9d6de122",
+    "original_question_id": "be9b3bfe",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SCHOOL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_district`.`district_name` where `dim_district`.`state_id` NOT IN (select `dim_state`.`state_id` from `dim_state` where `dim_state`.`state_name` = 'Andhra Pradesh'); group by `dim_district`.`district_name`"
+  },
+  {
+    "question": "List each state name and the total count of school IDs associated with it, grouped and ordered alphabetically by the state name.",
+    "sql": "SELECT T1.STATE_NAME, COUNT(T3.SCHOOL_ID) FROM DIM_STATE T1 JOIN DIM_DISTRICT T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SCHOOL T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID GROUP BY T1.STATE_NAME ORDER BY T1.STATE_NAME",
+    "pair_id": "0c47bd8b",
+    "original_question_id": "638edb75",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SCHOOL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Count `dim_school`.`school_id` per `dim_state`.`state_name` by joining `dim_school` → `dim_district` → `dim_state`; then GROUP BY and ORDER BY `dim_state`.`state_name` alphabetically."
+  },
+  {
+    "question": "List each state name and the total count of unique school IDs associated with it, grouped and ordered alphabetically by the state name.",
+    "sql": "SELECT T1.STATE_NAME, COUNT(T3.UNIQUE_SCHOOL_ID) FROM DIM_STATE T1 JOIN DIM_DISTRICT T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SCHOOL T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID GROUP BY T1.STATE_NAME ORDER BY T1.STATE_NAME",
+    "pair_id": "a77158ad",
+    "original_question_id": "638edb75",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SCHOOL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join dim_state → dim_district → dim_school; count distinct dim_school.unique_school_id per state; group by dim_state.state_name; order by dim_state.state_name alphabetically."
+  },
+  {
+    "question": "List each state name and the total count of school IDs associated with it, grouped and ordered alphabetically by the state name.",
+    "sql": "SELECT T1.STATE_NAME, COUNT(T3.SCHOOL_ID) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SCHOOL AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID GROUP BY T1.STATE_NAME ORDER BY T1.STATE_NAME;",
+    "pair_id": "a4946cd5",
+    "original_question_id": "638edb75",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SCHOOL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "State name is `dim_state`.`state_name`; total count of school IDs is COUNT(`dim_school`.`school_id`); join `dim_school` to `dim_district` on `dim_school`.`district_id` = `dim_district`.`district_id`, then join `dim_district` to `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id`; group by `dim_state`.`state_name` and order by `dim_state`.`state_name` alphabetically (ASC)."
+  },
+  {
+    "question": "For the states of Bihar and Andhra Pradesh, list each state name and the total count of unique school IDs, grouped and ordered by the state name.",
+    "sql": "SELECT T1.STATE_NAME, COUNT(T3.UNIQUE_SCHOOL_ID) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SCHOOL AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME IN ('Bihar', 'Andhra Pradesh') GROUP BY T1.STATE_NAME ORDER BY T1.STATE_NAME;",
+    "pair_id": "4796290e",
+    "original_question_id": "638edb75",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SCHOOL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state`.`state_name` IN ('Bihar', 'Andhra Pradesh'). Join `dim_state` to `dim_district` on `dim_state`.`state_id` = `dim_district`.`state_id`, then to `dim_school` on `dim_district`.`district_id` = `dim_school`.`district_id`. Count distinct `dim_school`.`unique_school_id` per state. Group by `dim_state`.`state_name` and order by `dim_state`.`state_name`."
+  },
+  {
+    "question": "Show the unique school ID and the academic year for schools where the academic year is 2018, a School Management Committee (SMC) has been constituted, and the schools received a full set of textbooks in the current academic year.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID, T2.ACADEMIC_YEAR FROM DIM_SCHOOL AS T1 JOIN DIM_YEAR AS T2 ON T1.SCHOOL_ID = T2.YEAR_ID JOIN FACT_SCHOOL_GOVERNANCE AS T3 ON T1.SCHOOL_ID = T3.SCHOOL_ID AND T2.YEAR_ID = T3.YEAR_ID JOIN FACT_SCHOOL_RESOURCES AS T4 ON T1.SCHOOL_ID = T4.SCHOOL_ID AND T2.YEAR_ID = T4.YEAR_ID WHERE T2.ACADEMIC_YEAR = '2018' AND T3.CONSTITUTION_OF_SMC = '1 - Yes' AND T4.SCHOOLS_RECEIVED_FULL_SET_OF_TEXTBOOKS_IN_CURRENT_ACADEMIC_YEAR = '1 - Yes';",
+    "pair_id": "9084fada",
+    "original_question_id": "99d879f6",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_GOVERNANCE",
+      "FACT_SCHOOL_RESOURCES"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "unique school ID refers to `dim_school.unique_school_id`; academic year refers to `dim_year.academic_year`; academic year is 2018 means `dim_year.academic_year = 2018`; SMC has been constituted means `fact_school_governance.constitution_of_smc = '1 - Yes'`; schools received a full set of textbooks in the current academic year means `fact_school_resources.schools_received_full_set_of_textbooks_in_current_academic_year = '1 - Yes'`."
+  },
+  {
+    "question": "Provide the unique school ID and the academic year for schools that have a constitution of School Management Committee (SMC), specifically filtering for the academic year 2018, and order the results by the academic year.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID, T2.ACADEMIC_YEAR FROM DIM_SCHOOL AS T1 JOIN DIM_YEAR AS T2 ON T1.SCHOOL_ID = T2.YEAR_ID JOIN FACT_SCHOOL_GOVERNANCE AS T3 ON T1.SCHOOL_ID = T3.SCHOOL_ID WHERE T3.CONSTITUTION_OF_SMC = '1 - Yes' AND T2.ACADEMIC_YEAR = '2018' ORDER BY T2.ACADEMIC_YEAR",
+    "pair_id": "c8b63b25",
+    "original_question_id": "99d879f6",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_GOVERNANCE",
+      "FACT_SCHOOL_RESOURCES"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter schools where `fact_school_governance`.`constitution_of_smc` = '1 - Yes' and `dim_year`.`academic_year` = 2018; return `dim_school`.`unique_school_id` and `dim_year`.`academic_year` ordered by `dim_year`.`academic_year`."
+  },
+  {
+    "question": "List the unique school ID and the academic year for schools that received a full set of textbooks in the current academic year and where the academic year is 2018, ordered by the academic year.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID, T2.ACADEMIC_YEAR FROM DIM_SCHOOL AS T1 JOIN DIM_YEAR AS T2 ON T1.SCHOOL_ID = T2.YEAR_ID JOIN FACT_SCHOOL_RESOURCES AS T3 ON T1.SCHOOL_ID = T3.SCHOOL_ID WHERE T3.SCHOOLS_RECEIVED_FULL_SET_OF_TEXTBOOKS_IN_CURRENT_ACADEMIC_YEAR = '1 - Yes' AND T2.ACADEMIC_YEAR = '2018' ORDER BY T2.ACADEMIC_YEAR",
+    "pair_id": "13b50cb2",
+    "original_question_id": "99d879f6",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_GOVERNANCE",
+      "FACT_SCHOOL_RESOURCES"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "fact_school_resources.schools_received_full_set_of_textbooks_in_current_academic_year = '1 - Yes' means the school received a full set of textbooks; academic_year = 2018; order by dim_year.academic_year"
+  },
+  {
+    "question": "Provide the unique school ID for schools that, in the academic year 2018, had a constituted School Management Committee (SMC) but did not receive graded supplementary material in the previous academic year.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL AS T1 JOIN FACT_SCHOOL_GOVERNANCE AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN FACT_SCHOOL_RESOURCES AS T3 ON T1.SCHOOL_ID = T3.SCHOOL_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID WHERE T4.ACADEMIC_YEAR = '2018' AND T2.CONSTITUTION_OF_SMC = '1 - Yes' AND T3.SCHOOLS_RECEIVED_GRADED_SUPPLEMENTARY_MATERIAL_IN_PREVIOUS_ACADEMIC_YEAR = '2 - No'",
+    "pair_id": "4855eee4",
+    "original_question_id": "4a901178",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_GOVERNANCE",
+      "FACT_SCHOOL_RESOURCES"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Academic year 2018 refers to `dim_year`.`academic_year` = 2018. Constituted School Management Committee (SMC) means `fact_school_governance`.`constitution_of_smc` = '1 - Yes'. Did not receive graded supplementary material in the previous academic year means `fact_school_resources`.`schools_received_graded_supplementary_material_in_previous_acad` = '2 - No'. Unique school ID is `dim_school`.`unique_school_id`."
+  },
+  {
+    "question": "List the unique school IDs for schools where the SMC and SDMC are the same, that did not receive graded supplementary material in the previous academic year, specifically for the academic year 2018.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL AS T1 JOIN FACT_SCHOOL_GOVERNANCE AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN FACT_SCHOOL_RESOURCES AS T3 ON T1.SCHOOL_ID = T3.SCHOOL_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID WHERE T4.ACADEMIC_YEAR = '2018' AND T2.SMC_AND_SDMC_SAME = '1 - Yes' AND T3.SCHOOLS_RECEIVED_GRADED_SUPPLEMENTARY_MATERIAL_IN_PREVIOUS_ACADEMIC_YEAR = '2 - No'",
+    "pair_id": "e6a283a7",
+    "original_question_id": "4a901178",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_GOVERNANCE",
+      "FACT_SCHOOL_RESOURCES"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "SMC and SDMC are the same refers to `fact_school_governance`.`smc_and_sdmc_same` = '1 - Yes'; did not receive graded supplementary material in the previous academic year refers to `fact_school_resources`.`schools_received_graded_supplementary_material_in_previous_acad` = '2 - No'; academic year 2018 refers to `dim_year`.`academic_year` = 2018; unique school IDs are in `dim_school`.`unique_school_id`."
+  },
+  {
+    "question": "Provide the unique school ID for schools that, for the academic year 2018, have a constituted School Management Committee (SMC) and have received a full set of textbooks in the current academic year.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL AS T1 JOIN FACT_SCHOOL_GOVERNANCE AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN FACT_SCHOOL_RESOURCES AS T3 ON T1.SCHOOL_ID = T3.SCHOOL_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID WHERE T4.ACADEMIC_YEAR = '2018' AND T2.CONSTITUTION_OF_SMC = '1 - Yes' AND T3.SCHOOLS_RECEIVED_FULL_SET_OF_TEXTBOOKS_IN_CURRENT_ACADEMIC_YEAR = '1 - Yes';",
+    "pair_id": "55483cb8",
+    "original_question_id": "4a901178",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_GOVERNANCE",
+      "FACT_SCHOOL_RESOURCES"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Academic year 2018 refers to `dim_year`.`academic_year` = 2018. Constituted School Management Committee (SMC) means `fact_school_governance`.`constitution_of_smc` = '1 - Yes'. Received full set of textbooks in current academic year means `fact_school_resources`.`schools_received_full_set_of_textbooks_in_current_academic_year` = '1 - Yes'. Need to output `dim_school`.`unique_school_id`."
+  },
+  {
+    "question": "List the unique school IDs for schools where the academic year is 2018, the School Development and Management Committee (SDMC) was constituted, and the schools did not receive graded supplementary material in the previous academic year.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL AS T1 JOIN FACT_SCHOOL_GOVERNANCE AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN FACT_SCHOOL_RESOURCES AS T3 ON T1.SCHOOL_ID = T3.SCHOOL_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.ACADEMIC_YEAR = '2018' AND T2.SDMC_CONSTITUTED = '1 - Yes' AND T3.SCHOOLS_RECEIVED_GRADED_SUPPLEMENTARY_MATERIAL_IN_PREVIOUS_ACADEMIC_YEAR = '2 - No';",
+    "pair_id": "6473d4dc",
+    "original_question_id": "4a901178",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_GOVERNANCE",
+      "FACT_SCHOOL_RESOURCES"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Academic year 2018 refers to `dim_year.academic_year` = 2018. SDMC was constituted refers to `fact_school_governance.sdmc_constituted` = '1 - Yes'. Schools did not receive graded supplementary material in previous academic year refers to `fact_school_resources.schools_received_graded_supplementary_material_in_previous_acad` = '2 - No'. Need to join `dim_school`, `dim_year`, `fact_school_governance`, and `fact_school_resources` via `school_id` and `year_id` and select `dim_school.unique_school_id`."
+  },
+  {
+    "question": "List the unique school IDs for schools where the constitution of a School Management Committee (SMC) is marked as yes.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL AS T1 JOIN FACT_SCHOOL_GOVERNANCE AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID WHERE T2.CONSTITUTION_OF_SMC = '1 - Yes'",
+    "pair_id": "a6270f84",
+    "original_question_id": "0ab3b07e",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_GOVERNANCE"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "constitution of SMC marked as yes means `fact_school_governance`.`constitution_of_smc` = '1 - Yes'; unique school IDs are in `dim_school`.`unique_school_id`; join `fact_school_governance` and `dim_school` on `school_id`."
+  },
+  {
+    "question": "List the school IDs for schools where the school management committee (SMC) has been constituted.",
+    "sql": "SELECT T1.SCHOOL_ID FROM DIM_SCHOOL AS T1 JOIN FACT_SCHOOL_GOVERNANCE AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID WHERE T2.CONSTITUTION_OF_SMC = '1 - Yes'",
+    "pair_id": "005f5db6",
+    "original_question_id": "0ab3b07e",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_GOVERNANCE"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "SMC has been constituted refers to `fact_school_governance`.`constitution_of_smc` = '1 - Yes'"
+  },
+  {
+    "question": "List the unique school IDs for schools that have a constitution of School Management Committee (SMC), grouped and ordered by their unique school ID in ascending order.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL AS T1 JOIN FACT_SCHOOL_GOVERNANCE AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID WHERE T2.CONSTITUTION_OF_SMC = '1 - Yes' GROUP BY T1.UNIQUE_SCHOOL_ID ORDER BY T1.UNIQUE_SCHOOL_ID ASC",
+    "pair_id": "c4affea1",
+    "original_question_id": "0ab3b07e",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_GOVERNANCE"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Constitution of School Management Committee (SMC) refers to `fact_school_governance`.`constitution_of_smc` = '1 - Yes'; unique school ID is `dim_school`.`unique_school_id`; group by and order by `dim_school`.`unique_school_id` ascending."
+  },
+  {
+    "question": "List the school IDs for schools that have a constitution of School Management Committee (SMC), grouped and ordered by their school ID.",
+    "sql": "SELECT T1.SCHOOL_ID FROM DIM_SCHOOL AS T1 JOIN FACT_SCHOOL_GOVERNANCE AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID WHERE T2.CONSTITUTION_OF_SMC = '1 - Yes' GROUP BY T1.SCHOOL_ID ORDER BY T1.SCHOOL_ID ASC",
+    "pair_id": "c9c04815",
+    "original_question_id": "0ab3b07e",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_GOVERNANCE"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Schools that have a constitution of SMC means `fact_school_governance`.`constitution_of_smc` = '1 - Yes'. School IDs are in `fact_school_governance`.`school_id`. Group by and order by `fact_school_governance`.`school_id`."
+  },
+  {
+    "question": "List the unique school IDs for the academic year 2018 where either the school has a constitution of SMC (School Management Committee) or the schools received a full set of textbooks in the current academic year.",
+    "sql": "SELECT DISTINCT T1.SCHOOL_ID FROM FACT_SCHOOL_GOVERNANCE AS T1 JOIN DIM_YEAR AS T2 ON T1.YEAR_ID = T2.YEAR_ID JOIN FACT_SCHOOL_RESOURCES AS T3 ON T1.SCHOOL_ID = T3.SCHOOL_ID WHERE T2.ACADEMIC_YEAR = '2018' AND (T1.CONSTITUTION_OF_SMC = '1 - Yes' OR T3.SCHOOLS_RECEIVED_FULL_SET_OF_TEXTBOOKS_IN_CURRENT_ACADEMIC_YEAR = '1 - Yes')",
+    "pair_id": "3439f0f3",
+    "original_question_id": "c1aa1a42",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_GOVERNANCE",
+      "FACT_SCHOOL_RESOURCES"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_year.academic_year` = 2018; `fact_school_governance.constitution_of_smc` = '1 - Yes' indicates school has constitution of SMC; `fact_school_resources.schools_received_full_set_of_textbooks_in_current_academic_year` = '1 - Yes' indicates schools received full set of textbooks. Use OR condition between these two criteria."
+  },
+  {
+    "question": "Provide the unique school IDs for the academic year 2018 where either the school governance has a constitution of SMC or the school resources indicate that the school received a full set of textbooks in the current academic year.",
+    "sql": "SELECT DISTINCT T1.SCHOOL_ID FROM DIM_SCHOOL AS T1 JOIN DIM_YEAR AS T2 ON T1.SCHOOL_ID = T1.SCHOOL_ID JOIN FACT_SCHOOL_GOVERNANCE AS T3 ON T1.SCHOOL_ID = T3.SCHOOL_ID JOIN FACT_SCHOOL_RESOURCES AS T4 ON T1.SCHOOL_ID = T4.SCHOOL_ID AND T3.YEAR_ID = T4.YEAR_ID WHERE T2.ACADEMIC_YEAR = '2018' AND (T3.CONSTITUTION_OF_SMC = '1 - Yes' OR T4.SCHOOLS_RECEIVED_FULL_SET_OF_TEXTBOOKS_IN_CURRENT_ACADEMIC_YEAR = '1 - Yes')",
+    "pair_id": "27948f1f",
+    "original_question_id": "c1aa1a42",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_GOVERNANCE",
+      "FACT_SCHOOL_RESOURCES"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "academic year 2018 refers to `dim_year`.`academic_year` = 2018; constitution of SMC means `fact_school_governance`.`constitution_of_smc` = '1 - Yes'; received a full set of textbooks means `fact_school_resources`.`schools_received_full_set_of_textbooks_in_current_academic_year` = '1 - Yes'; unique school IDs are `dim_school`.`unique_school_id`; conditions are combined with OR."
+  },
+  {
+    "question": "List the distinct unique school IDs for the year with ID 1, where either the school has a constituted School Management Committee (SMC) or the school received a full set of textbooks in the current academic year.",
+    "sql": "SELECT DISTINCT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL AS T1 JOIN DIM_YEAR AS T2 ON T2.YEAR_ID = T2.YEAR_ID JOIN FACT_SCHOOL_GOVERNANCE AS T3 ON T1.SCHOOL_ID = T3.SCHOOL_ID JOIN FACT_SCHOOL_RESOURCES AS T4 ON T1.SCHOOL_ID = T4.SCHOOL_ID AND T3.YEAR_ID = T4.YEAR_ID WHERE T2.YEAR_ID = 1 AND (T3.CONSTITUTION_OF_SMC = '1 - Yes' OR T4.SCHOOLS_RECEIVED_FULL_SET_OF_TEXTBOOKS_IN_CURRENT_ACADEMIC_YEAR = '1 - Yes')",
+    "pair_id": "1c19a5fa",
+    "original_question_id": "c1aa1a42",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_GOVERNANCE",
+      "FACT_SCHOOL_RESOURCES"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Year ID 1 refers to `dim_year`.`year_id` = 1; constituted SMC means `fact_school_governance`.`constitution_of_smc` = '1 - Yes'; received full set of textbooks means `fact_school_resources`.`schools_received_full_set_of_textbooks_in_current_academic_year` = '1 - Yes'; need distinct `dim_school`.`unique_school_id`."
+  },
+  {
+    "question": "Provide the unique school IDs for schools that received a full set of textbooks in the current academic year, did not receive graded supplementary material in the previous academic year, and are associated with the year ID 1.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL AS T1 JOIN FACT_SCHOOL_RESOURCES AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID WHERE T2.SCHOOLS_RECEIVED_FULL_SET_OF_TEXTBOOKS_IN_CURRENT_ACADEMIC_YEAR = '1 - Yes' AND T2.SCHOOLS_RECEIVED_GRADED_SUPPLEMENTARY_MATERIAL_IN_PREVIOUS_ACADEMIC_YEAR = '2 - No' AND T2.YEAR_ID = 1",
+    "pair_id": "1e95f564",
+    "original_question_id": "bab128b8",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_RESOURCES"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Received a full set of textbooks means `fact_school_resources`.`schools_received_full_set_of_textbooks_in_current_academic_year` = '1 - Yes'; did not receive graded supplementary material means `fact_school_resources`.`schools_received_graded_supplementary_material_in_previous_acad` = '2 - No'; year ID 1 means `fact_school_resources`.`year_id` = 1; unique school ID is `dim_school`.`unique_school_id`."
+  },
+  {
+    "question": "List the school IDs for schools located in the district with ID 1 that received a full set of textbooks in the current academic year but did not receive graded supplementary material in the previous academic year.",
+    "sql": "SELECT T1.SCHOOL_ID FROM DIM_SCHOOL AS T1 JOIN FACT_SCHOOL_RESOURCES AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID WHERE T2.SCHOOLS_RECEIVED_FULL_SET_OF_TEXTBOOKS_IN_CURRENT_ACADEMIC_YEAR = '1 - Yes' AND T2.SCHOOLS_RECEIVED_GRADED_SUPPLEMENTARY_MATERIAL_IN_PREVIOUS_ACADEMIC_YEAR = '2 - No' AND T1.DISTRICT_ID = 1",
+    "pair_id": "5c73aaab",
+    "original_question_id": "bab128b8",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_RESOURCES"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_school`.`district_id` = 1; `fact_school_resources`.`schools_received_full_set_of_textbooks_in_current_academic_year` = '1 - Yes'; `fact_school_resources`.`schools_received_graded_supplementary_material_in_previous_acad` = '2 - No'"
+  },
+  {
+    "question": "List the unique school IDs for schools that, in the 2018 academic year, received a full set of textbooks in the current academic year but did not receive graded supplementary material in the previous academic year.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL AS T1 JOIN FACT_SCHOOL_RESOURCES AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.ACADEMIC_YEAR = '2018' AND T2.SCHOOLS_RECEIVED_FULL_SET_OF_TEXTBOOKS_IN_CURRENT_ACADEMIC_YEAR = '1 - Yes' AND T2.SCHOOLS_RECEIVED_GRADED_SUPPLEMENTARY_MATERIAL_IN_PREVIOUS_ACADEMIC_YEAR = '2 - No'",
+    "pair_id": "611acf86",
+    "original_question_id": "bab128b8",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_RESOURCES"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_school.unique_school_id` is needed. Join `dim_school` with `fact_school_resources` on `school_id`, and join `fact_school_resources` with `dim_year` on `year_id`. Filter `dim_year.academic_year = 2018`. Condition: `fact_school_resources.schools_received_full_set_of_textbooks_in_current_academic_year = '1 - Yes'` AND `fact_school_resources.schools_received_graded_supplementary_material_in_previous_acad = '2 - No'`."
+  },
+  {
+    "question": "List the school IDs for schools that received a full set of textbooks in the current academic year but did not receive graded supplementary material in the previous academic year, specifically for the year associated with year ID 1.",
+    "sql": "SELECT T1.SCHOOL_ID FROM DIM_SCHOOL AS T1 JOIN FACT_SCHOOL_RESOURCES AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR_ID = 1 AND T2.SCHOOLS_RECEIVED_FULL_SET_OF_TEXTBOOKS_IN_CURRENT_ACADEMIC_YEAR = '1 - Yes' AND T2.SCHOOLS_RECEIVED_GRADED_SUPPLEMENTARY_MATERIAL_IN_PREVIOUS_ACADEMIC_YEAR = '2 - No'",
+    "pair_id": "6f481f1a",
+    "original_question_id": "bab128b8",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_RESOURCES"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`fact_school_resources`.`schools_received_full_set_of_textbooks_in_current_academic_year` = '1 - Yes' AND `fact_school_resources`.`schools_received_graded_supplementary_material_in_previous_acad` = '2 - No' AND `fact_school_resources`.`year_id` = 1"
+  },
+  {
+    "question": "List the district names for the top 5 districts with the highest count of schools that received a full set of textbooks in the current academic year, specifically for the year ID 1, grouped by their district name.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT T1 JOIN DIM_SCHOOL T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN FACT_SCHOOL_RESOURCES T3 ON T2.SCHOOL_ID = T3.SCHOOL_ID WHERE T3.SCHOOLS_RECEIVED_FULL_SET_OF_TEXTBOOKS_IN_CURRENT_ACADEMIC_YEAR = '1 - Yes' AND T3.YEAR_ID = 1 GROUP BY T1.DISTRICT_NAME ORDER BY COUNT(T2.SCHOOL_ID) DESC LIMIT 5",
+    "pair_id": "8ae8ab85",
+    "original_question_id": "20337e0e",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_RESOURCES"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "year ID 1 refers to `fact_school_resources`.`year_id` = 1; received a full set of textbooks means `fact_school_resources`.`schools_received_full_set_of_textbooks_in_current_academic_year` = '1 - Yes'; district names are in `dim_district`.`district_name`; count schools per district by joining `fact_school_resources` → `dim_school` → `dim_district` and grouping by `dim_district`.`district_name`."
+  },
+  {
+    "question": "For the state with ID 1, list the district names for the top 5 districts that have the highest count of resource IDs, filtering only for schools that received a full set of textbooks in the current academic year.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT T1 JOIN DIM_SCHOOL T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN FACT_SCHOOL_RESOURCES T3 ON T2.SCHOOL_ID = T3.SCHOOL_ID WHERE T3.SCHOOLS_RECEIVED_FULL_SET_OF_TEXTBOOKS_IN_CURRENT_ACADEMIC_YEAR = '1 - Yes' AND T1.STATE_ID = 1 GROUP BY T1.DISTRICT_NAME ORDER BY COUNT(T3.RESOURCE_ID) DESC LIMIT 5",
+    "pair_id": "4db6d59c",
+    "original_question_id": "20337e0e",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_RESOURCES"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "State ID 1 = `dim_state`.`state_id` = 1; Received full set of textbooks = `fact_school_resources`.`schools_received_full_set_of_textbooks_in_current_academic_year` = '1 - Yes'; Count of resource IDs = COUNT(`fact_school_resources`.`resource_id`); Top 5 districts = ORDER BY count DESC LIMIT 5; Output district names = `dim_district`.`district_name`."
+  },
+  {
+    "question": "For the academic year 2018, list the district names and the total count of schools that received a full set of textbooks in the current academic year, showing only the top 5 districts with the highest number of such schools.",
+    "sql": "SELECT T1.DISTRICT_NAME, COUNT(T2.SCHOOL_ID) FROM DIM_DISTRICT AS T1 JOIN DIM_SCHOOL AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN FACT_SCHOOL_RESOURCES AS T3 ON T2.SCHOOL_ID = T3.SCHOOL_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.ACADEMIC_YEAR = '2018' AND T3.SCHOOLS_RECEIVED_FULL_SET_OF_TEXTBOOKS_IN_CURRENT_ACADEMIC_YEAR = '1 - Yes' GROUP BY T1.DISTRICT_NAME ORDER BY COUNT(T2.SCHOOL_ID) DESC LIMIT 5",
+    "pair_id": "9296a3c5",
+    "original_question_id": "20337e0e",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_RESOURCES"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Academic year 2018 refers to `dim_year`.`academic_year` = 2018; received a full set of textbooks in the current academic year refers to `fact_school_resources`.`schools_received_full_set_of_textbooks_in_current_academic_year` = '1 - Yes'; district names are in `dim_district`.`district_name`; count of schools is the count of distinct `dim_school`.`school_id`; top 5 districts with highest number means ORDER BY count DESC LIMIT 5."
+  },
+  {
+    "question": "List the district names and the count of schools for the top 5 districts with the highest number of schools, specifically for those that received a full set of textbooks in the current academic year during the year with ID 1.",
+    "sql": "SELECT T1.DISTRICT_NAME, COUNT(T2.SCHOOL_ID) FROM DIM_DISTRICT AS T1 JOIN DIM_SCHOOL AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN FACT_SCHOOL_RESOURCES AS T3 ON T2.SCHOOL_ID = T3.SCHOOL_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T3.SCHOOLS_RECEIVED_FULL_SET_OF_TEXTBOOKS_IN_CURRENT_ACADEMIC_YEAR = '1 - Yes' AND T4.YEAR_ID = 1 GROUP BY T1.DISTRICT_NAME ORDER BY COUNT(T2.SCHOOL_ID) DESC LIMIT 5",
+    "pair_id": "5a34394f",
+    "original_question_id": "20337e0e",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_RESOURCES"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`fact_school_resources`.`schools_received_full_set_of_textbooks_in_current_academic_year` = '1 - Yes' indicates schools received full textbooks. Filter by `fact_school_resources`.`year_id` = 1. Count schools per district (`dim_district`.`district_name`) and get top 5 districts by school count."
+  },
+  {
+    "question": "List the unique school IDs and the academic years for schools that received a full set of textbooks in the current academic year.",
+    "sql": "SELECT DISTINCT T2.UNIQUE_SCHOOL_ID, T3.ACADEMIC_YEAR FROM FACT_SCHOOL_RESOURCES AS T1 JOIN DIM_SCHOOL AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T1.SCHOOLS_RECEIVED_FULL_SET_OF_TEXTBOOKS_IN_CURRENT_ACADEMIC_YEAR = '1 - Yes'",
+    "pair_id": "53820870",
+    "original_question_id": "f0f794fd",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_RESOURCES"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`fact_school_resources`.`schools_received_full_set_of_textbooks_in_current_academic_year` = '1 - Yes' indicates schools received full textbooks. Select `dim_school`.`unique_school_id` and `dim_year`.`academic_year` by joining `fact_school_resources` with `dim_school` on `school_id` and with `dim_year` on `year_id`."
+  },
+  {
+    "question": "Provide the unique school ID and the academic year for all schools that received a full set of textbooks in the current academic year, specifically for the academic year 2018.",
+    "sql": "SELECT DISTINCT T2.UNIQUE_SCHOOL_ID, T3.ACADEMIC_YEAR FROM FACT_SCHOOL_RESOURCES AS T1 JOIN DIM_SCHOOL AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T1.SCHOOLS_RECEIVED_FULL_SET_OF_TEXTBOOKS_IN_CURRENT_ACADEMIC_YEAR = '1 - Yes' AND T3.ACADEMIC_YEAR = '2018'",
+    "pair_id": "6a0bcda5",
+    "original_question_id": "f0f794fd",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_RESOURCES"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`fact_school_resources`.`schools_received_full_set_of_textbooks_in_current_academic_year` = '1 - Yes' and `dim_year`.`academic_year` = 2018. Unique school ID is `dim_school`.`unique_school_id`."
+  },
+  {
+    "question": "List the unique school IDs and the academic years, sorted by academic year in ascending order, for schools that received a full set of textbooks in the current academic year.",
+    "sql": "SELECT DISTINCT T2.UNIQUE_SCHOOL_ID, T3.ACADEMIC_YEAR FROM FACT_SCHOOL_RESOURCES AS T1 JOIN DIM_SCHOOL AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T1.SCHOOLS_RECEIVED_FULL_SET_OF_TEXTBOOKS_IN_CURRENT_ACADEMIC_YEAR = '1 - Yes' ORDER BY T3.ACADEMIC_YEAR ASC",
+    "pair_id": "966c360b",
+    "original_question_id": "f0f794fd",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_RESOURCES"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Schools that received a full set of textbooks refers to `fact_school_resources`.`schools_received_full_set_of_textbooks_in_current_academic_year` = '1 - Yes'; unique school ID is `dim_school`.`unique_school_id`; academic year is `dim_year`.`academic_year`; sort by `dim_year`.`academic_year` ASC."
+  },
+  {
+    "question": "List the unique school IDs and the academic years for schools that received a full set of textbooks in the current academic year, specifically filtering for the academic year 2018, and order the results by academic year.",
+    "sql": "SELECT DISTINCT T2.UNIQUE_SCHOOL_ID, T3.ACADEMIC_YEAR FROM FACT_SCHOOL_RESOURCES AS T1 JOIN DIM_SCHOOL AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T1.SCHOOLS_RECEIVED_FULL_SET_OF_TEXTBOOKS_IN_CURRENT_ACADEMIC_YEAR = '1 - Yes' AND T3.ACADEMIC_YEAR = '2018' ORDER BY T3.ACADEMIC_YEAR ASC",
+    "pair_id": "9b3a7270",
+    "original_question_id": "f0f794fd",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_RESOURCES"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Received a full set of textbooks in the current academic year corresponds to `fact_school_resources`.`schools_received_full_set_of_textbooks_in_current_academic_year` = '1 - Yes'. Academic year 2018 corresponds to `dim_year`.`academic_year` = 2018."
+  },
+  {
+    "question": "List the unique school IDs for schools that did not have any students attending special training during the 2018 academic year.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL AS T1 JOIN FACT_SPECIAL_TRAINING AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.ACADEMIC_YEAR = '2018' AND T2.STUDENTS_ATTENDING_SPECIAL_TRAINING = '2 - No'",
+    "pair_id": "9c31085b",
+    "original_question_id": "0d5975d0",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SPECIAL_TRAINING"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "did not have any students attending special training means `fact_special_training`.`students_attending_special_training` = '2 - No'; 2018 academic year means `dim_year`.`academic_year` = 2018; output `dim_school`.`unique_school_id`"
+  },
+  {
+    "question": "Provide the school ID for schools where no students attended special training during the 2018 academic year.",
+    "sql": "SELECT T1.SCHOOL_ID FROM DIM_SCHOOL AS T1 JOIN FACT_SPECIAL_TRAINING AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.ACADEMIC_YEAR = '2018' AND T2.STUDENTS_ATTENDING_SPECIAL_TRAINING = '2 - No'",
+    "pair_id": "bf35c301",
+    "original_question_id": "0d5975d0",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SPECIAL_TRAINING"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "No students attended special training means `fact_special_training`.`students_attending_special_training` = '2 - No'; 2018 academic year means `dim_year`.`academic_year` = 2018; output `fact_special_training`.`school_id`."
+  },
+  {
+    "question": "For the academic year 2018, list the unique school IDs for schools where students are not attending special training, ordered by their unique school ID.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL AS T1 JOIN FACT_SPECIAL_TRAINING AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.ACADEMIC_YEAR = '2018' AND T2.STUDENTS_ATTENDING_SPECIAL_TRAINING = '2 - No' ORDER BY T1.UNIQUE_SCHOOL_ID",
+    "pair_id": "93e24959",
+    "original_question_id": "0d5975d0",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SPECIAL_TRAINING"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Academic year 2018 refers to `dim_year`.`academic_year` = 2018. Students not attending special training refers to `fact_special_training`.`students_attending_special_training` = '2 - No'. Unique school ID is `dim_school`.`unique_school_id`. Order by `dim_school`.`unique_school_id`."
+  },
+  {
+    "question": "List the school IDs for schools where students did not attend special training during the year identified by ID 1, ordered by their school ID.",
+    "sql": "SELECT T1.SCHOOL_ID FROM DIM_SCHOOL AS T1 JOIN FACT_SPECIAL_TRAINING AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR_ID = 1 AND T2.STUDENTS_ATTENDING_SPECIAL_TRAINING = '2 - No' ORDER BY T1.SCHOOL_ID",
+    "pair_id": "6aeb8853",
+    "original_question_id": "0d5975d0",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SPECIAL_TRAINING"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "students did not attend special training refers to `fact_special_training`.`students_attending_special_training` = '2 - No'; year identified by ID 1 refers to `fact_special_training`.`year_id` = 1"
+  },
+  {
+    "question": "For the school with ID 1, list the unique school ID and the academic year for which special training records exist.",
+    "sql": "SELECT DISTINCT T2.UNIQUE_SCHOOL_ID, T3.ACADEMIC_YEAR FROM FACT_SPECIAL_TRAINING AS T1 JOIN DIM_SCHOOL AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T1.SCHOOL_ID = 1;",
+    "pair_id": "301f9baa",
+    "original_question_id": "b8b98dc0",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SPECIAL_TRAINING"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "school with ID 1 refers to `dim_school`.`school_id` = 1; unique school ID is `dim_school`.`unique_school_id`; academic year is `dim_year`.`academic_year`; special training records exist means there is a record in `fact_special_training` for that school (`fact_special_training`.`school_id` = `dim_school`.`school_id`)."
+  },
+  {
+    "question": "List the distinct unique school IDs and the academic years for all records where the year ID is 1.",
+    "sql": "SELECT DISTINCT T2.UNIQUE_SCHOOL_ID, T3.ACADEMIC_YEAR FROM FACT_SPECIAL_TRAINING AS T1 JOIN DIM_SCHOOL AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T1.YEAR_ID = 1;",
+    "pair_id": "baf8406a",
+    "original_question_id": "b8b98dc0",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SPECIAL_TRAINING"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_year.year_id` = 1 corresponds to `dim_year.academic_year` = 2018. `dim_school.unique_school_id` is the unique school identifier. Join any fact table (e.g., `fact_student_enrollment`) with `dim_school` on `school_id` and `dim_year` on `year_id` where `dim_year.year_id` = 1 to get distinct `dim_school.unique_school_id` and `dim_year.academic_year`."
+  },
+  {
+    "question": "List the distinct unique school IDs and the academic years for schools with a school ID greater than 1, ordered by the academic year.",
+    "sql": "SELECT DISTINCT T2.UNIQUE_SCHOOL_ID, T3.ACADEMIC_YEAR FROM FACT_SPECIAL_TRAINING AS T1 JOIN DIM_SCHOOL AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T1.SCHOOL_ID > 1 ORDER BY T3.ACADEMIC_YEAR",
+    "pair_id": "842dfada",
+    "original_question_id": "b8b98dc0",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SPECIAL_TRAINING"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "school ID refers to `dim_school`.`school_id`; unique school IDs refers to `dim_school`.`unique_school_id`; academic years refers to `dim_year`.`academic_year`; join `dim_school` to `fact_student_enrollment` on `school_id` and `fact_student_enrollment` to `dim_year` on `year_id`."
+  },
+  {
+    "question": "List the unique school IDs and their corresponding academic years for all records where the training ID is greater than 2, and sort the results by the academic year.",
+    "sql": "SELECT DISTINCT T2.UNIQUE_SCHOOL_ID, T3.ACADEMIC_YEAR FROM FACT_SPECIAL_TRAINING AS T1 JOIN DIM_SCHOOL AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T1.TRAINING_ID > 2 ORDER BY T3.ACADEMIC_YEAR",
+    "pair_id": "4cdccbee",
+    "original_question_id": "b8b98dc0",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SPECIAL_TRAINING"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`fact_special_training.training_id` is numeric; condition `training_id > 2` is numeric comparison. `dim_school.unique_school_id` is the unique school ID. `dim_year.academic_year` is the academic year. Join `fact_special_training` with `dim_school` on `school_id` and with `dim_year` on `year_id`."
+  },
+  {
+    "question": "For the academic year 2018, what is the unique school ID and the total sum of primary grade children who received free textbooks and primary grade children who received free uniforms, grouped by each unique school ID?",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID, SUM(T2.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_TEXTBOOKS + T2.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_UNIFORMS) FROM DIM_SCHOOL AS T1 JOIN FACT_STUDENT_SUPPORT_PRIMARY AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.ACADEMIC_YEAR = '2018' GROUP BY T1.UNIQUE_SCHOOL_ID",
+    "pair_id": "5eeb2a57",
+    "original_question_id": "52e4821c",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_STUDENT_SUPPORT_PRIMARY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "academic year 2018 = `dim_year`.`academic_year` = 2018; unique school ID = `dim_school`.`unique_school_id`; primary grade children who received free textbooks = `fact_student_support_primary`.`primary_grade_children_who_received_free_textbooks`; primary grade children who received free uniforms = `fact_student_support_primary`.`primary_grade_children_who_received_free_uniforms`; total sum = sum of those two columns; group by each unique school ID = group by `dim_school`.`unique_school_id`"
+  },
+  {
+    "question": "For the year with ID 1, what is the unique school ID and the total sum of primary grade children who received free textbooks and free uniforms for each school?",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID, SUM(T2.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_TEXTBOOKS + T2.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_UNIFORMS) FROM DIM_SCHOOL AS T1 JOIN FACT_STUDENT_SUPPORT_PRIMARY AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR_ID = 1 GROUP BY T1.UNIQUE_SCHOOL_ID",
+    "pair_id": "59385606",
+    "original_question_id": "52e4821c",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_STUDENT_SUPPORT_PRIMARY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "For year with ID 1, filter by `fact_student_support_primary`.`year_id` = 1. For each school, get `dim_school`.`unique_school_id` and compute total sum = `fact_student_support_primary`.`primary_grade_children_who_received_free_textbooks` + `fact_student_support_primary`.`primary_grade_children_who_received_free_uniforms`. Group by `dim_school`.`unique_school_id`."
+  },
+  {
+    "question": "For the academic year 2018, show the unique school ID and the total sum of primary grade children who received free textbooks plus primary grade children who received free uniforms, grouped by each unique school ID.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID, SUM(T2.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_TEXTBOOKS + T2.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_UNIFORMS) FROM DIM_SCHOOL AS T1 JOIN FACT_STUDENT_SUPPORT_PRIMARY AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.ACADEMIC_YEAR = '2018' GROUP BY T1.UNIQUE_SCHOOL_ID",
+    "pair_id": "71243621",
+    "original_question_id": "52e4821c",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_STUDENT_SUPPORT_PRIMARY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "For academic year 2018, sum = `fact_student_support_primary`.`primary_grade_children_who_received_free_textbooks` + `fact_student_support_primary`.`primary_grade_children_who_received_free_uniforms`, grouped by `dim_school`.`unique_school_id`."
+  },
+  {
+    "question": "For the year with ID 1, what is the unique school ID and the total sum of primary grade children who received free textbooks and free uniforms, grouped by each unique school ID?",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID, SUM(T2.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_TEXTBOOKS + T2.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_UNIFORMS) FROM DIM_SCHOOL AS T1 JOIN FACT_STUDENT_SUPPORT_PRIMARY AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR_ID = 1 GROUP BY T1.UNIQUE_SCHOOL_ID",
+    "pair_id": "1e6abed9",
+    "original_question_id": "52e4821c",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_STUDENT_SUPPORT_PRIMARY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "For `fact_student_support_primary`.`year_id` = 1, sum `fact_student_support_primary`.`primary_grade_children_who_received_free_textbooks` + `fact_student_support_primary`.`primary_grade_children_who_received_free_uniforms` grouped by `dim_school`.`unique_school_id`."
+  },
+  {
+    "question": "List the unique school IDs and the academic years for schools where both the number of primary grade children who received free textbooks and the number of primary grade children who received free uniforms are greater than zero.",
+    "sql": "SELECT DISTINCT T2.UNIQUE_SCHOOL_ID, T3.ACADEMIC_YEAR FROM FACT_STUDENT_SUPPORT_PRIMARY AS T1 JOIN DIM_SCHOOL AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T1.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_TEXTBOOKS > 0 AND T1.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_UNIFORMS > 0",
+    "pair_id": "c2bcc47a",
+    "original_question_id": "9e07163d",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_STUDENT_SUPPORT_PRIMARY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join fact_student_support_primary with dim_school on school_id and with dim_year on year_id. Select dim_school.unique_school_id and dim_year.academic_year where fact_student_support_primary.primary_grade_children_who_received_free_textbooks > 0 AND fact_student_support_primary.primary_grade_children_who_received_free_uniforms > 0."
+  },
+  {
+    "question": "List the unique school IDs and the academic years for schools where more than 5 children in primary grades received free textbooks and more than 5 children in primary grades received free uniforms.",
+    "sql": "SELECT DISTINCT T2.UNIQUE_SCHOOL_ID, T3.ACADEMIC_YEAR FROM FACT_STUDENT_SUPPORT_PRIMARY AS T1 JOIN DIM_SCHOOL AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T1.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_TEXTBOOKS > 5 AND T1.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_UNIFORMS > 5",
+    "pair_id": "a71b64ae",
+    "original_question_id": "9e07163d",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_STUDENT_SUPPORT_PRIMARY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Condition: `fact_student_support_primary`.`primary_grade_children_who_received_free_textbooks` > 5 AND `fact_student_support_primary`.`primary_grade_children_who_received_free_uniforms` > 5. Output: `dim_school`.`unique_school_id` and `dim_year`.`academic_year`."
+  },
+  {
+    "question": "List the unique school IDs and the academic years for schools where the number of primary grade children who received free textbooks is greater than zero and the number of primary grade children who received free uniforms is also greater than zero, ordered by the academic year.",
+    "sql": "SELECT DISTINCT T2.UNIQUE_SCHOOL_ID, T3.ACADEMIC_YEAR FROM FACT_STUDENT_SUPPORT_PRIMARY AS T1 JOIN DIM_SCHOOL AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T1.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_TEXTBOOKS > 0 AND T1.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_UNIFORMS > 0 ORDER BY T3.ACADEMIC_YEAR",
+    "pair_id": "5ed8e7b2",
+    "original_question_id": "9e07163d",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_STUDENT_SUPPORT_PRIMARY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_school`.`unique_school_id` and `dim_year`.`academic_year` from `fact_student_support_primary` join `dim_school` on `fact_student_support_primary`.`school_id` = `dim_school`.`school_id` join `dim_year` on `fact_student_support_primary`.`year_id` = `dim_year`.`year_id` where `fact_student_support_primary`.`primary_grade_children_who_received_free_textbooks` > 0 and `fact_student_support_primary`.`primary_grade_children_who_received_free_uniforms` > 0 order by `dim_year`.`academic_year`."
+  },
+  {
+    "question": "List the unique school IDs and their corresponding academic years for schools where more than 5 primary grade children received free textbooks and more than 5 primary grade children received free uniforms, sorted by the academic year.",
+    "sql": "SELECT DISTINCT T2.UNIQUE_SCHOOL_ID, T3.ACADEMIC_YEAR FROM FACT_STUDENT_SUPPORT_PRIMARY AS T1 JOIN DIM_SCHOOL AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T1.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_TEXTBOOKS > 5 AND T1.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_UNIFORMS > 5 ORDER BY T3.ACADEMIC_YEAR",
+    "pair_id": "cd5281db",
+    "original_question_id": "9e07163d",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_STUDENT_SUPPORT_PRIMARY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "More than 5 primary grade children received free textbooks refers to (`fact_student_support_primary`.`primary_grade_children_who_received_free_textbooks` > 5). More than 5 primary grade children received free uniforms refers to (`fact_student_support_primary`.`primary_grade_children_who_received_free_uniforms` > 5). Both conditions must be true (AND). Unique school ID is `dim_school`.`unique_school_id`. Academic year is `dim_year`.`academic_year`. Sort by `dim_year`.`academic_year`."
+  },
+  {
+    "question": "For the academic year 2018, list the distinct unique school IDs for schools where either the number of primary grade children who received free transport facilities is greater than zero or the number of primary grade children who received free uniforms is greater than zero.",
+    "sql": "SELECT DISTINCT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL AS T1 JOIN FACT_STUDENT_SUPPORT_PRIMARY AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.ACADEMIC_YEAR = '2018' AND (T2.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_TRANSPORT_FACILITY > '0' OR T2.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_UNIFORMS > '0')",
+    "pair_id": "471e498a",
+    "original_question_id": "d084f7f2",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_STUDENT_SUPPORT_PRIMARY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_year`.`academic_year` = 2018. Join `dim_school`, `fact_student_support_primary`, and `dim_year` via `school_id` and `year_id`. Select distinct `dim_school`.`unique_school_id` where `fact_student_support_primary`.`primary_grade_children_who_received_free_transport_facility` > 0 OR `fact_student_support_primary`.`primary_grade_children_who_received_free_uniforms` > 0."
+  },
+  {
+    "question": "List the unique school IDs for the academic year 2018 where either more than 3 primary grade children received free transport facilities or more than 5 primary grade children received free uniforms.",
+    "sql": "SELECT DISTINCT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL AS T1 JOIN FACT_STUDENT_SUPPORT_PRIMARY AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.ACADEMIC_YEAR = '2018' AND (T2.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_TRANSPORT_FACILITY > '3' OR T2.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_UNIFORMS > '5')",
+    "pair_id": "e4383f02",
+    "original_question_id": "d084f7f2",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_STUDENT_SUPPORT_PRIMARY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Academic year 2018 refers to `dim_year`.`academic_year` = 2018. Unique school IDs are in `dim_school`.`unique_school_id`. Conditions: `fact_student_support_primary`.`primary_grade_children_who_received_free_transport_facility` > 3 OR `fact_student_support_primary`.`primary_grade_children_who_received_free_uniforms` > 5."
+  },
+  {
+    "question": "List the distinct unique school IDs for the academic year 2018 where the number of primary grade children who received free transport facilities is greater than zero or the number of primary grade children who received free uniforms is greater than zero, ordered by the unique school ID.",
+    "sql": "SELECT DISTINCT T2.UNIQUE_SCHOOL_ID FROM FACT_STUDENT_SUPPORT_PRIMARY AS T1 JOIN DIM_SCHOOL AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T3.ACADEMIC_YEAR = '2018' AND (T1.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_TRANSPORT_FACILITY > 0 OR T1.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_UNIFORMS > 0) ORDER BY T2.UNIQUE_SCHOOL_ID",
+    "pair_id": "8ac08f85",
+    "original_question_id": "d084f7f2",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_STUDENT_SUPPORT_PRIMARY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_year.academic_year` = 2018; `fact_student_support_primary.primary_grade_children_who_received_free_transport_facility` > 0 OR `fact_student_support_primary.primary_grade_children_who_received_free_uniforms` > 0; result should be DISTINCT `dim_school.unique_school_id` ordered by `dim_school.unique_school_id`."
+  },
+  {
+    "question": "List the unique school IDs, ordered by ID, for schools where in the academic year 2018, either more than 3 primary grade children received free transport facilities or more than 5 primary grade children received free uniforms.",
+    "sql": "SELECT DISTINCT T2.UNIQUE_SCHOOL_ID FROM FACT_STUDENT_SUPPORT_PRIMARY AS T1 JOIN DIM_SCHOOL AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T3.ACADEMIC_YEAR = '2018' AND (T1.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_TRANSPORT_FACILITY > 3 OR T1.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_UNIFORMS > 5) ORDER BY T2.UNIQUE_SCHOOL_ID",
+    "pair_id": "1f4d82f6",
+    "original_question_id": "d084f7f2",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_STUDENT_SUPPORT_PRIMARY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter schools for academic year 2018 (`dim_year`.`academic_year` = 2018) where either `fact_student_support_primary`.`primary_grade_children_who_received_free_transport_facility` > 3 OR `fact_student_support_primary`.`primary_grade_children_who_received_free_uniforms` > 5. Return `dim_school`.`unique_school_id` ordered ascending."
+  },
+  {
+    "question": "List the school IDs for schools where the academic year is 2018 and the number of primary grade children who received free textbooks is greater than zero and the number of primary grade children who received free uniforms is also greater than zero.",
+    "sql": "SELECT T1.SCHOOL_ID FROM FACT_STUDENT_SUPPORT_PRIMARY AS T1 JOIN DIM_YEAR AS T2 ON T1.YEAR_ID = T2.YEAR_ID WHERE T2.ACADEMIC_YEAR = '2018' AND T1.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_TEXTBOOKS > 0 AND T1.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_UNIFORMS > 0",
+    "pair_id": "829debba",
+    "original_question_id": "39485e6b",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_STUDENT_SUPPORT_PRIMARY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Academic year 2018 is in `dim_year`.`academic_year`. Primary grade children who received free textbooks refers to `fact_student_support_primary`.`primary_grade_children_who_received_free_textbooks` > 0. Primary grade children who received free uniforms refers to `fact_student_support_primary`.`primary_grade_children_who_received_free_uniforms` > 0. Join `fact_student_support_primary` with `dim_year` on `year_id` to filter by academic year."
+  },
+  {
+    "question": "List the school IDs for the academic year 2018 where the number of primary grade children who received free textbooks is greater than 5 and the number of primary grade children who received free uniforms is also greater than 5.",
+    "sql": "SELECT T1.SCHOOL_ID FROM FACT_STUDENT_SUPPORT_PRIMARY AS T1 JOIN DIM_YEAR AS T2 ON T1.YEAR_ID = T2.YEAR_ID WHERE T2.ACADEMIC_YEAR = '2018' AND T1.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_TEXTBOOKS > 5 AND T1.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_UNIFORMS > 5",
+    "pair_id": "036b3bcc",
+    "original_question_id": "39485e6b",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_STUDENT_SUPPORT_PRIMARY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_student_support_primary` with `dim_year` on `fact_student_support_primary`.`year_id` = `dim_year`.`year_id`. Filter where `dim_year`.`academic_year` = 2018, `fact_student_support_primary`.`primary_grade_children_who_received_free_textbooks` > 5, and `fact_student_support_primary`.`primary_grade_children_who_received_free_uniforms` > 5. Select `fact_student_support_primary`.`school_id`."
+  },
+  {
+    "question": "List the school IDs for the academic year 2018 where the number of primary grade children who received free textbooks is greater than zero and the number of primary grade children who received free uniforms is also greater than zero, grouped and ordered by the school ID.",
+    "sql": "SELECT T1.SCHOOL_ID FROM FACT_STUDENT_SUPPORT_PRIMARY AS T1 JOIN DIM_YEAR AS T2 ON T1.YEAR_ID = T2.YEAR_ID WHERE T2.ACADEMIC_YEAR = '2018' AND T1.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_TEXTBOOKS > 0 AND T1.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_UNIFORMS > 0 GROUP BY T1.SCHOOL_ID ORDER BY T1.SCHOOL_ID ASC",
+    "pair_id": "232e817d",
+    "original_question_id": "39485e6b",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_STUDENT_SUPPORT_PRIMARY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Academic year 2018 is stored in `dim_year`.`academic_year` = 2018. Primary grade children who received free textbooks refers to `fact_student_support_primary`.`primary_grade_children_who_received_free_textbooks` > 0. Primary grade children who received free uniforms refers to `fact_student_support_primary`.`primary_grade_children_who_received_free_uniforms` > 0. Join `fact_student_support_primary` with `dim_year` on `year_id`."
+  },
+  {
+    "question": "List the school IDs, ordered by school ID, for the academic year 2018 where more than 5 primary grade children received free textbooks and more than 5 primary grade children received free uniforms, grouped by school ID.",
+    "sql": "SELECT T1.SCHOOL_ID FROM FACT_STUDENT_SUPPORT_PRIMARY AS T1 JOIN DIM_YEAR AS T2 ON T1.YEAR_ID = T2.YEAR_ID WHERE T2.ACADEMIC_YEAR = '2018' AND T1.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_TEXTBOOKS > 5 AND T1.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_UNIFORMS > 5 GROUP BY T1.SCHOOL_ID ORDER BY T1.SCHOOL_ID ASC",
+    "pair_id": "29071c6c",
+    "original_question_id": "39485e6b",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_STUDENT_SUPPORT_PRIMARY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Academic year 2018 refers to `dim_year`.`academic_year` = 2018. More than 5 primary grade children received free textbooks refers to `fact_student_support_primary`.`primary_grade_children_who_received_free_textbooks` > 5. More than 5 primary grade children received free uniforms refers to `fact_student_support_primary`.`primary_grade_children_who_received_free_uniforms` > 5. List school IDs ordered by school ID from `dim_school`.`school_id` (or `fact_student_support_primary`.`school_id`) and group by school ID."
+  },
+  {
+    "question": "List the unique school IDs for schools where the academic year is 2018 and the number of primary grade children who received free textbooks is greater than 35.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL AS T1 JOIN FACT_STUDENT_SUPPORT_PRIMARY AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.ACADEMIC_YEAR = '2018' AND T2.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_TEXTBOOKS > 35",
+    "pair_id": "375b9fb7",
+    "original_question_id": "985c36ef",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_STUDENT_SUPPORT_PRIMARY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_year`.`academic_year` = 2018; `fact_student_support_primary`.`primary_grade_children_who_received_free_textbooks` > 35 (numeric comparison); unique school IDs are in `dim_school`.`unique_school_id`; join `dim_school` with `fact_student_support_primary` on `school_id` and with `dim_year` on `year_id`."
+  },
+  {
+    "question": "List the school IDs for schools where the academic year is 2018 and the number of primary grade children who received free textbooks is greater than 5.",
+    "sql": "SELECT T1.SCHOOL_ID FROM DIM_SCHOOL AS T1 JOIN FACT_STUDENT_SUPPORT_PRIMARY AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.ACADEMIC_YEAR = '2018' AND T2.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_TEXTBOOKS > 5",
+    "pair_id": "cf1f2ecd",
+    "original_question_id": "985c36ef",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_STUDENT_SUPPORT_PRIMARY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Academic year 2018 refers to dim_year.academic_year = 2018; primary grade children who received free textbooks refers to fact_student_support_primary.primary_grade_children_who_received_free_textbooks; condition > 5 applies to that column; school IDs are fact_student_support_primary.school_id; join fact_student_support_primary with dim_year on year_id."
+  },
+  {
+    "question": "List the school IDs for the academic year '2018' where the total number of primary grade children who received free textbooks is greater than 35, grouped by the school ID.",
+    "sql": "SELECT T1.SCHOOL_ID FROM FACT_STUDENT_SUPPORT_PRIMARY AS T1 JOIN DIM_SCHOOL AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T3.ACADEMIC_YEAR = '2018' GROUP BY T1.SCHOOL_ID HAVING SUM(T1.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_TEXTBOOKS) > 35",
+    "pair_id": "67363790",
+    "original_question_id": "985c36ef",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_STUDENT_SUPPORT_PRIMARY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Academic year '2018' refers to `dim_year.academic_year` = 2018. Primary grade children who received free textbooks is `fact_student_support_primary.primary_grade_children_who_received_free_textbooks`. Condition: value > 35. Group by `fact_student_support_primary.school_id`. Join `fact_student_support_primary` with `dim_year` on `fact_student_support_primary.year_id` = `dim_year.year_id`."
+  },
+  {
+    "question": "List the school IDs for the academic year '2018' where the total number of primary grade children who received free textbooks is greater than 5, grouped by the school ID.",
+    "sql": "SELECT T1.SCHOOL_ID FROM FACT_STUDENT_SUPPORT_PRIMARY AS T1 JOIN DIM_SCHOOL AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T3.ACADEMIC_YEAR = '2018' GROUP BY T1.SCHOOL_ID HAVING SUM(T1.PRIMARY_GRADE_CHILDREN_WHO_RECEIVED_FREE_TEXTBOOKS) > 5",
+    "pair_id": "347834a6",
+    "original_question_id": "985c36ef",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_STUDENT_SUPPORT_PRIMARY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Academic year '2018' corresponds to `dim_year`.`academic_year` = 2018. The total number of primary grade children who received free textbooks is stored in `fact_student_support_primary`.`primary_grade_children_who_received_free_textbooks` as an integer. Condition 'greater than 5' means `fact_student_support_primary`.`primary_grade_children_who_received_free_textbooks` > 5. Grouping by school ID means grouping by `dim_school`.`school_id` or `fact_student_support_primary`.`school_id`."
+  },
+  {
+    "question": "List the unique school IDs for the academic year '2018' where the school grant received is equal to the utilization of the school grant.",
+    "sql": "SELECT T2.UNIQUE_SCHOOL_ID FROM FACT_SCHOOL_FINANCES AS T1 JOIN DIM_SCHOOL AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T3.ACADEMIC_YEAR = '2018' AND T1.SCHOOL_GRANT_RECEIVED = T1.UTILIZATION_OF_SCHOOL_GRANT",
+    "pair_id": "ad9d1687",
+    "original_question_id": "3833ef29",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_FINANCES"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "unique school IDs refers to `dim_school`.`unique_school_id`; academic year '2018' refers to `dim_year`.`academic_year` = 2018; school grant received is `fact_school_finances`.`school_grant_received`; utilization of the school grant is `fact_school_finances`.`utilization_of_school_grant`; condition is `fact_school_finances`.`school_grant_received` = `fact_school_finances`.`utilization_of_school_grant`."
+  },
+  {
+    "question": "Show the school ID for schools where the academic year is 2018 and the utilization of the school grant is equal to the school grant received.",
+    "sql": "SELECT T2.SCHOOL_ID FROM FACT_SCHOOL_FINANCES AS T1 JOIN DIM_SCHOOL AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T3.ACADEMIC_YEAR = '2018' AND T1.UTILIZATION_OF_SCHOOL_GRANT = T1.SCHOOL_GRANT_RECEIVED",
+    "pair_id": "ff8ab7c9",
+    "original_question_id": "3833ef29",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_FINANCES"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Academic year 2018 is in `dim_year`.`academic_year`. Utilization of school grant is `fact_school_finances`.`utilization_of_school_grant`. School grant received is `fact_school_finances`.`school_grant_received`. Condition: `fact_school_finances`.`utilization_of_school_grant` = `fact_school_finances`.`school_grant_received`."
+  },
+  {
+    "question": "List the unique school IDs for the academic year 2018 where the school grant received is equal to the utilization of the school grant, ordered by the unique school ID.",
+    "sql": "SELECT T1.UNIQUE_SCHOOL_ID FROM DIM_SCHOOL AS T1 JOIN FACT_SCHOOL_FINANCES AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.ACADEMIC_YEAR = '2018' AND T2.SCHOOL_GRANT_RECEIVED = T2.UTILIZATION_OF_SCHOOL_GRANT ORDER BY T1.UNIQUE_SCHOOL_ID",
+    "pair_id": "f21e6b76",
+    "original_question_id": "3833ef29",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_FINANCES"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_school`, `fact_school_finances`, and `dim_year`. Filter where `dim_year`.`academic_year` = 2018 and `fact_school_finances`.`school_grant_received` = `fact_school_finances`.`utilization_of_school_grant`. Select `dim_school`.`unique_school_id` and order by `dim_school`.`unique_school_id`."
+  },
+  {
+    "question": "List the school IDs for the academic year 2018 where the utilization of the school grant is equal to the school grant received, ordered by the school ID.",
+    "sql": "SELECT T1.SCHOOL_ID FROM DIM_SCHOOL AS T1 JOIN FACT_SCHOOL_FINANCES AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.ACADEMIC_YEAR = '2018' AND T2.UTILIZATION_OF_SCHOOL_GRANT = T2.SCHOOL_GRANT_RECEIVED ORDER BY T1.SCHOOL_ID",
+    "pair_id": "a2f00f86",
+    "original_question_id": "3833ef29",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_FINANCES"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "academic year 2018 refers to `dim_year`.`academic_year` = 2018; utilization of school grant refers to `fact_school_finances`.`utilization_of_school_grant`; school grant received refers to `fact_school_finances`.`school_grant_received`; school IDs refer to `fact_school_finances`.`school_id`; order by `fact_school_finances`.`school_id`."
+  },
+  {
+    "question": "For the academic year 2018, list each school ID and the total sum of school grants received, grouped by the school ID.",
+    "sql": "SELECT T1.SCHOOL_ID, SUM(T1.SCHOOL_GRANT_RECEIVED) FROM FACT_SCHOOL_FINANCES AS T1 JOIN DIM_YEAR AS T2 ON T1.YEAR_ID = T2.YEAR_ID WHERE T2.ACADEMIC_YEAR = '2018' GROUP BY T1.SCHOOL_ID",
+    "pair_id": "c90e68b5",
+    "original_question_id": "5943ee04",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_FINANCES"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Academic year 2018 corresponds to `dim_year`.`academic_year` = 2018; school grants received is `fact_school_finances`.`school_grant_received`; group by `fact_school_finances`.`school_id`."
+  },
+  {
+    "question": "For schools located in the district with ID 1, list each school ID along with the total sum of school grants received, grouped by the school ID.",
+    "sql": "SELECT T1.SCHOOL_ID, SUM(T1.SCHOOL_GRANT_RECEIVED) FROM FACT_SCHOOL_FINANCES AS T1 JOIN DIM_SCHOOL AS T2 ON T1.SCHOOL_ID = T2.SCHOOL_ID WHERE T2.DISTRICT_ID = 1 GROUP BY T1.SCHOOL_ID",
+    "pair_id": "7522d303",
+    "original_question_id": "5943ee04",
+    "schema_used": [
+      "DIM_SCHOOL",
+      "DIM_YEAR",
+      "FACT_SCHOOL_FINANCES"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_school.district_id` = 1, then join with `fact_school_finances` on `school_id`, and compute `SUM(fact_school_finances.school_grant_received)` grouped by `dim_school.school_id`."
+  }
+]

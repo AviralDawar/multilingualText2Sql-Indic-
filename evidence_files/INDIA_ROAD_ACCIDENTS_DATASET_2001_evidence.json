@@ -1,0 +1,1032 @@
+[
+  {
+    "question": "List the accident IDs for accidents where the number of casualties is greater than 2 and the driver involved has 1-2 years of driving experience.",
+    "sql": "SELECT T1.ACCIDENT_ID FROM FACT_ACCIDENT AS T1 JOIN DIM_DRIVER AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID WHERE T1.NUMBER_OF_CASUALTIES > 2 AND T2.DRIVING_EXPERIENCE = '1-2yr';",
+    "pair_id": "766ad2ba",
+    "original_question_id": "ede492bf",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_accident` and `dim_driver` on `driver_id`; filter where `fact_accident`.`number_of_casualties` > 2 and `dim_driver`.`driving_experience` = '1-2yr'; select `fact_accident`.`accident_id`."
+  },
+  {
+    "question": "List the accident IDs for all accidents where the number of casualties is greater than 2 and the driver involved has 1-2 years of driving experience.",
+    "sql": "SELECT T1.ACCIDENT_ID FROM FACT_ACCIDENT AS T1 JOIN DIM_DRIVER AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID WHERE T1.NUMBER_OF_CASUALTIES > 2 AND T2.DRIVING_EXPERIENCE = '1-2yr';",
+    "pair_id": "87f86ad9",
+    "original_question_id": "ede492bf",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Accident IDs are in `fact_accident`.`accident_id`. Condition 1: `fact_accident`.`number_of_casualties` > 2. Condition 2: `dim_driver`.`driving_experience` = '1-2yr'. Join `fact_accident` with `dim_driver` on `fact_accident`.`driver_id` = `dim_driver`.`driver_id`."
+  },
+  {
+    "question": "List each accident severity and the total count of accident IDs for drivers with 1-2 years of driving experience, showing only those severity levels that have more than one accident, and order the results by the accident severity.",
+    "sql": "SELECT T1.ACCIDENT_SEVERITY, COUNT(T1.ACCIDENT_ID) FROM FACT_ACCIDENT AS T1 JOIN DIM_DRIVER AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID WHERE T2.DRIVING_EXPERIENCE = '1-2yr' GROUP BY T1.ACCIDENT_SEVERITY HAVING COUNT(T1.ACCIDENT_ID) > 1 ORDER BY T1.ACCIDENT_SEVERITY",
+    "pair_id": "fbef6271",
+    "original_question_id": "ede492bf",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Drivers with 1-2 years of driving experience means `dim_driver`.`driving_experience` = '1-2yr'. Accident severity is `fact_accident`.`accident_severity`. Total count of accident IDs is COUNT(`fact_accident`.`accident_id`). More than one accident means COUNT(`fact_accident`.`accident_id`) > 1. Order by `fact_accident`.`accident_severity`."
+  },
+  {
+    "question": "List the accident IDs for cases involving drivers with 1-2 years of driving experience, where the total sum of casualties for each accident is greater than 3, ordered by the maximum number of casualties in descending order.",
+    "sql": "SELECT T2.ACCIDENT_ID FROM DIM_DRIVER AS T1 INNER JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID LEFT JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.DRIVING_EXPERIENCE = '1-2yr' GROUP BY T2.ACCIDENT_ID HAVING SUM(T2.NUMBER_OF_CASUALTIES) > 3 ORDER BY MAX(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "1c2bc7c6",
+    "original_question_id": "ede492bf",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Drivers with 1-2 years of driving experience refers to `dim_driver.driving_experience` = '1-2yr'. Total sum of casualties per accident is `fact_accident.number_of_casualties`. Filter where `fact_accident.number_of_casualties` > 3. Order by `fact_accident.number_of_casualties` DESC."
+  },
+  {
+    "question": "For each age band of the driver, list the age band, the average number of casualties, and the total count of accident IDs.",
+    "sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), COUNT(T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.AGE_BAND_OF_DRIVER",
+    "pair_id": "3cfe7990",
+    "original_question_id": "22b75f02",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_driver`.`age_band_of_driver`; compute AVG(`fact_accident`.`number_of_casualties`) and COUNT(DISTINCT `fact_accident`.`accident_id`) after joining `fact_accident` and `dim_driver` on `driver_id`."
+  },
+  {
+    "question": "For each age band of the driver, list the age band itself, the average number of casualties, and the total count of accident IDs.",
+    "sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), COUNT(T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.AGE_BAND_OF_DRIVER",
+    "pair_id": "7768a6de",
+    "original_question_id": "22b75f02",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_driver`.`age_band_of_driver`. Compute average casualties as AVG(`fact_accident`.`number_of_casualties`). Compute total accident count as COUNT(DISTINCT `fact_accident`.`accident_id`). Join `fact_accident` with `dim_driver` on `fact_accident`.`driver_id` = `dim_driver`.`driver_id`."
+  },
+  {
+    "question": "For each age band of the driver, list the age band, the average number of casualties, and the total count of accident IDs, filtering for groups where the average number of casualties is greater than one and ordering the results by the accident count in descending order.",
+    "sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), COUNT(T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.AGE_BAND_OF_DRIVER HAVING AVG(T2.NUMBER_OF_CASUALTIES) > 1 ORDER BY COUNT(T2.ACCIDENT_ID) DESC",
+    "pair_id": "9b1772a3",
+    "original_question_id": "22b75f02",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_driver`.`age_band_of_driver`, compute AVG(`fact_accident`.`number_of_casualties`) and COUNT(`fact_accident`.`accident_id`). Filter groups where AVG(`fact_accident`.`number_of_casualties`) > 1. Order by COUNT(`fact_accident`.`accident_id`) DESC."
+  },
+  {
+    "question": "Grouped by the age band of the driver, what is the age band, the average number of casualties, and the total count of unique accident IDs for those drivers involved in more than one accident, ordered by the average number of casualties in descending order?",
+    "sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), COUNT(DISTINCT T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.AGE_BAND_OF_DRIVER HAVING COUNT(T2.ACCIDENT_ID) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "b09b770f",
+    "original_question_id": "22b75f02",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_accident` and `dim_driver` on `driver_id`. Filter for drivers with COUNT(DISTINCT `fact_accident`.`accident_id`) > 1. Then group by `dim_driver`.`age_band_of_driver` and compute: the age band, AVG(`fact_accident`.`number_of_casualties`) as average casualties, and COUNT(DISTINCT `fact_accident`.`accident_id`) as total unique accidents. Order by average casualties DESC."
+  },
+  {
+    "question": "List the top 5 age bands of drivers and casualty severities that have the highest average number of casualties, showing the age band, the average number of casualties, and the casualty severity for each group.",
+    "sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), T3.CASUALTY_SEVERITY FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.AGE_BAND_OF_DRIVER, T3.CASUALTY_SEVERITY ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC LIMIT 5",
+    "pair_id": "046b8b21",
+    "original_question_id": "f82f9d80",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_driver`.`age_band_of_driver` and `bridge_accident_casualty`.`casualty_severity`; compute AVG(`fact_accident`.`number_of_casualties`); order by average descending, limit 5; join `dim_driver` to `fact_accident` on `driver_id`, and `fact_accident` to `bridge_accident_casualty` on `accident_id`."
+  },
+  {
+    "question": "List the age band of the driver and the average number of casualties for each age band, sorted by the average number of casualties in descending order, showing only the top 5 results.",
+    "sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.AGE_BAND_OF_DRIVER ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC LIMIT 5",
+    "pair_id": "cf10373b",
+    "original_question_id": "f82f9d80",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Age band of the driver refers to (`dim_driver`.`age_band_of_driver`). Average number of casualties is AVG(`fact_accident`.`number_of_casualties`). Join `fact_accident` with `dim_driver` on `fact_accident`.`driver_id` = `dim_driver`.`driver_id`. Group by (`dim_driver`.`age_band_of_driver`), order by average casualties DESC, limit 5."
+  },
+  {
+    "question": "Show the age band of the driver, the average number of casualties, and the casualty severity, grouped by driver age band and casualty severity, for those groups where the average number of casualties is greater than one, and list the top 5 results in descending order of the average casualties.",
+    "sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), T3.CASUALTY_SEVERITY FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.AGE_BAND_OF_DRIVER, T3.CASUALTY_SEVERITY HAVING AVG(T2.NUMBER_OF_CASUALTIES) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC LIMIT 5",
+    "pair_id": "7f0c5971",
+    "original_question_id": "f82f9d80",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Average casualties = AVG(count of casualties per accident) for each combination of `dim_driver.age_band_of_driver` and `bridge_accident_casualty.casualty_severity`. Count casualties per accident per severity from `bridge_accident_casualty`. Filter groups where average > 1. Order by average casualties DESC limit 5."
+  },
+  {
+    "question": "List the age band of the driver, the average number of casualties, and the total sum of casualty severity for the top 5 driver age bands with more than one accident, ordered by the average number of casualties in descending order.",
+    "sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), SUM(T3.CASUALTY_SEVERITY) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.AGE_BAND_OF_DRIVER HAVING COUNT(T2.ACCIDENT_ID) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC LIMIT 5",
+    "pair_id": "8567458b",
+    "original_question_id": "f82f9d80",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "`dim_driver.age_band_of_driver` is the driver age band. Average casualties = AVG(`fact_accident`.`number_of_casualties`). Total casualty severity = SUM(`bridge_accident_casualty`.`casualty_severity`). Filter driver age bands with COUNT(DISTINCT `fact_accident`.`accident_id`) > 1. Order by AVG(`fact_accident`.`number_of_casualties`) DESC, limit 5."
+  },
+  {
+    "question": "Show all columns from the casualty dimension for records where the casualty class is 'Pedestrian' and the fitness of the casualty is 'Normal'.",
+    "sql": "SELECT * FROM DIM_CASUALTY WHERE CASUALTY_CLASS = 'Pedestrian' AND FITNESS_OF_CASUALTY = 'Normal';",
+    "pair_id": "cf18af22",
+    "original_question_id": "979cc2b1",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "All columns from `dim_casualty` where `dim_casualty`.`casualty_class` = 'Pedestrian' and `dim_casualty`.`fitness_of_casualty` = 'Normal'."
+  },
+  {
+    "question": "List the casualty ID and the sex of the casualty for all individuals classified as pedestrians whose fitness was recorded as normal, ordered alphabetically by their sex.",
+    "sql": "SELECT T1.CASUALTY_ID, T1.SEX_OF_CASUALTY FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' AND T1.FITNESS_OF_CASUALTY = 'Normal' ORDER BY T1.SEX_OF_CASUALTY ASC",
+    "pair_id": "7048add7",
+    "original_question_id": "979cc2b1",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_casualty`.`casualty_id` and `dim_casualty`.`sex_of_casualty` from `dim_casualty` where `dim_casualty`.`casualty_class` = 'Pedestrian' and `dim_casualty`.`fitness_of_casualty` = 'Normal' order by `dim_casualty`.`sex_of_casualty`."
+  },
+  {
+    "question": "List the casualty IDs for casualties classified as pedestrians where the fitness of the casualty is normal, grouped by their casualty ID.",
+    "sql": "SELECT T1.CASUALTY_ID FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' GROUP BY T1.CASUALTY_ID HAVING T1.FITNESS_OF_CASUALTY = 'Normal';",
+    "pair_id": "c24c13f9",
+    "original_question_id": "979cc2b1",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "casualty IDs refer to `dim_casualty`.`casualty_id`; pedestrians refer to `dim_casualty`.`casualty_class` = 'Pedestrian'; normal fitness refers to `dim_casualty`.`fitness_of_casualty` = 'Normal'; group by `dim_casualty`.`casualty_id`"
+  },
+  {
+    "question": "List the casualty ID, the casualty class, the sex of the casualty, and the accident severity for casualties classified as 'Pedestrian' who have a 'Normal' fitness level, ensuring each casualty is associated with at least one accident, and order the results by the casualty class.",
+    "sql": "SELECT T1.CASUALTY_ID, T1.CASUALTY_CLASS, T1.SEX_OF_CASUALTY, T3.ACCIDENT_SEVERITY FROM DIM_CASUALTY AS T1 INNER JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID INNER JOIN FACT_ACCIDENT AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' AND T1.FITNESS_OF_CASUALTY = 'Normal' GROUP BY T1.CASUALTY_ID, T1.CASUALTY_CLASS, T1.SEX_OF_CASUALTY, T3.ACCIDENT_SEVERITY HAVING COUNT(T2.ACCIDENT_ID) >= 1 ORDER BY T1.CASUALTY_CLASS ASC",
+    "pair_id": "3de8a963",
+    "original_question_id": "979cc2b1",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "`dim_casualty`.`casualty_class` = 'Pedestrian'; `dim_casualty`.`fitness_of_casualty` = 'Normal'; casualty must be in `bridge_accident_casualty`; select `dim_casualty`.`casualty_id`, `dim_casualty`.`casualty_class`, `dim_casualty`.`sex_of_casualty`, `fact_accident`.`accident_severity`; order by `dim_casualty`.`casualty_class`"
+  },
+  {
+    "question": "For casualties classified as pedestrians, list each sex of casualty and the corresponding average casualty severity, grouped by the sex of casualty.",
+    "sql": "SELECT T1.SEX_OF_CASUALTY, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' GROUP BY T1.SEX_OF_CASUALTY",
+    "pair_id": "8d7cf5db",
+    "original_question_id": "f31677d4",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Pedestrians refers to `dim_casualty`.`casualty_class` = 'Pedestrian'. Sex of casualty is `dim_casualty`.`sex_of_casualty`. Casualty severity is `bridge_accident_casualty`.`casualty_severity`. Average casualty severity is AVG(`bridge_accident_casualty`.`casualty_severity`). Group by `dim_casualty`.`sex_of_casualty`."
+  },
+  {
+    "question": "For casualties classified as pedestrians, list each sex of casualty along with the average casualty severity, grouped by the sex of the casualty.",
+    "sql": "SELECT T1.SEX_OF_CASUALTY, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' GROUP BY T1.SEX_OF_CASUALTY",
+    "pair_id": "ae17899a",
+    "original_question_id": "f31677d4",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_casualty`.`casualty_class` = 'Pedestrian'; group by `dim_casualty`.`sex_of_casualty`; compute AVG(`bridge_accident_casualty`.`casualty_severity`); join `bridge_accident_casualty` on `bridge_accident_casualty`.`casualty_id` = `dim_casualty`.`casualty_id`."
+  },
+  {
+    "question": "For casualties classified as pedestrians, list each sex of casualty and their corresponding average casualty severity, filtering for groups where the average severity is greater than 1, and order the results by the sex of the casualty.",
+    "sql": "SELECT T1.SEX_OF_CASUALTY, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' GROUP BY T1.SEX_OF_CASUALTY HAVING AVG(T2.CASUALTY_SEVERITY) > 1 ORDER BY T1.SEX_OF_CASUALTY",
+    "pair_id": "7265cf38",
+    "original_question_id": "f31677d4",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Pedestrian casualties refer to `dim_casualty`.`casualty_class` = 'Pedestrian'. Sex of casualty values are 'Female' and 'Male' in `dim_casualty`.`sex_of_casualty`. Average casualty severity is AVG(`bridge_accident_casualty`.`casualty_severity`), which is numeric (1,2,3). Filter groups where this average > 1."
+  },
+  {
+    "question": "Show the sex of casualty and the average casualty severity for casualties who are either a driver, rider, or pedestrian and fall within the age bands of 18-30 or 31-50, grouped by their sex, where the average severity is greater than 1, and order the results by the average casualty severity in descending order.",
+    "sql": "SELECT T1.SEX_OF_CASUALTY, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 INNER JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID INNER JOIN FACT_ACCIDENT AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.CASUALTY_CLASS IN ('Driver or rider', 'Pedestrian') AND T1.AGE_BAND_OF_CASUALTY IN ('31-50', '18-30') GROUP BY T1.SEX_OF_CASUALTY HAVING AVG(T2.CASUALTY_SEVERITY) > 1 ORDER BY AVG(T2.CASUALTY_SEVERITY) DESC",
+    "pair_id": "e504e82d",
+    "original_question_id": "f31677d4",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Sex of casualty = `dim_casualty`.`sex_of_casualty`. Average casualty severity = AVG(`bridge_accident_casualty`.`casualty_severity`). Casualties who are either a driver, rider, or pedestrian = `dim_casualty`.`casualty_class` IN ('Driver or rider', 'Pedestrian'). Age bands of 18-30 or 31-50 = `dim_casualty`.`age_band_of_casualty` IN ('18-30', '31-50'). Group by `dim_casualty`.`sex_of_casualty`. Filter HAVING AVG(`bridge_accident_casualty`.`casualty_severity`) > 1. Order by AVG(`bridge_accident_casualty`.`casualty_severity`) DESC."
+  },
+  {
+    "question": "List the casualty class and the average casualty severity for each class, ordered from highest to lowest average severity, and show only the top 10 results.",
+    "sql": "SELECT T1.CASUALTY_CLASS, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID GROUP BY T1.CASUALTY_CLASS ORDER BY AVG(T2.CASUALTY_SEVERITY) DESC LIMIT 10",
+    "pair_id": "306138c8",
+    "original_question_id": "4c2d3b9d",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_casualty`.`casualty_class` values are like 'Passenger', 'Pedestrian', 'Driver or rider'; `bridge_accident_casualty`.`casualty_severity` is numeric (1,2,3); join via `bridge_accident_casualty`.`casualty_id` = `dim_casualty`.`casualty_id`; compute average severity per class; order by average severity DESC; limit 10."
+  },
+  {
+    "question": "Show the casualty class and the average casualty severity for each casualty class, ordered by the average severity from highest to lowest, and list only the top 10 results.",
+    "sql": "SELECT T1.CASUALTY_CLASS, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID GROUP BY T1.CASUALTY_CLASS ORDER BY AVG(T2.CASUALTY_SEVERITY) DESC LIMIT 10",
+    "pair_id": "a3527c36",
+    "original_question_id": "4c2d3b9d",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "casualty class refers to `dim_casualty`.`casualty_class`; casualty severity refers to `bridge_accident_casualty`.`casualty_severity` (numeric values 1,2,3); join `dim_casualty` and `bridge_accident_casualty` on `dim_casualty`.`casualty_id` = `bridge_accident_casualty`.`casualty_id`; compute average severity per class; order by average severity DESC; limit 10"
+  },
+  {
+    "question": "List the casualty classes where the average casualty severity is greater than 1, ordered by the average severity from highest to lowest, and show only the top 10 results.",
+    "sql": "SELECT T1.CASUALTY_CLASS FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID GROUP BY T1.CASUALTY_CLASS HAVING AVG(T2.CASUALTY_SEVERITY) > 1 ORDER BY AVG(T2.CASUALTY_SEVERITY) DESC LIMIT 10",
+    "pair_id": "e152aadf",
+    "original_question_id": "4c2d3b9d",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_casualty`.`casualty_class` values: 'Passenger', 'Pedestrian', 'Driver or rider'; `bridge_accident_casualty`.`casualty_severity` is numeric (1,2,3); average severity = AVG(`bridge_accident_casualty`.`casualty_severity`); join `bridge_accident_casualty` and `dim_casualty` on `casualty_id`; group by `dim_casualty`.`casualty_class`; filter groups with average > 1; order by average severity DESC; limit 10."
+  },
+  {
+    "question": "List the casualty class and the average casualty severity for each casualty class, ordered by the average casualty severity in descending order, showing only the top 10 results.",
+    "sql": "SELECT T1.CASUALTY_CLASS, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID GROUP BY T1.CASUALTY_CLASS ORDER BY AVG(T2.CASUALTY_SEVERITY) DESC LIMIT 10",
+    "pair_id": "d6f75ea7",
+    "original_question_id": "4c2d3b9d",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "`dim_casualty`.`casualty_class` values are 'Passenger', 'Pedestrian', 'Driver or rider'; `bridge_accident_casualty`.`casualty_severity` is numeric; join on `casualty_id`; compute average severity per class; order descending; limit 10."
+  },
+  {
+    "question": "List the sex, age band, and work status of the casualty, along with the casualty severity, ordered by the severity level from highest to lowest.",
+    "sql": "SELECT T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY, T2.CASUALTY_SEVERITY FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID ORDER BY T2.CASUALTY_SEVERITY DESC",
+    "pair_id": "280e1324",
+    "original_question_id": "b6d37303",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "sex refers to `dim_casualty`.`sex_of_casualty`; age band refers to `dim_casualty`.`age_band_of_casualty`; work status refers to `dim_casualty`.`work_of_casualty`; casualty severity refers to `bridge_accident_casualty`.`casualty_severity`; order by severity level from highest to lowest means ORDER BY `bridge_accident_casualty`.`casualty_severity` DESC; join `dim_casualty` and `bridge_accident_casualty` on `dim_casualty`.`casualty_id` = `bridge_accident_casualty`.`casualty_id`."
+  },
+  {
+    "question": "List the sex, age band, and work status of each casualty, along with their casualty severity, sorted by the severity of the casualty in descending order.",
+    "sql": "SELECT T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY, T2.CASUALTY_SEVERITY FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID ORDER BY T2.CASUALTY_SEVERITY DESC",
+    "pair_id": "428302b5",
+    "original_question_id": "b6d37303",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_casualty` and `bridge_accident_casualty` on `dim_casualty`.`casualty_id` = `bridge_accident_casualty`.`casualty_id`. Select `dim_casualty`.`sex_of_casualty`, `dim_casualty`.`age_band_of_casualty`, `dim_casualty`.`work_of_casualty`, `bridge_accident_casualty`.`casualty_severity`. Sort by `bridge_accident_casualty`.`casualty_severity` DESC (1 = most severe, 3 = least severe)."
+  },
+  {
+    "question": "List the sex of the casualty, the age band of the casualty, and the work status of the casualty, along with the average casualty severity for each of these groups, where the average casualty severity is greater than 1.",
+    "sql": "SELECT T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID GROUP BY T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY HAVING AVG(T2.CASUALTY_SEVERITY) > 1",
+    "pair_id": "6526c5cd",
+    "original_question_id": "b6d37303",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_casualty`.`sex_of_casualty` is sex of casualty; `dim_casualty`.`age_band_of_casualty` is age band of casualty; `dim_casualty`.`work_of_casualty` is work status of casualty; `bridge_accident_casualty`.`casualty_severity` is casualty severity (numeric); join `dim_casualty` and `bridge_accident_casualty` on `casualty_id`; compute average casualty severity per group of sex, age band, work status; filter groups where average casualty severity > 1."
+  },
+  {
+    "question": "List the sex of the casualty, the age band of the casualty, the work status of the casualty, and the casualty severity, along with the total count of accident IDs for each of these groups, where there is at least one accident, sorted by the casualty severity in descending order.",
+    "sql": "SELECT T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY, T2.CASUALTY_SEVERITY, COUNT(T3.ACCIDENT_ID) FROM DIM_CASUALTY AS T1 INNER JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID INNER JOIN FACT_ACCIDENT AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY, T2.CASUALTY_SEVERITY HAVING COUNT(T3.ACCIDENT_ID) >= 1 ORDER BY T2.CASUALTY_SEVERITY DESC",
+    "pair_id": "fd8870b7",
+    "original_question_id": "b6d37303",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_casualty` and `bridge_accident_casualty` on `casualty_id`. Group by `dim_casualty.sex_of_casualty`, `dim_casualty.age_band_of_casualty`, `dim_casualty.work_of_casualty`, `bridge_accident_casualty.casualty_severity`. Count distinct `bridge_accident_casualty.accident_id` as accident_count. Filter where accident_count > 0. Order by `bridge_accident_casualty.casualty_severity` DESC."
+  },
+  {
+    "question": "List the casualty IDs for casualties classified as pedestrians where the casualty severity level is 2.",
+    "sql": "SELECT T1.CASUALTY_ID FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' AND T2.CASUALTY_SEVERITY = 2;",
+    "pair_id": "e6ce2687",
+    "original_question_id": "850a178e",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "casualty IDs are `dim_casualty.casualty_id`; pedestrians refers to `dim_casualty.casualty_class = 'Pedestrian'`; casualty severity level 2 refers to `bridge_accident_casualty.casualty_severity = 2`; join `bridge_accident_casualty.casualty_id` = `dim_casualty.casualty_id`"
+  },
+  {
+    "question": "List the casualty IDs for all casualties classified as pedestrians where the casualty severity level is 2.",
+    "sql": "SELECT T1.CASUALTY_ID FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' AND T2.CASUALTY_SEVERITY = 2",
+    "pair_id": "946fede9",
+    "original_question_id": "850a178e",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Pedestrian refers to `dim_casualty`.`casualty_class` = 'Pedestrian'; casualty severity level 2 refers to `bridge_accident_casualty`.`casualty_severity` = 2; join `dim_casualty` and `bridge_accident_casualty` on `casualty_id`."
+  },
+  {
+    "question": "List the casualty class and the total count of bridge accident casualty IDs for records where the casualty severity is 2, specifically filtering for and showing only the 'Pedestrian' casualty class, ordered by the casualty class.",
+    "sql": "SELECT T1.CASUALTY_CLASS, COUNT(T2.BRIDGE_ACCIDENT_CASUALTY_ID) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T2.CASUALTY_SEVERITY = 2 GROUP BY T1.CASUALTY_CLASS HAVING T1.CASUALTY_CLASS = 'Pedestrian' ORDER BY T1.CASUALTY_CLASS",
+    "pair_id": "94ebfb34",
+    "original_question_id": "850a178e",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `bridge_accident_casualty` and `dim_casualty` on `bridge_accident_casualty`.`casualty_id` = `dim_casualty`.`casualty_id`. Filter where `bridge_accident_casualty`.`casualty_severity` = 2 and `dim_casualty`.`casualty_class` = 'Pedestrian'. Group by `dim_casualty`.`casualty_class` and count `bridge_accident_casualty`.`bridge_accident_casualty_id`. Order by `dim_casualty`.`casualty_class`."
+  },
+  {
+    "question": "Show the casualty class for all records where the casualty class is 'Pedestrian' and the casualty severity is level 2, grouped and ordered by the casualty class.",
+    "sql": "SELECT T1.CASUALTY_CLASS FROM DIM_CASUALTY AS T1 INNER JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID INNER JOIN FACT_ACCIDENT AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' AND T2.CASUALTY_SEVERITY = 2 GROUP BY T1.CASUALTY_CLASS ORDER BY T1.CASUALTY_CLASS ASC",
+    "pair_id": "4a7c38dd",
+    "original_question_id": "850a178e",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `bridge_accident_casualty` with `dim_casualty` on `bridge_accident_casualty`.`casualty_id` = `dim_casualty`.`casualty_id`. Filter where `dim_casualty`.`casualty_class` = 'Pedestrian' and `bridge_accident_casualty`.`casualty_severity` = 2. Group and order by `dim_casualty`.`casualty_class`."
+  },
+  {
+    "question": "For accidents occurring on a Monday, list each area where an accident occurred along with the average number of casualties and the total count of accident IDs, grouped by the area of the accident.",
+    "sql": "SELECT T2.AREA_ACCIDENT_OCCURRED, AVG(T1.NUMBER_OF_CASUALTIES), COUNT(T1.ACCIDENT_ID) FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Monday' GROUP BY T2.AREA_ACCIDENT_OCCURRED",
+    "pair_id": "94e894a9",
+    "original_question_id": "4283002e",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Monday refers to `dim_time.day_of_week` = 'Monday'; area refers to `dim_geography.area_accident_occurred`; average number of casualties = AVG(`fact_accident.number_of_casualties`); total count of accident IDs = COUNT(`fact_accident.accident_id`); group by `dim_geography.area_accident_occurred`."
+  },
+  {
+    "question": "For accidents that occurred on a Friday, list each area where an accident occurred along with the average number of casualties and the total count of accident IDs for each of those areas.",
+    "sql": "SELECT T2.AREA_ACCIDENT_OCCURRED, AVG(T1.NUMBER_OF_CASUALTIES), COUNT(T1.ACCIDENT_ID) FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Friday' GROUP BY T2.AREA_ACCIDENT_OCCURRED",
+    "pair_id": "9e2c6bbe",
+    "original_question_id": "4283002e",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter accidents where `dim_time`.`day_of_week` = 'Friday'. Join `fact_accident` with `dim_time` on `fact_accident`.`time_id` = `dim_time`.`time_id` and with `dim_geography` on `fact_accident`.`geography_id` = `dim_geography`.`geography_id`. Group by `dim_geography`.`area_accident_occurred`. Compute AVG(`fact_accident`.`number_of_casualties`) and COUNT(DISTINCT `fact_accident`.`accident_id`)."
+  },
+  {
+    "question": "For accidents that occurred on a Monday, list each area where an accident occurred, the average number of casualties per accident in that area, and the total count of accident IDs, ensuring only areas with at least one accident are shown and ordering the results by the average number of casualties from highest to lowest.",
+    "sql": "SELECT T2.AREA_ACCIDENT_OCCURRED, AVG(T1.NUMBER_OF_CASUALTIES), COUNT(T1.ACCIDENT_ID) FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Monday' GROUP BY T2.AREA_ACCIDENT_OCCURRED HAVING COUNT(T1.ACCIDENT_ID) > 0 ORDER BY AVG(T1.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "5be88ed8",
+    "original_question_id": "4283002e",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Monday refers to `dim_time.day_of_week` = 'Monday'; area refers to `dim_geography.area_accident_occurred`; average number of casualties per accident = AVG(`fact_accident.number_of_casualties`); total count of accident IDs = COUNT(`fact_accident.accident_id`); group by area and filter for Monday accidents; order by average casualties DESC."
+  },
+  {
+    "question": "For accidents that occurred on a Monday, list each area where the accident occurred along with the average number of casualties and the total count of accident IDs, grouped by the area and ordered by the average casualties in descending order.",
+    "sql": "SELECT T2.AREA_ACCIDENT_OCCURRED, AVG(T1.NUMBER_OF_CASUALTIES), COUNT(T1.ACCIDENT_ID) FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Monday' GROUP BY T2.AREA_ACCIDENT_OCCURRED HAVING COUNT(T1.ACCIDENT_ID) > 0 ORDER BY AVG(T1.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "ff0e8585",
+    "original_question_id": "4283002e",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Accidents on Monday: `dim_time.day_of_week` = 'Monday'. Area = `dim_geography.area_accident_occurred`. Average casualties = AVG(`fact_accident.number_of_casualties`). Total accident count = COUNT(DISTINCT `fact_accident.accident_id`). Group by area, order by average casualties DESC."
+  },
+  {
+    "question": "List the unique areas where accidents occurred for incidents that either involved more than five casualties or took place on a Sunday.",
+    "sql": "SELECT DISTINCT T2.AREA_ACCIDENT_OCCURRED FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T1.NUMBER_OF_CASUALTIES > 5 OR T3.DAY_OF_WEEK IN ('Sunday')",
+    "pair_id": "38852ca5",
+    "original_question_id": "abfddb45",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Unique areas refers to DISTINCT `dim_geography`.`area_accident_occurred`; more than five casualties refers to `fact_accident`.`number_of_casualties` > 5; took place on a Sunday refers to `dim_time`.`day_of_week` = 'Sunday'; accidents occurred requires joining `fact_accident` with `dim_geography` on `geography_id` and with `dim_time` on `time_id`."
+  },
+  {
+    "question": "List the area where the accident occurred for all records where either the number of casualties is greater than five or the day of the week is Sunday.",
+    "sql": "SELECT T1.AREA_ACCIDENT_OCCURRED FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T2.NUMBER_OF_CASUALTIES > 5 OR T3.DAY_OF_WEEK IN ('Sunday');",
+    "pair_id": "fa6e1133",
+    "original_question_id": "abfddb45",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Area where accident occurred is `dim_geography`.`area_accident_occurred`. Condition: `fact_accident`.`number_of_casualties` > 5 OR `dim_time`.`day_of_week` = 'Sunday'. Join `fact_accident` to `dim_geography` on `geography_id` and to `dim_time` on `time_id`."
+  },
+  {
+    "question": "List the areas where accidents occurred, ordered alphabetically, for those areas where the maximum number of casualties in a single accident exceeds 5 or where the count of days of the week recorded is greater than 1.",
+    "sql": "SELECT T1.AREA_ACCIDENT_OCCURRED FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID GROUP BY T1.AREA_ACCIDENT_OCCURRED HAVING MAX(T2.NUMBER_OF_CASUALTIES) > 5 OR COUNT(T3.DAY_OF_WEEK) > 1 ORDER BY T1.AREA_ACCIDENT_OCCURRED",
+    "pair_id": "8d4fc698",
+    "original_question_id": "abfddb45",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Areas refer to `dim_geography.area_accident_occurred`. Maximum casualties per accident means MAX(`fact_accident.number_of_casualties`) per area. Count of days of the week recorded means COUNT(DISTINCT `dim_time.day_of_week`) per area via `fact_accident.time_id`."
+  },
+  {
+    "question": "List the areas where accidents occurred for those locations that have experienced at least one accident with more than five casualties or at least one accident occurring on a Sunday or Monday, and sort the results alphabetically by the area name.",
+    "sql": "SELECT T2.AREA_ACCIDENT_OCCURRED FROM FACT_ACCIDENT AS T1 INNER JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID GROUP BY T2.AREA_ACCIDENT_OCCURRED HAVING SUM(CASE WHEN T1.NUMBER_OF_CASUALTIES > 5 THEN 1 ELSE 0 END) > 0 OR SUM(CASE WHEN T3.DAY_OF_WEEK IN ('Sunday', 'Monday') THEN 1 ELSE 0 END) > 0 ORDER BY T2.AREA_ACCIDENT_OCCURRED ASC",
+    "pair_id": "6036219b",
+    "original_question_id": "abfddb45",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Areas = `dim_geography`.`area_accident_occurred`. Conditions: (1) `fact_accident`.`number_of_casualties` > 5 OR (2) `dim_time`.`day_of_week` IN ('Sunday', 'Monday'). Join `fact_accident` with `dim_geography` on `geography_id` and with `dim_time` on `time_id`. Sort alphabetically by `dim_geography`.`area_accident_occurred`."
+  },
+  {
+    "question": "List the areas where accidents occurred for all incidents that took place on a Sunday involving more than one vehicle, grouped and ordered by the accident area.",
+    "sql": "SELECT T2.AREA_ACCIDENT_OCCURRED FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Sunday' AND T1.NUMBER_OF_VEHICLES_INVOLVED > 1 AND T3.DAY_OF_WEEK = 'Sunday' GROUP BY T2.AREA_ACCIDENT_OCCURRED ORDER BY T2.AREA_ACCIDENT_OCCURRED",
+    "pair_id": "d26b618e",
+    "original_question_id": "652c6517",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Sunday refers to `dim_time`.`day_of_week` = 'Sunday'; more than one vehicle refers to `fact_accident`.`number_of_vehicles_involved` > 1; areas where accidents occurred refers to `dim_geography`.`area_accident_occurred`; group and order by accident area refers to GROUP BY `dim_geography`.`area_accident_occurred` ORDER BY `dim_geography`.`area_accident_occurred`."
+  },
+  {
+    "question": "List the areas where accidents occurred for incidents involving more than one vehicle on a Sunday, specifically for those areas where no accidents occurred on a Monday.",
+    "sql": "SELECT T2.AREA_ACCIDENT_OCCURRED FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Sunday' AND T1.NUMBER_OF_VEHICLES_INVOLVED > 1 GROUP BY T2.AREA_ACCIDENT_OCCURRED HAVING COUNT(CASE WHEN T3.DAY_OF_WEEK = 'Monday' THEN 1 END) = 0",
+    "pair_id": "9f67d6f2",
+    "original_question_id": "652c6517",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "more than one vehicle refers to `fact_accident`.`number_of_vehicles_involved` > 1; on a Sunday refers to `dim_time`.`day_of_week` = 'Sunday'; no accidents occurred on a Monday refers to areas where there is no accident with `dim_time`.`day_of_week` = 'Monday'; areas where accidents occurred refers to `dim_geography`.`area_accident_occurred`."
+  },
+  {
+    "question": "For each area where an accident occurred, list the area name and the average number of casualties, sorted from highest to lowest average casualties.",
+    "sql": "SELECT T1.AREA_ACCIDENT_OCCURRED, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.AREA_ACCIDENT_OCCURRED ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "b844e893",
+    "original_question_id": "fd5041c4",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Area name is in `dim_geography`.`area_accident_occurred`. Casualties count is in `fact_accident`.`number_of_casualties`. Join `fact_accident` with `dim_geography` on `fact_accident`.`geography_id` = `dim_geography`.`geography_id`. Compute AVG(`fact_accident`.`number_of_casualties`) per area. Sort results by average casualties DESC."
+  },
+  {
+    "question": "For each area where an accident occurred, list the area name and the average number of casualties, sorted in descending order by the average casualty count.",
+    "sql": "SELECT T1.AREA_ACCIDENT_OCCURRED, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.AREA_ACCIDENT_OCCURRED ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "df672efe",
+    "original_question_id": "fd5041c4",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "area name refers to `dim_geography`.`area_accident_occurred`; average number of casualties = AVG(`fact_accident`.`number_of_casualties`)"
+  },
+  {
+    "question": "List the areas where accidents occurred for which the average number of casualties is greater than 1, and order the results by this average in descending order.",
+    "sql": "SELECT T1.AREA_ACCIDENT_OCCURRED FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.AREA_ACCIDENT_OCCURRED HAVING AVG(T2.NUMBER_OF_CASUALTIES) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "49d23186",
+    "original_question_id": "fd5041c4",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Average number of casualties per area = AVG(`fact_accident`.`number_of_casualties`) grouped by `dim_geography`.`area_accident_occurred`. Join `fact_accident` and `dim_geography` on `fact_accident`.`geography_id` = `dim_geography`.`geography_id`."
+  },
+  {
+    "question": "For each area where an accident occurred, provided there are more than one accident recorded, list the area name and the average number of casualties, sorted from the highest average to the lowest.",
+    "sql": "SELECT T1.AREA_ACCIDENT_OCCURRED, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.AREA_ACCIDENT_OCCURRED HAVING COUNT(T2.ACCIDENT_ID) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "9f31bb55",
+    "original_question_id": "fd5041c4",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "`dim_geography`.`area_accident_occurred` is the area name; `fact_accident`.`number_of_casualties` is the number of casualties; 'more than one accident recorded' means COUNT(`fact_accident`.`accident_id`) > 1 per area; average casualties = AVG(`fact_accident`.`number_of_casualties`); sort by average casualties DESC."
+  },
+  {
+    "question": "List the light conditions for accidents where the number of casualties is greater than two, specifically for those light conditions that appear more than once in the records.",
+    "sql": "SELECT T2.LIGHT_CONDITIONS FROM FACT_ACCIDENT AS T1 JOIN DIM_ENVIRONMENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID WHERE T1.NUMBER_OF_CASUALTIES > 2 GROUP BY T2.LIGHT_CONDITIONS HAVING COUNT(T2.LIGHT_CONDITIONS) > 1",
+    "pair_id": "2736c3fd",
+    "original_question_id": "8c7df621",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_environment`.`light_conditions` refers to light conditions; `fact_accident`.`number_of_casualties` > 2 means casualties greater than two; 'appear more than once' means count(`dim_environment`.`light_conditions`) > 1 after grouping by light condition among accidents with casualties > 2."
+  },
+  {
+    "question": "List the distinct light conditions for accidents where the number of casualties is greater than two and the day of the week is not Sunday, ordered alphabetically by the light conditions.",
+    "sql": "SELECT DISTINCT T2.LIGHT_CONDITIONS FROM FACT_ACCIDENT AS T1 JOIN DIM_ENVIRONMENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T1.NUMBER_OF_CASUALTIES > 2 AND T3.DAY_OF_WEEK != 'Sunday' ORDER BY T2.LIGHT_CONDITIONS ASC",
+    "pair_id": "71d5f8f4",
+    "original_question_id": "8c7df621",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`fact_accident`.`number_of_casualties` > 2; `dim_time`.`day_of_week` != 'Sunday'; join `fact_accident` with `dim_time` on `fact_accident`.`time_id` = `dim_time`.`time_id` and with `dim_environment` on `fact_accident`.`environment_id` = `dim_environment`.`environment_id`; select distinct `dim_environment`.`light_conditions` ordered alphabetically."
+  },
+  {
+    "question": "Show the light conditions, the weather conditions, and the total number of casualties, grouped by both light and weather conditions, and ordered from the highest to the lowest sum of casualties.",
+    "sql": "SELECT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS, SUM(T2.NUMBER_OF_CASUALTIES) FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS ORDER BY SUM(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "cddd642a",
+    "original_question_id": "0d8fdda5",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_environment`.`light_conditions`, `dim_environment`.`weather_conditions`, SUM(`fact_accident`.`number_of_casualties`) as total_casualties. Join `fact_accident` with `dim_environment` on `fact_accident`.`environment_id` = `dim_environment`.`environment_id`. Group by `dim_environment`.`light_conditions`, `dim_environment`.`weather_conditions`. Order by total_casualties DESC."
+  },
+  {
+    "question": "List the light conditions and weather conditions along with the total number of casualties for each combination, grouped by light and weather conditions and ordered by the total casualties in descending order.",
+    "sql": "SELECT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS, SUM(T2.NUMBER_OF_CASUALTIES) FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS ORDER BY SUM(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "0bb2c4d3",
+    "original_question_id": "0d8fdda5",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_environment.light_conditions`, `dim_environment.weather_conditions`, and SUM(`fact_accident.number_of_casualties`) as total casualties. Join `fact_accident` ON `fact_accident.environment_id` = `dim_environment.environment_id`. Group by `dim_environment.light_conditions`, `dim_environment.weather_conditions`. Order by total casualties DESC."
+  },
+  {
+    "question": "List the light conditions and weather conditions for all environmental settings where the total number of casualties exceeds 2, and display these results in descending order based on the total sum of casualties.",
+    "sql": "SELECT T2.LIGHT_CONDITIONS, T2.WEATHER_CONDITIONS FROM FACT_ACCIDENT AS T1 JOIN DIM_ENVIRONMENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T2.LIGHT_CONDITIONS, T2.WEATHER_CONDITIONS HAVING SUM(T1.NUMBER_OF_CASUALTIES) > 2 ORDER BY SUM(T1.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "bbc25a79",
+    "original_question_id": "0d8fdda5",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_environment.light_conditions` and `dim_environment.weather_conditions`; total number of casualties refers to SUM(`fact_accident`.`number_of_casualties`); group by `dim_environment`.`light_conditions`, `dim_environment`.`weather_conditions`; filter where SUM(`fact_accident`.`number_of_casualties`) > 2; order by SUM(`fact_accident`.`number_of_casualties`) DESC."
+  },
+  {
+    "question": "List the light conditions and weather conditions along with the total number of casualties for each combination, where the total casualties exceed 2, and order the results from the highest number of casualties to the lowest.",
+    "sql": "SELECT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS, SUM(T2.NUMBER_OF_CASUALTIES) FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS HAVING SUM(T2.NUMBER_OF_CASUALTIES) > 2 ORDER BY SUM(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "a914e6b9",
+    "original_question_id": "0d8fdda5",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Total number of casualties refers to SUM(`fact_accident`.`number_of_casualties`); light conditions refers to `dim_environment`.`light_conditions`; weather conditions refers to `dim_environment`.`weather_conditions`; join `fact_accident` with `dim_environment` on `fact_accident`.`environment_id` = `dim_environment`.`environment_id`; group by `dim_environment`.`light_conditions`, `dim_environment`.`weather_conditions`; filter with HAVING SUM(`fact_accident`.`number_of_casualties`) > 2; order by total casualties descending."
+  },
+  {
+    "question": "List the distinct light conditions and weather conditions recorded for all accidents, and sort the results by the light conditions.",
+    "sql": "SELECT DISTINCT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID ORDER BY T1.LIGHT_CONDITIONS",
+    "pair_id": "7e40fd48",
+    "original_question_id": "4ad9e406",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_accident` with `dim_environment` on `fact_accident`.`environment_id` = `dim_environment`.`environment_id` to get conditions for accidents. Select distinct `dim_environment`.`light_conditions` and `dim_environment`.`weather_conditions`. Sort by `dim_environment`.`light_conditions`."
+  },
+  {
+    "question": "List the distinct light conditions and weather conditions recorded for accidents, ordered alphabetically by the light conditions.",
+    "sql": "SELECT DISTINCT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID ORDER BY T1.LIGHT_CONDITIONS ASC",
+    "pair_id": "5e66cfee",
+    "original_question_id": "4ad9e406",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_accident` and `dim_environment` via `fact_accident.environment_id` = `dim_environment.environment_id`; select distinct `dim_environment.light_conditions`, `dim_environment.weather_conditions`; order by `dim_environment.light_conditions` alphabetically."
+  },
+  {
+    "question": "List the light conditions and the weather conditions for each unique combination of these two factors that is associated with at least one accident.",
+    "sql": "SELECT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS HAVING COUNT(T2.ACCIDENT_ID) >= 1",
+    "pair_id": "38a1b6a9",
+    "original_question_id": "4ad9e406",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Need distinct pairs of (`dim_environment`.`light_conditions`, `dim_environment`.`weather_conditions`) that appear in at least one accident. Join `fact_accident` with `dim_environment` on `fact_accident`.`environment_id` = `dim_environment`.`environment_id` and select distinct light_conditions and weather_conditions."
+  },
+  {
+    "question": "List the distinct light conditions and weather conditions for all environments that have at least one accident recorded, and sort the results alphabetically by the light conditions.",
+    "sql": "SELECT DISTINCT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS HAVING COUNT(T2.ACCIDENT_ID) >= 1 ORDER BY T1.LIGHT_CONDITIONS ASC",
+    "pair_id": "c589abbd",
+    "original_question_id": "4ad9e406",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `dim_environment`.`light_conditions` and `dim_environment`.`weather_conditions` from `dim_environment` inner join `fact_accident` on `dim_environment`.`environment_id` = `fact_accident`.`environment_id` and order by `dim_environment`.`light_conditions` alphabetically."
+  },
+  {
+    "question": "List the accident IDs for all accidents where the number of casualties is greater than 2 and the light conditions are 'Darkness - no lighting', sorted by the number of casualties in descending order.",
+    "sql": "SELECT T1.ACCIDENT_ID FROM FACT_ACCIDENT AS T1 JOIN DIM_ENVIRONMENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID WHERE T1.NUMBER_OF_CASUALTIES > 2 AND T2.LIGHT_CONDITIONS = 'Darkness - no lighting' ORDER BY T1.NUMBER_OF_CASUALTIES DESC",
+    "pair_id": "5b96834d",
+    "original_question_id": "83ddaf55",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "DIM_ACCIDENT_EVENT",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Accident IDs are in `fact_accident`.`accident_id`. Filter where `fact_accident`.`number_of_casualties` > 2 and `dim_environment`.`light_conditions` = 'Darkness - no lighting'. Join `fact_accident` with `dim_environment` on `fact_accident`.`environment_id` = `dim_environment`.`environment_id`. Sort by `fact_accident`.`number_of_casualties` DESC."
+  },
+  {
+    "question": "For environments where the light conditions are 'Darkness - no lighting', list each environment ID and the total count of accident IDs, provided that the sum of the number of casualties for that environment ID is greater than 5.",
+    "sql": "SELECT T1.ENVIRONMENT_ID, COUNT(T2.ACCIDENT_ID) FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID WHERE T1.LIGHT_CONDITIONS = 'Darkness - no lighting' GROUP BY T1.ENVIRONMENT_ID HAVING SUM(T2.NUMBER_OF_CASUALTIES) > 5",
+    "pair_id": "1640e576",
+    "original_question_id": "83ddaf55",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "DIM_ACCIDENT_EVENT",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_environment`.`light_conditions` = 'Darkness - no lighting'; sum of casualties = SUM(`fact_accident`.`number_of_casualties`); condition: sum > 5; output: `dim_environment`.`environment_id` and COUNT(DISTINCT `fact_accident`.`accident_id`) as total accident count."
+  },
+  {
+    "question": "List the accident ID and the total sum of casualties for each accident where the light conditions were 'Darkness - no lighting' and the collision type was 'Vehicle with vehicle collision', specifically for those accidents where the total number of casualties is greater than 5, ordered from the highest number of casualties to the lowest.",
+    "sql": "SELECT T1.ACCIDENT_ID, SUM(T1.NUMBER_OF_CASUALTIES) FROM FACT_ACCIDENT AS T1 INNER JOIN DIM_ENVIRONMENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID INNER JOIN DIM_ACCIDENT_EVENT AS T3 ON T1.ACCIDENT_EVENT_ID = T3.ACCIDENT_EVENT_ID WHERE T2.LIGHT_CONDITIONS = 'Darkness - no lighting' AND T3.TYPE_OF_COLLISION = 'Vehicle with vehicle collision' GROUP BY T1.ACCIDENT_ID HAVING SUM(T1.NUMBER_OF_CASUALTIES) > 5 ORDER BY SUM(T1.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "547dfb70",
+    "original_question_id": "83ddaf55",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "DIM_ACCIDENT_EVENT",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "`fact_accident.number_of_casualties` is the total casualties per accident. Filter: `dim_environment.light_conditions` = 'Darkness - no lighting', `dim_accident_event.type_of_collision` = 'Vehicle with vehicle collision', `fact_accident.number_of_casualties` > 5. Order by `fact_accident.number_of_casualties` DESC."
+  },
+  {
+    "question": "List each accident severity and the count of occurrences for that severity, specifically for drivers with 1-2 years of driving experience, where the average accident ID for the group is greater than 1, ordered by the accident severity.",
+    "sql": "SELECT T1.ACCIDENT_SEVERITY, COUNT(T1.ACCIDENT_SEVERITY) FROM FACT_ACCIDENT AS T1 JOIN DIM_DRIVER AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID WHERE T2.DRIVING_EXPERIENCE = '1-2yr' GROUP BY T1.ACCIDENT_SEVERITY HAVING AVG(T1.ACCIDENT_ID) > 1 ORDER BY T1.ACCIDENT_SEVERITY",
+    "pair_id": "b73a538f",
+    "original_question_id": "a6af3ff2",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_driver.driving_experience` = '1-2yr' maps to 1-2 years of driving experience; `fact_accident.accident_severity` values are 'Fatal injury', 'Serious Injury', 'Slight Injury'; average accident ID refers to AVG(`fact_accident.accident_id`); count of occurrences is COUNT(*); group by `fact_accident.accident_severity`; filter groups where AVG(`fact_accident.accident_id`) > 1; order by `fact_accident.accident_severity`."
+  },
+  {
+    "question": "Show all columns and details from the driver dimension for those drivers who have between 1-2 years of driving experience or whose educational level is junior high school.",
+    "sql": "SELECT * FROM DIM_DRIVER WHERE DRIVING_EXPERIENCE = '1-2yr' OR EDUCATIONAL_LEVEL = 'Junior high school';",
+    "pair_id": "d3c43b0a",
+    "original_question_id": "39b87aeb",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_driver` where `dim_driver`.`driving_experience` = '1-2yr' OR `dim_driver`.`educational_level` = 'Junior high school'"
+  },
+  {
+    "question": "List the driver ID and the age band of the driver for all records where the driving experience is '1-2yr' or the educational level is 'Junior high school', ordered by the driver ID.",
+    "sql": "SELECT DRIVER_ID, AGE_BAND_OF_DRIVER FROM DIM_DRIVER WHERE DRIVING_EXPERIENCE = '1-2yr' OR EDUCATIONAL_LEVEL = 'Junior high school' ORDER BY DRIVER_ID",
+    "pair_id": "4958cea5",
+    "original_question_id": "39b87aeb",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_driver`.`driver_id` and `dim_driver`.`age_band_of_driver` from `dim_driver` where `dim_driver`.`driving_experience` = '1-2yr' or `dim_driver`.`educational_level` = 'Junior high school' order by `dim_driver`.`driver_id`."
+  },
+  {
+    "question": "List the driving experience levels and the total count of accident IDs for drivers who either have '1-2yr' of driving experience or an educational level of 'Junior high school', grouping the results by driving experience and including only those groups with more than 1 accident.",
+    "sql": "SELECT T1.DRIVING_EXPERIENCE, COUNT(T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID WHERE T1.DRIVING_EXPERIENCE = '1-2yr' OR T1.EDUCATIONAL_LEVEL = 'Junior high school' GROUP BY T1.DRIVING_EXPERIENCE HAVING COUNT(T2.ACCIDENT_ID) > 1",
+    "pair_id": "e1d7950c",
+    "original_question_id": "39b87aeb",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Driving experience levels refer to (`dim_driver`.`driving_experience`). Total count of accident IDs is COUNT(`fact_accident`.`accident_id`). Drivers must satisfy (`dim_driver`.`driving_experience` = '1-2yr') OR (`dim_driver`.`educational_level` = 'Junior high school'). Group by (`dim_driver`.`driving_experience`). Filter groups with COUNT(`fact_accident`.`accident_id`) > 1."
+  },
+  {
+    "question": "List the driver ID, the age band of the driver, and the sex of the driver, along with the total count of accidents for each driver, specifically for those who have between 1-2 years of driving experience or whose educational level is 'Junior high school', including those with zero accidents, and order the results by the accident count in descending order.",
+    "sql": "SELECT T1.DRIVER_ID, T1.AGE_BAND_OF_DRIVER, T1.SEX_OF_DRIVER, COUNT(T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 LEFT JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID LEFT JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.DRIVING_EXPERIENCE = '1-2yr' OR T1.EDUCATIONAL_LEVEL = 'Junior high school' GROUP BY T1.DRIVER_ID, T1.AGE_BAND_OF_DRIVER, T1.SEX_OF_DRIVER HAVING COUNT(T2.ACCIDENT_ID) >= 0 ORDER BY COUNT(T2.ACCIDENT_ID) DESC",
+    "pair_id": "cab01d87",
+    "original_question_id": "39b87aeb",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter: `dim_driver.driving_experience` = '1-2yr' OR `dim_driver.educational_level` = 'Junior high school'. Use LEFT JOIN `dim_driver` to `fact_accident` on `dim_driver.driver_id` = `fact_accident.driver_id`. Group by `dim_driver.driver_id`, `dim_driver.age_band_of_driver`, `dim_driver.sex_of_driver`. Count `fact_accident.accident_id` as accident_count. Order by accident_count DESC."
+  },
+  {
+    "question": "List the educational level, the driving experience, and the average number of casualties for each combination of educational level and driving experience, ordered by the average number of casualties.",
+    "sql": "SELECT T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE ORDER BY AVG(T2.NUMBER_OF_CASUALTIES)",
+    "pair_id": "2376f2ec",
+    "original_question_id": "a069466e",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "educational level refers to `dim_driver`.`educational_level`; driving experience refers to `dim_driver`.`driving_experience`; average number of casualties refers to AVG(`fact_accident`.`number_of_casualties`); group by `dim_driver`.`educational_level`, `dim_driver`.`driving_experience`; order by AVG(`fact_accident`.`number_of_casualties`)"
+  },
+  {
+    "question": "List the educational level and driving experience of drivers, along with the average number of casualties per accident, grouped by their educational level and driving experience, and sorted by the average number of casualties in descending order.",
+    "sql": "SELECT T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "0c81d217",
+    "original_question_id": "a069466e",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Educational level refers to `dim_driver`.`educational_level`; Driving experience refers to `dim_driver`.`driving_experience`; Average number of casualties per accident is `AVG(fact_accident`.`number_of_casualties)`; Group by both columns; Sort by average casualties descending."
+  },
+  {
+    "question": "List the educational level and the driving experience of drivers, grouped by these two attributes, where the average number of casualties in accidents is greater than one, and sort the results by that average value.",
+    "sql": "SELECT T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE HAVING AVG(T2.NUMBER_OF_CASUALTIES) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES);",
+    "pair_id": "b4058904",
+    "original_question_id": "a069466e",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_accident` with `dim_driver` on `driver_id`. Group by `dim_driver`.`educational_level` and `dim_driver`.`driving_experience`. Compute `AVG(fact_accident.number_of_casualties)` per group. Filter groups where `AVG(fact_accident.number_of_casualties) > 1`. Sort results by `AVG(fact_accident.number_of_casualties)` ascending."
+  },
+  {
+    "question": "For male drivers in the age bands of '31-50' or '18-30', list their educational level and driving experience along with the average number of casualties per accident, specifically for those groups with more than one accident, and order the results by the average casualty count in descending order.",
+    "sql": "SELECT T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.AGE_BAND_OF_DRIVER IN ('31-50', '18-30') AND T1.SEX_OF_DRIVER = 'Male' GROUP BY T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE HAVING COUNT(T2.ACCIDENT_ID) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC;",
+    "pair_id": "0b93f640",
+    "original_question_id": "a069466e",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Male drivers refer to `dim_driver`.`sex_of_driver` = 'Male'; Age bands '31-50' or '18-30' refer to `dim_driver`.`age_band_of_driver` values '31-50' or '18-30'; Educational level is `dim_driver`.`educational_level`; Driving experience is `dim_driver`.`driving_experience`; Average number of casualties per accident is calculated as SUM(`fact_accident`.`number_of_casualties`) / COUNT(DISTINCT `fact_accident`.`accident_id`) per driver group; Groups with more than one accident means COUNT(DISTINCT `fact_accident`.`accident_id`) > 1."
+  },
+  {
+    "question": "List the educational levels of drivers involved in at least one accident that occurred on a Sunday, and display these educational levels in ascending alphabetical order.",
+    "sql": "SELECT T1.EDUCATIONAL_LEVEL FROM DIM_DRIVER T1 JOIN FACT_ACCIDENT T0 ON T1.DRIVER_ID = T0.DRIVER_ID JOIN DIM_TIME T2 ON T0.TIME_ID = T2.TIME_ID WHERE T2.DAY_OF_WEEK = 'Sunday' GROUP BY T1.EDUCATIONAL_LEVEL HAVING COUNT(T0.ACCIDENT_ID) > 0 ORDER BY T1.EDUCATIONAL_LEVEL ASC",
+    "pair_id": "0469fe97",
+    "original_question_id": "129555ef",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_DRIVER",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Sunday refers to `dim_time`.`day_of_week` = 'Sunday'; educational levels are stored in `dim_driver`.`educational_level`; join `fact_accident` with `dim_time` on `fact_accident`.`time_id` = `dim_time`.`time_id` and with `dim_driver` on `fact_accident`.`driver_id` = `dim_driver`.`driver_id`; filter for Sunday accidents; return distinct `dim_driver`.`educational_level` ordered by `dim_driver`.`educational_level` ASC."
+  }
+]

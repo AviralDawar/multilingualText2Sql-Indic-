@@ -1,0 +1,1487 @@
+[
+  {
+    "question": "List the station code and the type of water body for all stations located in the state of Assam.",
+    "sql": "SELECT T1.STATION_CODE, T1.TYPE_OF_WATER_BODY FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE = 'Assam';",
+    "pair_id": "a5ed7951",
+    "original_question_id": "9b118f1e",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "FACT_COLIFORMS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Assam is a value in `dim_state`.`state`; join `dim_station` with `dim_state` on `dim_station`.`state_id` = `dim_state`.`state_id`; select `dim_station`.`station_code` and `dim_station`.`type_of_water_body`."
+  },
+  {
+    "question": "List the station code and the type of water body for all stations located in the state of Bihar.",
+    "sql": "SELECT T1.STATION_CODE, T1.TYPE_OF_WATER_BODY FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE = 'Bihar';",
+    "pair_id": "2ae68d6b",
+    "original_question_id": "9b118f1e",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "FACT_COLIFORMS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Bihar refers to `dim_state`.`state` = 'Bihar'; station code refers to `dim_station`.`station_code`; type of water body refers to `dim_station`.`type_of_water_body`; join `dim_station` with `dim_state` on `dim_station`.`state_id` = `dim_state`.`state_id`."
+  },
+  {
+    "question": "List the station code and the type of water body for all stations located in the state of Andhra Pradesh.",
+    "sql": "SELECT T1.STATION_CODE, T1.TYPE_OF_WATER_BODY FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE = 'Andhra Pradesh';",
+    "pair_id": "02495b3f",
+    "original_question_id": "9b118f1e",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "FACT_COLIFORMS"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Andhra Pradesh is the exact value in `dim_state`.`state`; station code is `dim_station`.`station_code`; type of water body is `dim_station`.`type_of_water_body`; join `dim_station` with `dim_state` on `dim_station`.`state_id` = `dim_state`.`state_id`."
+  },
+  {
+    "question": "List the station name, the station code, and the type of water body for all stations located in the state of Assam, ordered by their station code.",
+    "sql": "SELECT T2.STATION_NAME, T2.STATION_CODE, T2.TYPE_OF_WATER_BODY FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE = 'Assam' ORDER BY T2.STATION_CODE",
+    "pair_id": "d44f6346",
+    "original_question_id": "9b118f1e",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "FACT_COLIFORMS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "state of Assam refers to `dim_state`.`state` = 'Assam'; station name, station code, type of water body refer to `dim_station`.`station_name`, `dim_station`.`station_code`, `dim_station`.`type_of_water_body`; ordered by station code means ORDER BY `dim_station`.`station_code`."
+  },
+  {
+    "question": "For the state of Bihar, list the station name, the station code, and the type of water body, ordered by the station code.",
+    "sql": "SELECT T2.STATION_NAME, T2.STATION_CODE, T2.TYPE_OF_WATER_BODY FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE = 'Bihar' ORDER BY T2.STATION_CODE",
+    "pair_id": "09396981",
+    "original_question_id": "9b118f1e",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "FACT_COLIFORMS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter stations in Bihar: `dim_state`.`state` = 'Bihar'. Join `dim_station` with `dim_state` on `dim_station`.`state_id` = `dim_state`.`state_id`. Select `dim_station`.`station_name`, `dim_station`.`station_code`, `dim_station`.`type_of_water_body`. Order by `dim_station`.`station_code`."
+  },
+  {
+    "question": "For the state of Andhra Pradesh, list the station name, the station code, and the type of water body for all stations, ordered by their station code.",
+    "sql": "SELECT T2.STATION_NAME, T2.STATION_CODE, T2.TYPE_OF_WATER_BODY FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE = 'Andhra Pradesh' ORDER BY T2.STATION_CODE",
+    "pair_id": "29222005",
+    "original_question_id": "9b118f1e",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "FACT_COLIFORMS"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Andhra Pradesh refers to `dim_state`.`state` = 'Andhra Pradesh'; station name, station code, and type of water body refer to `dim_station`.`station_name`, `dim_station`.`station_code`, and `dim_station`.`type_of_water_body`; order by `dim_station`.`station_code`."
+  },
+  {
+    "question": "List the station name, the station code, and the type of water body for all stations located in the state of 'Assam', grouped by these same attributes, ensuring at least one distinct station name is present and ordering the results by the station code in ascending order.",
+    "sql": "SELECT T2.STATION_NAME, T2.STATION_CODE, T2.TYPE_OF_WATER_BODY FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE = 'Assam' GROUP BY T2.STATION_NAME, T2.STATION_CODE, T2.TYPE_OF_WATER_BODY HAVING COUNT(DISTINCT T2.STATION_NAME) >= 1 ORDER BY T2.STATION_CODE ASC",
+    "pair_id": "58f48e81",
+    "original_question_id": "9b118f1e",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "FACT_COLIFORMS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "state of 'Assam' refers to (`dim_state`.`state`) = 'Assam'; station name refers to (`dim_station`.`station_name`); station code refers to (`dim_station`.`station_code`); type of water body refers to (`dim_station`.`type_of_water_body`); grouping by these same attributes means GROUP BY (`dim_station`.`station_name`), (`dim_station`.`station_code`), (`dim_station`.`type_of_water_body`); ordering by station code ascending means ORDER BY (`dim_station`.`station_code`) ASC."
+  },
+  {
+    "question": "List the station name, station code, and the type of water body for all stations located in the state of 'Andhra Pradesh', grouped by these three attributes, ensuring each station name is distinct and ordering the results by the station code in ascending order.",
+    "sql": "SELECT T2.STATION_NAME, T2.STATION_CODE, T2.TYPE_OF_WATER_BODY FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE = 'Andhra Pradesh' GROUP BY T2.STATION_NAME, T2.STATION_CODE, T2.TYPE_OF_WATER_BODY HAVING COUNT(DISTINCT T2.STATION_NAME) >= 1 ORDER BY T2.STATION_CODE ASC",
+    "pair_id": "fd3cd5fd",
+    "original_question_id": "9b118f1e",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "FACT_COLIFORMS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter: `dim_state`.`state` = 'Andhra Pradesh'. Select: `dim_station`.`station_name`, `dim_station`.`station_code`, `dim_station`.`type_of_water_body`. Group by these three columns. Order by `dim_station`.`station_code` ASC. Join `dim_station` and `dim_state` on `dim_station`.`state_id` = `dim_state`.`state_id`."
+  },
+  {
+    "question": "List the station name, the station code, and the type of water body for all stations located in the state of Bihar, grouped by these three attributes and ordered by the station code in ascending order.",
+    "sql": "SELECT T2.STATION_NAME, T2.STATION_CODE, T2.TYPE_OF_WATER_BODY FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE = 'Bihar' GROUP BY T2.STATION_NAME, T2.STATION_CODE, T2.TYPE_OF_WATER_BODY HAVING COUNT(DISTINCT T2.STATION_NAME) >= 1 ORDER BY T2.STATION_CODE ASC",
+    "pair_id": "7f424908",
+    "original_question_id": "9b118f1e",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "FACT_COLIFORMS"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "state of Bihar refers to `dim_state`.`state` = 'Bihar'; station name refers to `dim_station`.`station_name`; station code refers to `dim_station`.`station_code`; type of water body refers to `dim_station`.`type_of_water_body`; grouped by these three attributes means GROUP BY `dim_station`.`station_name`, `dim_station`.`station_code`, `dim_station`.`type_of_water_body`; ordered by station code ascending means ORDER BY `dim_station`.`station_code` ASC."
+  },
+  {
+    "question": "List the states that have stations located at a lake, excluding those states that also have stations located at a tank.",
+    "sql": "SELECT T1.STATE FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.TYPE_OF_WATER_BODY = 'LAKE' EXCEPT SELECT T1.STATE FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.TYPE_OF_WATER_BODY = 'TANK'",
+    "pair_id": "e310b905",
+    "original_question_id": "f100a274",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "lake refers to `dim_station`.`type_of_water_body` = 'LAKE'; tank refers to `dim_station`.`type_of_water_body` = 'TANK'; states refer to `dim_state`.`state`; exclude states that have any station with type 'TANK'."
+  },
+  {
+    "question": "List the state IDs for states that have stations located on lakes, excluding those state IDs that have stations located on tanks.",
+    "sql": "SELECT T1.STATE_ID FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.TYPE_OF_WATER_BODY = 'LAKE' EXCEPT SELECT T1.STATE_ID FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.TYPE_OF_WATER_BODY = 'TANK'",
+    "pair_id": "0706f6e2",
+    "original_question_id": "f100a274",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Find `dim_station.state_id` where `dim_station.type_of_water_body` = 'LAKE' and `dim_station.state_id` NOT IN (select `dim_station.state_id` from `dim_station` where `dim_station.type_of_water_body` = 'TANK')"
+  },
+  {
+    "question": "List the states that have water body stations located in lakes, but specifically exclude any states that have stations categorized as tanks, and display the results in alphabetical order by state name.",
+    "sql": "SELECT T1.STATE FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.TYPE_OF_WATER_BODY = 'LAKE' GROUP BY T1.STATE HAVING COUNT(CASE WHEN T2.TYPE_OF_WATER_BODY = 'TANK' THEN 1 END) = 0 ORDER BY T1.STATE",
+    "pair_id": "f033e6df",
+    "original_question_id": "f100a274",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "lakes refer to `dim_station`.`type_of_water_body` = 'LAKE'; tanks refer to `dim_station`.`type_of_water_body` = 'TANK'; exclude states that have any station with type 'TANK'; order by `dim_state`.`state` alphabetically."
+  },
+  {
+    "question": "List the names of the states that have water body stations categorized as 'TANK' but do not have any stations categorized as 'LAKE', grouped and ordered by the state name.",
+    "sql": "SELECT T1.STATE FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.TYPE_OF_WATER_BODY = 'TANK' GROUP BY T1.STATE HAVING COUNT(CASE WHEN T2.TYPE_OF_WATER_BODY = 'LAKE' THEN 1 END) = 0 ORDER BY T1.STATE",
+    "pair_id": "63f2e6d2",
+    "original_question_id": "f100a274",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "States have stations categorized as 'TANK' means dim_station.type_of_water_body = 'TANK'; states do not have any stations categorized as 'LAKE' means dim_station.type_of_water_body = 'LAKE' should not exist for that state; group and order by dim_state.state."
+  },
+  {
+    "question": "List the names of the states, ordered alphabetically, that have water stations located at lakes but do not have any water stations located at tanks.",
+    "sql": "SELECT T1.STATE FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.TYPE_OF_WATER_BODY = 'LAKE' AND T1.STATE_ID NOT IN (SELECT STATE_ID FROM DIM_STATION WHERE TYPE_OF_WATER_BODY = 'TANK') GROUP BY T1.STATE ORDER BY T1.STATE ASC",
+    "pair_id": "5bd76de8",
+    "original_question_id": "f100a274",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "State names are from `dim_state`.`state`; 'lakes' refers to `dim_station`.`type_of_water_body` = 'LAKE'; 'tanks' refers to `dim_station`.`type_of_water_body` = 'TANK'; need states that have at least one station with type 'LAKE' and zero stations with type 'TANK'; order alphabetically by state name."
+  },
+  {
+    "question": "List the states in alphabetical order that contain stations located on lakes, excluding any states that have a lake station with the specific station code '1790.0'.",
+    "sql": "SELECT T1.STATE FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.TYPE_OF_WATER_BODY = 'LAKE' AND T1.STATE_ID NOT IN (SELECT STATE_ID FROM DIM_STATION WHERE TYPE_OF_WATER_BODY = 'LAKE' AND STATION_CODE = '1790.0') GROUP BY T1.STATE ORDER BY T1.STATE ASC",
+    "pair_id": "d9b17a6c",
+    "original_question_id": "f100a274",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "`dim_station.type_of_water_body` = 'LAKE' for lake stations; exclude states where exists a lake station with `dim_station.station_code` = 1790.0; output `dim_state.state` in alphabetical order."
+  },
+  {
+    "question": "List the station name and the station code for all stations where the type of water body is a lake or the state is Assam.",
+    "sql": "SELECT T1.STATION_NAME, T1.STATION_CODE FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.TYPE_OF_WATER_BODY = 'LAKE' OR T2.STATE = 'Assam';",
+    "pair_id": "feae8f22",
+    "original_question_id": "e4c1c68d",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "station name refers to `dim_station`.`station_name`; station code refers to `dim_station`.`station_code`; type of water body is a lake refers to `dim_station`.`type_of_water_body` = 'LAKE'; state is Assam refers to `dim_state`.`state` = 'Assam'; need to join `dim_station` and `dim_state` on `dim_station`.`state_id` = `dim_state`.`state_id`."
+  },
+  {
+    "question": "List the station name and the station code for all stations where the type of water body is 'TANK' or the state is 'Bihar'.",
+    "sql": "SELECT T1.STATION_NAME, T1.STATION_CODE FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.TYPE_OF_WATER_BODY = 'TANK' OR T2.STATE = 'Bihar';",
+    "pair_id": "0937c612",
+    "original_question_id": "e4c1c68d",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "List station name (`dim_station`.`station_name`) and station code (`dim_station`.`station_code`) where `dim_station`.`type_of_water_body` = 'TANK' OR `dim_state`.`state` = 'Bihar' (join `dim_station` and `dim_state` on `state_id`)."
+  },
+  {
+    "question": "List the station name and the station code for all stations where the type of water body is a lake or the state is Chandigarh.",
+    "sql": "SELECT T1.STATION_NAME, T1.STATION_CODE FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.TYPE_OF_WATER_BODY = 'LAKE' OR T2.STATE = 'Chandigarh';",
+    "pair_id": "ac6c977b",
+    "original_question_id": "e4c1c68d",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "type of water body is a lake refers to `dim_station`.`type_of_water_body` = 'LAKE'; state is Chandigarh refers to `dim_state`.`state` = 'Chandigarh'; need to join `dim_station` with `dim_state` on `dim_station`.`state_id` = `dim_state`.`state_id`; output columns: `dim_station`.`station_name`, `dim_station`.`station_code`."
+  },
+  {
+    "question": "List the station name and station code for all stations where the water body type is 'LAKE' or the state is 'Assam', grouped by their station name and station code, and ordered by the station code in ascending order.",
+    "sql": "SELECT T2.STATION_NAME, T2.STATION_CODE FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.TYPE_OF_WATER_BODY = 'LAKE' OR T1.STATE = 'Assam' GROUP BY T2.STATION_NAME, T2.STATION_CODE ORDER BY T2.STATION_CODE ASC",
+    "pair_id": "9f94f3c2",
+    "original_question_id": "e4c1c68d",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_station.type_of_water_body` = 'LAKE' OR `dim_state.state` = 'Assam'; join `dim_station` with `dim_state` on `dim_station.state_id` = `dim_state.state_id`; select `dim_station.station_name`, `dim_station.station_code`; group by `dim_station.station_name`, `dim_station.station_code`; order by `dim_station.station_code` ASC"
+  },
+  {
+    "question": "List the station name and station code for all stations, grouped by their name and code and ordered by station code, where either the water body type is 'TANK' or the state is 'Bihar'.",
+    "sql": "SELECT T2.STATION_NAME, T2.STATION_CODE FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.TYPE_OF_WATER_BODY = 'TANK' OR T1.STATE = 'Bihar' GROUP BY T2.STATION_NAME, T2.STATION_CODE ORDER BY T2.STATION_CODE ASC",
+    "pair_id": "ab75799c",
+    "original_question_id": "e4c1c68d",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Water body type 'TANK' refers to `dim_station.type_of_water_body` = 'TANK'; state 'Bihar' refers to `dim_state.state` = 'Bihar'; grouping by name and code means `GROUP BY dim_station.station_name, dim_station.station_code`; ordering by station code means `ORDER BY dim_station.station_code`."
+  },
+  {
+    "question": "List the station name and the station code for all stations where the water body type is 'LAKE' or the state is 'Andhra Pradesh', grouped by station name and station code, and ordered by the station code in ascending order.",
+    "sql": "SELECT T2.STATION_NAME, T2.STATION_CODE FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.TYPE_OF_WATER_BODY = 'LAKE' OR T1.STATE = 'Andhra Pradesh' GROUP BY T2.STATION_NAME, T2.STATION_CODE ORDER BY T2.STATION_CODE ASC",
+    "pair_id": "7b4ed047",
+    "original_question_id": "e4c1c68d",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "'LAKE' refers to `dim_station`.`type_of_water_body` = 'LAKE'; 'Andhra Pradesh' refers to `dim_state`.`state` = 'Andhra Pradesh'; need to join `dim_station` and `dim_state` on `dim_station`.`state_id` = `dim_state`.`state_id`; group by `dim_station`.`station_name`, `dim_station`.`station_code`; order by `dim_station`.`station_code` ASC."
+  },
+  {
+    "question": "List the station name, the station code, and the type of water body for all stations that are either located in the state of Assam or are categorized as a lake, grouped by these three attributes and ordered by the station code in ascending order.",
+    "sql": "SELECT T1.STATION_NAME, T1.STATION_CODE, T1.TYPE_OF_WATER_BODY FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.TYPE_OF_WATER_BODY = 'LAKE' OR T2.STATE = 'Assam' GROUP BY T1.STATION_NAME, T1.STATION_CODE, T1.TYPE_OF_WATER_BODY ORDER BY T1.STATION_CODE ASC",
+    "pair_id": "1d3c1523",
+    "original_question_id": "e4c1c68d",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter stations where `dim_state`.`state` = 'Assam' OR `dim_station`.`type_of_water_body` = 'LAKE'. Select `dim_station`.`station_name`, `dim_station`.`station_code`, `dim_station`.`type_of_water_body`. Group by these three columns and order by `dim_station`.`station_code` ASC."
+  },
+  {
+    "question": "List the station name, the station code, and the type of water body for all stations where the water body type is 'TANK' or the state is 'Bihar', grouped by these three attributes and ordered by the station code in ascending order.",
+    "sql": "SELECT T1.STATION_NAME, T1.STATION_CODE, T1.TYPE_OF_WATER_BODY FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.TYPE_OF_WATER_BODY = 'TANK' OR T2.STATE = 'Bihar' GROUP BY T1.STATION_NAME, T1.STATION_CODE, T1.TYPE_OF_WATER_BODY ORDER BY T1.STATION_CODE ASC",
+    "pair_id": "7f028048",
+    "original_question_id": "e4c1c68d",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "station name refers to (`dim_station`.`station_name`); station code refers to (`dim_station`.`station_code`); type of water body refers to (`dim_station`.`type_of_water_body`); water body type is 'TANK' refers to (`dim_station`.`type_of_water_body`) = 'TANK'; state is 'Bihar' refers to (`dim_state`.`state`) = 'Bihar'; grouped by these three attributes refers to GROUP BY (`dim_station`.`station_name`), (`dim_station`.`station_code`), (`dim_station`.`type_of_water_body`); ordered by station code ascending refers to ORDER BY (`dim_station`.`station_code`) ASC"
+  },
+  {
+    "question": "List the station name, the station code, and the type of water body for all stations that are either located in the state of Chandigarh or have a water body type of 'LAKE', grouped by these three attributes and ordered by the station code in ascending order.",
+    "sql": "SELECT T1.STATION_NAME, T1.STATION_CODE, T1.TYPE_OF_WATER_BODY FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.TYPE_OF_WATER_BODY = 'LAKE' OR T2.STATE = 'Chandigarh' GROUP BY T1.STATION_NAME, T1.STATION_CODE, T1.TYPE_OF_WATER_BODY ORDER BY T1.STATION_CODE ASC",
+    "pair_id": "007854f2",
+    "original_question_id": "e4c1c68d",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List station name, station code, type of water body from `dim_station` where either `dim_state.state` = 'Chandigarh' (via join on `dim_station.state_id` = `dim_state.state_id`) or `dim_station.type_of_water_body` = 'LAKE', group by `dim_station.station_name`, `dim_station.station_code`, `dim_station.type_of_water_body`, order by `dim_station.station_code` ASC."
+  },
+  {
+    "question": "List the station name and station code for the first 10 stations located in the country of India, ordered by the type of water body.",
+    "sql": "SELECT T1.STATION_NAME, T1.STATION_CODE FROM DIM_STATION T1 JOIN DIM_STATE T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_COUNTRY T3 ON T2.COUNTRY_ID = T3.COUNTRY_ID WHERE T3.COUNTRY = 'India' ORDER BY T1.TYPE_OF_WATER_BODY LIMIT 10",
+    "pair_id": "45c00f7a",
+    "original_question_id": "1c2bf99e",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "station name refers to `dim_station`.`station_name`; station code refers to `dim_station`.`station_code`; country of India refers to `dim_country`.`country` = 'India'; order by type of water body refers to ORDER BY `dim_station`.`type_of_water_body`; first 10 stations refers to LIMIT 10; join `dim_station` → `dim_state` → `dim_country` to filter by country."
+  },
+  {
+    "question": "List the station name and the station code for the first ten stations located in the country with ID 1, ordered by the type of water body.",
+    "sql": "SELECT T1.STATION_NAME, T1.STATION_CODE FROM DIM_STATION T1 JOIN DIM_STATE T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_COUNTRY T3 ON T2.COUNTRY_ID = T3.COUNTRY_ID WHERE T3.COUNTRY_ID = 1 ORDER BY T1.TYPE_OF_WATER_BODY LIMIT 10",
+    "pair_id": "ce1fb70a",
+    "original_question_id": "1c2bf99e",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "country with ID 1 refers to `dim_country`.`country_id` = 1; stations located in the country requires joining `dim_station` → `dim_state` → `dim_country`; order by `dim_station`.`type_of_water_body`; limit 10; select `dim_station`.`station_name` and `dim_station`.`station_code`"
+  },
+  {
+    "question": "List the station name and the station code for the first ten stations located in the country of India, ordered alphabetically by the type of water body.",
+    "sql": "SELECT T1.STATION_NAME, T1.STATION_CODE FROM DIM_STATION T1 JOIN DIM_STATE T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_COUNTRY T3 ON T2.COUNTRY_ID = T3.COUNTRY_ID WHERE T3.COUNTRY = 'India' ORDER BY T1.TYPE_OF_WATER_BODY ASC LIMIT 10",
+    "pair_id": "86d6f60d",
+    "original_question_id": "1c2bf99e",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "country of India refers to `dim_country`.`country` = 'India'; station name refers to `dim_station`.`station_name`; station code refers to `dim_station`.`station_code`; type of water body refers to `dim_station`.`type_of_water_body`; first ten stations refers to LIMIT 10; ordered alphabetically by type of water body refers to ORDER BY `dim_station`.`type_of_water_body`; need to join `dim_station` → `dim_state` → `dim_country` to filter by country."
+  },
+  {
+    "question": "List the station name and the station code for the first ten stations located in India, ordered by their type of water body.",
+    "sql": "SELECT T1.STATION_NAME, T1.STATION_CODE FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_COUNTRY AS T3 ON T2.COUNTRY_ID = T3.COUNTRY_ID WHERE T3.COUNTRY = 'India' ORDER BY T1.TYPE_OF_WATER_BODY LIMIT 10",
+    "pair_id": "949911f4",
+    "original_question_id": "1c2bf99e",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "station name refers to `dim_station`.`station_name`; station code refers to `dim_station`.`station_code`; located in India means `dim_country`.`country` = 'India'; order by type of water body means ORDER BY `dim_station`.`type_of_water_body`; first ten stations means LIMIT 10."
+  },
+  {
+    "question": "List the station name and station code for the first 10 stations located in the country with ID 1, ordered by their type of water body.",
+    "sql": "SELECT T1.STATION_NAME, T1.STATION_CODE FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_COUNTRY AS T3 ON T2.COUNTRY_ID = T3.COUNTRY_ID WHERE T3.COUNTRY_ID = 1 ORDER BY T1.TYPE_OF_WATER_BODY LIMIT 10",
+    "pair_id": "1fc705b6",
+    "original_question_id": "1c2bf99e",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "country with ID 1 refers to `dim_country`.`country_id` = 1; station name is `dim_station`.`station_name`; station code is `dim_station`.`station_code`; type of water body is `dim_station`.`type_of_water_body`; join `dim_station` to `dim_state` on `dim_station`.`state_id` = `dim_state`.`state_id`, then join `dim_state` to `dim_country` on `dim_state`.`country_id` = `dim_country`.`country_id`; order by `dim_station`.`type_of_water_body`; limit to first 10 stations."
+  },
+  {
+    "question": "List the station name and the station code for the first 10 stations located in the country of India, ordered alphabetically by their type of water body.",
+    "sql": "SELECT T1.STATION_NAME, T1.STATION_CODE FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_COUNTRY AS T3 ON T2.COUNTRY_ID = T3.COUNTRY_ID WHERE T3.COUNTRY = 'India' ORDER BY T1.TYPE_OF_WATER_BODY ASC LIMIT 10",
+    "pair_id": "6260f6db",
+    "original_question_id": "1c2bf99e",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "country of India refers to (`dim_country`.`country`) = 'India'; station name refers to (`dim_station`.`station_name`); station code refers to (`dim_station`.`station_code`); type of water body refers to (`dim_station`.`type_of_water_body`); first 10 stations refers to LIMIT 10; ordered alphabetically by type of water body refers to ORDER BY (`dim_station`.`type_of_water_body`);"
+  },
+  {
+    "question": "List the station name and station code for stations located in the country of India, grouped by their station name, station code, and type of water body, ensuring each group has at least one station ID, and order the results by the type of water body in ascending order for the first 10 records.",
+    "sql": "SELECT T1.STATION_NAME, T1.STATION_CODE FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_COUNTRY AS T3 ON T2.COUNTRY_ID = T3.COUNTRY_ID WHERE T3.COUNTRY = 'India' GROUP BY T1.STATION_NAME, T1.STATION_CODE, T1.TYPE_OF_WATER_BODY HAVING COUNT(T1.STATION_ID) >= 1 ORDER BY T1.TYPE_OF_WATER_BODY ASC LIMIT 10",
+    "pair_id": "029bf7f0",
+    "original_question_id": "1c2bf99e",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter by `dim_country`.`country` = 'India'. Select `dim_station`.`station_name`, `dim_station`.`station_code`, `dim_station`.`type_of_water_body`. Group by `dim_station`.`station_name`, `dim_station`.`station_code`, `dim_station`.`type_of_water_body`. Order by `dim_station`.`type_of_water_body` ASC LIMIT 10."
+  },
+  {
+    "question": "List the station name and station code for the first 10 stations located in the country with ID 1, grouped by their station name, station code, and type of water body, ensuring that each group has at least one record and results are ordered by the type of water body.",
+    "sql": "SELECT T1.STATION_NAME, T1.STATION_CODE FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_COUNTRY AS T3 ON T2.COUNTRY_ID = T3.COUNTRY_ID WHERE T3.COUNTRY_ID = 1 GROUP BY T1.STATION_NAME, T1.STATION_CODE, T1.TYPE_OF_WATER_BODY HAVING COUNT(*) >= 1 ORDER BY T1.TYPE_OF_WATER_BODY ASC LIMIT 10",
+    "pair_id": "4a34dad9",
+    "original_question_id": "1c2bf99e",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "country with ID 1 refers to `dim_country`.`country_id` = 1; station name is `dim_station`.`station_name`; station code is `dim_station`.`station_code`; type of water body is `dim_station`.`type_of_water_body`; group by `dim_station`.`station_name`, `dim_station`.`station_code`, `dim_station`.`type_of_water_body`; order by `dim_station`.`type_of_water_body`; limit 10"
+  },
+  {
+    "question": "List the station name and station code for the first 10 stations located in the country of India, grouped by their station name, station code, and type of water body, ensuring each group includes at least one state, and order the results alphabetically by the type of water body.",
+    "sql": "SELECT T1.STATION_NAME, T1.STATION_CODE FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_COUNTRY AS T3 ON T2.COUNTRY_ID = T3.COUNTRY_ID WHERE T3.COUNTRY = 'India' GROUP BY T1.STATION_NAME, T1.STATION_CODE, T1.TYPE_OF_WATER_BODY HAVING COUNT(T2.STATE_ID) >= 1 ORDER BY T1.TYPE_OF_WATER_BODY ASC LIMIT 10",
+    "pair_id": "aba162ea",
+    "original_question_id": "1c2bf99e",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter: `dim_country`.`country` = 'India'. Select: `dim_station`.`station_name`, `dim_station`.`station_code`, `dim_station`.`type_of_water_body`. Group by these three columns. Order by `dim_station`.`type_of_water_body` ASC. Limit 10."
+  },
+  {
+    "question": "List the station names for stations where either the maximum temperature in Celsius was greater than 30.0 during the year 2023, or the type of water body associated with the station is a lake.",
+    "sql": "SELECT T1.STATION_NAME FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID WHERE (T2.MAX_TEMPERATURE_C > 30.0 AND T2.YEAR = 2023) OR T1.TYPE_OF_WATER_BODY = 'LAKE';",
+    "pair_id": "db50b18f",
+    "original_question_id": "01a8d660",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Station names where (fact_thermal.max_temperature_c > 30.0 AND fact_thermal.year = 2023) OR (dim_station.type_of_water_body = 'LAKE')."
+  },
+  {
+    "question": "List the station codes for stations where either the maximum temperature in Celsius was greater than 29.0 during the year 2023, or the type of water body is classified as a tank.",
+    "sql": "SELECT T1.STATION_CODE FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID WHERE (T2.MAX_TEMPERATURE_C > 29.0 AND T2.YEAR = 2023) OR T1.TYPE_OF_WATER_BODY = 'TANK';",
+    "pair_id": "a7576e08",
+    "original_question_id": "01a8d660",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Station codes are in `dim_station`.`station_code`. Condition 1: `fact_thermal`.`max_temperature_c` > 29.0 AND `fact_thermal`.`year` = 2023. Condition 2: `dim_station`.`type_of_water_body` = 'TANK'. Use OR to combine."
+  },
+  {
+    "question": "List the station names for stations that either recorded a maximum temperature in Celsius greater than 31.0 during the year 2023 or are located near a water body type classified as a lake.",
+    "sql": "SELECT T1.STATION_NAME FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID WHERE (T2.MAX_TEMPERATURE_C > 31.0 AND T2.YEAR = 2023) OR T1.TYPE_OF_WATER_BODY = 'LAKE';",
+    "pair_id": "4749c51d",
+    "original_question_id": "01a8d660",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Stations that either have `fact_thermal`.`max_temperature_c` > 31.0 AND `fact_thermal`.`year` = 2023, or have `dim_station`.`type_of_water_body` = 'LAKE'."
+  },
+  {
+    "question": "List the station names for stations that either recorded a maximum temperature in Celsius greater than 30 during the year 2023 or are located near a water body type of 'LAKE', grouped by the station name.",
+    "sql": "SELECT T1.STATION_NAME FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID WHERE (T2.MAX_TEMPERATURE_C > 30.0000000000000000 AND T2.YEAR = 2023) OR T1.TYPE_OF_WATER_BODY = 'LAKE' GROUP BY T1.STATION_NAME",
+    "pair_id": "6c0eb35b",
+    "original_question_id": "01a8d660",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`fact_thermal`.`max_temperature_c` > 30 AND `fact_thermal`.`year` = 2023; `dim_station`.`type_of_water_body` = 'LAKE'; group by `dim_station`.`station_name`"
+  },
+  {
+    "question": "List the station codes for stations that either recorded a maximum temperature in Celsius greater than 29 during the year 2023 or are located near a water body type of 'TANK', grouped by their station code.",
+    "sql": "SELECT T1.STATION_CODE FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID WHERE (T2.MAX_TEMPERATURE_C > 29.0000000000000000 AND T2.YEAR = 2023) OR T1.TYPE_OF_WATER_BODY = 'TANK' GROUP BY T1.STATION_CODE",
+    "pair_id": "325ea3bb",
+    "original_question_id": "01a8d660",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Condition 1: `fact_thermal`.`max_temperature_c` > 29 AND `fact_thermal`.`year` = 2023; Condition 2: `dim_station`.`type_of_water_body` = 'TANK'; Use OR between conditions; Group by `dim_station`.`station_code`."
+  },
+  {
+    "question": "List the station names for stations that either recorded a maximum temperature greater than 31 degrees Celsius in the year 2023 or are located near a lake water body type.",
+    "sql": "SELECT T1.STATION_NAME FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID WHERE (T2.MAX_TEMPERATURE_C > 31.0000000000000000 AND T2.YEAR = 2023) OR T1.TYPE_OF_WATER_BODY = 'LAKE' GROUP BY T1.STATION_NAME",
+    "pair_id": "d2607ee6",
+    "original_question_id": "01a8d660",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "maximum temperature greater than 31 degrees Celsius refers to `fact_thermal`.`max_temperature_c` > 31; year 2023 refers to `fact_thermal`.`year` = 2023; lake water body type refers to `dim_station`.`type_of_water_body` = 'LAKE'"
+  },
+  {
+    "question": "List the station name and station code for all stations where the water body type is 'LAKE' or for stations that recorded a maximum temperature greater than 30 degrees Celsius during the year 2023, ordered alphabetically by their station code.",
+    "sql": "SELECT T1.STATION_NAME, T1.STATION_CODE FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID WHERE T1.TYPE_OF_WATER_BODY = 'LAKE' OR T1.STATION_ID IN (SELECT T3.STATION_ID FROM FACT_THERMAL AS T3 WHERE T3.YEAR = 2023 GROUP BY T3.STATION_ID HAVING MAX(T3.MAX_TEMPERATURE_C) > 30.0000000000000000) ORDER BY T1.STATION_CODE ASC",
+    "pair_id": "d0870017",
+    "original_question_id": "01a8d660",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Station name and code from `dim_station` where (`dim_station`.`type_of_water_body` = 'LAKE') OR (stations have a record in `fact_thermal` with `fact_thermal`.`max_temperature_c` > 30 AND `fact_thermal`.`year` = 2023). Order by `dim_station`.`station_code` ascending."
+  },
+  {
+    "question": "List the station name and station code for all stations where the water body type is 'TANK' or for stations that, in the year 2023, recorded a maximum temperature greater than 29.0, ordered alphabetically by their station code.",
+    "sql": "SELECT T1.STATION_NAME, T1.STATION_CODE FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID WHERE T1.TYPE_OF_WATER_BODY = 'TANK' OR T1.STATION_ID IN (SELECT T3.STATION_ID FROM FACT_THERMAL AS T3 WHERE T3.YEAR = 2023 GROUP BY T3.STATION_ID HAVING MAX(T3.MAX_TEMPERATURE_C) > 29.0000000000000000) ORDER BY T1.STATION_CODE ASC",
+    "pair_id": "50f7e30a",
+    "original_question_id": "01a8d660",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List stations where (`dim_station`.`type_of_water_body` = 'TANK') OR (`fact_thermal`.`year` = 2023 AND `fact_thermal`.`max_temperature_c` > 29.0). Output `dim_station`.`station_name` and `dim_station`.`station_code`, ordered by `dim_station`.`station_code`."
+  },
+  {
+    "question": "List the station name and station code, ordered by station code, for the station named 'PULICATE LAKE, SRIHARI KOTA, SULLURUPETA (M)' or for stations that recorded a maximum temperature greater than 31.0 during the year 2023.",
+    "sql": "SELECT T1.STATION_NAME, T1.STATION_CODE FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID WHERE T1.STATION_NAME = 'PULICATE LAKE, SRIHARI KOTA, SULLURUPETA (M)' OR T1.STATION_ID IN (SELECT T3.STATION_ID FROM FACT_THERMAL AS T3 WHERE T3.YEAR = 2023 GROUP BY T3.STATION_ID HAVING MAX(T3.MAX_TEMPERATURE_C) > 31.0000000000000000) ORDER BY T1.STATION_CODE ASC",
+    "pair_id": "b867ef75",
+    "original_question_id": "01a8d660",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Station name 'PULICATE LAKE, SRIHARI KOTA, SULLURUPETA (M)' matches exactly in `dim_station`.`station_name`. For temperature condition, join `dim_station` with `fact_thermal` on `dim_station`.`station_id` = `fact_thermal`.`station_id` where `fact_thermal`.`max_temperature_c` > 31.0 and `fact_thermal`.`year` = 2023. Return `dim_station`.`station_name` and `dim_station`.`station_code` ordered by `dim_station`.`station_code`."
+  },
+  {
+    "question": "For each state, list the state name, the average maximum temperature in Celsius, and the total count of distinct station IDs.",
+    "sql": "SELECT T1.STATE, AVG(T2.MAX_TEMPERATURE_C), COUNT(DISTINCT T2.STATION_ID) FROM DIM_STATE AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATE_ID = T2.STATION_ID GROUP BY T1.STATE;",
+    "pair_id": "dd4b2771",
+    "original_question_id": "d01cdebf",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Average maximum temperature = AVG(`fact_thermal`.`max_temperature_c`). Total count of distinct station IDs = COUNT(DISTINCT `fact_thermal`.`station_id`). Group by `dim_state`.`state`. Join `fact_thermal` to `dim_station` on `fact_thermal`.`station_id` = `dim_station`.`station_id`, then join `dim_station` to `dim_state` on `dim_station`.`state_id` = `dim_state`.`state_id`."
+  },
+  {
+    "question": "For the state of Assam, list the state name, the average maximum temperature in Celsius, and the total count of distinct station IDs.",
+    "sql": "SELECT T1.STATE, AVG(T2.MAX_TEMPERATURE_C), COUNT(DISTINCT T2.STATION_ID) FROM DIM_STATE AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATE_ID = T2.STATION_ID WHERE T1.STATE = 'Assam' GROUP BY T1.STATE;",
+    "pair_id": "8a259fdd",
+    "original_question_id": "d01cdebf",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "For Assam (`dim_state.state` = 'Assam'), list `dim_state.state`, average of `fact_thermal.max_temperature_c`, and count distinct `dim_station.station_id`. Join `dim_state` to `dim_station` on `state_id`, then to `fact_thermal` on `station_id`."
+  },
+  {
+    "question": "For the year 2023, list each state along with the average maximum temperature in Celsius and the total count of distinct station IDs, grouped by state.",
+    "sql": "SELECT T1.STATE, AVG(T2.MAX_TEMPERATURE_C), COUNT(DISTINCT T2.STATION_ID) FROM DIM_STATE AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATE_ID = T2.STATION_ID WHERE T2.YEAR = 2023 GROUP BY T1.STATE;",
+    "pair_id": "ecf559c6",
+    "original_question_id": "d01cdebf",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "For year 2023, list each state (`dim_state.state`) with average maximum temperature (`AVG(fact_thermal.max_temperature_c)`) and total count of distinct station IDs (`COUNT(DISTINCT fact_thermal.station_id)`), grouped by state. Join `fact_thermal` with `dim_station` on `station_id`, then with `dim_state` on `state_id`. Filter `fact_thermal.year` = 2023."
+  },
+  {
+    "question": "For the state of Assam, list the state name, the average maximum temperature in Celsius, and the total count of distinct station IDs, grouped by the state and ordered by the average maximum temperature in descending order.",
+    "sql": "SELECT T1.STATE, AVG(T3.MAX_TEMPERATURE_C), COUNT(DISTINCT T2.STATION_ID) FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN FACT_THERMAL AS T3 ON T2.STATION_ID = T3.STATION_ID WHERE T1.STATE = 'Assam' GROUP BY T1.STATE ORDER BY AVG(T3.MAX_TEMPERATURE_C) DESC;",
+    "pair_id": "b1096598",
+    "original_question_id": "d01cdebf",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter by `dim_state`.`state` = 'Assam'. Join `dim_state` to `dim_station` on `dim_state`.`state_id` = `dim_station`.`state_id`. Join `dim_station` to `fact_thermal` on `dim_station`.`station_id` = `fact_thermal`.`station_id`. Compute AVG(`fact_thermal`.`max_temperature_c`) as average maximum temperature, COUNT(DISTINCT `dim_station`.`station_id`) as distinct station count. Group by `dim_state`.`state`. Order by average maximum temperature DESC."
+  },
+  {
+    "question": "For each state, list the state name, the average maximum temperature in Celsius, and the total count of unique station IDs, specifically for stations located near lakes, and order the results by the average maximum temperature in descending order.",
+    "sql": "SELECT T1.STATE, AVG(T3.MAX_TEMPERATURE_C), COUNT(DISTINCT T2.STATION_ID) FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN FACT_THERMAL AS T3 ON T2.STATION_ID = T3.STATION_ID WHERE T2.TYPE_OF_WATER_BODY = 'LAKE' GROUP BY T1.STATE ORDER BY AVG(T3.MAX_TEMPERATURE_C) DESC;",
+    "pair_id": "e2c56ea8",
+    "original_question_id": "d01cdebf",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_station.type_of_water_body` LIKE '%LAKE%'; then for each state, compute AVG(`fact_thermal.max_temperature_c`) and COUNT(DISTINCT `dim_station.station_id`); group by `dim_state.state`; order by AVG(`fact_thermal.max_temperature_c`) DESC."
+  },
+  {
+    "question": "For the year 2023, list each state along with the average maximum temperature in Celsius and the total count of distinct station IDs, ordered by the average maximum temperature from highest to lowest.",
+    "sql": "SELECT T1.STATE, AVG(T3.MAX_TEMPERATURE_C), COUNT(DISTINCT T2.STATION_ID) FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN FACT_THERMAL AS T3 ON T2.STATION_ID = T3.STATION_ID WHERE T3.YEAR = 2023 GROUP BY T1.STATE ORDER BY AVG(T3.MAX_TEMPERATURE_C) DESC;",
+    "pair_id": "5ceeafcf",
+    "original_question_id": "d01cdebf",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Year 2023 refers to `fact_thermal`.`year` = 2023; state refers to `dim_state`.`state`; average maximum temperature in Celsius refers to AVG(`fact_thermal`.`max_temperature_c`); total count of distinct station IDs refers to COUNT(DISTINCT `fact_thermal`.`station_id`); order by average maximum temperature from highest to lowest refers to ORDER BY AVG(`fact_thermal`.`max_temperature_c`) DESC."
+  },
+  {
+    "question": "For each state, list the state name, the average maximum temperature in Celsius, and the total count of distinct station IDs, including only those states that have more than zero stations, and order the results by the average maximum temperature in descending order.",
+    "sql": "SELECT T1.STATE, AVG(T3.MAX_TEMPERATURE_C), COUNT(DISTINCT T2.STATION_ID) FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN FACT_THERMAL AS T3 ON T2.STATION_ID = T3.STATION_ID GROUP BY T1.STATE HAVING COUNT(T2.STATION_ID) > 0 ORDER BY AVG(T3.MAX_TEMPERATURE_C) DESC",
+    "pair_id": "ae832838",
+    "original_question_id": "d01cdebf",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "State name is (`dim_state`.`state`). Average maximum temperature is computed from (`fact_thermal`.`max_temperature_c`). Count of distinct station IDs is from (`dim_station`.`station_id`). Join (`dim_state`) to (`dim_station`) on (`dim_state`.`state_id` = `dim_station`.`state_id`). Join (`dim_station`) to (`fact_thermal`) on (`dim_station`.`station_id` = `fact_thermal`.`station_id`). Group by (`dim_state`.`state_id`, `dim_state`.`state`). Order by average maximum temperature descending."
+  },
+  {
+    "question": "For states with more than one station, list each state along with the average maximum temperature in Celsius and the total count of distinct station IDs, specifically for stations located near lakes, and order the results by the average maximum temperature in descending order.",
+    "sql": "SELECT T1.STATE, AVG(T3.MAX_TEMPERATURE_C), COUNT(DISTINCT T2.STATION_ID) FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN FACT_THERMAL AS T3 ON T2.STATION_ID = T3.STATION_ID WHERE T2.TYPE_OF_WATER_BODY = 'LAKE' GROUP BY T1.STATE HAVING COUNT(T2.STATION_ID) > 1 ORDER BY AVG(T3.MAX_TEMPERATURE_C) DESC",
+    "pair_id": "f7eccede",
+    "original_question_id": "d01cdebf",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter stations with `dim_station.type_of_water_body` LIKE '%LAKE%'. Group by `dim_state.state`. Select `dim_state.state`, AVG(`fact_thermal.max_temperature_c`), COUNT(DISTINCT `dim_station.station_id`). Keep groups with COUNT(DISTINCT `dim_station.station_id`) > 1. Order by AVG(`fact_thermal.max_temperature_c`) DESC."
+  },
+  {
+    "question": "For the state of Assam, list the state name, the average maximum temperature in Celsius, and the count of distinct station IDs, provided that the total number of stations is at least one, and order the results by the average maximum temperature in descending order.",
+    "sql": "SELECT T1.STATE, AVG(T3.MAX_TEMPERATURE_C), COUNT(DISTINCT T2.STATION_ID) FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN FACT_THERMAL AS T3 ON T2.STATION_ID = T3.STATION_ID WHERE T1.STATE = 'Assam' GROUP BY T1.STATE HAVING COUNT(T2.STATION_ID) >= 1 ORDER BY AVG(T3.MAX_TEMPERATURE_C) DESC",
+    "pair_id": "118297f6",
+    "original_question_id": "d01cdebf",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter by `dim_state`.`state` = 'Assam'; compute AVG(`fact_thermal`.`max_temperature_c`) as average maximum temperature; compute COUNT(DISTINCT `dim_station`.`station_id`) as station count; group by `dim_state`.`state_id`, `dim_state`.`state`; ensure station count >= 1; order by average maximum temperature DESC."
+  },
+  {
+    "question": "List the station name and the state for all stations recorded in the year 2023, ordered by their maximum temperature in Celsius from highest to lowest.",
+    "sql": "SELECT T1.STATION_NAME, T2.STATE FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN FACT_THERMAL AS T3 ON T1.STATION_ID = T3.STATION_ID WHERE T3.YEAR = 2023 ORDER BY T3.MAX_TEMPERATURE_C DESC",
+    "pair_id": "857105f9",
+    "original_question_id": "cf471205",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Station name refers to `dim_station`.`station_name`; State refers to `dim_state`.`state`; Year 2023 refers to `fact_thermal`.`year` = 2023; Maximum temperature in Celsius refers to `fact_thermal`.`max_temperature_c`; Order from highest to lowest means ORDER BY `fact_thermal`.`max_temperature_c` DESC."
+  },
+  {
+    "question": "List the station code and the state for all stations recorded in the year 2023, ordered by their maximum temperature in Celsius from highest to lowest.",
+    "sql": "SELECT T1.STATION_CODE, T2.STATE FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN FACT_THERMAL AS T3 ON T1.STATION_ID = T3.STATION_ID WHERE T3.YEAR = 2023 ORDER BY T3.MAX_TEMPERATURE_C DESC",
+    "pair_id": "b0ae7a4c",
+    "original_question_id": "cf471205",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Year 2023 refers to `fact_thermal`.`year` = 2023; maximum temperature in Celsius refers to `fact_thermal`.`max_temperature_c`; station code refers to `dim_station`.`station_code`; state refers to `dim_state`.`state`; order by `fact_thermal`.`max_temperature_c` descending."
+  },
+  {
+    "question": "For the year 2023, list the station name and the state for all stations, ordered by the thermal fact ID in descending order.",
+    "sql": "SELECT T1.STATION_NAME, T2.STATE FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN FACT_THERMAL AS T3 ON T1.STATION_ID = T3.STATION_ID WHERE T3.YEAR = 2023 ORDER BY T3.FACT_THERMAL_ID DESC",
+    "pair_id": "f2e581e2",
+    "original_question_id": "cf471205",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Year 2023 refers to `fact_thermal.year` = 2023. Station name is `dim_station.station_name`. State is `dim_state.state`. Thermal fact ID is `fact_thermal.fact_thermal_id`. Order descending by `fact_thermal.fact_thermal_id`. Join `fact_thermal` with `dim_station` on `station_id`, and `dim_station` with `dim_state` on `state_id`."
+  },
+  {
+    "question": "For the year 2023, list the station name and the state for all stations, ordered by their maximum temperature in Celsius from highest to lowest.",
+    "sql": "SELECT T1.STATION_NAME, T2.STATE FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN FACT_THERMAL AS T3 ON T1.STATION_ID = T3.STATION_ID WHERE T3.YEAR = 2023 ORDER BY T3.MAX_TEMPERATURE_C DESC;",
+    "pair_id": "5e4075f0",
+    "original_question_id": "cf471205",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Year 2023 refers to `fact_thermal`.`year` = 2023; maximum temperature in Celsius refers to `fact_thermal`.`max_temperature_c`; station name is `dim_station`.`station_name`; state is `dim_state`.`state`; order by `fact_thermal`.`max_temperature_c` descending."
+  },
+  {
+    "question": "List the station name and the state for stations where the type of water body is a lake, specifically for the year 2023, ordered by the maximum temperature in Celsius from highest to lowest.",
+    "sql": "SELECT T1.STATION_NAME, T2.STATE FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN FACT_THERMAL AS T3 ON T1.STATION_ID = T3.STATION_ID WHERE T3.YEAR = 2023 AND T1.TYPE_OF_WATER_BODY = 'LAKE' ORDER BY T3.MAX_TEMPERATURE_C DESC;",
+    "pair_id": "29df05b3",
+    "original_question_id": "cf471205",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "type of water body is a lake refers to `dim_station`.`type_of_water_body` = 'LAKE'; year 2023 refers to `fact_thermal`.`year` = 2023; maximum temperature in Celsius refers to `fact_thermal`.`max_temperature_c`; order by highest to lowest means DESC."
+  },
+  {
+    "question": "List the station name and the state for all stations located in Assam during the year 2023, ordered by their maximum temperature in Celsius from highest to lowest.",
+    "sql": "SELECT T1.STATION_NAME, T2.STATE FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN FACT_THERMAL AS T3 ON T1.STATION_ID = T3.STATION_ID WHERE T3.YEAR = 2023 AND T2.STATE = 'Assam' ORDER BY T3.MAX_TEMPERATURE_C DESC;",
+    "pair_id": "1e8081b0",
+    "original_question_id": "cf471205",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Station name is `dim_station.station_name`; state is `dim_state.state`; Assam refers to `dim_state.state` = 'Assam'; year 2023 refers to `fact_thermal.year` = 2023; maximum temperature in Celsius is `fact_thermal.max_temperature_c`; order by `fact_thermal.max_temperature_c` descending."
+  },
+  {
+    "question": "For the year 2023, list the station name, the state, and the maximum temperature in Celsius for each station and state where the maximum temperature recorded was greater than 29, ordered from highest to lowest temperature.",
+    "sql": "SELECT T1.STATION_NAME, T2.STATE, MAX(T3.MAX_TEMPERATURE_C) FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN FACT_THERMAL AS T3 ON T1.STATION_ID = T3.STATION_ID WHERE T3.YEAR = 2023 GROUP BY T1.STATION_NAME, T2.STATE HAVING MAX(T3.MAX_TEMPERATURE_C) > 29.0000000000000000 ORDER BY MAX(T3.MAX_TEMPERATURE_C) DESC",
+    "pair_id": "ddbad9ab",
+    "original_question_id": "cf471205",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `fact_thermal`.`year` = 2023 and `fact_thermal`.`max_temperature_c` > 29. Select `dim_station`.`station_name`, `dim_state`.`state`, `fact_thermal`.`max_temperature_c`. Join `fact_thermal` to `dim_station` on `station_id`, then to `dim_state` on `state_id`. Order by `fact_thermal`.`max_temperature_c` DESC."
+  },
+  {
+    "question": "For the year 2023, list the station code, the state name, and the maximum temperature in Celsius for each station and state where the maximum temperature exceeded 30 degrees, sorted from highest to lowest temperature.",
+    "sql": "SELECT T1.STATION_CODE, T2.STATE, MAX(T3.MAX_TEMPERATURE_C) FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN FACT_THERMAL AS T3 ON T1.STATION_ID = T3.STATION_ID WHERE T3.YEAR = 2023 GROUP BY T1.STATION_CODE, T2.STATE HAVING MAX(T3.MAX_TEMPERATURE_C) > 30.0000000000000000 ORDER BY MAX(T3.MAX_TEMPERATURE_C) DESC",
+    "pair_id": "ca683cf3",
+    "original_question_id": "cf471205",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "year 2023 refers to `fact_thermal`.`year` = 2023; maximum temperature exceeded 30 degrees refers to `fact_thermal`.`max_temperature_c` > 30; station code refers to `dim_station`.`station_code`; state name refers to `dim_state`.`state`; sorted from highest to lowest temperature refers to ORDER BY `fact_thermal`.`max_temperature_c` DESC"
+  },
+  {
+    "question": "List the station name, the state, and the maximum recorded temperature in Celsius for the year 2023, filtering for those with a maximum temperature greater than 25 degrees, and order the results by the maximum temperature in descending order.",
+    "sql": "SELECT T1.STATION_NAME, T2.STATE, MAX(T3.MAX_TEMPERATURE_C) FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN FACT_THERMAL AS T3 ON T1.STATION_ID = T3.STATION_ID WHERE T3.YEAR = 2023 GROUP BY T1.STATION_NAME, T2.STATE HAVING MAX(T3.MAX_TEMPERATURE_C) > 25.0000000000000000 ORDER BY MAX(T3.MAX_TEMPERATURE_C) DESC",
+    "pair_id": "63d1c359",
+    "original_question_id": "cf471205",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "maximum recorded temperature in Celsius refers to `fact_thermal`.`max_temperature_c`; year 2023 refers to `fact_thermal`.`year` = 2023; greater than 25 degrees refers to `fact_thermal`.`max_temperature_c` > 25; station name refers to `dim_station`.`station_name`; state refers to `dim_state`.`state`; order by maximum temperature descending refers to ORDER BY `fact_thermal`.`max_temperature_c` DESC"
+  },
+  {
+    "question": "List the station names for the top 10 stations located in the state of Assam, ordered by their maximum temperature in Celsius from highest to lowest.",
+    "sql": "SELECT T2.STATION_NAME FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN FACT_THERMAL AS T3 ON T2.STATION_ID = T3.STATION_ID WHERE T1.STATE = 'Assam' ORDER BY T3.MAX_TEMPERATURE_C DESC LIMIT 10",
+    "pair_id": "0198dc4a",
+    "original_question_id": "565af2da",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Station names are in `dim_station.station_name`. State Assam is `dim_state.state` = 'Assam'. Maximum temperature in Celsius is `fact_thermal.max_temperature_c`. Order by `fact_thermal.max_temperature_c` DESC and limit 10."
+  },
+  {
+    "question": "List the station names for the top 10 stations located in the state of Bihar, ordered by their maximum temperature in Celsius from highest to lowest.",
+    "sql": "SELECT T2.STATION_NAME FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN FACT_THERMAL AS T3 ON T2.STATION_ID = T3.STATION_ID WHERE T1.STATE = 'Bihar' ORDER BY T3.MAX_TEMPERATURE_C DESC LIMIT 10",
+    "pair_id": "bf7aa2a8",
+    "original_question_id": "565af2da",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter by `dim_state.state` = 'Bihar'; join `dim_state` to `dim_station` on `dim_state.state_id` = `dim_station.state_id`; join `dim_station` to `fact_thermal` on `dim_station.station_id` = `fact_thermal.station_id`; order by `fact_thermal.max_temperature_c` DESC; limit to top 10 stations; output `dim_station.station_name`."
+  },
+  {
+    "question": "List the station names for the top 10 stations located in the state of 'Andhra Pradesh', ordered by their maximum temperature in Celsius in descending order.",
+    "sql": "SELECT T2.STATION_NAME FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN FACT_THERMAL AS T3 ON T2.STATION_ID = T3.STATION_ID WHERE T1.STATE = 'Andhra Pradesh' ORDER BY T3.MAX_TEMPERATURE_C DESC LIMIT 10",
+    "pair_id": "1eca3fb0",
+    "original_question_id": "565af2da",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state`.`state` = 'Andhra Pradesh', join `dim_station` on `dim_station`.`state_id` = `dim_state`.`state_id`, join `fact_thermal` on `fact_thermal`.`station_id` = `dim_station`.`station_id`, order by `fact_thermal`.`max_temperature_c` DESC, limit 10, select `dim_station`.`station_name`."
+  },
+  {
+    "question": "List the station names and the maximum temperature in Celsius for the top 10 stations located in the state of Assam, ordered by their highest recorded temperature from highest to lowest.",
+    "sql": "SELECT T2.STATION_NAME, MAX(T3.MAX_TEMPERATURE_C) FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN FACT_THERMAL AS T3 ON T2.STATION_ID = T3.STATION_ID WHERE T1.STATE = 'Assam' GROUP BY T2.STATION_NAME ORDER BY MAX(T3.MAX_TEMPERATURE_C) DESC LIMIT 10;",
+    "pair_id": "546f3925",
+    "original_question_id": "565af2da",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "State Assam is in `dim_state`.`state`; maximum temperature refers to `fact_thermal`.`max_temperature_c`; station names are in `dim_station`.`station_name`; join `dim_state` to `dim_station` on `dim_state`.`state_id` = `dim_station`.`state_id` and `dim_station` to `fact_thermal` on `dim_station`.`station_id` = `fact_thermal`.`station_id`; filter by `dim_state`.`state` = 'Assam'; order by `fact_thermal`.`max_temperature_c` DESC; limit to top 10."
+  },
+  {
+    "question": "For the state of Bihar, list the station names and the maximum temperature in Celsius recorded at each station, showing the top 10 stations with the highest recorded temperatures.",
+    "sql": "SELECT T2.STATION_NAME, MAX(T3.MAX_TEMPERATURE_C) FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN FACT_THERMAL AS T3 ON T2.STATION_ID = T3.STATION_ID WHERE T1.STATE = 'Bihar' GROUP BY T2.STATION_NAME ORDER BY MAX(T3.MAX_TEMPERATURE_C) DESC LIMIT 10;",
+    "pair_id": "58b51fb8",
+    "original_question_id": "565af2da",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter for `dim_state`.`state` = 'Bihar'. Join `dim_state` to `dim_station` on `dim_state`.`state_id` = `dim_station`.`state_id`, then join to `fact_thermal` on `dim_station`.`station_id` = `fact_thermal`.`station_id`. For each station, compute MAX(`fact_thermal`.`max_temperature_c`) as highest recorded temperature. Select `dim_station`.`station_name` and this max temperature, order by max temperature DESC, limit 10."
+  },
+  {
+    "question": "List the station names and the maximum recorded temperatures in Celsius for the top 10 stations in the state of 'Andhra Pradesh', ordered by their highest temperature in descending order.",
+    "sql": "SELECT T2.STATION_NAME, MAX(T3.MAX_TEMPERATURE_C) FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN FACT_THERMAL AS T3 ON T2.STATION_ID = T3.STATION_ID WHERE T1.STATE = 'Andhra Pradesh' GROUP BY T2.STATION_NAME ORDER BY MAX(T3.MAX_TEMPERATURE_C) DESC LIMIT 10;",
+    "pair_id": "fa80f06a",
+    "original_question_id": "565af2da",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Maximum recorded temperatures refers to `fact_thermal`.`max_temperature_c`; state of 'Andhra Pradesh' refers to `dim_state`.`state` = 'Andhra Pradesh'; top 10 stations ordered by highest temperature descending means ORDER BY `fact_thermal`.`max_temperature_c` DESC LIMIT 10."
+  },
+  {
+    "question": "List the station names and the maximum temperature in Celsius for the top 10 stations in the state of Assam that have a maximum temperature greater than 29, ordered by the maximum temperature from highest to lowest.",
+    "sql": "SELECT T2.STATION_NAME, MAX(T3.MAX_TEMPERATURE_C) FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN FACT_THERMAL AS T3 ON T2.STATION_ID = T3.STATION_ID WHERE T1.STATE = 'Assam' GROUP BY T2.STATION_NAME HAVING MAX(T3.MAX_TEMPERATURE_C) > 29.0000000000000000 ORDER BY MAX(T3.MAX_TEMPERATURE_C) DESC LIMIT 10",
+    "pair_id": "bdcd40ed",
+    "original_question_id": "565af2da",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select (`dim_station`.`station_name`, `fact_thermal`.`max_temperature_c`) where `dim_state`.`state` = 'Assam' and `fact_thermal`.`max_temperature_c` > 29, order by `fact_thermal`.`max_temperature_c` DESC, limit 10."
+  },
+  {
+    "question": "For stations located in the state of 'Bihar', list the station name and the maximum recorded temperature in Celsius, filtering for those where the maximum temperature exceeds 30 degrees, and display the top 10 results sorted by the maximum temperature in descending order.",
+    "sql": "SELECT T2.STATION_NAME, MAX(T3.MAX_TEMPERATURE_C) FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN FACT_THERMAL AS T3 ON T2.STATION_ID = T3.STATION_ID WHERE T1.STATE = 'Bihar' GROUP BY T2.STATION_NAME HAVING MAX(T3.MAX_TEMPERATURE_C) > 30.0000000000000000 ORDER BY MAX(T3.MAX_TEMPERATURE_C) DESC LIMIT 10",
+    "pair_id": "94463c4c",
+    "original_question_id": "565af2da",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter stations where `dim_state`.`state` = 'Bihar'; select `dim_station`.`station_name` and `fact_thermal`.`max_temperature_c`; filter where `fact_thermal`.`max_temperature_c` > 30; order by `fact_thermal`.`max_temperature_c` DESC; limit 10."
+  },
+  {
+    "question": "List the station names and the maximum temperature in Celsius for stations located in the state of 'Andhra Pradesh', specifically for those where the maximum temperature exceeds 31.0; show the top 10 results ordered by the maximum temperature in descending order.",
+    "sql": "SELECT T2.STATION_NAME, MAX(T3.MAX_TEMPERATURE_C) FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN FACT_THERMAL AS T3 ON T2.STATION_ID = T3.STATION_ID WHERE T1.STATE = 'Andhra Pradesh' GROUP BY T2.STATION_NAME HAVING MAX(T3.MAX_TEMPERATURE_C) > 31.0000000000000000 ORDER BY MAX(T3.MAX_TEMPERATURE_C) DESC LIMIT 10",
+    "pair_id": "25a3fbae",
+    "original_question_id": "565af2da",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Station names are in `dim_station`.`station_name`; maximum temperature is in `fact_thermal`.`max_temperature_c`; state name is in `dim_state`.`state`; join `fact_thermal` to `dim_station` on `station_id`, then to `dim_state` on `state_id`; filter `dim_state`.`state` = 'Andhra Pradesh' and `fact_thermal`.`max_temperature_c` > 31.0; order by `fact_thermal`.`max_temperature_c` DESC; limit to top 10."
+  },
+  {
+    "question": "List the station name, the station code, and the state ID for all stations where the type of water body is a lake.",
+    "sql": "SELECT STATION_NAME, STATION_CODE, STATE_ID FROM DIM_STATION WHERE TYPE_OF_WATER_BODY = 'LAKE';",
+    "pair_id": "eb0f71e2",
+    "original_question_id": "18265af6",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "lake refers to `dim_station`.`type_of_water_body` = 'LAKE'; required columns: `dim_station`.`station_name`, `dim_station`.`station_code`, `dim_station`.`state_id`."
+  },
+  {
+    "question": "List the station name, the station code, and the state ID for all stations where the type of water body is a tank.",
+    "sql": "SELECT STATION_NAME, STATION_CODE, STATE_ID FROM DIM_STATION WHERE TYPE_OF_WATER_BODY = 'TANK';",
+    "pair_id": "030f473a",
+    "original_question_id": "18265af6",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "tank refers to (`dim_station`.`type_of_water_body`) = 'TANK'; list (`dim_station`.`station_name`), (`dim_station`.`station_code`), (`dim_station`.`state_id`)"
+  },
+  {
+    "question": "List the station name, the station code, and the state ID for all stations where the state ID is 1.",
+    "sql": "SELECT STATION_NAME, STATION_CODE, STATE_ID FROM DIM_STATION WHERE STATE_ID = 1;",
+    "pair_id": "b746deee",
+    "original_question_id": "18265af6",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "station name refers to `dim_station`.`station_name`; station code refers to `dim_station`.`station_code`; state ID refers to `dim_station`.`state_id`; state ID is 1 refers to `dim_station`.`state_id` = 1"
+  },
+  {
+    "question": "List the station name, the station code, and the state ID for all stations where the type of water body is a lake, ordered alphabetically by the station name.",
+    "sql": "SELECT T1.STATION_NAME, T1.STATION_CODE, T2.STATE_ID FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.TYPE_OF_WATER_BODY = 'LAKE' ORDER BY T1.STATION_NAME;",
+    "pair_id": "40b6baef",
+    "original_question_id": "18265af6",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "lake refers to `dim_station`.`type_of_water_body` = 'LAKE'; list `dim_station`.`station_name`, `dim_station`.`station_code`, `dim_station`.`state_id`; order by `dim_station`.`station_name` alphabetically (ASC)."
+  },
+  {
+    "question": "List the station name, the station code, and the state ID for all stations where the type of water body is a tank, ordered alphabetically by the station name.",
+    "sql": "SELECT T1.STATION_NAME, T1.STATION_CODE, T2.STATE_ID FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.TYPE_OF_WATER_BODY = 'TANK' ORDER BY T1.STATION_NAME;",
+    "pair_id": "fbfe03e1",
+    "original_question_id": "18265af6",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "tank refers to `dim_station`.`type_of_water_body` = 'TANK'; ordered alphabetically by `dim_station`.`station_name`."
+  },
+  {
+    "question": "List the station name, the station code, and the state ID for all stations located in the state of Assam, ordered alphabetically by the station name.",
+    "sql": "SELECT T1.STATION_NAME, T1.STATION_CODE, T2.STATE_ID FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE = 'Assam' ORDER BY T1.STATION_NAME;",
+    "pair_id": "2f0ffaa6",
+    "original_question_id": "18265af6",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "state of Assam refers to `dim_state`.`state` = 'Assam'; station name refers to `dim_station`.`station_name`; station code refers to `dim_station`.`station_code`; state ID refers to `dim_station`.`state_id`; order alphabetically by station name refers to ORDER BY `dim_station`.`station_name`;"
+  },
+  {
+    "question": "List the station name, the station code, and the state ID for all stations where the water body type is 'LAKE' and the state is 'Assam', grouped by their station name, station code, and state ID, and ordered alphabetically by station name.",
+    "sql": "SELECT T1.STATION_NAME, T1.STATION_CODE, T2.STATE_ID FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.TYPE_OF_WATER_BODY = 'LAKE' AND T2.STATE = 'Assam' GROUP BY T1.STATION_NAME, T1.STATION_CODE, T2.STATE_ID ORDER BY T1.STATION_NAME ASC",
+    "pair_id": "7ad17392",
+    "original_question_id": "18265af6",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_station` and `dim_state` on `dim_station.state_id` = `dim_state.state_id`. Filter where `dim_station.type_of_water_body` = 'LAKE' and `dim_state.state` = 'Assam'. Select `dim_station.station_name`, `dim_station.station_code`, `dim_station.state_id`. Group by these three columns and order by `dim_station.station_name`."
+  },
+  {
+    "question": "List the station name, station code, and state ID for all stations where the type of water body is 'TANK' and the state is 'Andhra Pradesh', grouped by their station name, station code, and state ID, and ordered alphabetically by station name.",
+    "sql": "SELECT T1.STATION_NAME, T1.STATION_CODE, T2.STATE_ID FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.TYPE_OF_WATER_BODY = 'TANK' AND T2.STATE = 'Andhra Pradesh' GROUP BY T1.STATION_NAME, T1.STATION_CODE, T2.STATE_ID ORDER BY T1.STATION_NAME ASC",
+    "pair_id": "5805ad5d",
+    "original_question_id": "18265af6",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_station` with `dim_state` on `dim_station.state_id = dim_state.state_id`. Filter where `dim_station.type_of_water_body` = 'TANK' and `dim_state.state` = 'Andhra Pradesh'. Select `dim_station.station_name`, `dim_station.station_code`, `dim_station.state_id`. Group by these three columns. Order by `dim_station.station_name` alphabetically."
+  },
+  {
+    "question": "List the station name, the station code, and the state ID for all stations where the type of water body is a lake and the state is Bihar, grouped by the station name, station code, and state ID, and ordered alphabetically by the station name.",
+    "sql": "SELECT T1.STATION_NAME, T1.STATION_CODE, T2.STATE_ID FROM DIM_STATION AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.TYPE_OF_WATER_BODY = 'LAKE' AND T2.STATE = 'Bihar' GROUP BY T1.STATION_NAME, T1.STATION_CODE, T2.STATE_ID ORDER BY T1.STATION_NAME ASC",
+    "pair_id": "0dcf31c1",
+    "original_question_id": "18265af6",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_STATION"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter stations where `dim_station`.`type_of_water_body` = 'LAKE' and `dim_state`.`state` = 'Bihar'. Join `dim_station` with `dim_state` on `dim_station`.`state_id` = `dim_state`.`state_id`. Select `dim_station`.`station_name`, `dim_station`.`station_code`, `dim_station`.`state_id`. Group by these three columns and order by `dim_station`.`station_name` alphabetically."
+  },
+  {
+    "question": "Show the type of water body and the average maximum temperature in Celsius for each type of water body.",
+    "sql": "SELECT T1.TYPE_OF_WATER_BODY, AVG(T2.MAX_TEMPERATURE_C) FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID GROUP BY T1.TYPE_OF_WATER_BODY;",
+    "pair_id": "3ba48e01",
+    "original_question_id": "657105db",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_station.type_of_water_body` contains the water body type; `fact_thermal.max_temperature_c` is the maximum temperature in Celsius; join `fact_thermal` and `dim_station` on `station_id`; group by `dim_station.type_of_water_body` and compute AVG(`fact_thermal.max_temperature_c`)."
+  },
+  {
+    "question": "For the year 2023, list each type of water body along with the average maximum temperature in Celsius recorded for that specific water body type.",
+    "sql": "SELECT T1.TYPE_OF_WATER_BODY, AVG(T2.MAX_TEMPERATURE_C) FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID WHERE T2.YEAR = 2023 GROUP BY T1.TYPE_OF_WATER_BODY;",
+    "pair_id": "5cd2eb60",
+    "original_question_id": "657105db",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "year = 2023; water body type is `dim_station.type_of_water_body`; maximum temperature is `fact_thermal.max_temperature_c`; average maximum temperature per water body type is AVG(`fact_thermal.max_temperature_c`) grouped by `dim_station.type_of_water_body`"
+  },
+  {
+    "question": "What is the type of water body and the average maximum temperature in Celsius for stations where the water body type is a lake, grouped by the type of water body?",
+    "sql": "SELECT T1.TYPE_OF_WATER_BODY, AVG(T2.MAX_TEMPERATURE_C) FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID WHERE T1.TYPE_OF_WATER_BODY = 'LAKE' GROUP BY T1.TYPE_OF_WATER_BODY;",
+    "pair_id": "da2f2237",
+    "original_question_id": "657105db",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_station.type_of_water_body` containing 'LAKE' (case-sensitive). Compute average of `fact_thermal.max_temperature_c` grouped by `dim_station.type_of_water_body`."
+  },
+  {
+    "question": "List each type of water body along with the average maximum temperature in Celsius, grouped by the type of water body and ordered from the highest average maximum temperature to the lowest.",
+    "sql": "SELECT T1.TYPE_OF_WATER_BODY, AVG(T2.MAX_TEMPERATURE_C) FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID GROUP BY T1.TYPE_OF_WATER_BODY ORDER BY AVG(T2.MAX_TEMPERATURE_C) DESC;",
+    "pair_id": "899f0cc3",
+    "original_question_id": "657105db",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "type of water body refers to `dim_station`.`type_of_water_body`; average maximum temperature in Celsius refers to AVG(`fact_thermal`.`max_temperature_c`); group by `dim_station`.`type_of_water_body`; order by average maximum temperature descending."
+  },
+  {
+    "question": "For the year 2023, list each type of water body along with the average maximum temperature in Celsius, sorted by the average maximum temperature in descending order.",
+    "sql": "SELECT T1.TYPE_OF_WATER_BODY, AVG(T2.MAX_TEMPERATURE_C) FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID WHERE T2.YEAR = 2023 GROUP BY T1.TYPE_OF_WATER_BODY ORDER BY AVG(T2.MAX_TEMPERATURE_C) DESC;",
+    "pair_id": "05ca993c",
+    "original_question_id": "657105db",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_station`.`type_of_water_body` categorizes water bodies; `fact_thermal`.`max_temperature_c` is maximum temperature in Celsius; filter `fact_thermal`.`year` = 2023; compute average of `fact_thermal`.`max_temperature_c` grouped by `dim_station`.`type_of_water_body`; sort by average descending."
+  },
+  {
+    "question": "Show the type of water body and the average maximum temperature in Celsius for stations where the water body type is a lake, grouped by the type of water body and ordered by the average maximum temperature from highest to lowest.",
+    "sql": "SELECT T1.TYPE_OF_WATER_BODY, AVG(T2.MAX_TEMPERATURE_C) FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID WHERE T1.TYPE_OF_WATER_BODY = 'LAKE' GROUP BY T1.TYPE_OF_WATER_BODY ORDER BY AVG(T2.MAX_TEMPERATURE_C) DESC;",
+    "pair_id": "55042009",
+    "original_question_id": "657105db",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Water body type is in `dim_station.type_of_water_body`; lake means `dim_station.type_of_water_body` = 'LAKE'. Maximum temperature in Celsius is `fact_thermal.max_temperature_c`. Join `dim_station` and `fact_thermal` on `station_id`, filter for lake, group by `dim_station.type_of_water_body`, compute average of `fact_thermal.max_temperature_c`, order by average descending."
+  },
+  {
+    "question": "For the year 2023, list the type of water body and the average maximum temperature in Celsius for stations where the water body type is 'LAKE', provided that this average is greater than the overall average maximum temperature across all records, and order the results by the average maximum temperature in descending order.",
+    "sql": "SELECT T1.TYPE_OF_WATER_BODY, AVG(T2.MAX_TEMPERATURE_C) FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID JOIN DIM_TIME AS T3 ON T2.YEAR = T3.YEAR WHERE T3.YEAR = 2023 AND T1.TYPE_OF_WATER_BODY = 'LAKE' GROUP BY T1.TYPE_OF_WATER_BODY HAVING AVG(T2.MAX_TEMPERATURE_C) > (SELECT AVG(MAX_TEMPERATURE_C) FROM FACT_THERMAL) ORDER BY AVG(T2.MAX_TEMPERATURE_C) DESC;",
+    "pair_id": "a801cc40",
+    "original_question_id": "657105db",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "`fact_thermal.max_temperature_c` is the maximum temperature in Celsius; `dim_station.type_of_water_body` must be 'LAKE'; year is 2023: `fact_thermal.year` = 2023; overall average maximum temperature across all records is the average of `fact_thermal.max_temperature_c` over all rows in `fact_thermal`; for each station in 2023 with water body type 'LAKE', compute its average maximum temperature (which is just `fact_thermal.max_temperature_c` since one record per station per year) and compare to overall average; select `dim_station.type_of_water_body` and `fact_thermal.max_temperature_c` (as average); order by `fact_thermal.max_temperature_c` descending."
+  },
+  {
+    "question": "List the type of water body and the average maximum temperature in Celsius for water bodies of type 'TANK' where the minimum temperature is at least 19.0, grouping the results by the water body type; only include those where the average maximum temperature is greater than the average maximum temperature of stations with IDs 1, 2, 3, 4, and 5, and sort the final list by the average maximum temperature in descending order.",
+    "sql": "SELECT T1.TYPE_OF_WATER_BODY, AVG(T2.MAX_TEMPERATURE_C) FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID JOIN DIM_TIME AS T3 ON T2.YEAR = T3.YEAR WHERE T1.TYPE_OF_WATER_BODY = 'TANK' AND T2.MIN_TEMPERATURE_C >= 19.0000000000000000 GROUP BY T1.TYPE_OF_WATER_BODY HAVING AVG(T2.MAX_TEMPERATURE_C) > (SELECT AVG(MAX_TEMPERATURE_C) FROM FACT_THERMAL WHERE STATION_ID IN (1, 2, 3, 4, 5)) ORDER BY AVG(T2.MAX_TEMPERATURE_C) DESC;",
+    "pair_id": "77cecd8d",
+    "original_question_id": "657105db",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_station.type_of_water_body` = 'TANK' and `fact_thermal.min_temperature_c` >= 19.0. Group by `dim_station.type_of_water_body`. Compute `AVG(fact_thermal.max_temperature_c)`. Compare to `AVG(fact_thermal.max_temperature_c)` for stations where `dim_station.station_id` IN (1,2,3,4,5). Sort by `AVG(fact_thermal.max_temperature_c)` DESC."
+  },
+  {
+    "question": "For the year 2023, list each station name along with its maximum recorded temperature in Celsius, grouped by the station name and ordered from the highest to the lowest maximum temperature.",
+    "sql": "SELECT T1.STATION_NAME, MAX(T2.MAX_TEMPERATURE_C) FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID WHERE T2.YEAR = 2023 GROUP BY T1.STATION_NAME ORDER BY MAX(T2.MAX_TEMPERATURE_C) DESC;",
+    "pair_id": "c4de4ad4",
+    "original_question_id": "4670e83e",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Year 2023 refers to `fact_thermal`.`year` = 2023; Maximum recorded temperature in Celsius is `fact_thermal`.`max_temperature_c`; Station name is `dim_station`.`station_name`; Join `fact_thermal` and `dim_station` on `station_id`; Group by `dim_station`.`station_name`; Order by `fact_thermal`.`max_temperature_c` DESC."
+  },
+  {
+    "question": "For the year 2023, list each station code along with the maximum temperature in Celsius recorded, grouped by the station code and ordered from the highest to lowest maximum temperature.",
+    "sql": "SELECT T1.STATION_CODE, MAX(T2.MAX_TEMPERATURE_C) FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID WHERE T2.YEAR = 2023 GROUP BY T1.STATION_CODE ORDER BY MAX(T2.MAX_TEMPERATURE_C) DESC;",
+    "pair_id": "c43050ae",
+    "original_question_id": "4670e83e",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "For year 2023, use fact_thermal.year = 2023. Maximum temperature in Celsius is fact_thermal.max_temperature_c. Station code is dim_station.station_code. Join fact_thermal and dim_station on fact_thermal.station_id = dim_station.station_id. Group by station code and take the maximum of max_temperature_c per station. Order by maximum temperature descending."
+  },
+  {
+    "question": "For the year 2023, list each type of water body along with the maximum temperature in Celsius recorded for that type, sorted from highest to lowest maximum temperature.",
+    "sql": "SELECT T1.TYPE_OF_WATER_BODY, MAX(T2.MAX_TEMPERATURE_C) FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID WHERE T2.YEAR = 2023 GROUP BY T1.TYPE_OF_WATER_BODY ORDER BY MAX(T2.MAX_TEMPERATURE_C) DESC;",
+    "pair_id": "9ad67f81",
+    "original_question_id": "4670e83e",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "`dim_station`.`type_of_water_body` is the water body type; `fact_thermal`.`max_temperature_c` is the maximum temperature in Celsius; year 2023 refers to `fact_thermal`.`year` = 2023; need MAX(`fact_thermal`.`max_temperature_c`) per water body type for 2023, sorted descending by that maximum temperature."
+  },
+  {
+    "question": "List each station name along with the highest maximum temperature in Celsius recorded for that station in the year 2023, and sort the results by the maximum temperature in descending order.",
+    "sql": "SELECT T1.STATION_NAME, MAX(T2.MAX_TEMPERATURE_C) FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID WHERE T2.YEAR = 2023 GROUP BY T1.STATION_NAME ORDER BY MAX(T2.MAX_TEMPERATURE_C) DESC;",
+    "pair_id": "cc781d44",
+    "original_question_id": "4670e83e",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "`dim_station`.`station_name` is station name; `fact_thermal`.`max_temperature_c` is maximum temperature in Celsius; filter `fact_thermal`.`year` = 2023; group by station to get highest max temperature per station (MAX(`fact_thermal`.`max_temperature_c`)); sort by `max_temperature_c` descending."
+  },
+  {
+    "question": "For the year 2023, list each station code along with the maximum temperature in Celsius recorded, grouped by the station code and ordered from the highest to lowest maximum temperature.",
+    "sql": "SELECT T1.STATION_CODE, MAX(T2.MAX_TEMPERATURE_C) FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID WHERE T2.YEAR = 2023 GROUP BY T1.STATION_CODE ORDER BY MAX(T2.MAX_TEMPERATURE_C) DESC;",
+    "pair_id": "9823409b",
+    "original_question_id": "4670e83e",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Year 2023 refers to `fact_thermal`.`year` = 2023; station code is `dim_station`.`station_code`; maximum temperature in Celsius is `fact_thermal`.`max_temperature_c`; group by `dim_station`.`station_code`; order by `fact_thermal`.`max_temperature_c` DESC"
+  },
+  {
+    "question": "For the year 2023, list each type of water body along with the maximum temperature in Celsius recorded for that type, sorted from highest to lowest maximum temperature.",
+    "sql": "SELECT T1.TYPE_OF_WATER_BODY, MAX(T2.MAX_TEMPERATURE_C) FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID WHERE T2.YEAR = 2023 GROUP BY T1.TYPE_OF_WATER_BODY ORDER BY MAX(T2.MAX_TEMPERATURE_C) DESC;",
+    "pair_id": "b27e0c24",
+    "original_question_id": "4670e83e",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "type of water body refers to `dim_station`.`type_of_water_body`; maximum temperature in Celsius refers to `fact_thermal`.`max_temperature_c`; year 2023 refers to `fact_thermal`.`year` = 2023; sorted from highest to lowest maximum temperature means ORDER BY `fact_thermal`.`max_temperature_c` DESC"
+  },
+  {
+    "question": "List the station names and their corresponding maximum recorded temperatures in Celsius for the year 2023, specifically for those stations where the maximum temperature exceeds the overall average maximum temperature across all records, and sort the results by the maximum temperature in descending order.",
+    "sql": "SELECT T1.STATION_NAME, MAX(T2.MAX_TEMPERATURE_C) FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID JOIN DIM_TIME AS T3 ON T2.YEAR = T3.YEAR WHERE T3.YEAR = 2023 GROUP BY T1.STATION_NAME HAVING MAX(T2.MAX_TEMPERATURE_C) > (SELECT AVG(MAX_TEMPERATURE_C) FROM FACT_THERMAL) ORDER BY MAX(T2.MAX_TEMPERATURE_C) DESC",
+    "pair_id": "ec775591",
+    "original_question_id": "4670e83e",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "`fact_thermal`.`max_temperature_c` is maximum temperature in Celsius; `fact_thermal`.`year` = 2023 filters year; overall average maximum temperature is AVG(`fact_thermal`.`max_temperature_c`) over all rows; join `fact_thermal` with `dim_station` on `station_id` to get `dim_station`.`station_name`; sort by `fact_thermal`.`max_temperature_c` DESC."
+  },
+  {
+    "question": "Show the station code and the maximum temperature in Celsius for each station during the year 2023, filtering for those where the maximum temperature is greater than the overall average maximum temperature across all records, and order the results by the maximum temperature in descending order.",
+    "sql": "SELECT T1.STATION_CODE, MAX(T2.MAX_TEMPERATURE_C) FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID JOIN DIM_TIME AS T3 ON T2.YEAR = T3.YEAR WHERE T3.YEAR = 2023 GROUP BY T1.STATION_CODE HAVING MAX(T2.MAX_TEMPERATURE_C) > (SELECT AVG(MAX_TEMPERATURE_C) FROM FACT_THERMAL) ORDER BY MAX(T2.MAX_TEMPERATURE_C) DESC",
+    "pair_id": "a49fd278",
+    "original_question_id": "4670e83e",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Station code is in `dim_station`.`station_code`; maximum temperature is `fact_thermal`.`max_temperature_c`; year 2023 is `fact_thermal`.`year` = 2023; overall average maximum temperature is AVG(`fact_thermal`.`max_temperature_c`) over all rows in `fact_thermal`; join `fact_thermal` and `dim_station` on `fact_thermal`.`station_id` = `dim_station`.`station_id`; filter where `fact_thermal`.`max_temperature_c` > overall average; order by `fact_thermal`.`max_temperature_c` DESC."
+  },
+  {
+    "question": "For the year 2023, list each type of water body along with its maximum recorded temperature in Celsius, specifically for those water body types where that maximum temperature is greater than the overall average maximum temperature across all records, and sort the results by the maximum temperature in descending order.",
+    "sql": "SELECT T1.TYPE_OF_WATER_BODY, MAX(T2.MAX_TEMPERATURE_C) FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID JOIN DIM_TIME AS T3 ON T2.YEAR = T3.YEAR WHERE T3.YEAR = 2023 GROUP BY T1.TYPE_OF_WATER_BODY HAVING MAX(T2.MAX_TEMPERATURE_C) > (SELECT AVG(MAX_TEMPERATURE_C) FROM FACT_THERMAL) ORDER BY MAX(T2.MAX_TEMPERATURE_C) DESC",
+    "pair_id": "4472e6f5",
+    "original_question_id": "4670e83e",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Overall average maximum temperature = AVG(fact_thermal.max_temperature_c) over all rows in fact_thermal. For year=2023, group by dim_station.type_of_water_body, compute MAX(fact_thermal.max_temperature_c) per group. Keep groups where that MAX > overall average. Sort by MAX(fact_thermal.max_temperature_c) DESC."
+  },
+  {
+    "question": "List the station names for stations where either the maximum temperature in Celsius was greater than 30.0 during the year 2023, or the type of water body associated with the station is a lake.",
+    "sql": "SELECT T1.STATION_NAME FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID WHERE T2.MAX_TEMPERATURE_C > 30.0 AND T2.YEAR = 2023 OR T1.TYPE_OF_WATER_BODY = 'LAKE';",
+    "pair_id": "93eb9fe6",
+    "original_question_id": "a8ccd756",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Station names where (`fact_thermal`.`max_temperature_c` > 30.0 AND `fact_thermal`.`year` = 2023) OR (`dim_station`.`type_of_water_body` = 'LAKE'). Join `dim_station` and `fact_thermal` on `station_id`."
+  },
+  {
+    "question": "List the station codes for stations where the maximum temperature in Celsius was greater than 29.0 during the year 2023, or for stations where the type of water body is a tank.",
+    "sql": "SELECT T1.STATION_CODE FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID WHERE T2.MAX_TEMPERATURE_C > 29.0 AND T2.YEAR = 2023 OR T1.TYPE_OF_WATER_BODY = 'TANK';",
+    "pair_id": "24ad948b",
+    "original_question_id": "a8ccd756",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Station codes from `dim_station`.`station_code` where either (`fact_thermal`.`max_temperature_c` > 29.0 and `fact_thermal`.`year` = 2023) or (`dim_station`.`type_of_water_body` = 'TANK')."
+  },
+  {
+    "question": "List the station names for stations that either recorded a maximum temperature in Celsius greater than 31.0 during the year 2023 or are located near a water body type of 'LAKE'.",
+    "sql": "SELECT T1.STATION_NAME FROM DIM_STATION AS T1 JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID WHERE T2.MAX_TEMPERATURE_C > 31.0 AND T2.YEAR = 2023 OR T1.TYPE_OF_WATER_BODY = 'LAKE';",
+    "pair_id": "40b14bd8",
+    "original_question_id": "a8ccd756",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Station names are in `dim_station`.`station_name`. Condition 1: Stations with `fact_thermal`.`max_temperature_c` > 31.0 AND `fact_thermal`.`year` = 2023. Condition 2: Stations where `dim_station`.`type_of_water_body` = 'LAKE'. Use OR between conditions."
+  },
+  {
+    "question": "List the station names for stations that are either located near a lake or have recorded a maximum temperature greater than 30 degrees Celsius during the year 2023.",
+    "sql": "SELECT T1.STATION_NAME FROM DIM_STATION AS T1 LEFT JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID WHERE (T2.MAX_TEMPERATURE_C > 30.0000000000000000 AND T2.YEAR = 2023) OR T1.TYPE_OF_WATER_BODY = 'LAKE' GROUP BY T1.STATION_NAME",
+    "pair_id": "7097b69f",
+    "original_question_id": "a8ccd756",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Station located near a lake refers to `dim_station`.`type_of_water_body` LIKE '%LAKE%'; maximum temperature greater than 30 degrees Celsius during 2023 refers to `fact_thermal`.`max_temperature_c` > 30 AND `fact_thermal`.`year` = 2023; list station names (`dim_station`.`station_name`) that satisfy either condition."
+  },
+  {
+    "question": "List the station codes for stations that either recorded a maximum temperature greater than 29 degrees Celsius in the year 2023 or are located near a water body type of 'TANK', grouped by their station code.",
+    "sql": "SELECT T1.STATION_CODE FROM DIM_STATION AS T1 LEFT JOIN FACT_THERMAL AS T2 ON T1.STATION_ID = T2.STATION_ID WHERE (T2.MAX_TEMPERATURE_C > 29.0000000000000000 AND T2.YEAR = 2023) OR T1.TYPE_OF_WATER_BODY = 'TANK' GROUP BY T1.STATION_CODE",
+    "pair_id": "ab006649",
+    "original_question_id": "a8ccd756",
+    "schema_used": [
+      "DIM_STATION",
+      "DIM_TIME",
+      "FACT_THERMAL"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Station codes are in `dim_station.station_code`. Condition 1: `fact_thermal.max_temperature_c` > 29 AND `fact_thermal.year` = 2023. Condition 2: `dim_station.type_of_water_body` = 'TANK'. Use DISTINCT or GROUP BY `dim_station.station_code`."
+  }
+]
