@@ -1,0 +1,3172 @@
+[
+  {
+    "question": "What are the district names for all districts located in the state named 'Assam'?",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Assam'",
+    "pair_id": "5950bb91",
+    "original_question_id": "5fcb5fa9",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state` where `dim_state`.`state_name` = 'Assam', then join to `dim_district` on `dim_state`.`state_id` = `dim_district`.`state_id` to get `dim_district`.`district_name`."
+  },
+  {
+    "question": "List the district names for all districts located in the state named 'Bihar'.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Bihar'",
+    "pair_id": "ab34ab09",
+    "original_question_id": "5fcb5fa9",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_district`.`district_name` from `dim_district` join `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id` where `dim_state`.`state_name` = 'Bihar'."
+  },
+  {
+    "question": "List the district names for all districts located in the state named 'Assam'.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Assam'",
+    "pair_id": "55d8628e",
+    "original_question_id": "5fcb5fa9",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state` where (`dim_state`.`state_name`) = 'Assam' to get the state_id. Then join `dim_district` on (`dim_district`.`state_id`) = (`dim_state`.`state_id`) and select (`dim_district`.`district_name`)."
+  },
+  {
+    "question": "List the district names for all districts located in the state named 'Bihar'.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Bihar'",
+    "pair_id": "bf2e9dc4",
+    "original_question_id": "5fcb5fa9",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve (`dim_district`.`district_name`) from `dim_district` JOIN `dim_state` ON (`dim_district`.`state_id` = `dim_state`.`state_id`) WHERE (`dim_state`.`state_name` = 'Bihar')."
+  },
+  {
+    "question": "Identify the state ID for the state of Assam, and then list all the district names associated with that state ID, sorted alphabetically by district name.",
+    "sql": "SELECT DISTRICT_NAME FROM DIM_DISTRICT WHERE STATE_ID IN (SELECT STATE_ID FROM DIM_STATE WHERE STATE_NAME = 'Assam') ORDER BY DISTRICT_NAME ASC",
+    "pair_id": "4e9a39fe",
+    "original_question_id": "5fcb5fa9",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "First, get `dim_state.state_id` for `dim_state.state_name` = 'Assam'. Then, select `dim_district.district_name` where `dim_district.state_id` equals that `state_id`, ordered by `dim_district.district_name`."
+  },
+  {
+    "question": "List the district names in alphabetical order for all districts located within the state named 'Bihar', identified by looking up its state ID.",
+    "sql": "SELECT DISTRICT_NAME FROM DIM_DISTRICT WHERE STATE_ID IN (SELECT STATE_ID FROM DIM_STATE WHERE STATE_NAME = 'Bihar') ORDER BY DISTRICT_NAME ASC",
+    "pair_id": "6e148091",
+    "original_question_id": "5fcb5fa9",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_communications.number_of_telephone_connections` for all sub-districts in Bihar. Filter `dim_state.state_name` = 'Bihar', join `dim_district` on `dim_district.state_id` = `dim_state.state_id`, join `dim_sub_district` on `dim_sub_district.district_id` = `dim_district.district_id`, join `fact_communications` on `fact_communications.sub_district_id` = `dim_sub_district.sub_district_id`."
+  },
+  {
+    "question": "List the district names located in the state of 'Assam', grouped and ordered alphabetically by district name.",
+    "sql": "SELECT T3.DISTRICT_NAME FROM DIM_COUNTRY AS T1 INNER JOIN DIM_STATE AS T2 ON T1.COUNTRY_ID = T2.COUNTRY_ID INNER JOIN DIM_DISTRICT AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T2.STATE_NAME = 'Assam' GROUP BY T3.DISTRICT_NAME ORDER BY T3.DISTRICT_NAME ASC",
+    "pair_id": "51db4207",
+    "original_question_id": "5fcb5fa9",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "The question asks for district names in the state 'Assam'. The state name is stored in `dim_state`.`state_name`. The district names are stored in `dim_district`.`district_name`. The relationship between `dim_state` and `dim_district` is via `dim_state`.`state_id` = `dim_district`.`state_id`. The state name 'Assam' must be matched exactly (case-sensitive). The result should be grouped by district name (though grouping is redundant if we select distinct district names) and ordered alphabetically by district name."
+  },
+  {
+    "question": "List the district names located in the state of 'Andaman And Nicobar Islands', grouped and ordered alphabetically by district name.",
+    "sql": "SELECT T3.DISTRICT_NAME FROM DIM_COUNTRY AS T1 INNER JOIN DIM_STATE AS T2 ON T1.COUNTRY_ID = T2.COUNTRY_ID INNER JOIN DIM_DISTRICT AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T2.STATE_NAME = 'Andaman And Nicobar Islands' GROUP BY T3.DISTRICT_NAME ORDER BY T3.DISTRICT_NAME ASC",
+    "pair_id": "089bd9e7",
+    "original_question_id": "5fcb5fa9",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state` where (`dim_state`.`state_name`) = 'Andaman And Nicobar Islands'. Join with `dim_district` on (`dim_district`.`state_id`) = (`dim_state`.`state_id`). Select (`dim_district`.`district_name`), group by (`dim_district`.`district_name`), order by (`dim_district`.`district_name`) alphabetically."
+  },
+  {
+    "question": "List the district names for locations where the state name is either 'Assam' or 'Bihar'.",
+    "sql": "SELECT T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_NAME = 'Assam' OR T1.STATE_NAME = 'Bihar';",
+    "pair_id": "07db8567",
+    "original_question_id": "88d07f94",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_district` with `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id`. Filter where `dim_state`.`state_name` is exactly 'Assam' or 'Bihar'. Select `dim_district`.`district_name`."
+  },
+  {
+    "question": "List the district names for locations where the state name is either 'Andhra Pradesh' or 'Arunachal Pradesh'.",
+    "sql": "SELECT T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_NAME = 'Andhra Pradesh' OR T1.STATE_NAME = 'Arunachal Pradesh';",
+    "pair_id": "4909d0a0",
+    "original_question_id": "88d07f94",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_district` with `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id`. Filter where `dim_state`.`state_name` is exactly 'Andhra Pradesh' or 'Arunachal Pradesh'. Select `dim_district`.`district_name`."
+  },
+  {
+    "question": "List the district names for the states of 'Andaman And Nicobar Islands' and 'Assam', and sort the results alphabetically by district name.",
+    "sql": "SELECT T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_NAME IN ('Andaman And Nicobar Islands', 'Assam') ORDER BY T2.DISTRICT_NAME ASC",
+    "pair_id": "a6e48eb2",
+    "original_question_id": "88d07f94",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_district`.`district_name` from `dim_district` join `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id` where `dim_state`.`state_name` in ('Andaman And Nicobar Islands', 'Assam') order by `dim_district`.`district_name`."
+  },
+  {
+    "question": "List the district names in ascending alphabetical order for all districts located in the states of Bihar and Andhra Pradesh.",
+    "sql": "SELECT T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_NAME IN ('Bihar', 'Andhra Pradesh') ORDER BY T2.DISTRICT_NAME ASC",
+    "pair_id": "0c003b58",
+    "original_question_id": "88d07f94",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select (`dim_district`.`district_name`) from `dim_district` join `dim_state` on (`dim_district`.`state_id`) = (`dim_state`.`state_id`) where (`dim_state`.`state_name`) in ('Bihar', 'Andhra Pradesh') order by (`dim_district`.`district_name`) ASC."
+  },
+  {
+    "question": "Show the state name and the count of district names for the states of Assam or Bihar, grouping the results by state name and including only those states that have more than zero districts.",
+    "sql": "SELECT T2.STATE_NAME, COUNT(T1.DISTRICT_NAME) FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Assam' OR T2.STATE_NAME = 'Bihar' GROUP BY T2.STATE_NAME HAVING COUNT(T1.DISTRICT_NAME) > 0",
+    "pair_id": "f2dec15b",
+    "original_question_id": "88d07f94",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_state` and `dim_district` on `dim_state.state_id` = `dim_district.state_id`. Filter `dim_state.state_name` IN ('Assam', 'Bihar'). Group by `dim_state.state_name`. Count `dim_district.district_name` (or `dim_district.district_id`). Include only groups with COUNT > 0."
+  },
+  {
+    "question": "For the states of Andhra Pradesh and Arunachal Pradesh, list each state name along with the total count of district IDs, provided that the count of district IDs for that state is at least one.",
+    "sql": "SELECT T2.STATE_NAME, COUNT(T1.DISTRICT_ID) FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Andhra Pradesh' OR T2.STATE_NAME = 'Arunachal Pradesh' GROUP BY T2.STATE_NAME HAVING COUNT(T1.DISTRICT_ID) >= 1",
+    "pair_id": "67e39d30",
+    "original_question_id": "88d07f94",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state` for `dim_state.state_name` in ('Andhra Pradesh', 'Arunachal Pradesh'). Join `dim_district` on `dim_state.state_id` = `dim_district.state_id`. Group by `dim_state.state_name` and count `dim_district.district_id`. Include only groups having COUNT(`dim_district.district_id`) >= 1."
+  },
+  {
+    "question": "List the state names and district names for the states of Assam and Bihar, grouped by state and district, and ordered alphabetically by the district name.",
+    "sql": "SELECT T2.STATE_NAME, T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 INNER JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME IN ('Assam', 'Bihar') GROUP BY T2.STATE_NAME, T1.DISTRICT_NAME ORDER BY T1.DISTRICT_NAME ASC",
+    "pair_id": "5a863e9e",
+    "original_question_id": "88d07f94",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_state`.`state_name` and `dim_district`.`district_name` from `dim_state` join `dim_district` on `dim_state`.`state_id` = `dim_district`.`state_id` where `dim_state`.`state_name` IN ('Assam', 'Bihar') group by `dim_state`.`state_name`, `dim_district`.`district_name` order by `dim_district`.`district_name`."
+  },
+  {
+    "question": "List the state names and the district names for the states of Andhra Pradesh and Arunachal Pradesh, grouped by state and district, and ordered alphabetically by the district name.",
+    "sql": "SELECT T2.STATE_NAME, T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 INNER JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME IN ('Andhra Pradesh', 'Arunachal Pradesh') GROUP BY T2.STATE_NAME, T1.DISTRICT_NAME ORDER BY T1.DISTRICT_NAME ASC",
+    "pair_id": "7d1aca6a",
+    "original_question_id": "88d07f94",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_state` and `dim_district` on `dim_state.state_id` = `dim_district.state_id`. Filter `dim_state.state_name` IN ('Andhra Pradesh', 'Arunachal Pradesh'). Select `dim_state.state_name` and `dim_district.district_name`. Group by `dim_state.state_name`, `dim_district.district_name`. Order by `dim_district.district_name` alphabetically."
+  },
+  {
+    "question": "For the country of India, list the district names and the total number of child welfare centres for each district, showing only the top 5 districts with the highest number of centres.",
+    "sql": "SELECT T1.DISTRICT_NAME, SUM(T3.NUMBER_OF_CHILD_WELFARE_CENTRES) FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN FACT_MATERNITY_CHILD_CARE AS T3 ON T2.SUB_DISTRICT_ID = T3.SUB_DISTRICT_ID JOIN DIM_STATE AS T4 ON T1.STATE_ID = T4.STATE_ID JOIN DIM_COUNTRY AS T5 ON T4.COUNTRY_ID = T5.COUNTRY_ID WHERE T5.COUNTRY_NAME = 'India' GROUP BY T1.DISTRICT_NAME ORDER BY SUM(T3.NUMBER_OF_CHILD_WELFARE_CENTRES) DESC LIMIT 5",
+    "pair_id": "e77ecd8e",
+    "original_question_id": "dea9b56d",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_MATERNITY_CHILD_CARE"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_MATERNITY_CHILD_CARE": [
+        "NUMBER_OF_MATERNITY_AND_CHILD_WELFARE_CENTRES",
+        "FACT_MATERNITY_CHILD_CARE_ID",
+        "NUMBER_OF_HEALTH_CENTRES",
+        "SUB_DISTRICT_ID",
+        "NUMBER_OF_CHILD_WELFARE_CENTRES"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter: `dim_country`.`country_name` = 'India'. Join `dim_state` on `dim_country`.`country_id` = `dim_state`.`country_id`, `dim_district` on `dim_state`.`state_id` = `dim_district`.`state_id`, `dim_sub_district` on `dim_district`.`district_id` = `dim_sub_district`.`district_id`, `fact_maternity_child_care` on `dim_sub_district`.`sub_district_id` = `fact_maternity_child_care`.`sub_district_id`. Group by `dim_district`.`district_name`, sum(`fact_maternity_child_care`.`number_of_child_welfare_centres`) as total_centres. Order by total_centres DESC, limit 5."
+  },
+  {
+    "question": "For the country of India, list the district names and the total number of maternity and child welfare centres for each district, sorted by the total number of centres in descending order, and show only the top 5 results.",
+    "sql": "SELECT T1.DISTRICT_NAME, SUM(T3.NUMBER_OF_MATERNITY_AND_CHILD_WELFARE_CENTRES) FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN FACT_MATERNITY_CHILD_CARE AS T3 ON T2.SUB_DISTRICT_ID = T3.SUB_DISTRICT_ID JOIN DIM_STATE AS T4 ON T1.STATE_ID = T4.STATE_ID JOIN DIM_COUNTRY AS T5 ON T4.COUNTRY_ID = T5.COUNTRY_ID WHERE T5.COUNTRY_NAME = 'India' GROUP BY T1.DISTRICT_NAME ORDER BY SUM(T3.NUMBER_OF_MATERNITY_AND_CHILD_WELFARE_CENTRES) DESC LIMIT 5",
+    "pair_id": "92b8abcd",
+    "original_question_id": "dea9b56d",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_MATERNITY_CHILD_CARE"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_MATERNITY_CHILD_CARE": [
+        "NUMBER_OF_MATERNITY_AND_CHILD_WELFARE_CENTRES",
+        "FACT_MATERNITY_CHILD_CARE_ID",
+        "NUMBER_OF_HEALTH_CENTRES",
+        "SUB_DISTRICT_ID",
+        "NUMBER_OF_CHILD_WELFARE_CENTRES"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Query requires: join `fact_maternity_child_care` → `dim_sub_district` → `dim_district` → `dim_state` → `dim_country`. Filter where `dim_country`.`country_name` = 'India'. Group by `dim_district`.`district_name`, sum(`fact_maternity_child_care`.`number_of_maternity_and_child_welfare_centres`) as total_centres. Order by total_centres DESC limit 5."
+  },
+  {
+    "question": "List the district names and the total number of child welfare centres for each district, sorted by the sum of child welfare centres in descending order, and show only the top 5 results.",
+    "sql": "SELECT T1.DISTRICT_NAME, SUM(T3.NUMBER_OF_CHILD_WELFARE_CENTRES) FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN FACT_MATERNITY_CHILD_CARE AS T3 ON T2.SUB_DISTRICT_ID = T3.SUB_DISTRICT_ID GROUP BY T1.DISTRICT_NAME ORDER BY SUM(T3.NUMBER_OF_CHILD_WELFARE_CENTRES) DESC LIMIT 5",
+    "pair_id": "fa8e5ee2",
+    "original_question_id": "dea9b56d",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_MATERNITY_CHILD_CARE"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_MATERNITY_CHILD_CARE": [
+        "NUMBER_OF_MATERNITY_AND_CHILD_WELFARE_CENTRES",
+        "FACT_MATERNITY_CHILD_CARE_ID",
+        "NUMBER_OF_HEALTH_CENTRES",
+        "SUB_DISTRICT_ID",
+        "NUMBER_OF_CHILD_WELFARE_CENTRES"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_district.district_name` and sum(`fact_maternity_child_care.number_of_child_welfare_centres`) grouped by district. Join `dim_district` → `dim_sub_district` → `fact_maternity_child_care`. Sort by sum descending, limit 5."
+  },
+  {
+    "question": "For the state of Andhra Pradesh, list each district name and the total number of maternity and child welfare centres, ordered by the total count in descending order, and show only the top 5 districts.",
+    "sql": "SELECT T1.DISTRICT_NAME, SUM(T3.NUMBER_OF_MATERNITY_AND_CHILD_WELFARE_CENTRES) FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN FACT_MATERNITY_CHILD_CARE AS T3 ON T2.SUB_DISTRICT_ID = T3.SUB_DISTRICT_ID JOIN DIM_STATE AS T4 ON T1.STATE_ID = T4.STATE_ID WHERE T4.STATE_NAME = 'Andhra Pradesh' GROUP BY T1.DISTRICT_NAME ORDER BY SUM(T3.NUMBER_OF_MATERNITY_AND_CHILD_WELFARE_CENTRES) DESC LIMIT 5",
+    "pair_id": "bfcae8cb",
+    "original_question_id": "dea9b56d",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_MATERNITY_CHILD_CARE"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_MATERNITY_CHILD_CARE": [
+        "NUMBER_OF_MATERNITY_AND_CHILD_WELFARE_CENTRES",
+        "FACT_MATERNITY_CHILD_CARE_ID",
+        "NUMBER_OF_HEALTH_CENTRES",
+        "SUB_DISTRICT_ID",
+        "NUMBER_OF_CHILD_WELFARE_CENTRES"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state.state_name` = 'Andhra Pradesh'. Join `dim_state` to `dim_district` on `dim_state.state_id` = `dim_district.state_id`. Join `dim_district` to `dim_sub_district` on `dim_district.district_id` = `dim_sub_district.district_id`. Join `dim_sub_district` to `fact_maternity_child_care` on `dim_sub_district.sub_district_id` = `fact_maternity_child_care.sub_district_id`. Group by `dim_district.district_name`. Sum `fact_maternity_child_care.number_of_maternity_and_child_welfare_centres` as total. Order by total DESC, limit 5."
+  },
+  {
+    "question": "List the district names located in the state of 'Andaman And Nicobar Islands' that have a district ID count greater than zero, and display the top 5 results ordered by the count of district IDs in descending order.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Andaman And Nicobar Islands' GROUP BY T1.DISTRICT_NAME HAVING COUNT(T1.DISTRICT_ID) > 0 ORDER BY COUNT(T1.DISTRICT_ID) DESC LIMIT 5",
+    "pair_id": "2c9a0aca",
+    "original_question_id": "dea9b56d",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_MATERNITY_CHILD_CARE"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_MATERNITY_CHILD_CARE": [
+        "NUMBER_OF_MATERNITY_AND_CHILD_WELFARE_CENTRES",
+        "FACT_MATERNITY_CHILD_CARE_ID",
+        "NUMBER_OF_HEALTH_CENTRES",
+        "SUB_DISTRICT_ID",
+        "NUMBER_OF_CHILD_WELFARE_CENTRES"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state`.`state_name` = 'Andaman And Nicobar Islands'. Join `dim_state` to `dim_district` on `dim_state`.`state_id` = `dim_district`.`state_id`. Group by `dim_district`.`district_name` and count `dim_district`.`district_id`. Filter count > 0. Order by count descending. Limit to top 5."
+  },
+  {
+    "question": "List the district names located in the state of 'Assam', grouped by their name, where the count of district IDs is greater than zero, and display the top 5 districts with the highest count of district IDs.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Assam' GROUP BY T1.DISTRICT_NAME HAVING COUNT(T1.DISTRICT_ID) > 0 ORDER BY COUNT(T1.DISTRICT_ID) DESC LIMIT 5",
+    "pair_id": "0bedf9d4",
+    "original_question_id": "dea9b56d",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_MATERNITY_CHILD_CARE"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_MATERNITY_CHILD_CARE": [
+        "NUMBER_OF_MATERNITY_AND_CHILD_WELFARE_CENTRES",
+        "FACT_MATERNITY_CHILD_CARE_ID",
+        "NUMBER_OF_HEALTH_CENTRES",
+        "SUB_DISTRICT_ID",
+        "NUMBER_OF_CHILD_WELFARE_CENTRES"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state` where (`dim_state`.`state_name`) = 'Assam'. Join `dim_district` on (`dim_district`.`state_id`) = (`dim_state`.`state_id`). Group by (`dim_district`.`district_name`). Count (`dim_district`.`district_id`). Order by count descending, limit 5."
+  },
+  {
+    "question": "List the district names and the total number of child welfare centres for each district, focusing on those within the country with ID 1, and show the top 5 districts with the highest number of centres.",
+    "sql": "SELECT T3.DISTRICT_NAME, SUM(T1.NUMBER_OF_CHILD_WELFARE_CENTRES) FROM FACT_MATERNITY_CHILD_CARE AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID JOIN DIM_STATE AS T4 ON T3.STATE_ID = T4.STATE_ID WHERE T4.COUNTRY_ID = 1 GROUP BY T3.DISTRICT_NAME ORDER BY SUM(T1.NUMBER_OF_CHILD_WELFARE_CENTRES) DESC LIMIT 5",
+    "pair_id": "7d2a508a",
+    "original_question_id": "dea9b56d",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_MATERNITY_CHILD_CARE"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_MATERNITY_CHILD_CARE": [
+        "NUMBER_OF_MATERNITY_AND_CHILD_WELFARE_CENTRES",
+        "FACT_MATERNITY_CHILD_CARE_ID",
+        "NUMBER_OF_HEALTH_CENTRES",
+        "SUB_DISTRICT_ID",
+        "NUMBER_OF_CHILD_WELFARE_CENTRES"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_maternity_child_care`.`number_of_child_welfare_centres` grouped by `dim_district`.`district_name` for districts in `dim_country`.`country_id` = 1. Join: `fact_maternity_child_care` → `dim_sub_district` (`sub_district_id`) → `dim_district` (`district_id`) → `dim_state` (`state_id`) → `dim_country` (`country_id`). Order by total centres DESC, limit 5."
+  },
+  {
+    "question": "List the district names and the total number of child welfare centres for the top 5 districts in India, ordered by the sum of child welfare centres in descending order.",
+    "sql": "SELECT T3.DISTRICT_NAME, SUM(T1.NUMBER_OF_CHILD_WELFARE_CENTRES) FROM FACT_MATERNITY_CHILD_CARE AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID JOIN DIM_STATE AS T4 ON T3.STATE_ID = T4.STATE_ID JOIN DIM_COUNTRY AS T5 ON T4.COUNTRY_ID = T5.COUNTRY_ID WHERE T5.COUNTRY_NAME = 'India' GROUP BY T3.DISTRICT_NAME ORDER BY SUM(T1.NUMBER_OF_CHILD_WELFARE_CENTRES) DESC LIMIT 5",
+    "pair_id": "ae8d0bb5",
+    "original_question_id": "dea9b56d",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_MATERNITY_CHILD_CARE"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_MATERNITY_CHILD_CARE": [
+        "NUMBER_OF_MATERNITY_AND_CHILD_WELFARE_CENTRES",
+        "FACT_MATERNITY_CHILD_CARE_ID",
+        "NUMBER_OF_HEALTH_CENTRES",
+        "SUB_DISTRICT_ID",
+        "NUMBER_OF_CHILD_WELFARE_CENTRES"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_district`.`district_name`, SUM(`fact_maternity_child_care`.`number_of_child_welfare_centres`) AS total_child_welfare_centres from `dim_country` JOIN `dim_state` ON `dim_country`.`country_id` = `dim_state`.`country_id` JOIN `dim_district` ON `dim_state`.`state_id` = `dim_district`.`state_id` JOIN `dim_sub_district` ON `dim_district`.`district_id` = `dim_sub_district`.`district_id` JOIN `fact_maternity_child_care` ON `dim_sub_district`.`sub_district_id` = `fact_maternity_child_care`.`sub_district_id` WHERE `dim_country`.`country_name` = 'India' GROUP BY `dim_district`.`district_id`, `dim_district`.`district_name` ORDER BY total_child_welfare_centres DESC LIMIT 5"
+  },
+  {
+    "question": "List the district names for all records where the state name is 'Assam'.",
+    "sql": "SELECT T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_NAME = 'Assam';",
+    "pair_id": "c006b243",
+    "original_question_id": "1d1c6c63",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_district`.`district_name` by joining `dim_district` with `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id` where `dim_state`.`state_name` = 'Assam'."
+  },
+  {
+    "question": "List the district names for the state named 'Andaman And Nicobar Islands'.",
+    "sql": "SELECT T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_NAME = 'Andaman And Nicobar Islands';",
+    "pair_id": "4b395991",
+    "original_question_id": "1d1c6c63",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state` where (`dim_state`.`state_name` = 'Andaman And Nicobar Islands'), join with `dim_district` on (`dim_state`.`state_id` = `dim_district`.`state_id`), and select `dim_district`.`district_name`."
+  },
+  {
+    "question": "List the district names for the state of Assam, ordered alphabetically by district name.",
+    "sql": "SELECT T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_NAME = 'Assam' ORDER BY T2.DISTRICT_NAME",
+    "pair_id": "50d5bb4b",
+    "original_question_id": "1d1c6c63",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select (`dim_district`.`district_name`) from `dim_district` join `dim_state` on (`dim_district`.`state_id` = `dim_state`.`state_id`) where `dim_state`.`state_name` = 'Assam' order by `dim_district`.`district_name` ASC."
+  },
+  {
+    "question": "List the district names for the state named 'Andaman And Nicobar Islands', sorted alphabetically by district name.",
+    "sql": "SELECT T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_NAME = 'Andaman And Nicobar Islands' ORDER BY T2.DISTRICT_NAME",
+    "pair_id": "7993ba5f",
+    "original_question_id": "1d1c6c63",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter dim_state where dim_state.state_name = 'Andaman And Nicobar Islands', join dim_district on dim_district.state_id = dim_state.state_id, select dim_district.district_name, order by dim_district.district_name ASC."
+  },
+  {
+    "question": "List the district names for all districts located within the state named 'Andaman And Nicobar Islands', grouped by their district name.",
+    "sql": "SELECT DISTRICT_NAME FROM DIM_DISTRICT WHERE STATE_ID IN (SELECT STATE_ID FROM DIM_STATE WHERE STATE_NAME = 'Andaman And Nicobar Islands') GROUP BY DISTRICT_NAME",
+    "pair_id": "d9c44641",
+    "original_question_id": "1d1c6c63",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state`.`state_name` = 'Andaman And Nicobar Islands'. Join `dim_district` with `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id`. Select `dim_district`.`district_name` and group by `dim_district`.`district_name`."
+  },
+  {
+    "question": "List the district names for all districts located within the state named 'Assam', grouped by their district name.",
+    "sql": "SELECT DISTRICT_NAME FROM DIM_DISTRICT WHERE STATE_ID IN (SELECT STATE_ID FROM DIM_STATE WHERE STATE_NAME = 'Assam') GROUP BY DISTRICT_NAME",
+    "pair_id": "906b0b25",
+    "original_question_id": "1d1c6c63",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state` where `dim_state`.`state_name` = 'Assam'. Join `dim_district` on `dim_district`.`state_id` = `dim_state`.`state_id`. Select `dim_district`.`district_name` and group by `dim_district`.`district_name`."
+  },
+  {
+    "question": "For the state of 'Andaman And Nicobar Islands', list each district name and the total count of sub-district IDs associated with it, including only those districts that have at least one sub-district, and sort the results alphabetically by the district name.",
+    "sql": "SELECT T2.DISTRICT_NAME, COUNT(T3.SUB_DISTRICT_ID) FROM DIM_STATE AS T1 INNER JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID LEFT JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME = 'Andaman And Nicobar Islands' GROUP BY T2.DISTRICT_NAME HAVING COUNT(T3.SUB_DISTRICT_ID) >= 1 ORDER BY T2.DISTRICT_NAME ASC",
+    "pair_id": "c191da62",
+    "original_question_id": "1d1c6c63",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state`.`state_name` = 'Andaman And Nicobar Islands'. Join `dim_state` to `dim_district` on `dim_state`.`state_id` = `dim_district`.`state_id`. Join `dim_district` to `dim_sub_district` on `dim_district`.`district_id` = `dim_sub_district`.`district_id`. Group by `dim_district`.`district_name`. Count distinct `dim_sub_district`.`sub_district_id` per district. Include only districts with count > 0. Order by `dim_district`.`district_name` ASC."
+  },
+  {
+    "question": "For the state of 'Assam', list each district name along with the count of its sub-district names, including those with zero sub-districts, and sort the results alphabetically by the district name.",
+    "sql": "SELECT T2.DISTRICT_NAME, COUNT(T3.SUB_DISTRICT_NAME) FROM DIM_STATE AS T1 INNER JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID LEFT JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME = 'Assam' GROUP BY T2.DISTRICT_NAME HAVING COUNT(T3.SUB_DISTRICT_NAME) >= 0 ORDER BY T2.DISTRICT_NAME ASC",
+    "pair_id": "578793ca",
+    "original_question_id": "1d1c6c63",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state` where `dim_state.state_name` = 'Assam' to get Assam's state_id. Join `dim_district` on `dim_district.state_id` = Assam's state_id to get all districts in Assam. Left join `dim_sub_district` on `dim_sub_district.district_id` = `dim_district.district_id`. Group by `dim_district.district_name` and count `dim_sub_district.sub_district_id` as sub-district count. Order by `dim_district.district_name` alphabetically."
+  },
+  {
+    "question": "List the unique district names in alphabetical order for the states of Bihar and Assam.",
+    "sql": "SELECT DISTINCT T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_NAME IN ('Bihar', 'Assam') ORDER BY T2.DISTRICT_NAME ASC",
+    "pair_id": "bb8a9136",
+    "original_question_id": "fae914d5",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `dim_district`.`district_name` from `dim_district` join `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id` where `dim_state`.`state_name` in ('Bihar', 'Assam') order by `dim_district`.`district_name`."
+  },
+  {
+    "question": "List the unique district names in alphabetical order for the states of Andaman And Nicobar Islands and Bihar.",
+    "sql": "SELECT DISTINCT T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_NAME IN ('Andaman And Nicobar Islands', 'Bihar') ORDER BY T2.DISTRICT_NAME ASC",
+    "pair_id": "68894dd7",
+    "original_question_id": "fae914d5",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve unique `dim_district`.`district_name` values by joining `dim_district` with `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id`. Filter where `dim_state`.`state_name` is exactly 'Andaman And Nicobar Islands' or 'Bihar'. Order results alphabetically by `dim_district`.`district_name`."
+  },
+  {
+    "question": "List the sub-district names for the district named 'North And Middle Andaman'.",
+    "sql": "SELECT T2.SUB_DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T1.DISTRICT_NAME = 'North And Middle Andaman'",
+    "pair_id": "b85970b2",
+    "original_question_id": "851b2d65",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_district` where `dim_district`.`district_name` = 'North And Middle Andaman'. Join `dim_sub_district` on `dim_district`.`district_id` = `dim_sub_district`.`district_id`. Select `dim_sub_district`.`sub_district_name`."
+  },
+  {
+    "question": "List the sub-district names for all sub-districts belonging to the district named 'Nicobars'.",
+    "sql": "SELECT T2.SUB_DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T1.DISTRICT_NAME = 'Nicobars'",
+    "pair_id": "41e3e502",
+    "original_question_id": "851b2d65",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_district` where `dim_district`.`district_name` = 'Nicobars', then join with `dim_sub_district` on `dim_district`.`district_id` = `dim_sub_district`.`district_id` to get `dim_sub_district`.`sub_district_name`."
+  },
+  {
+    "question": "List the sub-district names located within the 'North And Middle Andaman' district, ordered alphabetically by the sub-district name.",
+    "sql": "SELECT T2.SUB_DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T1.DISTRICT_NAME = 'North And Middle Andaman' ORDER BY T2.SUB_DISTRICT_NAME",
+    "pair_id": "ddec697f",
+    "original_question_id": "851b2d65",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_sub_district`.`sub_district_name` from `dim_sub_district` join `dim_district` on `dim_sub_district`.`district_id` = `dim_district`.`district_id` where `dim_district`.`district_name` = 'North And Middle Andaman' order by `dim_sub_district`.`sub_district_name` asc."
+  },
+  {
+    "question": "List the sub-district names located within the district named 'Nicobars', ordered alphabetically by the sub-district name.",
+    "sql": "SELECT T2.SUB_DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T1.DISTRICT_NAME = 'Nicobars' ORDER BY T2.SUB_DISTRICT_NAME",
+    "pair_id": "d918bec0",
+    "original_question_id": "851b2d65",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_sub_district` with `dim_district` on `dim_sub_district`.`district_id` = `dim_district`.`district_id`. Filter where `dim_district`.`district_name` = 'Nicobars'. Select `dim_sub_district`.`sub_district_name` and order by `dim_sub_district`.`sub_district_name` alphabetically (ascending)."
+  },
+  {
+    "question": "For the district named 'North And Middle Andaman', list the district name and the total count of sub-district IDs, but only if that count is greater than one.",
+    "sql": "SELECT T1.DISTRICT_NAME, COUNT(T2.SUB_DISTRICT_ID) FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T1.DISTRICT_NAME = 'North And Middle Andaman' GROUP BY T1.DISTRICT_NAME HAVING COUNT(T2.SUB_DISTRICT_ID) > 1",
+    "pair_id": "e13b2d86",
+    "original_question_id": "851b2d65",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_district` where `dim_district`.`district_name` = 'North And Middle Andaman'. Join with `dim_sub_district` on `dim_district`.`district_id` = `dim_sub_district`.`district_id`. Group by `dim_district`.`district_id`, `dim_district`.`district_name`. Count `dim_sub_district`.`sub_district_id` as sub_district_count. Use HAVING sub_district_count > 1. Select `dim_district`.`district_name` and sub_district_count."
+  },
+  {
+    "question": "For the district with ID 1, list the district name and the count of its sub-district names, ensuring that only districts with at least one sub-district are shown.",
+    "sql": "SELECT T1.DISTRICT_NAME, COUNT(T2.SUB_DISTRICT_NAME) FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T1.DISTRICT_ID = 1 GROUP BY T1.DISTRICT_NAME HAVING COUNT(T2.SUB_DISTRICT_NAME) > 0",
+    "pair_id": "736692da",
+    "original_question_id": "851b2d65",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_district` and `dim_sub_district` on `dim_district.district_id` = `dim_sub_district.district_id`. Filter where `dim_district.district_id` = 1. Group by `dim_district.district_id`, `dim_district.district_name`. Count `dim_sub_district.sub_district_name`. Ensure count >= 1."
+  },
+  {
+    "question": "List the sub-district names located within the 'North And Middle Andaman' district, grouped and ordered alphabetically by the sub-district name.",
+    "sql": "SELECT T2.SUB_DISTRICT_NAME FROM DIM_DISTRICT AS T1 INNER JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T1.DISTRICT_NAME = 'North And Middle Andaman' GROUP BY T2.SUB_DISTRICT_NAME ORDER BY T2.SUB_DISTRICT_NAME ASC",
+    "pair_id": "0768e70e",
+    "original_question_id": "851b2d65",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_district` and `dim_sub_district` on `dim_district`.`district_id` = `dim_sub_district`.`district_id`. Filter `dim_district`.`district_name` = 'North And Middle Andaman'. Select `dim_sub_district`.`sub_district_name`, group by `dim_sub_district`.`sub_district_name`, order by `dim_sub_district`.`sub_district_name` ASC."
+  },
+  {
+    "question": "List the sub-district names located within the district named 'Nicobars', grouped and ordered alphabetically by the sub-district name.",
+    "sql": "SELECT T2.SUB_DISTRICT_NAME FROM DIM_DISTRICT AS T1 INNER JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T1.DISTRICT_NAME = 'Nicobars' GROUP BY T2.SUB_DISTRICT_NAME ORDER BY T2.SUB_DISTRICT_NAME ASC",
+    "pair_id": "de70af7b",
+    "original_question_id": "851b2d65",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_sub_district`.`sub_district_name` from `dim_sub_district` inner join `dim_district` on `dim_sub_district`.`district_id` = `dim_district`.`district_id` where `dim_district`.`district_name` = 'Nicobars' group by `dim_sub_district`.`sub_district_name` order by `dim_sub_district`.`sub_district_name`."
+  },
+  {
+    "question": "List the district names and the total count of sub-district IDs for each district, sorted by the count of sub-districts in descending order, and show only the top 5 results.",
+    "sql": "SELECT T1.DISTRICT_NAME, COUNT(T2.SUB_DISTRICT_ID) FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID GROUP BY T1.DISTRICT_NAME ORDER BY COUNT(T2.SUB_DISTRICT_ID) DESC LIMIT 5",
+    "pair_id": "ef67c990",
+    "original_question_id": "d4bff2e4",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_district` with `dim_sub_district` on `dim_district`.`district_id` = `dim_sub_district`.`district_id`. Group by `dim_district`.`district_id` and `dim_district`.`district_name`. Select `dim_district`.`district_name` and COUNT(`dim_sub_district`.`sub_district_id`) as sub_district_count. Order by sub_district_count DESC. Limit to 5 rows."
+  },
+  {
+    "question": "List the district IDs and the count of sub-district names for each district, sorted by the count of sub-district names in descending order, and show only the top 5 results.",
+    "sql": "SELECT T1.DISTRICT_ID, COUNT(T2.SUB_DISTRICT_NAME) FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID GROUP BY T1.DISTRICT_ID ORDER BY COUNT(T2.SUB_DISTRICT_NAME) DESC LIMIT 5",
+    "pair_id": "55362d5a",
+    "original_question_id": "d4bff2e4",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_district` and `dim_sub_district` on `dim_district.district_id` = `dim_sub_district.district_id`. Group by `dim_district.district_id`. Count `dim_sub_district.sub_district_name` for each district. Order by count descending. Limit to 5 rows."
+  },
+  {
+    "question": "List the district names and the count of sub-district IDs for the districts named 'North And Middle Andaman', 'West Godavari', 'Nicobars', 'Kurnool', and 'South Andamans', grouped by their district name and ordered by the count of sub-district IDs in descending order, showing only the top 5 results.",
+    "sql": "SELECT T1.DISTRICT_NAME, COUNT(T2.SUB_DISTRICT_ID) FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T1.DISTRICT_NAME IN ('North And Middle Andaman', 'West Godavari', 'Nicobars', 'Kurnool', 'South Andamans') GROUP BY T1.DISTRICT_NAME ORDER BY COUNT(T2.SUB_DISTRICT_ID) DESC LIMIT 5",
+    "pair_id": "dfb1254b",
+    "original_question_id": "d4bff2e4",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_district.district_name` IN ('North And Middle Andaman', 'West Godavari', 'Nicobars', 'Kurnool', 'South Andamans'). Join `dim_district` with `dim_sub_district` on `dim_district.district_id` = `dim_sub_district.district_id`. Group by `dim_district.district_name`. Count `dim_sub_district.sub_district_id`. Order by count descending. Limit to top 5."
+  },
+  {
+    "question": "List the district names and the count of their sub-district names for districts located in states with IDs 1 or 2, where the district ID is between 1 and 3; only include districts with at least one sub-district ID, and show the top 5 results ordered by the count of sub-district names in descending order.",
+    "sql": "SELECT T1.DISTRICT_NAME, COUNT(T2.SUB_DISTRICT_NAME) FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T1.STATE_ID IN (1, 2) AND T2.DISTRICT_ID BETWEEN 1 AND 3 GROUP BY T1.DISTRICT_NAME HAVING COUNT(T2.SUB_DISTRICT_ID) >= 1 ORDER BY COUNT(T2.SUB_DISTRICT_NAME) DESC LIMIT 5",
+    "pair_id": "db728082",
+    "original_question_id": "d4bff2e4",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_district`.`district_name`, count(`dim_sub_district`.`sub_district_id`) as sub_district_count from `dim_district` join `dim_sub_district` on `dim_district`.`district_id` = `dim_sub_district`.`district_id` where `dim_district`.`state_id` in (1, 2) and `dim_district`.`district_id` between 1 and 3 group by `dim_district`.`district_id`, `dim_district`.`district_name` having count(`dim_sub_district`.`sub_district_id`) >= 1 order by sub_district_count desc limit 5."
+  },
+  {
+    "question": "List the sub-district name, the district name, and the state name for all sub-districts.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T2.DISTRICT_NAME, T3.STATE_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID;",
+    "pair_id": "edba38b2",
+    "original_question_id": "336b7331",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_sub_district`.`sub_district_name`, `dim_district`.`district_name`, `dim_state`.`state_name` from `dim_sub_district` join `dim_district` on `dim_sub_district`.`district_id` = `dim_district`.`district_id` join `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id`."
+  },
+  {
+    "question": "List the sub-district name, the district name, and the state name for all records where the state name is 'Andaman And Nicobar Islands'.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T2.DISTRICT_NAME, T3.STATE_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T3.STATE_NAME = 'Andaman And Nicobar Islands';",
+    "pair_id": "0ae446ea",
+    "original_question_id": "336b7331",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter where `dim_state`.`state_name` = 'Andaman And Nicobar Islands'. Join `dim_sub_district` to `dim_district` on `dim_sub_district`.`district_id` = `dim_district`.`district_id`, then join to `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id`. Select `dim_sub_district`.`sub_district_name`, `dim_district`.`district_name`, `dim_state`.`state_name`."
+  },
+  {
+    "question": "List the sub-district name, the district name, and the state name for all records where the state name is 'Andaman And Nicobar Islands', ordered alphabetically by the state name.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T2.DISTRICT_NAME, T3.STATE_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T3.STATE_NAME = 'Andaman And Nicobar Islands' ORDER BY T3.STATE_NAME ASC",
+    "pair_id": "8415266f",
+    "original_question_id": "336b7331",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_sub_district` → `dim_district` → `dim_state`. Select `dim_sub_district.sub_district_name`, `dim_district.district_name`, `dim_state.state_name`. Filter where `dim_state.state_name` = 'Andaman And Nicobar Islands'. Order by `dim_state.state_name`."
+  },
+  {
+    "question": "List the sub-district name, the district name, and the state name for all records where the district name is 'North And Middle Andaman', and order the results alphabetically by the state name.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T2.DISTRICT_NAME, T3.STATE_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T2.DISTRICT_NAME = 'North And Middle Andaman' ORDER BY T3.STATE_NAME ASC",
+    "pair_id": "f789dc2e",
+    "original_question_id": "336b7331",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_sub_district`.`sub_district_name`, `dim_district`.`district_name`, `dim_state`.`state_name` from `dim_sub_district` join `dim_district` on `dim_sub_district`.`district_id` = `dim_district`.`district_id` join `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id` where `dim_district`.`district_name` = 'North And Middle Andaman' order by `dim_state`.`state_name`."
+  },
+  {
+    "question": "List the sub-district name, the district name, and the state name for all sub-districts, grouped by these three attributes, where the count of sub-district IDs is at least one.",
+    "sql": "SELECT T3.SUB_DISTRICT_NAME, T2.DISTRICT_NAME, T1.STATE_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID GROUP BY T3.SUB_DISTRICT_NAME, T2.DISTRICT_NAME, T1.STATE_NAME HAVING COUNT(T3.SUB_DISTRICT_ID) >= 1;",
+    "pair_id": "f801c3c9",
+    "original_question_id": "336b7331",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_sub_district` with `dim_district` on `dim_sub_district.district_id` = `dim_district.district_id`, then join `dim_district` with `dim_state` on `dim_district.state_id` = `dim_state.state_id`. Select `dim_sub_district.sub_district_name`, `dim_district.district_name`, `dim_state.state_name`. Group by these three columns. Use HAVING COUNT(`dim_sub_district.sub_district_id`) >= 1. Since each sub-district has a unique ID, the count per group will be 1, so this condition is always true for existing sub-districts."
+  },
+  {
+    "question": "List the sub-district name, the district name, and the state name for all locations where the count of state IDs is at least one, grouped by their sub-district, district, and state.",
+    "sql": "SELECT T3.SUB_DISTRICT_NAME, T2.DISTRICT_NAME, T1.STATE_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID GROUP BY T3.SUB_DISTRICT_NAME, T2.DISTRICT_NAME, T1.STATE_NAME HAVING COUNT(T1.STATE_ID) >= 1;",
+    "pair_id": "30005b24",
+    "original_question_id": "336b7331",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_sub_district.sub_district_name`, `dim_district.district_name`, `dim_state.state_name` from `dim_sub_district` join `dim_district` on `dim_sub_district.district_id` = `dim_district.district_id` join `dim_state` on `dim_district.state_id` = `dim_state.state_id` group by `dim_sub_district.sub_district_id`, `dim_district.district_id`, `dim_state.state_id` having count(`dim_state.state_id`) >= 1."
+  },
+  {
+    "question": "List the state name, district name, and sub-district name for all records where the state is either 'Andaman And Nicobar Islands' or 'Assam' and the district is not 'West Godavari', grouped by these three columns and ordered alphabetically by sub-district name and then district name.",
+    "sql": "SELECT T1.STATE_NAME, T2.DISTRICT_NAME, T3.SUB_DISTRICT_NAME FROM DIM_STATE AS T1 INNER JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID INNER JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME IN ('Andaman And Nicobar Islands', 'Assam') AND T2.DISTRICT_NAME NOT IN ('West Godavari') GROUP BY T1.STATE_NAME, T2.DISTRICT_NAME, T3.SUB_DISTRICT_NAME ORDER BY T3.SUB_DISTRICT_NAME ASC, T2.DISTRICT_NAME ASC",
+    "pair_id": "32ee2049",
+    "original_question_id": "336b7331",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_state`.`state_name`, `dim_district`.`district_name`, `dim_sub_district`.`sub_district_name` from `dim_state` join `dim_district` on `dim_state`.`state_id` = `dim_district`.`state_id` join `dim_sub_district` on `dim_district`.`district_id` = `dim_sub_district`.`district_id` where `dim_state`.`state_name` in ('Andaman And Nicobar Islands', 'Assam') and `dim_district`.`district_name` != 'West Godavari' group by `dim_state`.`state_name`, `dim_district`.`district_name`, `dim_sub_district`.`sub_district_name` order by `dim_sub_district`.`sub_district_name`, `dim_district`.`district_name`."
+  },
+  {
+    "question": "List the state name, the district name, and the sub-district name for states with an ID of 5 or less and districts named 'North And Middle Andaman', 'Nicobars', or 'South Andamans', grouped by these three columns and ordered alphabetically by sub-district name and then by district name.",
+    "sql": "SELECT T1.STATE_NAME, T2.DISTRICT_NAME, T3.SUB_DISTRICT_NAME FROM DIM_STATE AS T1 INNER JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID INNER JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_ID <= 5 AND T2.DISTRICT_NAME IN ('North And Middle Andaman', 'Nicobars', 'South Andamans') GROUP BY T1.STATE_NAME, T2.DISTRICT_NAME, T3.SUB_DISTRICT_NAME ORDER BY T3.SUB_DISTRICT_NAME ASC, T2.DISTRICT_NAME ASC",
+    "pair_id": "fa43fd2e",
+    "original_question_id": "336b7331",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join dim_state, dim_district, dim_sub_district to get dim_state.state_name, dim_district.district_name, dim_sub_district.sub_district_name. Filter dim_state.state_id ≤ 5 and dim_district.district_name IN ('North And Middle Andaman', 'Nicobars', 'South Andamans'). Group by dim_state.state_name, dim_district.district_name, dim_sub_district.sub_district_name. Order by dim_sub_district.sub_district_name ASC, dim_district.district_name ASC."
+  },
+  {
+    "question": "List each state name and the total count of sub-district IDs, grouped by the state name.",
+    "sql": "SELECT T1.STATE_NAME, COUNT(T3.SUB_DISTRICT_ID) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID GROUP BY T1.STATE_NAME",
+    "pair_id": "d1ccf1e5",
+    "original_question_id": "5988379e",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_state` to `dim_district` on `dim_state.state_id` = `dim_district.state_id`, then join `dim_district` to `dim_sub_district` on `dim_district.district_id` = `dim_sub_district.district_id`. Group by `dim_state.state_name` and count `dim_sub_district.sub_district_id`."
+  },
+  {
+    "question": "For each state ID, provide the state ID and the total count of sub-district names associated with it.",
+    "sql": "SELECT T1.STATE_ID, COUNT(T3.SUB_DISTRICT_NAME) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID GROUP BY T1.STATE_ID",
+    "pair_id": "b48c9a0f",
+    "original_question_id": "5988379e",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_state` to `dim_district` on (`dim_state`.`state_id` = `dim_district`.`state_id`), then join `dim_district` to `dim_sub_district` on (`dim_district`.`district_id` = `dim_sub_district`.`district_id`). Group by `dim_state`.`state_id` and count `dim_sub_district`.`sub_district_name`."
+  },
+  {
+    "question": "For the states of 'Andaman And Nicobar Islands' and 'Assam', list each state name along with the total count of sub-district IDs associated with them.",
+    "sql": "SELECT T1.STATE_NAME, COUNT(T3.SUB_DISTRICT_ID) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME IN ('Andaman And Nicobar Islands', 'Assam') GROUP BY T1.STATE_NAME",
+    "pair_id": "cb0a9905",
+    "original_question_id": "5988379e",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state.state_name` IN ('Andaman And Nicobar Islands', 'Assam'). Join `dim_state.state_id` = `dim_district.state_id` and `dim_district.district_id` = `dim_sub_district.district_id`. Group by `dim_state.state_name` and count distinct `dim_sub_district.sub_district_id`."
+  },
+  {
+    "question": "For states with ID 1 or 2, list each state name and the total count of sub-district names associated with them.",
+    "sql": "SELECT T1.STATE_NAME, COUNT(T3.SUB_DISTRICT_NAME) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_ID IN (1, 2) GROUP BY T1.STATE_NAME",
+    "pair_id": "aaa63c3d",
+    "original_question_id": "5988379e",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state` where `dim_state.state_id` IN (1, 2). For each state, output `dim_state.state_name` and count of `dim_sub_district.sub_district_name` (all rows) linked via `dim_district`. Join: `dim_state` LEFT JOIN `dim_district` ON `dim_state.state_id` = `dim_district.state_id` LEFT JOIN `dim_sub_district` ON `dim_district.district_id` = `dim_sub_district.district_id`. Group by `dim_state.state_id`, `dim_state.state_name`."
+  },
+  {
+    "question": "List each state name and the total count of sub-district IDs associated with it, grouped by the state name and ordered from the highest to lowest count.",
+    "sql": "SELECT T1.STATE_NAME, COUNT(T3.SUB_DISTRICT_ID) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID GROUP BY T1.STATE_NAME ORDER BY COUNT(T3.SUB_DISTRICT_ID) DESC",
+    "pair_id": "784df5e2",
+    "original_question_id": "5988379e",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Count distinct `dim_sub_district`.`sub_district_id` for each `dim_state`.`state_name` by joining `dim_state` (state_id) to `dim_district` (state_id) to `dim_sub_district` (district_id). Group by `dim_state`.`state_name` and order by count descending."
+  },
+  {
+    "question": "List each state name and the total count of sub-district names for the states of 'Andaman And Nicobar Islands' and 'Assam', grouped by the state name and ordered by the count of sub-districts in descending order.",
+    "sql": "SELECT T1.STATE_NAME, COUNT(T3.SUB_DISTRICT_NAME) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME IN ('Andaman And Nicobar Islands', 'Assam') GROUP BY T1.STATE_NAME ORDER BY COUNT(T3.SUB_DISTRICT_NAME) DESC",
+    "pair_id": "8873e9ae",
+    "original_question_id": "5988379e",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state.state_name` IN ('Andaman And Nicobar Islands', 'Assam'). Join `dim_state` to `dim_district` on `dim_state.state_id = dim_district.state_id`, then to `dim_sub_district` on `dim_district.district_id = dim_sub_district.district_id`. Count `dim_sub_district.sub_district_id` per state. Group by `dim_state.state_name`, order by count DESC."
+  },
+  {
+    "question": "List each state name along with the total count of sub-district IDs, including only those states that have more than zero sub-districts, and order the results by the count of sub-districts in descending order.",
+    "sql": "SELECT T1.STATE_NAME, COUNT(T3.SUB_DISTRICT_ID) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID GROUP BY T1.STATE_NAME HAVING COUNT(T3.SUB_DISTRICT_ID) > 0 ORDER BY COUNT(T3.SUB_DISTRICT_ID) DESC",
+    "pair_id": "ee9b7930",
+    "original_question_id": "5988379e",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_state` to `dim_district` on `dim_state`.`state_id` = `dim_district`.`state_id`, then join `dim_district` to `dim_sub_district` on `dim_district`.`district_id` = `dim_sub_district`.`district_id`. Group by `dim_state`.`state_name` (or `dim_state`.`state_id`). Count `dim_sub_district`.`sub_district_id`. Filter with HAVING COUNT(`dim_sub_district`.`sub_district_id`) > 0. Order by the count descending."
+  },
+  {
+    "question": "For the states of 'Andaman And Nicobar Islands', 'Assam', and 'Bihar', list each state name and the total count of their sub-district names, filtering for states that have more than one sub-district and ordering the results by the count in descending order.",
+    "sql": "SELECT T1.STATE_NAME, COUNT(T3.SUB_DISTRICT_NAME) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME IN ('Andaman And Nicobar Islands', 'Assam', 'Bihar') GROUP BY T1.STATE_NAME HAVING COUNT(T3.SUB_DISTRICT_NAME) > 1 ORDER BY COUNT(T3.SUB_DISTRICT_NAME) DESC",
+    "pair_id": "28d519d0",
+    "original_question_id": "5988379e",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state.state_name` IN ('Andaman And Nicobar Islands', 'Assam', 'Bihar'). Join `dim_state` to `dim_district` on `dim_state.state_id` = `dim_district.state_id`, then to `dim_sub_district` on `dim_district.district_id` = `dim_sub_district.district_id`. Group by `dim_state.state_name`, count distinct `dim_sub_district.sub_district_name`. Keep groups with count > 1. Order by count descending."
+  },
+  {
+    "question": "List the sub-district names for areas where the scheduled tribes rural population is greater than zero and the scheduled castes rural population is exactly zero.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_POPULATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T2.SCHEDULED_TRIBES_RURAL_POPULATION > 0.000 AND T2.SCHEDULED_CASTES_RURAL_POPULATION = 0.000",
+    "pair_id": "c54a49a8",
+    "original_question_id": "6260a665",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "FACT_POPULATION_ID",
+        "SCHEDULED_TRIBES_RURAL_POPULATION",
+        "NUMBER_OF_HOUSEHOLDS",
+        "SCHEDULED_CASTES_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_sub_district`.`sub_district_name` where `fact_population`.`scheduled_tribes_rural_population` > 0 and `fact_population`.`scheduled_castes_rural_population` = 0, joining `fact_population` with `dim_sub_district` on `sub_district_id`."
+  },
+  {
+    "question": "List the sub-district names for areas where the rural population of scheduled tribes is greater than 22.000 and the rural population of scheduled castes is exactly 0.000.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_POPULATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T2.SCHEDULED_TRIBES_RURAL_POPULATION > 22.000 AND T2.SCHEDULED_CASTES_RURAL_POPULATION = 0.000",
+    "pair_id": "ad1662d9",
+    "original_question_id": "6260a665",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "FACT_POPULATION_ID",
+        "SCHEDULED_TRIBES_RURAL_POPULATION",
+        "NUMBER_OF_HOUSEHOLDS",
+        "SCHEDULED_CASTES_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_sub_district.sub_district_name` by joining `dim_sub_district` with `fact_population` on `sub_district_id`. Filter where `fact_population.scheduled_tribes_rural_population` > 22 and `fact_population.scheduled_castes_rural_population` = 0."
+  },
+  {
+    "question": "List the sub-district names for areas where the scheduled tribes rural population is greater than zero and the scheduled castes rural population is exactly zero.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_POPULATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T2.SCHEDULED_TRIBES_RURAL_POPULATION > 0.000 AND T2.SCHEDULED_CASTES_RURAL_POPULATION = 0.000",
+    "pair_id": "4ffa7d6b",
+    "original_question_id": "6260a665",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "FACT_POPULATION_ID",
+        "SCHEDULED_TRIBES_RURAL_POPULATION",
+        "NUMBER_OF_HOUSEHOLDS",
+        "SCHEDULED_CASTES_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_sub_district` and `fact_population` on `sub_district_id`. Select `dim_sub_district.sub_district_name` where `fact_population.scheduled_tribes_rural_population` > 0 and `fact_population.scheduled_castes_rural_population` = 0."
+  },
+  {
+    "question": "List the sub-district names for areas where the scheduled tribes rural population is greater than 22.000 and the scheduled castes rural population is exactly 0.000.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_POPULATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T2.SCHEDULED_TRIBES_RURAL_POPULATION > 22.000 AND T2.SCHEDULED_CASTES_RURAL_POPULATION = 0.000",
+    "pair_id": "985bc587",
+    "original_question_id": "6260a665",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "FACT_POPULATION_ID",
+        "SCHEDULED_TRIBES_RURAL_POPULATION",
+        "NUMBER_OF_HOUSEHOLDS",
+        "SCHEDULED_CASTES_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_sub_district.sub_district_name` by joining `dim_sub_district` with `fact_population` on `sub_district_id` where `fact_population.scheduled_tribes_rural_population` > 22.000 and `fact_population.scheduled_castes_rural_population` = 0.000."
+  },
+  {
+    "question": "List the sub-district names and the total scheduled tribes rural population for each sub-district where the scheduled castes rural population is exactly 0.000, only including sub-districts with a total scheduled tribes rural population greater than 0, and order the results alphabetically by the sub-district name.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.SCHEDULED_TRIBES_RURAL_POPULATION) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_POPULATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T2.SCHEDULED_CASTES_RURAL_POPULATION = '0.000' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.SCHEDULED_TRIBES_RURAL_POPULATION) > 0 ORDER BY T1.SUB_DISTRICT_NAME",
+    "pair_id": "8285a27e",
+    "original_question_id": "6260a665",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "FACT_POPULATION_ID",
+        "SCHEDULED_TRIBES_RURAL_POPULATION",
+        "NUMBER_OF_HOUSEHOLDS",
+        "SCHEDULED_CASTES_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_sub_district` and `fact_population` on `sub_district_id`. Select `dim_sub_district.sub_district_name` and `fact_population.scheduled_tribes_rural_population`. Filter where `fact_population.scheduled_castes_rural_population` = 0 (interpret 'exactly 0.000' as numeric 0) and `fact_population.scheduled_tribes_rural_population` > 0. Order by `dim_sub_district.sub_district_name` alphabetically ascending."
+  },
+  {
+    "question": "For sub-districts where the rural scheduled castes population is 0.000, list each sub-district name and the total sum of their rural scheduled tribes population, provided that this sum is greater than 20, and sort the results alphabetically by the sub-district name.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.SCHEDULED_TRIBES_RURAL_POPULATION) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_POPULATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T2.SCHEDULED_CASTES_RURAL_POPULATION = '0.000' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.SCHEDULED_TRIBES_RURAL_POPULATION) > 20 ORDER BY T1.SUB_DISTRICT_NAME",
+    "pair_id": "a82a4daf",
+    "original_question_id": "6260a665",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "FACT_POPULATION_ID",
+        "SCHEDULED_TRIBES_RURAL_POPULATION",
+        "NUMBER_OF_HOUSEHOLDS",
+        "SCHEDULED_CASTES_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter sub-districts where `fact_population`.`scheduled_castes_rural_population` = 0. For each, get `dim_sub_district`.`sub_district_name` and sum(`fact_population`.`scheduled_tribes_rural_population`) as total. Keep only those with total > 20. Order by `dim_sub_district`.`sub_district_name` ascending."
+  },
+  {
+    "question": "List the sub-district names where the total rural population of scheduled tribes is greater than zero and the total rural population of scheduled castes is exactly zero.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_POPULATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.SCHEDULED_TRIBES_RURAL_POPULATION) > 0.000 AND SUM(T2.SCHEDULED_CASTES_RURAL_POPULATION) = 0.000",
+    "pair_id": "56a691a8",
+    "original_question_id": "6260a665",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "FACT_POPULATION_ID",
+        "SCHEDULED_TRIBES_RURAL_POPULATION",
+        "NUMBER_OF_HOUSEHOLDS",
+        "SCHEDULED_CASTES_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_sub_district` with `fact_population` on `sub_district_id`. Select `dim_sub_district.sub_district_name` where `fact_population.scheduled_tribes_rural_population > 0` and `fact_population.scheduled_castes_rural_population = 0`."
+  },
+  {
+    "question": "List the sub-district names for Diglipur, Mayabunder, Ferrargunj, Great Nicobar, and Rangat where the total scheduled tribes rural population is at least 22.000 and the total scheduled castes rural population is exactly 0.000, grouped by the sub-district name.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_POPULATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T1.SUB_DISTRICT_NAME IN ('Diglipur', 'Mayabunder', 'Ferrargunj', 'Great Nicobar', 'Rangat') GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.SCHEDULED_TRIBES_RURAL_POPULATION) >= 22.000 AND SUM(T2.SCHEDULED_CASTES_RURAL_POPULATION) = 0.000",
+    "pair_id": "55bf864d",
+    "original_question_id": "6260a665",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "FACT_POPULATION_ID",
+        "SCHEDULED_TRIBES_RURAL_POPULATION",
+        "NUMBER_OF_HOUSEHOLDS",
+        "SCHEDULED_CASTES_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List the sub-district names (`dim_sub_district`.`sub_district_name`) that are exactly 'Diglipur', 'Mayabunder', 'Ferrargunj', 'Great Nicobar', or 'Rangat' and have `fact_population`.`scheduled_tribes_rural_population` >= 22 and `fact_population`.`scheduled_castes_rural_population` = 0, grouped by sub-district name."
+  },
+  {
+    "question": "List each sub-district name and the total rural population for those sub-districts, filtering for the district named 'North And Middle Andaman', grouped by the sub-district name and ordered by the total rural population in descending order.",
+    "sql": "SELECT T2.SUB_DISTRICT_NAME, SUM(T3.RURAL_POPULATION) FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN FACT_POPULATION AS T3 ON T2.SUB_DISTRICT_ID = T3.SUB_DISTRICT_ID WHERE T1.DISTRICT_NAME = 'North And Middle Andaman' GROUP BY T2.SUB_DISTRICT_NAME ORDER BY SUM(T3.RURAL_POPULATION) DESC",
+    "pair_id": "2f3e5856",
+    "original_question_id": "402f457d",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "MALE_RURAL_POPULATION",
+        "FACT_POPULATION_ID",
+        "NUMBER_OF_HOUSEHOLDS",
+        "FEMALE_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_sub_district` to `dim_district` on (`dim_sub_district`.`district_id` = `dim_district`.`district_id`) and join `fact_population` to `dim_sub_district` on (`fact_population`.`sub_district_id` = `dim_sub_district`.`sub_district_id`). Filter for `dim_district`.`district_name` = 'North And Middle Andaman'. Select `dim_sub_district`.`sub_district_name` and SUM(`fact_population`.`rural_population`). Group by `dim_sub_district`.`sub_district_name` and order by SUM(`fact_population`.`rural_population`) DESC."
+  },
+  {
+    "question": "List the sub-district names and the total rural population for each sub-district within the 'West Godavari' district, and order the results by the total rural population in descending order.",
+    "sql": "SELECT T2.SUB_DISTRICT_NAME, SUM(T3.RURAL_POPULATION) FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN FACT_POPULATION AS T3 ON T2.SUB_DISTRICT_ID = T3.SUB_DISTRICT_ID WHERE T1.DISTRICT_NAME = 'West Godavari' GROUP BY T2.SUB_DISTRICT_NAME ORDER BY SUM(T3.RURAL_POPULATION) DESC",
+    "pair_id": "809a97ce",
+    "original_question_id": "402f457d",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "MALE_RURAL_POPULATION",
+        "FACT_POPULATION_ID",
+        "NUMBER_OF_HOUSEHOLDS",
+        "FEMALE_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_district` where `dim_district.district_name` = 'West Godavari'. Join `dim_district` to `dim_sub_district` on `dim_district.district_id` = `dim_sub_district.district_id`. Join `dim_sub_district` to `fact_population` on `dim_sub_district.sub_district_id` = `fact_population.sub_district_id`. Select `dim_sub_district.sub_district_name` and `fact_population.rural_population`. Order by `fact_population.rural_population` DESC."
+  },
+  {
+    "question": "List the sub-district names and the total rural population for each sub-district within the 'North And Middle Andaman' district, and order the results by the total rural population in descending order.",
+    "sql": "SELECT T2.SUB_DISTRICT_NAME, SUM(T3.RURAL_POPULATION) FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN FACT_POPULATION AS T3 ON T2.SUB_DISTRICT_ID = T3.SUB_DISTRICT_ID WHERE T1.DISTRICT_NAME = 'North And Middle Andaman' GROUP BY T2.SUB_DISTRICT_NAME ORDER BY SUM(T3.RURAL_POPULATION) DESC",
+    "pair_id": "ab83386e",
+    "original_question_id": "402f457d",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "MALE_RURAL_POPULATION",
+        "FACT_POPULATION_ID",
+        "NUMBER_OF_HOUSEHOLDS",
+        "FEMALE_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_district`, `dim_sub_district`, and `fact_population` where `dim_district.district_id` = `dim_sub_district.district_id` and `dim_sub_district.sub_district_id` = `fact_population.sub_district_id`. Filter by `dim_district.district_name` = 'North And Middle Andaman'. Select `dim_sub_district.sub_district_name` and `fact_population.rural_population`. Order by `fact_population.rural_population` DESC."
+  },
+  {
+    "question": "List each sub-district name and the total rural population for all sub-districts within the 'West Godavari' district, ordered from the highest to the lowest total rural population.",
+    "sql": "SELECT T2.SUB_DISTRICT_NAME, SUM(T3.RURAL_POPULATION) FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN FACT_POPULATION AS T3 ON T2.SUB_DISTRICT_ID = T3.SUB_DISTRICT_ID WHERE T1.DISTRICT_NAME = 'West Godavari' GROUP BY T2.SUB_DISTRICT_NAME ORDER BY SUM(T3.RURAL_POPULATION) DESC",
+    "pair_id": "59611e26",
+    "original_question_id": "402f457d",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "MALE_RURAL_POPULATION",
+        "FACT_POPULATION_ID",
+        "NUMBER_OF_HOUSEHOLDS",
+        "FEMALE_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_sub_district`.`sub_district_name` and `fact_population`.`rural_population` for sub-districts where `dim_district`.`district_name` = 'West Godavari'. Join `dim_district` to `dim_sub_district` on `district_id`, then join to `fact_population` on `sub_district_id`. Order by `fact_population`.`rural_population` DESC."
+  },
+  {
+    "question": "List the sub-district names located in the 'North And Middle Andaman' district that have a total rural population greater than 500, and order the results by the total rural population in descending order.",
+    "sql": "SELECT T2.SUB_DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN FACT_POPULATION AS T3 ON T2.SUB_DISTRICT_ID = T3.SUB_DISTRICT_ID WHERE T1.DISTRICT_NAME = 'North And Middle Andaman' GROUP BY T2.SUB_DISTRICT_NAME HAVING SUM(T3.RURAL_POPULATION) > 500 ORDER BY SUM(T3.RURAL_POPULATION) DESC",
+    "pair_id": "cd5f6a12",
+    "original_question_id": "402f457d",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "MALE_RURAL_POPULATION",
+        "FACT_POPULATION_ID",
+        "NUMBER_OF_HOUSEHOLDS",
+        "FEMALE_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_sub_district`.`sub_district_name` from `dim_sub_district` inner join `dim_district` on `dim_district`.`district_id` = `dim_sub_district`.`district_id` inner join `fact_population` on `fact_population`.`sub_district_id` = `dim_sub_district`.`sub_district_id` where `dim_district`.`district_name` = 'North And Middle Andaman' and `fact_population`.`rural_population` > 500 order by `fact_population`.`rural_population` desc."
+  },
+  {
+    "question": "List the names of the sub-districts located in the 'West Godavari' district that have a total rural population greater than 1000, and order the results by the total rural population in descending order.",
+    "sql": "SELECT T2.SUB_DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN FACT_POPULATION AS T3 ON T2.SUB_DISTRICT_ID = T3.SUB_DISTRICT_ID WHERE T1.DISTRICT_NAME = 'West Godavari' GROUP BY T2.SUB_DISTRICT_NAME HAVING SUM(T3.RURAL_POPULATION) > 1000 ORDER BY SUM(T3.RURAL_POPULATION) DESC",
+    "pair_id": "3a4cab75",
+    "original_question_id": "402f457d",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "MALE_RURAL_POPULATION",
+        "FACT_POPULATION_ID",
+        "NUMBER_OF_HOUSEHOLDS",
+        "FEMALE_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_sub_district`.`sub_district_name` for sub-districts in district `dim_district`.`district_name` = 'West Godavari' with `fact_population`.`rural_population` > 1000, ordered by `fact_population`.`rural_population` DESC. Join `dim_district` to `dim_sub_district` on `dim_district`.`district_id` = `dim_sub_district`.`district_id`, then join `dim_sub_district` to `fact_population` on `dim_sub_district`.`sub_district_id` = `fact_population`.`sub_district_id`."
+  },
+  {
+    "question": "List the sub-district names and the total rural population for each sub-district within the 'North And Middle Andaman' district, and order the results by the total rural population in descending order.",
+    "sql": "SELECT T2.SUB_DISTRICT_NAME, SUM(T3.RURAL_POPULATION) FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN FACT_POPULATION AS T3 ON T2.SUB_DISTRICT_ID = T3.SUB_DISTRICT_ID WHERE T1.DISTRICT_NAME = 'North And Middle Andaman' GROUP BY T2.SUB_DISTRICT_NAME ORDER BY SUM(T3.RURAL_POPULATION) DESC",
+    "pair_id": "1dc4ca4e",
+    "original_question_id": "402f457d",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "MALE_RURAL_POPULATION",
+        "FACT_POPULATION_ID",
+        "NUMBER_OF_HOUSEHOLDS",
+        "FEMALE_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_district` where `dim_district.district_name` = 'North And Middle Andaman'. Join `dim_district` to `dim_sub_district` on `dim_district.district_id` = `dim_sub_district.district_id`. Join `dim_sub_district` to `fact_population` on `dim_sub_district.sub_district_id` = `fact_population.sub_district_id`. Select `dim_sub_district.sub_district_name` and `fact_population.rural_population`. Order by `fact_population.rural_population` DESC."
+  },
+  {
+    "question": "List the sub-district names and the total rural population for each sub-district within the 'West Godavari' district, and order the results by the total rural population in descending order.",
+    "sql": "SELECT T2.SUB_DISTRICT_NAME, SUM(T3.RURAL_POPULATION) FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN FACT_POPULATION AS T3 ON T2.SUB_DISTRICT_ID = T3.SUB_DISTRICT_ID WHERE T1.DISTRICT_NAME = 'West Godavari' GROUP BY T2.SUB_DISTRICT_NAME ORDER BY SUM(T3.RURAL_POPULATION) DESC",
+    "pair_id": "b45c860a",
+    "original_question_id": "402f457d",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "MALE_RURAL_POPULATION",
+        "FACT_POPULATION_ID",
+        "NUMBER_OF_HOUSEHOLDS",
+        "FEMALE_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_district`, `dim_sub_district`, and `fact_population` to get `dim_sub_district.sub_district_name` and `fact_population.rural_population` for sub-districts in district `'West Godavari'`. Filter `dim_district.district_name` = 'West Godavari'. Order by `fact_population.rural_population` DESC."
+  },
+  {
+    "question": "List the district name, the total rural population, and the total rural population of scheduled tribes for each district, ordered by the total rural population in descending order.",
+    "sql": "SELECT T1.DISTRICT_NAME, SUM(T2.RURAL_POPULATION), SUM(T2.SCHEDULED_TRIBES_RURAL_POPULATION) FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T3 ON T1.DISTRICT_ID = T3.DISTRICT_ID JOIN FACT_POPULATION AS T2 ON T3.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID GROUP BY T1.DISTRICT_NAME ORDER BY SUM(T2.RURAL_POPULATION) DESC",
+    "pair_id": "74a8c7ac",
+    "original_question_id": "c2b4077b",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "MALE_RURAL_POPULATION",
+        "FACT_POPULATION_ID",
+        "SCHEDULED_TRIBES_RURAL_POPULATION",
+        "FEMALE_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_district`.`district_name`, SUM(`fact_population`.`rural_population`) AS total_rural_population, SUM(`fact_population`.`scheduled_tribes_rural_population`) AS total_scheduled_tribes_rural_population from `fact_population` join `dim_sub_district` on `fact_population`.`sub_district_id` = `dim_sub_district`.`sub_district_id` join `dim_district` on `dim_sub_district`.`district_id` = `dim_district`.`district_id` group by `dim_district`.`district_id`, `dim_district`.`district_name` order by total_rural_population DESC."
+  },
+  {
+    "question": "List the district ID, the total rural population, and the total rural population of scheduled tribes for each district, ordered by the total rural population in descending order.",
+    "sql": "SELECT T1.DISTRICT_ID, SUM(T2.RURAL_POPULATION), SUM(T2.SCHEDULED_TRIBES_RURAL_POPULATION) FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T3 ON T1.DISTRICT_ID = T3.DISTRICT_ID JOIN FACT_POPULATION AS T2 ON T3.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID GROUP BY T1.DISTRICT_ID ORDER BY SUM(T2.RURAL_POPULATION) DESC",
+    "pair_id": "de158374",
+    "original_question_id": "c2b4077b",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "MALE_RURAL_POPULATION",
+        "FACT_POPULATION_ID",
+        "SCHEDULED_TRIBES_RURAL_POPULATION",
+        "FEMALE_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Need to list each district's ID (`dim_district.district_id`), total rural population (sum of `fact_population.rural_population`), and total scheduled tribes rural population (sum of `fact_population.scheduled_tribes_rural_population`). Join `dim_district` to `dim_sub_district` on `dim_district.district_id` = `dim_sub_district.district_id`, then join `fact_population` on `dim_sub_district.sub_district_id` = `fact_population.sub_district_id`. Group by `dim_district.district_id`. Order by total rural population descending."
+  },
+  {
+    "question": "List the district name, the total rural population, and the total rural population of scheduled tribes for each district, and order the results by the total rural population in descending order.",
+    "sql": "SELECT T1.DISTRICT_NAME, SUM(T3.RURAL_POPULATION), SUM(T3.SCHEDULED_TRIBES_RURAL_POPULATION) FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN FACT_POPULATION AS T3 ON T2.SUB_DISTRICT_ID = T3.SUB_DISTRICT_ID GROUP BY T1.DISTRICT_NAME ORDER BY SUM(T3.RURAL_POPULATION) DESC;",
+    "pair_id": "374ad1a7",
+    "original_question_id": "c2b4077b",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "MALE_RURAL_POPULATION",
+        "FACT_POPULATION_ID",
+        "SCHEDULED_TRIBES_RURAL_POPULATION",
+        "FEMALE_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_population` to `dim_sub_district` on `fact_population.sub_district_id` = `dim_sub_district.sub_district_id`, then join `dim_sub_district` to `dim_district` on `dim_sub_district.district_id` = `dim_district.district_id`. Group by `dim_district.district_id`, `dim_district.district_name`. Sum `fact_population.rural_population` as total rural population, sum `fact_population.scheduled_tribes_rural_population` as total scheduled tribes rural population. Order by total rural population descending."
+  },
+  {
+    "question": "List the district names, the total rural population, and the total scheduled tribes rural population for the districts of 'North And Middle Andaman', 'West Godavari', and 'Nicobars', grouped by district name and ordered by the total rural population in descending order.",
+    "sql": "SELECT T1.DISTRICT_NAME, SUM(T3.RURAL_POPULATION), SUM(T3.SCHEDULED_TRIBES_RURAL_POPULATION) FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN FACT_POPULATION AS T3 ON T2.SUB_DISTRICT_ID = T3.SUB_DISTRICT_ID WHERE T1.DISTRICT_NAME IN ('North And Middle Andaman', 'West Godavari', 'Nicobars') GROUP BY T1.DISTRICT_NAME ORDER BY SUM(T3.RURAL_POPULATION) DESC;",
+    "pair_id": "fe2add0d",
+    "original_question_id": "c2b4077b",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "MALE_RURAL_POPULATION",
+        "FACT_POPULATION_ID",
+        "SCHEDULED_TRIBES_RURAL_POPULATION",
+        "FEMALE_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_district`.`district_name` IN ('North And Middle Andaman', 'West Godavari', 'Nicobars'). Join `dim_district` to `dim_sub_district` on (`dim_district`.`district_id` = `dim_sub_district`.`district_id`). Join `dim_sub_district` to `fact_population` on (`dim_sub_district`.`sub_district_id` = `fact_population`.`sub_district_id`). Sum `fact_population`.`rural_population` as total_rural_population and `fact_population`.`scheduled_tribes_rural_population` as total_scheduled_tribes_rural_population. Group by `dim_district`.`district_name`. Order by total_rural_population DESC."
+  },
+  {
+    "question": "List the district name, the total rural population, and the total scheduled tribes rural population for each district where the total rural population is greater than 524.000, and order the results by the total rural population in descending order.",
+    "sql": "SELECT T1.DISTRICT_NAME, SUM(T2.RURAL_POPULATION) AS total_rural_pop, SUM(T2.SCHEDULED_TRIBES_RURAL_POPULATION) AS total_st_rural_pop FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T3 ON T1.DISTRICT_ID = T3.DISTRICT_ID JOIN FACT_POPULATION AS T2 ON T3.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID GROUP BY T1.DISTRICT_NAME HAVING SUM(T2.RURAL_POPULATION) > 524.000 ORDER BY total_rural_pop DESC",
+    "pair_id": "1bee51ee",
+    "original_question_id": "c2b4077b",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "MALE_RURAL_POPULATION",
+        "FACT_POPULATION_ID",
+        "SCHEDULED_TRIBES_RURAL_POPULATION",
+        "FEMALE_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Need to join `dim_district`, `dim_sub_district`, and `fact_population`. Group by `dim_district.district_id` and `dim_district.district_name`. Select `dim_district.district_name`, SUM(`fact_population.rural_population`) as total_rural_population, SUM(`fact_population.scheduled_tribes_rural_population`) as total_scheduled_tribes_rural_population. Filter with HAVING SUM(`fact_population.rural_population`) > 524.000. Order by total_rural_population DESC."
+  },
+  {
+    "question": "List the district name, the total rural population, and the total scheduled tribes rural population for each district where the total rural population is greater than 1109.000, and order the results by the total rural population in descending order.",
+    "sql": "SELECT T1.DISTRICT_NAME, SUM(T2.RURAL_POPULATION) AS total_rural_pop, SUM(T2.SCHEDULED_TRIBES_RURAL_POPULATION) AS total_st_rural_pop FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T3 ON T1.DISTRICT_ID = T3.DISTRICT_ID JOIN FACT_POPULATION AS T2 ON T3.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID GROUP BY T1.DISTRICT_NAME HAVING SUM(T2.RURAL_POPULATION) > 1109.000 ORDER BY total_rural_pop DESC",
+    "pair_id": "dbc05e36",
+    "original_question_id": "c2b4077b",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "MALE_RURAL_POPULATION",
+        "FACT_POPULATION_ID",
+        "SCHEDULED_TRIBES_RURAL_POPULATION",
+        "FEMALE_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_population` with `dim_sub_district` on `fact_population.sub_district_id` = `dim_sub_district.sub_district_id`, then join with `dim_district` on `dim_sub_district.district_id` = `dim_district.district_id`. Group by `dim_district.district_id`, `dim_district.district_name`. Select `dim_district.district_name`, SUM(CAST(`fact_population.rural_population` AS numeric)) as total_rural_population, SUM(CAST(`fact_population.scheduled_tribes_rural_population` AS numeric)) as total_scheduled_tribes_rural_population. Filter with HAVING SUM(CAST(`fact_population.rural_population` AS numeric)) > 1109.000. Order by total_rural_population DESC."
+  },
+  {
+    "question": "List the district names, the total rural population, and the total rural population of scheduled tribes for the districts of 'North And Middle Andaman', 'West Godavari', and 'Nicobars', grouped by district name and ordered by the total rural population in descending order.",
+    "sql": "SELECT T1.DISTRICT_NAME, SUM(T3.RURAL_POPULATION), SUM(T3.SCHEDULED_TRIBES_RURAL_POPULATION) FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN FACT_POPULATION AS T3 ON T2.SUB_DISTRICT_ID = T3.SUB_DISTRICT_ID WHERE T1.DISTRICT_NAME IN ('North And Middle Andaman', 'West Godavari', 'Nicobars') GROUP BY T1.DISTRICT_NAME ORDER BY SUM(T3.RURAL_POPULATION) DESC",
+    "pair_id": "06ba5a0d",
+    "original_question_id": "c2b4077b",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "MALE_RURAL_POPULATION",
+        "FACT_POPULATION_ID",
+        "SCHEDULED_TRIBES_RURAL_POPULATION",
+        "FEMALE_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_district.district_name` IN ('North And Middle Andaman', 'West Godavari', 'Nicobars'). Join `dim_district` to `dim_sub_district` on `dim_district.district_id = dim_sub_district.district_id`. Join `dim_sub_district` to `fact_population` on `dim_sub_district.sub_district_id = fact_population.sub_district_id`. Sum `fact_population.rural_population` as total_rural_population and `fact_population.scheduled_tribes_rural_population` as total_scheduled_tribes_rural_population. Group by `dim_district.district_name`. Order by total_rural_population DESC."
+  },
+  {
+    "question": "For the state with ID 1, list the district names along with the total rural population and the total scheduled tribes rural population for each district, considering only sub-districts where the rural population exceeds 500, and order the results by the total rural population in descending order.",
+    "sql": "SELECT T1.DISTRICT_NAME, SUM(T3.RURAL_POPULATION), SUM(T3.SCHEDULED_TRIBES_RURAL_POPULATION) FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN FACT_POPULATION AS T3 ON T2.SUB_DISTRICT_ID = T3.SUB_DISTRICT_ID WHERE T1.STATE_ID = 1 AND T3.RURAL_POPULATION > 500 GROUP BY T1.DISTRICT_NAME ORDER BY SUM(T3.RURAL_POPULATION) DESC",
+    "pair_id": "01185669",
+    "original_question_id": "c2b4077b",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "MALE_RURAL_POPULATION",
+        "FACT_POPULATION_ID",
+        "SCHEDULED_TRIBES_RURAL_POPULATION",
+        "FEMALE_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state`.`state_id` = 1. Join `dim_state` to `dim_district` on `dim_state`.`state_id` = `dim_district`.`state_id`. Join `dim_district` to `dim_sub_district` on `dim_district`.`district_id` = `dim_sub_district`.`district_id`. Join `dim_sub_district` to `fact_population` on `dim_sub_district`.`sub_district_id` = `fact_population`.`sub_district_id`. Apply condition `fact_population`.`rural_population` > 500 at sub-district level. Group by `dim_district`.`district_id`, `dim_district`.`district_name`. Compute SUM(`fact_population`.`rural_population`) as total_rural_population and SUM(`fact_population`.`scheduled_tribes_rural_population`) as total_scheduled_tribes_rural_population. Order by total_rural_population DESC."
+  },
+  {
+    "question": "List the sub-district names for areas where the rural population is greater than 2691.000 or the scheduled tribes rural population is greater than 22.000.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_POPULATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T2.RURAL_POPULATION > 2691.000 OR T2.SCHEDULED_TRIBES_RURAL_POPULATION > 22.000",
+    "pair_id": "c9f0d349",
+    "original_question_id": "46184fd0",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "MALE_RURAL_POPULATION",
+        "FACT_POPULATION_ID",
+        "SCHEDULED_TRIBES_RURAL_POPULATION",
+        "NUMBER_OF_HOUSEHOLDS",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_population` with `dim_sub_district` on (`fact_population`.`sub_district_id` = `dim_sub_district`.`sub_district_id`). Filter rows where (`fact_population`.`rural_population` > 2691.000) OR (`fact_population`.`scheduled_tribes_rural_population` > 22.000). Select `dim_sub_district`.`sub_district_name`."
+  },
+  {
+    "question": "List the sub-district names for areas where the rural population is greater than 1109.000 or the scheduled tribes rural population is greater than 0.000.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_POPULATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T2.RURAL_POPULATION > 1109.000 OR T2.SCHEDULED_TRIBES_RURAL_POPULATION > 0.000",
+    "pair_id": "c4ccc277",
+    "original_question_id": "46184fd0",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "MALE_RURAL_POPULATION",
+        "FACT_POPULATION_ID",
+        "SCHEDULED_TRIBES_RURAL_POPULATION",
+        "NUMBER_OF_HOUSEHOLDS",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_sub_district`.`sub_district_name` from `dim_sub_district` join `fact_population` on `dim_sub_district`.`sub_district_id` = `fact_population`.`sub_district_id` where `fact_population`.`rural_population` > 1109.000 or `fact_population`.`scheduled_tribes_rural_population` > 0.000."
+  },
+  {
+    "question": "List the sub-district names for areas where either the rural population is greater than 2691.000 or the scheduled tribes rural population exceeds 22.000.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_POPULATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T2.RURAL_POPULATION > 2691.000 OR T2.SCHEDULED_TRIBES_RURAL_POPULATION > 22.000",
+    "pair_id": "46985bd6",
+    "original_question_id": "46184fd0",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "MALE_RURAL_POPULATION",
+        "FACT_POPULATION_ID",
+        "SCHEDULED_TRIBES_RURAL_POPULATION",
+        "NUMBER_OF_HOUSEHOLDS",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_sub_district.sub_district_name` by joining `dim_sub_district` with `fact_population` on `dim_sub_district.sub_district_id` = `fact_population.sub_district_id`. Filter where `fact_population.rural_population` > 2691.000 OR `fact_population.scheduled_tribes_rural_population` > 22.000."
+  },
+  {
+    "question": "List the sub-district names for areas where either the rural population is greater than 1109.000 or the scheduled tribes rural population exceeds 23.000.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_POPULATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T2.RURAL_POPULATION > 1109.000 OR T2.SCHEDULED_TRIBES_RURAL_POPULATION > 23.000",
+    "pair_id": "f853df43",
+    "original_question_id": "46184fd0",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "MALE_RURAL_POPULATION",
+        "FACT_POPULATION_ID",
+        "SCHEDULED_TRIBES_RURAL_POPULATION",
+        "NUMBER_OF_HOUSEHOLDS",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_sub_district.sub_district_name` by joining `dim_sub_district` with `fact_population` on `sub_district_id`, filtering where `fact_population.rural_population > 1109.000` OR `fact_population.scheduled_tribes_rural_population > 23.000`."
+  },
+  {
+    "question": "List the sub-district names for areas where the rural population is greater than 524.000 and the number of households exceeds 148.000.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_POPULATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T2.RURAL_POPULATION > 524.000 AND T2.NUMBER_OF_HOUSEHOLDS > 148.000",
+    "pair_id": "074624c9",
+    "original_question_id": "0d59b543",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "MALE_RURAL_POPULATION",
+        "FACT_POPULATION_ID",
+        "NUMBER_OF_HOUSEHOLDS",
+        "FEMALE_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_sub_district`.`sub_district_name` from `fact_population` join `dim_sub_district` on `fact_population`.`sub_district_id` = `dim_sub_district`.`sub_district_id` where `fact_population`.`rural_population` > 524.000 and `fact_population`.`number_of_households` > 148.000."
+  },
+  {
+    "question": "List the sub-district names for areas where the rural population is greater than 1109.000 and the number of households exceeds 208.000.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_POPULATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T2.RURAL_POPULATION > 1109.000 AND T2.NUMBER_OF_HOUSEHOLDS > 208.000",
+    "pair_id": "5893cecc",
+    "original_question_id": "0d59b543",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "MALE_RURAL_POPULATION",
+        "FACT_POPULATION_ID",
+        "NUMBER_OF_HOUSEHOLDS",
+        "FEMALE_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_sub_district.sub_district_name` by joining `dim_sub_district` with `fact_population` on `sub_district_id`, where `fact_population.rural_population` > 1109.000 and `fact_population.number_of_households` > 208.000."
+  },
+  {
+    "question": "List the sub-district names for areas where the rural population is greater than 524.000 and the number of households exceeds 148.000.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_POPULATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T2.RURAL_POPULATION > 524.000 AND T2.NUMBER_OF_HOUSEHOLDS > 148.000;",
+    "pair_id": "8c838ef5",
+    "original_question_id": "0d59b543",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "MALE_RURAL_POPULATION",
+        "FACT_POPULATION_ID",
+        "NUMBER_OF_HOUSEHOLDS",
+        "FEMALE_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_sub_district.sub_district_name` by joining `dim_sub_district` with `fact_population` on `dim_sub_district.sub_district_id` = `fact_population.sub_district_id`. Filter where `fact_population.rural_population` > 524.000 and `fact_population.number_of_households` > 148.000."
+  },
+  {
+    "question": "List the sub-district names for areas where the rural population is greater than 1109.000 and the number of households exceeds 208.000.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_POPULATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T2.RURAL_POPULATION > 1109.000 AND T2.NUMBER_OF_HOUSEHOLDS > 208.000;",
+    "pair_id": "12e9a3b3",
+    "original_question_id": "0d59b543",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "MALE_RURAL_POPULATION",
+        "FACT_POPULATION_ID",
+        "NUMBER_OF_HOUSEHOLDS",
+        "FEMALE_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_sub_district.sub_district_name` by joining `dim_sub_district` with `fact_population` on `sub_district_id` where `fact_population.rural_population` > 1109.000 and `fact_population.number_of_households` > 208.000."
+  },
+  {
+    "question": "List each sub-district name and the total rural population for those sub-districts where the sum of the rural population exceeds 524.000 and the total number of households is greater than 148.000, ordered alphabetically by the sub-district name.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.RURAL_POPULATION) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_POPULATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.RURAL_POPULATION) > 524.000 AND SUM(T2.NUMBER_OF_HOUSEHOLDS) > 148.000 ORDER BY T1.SUB_DISTRICT_NAME",
+    "pair_id": "586f5333",
+    "original_question_id": "0d59b543",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "MALE_RURAL_POPULATION",
+        "FACT_POPULATION_ID",
+        "NUMBER_OF_HOUSEHOLDS",
+        "FEMALE_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_sub_district` and `fact_population` on `sub_district_id`. Select `dim_sub_district.sub_district_name` and `fact_population.rural_population`. Filter where `fact_population.rural_population` > 524.000 and `fact_population.number_of_households` > 148.000. Order by `dim_sub_district.sub_district_name`."
+  },
+  {
+    "question": "List the sub-district names and the total rural population for each sub-district, filtering for those where the sum of the rural population is greater than 1109.000 and the total number of households exceeds 208.000, and order the results alphabetically by the sub-district name.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.RURAL_POPULATION) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_POPULATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.RURAL_POPULATION) > 1109.000 AND SUM(T2.NUMBER_OF_HOUSEHOLDS) > 208.000 ORDER BY T1.SUB_DISTRICT_NAME",
+    "pair_id": "30224a17",
+    "original_question_id": "0d59b543",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "MALE_RURAL_POPULATION",
+        "FACT_POPULATION_ID",
+        "NUMBER_OF_HOUSEHOLDS",
+        "FEMALE_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_sub_district`.`sub_district_name` and `fact_population`.`rural_population` from `dim_sub_district` join `fact_population` on `dim_sub_district`.`sub_district_id` = `fact_population`.`sub_district_id` where `fact_population`.`rural_population` > 1109.000 and `fact_population`.`number_of_households` > 208.000 order by `dim_sub_district`.`sub_district_name`."
+  },
+  {
+    "question": "List the sub-district names for those sub-districts where the total rural population exceeds 500 and the total number of households is greater than 100, ordered by the total rural population in descending order.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_POPULATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.RURAL_POPULATION) > 500 AND SUM(T2.NUMBER_OF_HOUSEHOLDS) > 100 ORDER BY SUM(T2.RURAL_POPULATION) DESC",
+    "pair_id": "2ad4c5bf",
+    "original_question_id": "0d59b543",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "MALE_RURAL_POPULATION",
+        "FACT_POPULATION_ID",
+        "NUMBER_OF_HOUSEHOLDS",
+        "FEMALE_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_sub_district.sub_district_name` for records where `fact_population.rural_population` > 500 and `fact_population.number_of_households` > 100, joining `dim_sub_district` and `fact_population` on `sub_district_id`, ordered by `fact_population.rural_population` DESC."
+  },
+  {
+    "question": "List the sub-district names for 'Diglipur', 'Mayabunder', 'Ferrargunj', 'Great Nicobar', and 'Rangat' where the total rural population exceeds 1000 and the total number of households is greater than 200, ordering the results by the total rural population in descending order.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_POPULATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T1.SUB_DISTRICT_NAME IN ('Diglipur', 'Mayabunder', 'Ferrargunj', 'Great Nicobar', 'Rangat') GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.RURAL_POPULATION) > 1000 AND SUM(T2.NUMBER_OF_HOUSEHOLDS) > 200 ORDER BY SUM(T2.RURAL_POPULATION) DESC",
+    "pair_id": "2f5f22ac",
+    "original_question_id": "0d59b543",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_POPULATION"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_POPULATION": [
+        "MALE_RURAL_POPULATION",
+        "FACT_POPULATION_ID",
+        "NUMBER_OF_HOUSEHOLDS",
+        "FEMALE_RURAL_POPULATION",
+        "RURAL_POPULATION",
+        "SUB_DISTRICT_ID"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_sub_district.sub_district_name` for exact values: 'Diglipur', 'Mayabunder', 'Ferrargunj', 'Great Nicobar', 'Rangat'. Join `dim_sub_district` with `fact_population` on `sub_district_id`. Apply conditions: `fact_population.rural_population` > 1000 and `fact_population.number_of_households` > 200. Order results by `fact_population.rural_population` DESC."
+  },
+  {
+    "question": "List the sub-district name and the corresponding district name for all areas where the number of ayurvedic dispensaries is greater than zero or the number of homeopathic dispensaries is greater than zero.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T2.DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN FACT_HEALTHCARE_FACILITIES AS T3 ON T1.SUB_DISTRICT_ID = T3.SUB_DISTRICT_ID WHERE T3.NUMBER_OF_AYURVEDIC_DISPENSARY > 0.000 OR T3.NUMBER_OF_HOMEOPATHIC_DISPENSARIES > 0.000",
+    "pair_id": "35bad358",
+    "original_question_id": "8368a60e",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_HEALTHCARE_FACILITIES"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_HEALTHCARE_FACILITIES": [
+        "NUMBER_OF_AYURVEDIC_DISPENSARY",
+        "FACT_HEALTHCARE_FACILITIES_ID",
+        "NUMBER_OF_HOMEOPATHIC_DISPENSARIES",
+        "NUMBER_OF_ALLOPATHIC_DISPENSARIES",
+        "SUB_DISTRICT_ID",
+        "NUMBER_OF_ALLOPATHIC_HOSPITALS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_sub_district`.`sub_district_name` and `dim_district`.`district_name` by joining `fact_healthcare_facilities` (filtered where `fact_healthcare_facilities`.`number_of_ayurvedic_dispensary` > 0 OR `fact_healthcare_facilities`.`number_of_homeopathic_dispensaries` > 0) with `dim_sub_district` on `fact_healthcare_facilities`.`sub_district_id` = `dim_sub_district`.`sub_district_id`, then join `dim_sub_district` with `dim_district` on `dim_sub_district`.`district_id` = `dim_district`.`district_id`."
+  },
+  {
+    "question": "List the sub-district names and their corresponding district names for areas where the number of homeopathic dispensaries is greater than zero or the number of ayurvedic dispensaries is greater than zero.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T2.DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN FACT_HEALTHCARE_FACILITIES AS T3 ON T1.SUB_DISTRICT_ID = T3.SUB_DISTRICT_ID WHERE T3.NUMBER_OF_HOMEOPATHIC_DISPENSARIES > 0.000 OR T3.NUMBER_OF_AYURVEDIC_DISPENSARY > 0.000",
+    "pair_id": "2671d004",
+    "original_question_id": "8368a60e",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT",
+      "FACT_HEALTHCARE_FACILITIES"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME"
+      ],
+      "FACT_HEALTHCARE_FACILITIES": [
+        "NUMBER_OF_AYURVEDIC_DISPENSARY",
+        "FACT_HEALTHCARE_FACILITIES_ID",
+        "NUMBER_OF_HOMEOPATHIC_DISPENSARIES",
+        "NUMBER_OF_ALLOPATHIC_DISPENSARIES",
+        "SUB_DISTRICT_ID",
+        "NUMBER_OF_ALLOPATHIC_HOSPITALS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter sub-districts where `fact_healthcare_facilities`.`number_of_homeopathic_dispensaries` > 0 OR `fact_healthcare_facilities`.`number_of_ayurvedic_dispensary` > 0. Join `dim_sub_district` (sub_district_id, sub_district_name, district_id) with `dim_district` (district_id, district_name) and `fact_healthcare_facilities` (sub_district_id). Return `dim_sub_district`.`sub_district_name` and `dim_district`.`district_name`."
+  }
+]
