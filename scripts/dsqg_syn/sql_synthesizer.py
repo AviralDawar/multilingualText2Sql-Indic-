@@ -90,6 +90,10 @@ class SQLNLQSynthesizer:
                 "Difficulty target: hard.\n"
                 "- Create complex skeletons.\n"
                 "- Prefer two JOINs where relevant.\n"
+                "- Across the hard skeleton batch, diversify JOIN types when semantically valid "
+                "(e.g., INNER JOIN, LEFT JOIN; use RIGHT/FULL only if truly needed).\n"
+                "- Include aggregation patterns with GROUP BY and at least one of COUNT/SUM/AVG/MIN/MAX "
+                "when the question intent supports aggregation.\n"
                 "- Include advanced patterns such as subqueries/CTEs and HAVING when appropriate.\n"
                 "- Keep templates realistic and executable after filling."
             ),
@@ -113,7 +117,10 @@ class SQLNLQSynthesizer:
             'hard': (
                 "Difficulty target: hard.\n"
                 "Approximate token length per SQL: > 120.\n"
-                "Use richer SQL construction while still strictly following the template and schema."
+                "Use richer SQL construction while still strictly following the template and schema.\n"
+                "When semantically appropriate, prefer diverse JOIN types (INNER/LEFT) and "
+                "aggregation functions (COUNT/SUM/AVG/MIN/MAX) with GROUP BY/HAVING.\n"
+                "Use CTEs/subqueries where they genuinely improve correctness and clarity."
             ),
         }
         return instructions.get(difficulty, instructions['medium'])
@@ -334,7 +341,131 @@ The "templates" list must contain exactly {num_skeletons} items.
             prompt,
             self.config.sql_generation_temperature
         )
-        return self._parse_sql_response(response)
+        sqls = self._parse_sql_response(response)
+        sqls = self._filter_type_unsafe_sql(sqls, linked_schema, schema)
+        return sqls
+
+    def _is_numeric_sql_type(self, sql_type: str) -> bool:
+        """Return True if type string is numeric-like."""
+        t = (sql_type or "").upper()
+        numeric_tokens = (
+            "INT", "INTEGER", "BIGINT", "SMALLINT",
+            "DOUBLE", "FLOAT", "REAL", "NUMERIC", "DECIMAL"
+        )
+        return any(tok in t for tok in numeric_tokens)
+
+    def _is_temporal_sql_type(self, sql_type: str) -> bool:
+        """Return True if type string is date/time-like."""
+        t = (sql_type or "").upper()
+        temporal_tokens = ("DATE", "TIME", "TIMESTAMP")
+        return any(tok in t for tok in temporal_tokens)
+
+    def _build_linked_column_type_map(
+        self,
+        linked_schema: Dict[str, List[str]],
+        schema: SchemaInfo
+    ) -> Dict[str, str]:
+        """Build map TABLE.COLUMN -> SQL type for linked schema columns."""
+        col_type_map: Dict[str, str] = {}
+        for table_name, columns in linked_schema.items():
+            table_info = schema.tables.get(table_name)
+            if not table_info:
+                continue
+            for col in table_info.columns:
+                col_name = col.get("name")
+                if not col_name or (columns and col_name not in columns):
+                    continue
+                key = f"{table_name.upper()}.{col_name.upper()}"
+                col_type_map[key] = col.get("type", "TEXT")
+        return col_type_map
+
+    def _filter_type_unsafe_sql(
+        self,
+        sqls: List[str],
+        linked_schema: Dict[str, List[str]],
+        schema: SchemaInfo
+    ) -> List[str]:
+        """
+        Drop SQL queries that apply numeric-only operations to text columns.
+
+        Current checks:
+        - AVG/SUM applied to non-numeric columns
+        - Numeric comparisons (>, >=, <, <=) between column and numeric literal
+          where column is not numeric/date-like.
+        """
+        if not sqls:
+            return []
+
+        col_type_map = self._build_linked_column_type_map(linked_schema, schema)
+        filtered = []
+        dropped = 0
+
+        agg_re = re.compile(
+            r"\b(AVG|SUM)\s*\(\s*(?:DISTINCT\s+)?([A-Za-z_][A-Za-z0-9_]*)\.([A-Za-z_][A-Za-z0-9_]*)\s*\)",
+            flags=re.IGNORECASE
+        )
+        comp_left_re = re.compile(
+            r"([A-Za-z_][A-Za-z0-9_]*)\.([A-Za-z_][A-Za-z0-9_]*)\s*(>=|<=|>|<)\s*[-+]?\d+(?:\.\d+)?",
+            flags=re.IGNORECASE
+        )
+        comp_right_re = re.compile(
+            r"[-+]?\d+(?:\.\d+)?\s*(>=|<=|>|<)\s*([A-Za-z_][A-Za-z0-9_]*)\.([A-Za-z_][A-Za-z0-9_]*)",
+            flags=re.IGNORECASE
+        )
+
+        for sql in sqls:
+            valid = True
+
+            # Build alias -> table map from FROM/JOIN clauses
+            alias_to_table: Dict[str, str] = {}
+            for m in re.finditer(
+                r"\b(?:FROM|JOIN)\s+([A-Za-z_][A-Za-z0-9_]*)\s+(?:AS\s+)?([A-Za-z_][A-Za-z0-9_]*)",
+                sql,
+                flags=re.IGNORECASE
+            ):
+                table_name = m.group(1).upper()
+                alias = m.group(2).upper()
+                alias_to_table[alias] = table_name
+                alias_to_table[table_name] = table_name
+
+            def resolve_type(alias: str, col: str) -> str:
+                table_name = alias_to_table.get(alias.upper(), alias.upper())
+                return col_type_map.get(f"{table_name}.{col.upper()}", "")
+
+            # Check AVG/SUM target types
+            for _, alias, col in agg_re.findall(sql):
+                col_type = resolve_type(alias, col)
+                if not self._is_numeric_sql_type(col_type):
+                    valid = False
+                    break
+
+            if not valid:
+                dropped += 1
+                continue
+
+            # Check numeric comparisons against literals
+            for alias, col, _ in comp_left_re.findall(sql):
+                col_type = resolve_type(alias, col)
+                if not (self._is_numeric_sql_type(col_type) or self._is_temporal_sql_type(col_type)):
+                    valid = False
+                    break
+
+            if valid:
+                for _, alias, col in comp_right_re.findall(sql):
+                    col_type = resolve_type(alias, col)
+                    if not (self._is_numeric_sql_type(col_type) or self._is_temporal_sql_type(col_type)):
+                        valid = False
+                        break
+
+            if valid:
+                filtered.append(sql)
+            else:
+                dropped += 1
+
+        if dropped:
+            print(f"        [SQL Gen] Dropped {dropped} type-unsafe SQL candidate(s)")
+
+        return filtered
 
     def _build_sql_generation_prompt(
         self,
@@ -348,6 +479,35 @@ The "templates" list must contain exactly {num_skeletons} items.
         """Build prompt for SQL generation from skeleton."""
         schema_str = self._format_linked_schema_with_types(linked_schema, schema)
         difficulty_instructions = self._get_difficulty_instructions_for_sql(skeleton.difficulty)
+
+        # Build allowed FK join paths for the linked sub-schema.
+        linked_table_set = set(linked_schema.keys())
+        fk_lines = []
+        for fk in schema.foreign_keys:
+            from_table = fk.get('from_table', '')
+            from_col = fk.get('from_column', '')
+            to_table = fk.get('to_table', '')
+            to_col = fk.get('to_column', '')
+            if (
+                from_table in linked_table_set
+                and to_table in linked_table_set
+                and from_col and to_col
+            ):
+                fk_lines.append(f"- {from_table}.{from_col} = {to_table}.{to_col}")
+
+        fk_lines = sorted(set(fk_lines))
+        fk_constraints_str = "\n".join(fk_lines) if fk_lines else "- None provided"
+
+        # Build explicit type hints to prevent text-vs-numeric operator mistakes.
+        col_type_map = self._build_linked_column_type_map(linked_schema, schema)
+        numeric_cols = sorted(
+            [k for k, v in col_type_map.items() if self._is_numeric_sql_type(v)]
+        )
+        non_numeric_cols = sorted(
+            [k for k, v in col_type_map.items() if not self._is_numeric_sql_type(v)]
+        )
+        numeric_cols_str = "\n".join(f"- {c}" for c in numeric_cols) if numeric_cols else "- None"
+        non_numeric_cols_str = "\n".join(f"- {c}" for c in non_numeric_cols[:80]) if non_numeric_cols else "- None"
 
         # Format sample values for the prompt
         sample_values_str = ""
@@ -376,17 +536,34 @@ Your task is to:
 1. Strictly use the information from the provided schema to complete PostgreSQL queries.
    Ensure that all necessary table names, column names, and clauses (such as FROM and JOIN)
    come from the schema only.
-2. **CRITICAL**: When using literal values in WHERE, HAVING, IN, or other filter clauses,
+2. **CRITICAL JOIN RULE**: Use ONLY foreign-key-valid join predicates. A JOIN condition must
+   exactly match one of the allowed FK relationships listed below (direction can be reversed).
+   Do NOT join semantically unrelated IDs (e.g., STATE_ID = STATION_ID) just because data types match.
+3. **CRITICAL**: When using literal values in WHERE, HAVING, IN, or other filter clauses,
    you MUST use ONLY the sample values provided above. Do NOT make up or hallucinate values.
    This ensures the generated queries will return actual results when executed against the database.
-3. Avoid introducing any table names, column names, or other elements that are not explicitly
+4. **CRITICAL TYPE RULE**: Use numeric operators/aggregates only on numeric columns.
+   - AVG/SUM require numeric columns.
+   - Numeric comparisons (>, >=, <, <=) require numeric/date columns.
+   - For text columns, use equality/inequality, IN, LIKE, IS NULL, COUNT, GROUP BY.
+   - Do not cast text columns to numeric unless values are guaranteed numeric in schema context.
+5. Avoid introducing any table names, column names, or other elements that are not explicitly
    defined in the schema.
-4. Generate {num_sqls} PostgreSQL SQL queries that are directly related to the given question
+6. Generate {num_sqls} PostgreSQL SQL queries that are directly related to the given question
    and fit the SQL query template.
-5. Use PostgreSQL-compatible syntax only.
-6. Keep the output in JSON format.
+7. Use PostgreSQL-compatible syntax only.
+8. Keep the output in JSON format.
 
 {difficulty_instructions}
+
+Allowed FK relationships for JOINs:
+{fk_constraints_str}
+
+Numeric columns (safe for AVG/SUM and numeric comparisons):
+{numeric_cols_str}
+
+Non-numeric columns (do NOT use AVG/SUM or numeric comparisons):
+{non_numeric_cols_str}
 
 Example:
 Input:
@@ -618,6 +795,7 @@ Output JSON:
                             nlq=nlq,
                             sql=sql,
                             schema_used=list(linked_schema.keys()),
+                            linked_schema=linked_schema,
                             skeleton_id=skeleton.skeleton_id,
                             difficulty=skeleton.difficulty
                         )

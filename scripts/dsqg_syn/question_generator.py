@@ -68,6 +68,29 @@ class DomainQuestionGenerator:
                     relationship=fk
                 )
 
+        # Debug visibility for schema graph correctness.
+        print(f"        [Graph] Nodes: {G.number_of_nodes()}, Edges: {G.number_of_edges()}")
+        components = list(nx.connected_components(G))
+        comp_sizes = sorted([len(c) for c in components], reverse=True)
+        print(f"        [Graph] Connected components: {len(components)} | sizes={comp_sizes}")
+
+        sorted_edges = sorted(
+            schema.foreign_keys,
+            key=lambda x: (
+                x.get('from_table', ''),
+                x.get('from_column', ''),
+                x.get('to_table', ''),
+                x.get('to_column', '')
+            )
+        )
+        print("        [Graph] FK edges:")
+        for fk in sorted_edges:
+            print(
+                "          - "
+                f"{fk.get('from_table', '?')}.{fk.get('from_column', '?')} -> "
+                f"{fk.get('to_table', '?')}.{fk.get('to_column', '?')}"
+            )
+
         self.schema_graph = G
         return G
 
@@ -332,9 +355,19 @@ For example:
                 lines.append(f"-- Description: {table_info.description}")
         return '\n'.join(lines)
 
-    def _extract_json_from_response(self, response: str) -> str:
+    def _extract_json_from_response(self, response) -> str:
         """Extract JSON from LLM response, handling markdown code blocks."""
+        if response is None:
+            return ""
+        if not isinstance(response, str):
+            try:
+                response = json.dumps(response)
+            except Exception:
+                response = str(response)
+
         response = response.strip()
+        if not response:
+            return ""
 
         # Handle markdown code blocks
         if response.startswith('```'):
@@ -353,9 +386,11 @@ For example:
         """Parse LLM response for keywords."""
         try:
             clean_response = self._extract_json_from_response(response)
+            if not clean_response:
+                return []
             data = json.loads(clean_response)
             return data.get('keywords', [])
-        except json.JSONDecodeError:
+        except (json.JSONDecodeError, TypeError, ValueError):
             return []
 
     def _parse_question_response(
@@ -367,6 +402,8 @@ For example:
         """Parse LLM response for generated question."""
         try:
             clean_response = self._extract_json_from_response(response)
+            if not clean_response:
+                return None
             data = json.loads(clean_response)
 
             # Some models return a JSON array with one object.
@@ -390,5 +427,5 @@ For example:
                 keywords=data.get('keywords_used', []),
                 sql_operations=data.get('sql_operations', [])
             )
-        except json.JSONDecodeError:
+        except (json.JSONDecodeError, TypeError, ValueError):
             return None

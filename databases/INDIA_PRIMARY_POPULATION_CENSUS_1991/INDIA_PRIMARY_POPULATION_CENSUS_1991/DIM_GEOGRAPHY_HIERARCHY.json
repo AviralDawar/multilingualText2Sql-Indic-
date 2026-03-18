@@ -1,6 +1,7 @@
 [
   {
     "HIERARCHY_ID": 1,
+    "PARENT_ID": null,
     "LOCATION_NAME": "Uttara (Rv)",
     "LOCATION_TYPE": "Rural",
     "COUNTRY": "India",
@@ -10,6 +11,7 @@
   },
   {
     "HIERARCHY_ID": 2,
+    "PARENT_ID": null,
     "LOCATION_NAME": "Sitanagar (Rv)",
     "LOCATION_TYPE": "Rural",
     "COUNTRY": "India",
@@ -19,6 +21,7 @@
   },
   {
     "HIERARCHY_ID": 3,
+    "PARENT_ID": null,
     "LOCATION_NAME": "Paschimsagar (Efa)",
     "LOCATION_TYPE": "Rural",
     "COUNTRY": "India",
@@ -28,6 +31,7 @@
   },
   {
     "HIERARCHY_ID": 4,
+    "PARENT_ID": null,
     "LOCATION_NAME": "Bejoy Nagar (Rv)",
     "LOCATION_TYPE": "Rural",
     "COUNTRY": "India",
@@ -37,6 +41,7 @@
   },
   {
     "HIERARCHY_ID": 5,
+    "PARENT_ID": null,
     "LOCATION_NAME": "Vidyasagarpalli (Rv)",
     "LOCATION_TYPE": "Rural",
     "COUNTRY": "India",

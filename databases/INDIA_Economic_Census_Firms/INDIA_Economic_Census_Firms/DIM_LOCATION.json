@@ -1,26 +1,31 @@
 [
   {
     "LOCATION_ID": 1,
+    "DISTRICT_ID": 1,
     "SUB_DISTRICT_NAME": "Ferrargunj",
     "ULB_RLB_VILLAGE_NAME": "Chouldari (Rv)"
   },
   {
     "LOCATION_ID": 2,
+    "DISTRICT_ID": 2,
     "SUB_DISTRICT_NAME": "Mayabunder",
     "ULB_RLB_VILLAGE_NAME": "Jaipur (Rv)"
   },
   {
     "LOCATION_ID": 3,
+    "DISTRICT_ID": 3,
     "SUB_DISTRICT_NAME": "Nancowry",
     "ULB_RLB_VILLAGE_NAME": "Pilpilow"
   },
   {
     "LOCATION_ID": 4,
+    "DISTRICT_ID": 1,
     "SUB_DISTRICT_NAME": "Ferrargunj",
     "ULB_RLB_VILLAGE_NAME": "Govindapuram (Rv)"
   },
   {
     "LOCATION_ID": 5,
+    "DISTRICT_ID": 2,
     "SUB_DISTRICT_NAME": "Mayabunder",
     "ULB_RLB_VILLAGE_NAME": "Profullya Nagar (Rv)"
   }

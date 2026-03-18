@@ -1,27 +1,27 @@
 [
   {
     "TIME_ID": 1,
-    "YEAR": "Financial Year (Apr - Mar), 2022",
+    "YEAR": "2022",
     "MONTH": "December, 2022"
   },
   {
     "TIME_ID": 2,
-    "YEAR": "Financial Year (Apr - Mar), 2021",
+    "YEAR": "2021",
     "MONTH": "October, 2021"
   },
   {
     "TIME_ID": 3,
-    "YEAR": "Financial Year (Apr - Mar), 2020",
+    "YEAR": "2020",
     "MONTH": "September, 2020"
   },
   {
     "TIME_ID": 4,
-    "YEAR": "Financial Year (Apr - Mar), 2021",
+    "YEAR": "2021",
     "MONTH": "November, 2021"
   },
   {
     "TIME_ID": 5,
-    "YEAR": "Financial Year (Apr - Mar), 2020",
+    "YEAR": "2020",
     "MONTH": "May, 2020"
   }
 ]

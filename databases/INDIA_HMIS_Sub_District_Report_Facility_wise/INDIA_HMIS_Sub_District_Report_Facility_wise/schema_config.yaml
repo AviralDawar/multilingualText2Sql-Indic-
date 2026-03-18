@@ -28,6 +28,7 @@ dimension_tables:
     columns:
     - source_index: 4
       target_name: YEAR
+      transform: extract_year
     - source_index: 5
       target_name: MONTH
 fact_tables:

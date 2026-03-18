@@ -86,17 +86,17 @@ class DSQGConfig:
     max_tokens: int = 2000
 
     # Question Generation Settings
-    questions_per_table: int = 5  # Paper finds 9 is optimal (one per question type)
+    questions_per_table: int = 9  # Paper finds 9 is optimal (one per question type)
     max_join_depth: int = 3  # Maximum tables to join in a query
 
     # SQL Skeleton Settings
-    skeletons_per_question: int = 2  # Paper finds 3 is optimal
+    skeletons_per_question: int = 2  # Default target split: 1 easy, 2 medium, 1 hard
 
     # SQL Generation Settings
-    sqls_per_skeleton: int = 2  # Multiple SQLs per skeleton for diversity
+    sqls_per_skeleton: int = 1  # One SQL per skeleton to control per-difficulty counts
     sql_difficulty: str = "mixed"  # easy, medium, hard, mixed
     sql_difficulty_mix: Dict[str, float] = field(
-        default_factory=lambda: {"easy": 0.4, "medium": 0.4, "hard": 0.2}
+        default_factory=lambda: {"easy": 0.30, "medium": 0.40, "hard": 0.30}
     )
 
     # NLQ Semantic Optimization Settings
@@ -163,6 +163,8 @@ class NLQSQLPair:
     nlq: str
     sql: str
     schema_used: List[str]
+    skeleton_id: str
+    linked_schema: Dict[str, List[str]] = field(default_factory=dict)
     skeleton_id: str
     difficulty: str = "medium"
     similarity_score: float = 0.0

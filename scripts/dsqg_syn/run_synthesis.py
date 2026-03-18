@@ -263,20 +263,20 @@ def main():
     parser.add_argument(
         '--questions-per-table',
         type=int,
-        default=4,
+        default=9,
         help='Number of questions to generate per table (default: 9)'
     )
     parser.add_argument(
         '--skeletons-per-question',
         type=int,
-        default=3,
-        help='Number of SQL skeletons per question (default: 3)'
+        default=2,
+        help='Number of SQL skeletons per question (default: 4)'
     )
     parser.add_argument(
         '--sqls-per-skeleton',
         type=int,
-        default=3,
-        help='Number of SQLs per skeleton (default: 3)'
+        default=1,
+        help='Number of SQLs per skeleton (default: 1)'
     )
     parser.add_argument(
         '--sql-difficulty',
@@ -288,8 +288,8 @@ def main():
     parser.add_argument(
         '--sql-difficulty-mix',
         type=str,
-        default='0.4,0.4,0.2',
-        help='Difficulty mix for mixed mode as easy,medium,hard ratios (default: 0.4,0.4,0.2)'
+        default='0.30,0.40,0.30',
+        help='Difficulty mix for mixed mode as easy,medium,hard ratios (default: 0.25,0.5,0.25)'
     )
     parser.add_argument(
         '--top-k',

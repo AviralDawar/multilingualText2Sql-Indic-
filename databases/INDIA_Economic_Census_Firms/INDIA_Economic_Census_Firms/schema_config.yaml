@@ -48,6 +48,7 @@ dimension_tables:
     columns:
     - source_index: 5
       target_name: CENSUS_YEAR
+      transform: extract_year
   DIM_SECTOR_CATEGORY:
     key_column: SECTOR_ID
     dedup_columns:

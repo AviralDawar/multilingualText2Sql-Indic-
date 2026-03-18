@@ -93,10 +93,40 @@ class DSQGSyn:
             config = yaml.safe_load(f)
 
         tables = {}
+        dimension_tables = config.get('dimension_tables', {}) or {}
+        fact_tables = config.get('fact_tables', {}) or {}
+
+        table_key_map: Dict[str, str] = {}
+        for table_name, table_config in {**dimension_tables, **fact_tables}.items():
+            table_key_map[table_name] = table_config.get('key_column', f'{table_name}_ID')
 
         # Determine data directory (same directory as YAML by default, or use self.data_path)
         yaml_dir = Path(yaml_path).parent
         data_dir = Path(self.data_path) if self.data_path else yaml_dir
+
+        def infer_key_type(column_name: str) -> str:
+            """Infer type for PK/FK-like columns used in schema prompts."""
+            col = (column_name or '').upper()
+            if col == 'YEAR' or 'YEAR' in col:
+                return 'INTEGER'
+            return 'BIGINT'
+
+        def add_column(
+            columns: List[Dict[str, str]],
+            seen_columns: set,
+            name: str,
+            col_type: str,
+            description: str
+        ):
+            """Append a column once to avoid duplicated entries in prompts."""
+            if not name or name in seen_columns:
+                return
+            columns.append({
+                'name': name,
+                'type': col_type,
+                'description': description
+            })
+            seen_columns.add(name)
 
         def load_sample_data(table_name: str) -> Optional[List[Dict]]:
             """Load sample data from JSON file if available."""
@@ -110,37 +140,53 @@ class DSQGSyn:
                     print(f"Warning: Could not load sample data for {table_name}: {e}")
             return None
 
+        def build_sample_values(columns: List[Dict[str, str]], sample_data: Optional[List[Dict]]) -> Dict[str, List]:
+            """Convert row-wise samples to column-wise sample values."""
+            sample_values = {}
+            if not sample_data:
+                return sample_values
+
+            for col in columns:
+                col_name = col['name']
+                values = [row.get(col_name) for row in sample_data if col_name in row]
+                unique_values = list(set([v for v in values if v is not None]))
+                if unique_values:
+                    sample_values[col_name] = unique_values[:6]
+
+            return sample_values
+
         # Load dimension tables
-        for table_name, table_config in config.get('dimension_tables', {}).items():
+        for table_name, table_config in dimension_tables.items():
             columns = []
+            seen_columns = set()
             # Add key column
             key_col = table_config.get('key_column', f'{table_name}_ID')
-            columns.append({
-                'name': key_col,
-                'type': 'BIGINT',
-                'description': 'Primary key'
-            })
+            add_column(columns, seen_columns, key_col, infer_key_type(key_col), 'Primary key')
+
+            # Add FK columns (dimension tables can also reference parent dimensions)
+            for fk in table_config.get('foreign_keys', []):
+                fk_col = fk.get('column', '')
+                add_column(
+                    columns,
+                    seen_columns,
+                    fk_col,
+                    infer_key_type(fk_col),
+                    f"FK to {fk.get('references', '')}"
+                )
+
             # Add other columns
             for col_config in table_config.get('columns', []):
-                columns.append({
-                    'name': col_config.get('target_name', ''),
-                    'type': 'VARCHAR',
-                    'description': ''
-                })
+                add_column(
+                    columns,
+                    seen_columns,
+                    col_config.get('target_name', ''),
+                    'VARCHAR',
+                    ''
+                )
 
             # Load sample data from JSON file (e.g., DIM_COUNTRY.json)
             sample_data = load_sample_data(table_name)
-
-            # Convert sample data to sample_values format (Dict[column_name, List[values]])
-            sample_values = {}
-            if sample_data:
-                for col in columns:
-                    col_name = col['name']
-                    values = [row.get(col_name) for row in sample_data if col_name in row]
-                    # Remove None values and get unique values
-                    values = list(set([v for v in values if v is not None]))
-                    if values:
-                        sample_values[col_name] = values[:6]  # Limit to 6 samples
+            sample_values = build_sample_values(columns, sample_data)
 
             tables[table_name] = TableInfo(
                 table_name=table_name,
@@ -152,42 +198,34 @@ class DSQGSyn:
             )
 
         # Load fact tables
-        for table_name, table_config in config.get('fact_tables', {}).items():
+        for table_name, table_config in fact_tables.items():
             columns = []
+            seen_columns = set()
             key_col = table_config.get('key_column', f'{table_name}_ID')
-            columns.append({
-                'name': key_col,
-                'type': 'BIGINT',
-                'description': 'Primary key'
-            })
+            add_column(columns, seen_columns, key_col, infer_key_type(key_col), 'Primary key')
             # Add FK columns
             for fk in table_config.get('foreign_keys', []):
-                columns.append({
-                    'name': fk.get('column', ''),
-                    'type': 'BIGINT',
-                    'description': f"FK to {fk.get('references', '')}"
-                })
+                fk_col = fk.get('column', '')
+                add_column(
+                    columns,
+                    seen_columns,
+                    fk_col,
+                    infer_key_type(fk_col),
+                    f"FK to {fk.get('references', '')}"
+                )
             # Add other columns
             for col_config in table_config.get('columns', []):
-                columns.append({
-                    'name': col_config.get('target_name', ''),
-                    'type': 'DOUBLE PRECISION',
-                    'description': ''
-                })
+                add_column(
+                    columns,
+                    seen_columns,
+                    col_config.get('target_name', ''),
+                    'DOUBLE PRECISION',
+                    ''
+                )
 
             # Load sample data from JSON file (e.g., FACT_TRANSPORTATION_ACCESSIBILITY.json)
             sample_data = load_sample_data(table_name)
-
-            # Convert sample data to sample_values format (Dict[column_name, List[values]])
-            sample_values = {}
-            if sample_data:
-                for col in columns:
-                    col_name = col['name']
-                    values = [row.get(col_name) for row in sample_data if col_name in row]
-                    # Remove None values and get unique values
-                    values = list(set([v for v in values if v is not None]))
-                    if values:
-                        sample_values[col_name] = values[:6]  # Limit to 6 samples
+            sample_values = build_sample_values(columns, sample_data)
 
             tables[table_name] = TableInfo(
                 table_name=table_name,
@@ -200,14 +238,22 @@ class DSQGSyn:
 
         # Build foreign key relationships
         foreign_keys = []
+        seen_fk_edges = set()
         for table_name, table_info in tables.items():
             for fk in table_info.foreign_keys:
+                from_column = fk.get('column', '')
+                ref_table = fk.get('references', '')
+                ref_column = fk.get('references_column') or table_key_map.get(ref_table, f"{ref_table}_ID")
+                fk_edge = (table_name, from_column, ref_table, ref_column)
+                if not all(fk_edge) or fk_edge in seen_fk_edges:
+                    continue
                 foreign_keys.append({
                     'from_table': table_name,
-                    'from_column': fk.get('column', ''),
-                    'to_table': fk.get('references', ''),
-                    'to_column': f"{fk.get('references', '')}_ID"
+                    'from_column': from_column,
+                    'to_table': ref_table,
+                    'to_column': ref_column
                 })
+                seen_fk_edges.add(fk_edge)
 
         return SchemaInfo(
             database_name=config.get('database_name', 'unknown'),
@@ -220,9 +266,11 @@ class DSQGSyn:
         """Load schema from DDL CSV file."""
         import csv
         import re
+        from pathlib import Path
 
         tables = {}
         foreign_keys = []
+        seen_fk_edges = set()
 
         with open(ddl_path, 'r') as f:
             reader = csv.DictReader(f)
@@ -231,32 +279,147 @@ class DSQGSyn:
                 description = row['description']
                 ddl = row['DDL']
 
-                # Parse columns from DDL
+                # Parse columns and constraints from CREATE TABLE body.
                 columns = []
                 primary_key = None
+                table_foreign_keys = []
 
-                # Extract column definitions
-                col_pattern = r'(\w+)\s+([\w\s\(\)]+?)(?:,|\))'
-                matches = re.findall(col_pattern, ddl)
+                create_match = re.search(
+                    r'CREATE\s+TABLE\s+.*?\((.*)\)\s*;',
+                    ddl,
+                    re.IGNORECASE | re.DOTALL
+                )
+                table_body = create_match.group(1) if create_match else ""
 
-                for col_name, col_type in matches:
-                    if col_name.upper() not in ['DROP', 'TABLE', 'IF', 'EXISTS', 'CREATE', 'CASCADE']:
-                        col_type_clean = col_type.strip()
-                        if 'PRIMARY KEY' in col_type_clean.upper():
-                            primary_key = col_name
-                            col_type_clean = col_type_clean.replace('PRIMARY KEY', '').strip()
+                def split_ddl_items(body: str) -> List[str]:
+                    """Split column/constraint items by commas outside parentheses."""
+                    items = []
+                    current = []
+                    depth = 0
+                    for ch in body:
+                        if ch == '(':
+                            depth += 1
+                        elif ch == ')' and depth > 0:
+                            depth -= 1
 
-                        columns.append({
-                            'name': col_name,
-                            'type': col_type_clean,
-                            'description': ''
-                        })
+                        if ch == ',' and depth == 0:
+                            part = ''.join(current).strip()
+                            if part:
+                                items.append(part)
+                            current = []
+                        else:
+                            current.append(ch)
+
+                    tail = ''.join(current).strip()
+                    if tail:
+                        items.append(tail)
+                    return items
+
+                for item in split_ddl_items(table_body):
+                    upper_item = item.upper().strip()
+
+                    # Table-level PRIMARY KEY
+                    pk_match = re.search(
+                        r'(?:CONSTRAINT\s+"?[A-Za-z_][A-Za-z0-9_]*"?\s+)?'
+                        r'PRIMARY\s+KEY\s*\(([^)]+)\)',
+                        item,
+                        re.IGNORECASE
+                    )
+                    if pk_match:
+                        pk_cols = [c.strip().strip('"') for c in pk_match.group(1).split(',') if c.strip()]
+                        if pk_cols and not primary_key:
+                            primary_key = pk_cols[0]
+                        continue
+
+                    # Table-level FOREIGN KEY
+                    fk_match = re.search(
+                        r'(?:CONSTRAINT\s+"?[A-Za-z_][A-Za-z0-9_]*"?\s+)?'
+                        r'FOREIGN\s+KEY\s*\(\s*"?([A-Za-z_][A-Za-z0-9_]*)"?\s*\)\s*'
+                        r'REFERENCES\s+("?[\w\.]+"?)\s*\(\s*"?([A-Za-z_][A-Za-z0-9_]*)"?\s*\)',
+                        item,
+                        re.IGNORECASE
+                    )
+                    if fk_match:
+                        from_col, raw_ref_table, to_col = fk_match.groups()
+                        ref_table = raw_ref_table.split('.')[-1].strip('"')
+                        fk_edge = (table_name, from_col, ref_table, to_col)
+                        if all(fk_edge) and fk_edge not in seen_fk_edges:
+                            fk_spec = {
+                                'column': from_col,
+                                'references': ref_table,
+                                'references_column': to_col
+                            }
+                            table_foreign_keys.append(fk_spec)
+                            foreign_keys.append({
+                                'from_table': table_name,
+                                'from_column': from_col,
+                                'to_table': ref_table,
+                                'to_column': to_col
+                            })
+                            seen_fk_edges.add(fk_edge)
+                        continue
+
+                    # Column definition
+                    col_match = re.match(
+                        r'^"?([A-Za-z_][A-Za-z0-9_]*)"?\s+(.+)$',
+                        item.strip(),
+                        re.IGNORECASE | re.DOTALL
+                    )
+                    if not col_match:
+                        continue
+
+                    col_name, col_def = col_match.groups()
+                    col_def = col_def.strip()
+
+                    if 'PRIMARY KEY' in upper_item and not primary_key:
+                        primary_key = col_name
+
+                    # Inline REFERENCES support: e.g. col_id BIGINT REFERENCES dim(col_id)
+                    inline_fk_match = re.search(
+                        r'REFERENCES\s+("?[\w\.]+"?)\s*\(\s*"?([A-Za-z_][A-Za-z0-9_]*)"?\s*\)',
+                        col_def,
+                        re.IGNORECASE
+                    )
+                    if inline_fk_match:
+                        raw_ref_table, to_col = inline_fk_match.groups()
+                        ref_table = raw_ref_table.split('.')[-1].strip('"')
+                        fk_edge = (table_name, col_name, ref_table, to_col)
+                        if all(fk_edge) and fk_edge not in seen_fk_edges:
+                            fk_spec = {
+                                'column': col_name,
+                                'references': ref_table,
+                                'references_column': to_col
+                            }
+                            table_foreign_keys.append(fk_spec)
+                            foreign_keys.append({
+                                'from_table': table_name,
+                                'from_column': col_name,
+                                'to_table': ref_table,
+                                'to_column': to_col
+                            })
+                            seen_fk_edges.add(fk_edge)
+
+                    # Keep data type segment before constraints.
+                    col_type_clean = re.split(
+                        r'\bPRIMARY\s+KEY\b|\bNOT\s+NULL\b|\bUNIQUE\b|\bREFERENCES\b|'
+                        r'\bCHECK\b|\bDEFAULT\b|\bCONSTRAINT\b',
+                        col_def,
+                        maxsplit=1,
+                        flags=re.IGNORECASE
+                    )[0].strip()
+
+                    columns.append({
+                        'name': col_name,
+                        'type': col_type_clean,
+                        'description': ''
+                    })
 
                 tables[table_name] = TableInfo(
                     table_name=table_name,
                     description=description,
                     columns=columns,
-                    primary_key=primary_key or (columns[0]['name'] if columns else '')
+                    primary_key=primary_key or (columns[0]['name'] if columns else ''),
+                    foreign_keys=table_foreign_keys
                 )
 
         # Infer database name from DDL path if available
@@ -300,15 +463,28 @@ class DSQGSyn:
         )
         print(f"Synthesized {len(self.raw_pairs)} raw NLQ-SQL pairs")
 
+        # Always save raw pairs immediately so they are never lost
+        import os
+        raw_output_dir = os.path.join("output")
+        os.makedirs(raw_output_dir, exist_ok=True)
+        raw_output_path = os.path.join(raw_output_dir, f"{schema.database_name}_raw.jsonl")
+        self.export_to_jsonl(self.raw_pairs, raw_output_path)
+        print(f"Raw pairs saved to: {raw_output_path}")
+
         # Step 3: NLQ Semantic Optimization
         print("\n=== Step 3: NLQ Semantic Optimization ===")
-        self.final_pairs = self.semantic_optimizer.optimize(
-            self.generated_questions,
-            self.raw_pairs,
-            schema.database_name,
-            db_connection
-        )
-        print(f"Final dataset: {len(self.final_pairs)} high-quality NLQ-SQL pairs")
+        try:
+            self.final_pairs = self.semantic_optimizer.optimize(
+                self.generated_questions,
+                self.raw_pairs,
+                schema.database_name,
+                db_connection
+            )
+            print(f"Final dataset: {len(self.final_pairs)} high-quality NLQ-SQL pairs")
+        except Exception as e:
+            print(f"\n⚠ Semantic optimization failed: {e}")
+            print("Using raw pairs as final output...")
+            self.final_pairs = self.raw_pairs
 
         # Compute and display metrics
         metrics = self.semantic_optimizer.compute_quality_metrics(self.final_pairs)
@@ -339,6 +515,7 @@ class DSQGSyn:
                         'pair_id': pair.pair_id,
                         'original_question_id': pair.original_question_id,
                         'schema_used': pair.schema_used,
+                        'linked_schema': pair.linked_schema,
                         'skeleton_id': pair.skeleton_id,
                         'difficulty': pair.difficulty,
                         'similarity_score': pair.similarity_score
@@ -365,6 +542,7 @@ class DSQGSyn:
                     'pair_id': pair.pair_id,
                     'original_question_id': pair.original_question_id,
                     'schema_used': pair.schema_used,
+                    'linked_schema': pair.linked_schema,
                     'skeleton_id': pair.skeleton_id,
                     'difficulty': pair.difficulty,
                     'similarity_score': pair.similarity_score

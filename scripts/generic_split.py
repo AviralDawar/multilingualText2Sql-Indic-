@@ -193,7 +193,7 @@ class GenericSplitter:
 
         # Process dimension tables first (they generate IDs needed by fact tables)
         for table_name, table_config in self.config.dimension_tables.items():
-            dim_id = self._process_dimension_row(table_name, table_config, row)
+            dim_id = self._process_dimension_row(table_name, table_config, row, all_ids)
             all_ids[table_name] = dim_id
 
         # Process fact tables in order (first fact table generates ID, others may reference it)
@@ -202,18 +202,50 @@ class GenericSplitter:
             fact_id = self._process_fact_row(table_name, table_config, row, all_ids)
             all_ids[table_name] = fact_id
 
-    def _process_dimension_row(self, table_name: str, config: dict, row: List[str]) -> int:
+    def _process_dimension_row(self, table_name: str, config: dict, row: List[str], all_ids: Dict[str, int]) -> int:
         """Process dimension table - dedup and return ID"""
+        key_source_index = config.get('key_source_index')
+        key_transform = config.get('key_transform')
+        natural_key = None
+        if key_source_index is not None:
+            natural_key = self._safe_get(row, key_source_index)
+            if key_transform and key_transform in TRANSFORMERS:
+                try:
+                    natural_key = TRANSFORMERS[key_transform](natural_key)
+                except Exception:
+                    natural_key = ''
+            if not is_valid_value(natural_key):
+                natural_key = None
+
         # Generate dedup key from specified columns
         dedup_cols = config.get('dedup_columns', [])
-        key = '|'.join(self._safe_get(row, i) for i in dedup_cols)
+        dedup_parts = [str(natural_key)] if natural_key is not None else []
+        dedup_parts.extend(self._safe_get(row, i) for i in dedup_cols)
+
+        # Include FK parent IDs in dedup key so child values that repeat across
+        # different parents are not collapsed into one dimension row.
+        for fk in config.get('foreign_keys', []):
+            parent_id = all_ids.get(fk['references'])
+            dedup_parts.append(str(parent_id) if parent_id is not None else '')
+
+        key = '|'.join(dedup_parts)
 
         if key not in self.dimension_data[table_name]:
             # Extract column values
             row_data = self._extract_columns(config, row)
-            dim_id = self.id_counters[table_name]
+
+            # Add FK columns on dimensions so generated CSV/DDL matches schema_config.
+            for fk in config.get('foreign_keys', []):
+                fk_column = fk['column']
+                fk_value = all_ids.get(fk['references'])
+                row_data[fk_column] = fk_value
+
+            if natural_key is not None:
+                dim_id = natural_key
+            else:
+                dim_id = self.id_counters[table_name]
+                self.id_counters[table_name] += 1
             self.dimension_data[table_name][key] = (dim_id, row_data)
-            self.id_counters[table_name] += 1
 
         return self.dimension_data[table_name][key][0]
 
@@ -317,12 +349,16 @@ class GenericSplitter:
         # Write dimension tables
         for table_name, config in self.config.dimension_tables.items():
             key_column = config.get('key_column', f'{table_name}_ID')
+            fk_columns = [fk['column'] for fk in config.get('foreign_keys', [])]
             col_names = [c['target_name'] for c in config.get('columns', [])]
-            headers = [key_column] + col_names
+            headers = [key_column] + fk_columns + col_names
 
             rows = []
             for _, (dim_id, data) in self.dimension_data[table_name].items():
-                rows.append([dim_id] + list(data.values()))
+                row_values = [dim_id]
+                row_values.extend(data.get(col) for col in fk_columns)
+                row_values.extend(data.get(col) for col in col_names)
+                rows.append(row_values)
 
             self._write_csv(data_dir / f'{table_name}.csv', rows, headers)
             self._write_json(output_dir / f'{table_name}.json', rows, headers, sample_size)

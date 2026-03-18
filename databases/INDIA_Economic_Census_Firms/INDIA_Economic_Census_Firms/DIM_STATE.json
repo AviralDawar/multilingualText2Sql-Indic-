@@ -1,22 +1,27 @@
 [
   {
     "STATE_ID": 1,
+    "COUNTRY_ID": 1,
     "STATE_NAME": "Andaman And Nicobar Islands"
   },
   {
     "STATE_ID": 2,
+    "COUNTRY_ID": 1,
     "STATE_NAME": "Andhra Pradesh"
   },
   {
     "STATE_ID": 3,
+    "COUNTRY_ID": 1,
     "STATE_NAME": "Arunachal Pradesh"
   },
   {
     "STATE_ID": 4,
+    "COUNTRY_ID": 1,
     "STATE_NAME": "Assam"
   },
   {
     "STATE_ID": 5,
+    "COUNTRY_ID": 1,
     "STATE_NAME": "Bihar"
   }
 ]

@@ -74,7 +74,7 @@ def execute_use_schema(cursor, schema: str):
         cursor: Database cursor
         schema: Schema name
     """
-    cursor.execute(f"SET search_path TO {schema}")
+    cursor.execute(f'SET search_path TO "{schema.lower()}"')
 
 
 def execute_create_schema(cursor, schema: str):
@@ -85,7 +85,7 @@ def execute_create_schema(cursor, schema: str):
         cursor: Database cursor
         schema: Schema name
     """
-    cursor.execute(f"CREATE SCHEMA IF NOT EXISTS {schema}")
+    cursor.execute(f'CREATE SCHEMA IF NOT EXISTS "{schema}"')
 
 
 def execute_truncate_table(cursor, table_name: str):
