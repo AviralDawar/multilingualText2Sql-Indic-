@@ -1,0 +1,3642 @@
+[
+  {
+    "question": "List the distinct geography IDs for households where either the completion status is 'Located' or the new household split number is greater than zero.",
+    "sql": "SELECT DISTINCT T1.GEOGRAPHY_ID FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_HOUSEHOLD_STATUS AS T2 ON T1.HOUSEHOLD_STATUS_ID = T2.HOUSEHOLD_STATUS_ID WHERE T2.COMPLETION_STATUS = 'Located' OR T1.NEW_HOUSEHOLD_SPLIT_NUMBER > 0;",
+    "pair_id": "1f4fe08c",
+    "original_question_id": "f83949c2",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve distinct `fact_household_core.geography_id` where either `dim_household_status.completion_status` = 'Located' OR `fact_household_core.new_household_split_number` > 0. Join `fact_household_core` with `dim_household_status` on `fact_household_core.household_status_id` = `dim_household_status.household_status_id`."
+  },
+  {
+    "question": "List the unique geography IDs for households where either the completion status is 'Moved out' or the new household split number is greater than 1.",
+    "sql": "SELECT DISTINCT T1.GEOGRAPHY_ID FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_HOUSEHOLD_STATUS AS T2 ON T1.HOUSEHOLD_STATUS_ID = T2.HOUSEHOLD_STATUS_ID WHERE T2.COMPLETION_STATUS = 'Moved out' OR T1.NEW_HOUSEHOLD_SPLIT_NUMBER > 1;",
+    "pair_id": "b264690b",
+    "original_question_id": "f83949c2",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct (`fact_household_core`.`geography_id`) from `fact_household_core` join `dim_household_status` on `fact_household_core`.`household_status_id` = `dim_household_status`.`household_status_id` where (`dim_household_status`.`completion_status` = 'Moved out') or (`fact_household_core`.`new_household_split_number` > 1)."
+  },
+  {
+    "question": "List the distinct geography IDs for households where either the completion status is 'Located' or the new household split number is not equal to zero.",
+    "sql": "SELECT DISTINCT T1.GEOGRAPHY_ID FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_HOUSEHOLD_STATUS AS T2 ON T1.HOUSEHOLD_STATUS_ID = T2.HOUSEHOLD_STATUS_ID WHERE T2.COMPLETION_STATUS = 'Located' OR T1.NEW_HOUSEHOLD_SPLIT_NUMBER <> 0",
+    "pair_id": "135b75e1",
+    "original_question_id": "f83949c2",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve distinct `fact_household_core.geography_id` from `fact_household_core` joined with `dim_household_status` on `household_status_id` where `dim_household_status.completion_status` = 'Located' OR `fact_household_core.new_household_split_number` != 0."
+  },
+  {
+    "question": "List the unique geography IDs for households where the completion status is 'Moved out' or the new household split number is not equal to zero.",
+    "sql": "SELECT DISTINCT T1.GEOGRAPHY_ID FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_HOUSEHOLD_STATUS AS T2 ON T1.HOUSEHOLD_STATUS_ID = T2.HOUSEHOLD_STATUS_ID WHERE T2.COMPLETION_STATUS = 'Moved out' OR T1.NEW_HOUSEHOLD_SPLIT_NUMBER <> 0",
+    "pair_id": "a931cdd0",
+    "original_question_id": "f83949c2",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve distinct `fact_household_core`.`geography_id` from `fact_household_core` LEFT JOIN `dim_household_status` ON `fact_household_core`.`household_status_id` = `dim_household_status`.`household_status_id` where `dim_household_status`.`completion_status` = 'Moved out' OR `fact_household_core`.`new_household_split_number` != 0."
+  },
+  {
+    "question": "List the geography IDs, grouped and ordered by geography ID, for households where either the completion status is 'Located' or the new household split number is greater than 1.",
+    "sql": "SELECT T1.GEOGRAPHY_ID FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_HOUSEHOLD_STATUS AS T2 ON T1.HOUSEHOLD_STATUS_ID = T2.HOUSEHOLD_STATUS_ID WHERE T2.COMPLETION_STATUS = 'Located' OR T1.NEW_HOUSEHOLD_SPLIT_NUMBER > 1 GROUP BY T1.GEOGRAPHY_ID ORDER BY T1.GEOGRAPHY_ID",
+    "pair_id": "b88e6e6c",
+    "original_question_id": "f83949c2",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `fact_household_core`.`geography_id` from `fact_household_core` joined with `dim_household_status` on `fact_household_core`.`household_status_id` = `dim_household_status`.`household_status_id` where `dim_household_status`.`completion_status` = 'Located' OR `fact_household_core`.`new_household_split_number` > 1. Group by `fact_household_core`.`geography_id` and order by `fact_household_core`.`geography_id`."
+  },
+  {
+    "question": "List the geography IDs, grouped and ordered by geography ID, for households where the completion status is 'Moved out' or the new household split number is greater than zero.",
+    "sql": "SELECT T1.GEOGRAPHY_ID FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_HOUSEHOLD_STATUS AS T2 ON T1.HOUSEHOLD_STATUS_ID = T2.HOUSEHOLD_STATUS_ID WHERE T2.COMPLETION_STATUS = 'Moved out' OR T1.NEW_HOUSEHOLD_SPLIT_NUMBER > 0 GROUP BY T1.GEOGRAPHY_ID ORDER BY T1.GEOGRAPHY_ID",
+    "pair_id": "be83fc8f",
+    "original_question_id": "f83949c2",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select fact_household_core.geography_id from fact_household_core join dim_household_status on fact_household_core.household_status_id = dim_household_status.household_status_id where dim_household_status.completion_status = 'Moved out' or fact_household_core.new_household_split_number > 0 group by fact_household_core.geography_id order by fact_household_core.geography_id."
+  },
+  {
+    "question": "List the unique geography IDs, ordered ascending, for locations that have at least one household record where either the household completion status is 'Located' or the new household split number is not equal to 0.",
+    "sql": "SELECT DISTINCT T1.GEOGRAPHY_ID FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T1.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID WHERE T3.COMPLETION_STATUS = 'Located' OR T1.NEW_HOUSEHOLD_SPLIT_NUMBER <> 0 GROUP BY T1.GEOGRAPHY_ID HAVING COUNT(T1.HOUSEHOLD_ID) >= 1 ORDER BY T1.GEOGRAPHY_ID ASC",
+    "pair_id": "9f45dc1c",
+    "original_question_id": "f83949c2",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve distinct `fact_household_core`.`geography_id` from `fact_household_core` LEFT JOIN `dim_household_status` ON `fact_household_core`.`household_status_id` = `dim_household_status`.`household_status_id` where `dim_household_status`.`completion_status` = 'Located' OR `fact_household_core`.`new_household_split_number` <> 0. Order by `fact_household_core`.`geography_id` ASC."
+  },
+  {
+    "question": "List the unique geography IDs, ordered ascending, for locations where there is at least one household record that either has a completion status of 'Moved out' or a new household split number other than zero, grouped by their geography ID.",
+    "sql": "SELECT DISTINCT T1.GEOGRAPHY_ID FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T1.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID WHERE T3.COMPLETION_STATUS = 'Moved out' OR T1.NEW_HOUSEHOLD_SPLIT_NUMBER <> 0 GROUP BY T1.GEOGRAPHY_ID HAVING COUNT(T1.HOUSEHOLD_NUMBER) >= 1 ORDER BY T1.GEOGRAPHY_ID ASC",
+    "pair_id": "6a034850",
+    "original_question_id": "f83949c2",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `fact_household_core`.`geography_id` from `fact_household_core` left join `dim_household_status` on `fact_household_core`.`household_status_id` = `dim_household_status`.`household_status_id` where `dim_household_status`.`completion_status` = 'Moved out' or `fact_household_core`.`new_household_split_number` != 0 order by `fact_household_core`.`geography_id` asc."
+  },
+  {
+    "question": "List the geography IDs for households where the completion status is 'Located' and the household split number is equal to 1.",
+    "sql": "SELECT T1.GEOGRAPHY_ID FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_HOUSEHOLD_STATUS AS T2 ON T1.HOUSEHOLD_STATUS_ID = T2.HOUSEHOLD_STATUS_ID WHERE T2.COMPLETION_STATUS = 'Located' AND T1.HOUSEHOLD_SPLIT_NUMBER = 1",
+    "pair_id": "f6d79b0f",
+    "original_question_id": "d25d7ea2",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_household_core`.`geography_id` from `fact_household_core` join `dim_household_status` on `fact_household_core`.`household_status_id` = `dim_household_status`.`household_status_id` where `dim_household_status`.`completion_status` = 'Located' and `fact_household_core`.`household_split_number` = 1."
+  },
+  {
+    "question": "List the geography IDs for households where the completion status is 'Moved out' and the household split number is equal to 1.",
+    "sql": "SELECT T1.GEOGRAPHY_ID FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_HOUSEHOLD_STATUS AS T2 ON T1.HOUSEHOLD_STATUS_ID = T2.HOUSEHOLD_STATUS_ID WHERE T2.COMPLETION_STATUS = 'Moved out' AND T1.HOUSEHOLD_SPLIT_NUMBER = 1",
+    "pair_id": "fe422831",
+    "original_question_id": "d25d7ea2",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_household_core`.`geography_id` from `fact_household_core` join `dim_household_status` on `fact_household_core`.`household_status_id` = `dim_household_status`.`household_status_id` where `dim_household_status`.`completion_status` = 'Moved out' and `fact_household_core`.`household_split_number` = '1'."
+  },
+  {
+    "question": "List the geography IDs for households where the completion status is 'Located', specifically for those geography IDs that have a count of household split numbers greater than zero.",
+    "sql": "SELECT T1.GEOGRAPHY_ID FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_HOUSEHOLD_STATUS AS T2 ON T1.HOUSEHOLD_STATUS_ID = T2.HOUSEHOLD_STATUS_ID WHERE T2.COMPLETION_STATUS = 'Located' GROUP BY T1.GEOGRAPHY_ID HAVING COUNT(T1.HOUSEHOLD_SPLIT_NUMBER) > 0",
+    "pair_id": "baa4034d",
+    "original_question_id": "d25d7ea2",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter households where `dim_household_status`.`completion_status` = 'Located'. For each `fact_household_core`.`geography_id`, count rows where `fact_household_core`.`household_split_number` > 0. Return geography IDs where this count > 0."
+  },
+  {
+    "question": "List the geography IDs for areas in the state of Rajasthan where the count of new household split numbers is greater than one, grouped by their geography ID.",
+    "sql": "SELECT T1.GEOGRAPHY_ID FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.STATE_CODE = 'Rajasthan' GROUP BY T1.GEOGRAPHY_ID HAVING COUNT(T1.NEW_HOUSEHOLD_SPLIT_NUMBER) > 1",
+    "pair_id": "9df78651",
+    "original_question_id": "d25d7ea2",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy` where `dim_geography_hierarchy.state_code` = 'Rajasthan', join with `fact_household_core` on `dim_geography_hierarchy.geography_id` = `fact_household_core.geography_id`. Count rows where `fact_household_core.new_household_split_number` > 1 per `fact_household_core.geography_id`, and select `fact_household_core.geography_id` having count > 1."
+  },
+  {
+    "question": "List the unique geography IDs, ordered ascendingly, for households where the completion status is 'Located' and the household split number is 1.",
+    "sql": "SELECT DISTINCT T1.GEOGRAPHY_ID FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_HOUSEHOLD_STATUS AS T2 ON T1.HOUSEHOLD_STATUS_ID = T2.HOUSEHOLD_STATUS_ID WHERE T2.COMPLETION_STATUS = 'Located' AND T1.HOUSEHOLD_SPLIT_NUMBER = 1 ORDER BY T1.GEOGRAPHY_ID ASC",
+    "pair_id": "4c9eca12",
+    "original_question_id": "d25d7ea2",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_core` with `dim_household_status` on `fact_household_core`.`household_status_id` = `dim_household_status`.`household_status_id`. Filter where `dim_household_status`.`completion_status` = 'Located' and `fact_household_core`.`household_split_number` = 1. Select distinct `fact_household_core`.`geography_id` and order by `fact_household_core`.`geography_id` ASC."
+  },
+  {
+    "question": "List the unique geography IDs, sorted in ascending order, for households where the household split number is 1 and the state code is 'Rajasthan'.",
+    "sql": "SELECT DISTINCT T1.GEOGRAPHY_ID FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.STATE_CODE = 'Rajasthan' AND T1.HOUSEHOLD_SPLIT_NUMBER = 1 ORDER BY T1.GEOGRAPHY_ID ASC",
+    "pair_id": "3dde3866",
+    "original_question_id": "d25d7ea2",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_core` and `dim_geography_hierarchy` on `geography_id`. Filter where `fact_household_core`.`household_split_number` = '1' and `dim_geography_hierarchy`.`state_code` = 'Rajasthan'. Select distinct `fact_household_core`.`geography_id` and sort ascending."
+  },
+  {
+    "question": "List the geography IDs, ordered ascending, for areas in the state of 'Rajasthan' that have at least one household with a completion status of 'Located' and a total household split number greater than zero.",
+    "sql": "SELECT T1.GEOGRAPHY_ID FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T1.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID WHERE T2.STATE_CODE = 'Rajasthan' GROUP BY T1.GEOGRAPHY_ID HAVING COUNT(CASE WHEN T3.COMPLETION_STATUS = 'Located' THEN 1 END) > 0 AND SUM(T1.HOUSEHOLD_SPLIT_NUMBER) > 0 ORDER BY T1.GEOGRAPHY_ID ASC",
+    "pair_id": "20717106",
+    "original_question_id": "d25d7ea2",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy.state_code` = 'Rajasthan' and `dim_household_status.completion_status` = 'Located'. Join `dim_geography_hierarchy` to `fact_household_core` on `geography_id`, and `fact_household_core` to `dim_household_status` on `household_status_id`. Group by `dim_geography_hierarchy.geography_id`, calculate sum(`fact_household_core.household_split_number`), keep groups where sum > 0. Order by `dim_geography_hierarchy.geography_id` ascending."
+  },
+  {
+    "question": "List the geography IDs for districts with code '5' where there is at least one household with a completion status of 'Moved out' and the maximum new household split number is 1 or greater, ordered by the geography ID.",
+    "sql": "SELECT T1.GEOGRAPHY_ID FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T1.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID WHERE T2.DISTRICT_CODE = '5' GROUP BY T1.GEOGRAPHY_ID HAVING COUNT(CASE WHEN T3.COMPLETION_STATUS = 'Moved out' THEN 1 END) > 0 AND MAX(T1.NEW_HOUSEHOLD_SPLIT_NUMBER) >= 1 ORDER BY T1.GEOGRAPHY_ID ASC",
+    "pair_id": "fa1e8f38",
+    "original_question_id": "d25d7ea2",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Need `dim_geography_hierarchy`.`geography_id` where `dim_geography_hierarchy`.`district_code` = 5 and exists at least one household in `fact_household_core` linked via `fact_household_core`.`geography_id` with `dim_household_status`.`completion_status` = 'Moved out' and MAX(`fact_household_core`.`new_household_split_number`) >= 1 for that geography. Order by `dim_geography_hierarchy`.`geography_id`."
+  },
+  {
+    "question": "List the PSU codes from the geography hierarchy for households where the completion status is 'Located' and the household split number is 0.",
+    "sql": "SELECT T1.PSU_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T2.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID WHERE T3.COMPLETION_STATUS = 'Located' AND T2.HOUSEHOLD_SPLIT_NUMBER = 0",
+    "pair_id": "f17305d9",
+    "original_question_id": "41c9dae6",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_geography_hierarchy`.`psu_code` by joining `fact_household_core` with `dim_geography_hierarchy` on `fact_household_core`.`geography_id` = `dim_geography_hierarchy`.`geography_id` and with `dim_household_status` on `fact_household_core`.`household_status_id` = `dim_household_status`.`household_status_id`. Filter where `dim_household_status`.`completion_status` = 'Located' and `fact_household_core`.`household_split_number` = 0."
+  },
+  {
+    "question": "List the PSU code from the geography hierarchy for households where the completion status is 'Located' and the new household split number is equal to 1.",
+    "sql": "SELECT T1.PSU_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T2.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID WHERE T3.COMPLETION_STATUS = 'Located' AND T2.NEW_HOUSEHOLD_SPLIT_NUMBER = 1",
+    "pair_id": "9964b6f1",
+    "original_question_id": "41c9dae6",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_household_status`.`completion_status` = 'Located' and `fact_household_core`.`new_household_split_number` = 1. Join `fact_household_core` with `dim_household_status` on `household_status_id`. Join `fact_household_core` with `dim_geography_hierarchy` on `geography_id`. Select `dim_geography_hierarchy`.`psu_code`."
+  },
+  {
+    "question": "List the PSU codes from the geography hierarchy for households where the completion status is 'Located' and the household split number is 0, specifically filtering for those PSU codes that are associated with exactly one household record.",
+    "sql": "SELECT T1.PSU_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T2.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID WHERE T3.COMPLETION_STATUS = 'Located' AND T2.HOUSEHOLD_SPLIT_NUMBER = 0 GROUP BY T1.PSU_CODE HAVING COUNT(T2.HOUSEHOLD_ID) = 1",
+    "pair_id": "9a3efba2",
+    "original_question_id": "41c9dae6",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Find `dim_geography_hierarchy`.`psu_code` values where `dim_household_status`.`completion_status` is exactly 'Located' and `fact_household_core`.`household_split_number` = 0, and each such PSU code is associated with exactly one distinct `fact_household_core`.`household_id`."
+  },
+  {
+    "question": "List the unique PSU codes in ascending order for households where the completion status is 'Located', the household split number is 0, and the new household split number is 1.",
+    "sql": "SELECT DISTINCT T1.PSU_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T2.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID WHERE T3.COMPLETION_STATUS = 'Located' AND T2.HOUSEHOLD_SPLIT_NUMBER = 0 AND T2.NEW_HOUSEHOLD_SPLIT_NUMBER = 1 ORDER BY T1.PSU_CODE ASC",
+    "pair_id": "cd91f0bd",
+    "original_question_id": "41c9dae6",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `fact_household_core` where `fact_household_core`.`household_split_number` = 0 and `fact_household_core`.`new_household_split_number` = 1, and join to `dim_household_status` on `fact_household_core`.`household_status_id` = `dim_household_status`.`household_status_id` where `dim_household_status`.`completion_status` = 'Located'. Then join to `dim_geography_hierarchy` on `fact_household_core`.`geography_id` = `dim_geography_hierarchy`.`geography_id` and select distinct `dim_geography_hierarchy`.`psu_code` ordered ascending."
+  },
+  {
+    "question": "List the unique PSU codes in ascending order for households where the completion status is 'Located', the household split number is 0, and the household number is 1.",
+    "sql": "SELECT DISTINCT T1.PSU_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T2.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID WHERE T3.COMPLETION_STATUS = 'Located' AND T2.HOUSEHOLD_SPLIT_NUMBER = 0 AND T2.HOUSEHOLD_NUMBER = 1 ORDER BY T1.PSU_CODE ASC",
+    "pair_id": "623c49a0",
+    "original_question_id": "41c9dae6",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `dim_geography_hierarchy`.`psu_code` from `fact_household_core` join `dim_household_status` on `fact_household_core`.`household_status_id` = `dim_household_status`.`household_status_id` join `dim_geography_hierarchy` on `fact_household_core`.`geography_id` = `dim_geography_hierarchy`.`geography_id` where `dim_household_status`.`completion_status` = 'Located' and `fact_household_core`.`household_split_number` = 0 and `fact_household_core`.`household_number` = 1 order by `dim_geography_hierarchy`.`psu_code` asc."
+  },
+  {
+    "question": "List the PSU codes from the geography hierarchy for households in the state of 'Rajasthan' where the completion status is 'Located', grouped by their PSU code, such that the total sum of their household split numbers is exactly zero, and order the results by PSU code in ascending order.",
+    "sql": "SELECT T1.PSU_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T2.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID WHERE T3.COMPLETION_STATUS = 'Located' AND T1.STATE_CODE = 'Rajasthan' GROUP BY T1.PSU_CODE HAVING SUM(T2.HOUSEHOLD_SPLIT_NUMBER) = 0 ORDER BY T1.PSU_CODE ASC",
+    "pair_id": "8ef9221e",
+    "original_question_id": "41c9dae6",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join fact_household_core with dim_geography_hierarchy on geography_id and dim_household_status on household_status_id. Filter where dim_geography_hierarchy.state_code = 'Rajasthan' and dim_household_status.completion_status = 'Located'. Group by dim_geography_hierarchy.psu_code and require SUM(fact_household_core.household_split_number) = 0. Order by dim_geography_hierarchy.psu_code ASC."
+  },
+  {
+    "question": "List the household ID, the household number, the state code, the district code, and the PSU code for all records where the household split number is equal to 1.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T1.HOUSEHOLD_NUMBER, T2.STATE_CODE, T2.DISTRICT_CODE, T2.PSU_CODE FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.HOUSEHOLD_SPLIT_NUMBER = 1",
+    "pair_id": "a1918adc",
+    "original_question_id": "5693b172",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE",
+      "FACT_HOUSEHOLD_TRACKING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_ID"
+      ],
+      "FACT_HOUSEHOLD_TRACKING": [
+        "HOUSEHOLD_TRACKING_ID",
+        "HOUSEHOLD_ID",
+        "SAME_ADDRESS_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_household_core`.`household_id`, `fact_household_core`.`household_number`, `dim_geography_hierarchy`.`state_code`, `dim_geography_hierarchy`.`district_code`, `dim_geography_hierarchy`.`psu_code` from `fact_household_core` join `dim_geography_hierarchy` on `fact_household_core`.`geography_id` = `dim_geography_hierarchy`.`geography_id` where `fact_household_core`.`household_split_number` = 1."
+  },
+  {
+    "question": "List the household ID, the household number, the completion status, the other completion status details, and the household split number for all records where the household split number is equal to 1.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T1.HOUSEHOLD_NUMBER, T2.COMPLETION_STATUS, T2.COMPLETION_STATUS_OTHER, T1.HOUSEHOLD_SPLIT_NUMBER FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_HOUSEHOLD_STATUS AS T2 ON T1.HOUSEHOLD_STATUS_ID = T2.HOUSEHOLD_STATUS_ID WHERE T1.HOUSEHOLD_SPLIT_NUMBER = 1",
+    "pair_id": "8755e39a",
+    "original_question_id": "5693b172",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE",
+      "FACT_HOUSEHOLD_TRACKING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_ID"
+      ],
+      "FACT_HOUSEHOLD_TRACKING": [
+        "HOUSEHOLD_TRACKING_ID",
+        "HOUSEHOLD_ID",
+        "SAME_ADDRESS_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_household_core.household_id`, `fact_household_core.household_number`, `dim_household_status.completion_status`, `dim_household_status.completion_status_other`, `fact_household_core.household_split_number` from `fact_household_core` inner join `dim_household_status` on `fact_household_core.household_status_id` = `dim_household_status.household_status_id` where `fact_household_core.household_split_number` = 1."
+  },
+  {
+    "question": "List the household ID, the household number, the household split number, and the state code for all records where the household split number is 1, ordered by the household ID.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T1.HOUSEHOLD_NUMBER, T1.HOUSEHOLD_SPLIT_NUMBER, T2.STATE_CODE FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.HOUSEHOLD_SPLIT_NUMBER = 1 ORDER BY T1.HOUSEHOLD_ID ASC",
+    "pair_id": "7f3b380d",
+    "original_question_id": "5693b172",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE",
+      "FACT_HOUSEHOLD_TRACKING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_ID"
+      ],
+      "FACT_HOUSEHOLD_TRACKING": [
+        "HOUSEHOLD_TRACKING_ID",
+        "HOUSEHOLD_ID",
+        "SAME_ADDRESS_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_household_core`.`household_id`, `fact_household_core`.`household_number`, `fact_household_core`.`household_split_number`, `dim_geography_hierarchy`.`state_code` from `fact_household_core` join `dim_geography_hierarchy` on `fact_household_core`.`geography_id` = `dim_geography_hierarchy`.`geography_id` where `fact_household_core`.`household_split_number` = 1 order by `fact_household_core`.`household_id`."
+  },
+  {
+    "question": "List the household ID, the household number, the new household split number, and the completion status for all records where the household split number is 1, ordered by the household ID.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T1.HOUSEHOLD_NUMBER, T1.NEW_HOUSEHOLD_SPLIT_NUMBER, T2.COMPLETION_STATUS FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_HOUSEHOLD_STATUS AS T2 ON T1.HOUSEHOLD_STATUS_ID = T2.HOUSEHOLD_STATUS_ID WHERE T1.HOUSEHOLD_SPLIT_NUMBER = 1 ORDER BY T1.HOUSEHOLD_ID ASC",
+    "pair_id": "725d9099",
+    "original_question_id": "5693b172",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE",
+      "FACT_HOUSEHOLD_TRACKING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_ID"
+      ],
+      "FACT_HOUSEHOLD_TRACKING": [
+        "HOUSEHOLD_TRACKING_ID",
+        "HOUSEHOLD_ID",
+        "SAME_ADDRESS_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_household_core`.`household_id`, `fact_household_core`.`household_number`, `fact_household_core`.`new_household_split_number`, `dim_household_status`.`completion_status` from `fact_household_core` join `dim_household_status` on `fact_household_core`.`household_status_id` = `dim_household_status`.`household_status_id` where `fact_household_core`.`household_split_number` = 1 order by `fact_household_core`.`household_id`."
+  },
+  {
+    "question": "For households that are located and have a new household split number of 1 or more, list the state code, the PSU code, and the completion status, ensuring that only groups with at least one household tracking record are included.",
+    "sql": "SELECT T1.STATE_CODE, T1.PSU_CODE, T3.COMPLETION_STATUS FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T2.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID JOIN FACT_HOUSEHOLD_TRACKING AS T4 ON T2.HOUSEHOLD_ID = T4.HOUSEHOLD_ID WHERE T3.COMPLETION_STATUS = 'Located' AND T2.NEW_HOUSEHOLD_SPLIT_NUMBER >= 1 GROUP BY T1.STATE_CODE, T1.PSU_CODE, T3.COMPLETION_STATUS HAVING COUNT(T4.HOUSEHOLD_TRACKING_ID) > 0;",
+    "pair_id": "fbb764b2",
+    "original_question_id": "5693b172",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE",
+      "FACT_HOUSEHOLD_TRACKING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_ID"
+      ],
+      "FACT_HOUSEHOLD_TRACKING": [
+        "HOUSEHOLD_TRACKING_ID",
+        "HOUSEHOLD_ID",
+        "SAME_ADDRESS_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `fact_household_core` where `dim_household_status`.`completion_status` = 'Located' and `fact_household_core`.`new_household_split_number` >= 1. Join `dim_geography_hierarchy` on `fact_household_core`.`geography_id` = `dim_geography_hierarchy`.`geography_id`. Join `dim_household_status` on `fact_household_core`.`household_status_id` = `dim_household_status`.`household_status_id`. Ensure existence in `fact_household_tracking` on `fact_household_core`.`household_id` = `fact_household_tracking`.`household_id`. Group by `dim_geography_hierarchy`.`state_code`, `dim_geography_hierarchy`.`psu_code`, `dim_household_status`.`completion_status` having COUNT(`fact_household_tracking`.`household_id`) >= 1."
+  },
+  {
+    "question": "Identify the household ID, the new household split number, the state code, the district code, the PSU code, and the completion status for households where the completion status is 'Located' and the household ID is associated with tracking IDs 1, 2, 3, 4, or 5, grouped by these same attributes and ordered by state and district codes.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T1.NEW_HOUSEHOLD_SPLIT_NUMBER, T2.STATE_CODE, T2.DISTRICT_CODE, T2.PSU_CODE, T3.COMPLETION_STATUS FROM FACT_HOUSEHOLD_CORE AS T1 INNER JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T1.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID WHERE T1.HOUSEHOLD_ID IN (SELECT HOUSEHOLD_ID FROM FACT_HOUSEHOLD_TRACKING WHERE HOUSEHOLD_TRACKING_ID IN (1, 2, 3, 4, 5)) AND T3.COMPLETION_STATUS = 'Located' GROUP BY T1.HOUSEHOLD_ID, T1.NEW_HOUSEHOLD_SPLIT_NUMBER, T2.STATE_CODE, T2.DISTRICT_CODE, T2.PSU_CODE, T3.COMPLETION_STATUS ORDER BY T2.STATE_CODE ASC, T2.DISTRICT_CODE ASC",
+    "pair_id": "8df5c096",
+    "original_question_id": "5693b172",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE",
+      "FACT_HOUSEHOLD_TRACKING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_ID"
+      ],
+      "FACT_HOUSEHOLD_TRACKING": [
+        "HOUSEHOLD_TRACKING_ID",
+        "HOUSEHOLD_ID",
+        "SAME_ADDRESS_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Query `fact_household_core.household_id`, `fact_household_core.new_household_split_number`, `dim_geography_hierarchy.state_code`, `dim_geography_hierarchy.district_code`, `dim_geography_hierarchy.psu_code`, `dim_household_status.completion_status`. Join `fact_household_core` with `dim_geography_hierarchy` on `fact_household_core.geography_id` = `dim_geography_hierarchy.geography_id`, and with `dim_household_status` on `fact_household_core.household_status_id` = `dim_household_status.household_status_id`. Filter `dim_household_status.completion_status` = 'Located' and ensure `fact_household_core.household_id` is linked (via `fact_household_tracking.household_id`) to `fact_household_tracking.household_tracking_id` IN (1, 2, 3, 4, 5). Group by all selected columns and order by `dim_geography_hierarchy.state_code`, `dim_geography_hierarchy.district_code`."
+  },
+  {
+    "question": "List the top 10 district codes with the highest number of records, specifically for households where the new household split number is greater than zero, grouped by their district code.",
+    "sql": "SELECT T1.DISTRICT_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.NEW_HOUSEHOLD_SPLIT_NUMBER > 0 GROUP BY T1.DISTRICT_CODE ORDER BY COUNT(*) DESC LIMIT 10",
+    "pair_id": "76cd9af1",
+    "original_question_id": "ee0a0ff4",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Count `fact_household_core.household_id` where `fact_household_core.new_household_split_number > 0`, join `dim_geography_hierarchy` on `fact_household_core.geography_id = dim_geography_hierarchy.geography_id`, group by `dim_geography_hierarchy.district_code`, order by count descending, limit 10."
+  },
+  {
+    "question": "List the district codes for the top 10 districts that have the highest count of records where the new household split number is greater than one, grouped by their district code.",
+    "sql": "SELECT T1.DISTRICT_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.NEW_HOUSEHOLD_SPLIT_NUMBER > 1 GROUP BY T1.DISTRICT_CODE ORDER BY COUNT(*) DESC LIMIT 10",
+    "pair_id": "7c12988d",
+    "original_question_id": "ee0a0ff4",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join fact_household_core with dim_geography_hierarchy on geography_id. Filter where fact_household_core.new_household_split_number > 1. Group by dim_geography_hierarchy.district_code, count records per district. Order by count descending, limit 10."
+  },
+  {
+    "question": "List the district codes and the total count of household IDs for each district, filtering for households where the new household split number is greater than zero, and show the top 10 districts with the highest household counts.",
+    "sql": "SELECT T1.DISTRICT_CODE, COUNT(T2.HOUSEHOLD_ID) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.NEW_HOUSEHOLD_SPLIT_NUMBER > 0 GROUP BY T1.DISTRICT_CODE ORDER BY COUNT(T2.HOUSEHOLD_ID) DESC LIMIT 10",
+    "pair_id": "5684f110",
+    "original_question_id": "ee0a0ff4",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Need to join `fact_household_core` (contains `household_id` and `new_household_split_number`) with `dim_geography_hierarchy` (contains `district_code`) via `geography_id`. Filter `fact_household_core`.`new_household_split_number` > 0. Group by `dim_geography_hierarchy`.`district_code`, count distinct `fact_household_core`.`household_id`. Order by count descending, limit 10."
+  },
+  {
+    "question": "List the district codes and the total count of household IDs for households where the new household split number is greater than one, grouped by district code and ordered by the count in descending order for the top 10 results.",
+    "sql": "SELECT T1.DISTRICT_CODE, COUNT(T2.HOUSEHOLD_ID) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.NEW_HOUSEHOLD_SPLIT_NUMBER > 1 GROUP BY T1.DISTRICT_CODE ORDER BY COUNT(T2.HOUSEHOLD_ID) DESC LIMIT 10",
+    "pair_id": "032cf4dc",
+    "original_question_id": "ee0a0ff4",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_core` with `dim_geography_hierarchy` on `fact_household_core.geography_id` = `dim_geography_hierarchy.geography_id`. Filter where `fact_household_core.new_household_split_number` > 1. Group by `dim_geography_hierarchy.district_code`. Count distinct `fact_household_core.household_id`. Order by count descending, limit 10."
+  },
+  {
+    "question": "List the district codes for districts that have more than one household record where the new household split number is not zero, ordered by the count of household IDs in descending order, and show only the top 10 results.",
+    "sql": "SELECT T1.DISTRICT_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.NEW_HOUSEHOLD_SPLIT_NUMBER != 0 GROUP BY T1.DISTRICT_CODE HAVING COUNT(*) > 1 ORDER BY COUNT(T2.HOUSEHOLD_ID) DESC LIMIT 10",
+    "pair_id": "d8c8f742",
+    "original_question_id": "ee0a0ff4",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `fact_household_core` where `fact_household_core.new_household_split_number` != 0. Join `fact_household_core` with `dim_geography_hierarchy` on `fact_household_core.geography_id` = `dim_geography_hierarchy.geography_id`. Group by `dim_geography_hierarchy.district_code`. Count `fact_household_core.household_id` per group. Keep groups with count > 1. Order by count DESC. Limit 10."
+  },
+  {
+    "question": "Show the district codes for the top 10 districts that have the highest count of household numbers, considering only records where the new household split number is not zero, and group the results by district code.",
+    "sql": "SELECT T1.DISTRICT_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.NEW_HOUSEHOLD_SPLIT_NUMBER != 0 GROUP BY T1.DISTRICT_CODE HAVING COUNT(*) > 0 ORDER BY COUNT(T2.HOUSEHOLD_NUMBER) DESC LIMIT 10",
+    "pair_id": "78bbd1c9",
+    "original_question_id": "ee0a0ff4",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_core` and `dim_geography_hierarchy` on `fact_household_core.geography_id` = `dim_geography_hierarchy.geography_id`. Filter where `fact_household_core.new_household_split_number` != 0. Group by `dim_geography_hierarchy.district_code`. Count `fact_household_core.household_number` per district. Order by count descending, limit 10. Select `dim_geography_hierarchy.district_code`."
+  },
+  {
+    "question": "List the district codes and the total count of household IDs for households where the new household split number is not zero, grouped by their district code and ordered by the count in descending order for the top 10 results.",
+    "sql": "SELECT T1.DISTRICT_CODE, COUNT(T2.HOUSEHOLD_ID) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.NEW_HOUSEHOLD_SPLIT_NUMBER <> 0 GROUP BY T1.DISTRICT_CODE ORDER BY COUNT(T2.HOUSEHOLD_ID) DESC LIMIT 10",
+    "pair_id": "7d516496",
+    "original_question_id": "ee0a0ff4",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_core` with `dim_geography_hierarchy` on `fact_household_core`.`geography_id` = `dim_geography_hierarchy`.`geography_id`. Filter where `fact_household_core`.`new_household_split_number` != 0. Group by `dim_geography_hierarchy`.`district_code`. Count distinct `fact_household_core`.`household_id`. Order by count descending, limit 10."
+  },
+  {
+    "question": "List the district codes and the total count of new household split numbers for the states of Rajasthan, Maharashtra, and Andhra Pradesh, considering only records where the new household split number is greater than zero; group the results by district code and show the top 10 districts with the highest counts.",
+    "sql": "SELECT T1.DISTRICT_CODE, COUNT(T2.NEW_HOUSEHOLD_SPLIT_NUMBER) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 INNER JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.NEW_HOUSEHOLD_SPLIT_NUMBER > 0 AND T1.STATE_CODE IN ('Rajasthan', 'Maharashtra', 'Andhra Pradesh') GROUP BY T1.DISTRICT_CODE ORDER BY COUNT(T2.NEW_HOUSEHOLD_SPLIT_NUMBER) DESC LIMIT 10",
+    "pair_id": "c3e70f36",
+    "original_question_id": "ee0a0ff4",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_core` with `dim_geography_hierarchy` on `fact_household_core`.`geography_id` = `dim_geography_hierarchy`.`geography_id`. Filter where `dim_geography_hierarchy`.`state_code` IN ('Rajasthan', 'Maharashtra', 'Andhra Pradesh') and `fact_household_core`.`new_household_split_number` > 0. Group by `dim_geography_hierarchy`.`district_code` and count `fact_household_core`.`new_household_split_number`. Order by count descending, limit 10."
+  },
+  {
+    "question": "For each state code, list the state code itself, the total count of household IDs, and the average household split number.",
+    "sql": "SELECT T1.STATE_CODE, COUNT(T2.HOUSEHOLD_ID), AVG(T2.HOUSEHOLD_SPLIT_NUMBER) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE_CODE;",
+    "pair_id": "dca5c813",
+    "original_question_id": "67072de1",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join fact_household_core with dim_geography_hierarchy on fact_household_core.geography_id = dim_geography_hierarchy.geography_id. Group by dim_geography_hierarchy.state_code. For each state_code, count fact_household_core.household_id and average fact_household_core.household_split_number."
+  },
+  {
+    "question": "For the state of Rajasthan, list the state code, the total count of household IDs, and the average household split number, grouped by the state code.",
+    "sql": "SELECT T1.STATE_CODE, COUNT(T2.HOUSEHOLD_ID), AVG(T2.HOUSEHOLD_SPLIT_NUMBER) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.STATE_CODE = 'Rajasthan' GROUP BY T1.STATE_CODE;",
+    "pair_id": "240e88c4",
+    "original_question_id": "67072de1",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_core` with `dim_geography_hierarchy` on `fact_household_core.geography_id` = `dim_geography_hierarchy.geography_id`. Filter where `dim_geography_hierarchy.state_code` = 'Rajasthan'. Group by `dim_geography_hierarchy.state_code`. Select `dim_geography_hierarchy.state_code`, COUNT(`fact_household_core.household_id`) as total_households, AVG(`fact_household_core.household_split_number`) as avg_split_number."
+  },
+  {
+    "question": "For each state code, list the state code itself, the total count of household IDs, and the average household split number.",
+    "sql": "SELECT T2.STATE_CODE, COUNT(T1.HOUSEHOLD_ID), AVG(T1.HOUSEHOLD_SPLIT_NUMBER) FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T2.STATE_CODE",
+    "pair_id": "b7d8b586",
+    "original_question_id": "67072de1",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_core` and `dim_geography_hierarchy` on `fact_household_core`.`geography_id` = `dim_geography_hierarchy`.`geography_id`. Group by `dim_geography_hierarchy`.`state_code`. Output `dim_geography_hierarchy`.`state_code`, COUNT(`fact_household_core`.`household_id`) as total household count, AVG(`fact_household_core`.`household_split_number`) as average split number."
+  },
+  {
+    "question": "For the states of Rajasthan, Maharashtra, and Andhra Pradesh, list each state code along with the total count of household numbers and the average household split number, grouped by the state code.",
+    "sql": "SELECT T2.STATE_CODE, COUNT(T1.HOUSEHOLD_NUMBER), AVG(T1.HOUSEHOLD_SPLIT_NUMBER) FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.STATE_CODE IN ('Rajasthan', 'Maharashtra', 'Andhra Pradesh') GROUP BY T2.STATE_CODE",
+    "pair_id": "009aab2b",
+    "original_question_id": "67072de1",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy.state_code` IN ('Rajasthan', 'Maharashtra', 'Andhra Pradesh'). Join `fact_household_core` ON `dim_geography_hierarchy.geography_id` = `fact_household_core.geography_id`. Group by `dim_geography_hierarchy.state_code`. Compute COUNT(`fact_household_core.household_number`) and AVG(`fact_household_core.household_split_number`)."
+  },
+  {
+    "question": "For each state code, provide the state code itself, the total count of household IDs, and the average household split number, and display these results in descending order based on the count of household IDs.",
+    "sql": "SELECT T2.STATE_CODE, COUNT(T1.HOUSEHOLD_ID), AVG(T1.HOUSEHOLD_SPLIT_NUMBER) FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T2.STATE_CODE ORDER BY COUNT(T1.HOUSEHOLD_ID) DESC",
+    "pair_id": "d1d40a3a",
+    "original_question_id": "67072de1",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_geography_hierarchy`.`state_code`. Select `dim_geography_hierarchy`.`state_code`, COUNT(DISTINCT `fact_household_core`.`household_id`) as household_count, AVG(`fact_household_core`.`household_split_number`) as avg_split_number. Join `fact_household_core` ON `fact_household_core`.`geography_id` = `dim_geography_hierarchy`.`geography_id`. Order by household_count DESC."
+  },
+  {
+    "question": "For the states of Rajasthan, Maharashtra, and Andhra Pradesh, provide the state code, the total count of household numbers, and the average household split number, grouped by state code and ordered by the count of household numbers in descending order.",
+    "sql": "SELECT T2.STATE_CODE, COUNT(T1.HOUSEHOLD_NUMBER), AVG(T1.HOUSEHOLD_SPLIT_NUMBER) FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.STATE_CODE IN ('Rajasthan', 'Maharashtra', 'Andhra Pradesh') GROUP BY T2.STATE_CODE ORDER BY COUNT(T1.HOUSEHOLD_NUMBER) DESC",
+    "pair_id": "c9466bb8",
+    "original_question_id": "67072de1",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy`.`state_code` IN ('Rajasthan', 'Maharashtra', 'Andhra Pradesh'). Join `fact_household_core` ON `fact_household_core`.`geography_id` = `dim_geography_hierarchy`.`geography_id`. Select `dim_geography_hierarchy`.`state_code`, COUNT(`fact_household_core`.`household_number`) AS total_household_count, AVG(`fact_household_core`.`household_split_number`) AS avg_split_number. Group by `dim_geography_hierarchy`.`state_code`. Order by total_household_count DESC."
+  },
+  {
+    "question": "For each state code, provide the state code, the total count of household IDs, and the average household split number for households with a completion status of 'Located', ensuring only states with at least one household are included and sorting the results by the average household split number in descending order.",
+    "sql": "SELECT T1.STATE_CODE, COUNT(T2.HOUSEHOLD_ID), AVG(T2.HOUSEHOLD_SPLIT_NUMBER) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T2.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID WHERE T3.COMPLETION_STATUS = 'Located' GROUP BY T1.STATE_CODE HAVING COUNT(T2.HOUSEHOLD_ID) > 0 ORDER BY AVG(T2.HOUSEHOLD_SPLIT_NUMBER) DESC",
+    "pair_id": "fe4381e9",
+    "original_question_id": "67072de1",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_core` with `dim_geography_hierarchy` on `fact_household_core`.`geography_id` = `dim_geography_hierarchy`.`geography_id` and with `dim_household_status` on `fact_household_core`.`household_status_id` = `dim_household_status`.`household_status_id`. Filter where `dim_household_status`.`completion_status` = 'Located'. Group by `dim_geography_hierarchy`.`state_code`. Compute COUNT(`fact_household_core`.`household_id`) and AVG(`fact_household_core`.`household_split_number`). Order by AVG(`fact_household_core`.`household_split_number`) DESC."
+  },
+  {
+    "question": "For each state code, provide the state code, the total count of household IDs, and the average household split number for households where the completion status is 'Moved out', ensuring the count is greater than zero and ordering the results by the average household split number in descending order.",
+    "sql": "SELECT T1.STATE_CODE, COUNT(T2.HOUSEHOLD_ID), AVG(T2.HOUSEHOLD_SPLIT_NUMBER) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T2.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID WHERE T3.COMPLETION_STATUS = 'Moved out' GROUP BY T1.STATE_CODE HAVING COUNT(T2.HOUSEHOLD_ID) > 0 ORDER BY AVG(T2.HOUSEHOLD_SPLIT_NUMBER) DESC",
+    "pair_id": "3fe246cb",
+    "original_question_id": "67072de1",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_core` with `dim_geography_hierarchy` on `fact_household_core`.`geography_id` = `dim_geography_hierarchy`.`geography_id`, and with `dim_household_status` on `fact_household_core`.`household_status_id` = `dim_household_status`.`household_status_id`. Filter where `dim_household_status`.`completion_status` = 'Moved out'. Group by `dim_geography_hierarchy`.`state_code`. For each state, count distinct `fact_household_core`.`household_id` and average `fact_household_core`.`household_split_number`. Keep groups with count > 0. Order by average household split number descending."
+  },
+  {
+    "question": "List the distinct geography IDs for households where either the household split number is 1 or the completion status is 'Located'.",
+    "sql": "SELECT DISTINCT T1.GEOGRAPHY_ID FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_HOUSEHOLD_STATUS AS T2 ON T1.HOUSEHOLD_STATUS_ID = T2.HOUSEHOLD_STATUS_ID WHERE T1.HOUSEHOLD_SPLIT_NUMBER = 1 OR T2.COMPLETION_STATUS = 'Located';",
+    "pair_id": "a45e1f13",
+    "original_question_id": "7866903e",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve distinct `fact_household_core.geography_id` from `fact_household_core` LEFT JOIN `dim_household_status` ON `fact_household_core.household_status_id` = `dim_household_status.household_status_id` where `fact_household_core.household_split_number` = 1 OR `dim_household_status.completion_status` = 'Located'."
+  },
+  {
+    "question": "List the distinct geography IDs for households where either the new household split number is 1 or the completion status is 'Moved out'.",
+    "sql": "SELECT DISTINCT T1.GEOGRAPHY_ID FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_HOUSEHOLD_STATUS AS T2 ON T1.HOUSEHOLD_STATUS_ID = T2.HOUSEHOLD_STATUS_ID WHERE T1.NEW_HOUSEHOLD_SPLIT_NUMBER = 1 OR T2.COMPLETION_STATUS = 'Moved out';",
+    "pair_id": "7d6b69e3",
+    "original_question_id": "7866903e",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve distinct `fact_household_core.geography_id` where `fact_household_core.new_household_split_number` = 1 or `dim_household_status.completion_status` = 'Moved out'. Join `fact_household_core` with `dim_household_status` on `fact_household_core.household_status_id` = `dim_household_status.household_status_id`."
+  },
+  {
+    "question": "List the distinct geography IDs for households where either the completion status is 'Located' or the household split number is equal to 1.",
+    "sql": "SELECT DISTINCT T1.GEOGRAPHY_ID FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_HOUSEHOLD_STATUS AS T2 ON T1.HOUSEHOLD_STATUS_ID = T2.HOUSEHOLD_STATUS_ID WHERE T2.COMPLETION_STATUS = 'Located' OR T1.HOUSEHOLD_SPLIT_NUMBER = 1",
+    "pair_id": "42202074",
+    "original_question_id": "7866903e",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Need distinct `fact_household_core`.`geography_id` from `fact_household_core` LEFT JOIN `dim_household_status` ON `fact_household_core`.`household_status_id` = `dim_household_status`.`household_status_id` where `dim_household_status`.`completion_status` = 'Located' OR `fact_household_core`.`household_split_number` = 1."
+  },
+  {
+    "question": "List the unique geography IDs for households where the completion status is 'Moved out' or the new household split number is equal to 2.",
+    "sql": "SELECT DISTINCT T1.GEOGRAPHY_ID FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_HOUSEHOLD_STATUS AS T2 ON T1.HOUSEHOLD_STATUS_ID = T2.HOUSEHOLD_STATUS_ID WHERE T2.COMPLETION_STATUS = 'Moved out' OR T1.NEW_HOUSEHOLD_SPLIT_NUMBER = 2",
+    "pair_id": "c209408e",
+    "original_question_id": "7866903e",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `fact_household_core`.`geography_id` from `fact_household_core` left join `dim_household_status` on `fact_household_core`.`household_status_id` = `dim_household_status`.`household_status_id` where `dim_household_status`.`completion_status` = 'Moved out' or `fact_household_core`.`new_household_split_number` = 2."
+  },
+  {
+    "question": "List the geography IDs, ordered ascending by geography ID, for households where either the completion status is 'Located' or the household split number is 1, grouped by their geography ID.",
+    "sql": "SELECT T1.GEOGRAPHY_ID FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_HOUSEHOLD_STATUS AS T2 ON T1.HOUSEHOLD_STATUS_ID = T2.HOUSEHOLD_STATUS_ID WHERE T2.COMPLETION_STATUS = 'Located' OR T1.HOUSEHOLD_SPLIT_NUMBER = 1 GROUP BY T1.GEOGRAPHY_ID ORDER BY T1.GEOGRAPHY_ID ASC",
+    "pair_id": "f3127d47",
+    "original_question_id": "7866903e",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `fact_household_core`.`geography_id` from `fact_household_core` join `dim_household_status` on `fact_household_core`.`household_status_id` = `dim_household_status`.`household_status_id` where `dim_household_status`.`completion_status` = 'Located' or `fact_household_core`.`household_split_number` = 1 group by `fact_household_core`.`geography_id` order by `fact_household_core`.`geography_id` asc."
+  },
+  {
+    "question": "List the geography IDs, grouped and sorted in ascending order, for households where the completion status is 'Moved out' or the new household split number is equal to 2.",
+    "sql": "SELECT T1.GEOGRAPHY_ID FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_HOUSEHOLD_STATUS AS T2 ON T1.HOUSEHOLD_STATUS_ID = T2.HOUSEHOLD_STATUS_ID WHERE T2.COMPLETION_STATUS = 'Moved out' OR T1.NEW_HOUSEHOLD_SPLIT_NUMBER = 2 GROUP BY T1.GEOGRAPHY_ID ORDER BY T1.GEOGRAPHY_ID ASC",
+    "pair_id": "42e6db6c",
+    "original_question_id": "7866903e",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve distinct `fact_household_core`.`geography_id` from `fact_household_core` LEFT JOIN `dim_household_status` ON `fact_household_core`.`household_status_id` = `dim_household_status`.`household_status_id` where `dim_household_status`.`completion_status` = 'Moved out' OR `fact_household_core`.`new_household_split_number` = '2'. Group results by `fact_household_core`.`geography_id` and sort ascending."
+  },
+  {
+    "question": "List the unique geography IDs, ordered ascending by geography ID, for locations where the household split number is 1 or the household completion status is 'Located', and where the total count of household IDs per geography ID is at least 1.",
+    "sql": "SELECT DISTINCT T1.GEOGRAPHY_ID FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T1.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID WHERE T1.HOUSEHOLD_SPLIT_NUMBER = 1 OR T3.COMPLETION_STATUS = 'Located' GROUP BY T1.GEOGRAPHY_ID HAVING COUNT(T1.HOUSEHOLD_ID) >= 1 ORDER BY T1.GEOGRAPHY_ID ASC",
+    "pair_id": "cf1d8c9d",
+    "original_question_id": "7866903e",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_core` with `dim_household_status` on `fact_household_core`.`household_status_id` = `dim_household_status`.`household_status_id`. Filter where `fact_household_core`.`household_split_number` = 1 OR `dim_household_status`.`completion_status` = 'Located'. Group by `fact_household_core`.`geography_id` and count `fact_household_core`.`household_id`. Keep groups with count >= 1. Select distinct `fact_household_core`.`geography_id` and order ascending by `fact_household_core`.`geography_id`."
+  },
+  {
+    "question": "List the unique geography IDs, ordered ascending, for locations where there is at least one household record, filtering for cases where the new household split number is 2 or the household completion status is 'Moved out'.",
+    "sql": "SELECT DISTINCT T1.GEOGRAPHY_ID FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T1.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID WHERE T1.NEW_HOUSEHOLD_SPLIT_NUMBER = 2 OR T3.COMPLETION_STATUS = 'Moved out' GROUP BY T1.GEOGRAPHY_ID HAVING COUNT(T1.HOUSEHOLD_NUMBER) >= 1 ORDER BY T1.GEOGRAPHY_ID ASC",
+    "pair_id": "8293186f",
+    "original_question_id": "7866903e",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "We need distinct `fact_household_core`.`geography_id` values where there exists at least one household record (`fact_household_core`.`household_id` exists) and (`fact_household_core`.`new_household_split_number` = 2 OR `dim_household_status`.`completion_status` = 'Moved out'). Join `fact_household_core` with `dim_household_status` on `fact_household_core`.`household_status_id` = `dim_household_status`.`household_status_id`. Order by `fact_household_core`.`geography_id` ASC."
+  },
+  {
+    "question": "List the district codes and the count of household split numbers for each district, considering only households with a completion status of 'Located', and show the top 5 districts with the highest counts.",
+    "sql": "SELECT T1.DISTRICT_CODE, COUNT(T2.HOUSEHOLD_SPLIT_NUMBER) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T2.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID WHERE T3.COMPLETION_STATUS = 'Located' GROUP BY T1.DISTRICT_CODE ORDER BY COUNT(T2.HOUSEHOLD_SPLIT_NUMBER) DESC LIMIT 5",
+    "pair_id": "a9501d12",
+    "original_question_id": "215de04a",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_core` with `dim_geography_hierarchy` on `geography_id` and with `dim_household_status` on `household_status_id`. Filter where `dim_household_status.completion_status` = 'Located'. Group by `dim_geography_hierarchy.district_code`, count `fact_household_core.household_split_number`. Order by count descending, limit 5."
+  },
+  {
+    "question": "List the district codes and the count of new household split numbers for households with a completion status of 'Moved out', grouped by their district code, and show only the top 5 districts with the highest counts.",
+    "sql": "SELECT T1.DISTRICT_CODE, COUNT(T2.NEW_HOUSEHOLD_SPLIT_NUMBER) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T2.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID WHERE T3.COMPLETION_STATUS = 'Moved out' GROUP BY T1.DISTRICT_CODE ORDER BY COUNT(T2.NEW_HOUSEHOLD_SPLIT_NUMBER) DESC LIMIT 5",
+    "pair_id": "0b850dad",
+    "original_question_id": "215de04a",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Count households where `dim_household_status`.`completion_status` = 'Moved out' and `fact_household_core`.`new_household_split_number` > 2, grouping by `dim_geography_hierarchy`.`district_code`. Use `fact_household_core`.`household_id` for counting. Join `fact_household_core` with `dim_household_status` on `fact_household_core`.`household_status_id` = `dim_household_status`.`household_status_id`. Join `fact_household_core` with `dim_geography_hierarchy` on `fact_household_core`.`geography_id` = `dim_geography_hierarchy`.`geography_id`."
+  },
+  {
+    "question": "List the district codes and the total count of household IDs for each district, specifically for households where the completion status is 'Located', ordered by the household count in descending order for the top 5 districts.",
+    "sql": "SELECT T1.DISTRICT_CODE, COUNT(T2.HOUSEHOLD_ID) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T2.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID WHERE T3.COMPLETION_STATUS = 'Located' GROUP BY T1.DISTRICT_CODE ORDER BY COUNT(T2.HOUSEHOLD_ID) DESC LIMIT 5",
+    "pair_id": "3bbd4328",
+    "original_question_id": "215de04a",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_core` with `dim_household_status` on `fact_household_core`.`household_status_id` = `dim_household_status`.`household_status_id` and with `dim_geography_hierarchy` on `fact_household_core`.`geography_id` = `dim_geography_hierarchy`.`geography_id`. Filter where `dim_household_status`.`completion_status` = 'Located'. Group by `dim_geography_hierarchy`.`district_code`. Count distinct `fact_household_core`.`household_id`. Order by count descending, limit 5."
+  },
+  {
+    "question": "List the district codes and the total count of household split numbers for households with a completion status of 'Moved out', grouped by their district code, and show only the top 5 districts with the highest counts.",
+    "sql": "SELECT T1.DISTRICT_CODE, COUNT(T2.HOUSEHOLD_SPLIT_NUMBER) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T2.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID WHERE T3.COMPLETION_STATUS = 'Moved out' GROUP BY T1.DISTRICT_CODE ORDER BY COUNT(T2.HOUSEHOLD_SPLIT_NUMBER) DESC LIMIT 5",
+    "pair_id": "22fdd09e",
+    "original_question_id": "215de04a",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join fact_household_core with dim_geography_hierarchy on geography_id and with dim_household_status on household_status_id. Filter where dim_household_status.completion_status = 'Moved out'. Group by dim_geography_hierarchy.district_code. Count fact_household_core.household_split_number per group. Order by count descending, limit 5."
+  },
+  {
+    "question": "List the district codes for the top 5 districts, sorted in descending order of their district code, where the household completion status is 'Located' and the count of household split numbers is greater than zero.",
+    "sql": "SELECT T1.DISTRICT_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T2.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID WHERE T3.COMPLETION_STATUS = 'Located' GROUP BY T1.DISTRICT_CODE HAVING COUNT(T2.HOUSEHOLD_SPLIT_NUMBER) > 0 ORDER BY T1.DISTRICT_CODE DESC LIMIT 5",
+    "pair_id": "fc49ca52",
+    "original_question_id": "215de04a",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_household_status`.`completion_status` = 'Located'. Join `fact_household_core` on `household_status_id`. Filter `fact_household_core`.`household_split_number` > 0. Join `dim_geography_hierarchy` on `geography_id`. Group by `dim_geography_hierarchy`.`district_code`. Count distinct `fact_household_core`.`household_id` per district. Order by `dim_geography_hierarchy`.`district_code` DESC. Limit 5."
+  },
+  {
+    "question": "List the district codes for districts where more than one household has a completion status of 'Moved out', sorted by the district code in descending order, and show only the first five results.",
+    "sql": "SELECT T1.DISTRICT_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T2.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID WHERE T3.COMPLETION_STATUS = 'Moved out' GROUP BY T1.DISTRICT_CODE HAVING COUNT(T2.HOUSEHOLD_ID) > 1 ORDER BY T1.DISTRICT_CODE DESC LIMIT 5",
+    "pair_id": "e05674b2",
+    "original_question_id": "215de04a",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_household_status`.`completion_status` = 'Moved out'. Join `fact_household_core` with `dim_household_status` on `household_status_id` and with `dim_geography_hierarchy` on `geography_id`. Group by `dim_geography_hierarchy`.`district_code`, count distinct `fact_household_core`.`household_id` per district, keep districts with count > 1. Sort `district_code` DESC, limit 5."
+  },
+  {
+    "question": "List the district codes and the total count of household IDs for each district, filtering for households where the completion status is 'Located', and show the top 5 districts with the highest number of households.",
+    "sql": "SELECT T1.DISTRICT_CODE, COUNT(T2.HOUSEHOLD_ID) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T2.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID WHERE T3.COMPLETION_STATUS = 'Located' GROUP BY T1.DISTRICT_CODE ORDER BY COUNT(T2.HOUSEHOLD_ID) DESC LIMIT 5",
+    "pair_id": "8fe49af9",
+    "original_question_id": "215de04a",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_core` with `dim_geography_hierarchy` on `fact_household_core.geography_id` = `dim_geography_hierarchy.geography_id`, and with `dim_household_status` on `fact_household_core.household_status_id` = `dim_household_status.household_status_id`. Filter where `dim_household_status.completion_status` = 'Located'. Group by `dim_geography_hierarchy.district_code`, count distinct `fact_household_core.household_id`. Order by count descending, limit 5."
+  },
+  {
+    "question": "List the district codes and the total count of household split numbers for households with a completion status of 'Moved out', grouped by their district code, and show the top 5 districts with the highest counts.",
+    "sql": "SELECT T1.DISTRICT_CODE, COUNT(T2.HOUSEHOLD_SPLIT_NUMBER) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T2.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID WHERE T3.COMPLETION_STATUS = 'Moved out' GROUP BY T1.DISTRICT_CODE ORDER BY COUNT(T2.HOUSEHOLD_SPLIT_NUMBER) DESC LIMIT 5",
+    "pair_id": "f4ba945e",
+    "original_question_id": "215de04a",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join fact_household_core with dim_geography_hierarchy on geography_id and with dim_household_status on household_status_id. Filter where dim_household_status.completion_status = 'Moved out'. Group by dim_geography_hierarchy.district_code, count fact_household_core.household_split_number, order by count descending, limit to 5 rows."
+  },
+  {
+    "question": "List the state codes from the geography hierarchy where the household split number is greater than zero, filtered to include only those states where none of the households have a completion status of 'Moved out' or 'All dead'.",
+    "sql": "SELECT T1.STATE_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T2.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID WHERE T2.HOUSEHOLD_SPLIT_NUMBER > 0 GROUP BY T1.STATE_CODE HAVING SUM(CASE WHEN T3.COMPLETION_STATUS IN ('Moved out', 'All dead') THEN 1 ELSE 0 END) = 0",
+    "pair_id": "db9b7f0c",
+    "original_question_id": "f636d58a",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_geography_hierarchy.state_code` where `fact_household_core.household_split_number` > 0 and the state has no household with `dim_household_status.completion_status` IN ('Moved out', 'All dead'). Join `dim_geography_hierarchy` to `fact_household_core` on `geography_id`, and `fact_household_core` to `dim_household_status` on `household_status_id`. Exclude states where any linked household has completion_status 'Moved out' or 'All dead'."
+  },
+  {
+    "question": "List the state codes from the geography hierarchy for households where the household split number is greater than zero, specifically filtering for those states where there are zero instances of households having a completion status of 'Non-contact' or 'Not found'.",
+    "sql": "SELECT T1.STATE_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T2.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID WHERE T2.HOUSEHOLD_SPLIT_NUMBER > 0 GROUP BY T1.STATE_CODE HAVING SUM(CASE WHEN T3.COMPLETION_STATUS IN ('Non-contact', 'Not found') THEN 1 ELSE 0 END) = 0",
+    "pair_id": "d090f78f",
+    "original_question_id": "f636d58a",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `dim_geography_hierarchy.state_code` for households where `fact_household_core.household_split_number` > 0, and where the state has zero households with `dim_household_status.completion_status` IN ('Non-contact', 'Not found'). Join `fact_household_core` to `dim_geography_hierarchy` via `geography_id` and to `dim_household_status` via `household_status_id`."
+  },
+  {
+    "question": "List the state codes from the geography hierarchy for households where the household split number is greater than zero, specifically filtering for those states where there are zero instances of households having a status of 'Non-contact' or 'Not found'.",
+    "sql": "SELECT T1.STATE_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.HOUSEHOLD_SPLIT_NUMBER > 0 GROUP BY T1.STATE_CODE HAVING COUNT(CASE WHEN T2.HOUSEHOLD_STATUS_ID IN (SELECT HOUSEHOLD_STATUS_ID FROM DIM_HOUSEHOLD_STATUS WHERE COMPLETION_STATUS IN ('Non-contact', 'Not found')) THEN 1 END) = 0",
+    "pair_id": "fac41e3c",
+    "original_question_id": "f636d58a",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_geography_hierarchy.state_code` for households with `fact_household_core.household_split_number` > 0. Exclude states where any household has `dim_household_status.completion_status` IN ('Non-contact', 'Not found'). Join `fact_household_core` with `dim_geography_hierarchy` on `geography_id` and with `dim_household_status` on `household_status_id`. Group by state and ensure count of households with those statuses = 0."
+  },
+  {
+    "question": "List the household ID, the household number, and the state code for households where the household split number is 1 and the completion status is 'Located'.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T1.HOUSEHOLD_NUMBER, T2.STATE_CODE FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T1.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID WHERE T1.HOUSEHOLD_SPLIT_NUMBER = 1 AND T3.COMPLETION_STATUS = 'Located';",
+    "pair_id": "fd6f1b46",
+    "original_question_id": "13312826",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_household_core`.`household_id`, `fact_household_core`.`household_number`, `dim_geography_hierarchy`.`state_code` from `fact_household_core` join `dim_household_status` on `fact_household_core`.`household_status_id` = `dim_household_status`.`household_status_id` join `dim_geography_hierarchy` on `fact_household_core`.`geography_id` = `dim_geography_hierarchy`.`geography_id` where `fact_household_core`.`household_split_number` = 1 and `dim_household_status`.`completion_status` = 'Located'."
+  },
+  {
+    "question": "List the household ID, the state code, and the district code for households where the new household split number is 1 and the completion status is 'Moved out'.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T2.STATE_CODE, T2.DISTRICT_CODE FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T1.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID WHERE T1.NEW_HOUSEHOLD_SPLIT_NUMBER = 1 AND T3.COMPLETION_STATUS = 'Moved out'",
+    "pair_id": "60c55872",
+    "original_question_id": "13312826",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_household_core`.`household_id`, `dim_geography_hierarchy`.`state_code`, `dim_geography_hierarchy`.`district_code` from `fact_household_core` join `dim_geography_hierarchy` on `fact_household_core`.`geography_id` = `dim_geography_hierarchy`.`geography_id` join `dim_household_status` on `fact_household_core`.`household_status_id` = `dim_household_status`.`household_status_id` where `fact_household_core`.`new_household_split_number` = 1 and `dim_household_status`.`completion_status` = 'Moved out'."
+  },
+  {
+    "question": "List the household ID, the household number, and the state code for all records where the household split number is greater than zero and the state code is 'Rajasthan'.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T1.HOUSEHOLD_NUMBER, T2.STATE_CODE FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.HOUSEHOLD_SPLIT_NUMBER > 0 AND T2.STATE_CODE = 'Rajasthan';",
+    "pair_id": "4d402096",
+    "original_question_id": "13312826",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join fact_household_core with dim_geography_hierarchy on fact_household_core.geography_id = dim_geography_hierarchy.geography_id. Select fact_household_core.household_id, fact_household_core.household_number, dim_geography_hierarchy.state_code. Filter where fact_household_core.household_split_number > 0 and dim_geography_hierarchy.state_code = 'Rajasthan'."
+  },
+  {
+    "question": "List the household ID, the state code, and the district code for all households where the new household split number is greater than 1 and the state code is 'Maharashtra'.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T2.STATE_CODE, T2.DISTRICT_CODE FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.NEW_HOUSEHOLD_SPLIT_NUMBER > 1 AND T2.STATE_CODE = 'Maharashtra';",
+    "pair_id": "64996465",
+    "original_question_id": "13312826",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_core` and `dim_geography_hierarchy` on `fact_household_core`.`geography_id` = `dim_geography_hierarchy`.`geography_id`. Filter where `dim_geography_hierarchy`.`state_code` = 'Maharashtra' and CAST(`fact_household_core`.`new_household_split_number` AS numeric) > 1. Select `fact_household_core`.`household_id`, `dim_geography_hierarchy`.`state_code`, `dim_geography_hierarchy`.`district_code`."
+  },
+  {
+    "question": "List the household ID, the household number, and the state code for all households where the household split number is not zero, ensuring that each group has at least one household status ID record, and order the results by the household ID in ascending order.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T1.HOUSEHOLD_NUMBER, T2.STATE_CODE FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.HOUSEHOLD_SPLIT_NUMBER != 0 GROUP BY T1.HOUSEHOLD_ID, T1.HOUSEHOLD_NUMBER, T2.STATE_CODE HAVING COUNT(T1.HOUSEHOLD_STATUS_ID) >= 1 ORDER BY T1.HOUSEHOLD_ID ASC",
+    "pair_id": "74e37e65",
+    "original_question_id": "13312826",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_household_core`.`household_id`, `fact_household_core`.`household_number`, `dim_geography_hierarchy`.`state_code` from `fact_household_core` inner join `dim_geography_hierarchy` on `fact_household_core`.`geography_id` = `dim_geography_hierarchy`.`geography_id` where `fact_household_core`.`household_split_number` != 0 and `fact_household_core`.`household_status_id` is not null order by `fact_household_core`.`household_id` asc."
+  },
+  {
+    "question": "List the household ID, household number, and district code for all households where the new household split number is not zero and there is at least one household status ID recorded, ordered by the household ID in ascending order.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T1.HOUSEHOLD_NUMBER, T2.DISTRICT_CODE FROM FACT_HOUSEHOLD_CORE AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.NEW_HOUSEHOLD_SPLIT_NUMBER != 0 GROUP BY T1.HOUSEHOLD_ID, T1.HOUSEHOLD_NUMBER, T2.DISTRICT_CODE HAVING COUNT(T1.HOUSEHOLD_STATUS_ID) > 0 ORDER BY T1.HOUSEHOLD_ID ASC",
+    "pair_id": "775ee0a4",
+    "original_question_id": "13312826",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_household_core.household_id`, `fact_household_core.household_number`, `dim_geography_hierarchy.district_code` from `fact_household_core` inner join `dim_geography_hierarchy` on `fact_household_core.geography_id` = `dim_geography_hierarchy.geography_id` where `fact_household_core.new_household_split_number` <> 0 and `fact_household_core.household_status_id` is not null order by `fact_household_core.household_id` asc."
+  },
+  {
+    "question": "List the household ID, household number, state code, and district code for all households where the household split number is greater than zero and the completion status is 'Located', grouped by these same four columns and ordered by household ID.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T1.HOUSEHOLD_NUMBER, T2.STATE_CODE, T2.DISTRICT_CODE FROM FACT_HOUSEHOLD_CORE AS T1 INNER JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN DIM_HOUSEHOLD_STATUS AS T3 ON T1.HOUSEHOLD_STATUS_ID = T3.HOUSEHOLD_STATUS_ID WHERE T1.HOUSEHOLD_SPLIT_NUMBER > 0 AND T3.COMPLETION_STATUS = 'Located' GROUP BY T1.HOUSEHOLD_ID, T1.HOUSEHOLD_NUMBER, T2.STATE_CODE, T2.DISTRICT_CODE ORDER BY T1.HOUSEHOLD_ID ASC",
+    "pair_id": "b662fd6a",
+    "original_question_id": "13312826",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_STATUS",
+      "FACT_HOUSEHOLD_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE_CODE",
+        "DISTRICT_CODE",
+        "PSU_CODE"
+      ],
+      "DIM_HOUSEHOLD_STATUS": [
+        "HOUSEHOLD_STATUS_ID",
+        "COMPLETION_STATUS",
+        "COMPLETION_STATUS_OTHER"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Need to join `fact_household_core` (contains `household_id`, `household_number`, `household_split_number`), `dim_geography_hierarchy` (contains `state_code`, `district_code`), and `dim_household_status` (contains `completion_status`). Filter where `fact_household_core`.`household_split_number` > 0 and `dim_household_status`.`completion_status` = 'Located'. Group by `fact_household_core`.`household_id`, `fact_household_core`.`household_number`, `dim_geography_hierarchy`.`state_code`, `dim_geography_hierarchy`.`district_code`. Order by `fact_household_core`.`household_id`."
+  },
+  {
+    "question": "List the household IDs for households where every member is at least 46 years old, specifically filtering for households that do not contain any individuals with a marital status code of 'Married'.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM FACT_PERSON_CORE AS T1 JOIN DIM_DEMOGRAPHIC_CODES AS T2 ON T1.DEMOGRAPHIC_CODE_ID = T2.DEMOGRAPHIC_CODE_ID WHERE T1.AGE >= 46 GROUP BY T1.HOUSEHOLD_ID HAVING SUM(CASE WHEN T2.MARITAL_STATUS_CODE = 'Married' THEN 1 ELSE 0 END) = 0",
+    "pair_id": "1a3483e5",
+    "original_question_id": "8804cc90",
+    "schema_used": [
+      "DIM_DEMOGRAPHIC_CODES",
+      "FACT_HOUSEHOLD_CORE",
+      "FACT_PERSON_CORE"
+    ],
+    "linked_schema": {
+      "DIM_DEMOGRAPHIC_CODES": [
+        "DEMOGRAPHIC_CODE_ID",
+        "SEX_CODE",
+        "MARITAL_STATUS_CODE"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ],
+      "FACT_PERSON_CORE": [
+        "PERSON_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_STATUS_ID",
+        "DEMOGRAPHIC_CODE_ID",
+        "CURRENT_LOCATION_ID",
+        "PERSON_NUMBER",
+        "AGE"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Find household IDs from `fact_person_core` where all members satisfy: (1) `fact_person_core.age` >= 46, and (2) `dim_demographic_codes`.`marital_status_code` != 'Married'. Join `fact_person_core` with `dim_demographic_codes` on `demographic_code_id`. Group by `fact_person_core`.`household_id`. Use HAVING MIN(`fact_person_core`.`age`) >= 46 AND COUNT(CASE WHEN `dim_demographic_codes`.`marital_status_code` = 'Married' THEN 1 END) = 0."
+  },
+  {
+    "question": "List the household IDs for households where all members are at least 22 years old, specifically identifying those households that do not contain any married individuals based on their marital status code.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM FACT_PERSON_CORE AS T1 JOIN DIM_DEMOGRAPHIC_CODES AS T2 ON T1.DEMOGRAPHIC_CODE_ID = T2.DEMOGRAPHIC_CODE_ID WHERE T1.AGE >= 22 GROUP BY T1.HOUSEHOLD_ID HAVING SUM(CASE WHEN T2.MARITAL_STATUS_CODE = 'Married' THEN 1 ELSE 0 END) = 0",
+    "pair_id": "49903c3f",
+    "original_question_id": "8804cc90",
+    "schema_used": [
+      "DIM_DEMOGRAPHIC_CODES",
+      "FACT_HOUSEHOLD_CORE",
+      "FACT_PERSON_CORE"
+    ],
+    "linked_schema": {
+      "DIM_DEMOGRAPHIC_CODES": [
+        "DEMOGRAPHIC_CODE_ID",
+        "SEX_CODE",
+        "MARITAL_STATUS_CODE"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ],
+      "FACT_PERSON_CORE": [
+        "PERSON_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_STATUS_ID",
+        "DEMOGRAPHIC_CODE_ID",
+        "CURRENT_LOCATION_ID",
+        "PERSON_NUMBER",
+        "AGE"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Find `fact_household_core.household_id` where every person in the household has `fact_person_core.age` >= 22 and no person has `dim_demographic_codes.marital_status_code` = 'Married'. Join `fact_person_core` to `dim_demographic_codes` on `fact_person_core.demographic_code_id` = `dim_demographic_codes.demographic_code_id`. Group by household and ensure MIN(`fact_person_core.age`) >= 22 and COUNT(CASE WHEN `dim_demographic_codes.marital_status_code` = 'Married' THEN 1 END) = 0."
+  },
+  {
+    "question": "List the household IDs for households where every member is at least 46 years old, specifically filtering for those households that do not contain any individuals with a marital status code of 'Married'.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM FACT_PERSON_CORE AS T1 JOIN DIM_DEMOGRAPHIC_CODES AS T2 ON T1.DEMOGRAPHIC_CODE_ID = T2.DEMOGRAPHIC_CODE_ID WHERE T1.AGE >= 46 GROUP BY T1.HOUSEHOLD_ID HAVING SUM(CASE WHEN T2.MARITAL_STATUS_CODE = 'Married' THEN 1 ELSE 0 END) = 0",
+    "pair_id": "434dae08",
+    "original_question_id": "8804cc90",
+    "schema_used": [
+      "DIM_DEMOGRAPHIC_CODES",
+      "FACT_HOUSEHOLD_CORE",
+      "FACT_PERSON_CORE"
+    ],
+    "linked_schema": {
+      "DIM_DEMOGRAPHIC_CODES": [
+        "DEMOGRAPHIC_CODE_ID",
+        "SEX_CODE",
+        "MARITAL_STATUS_CODE"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ],
+      "FACT_PERSON_CORE": [
+        "PERSON_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_STATUS_ID",
+        "DEMOGRAPHIC_CODE_ID",
+        "CURRENT_LOCATION_ID",
+        "PERSON_NUMBER",
+        "AGE"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Find `fact_household_core.household_id` where every person in the household (via `fact_person_core.household_id`) has `fact_person_core.age` ≥ 46 and no person has `dim_demographic_codes.marital_status_code` = 'Married' (linked via `fact_person_core.demographic_code_id`)."
+  },
+  {
+    "question": "List the household IDs for households where all members are at least 22 years old, but the sum of members with a marital status code of 'Married' is zero.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM FACT_PERSON_CORE AS T1 JOIN DIM_DEMOGRAPHIC_CODES AS T2 ON T1.DEMOGRAPHIC_CODE_ID = T2.DEMOGRAPHIC_CODE_ID WHERE T1.AGE >= 22 GROUP BY T1.HOUSEHOLD_ID HAVING SUM(CASE WHEN T2.MARITAL_STATUS_CODE = 'Married' THEN 1 ELSE 0 END) = 0",
+    "pair_id": "1b772c79",
+    "original_question_id": "8804cc90",
+    "schema_used": [
+      "DIM_DEMOGRAPHIC_CODES",
+      "FACT_HOUSEHOLD_CORE",
+      "FACT_PERSON_CORE"
+    ],
+    "linked_schema": {
+      "DIM_DEMOGRAPHIC_CODES": [
+        "DEMOGRAPHIC_CODE_ID",
+        "SEX_CODE",
+        "MARITAL_STATUS_CODE"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ],
+      "FACT_PERSON_CORE": [
+        "PERSON_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_STATUS_ID",
+        "DEMOGRAPHIC_CODE_ID",
+        "CURRENT_LOCATION_ID",
+        "PERSON_NUMBER",
+        "AGE"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Find household IDs from `fact_household_core` where all persons in that household (via `fact_person_core.household_id`) have `fact_person_core.age` >= 22 and no person has `dim_demographic_codes.marital_status_code` = 'Married'. Join `fact_person_core` with `dim_demographic_codes` on `fact_person_core.demographic_code_id` = `dim_demographic_codes.demographic_code_id`. Group by household and check: MIN(`fact_person_core.age`) >= 22 and SUM(CASE WHEN `dim_demographic_codes.marital_status_code` = 'Married' THEN 1 ELSE 0 END) = 0."
+  },
+  {
+    "question": "List the household IDs for individuals aged 46 or older, excluding any household IDs that contain at least one person with a marital status code of 'Married', and order the results by the household ID.",
+    "sql": "SELECT FACT_PERSON_CORE.HOUSEHOLD_ID FROM FACT_PERSON_CORE JOIN DIM_DEMOGRAPHIC_CODES ON FACT_PERSON_CORE.DEMOGRAPHIC_CODE_ID = DIM_DEMOGRAPHIC_CODES.DEMOGRAPHIC_CODE_ID WHERE FACT_PERSON_CORE.AGE >= 46 AND FACT_PERSON_CORE.HOUSEHOLD_ID NOT IN (SELECT FACT_PERSON_CORE.HOUSEHOLD_ID FROM FACT_PERSON_CORE JOIN DIM_DEMOGRAPHIC_CODES ON FACT_PERSON_CORE.DEMOGRAPHIC_CODE_ID = DIM_DEMOGRAPHIC_CODES.DEMOGRAPHIC_CODE_ID WHERE DIM_DEMOGRAPHIC_CODES.MARITAL_STATUS_CODE = 'Married') ORDER BY FACT_PERSON_CORE.HOUSEHOLD_ID",
+    "pair_id": "335416dd",
+    "original_question_id": "8804cc90",
+    "schema_used": [
+      "DIM_DEMOGRAPHIC_CODES",
+      "FACT_HOUSEHOLD_CORE",
+      "FACT_PERSON_CORE"
+    ],
+    "linked_schema": {
+      "DIM_DEMOGRAPHIC_CODES": [
+        "DEMOGRAPHIC_CODE_ID",
+        "SEX_CODE",
+        "MARITAL_STATUS_CODE"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ],
+      "FACT_PERSON_CORE": [
+        "PERSON_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_STATUS_ID",
+        "DEMOGRAPHIC_CODE_ID",
+        "CURRENT_LOCATION_ID",
+        "PERSON_NUMBER",
+        "AGE"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `fact_person_core`.`household_id` from `fact_person_core` where `fact_person_core`.`age` >= 46 and `fact_person_core`.`household_id` not in (select distinct `fact_person_core`.`household_id` from `fact_person_core` inner join `dim_demographic_codes` on `fact_person_core`.`demographic_code_id` = `dim_demographic_codes`.`demographic_code_id` where `dim_demographic_codes`.`marital_status_code` = 'Married') order by `fact_person_core`.`household_id`."
+  },
+  {
+    "question": "List the household IDs from the person core records for individuals aged 22 or older, specifically excluding any household IDs that contain at least one person with a marital status code of 'Married', and order the results by the household ID.",
+    "sql": "SELECT FACT_PERSON_CORE.HOUSEHOLD_ID FROM FACT_PERSON_CORE JOIN FACT_HOUSEHOLD_CORE ON FACT_PERSON_CORE.HOUSEHOLD_ID = FACT_HOUSEHOLD_CORE.HOUSEHOLD_ID WHERE FACT_PERSON_CORE.AGE >= 22 AND FACT_PERSON_CORE.HOUSEHOLD_ID NOT IN (SELECT FACT_PERSON_CORE.HOUSEHOLD_ID FROM FACT_PERSON_CORE JOIN DIM_DEMOGRAPHIC_CODES ON FACT_PERSON_CORE.DEMOGRAPHIC_CODE_ID = DIM_DEMOGRAPHIC_CODES.DEMOGRAPHIC_CODE_ID WHERE DIM_DEMOGRAPHIC_CODES.MARITAL_STATUS_CODE = 'Married') ORDER BY FACT_PERSON_CORE.HOUSEHOLD_ID",
+    "pair_id": "2785a73e",
+    "original_question_id": "8804cc90",
+    "schema_used": [
+      "DIM_DEMOGRAPHIC_CODES",
+      "FACT_HOUSEHOLD_CORE",
+      "FACT_PERSON_CORE"
+    ],
+    "linked_schema": {
+      "DIM_DEMOGRAPHIC_CODES": [
+        "DEMOGRAPHIC_CODE_ID",
+        "SEX_CODE",
+        "MARITAL_STATUS_CODE"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ],
+      "FACT_PERSON_CORE": [
+        "PERSON_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_STATUS_ID",
+        "DEMOGRAPHIC_CODE_ID",
+        "CURRENT_LOCATION_ID",
+        "PERSON_NUMBER",
+        "AGE"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `fact_person_core`.`household_id` from `fact_person_core` where `fact_person_core`.`age` >= 22 and `fact_person_core`.`household_id` not in (select distinct `fact_person_core`.`household_id` from `fact_person_core` join `dim_demographic_codes` on `fact_person_core`.`demographic_code_id` = `dim_demographic_codes`.`demographic_code_id` where `dim_demographic_codes`.`marital_status_code` = 'Married') order by `fact_person_core`.`household_id`."
+  },
+  {
+    "question": "List the household IDs for households where every person aged 46 or older is not married, specifically identifying those households where the count of people meeting the criteria of being married (based on their demographic code) is zero.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM FACT_HOUSEHOLD_CORE AS T1 JOIN FACT_PERSON_CORE AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.AGE >= 46 GROUP BY T1.HOUSEHOLD_ID HAVING SUM(CASE WHEN EXISTS (SELECT 1 FROM DIM_DEMOGRAPHIC_CODES AS T3 WHERE T3.DEMOGRAPHIC_CODE_ID = T2.DEMOGRAPHIC_CODE_ID AND T3.MARITAL_STATUS_CODE = 'Married') THEN 1 ELSE 0 END) = 0",
+    "pair_id": "36c04905",
+    "original_question_id": "8804cc90",
+    "schema_used": [
+      "DIM_DEMOGRAPHIC_CODES",
+      "FACT_HOUSEHOLD_CORE",
+      "FACT_PERSON_CORE"
+    ],
+    "linked_schema": {
+      "DIM_DEMOGRAPHIC_CODES": [
+        "DEMOGRAPHIC_CODE_ID",
+        "SEX_CODE",
+        "MARITAL_STATUS_CODE"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ],
+      "FACT_PERSON_CORE": [
+        "PERSON_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_STATUS_ID",
+        "DEMOGRAPHIC_CODE_ID",
+        "CURRENT_LOCATION_ID",
+        "PERSON_NUMBER",
+        "AGE"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Find household IDs (`fact_person_core.household_id`) where no person aged ≥46 (`fact_person_core.age >= 46`) has marital_status_code = 'Married'. Join `fact_person_core` with `dim_demographic_codes` on `fact_person_core.demographic_code_id` = `dim_demographic_codes.demographic_code_id`. For each household, count persons with age >=46 and `dim_demographic_codes.marital_status_code` = 'Married'. Select households where that count = 0."
+  },
+  {
+    "question": "List the household IDs for households where all members are at least 22 years old, but specifically only those households where none of the members have a marital status code indicating they are married.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM FACT_HOUSEHOLD_CORE AS T1 JOIN FACT_PERSON_CORE AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.AGE >= 22 GROUP BY T1.HOUSEHOLD_ID HAVING SUM(CASE WHEN EXISTS (SELECT 1 FROM DIM_DEMOGRAPHIC_CODES AS T3 WHERE T3.DEMOGRAPHIC_CODE_ID = T2.DEMOGRAPHIC_CODE_ID AND T3.MARITAL_STATUS_CODE = 'Married') THEN 1 ELSE 0 END) = 0",
+    "pair_id": "237a1657",
+    "original_question_id": "8804cc90",
+    "schema_used": [
+      "DIM_DEMOGRAPHIC_CODES",
+      "FACT_HOUSEHOLD_CORE",
+      "FACT_PERSON_CORE"
+    ],
+    "linked_schema": {
+      "DIM_DEMOGRAPHIC_CODES": [
+        "DEMOGRAPHIC_CODE_ID",
+        "SEX_CODE",
+        "MARITAL_STATUS_CODE"
+      ],
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ],
+      "FACT_PERSON_CORE": [
+        "PERSON_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_STATUS_ID",
+        "DEMOGRAPHIC_CODE_ID",
+        "CURRENT_LOCATION_ID",
+        "PERSON_NUMBER",
+        "AGE"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `fact_person_core.household_id` where all persons in the household have `fact_person_core.age` >= 22 and `dim_demographic_codes.marital_status_code` != 'Married'. Join `fact_person_core` to `dim_demographic_codes` on `fact_person_core.demographic_code_id` = `dim_demographic_codes.demographic_code_id`. Group by household_id, filter with MIN(age) >= 22 and MAX(CASE WHEN marital_status_code = 'Married' THEN 1 ELSE 0 END) = 0."
+  },
+  {
+    "question": "List the age and the household split number for the top 10 individuals with the highest ages, specifically for those where the household split number is 1.",
+    "sql": "SELECT T1.AGE, T2.HOUSEHOLD_SPLIT_NUMBER FROM FACT_PERSON_CORE AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_SPLIT_NUMBER = 1 ORDER BY T1.AGE DESC LIMIT 10",
+    "pair_id": "94432a4e",
+    "original_question_id": "f125e05b",
+    "schema_used": [
+      "FACT_HOUSEHOLD_CORE",
+      "FACT_PERSON_CORE",
+      "FACT_HOUSEHOLD_TRACKING"
+    ],
+    "linked_schema": {
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ],
+      "FACT_PERSON_CORE": [
+        "PERSON_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_STATUS_ID",
+        "DEMOGRAPHIC_CODE_ID",
+        "CURRENT_LOCATION_ID",
+        "PERSON_NUMBER",
+        "AGE"
+      ],
+      "FACT_HOUSEHOLD_TRACKING": [
+        "HOUSEHOLD_TRACKING_ID",
+        "HOUSEHOLD_ID",
+        "SAME_ADDRESS_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_person_core`.`age` and `fact_household_core`.`household_split_number` from `fact_person_core` join `fact_household_core` on `fact_person_core`.`household_id` = `fact_household_core`.`household_id` where `fact_household_core`.`household_split_number` = 1 order by `fact_person_core`.`age` desc limit 10."
+  },
+  {
+    "question": "List the age and the new household split number for the top 10 records with the highest age, specifically for households where the new household split number is 1.",
+    "sql": "SELECT T1.AGE, T2.NEW_HOUSEHOLD_SPLIT_NUMBER FROM FACT_PERSON_CORE AS T1 JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.NEW_HOUSEHOLD_SPLIT_NUMBER = 1 ORDER BY T1.AGE DESC LIMIT 10",
+    "pair_id": "00599e9c",
+    "original_question_id": "f125e05b",
+    "schema_used": [
+      "FACT_HOUSEHOLD_CORE",
+      "FACT_PERSON_CORE",
+      "FACT_HOUSEHOLD_TRACKING"
+    ],
+    "linked_schema": {
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ],
+      "FACT_PERSON_CORE": [
+        "PERSON_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_STATUS_ID",
+        "DEMOGRAPHIC_CODE_ID",
+        "CURRENT_LOCATION_ID",
+        "PERSON_NUMBER",
+        "AGE"
+      ],
+      "FACT_HOUSEHOLD_TRACKING": [
+        "HOUSEHOLD_TRACKING_ID",
+        "HOUSEHOLD_ID",
+        "SAME_ADDRESS_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_person_core`.`age` and `fact_household_core`.`new_household_split_number` from `fact_person_core` join `fact_household_core` on `fact_person_core`.`household_id` = `fact_household_core`.`household_id` where `fact_household_core`.`new_household_split_number` = 1 order by `fact_person_core`.`age` desc limit 10."
+  },
+  {
+    "question": "List the age and the household split number for the top 10 records with a household split number of 1, ordered by age from highest to lowest.",
+    "sql": "SELECT T2.AGE, T1.HOUSEHOLD_SPLIT_NUMBER FROM FACT_HOUSEHOLD_CORE AS T1 JOIN FACT_PERSON_CORE AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.HOUSEHOLD_SPLIT_NUMBER = 1 ORDER BY T2.AGE DESC LIMIT 10",
+    "pair_id": "35c2e968",
+    "original_question_id": "f125e05b",
+    "schema_used": [
+      "FACT_HOUSEHOLD_CORE",
+      "FACT_PERSON_CORE",
+      "FACT_HOUSEHOLD_TRACKING"
+    ],
+    "linked_schema": {
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ],
+      "FACT_PERSON_CORE": [
+        "PERSON_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_STATUS_ID",
+        "DEMOGRAPHIC_CODE_ID",
+        "CURRENT_LOCATION_ID",
+        "PERSON_NUMBER",
+        "AGE"
+      ],
+      "FACT_HOUSEHOLD_TRACKING": [
+        "HOUSEHOLD_TRACKING_ID",
+        "HOUSEHOLD_ID",
+        "SAME_ADDRESS_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_person_core` and `fact_household_core` on `fact_person_core`.`household_id` = `fact_household_core`.`household_id`. Select `fact_person_core`.`age` and `fact_household_core`.`household_split_number`. Filter where `fact_household_core`.`household_split_number` = 1. Order by `fact_person_core`.`age` DESC. Limit 10."
+  },
+  {
+    "question": "List the age and the new household split number for the 10 oldest people whose new household split number is equal to 2.",
+    "sql": "SELECT T2.AGE, T1.NEW_HOUSEHOLD_SPLIT_NUMBER FROM FACT_HOUSEHOLD_CORE AS T1 JOIN FACT_PERSON_CORE AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.NEW_HOUSEHOLD_SPLIT_NUMBER = 2 ORDER BY T2.AGE DESC LIMIT 10",
+    "pair_id": "70faa248",
+    "original_question_id": "f125e05b",
+    "schema_used": [
+      "FACT_HOUSEHOLD_CORE",
+      "FACT_PERSON_CORE",
+      "FACT_HOUSEHOLD_TRACKING"
+    ],
+    "linked_schema": {
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ],
+      "FACT_PERSON_CORE": [
+        "PERSON_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_STATUS_ID",
+        "DEMOGRAPHIC_CODE_ID",
+        "CURRENT_LOCATION_ID",
+        "PERSON_NUMBER",
+        "AGE"
+      ],
+      "FACT_HOUSEHOLD_TRACKING": [
+        "HOUSEHOLD_TRACKING_ID",
+        "HOUSEHOLD_ID",
+        "SAME_ADDRESS_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_person_core` and `fact_household_core` on `fact_person_core.household_id` = `fact_household_core.household_id`. Filter rows where `fact_household_core.new_household_split_number` = 2. Select `fact_person_core.age` and `fact_household_core.new_household_split_number`. Sort by `fact_person_core.age` descending, limit 10."
+  },
+  {
+    "question": "For each person ID and household split number, find the maximum age and the household split number, filtering for those where the maximum age is greater than 13, and list the top 10 results sorted by the maximum age in descending order.",
+    "sql": "SELECT MAX(T2.AGE), T1.HOUSEHOLD_SPLIT_NUMBER FROM FACT_HOUSEHOLD_CORE AS T1 JOIN FACT_PERSON_CORE AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID GROUP BY T1.HOUSEHOLD_SPLIT_NUMBER, T2.PERSON_ID HAVING MAX(T2.AGE) > 13 ORDER BY MAX(T2.AGE) DESC LIMIT 10;",
+    "pair_id": "bb6daf07",
+    "original_question_id": "f125e05b",
+    "schema_used": [
+      "FACT_HOUSEHOLD_CORE",
+      "FACT_PERSON_CORE",
+      "FACT_HOUSEHOLD_TRACKING"
+    ],
+    "linked_schema": {
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ],
+      "FACT_PERSON_CORE": [
+        "PERSON_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_STATUS_ID",
+        "DEMOGRAPHIC_CODE_ID",
+        "CURRENT_LOCATION_ID",
+        "PERSON_NUMBER",
+        "AGE"
+      ],
+      "FACT_HOUSEHOLD_TRACKING": [
+        "HOUSEHOLD_TRACKING_ID",
+        "HOUSEHOLD_ID",
+        "SAME_ADDRESS_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_person_core` and `fact_household_core` on `fact_person_core.household_id` = `fact_household_core.household_id`. Group by `fact_person_core.person_id` and `fact_household_core.household_split_number`. Compute `MAX(fact_person_core.age)` as max_age. Filter groups with `HAVING max_age > 13`. Order results by max_age descending and limit to 10."
+  },
+  {
+    "question": "Show the average age and the household split number for each person ID and household split number where the average age is greater than 21, sorted by the average age in descending order and limited to the top 10 results.",
+    "sql": "SELECT AVG(T2.AGE), T1.HOUSEHOLD_SPLIT_NUMBER FROM FACT_HOUSEHOLD_CORE AS T1 JOIN FACT_PERSON_CORE AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID GROUP BY T1.HOUSEHOLD_SPLIT_NUMBER, T2.PERSON_ID HAVING AVG(T2.AGE) > 21 ORDER BY AVG(T2.AGE) DESC LIMIT 10;",
+    "pair_id": "919301df",
+    "original_question_id": "f125e05b",
+    "schema_used": [
+      "FACT_HOUSEHOLD_CORE",
+      "FACT_PERSON_CORE",
+      "FACT_HOUSEHOLD_TRACKING"
+    ],
+    "linked_schema": {
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ],
+      "FACT_PERSON_CORE": [
+        "PERSON_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_STATUS_ID",
+        "DEMOGRAPHIC_CODE_ID",
+        "CURRENT_LOCATION_ID",
+        "PERSON_NUMBER",
+        "AGE"
+      ],
+      "FACT_HOUSEHOLD_TRACKING": [
+        "HOUSEHOLD_TRACKING_ID",
+        "HOUSEHOLD_ID",
+        "SAME_ADDRESS_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_person_core` and `fact_household_core` on `fact_person_core`.`household_id` = `fact_household_core`.`household_id`. Group by `fact_person_core`.`person_id` and `fact_household_core`.`household_split_number`. Compute average of `fact_person_core`.`age` per group. Filter groups where average age > 21. Sort by average age descending, limit 10."
+  },
+  {
+    "question": "List the household split numbers and the ages for individuals older than 13, grouped by these two attributes, provided that there is at least one associated household tracking record; sort the results by household split number in descending order and show only the first 10 entries.",
+    "sql": "SELECT T2.HOUSEHOLD_SPLIT_NUMBER, T1.AGE FROM FACT_PERSON_CORE AS T1 INNER JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID INNER JOIN FACT_HOUSEHOLD_TRACKING AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T1.AGE > 13 GROUP BY T2.HOUSEHOLD_SPLIT_NUMBER, T1.AGE HAVING COUNT(T3.HOUSEHOLD_TRACKING_ID) >= 1 ORDER BY T2.HOUSEHOLD_SPLIT_NUMBER DESC LIMIT 10",
+    "pair_id": "a49d3e94",
+    "original_question_id": "f125e05b",
+    "schema_used": [
+      "FACT_HOUSEHOLD_CORE",
+      "FACT_PERSON_CORE",
+      "FACT_HOUSEHOLD_TRACKING"
+    ],
+    "linked_schema": {
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ],
+      "FACT_PERSON_CORE": [
+        "PERSON_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_STATUS_ID",
+        "DEMOGRAPHIC_CODE_ID",
+        "CURRENT_LOCATION_ID",
+        "PERSON_NUMBER",
+        "AGE"
+      ],
+      "FACT_HOUSEHOLD_TRACKING": [
+        "HOUSEHOLD_TRACKING_ID",
+        "HOUSEHOLD_ID",
+        "SAME_ADDRESS_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `fact_household_core`.`household_split_number` and `fact_person_core`.`age` from `fact_person_core` inner join `fact_household_core` on `fact_person_core`.`household_id` = `fact_household_core`.`household_id` inner join `fact_household_tracking` on `fact_household_core`.`household_id` = `fact_household_tracking`.`household_id` where `fact_person_core`.`age` > 13 group by `fact_household_core`.`household_split_number`, `fact_person_core`.`age` order by `fact_household_core`.`household_split_number` desc limit 10."
+  },
+  {
+    "question": "List the household split number and the age for individuals older than 21, grouped by these two attributes, where there is at least one associated household tracking record; display the top 10 results sorted by household split number in descending order.",
+    "sql": "SELECT T2.HOUSEHOLD_SPLIT_NUMBER, T1.AGE FROM FACT_PERSON_CORE AS T1 INNER JOIN FACT_HOUSEHOLD_CORE AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID INNER JOIN FACT_HOUSEHOLD_TRACKING AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T1.AGE > 21 GROUP BY T2.HOUSEHOLD_SPLIT_NUMBER, T1.AGE HAVING COUNT(T3.HOUSEHOLD_ID) >= 1 ORDER BY T2.HOUSEHOLD_SPLIT_NUMBER DESC LIMIT 10",
+    "pair_id": "c1dd9b96",
+    "original_question_id": "f125e05b",
+    "schema_used": [
+      "FACT_HOUSEHOLD_CORE",
+      "FACT_PERSON_CORE",
+      "FACT_HOUSEHOLD_TRACKING"
+    ],
+    "linked_schema": {
+      "FACT_HOUSEHOLD_CORE": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_STATUS_ID",
+        "HOUSEHOLD_NUMBER",
+        "HOUSEHOLD_SPLIT_NUMBER",
+        "NEW_HOUSEHOLD_SPLIT_NUMBER"
+      ],
+      "FACT_PERSON_CORE": [
+        "PERSON_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_STATUS_ID",
+        "DEMOGRAPHIC_CODE_ID",
+        "CURRENT_LOCATION_ID",
+        "PERSON_NUMBER",
+        "AGE"
+      ],
+      "FACT_HOUSEHOLD_TRACKING": [
+        "HOUSEHOLD_TRACKING_ID",
+        "HOUSEHOLD_ID",
+        "SAME_ADDRESS_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_person_core` with `fact_household_core` on `fact_person_core.household_id` = `fact_household_core.household_id`. Join `fact_household_tracking` on `fact_household_core.household_id` = `fact_household_tracking.household_id`. Filter where `fact_person_core.age` > 21. Group by `fact_household_core.household_split_number` and `fact_person_core.age`. Order by `fact_household_core.household_split_number` DESC. Limit 10."
+  },
+  {
+    "question": "List the person IDs for individuals who are 46 years of age or older and have a marital status code of 'Widowed'.",
+    "sql": "SELECT T1.PERSON_ID FROM FACT_PERSON_CORE AS T1 JOIN DIM_DEMOGRAPHIC_CODES AS T2 ON T1.DEMOGRAPHIC_CODE_ID = T2.DEMOGRAPHIC_CODE_ID WHERE T1.AGE >= 46 AND T2.MARITAL_STATUS_CODE = 'Widowed';",
+    "pair_id": "2f099f0a",
+    "original_question_id": "b47067f3",
+    "schema_used": [
+      "DIM_DEMOGRAPHIC_CODES",
+      "FACT_PERSON_CORE",
+      "FACT_HOUSEHOLD_TRACKING"
+    ],
+    "linked_schema": {
+      "DIM_DEMOGRAPHIC_CODES": [
+        "DEMOGRAPHIC_CODE_ID",
+        "SEX_CODE",
+        "MARITAL_STATUS_CODE"
+      ],
+      "FACT_PERSON_CORE": [
+        "DEMOGRAPHIC_CODE_ID",
+        "PERSON_STATUS_ID",
+        "AGE",
+        "CURRENT_LOCATION_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_ID"
+      ],
+      "FACT_HOUSEHOLD_TRACKING": [
+        "HOUSEHOLD_TRACKING_ID",
+        "HOUSEHOLD_ID",
+        "SAME_ADDRESS_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_person_core`.`person_id` from `fact_person_core` join `dim_demographic_codes` on `fact_person_core`.`demographic_code_id` = `dim_demographic_codes`.`demographic_code_id` where `fact_person_core`.`age` >= 46 and `dim_demographic_codes`.`marital_status_code` = 'Widowed'."
+  },
+  {
+    "question": "List the household IDs for individuals who are 22 years of age or older and have a marital status code of 'Widowed'.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM FACT_PERSON_CORE AS T1 JOIN DIM_DEMOGRAPHIC_CODES AS T2 ON T1.DEMOGRAPHIC_CODE_ID = T2.DEMOGRAPHIC_CODE_ID WHERE T1.AGE >= 22 AND T2.MARITAL_STATUS_CODE = 'Widowed';",
+    "pair_id": "69f97d1a",
+    "original_question_id": "b47067f3",
+    "schema_used": [
+      "DIM_DEMOGRAPHIC_CODES",
+      "FACT_PERSON_CORE",
+      "FACT_HOUSEHOLD_TRACKING"
+    ],
+    "linked_schema": {
+      "DIM_DEMOGRAPHIC_CODES": [
+        "DEMOGRAPHIC_CODE_ID",
+        "SEX_CODE",
+        "MARITAL_STATUS_CODE"
+      ],
+      "FACT_PERSON_CORE": [
+        "DEMOGRAPHIC_CODE_ID",
+        "PERSON_STATUS_ID",
+        "AGE",
+        "CURRENT_LOCATION_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_ID"
+      ],
+      "FACT_HOUSEHOLD_TRACKING": [
+        "HOUSEHOLD_TRACKING_ID",
+        "HOUSEHOLD_ID",
+        "SAME_ADDRESS_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_person_core`.`household_id` from `fact_person_core` join `dim_demographic_codes` on `fact_person_core`.`demographic_code_id` = `dim_demographic_codes`.`demographic_code_id` where `fact_person_core`.`age` >= 22 and `dim_demographic_codes`.`marital_status_code` = 'Widowed'."
+  },
+  {
+    "question": "List the person IDs for individuals who are 46 years of age or older and have a marital status code of 'Widowed'.",
+    "sql": "SELECT T1.PERSON_ID FROM FACT_PERSON_CORE AS T1 JOIN DIM_DEMOGRAPHIC_CODES AS T2 ON T1.DEMOGRAPHIC_CODE_ID = T2.DEMOGRAPHIC_CODE_ID WHERE T1.AGE >= 46 AND T2.MARITAL_STATUS_CODE = 'Widowed';",
+    "pair_id": "391fc5af",
+    "original_question_id": "b47067f3",
+    "schema_used": [
+      "DIM_DEMOGRAPHIC_CODES",
+      "FACT_PERSON_CORE",
+      "FACT_HOUSEHOLD_TRACKING"
+    ],
+    "linked_schema": {
+      "DIM_DEMOGRAPHIC_CODES": [
+        "DEMOGRAPHIC_CODE_ID",
+        "SEX_CODE",
+        "MARITAL_STATUS_CODE"
+      ],
+      "FACT_PERSON_CORE": [
+        "DEMOGRAPHIC_CODE_ID",
+        "PERSON_STATUS_ID",
+        "AGE",
+        "CURRENT_LOCATION_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_ID"
+      ],
+      "FACT_HOUSEHOLD_TRACKING": [
+        "HOUSEHOLD_TRACKING_ID",
+        "HOUSEHOLD_ID",
+        "SAME_ADDRESS_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_person_core`.`person_id` from `fact_person_core` join `dim_demographic_codes` on `fact_person_core`.`demographic_code_id` = `dim_demographic_codes`.`demographic_code_id` where `fact_person_core`.`age` >= 46 and `dim_demographic_codes`.`marital_status_code` = 'Widowed'."
+  },
+  {
+    "question": "Provide the person ID for individuals who are at least 22 years old and have a marital status code of 'Widowed'.",
+    "sql": "SELECT T1.PERSON_ID FROM FACT_PERSON_CORE AS T1 JOIN DIM_DEMOGRAPHIC_CODES AS T2 ON T1.DEMOGRAPHIC_CODE_ID = T2.DEMOGRAPHIC_CODE_ID WHERE T1.AGE >= 22 AND T2.MARITAL_STATUS_CODE = 'Widowed';",
+    "pair_id": "d5bbef4a",
+    "original_question_id": "b47067f3",
+    "schema_used": [
+      "DIM_DEMOGRAPHIC_CODES",
+      "FACT_PERSON_CORE",
+      "FACT_HOUSEHOLD_TRACKING"
+    ],
+    "linked_schema": {
+      "DIM_DEMOGRAPHIC_CODES": [
+        "DEMOGRAPHIC_CODE_ID",
+        "SEX_CODE",
+        "MARITAL_STATUS_CODE"
+      ],
+      "FACT_PERSON_CORE": [
+        "DEMOGRAPHIC_CODE_ID",
+        "PERSON_STATUS_ID",
+        "AGE",
+        "CURRENT_LOCATION_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_ID"
+      ],
+      "FACT_HOUSEHOLD_TRACKING": [
+        "HOUSEHOLD_TRACKING_ID",
+        "HOUSEHOLD_ID",
+        "SAME_ADDRESS_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select (`fact_person_core`.`person_id`) from `fact_person_core` join `dim_demographic_codes` on (`fact_person_core`.`demographic_code_id` = `dim_demographic_codes`.`demographic_code_id`) where (`fact_person_core`.`age` >= 22) and (`dim_demographic_codes`.`marital_status_code` = 'Widowed')."
+  },
+  {
+    "question": "For individuals aged 46 and older who have a marital status of 'Widowed', list the marital status code and the total count of people, grouped and ordered by their marital status code.",
+    "sql": "SELECT T2.MARITAL_STATUS_CODE, COUNT(*) FROM FACT_PERSON_CORE AS T1 JOIN DIM_DEMOGRAPHIC_CODES AS T2 ON T1.DEMOGRAPHIC_CODE_ID = T2.DEMOGRAPHIC_CODE_ID WHERE T1.AGE >= 46 AND T2.MARITAL_STATUS_CODE = 'Widowed' GROUP BY T2.MARITAL_STATUS_CODE ORDER BY T2.MARITAL_STATUS_CODE ASC",
+    "pair_id": "8850df19",
+    "original_question_id": "b47067f3",
+    "schema_used": [
+      "DIM_DEMOGRAPHIC_CODES",
+      "FACT_PERSON_CORE",
+      "FACT_HOUSEHOLD_TRACKING"
+    ],
+    "linked_schema": {
+      "DIM_DEMOGRAPHIC_CODES": [
+        "DEMOGRAPHIC_CODE_ID",
+        "SEX_CODE",
+        "MARITAL_STATUS_CODE"
+      ],
+      "FACT_PERSON_CORE": [
+        "DEMOGRAPHIC_CODE_ID",
+        "PERSON_STATUS_ID",
+        "AGE",
+        "CURRENT_LOCATION_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_ID"
+      ],
+      "FACT_HOUSEHOLD_TRACKING": [
+        "HOUSEHOLD_TRACKING_ID",
+        "HOUSEHOLD_ID",
+        "SAME_ADDRESS_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_demographic_codes`.`marital_status_code` and count(`fact_person_core`.`person_id`) from `fact_person_core` join `dim_demographic_codes` on `fact_person_core`.`demographic_code_id` = `dim_demographic_codes`.`demographic_code_id` where `fact_person_core`.`age` >= 46 and `dim_demographic_codes`.`marital_status_code` = 'Widowed' group by `dim_demographic_codes`.`marital_status_code` order by `dim_demographic_codes`.`marital_status_code`."
+  },
+  {
+    "question": "For individuals aged 22 or older who have a marital status code of 'Widowed', list each sex code and the total count of people for each, ordered alphabetically by the sex code.",
+    "sql": "SELECT T2.SEX_CODE, COUNT(*) FROM FACT_PERSON_CORE AS T1 JOIN DIM_DEMOGRAPHIC_CODES AS T2 ON T1.DEMOGRAPHIC_CODE_ID = T2.DEMOGRAPHIC_CODE_ID WHERE T1.AGE >= 22 AND T2.MARITAL_STATUS_CODE = 'Widowed' GROUP BY T2.SEX_CODE ORDER BY T2.SEX_CODE ASC",
+    "pair_id": "5daf87da",
+    "original_question_id": "b47067f3",
+    "schema_used": [
+      "DIM_DEMOGRAPHIC_CODES",
+      "FACT_PERSON_CORE",
+      "FACT_HOUSEHOLD_TRACKING"
+    ],
+    "linked_schema": {
+      "DIM_DEMOGRAPHIC_CODES": [
+        "DEMOGRAPHIC_CODE_ID",
+        "SEX_CODE",
+        "MARITAL_STATUS_CODE"
+      ],
+      "FACT_PERSON_CORE": [
+        "DEMOGRAPHIC_CODE_ID",
+        "PERSON_STATUS_ID",
+        "AGE",
+        "CURRENT_LOCATION_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_ID"
+      ],
+      "FACT_HOUSEHOLD_TRACKING": [
+        "HOUSEHOLD_TRACKING_ID",
+        "HOUSEHOLD_ID",
+        "SAME_ADDRESS_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_person_core` and `dim_demographic_codes` on `demographic_code_id`. Filter where `fact_person_core`.`age` >= 22 and `dim_demographic_codes`.`marital_status_code` = 'Widowed'. Group by `dim_demographic_codes`.`sex_code` and count distinct `fact_person_core`.`person_id`. Order by `dim_demographic_codes`.`sex_code`."
+  },
+  {
+    "question": "List the person IDs for individuals who are at least 46 years old and have a marital status of 'Widowed', ensuring they are associated with at least one household tracking record, and order the results by age in descending order.",
+    "sql": "SELECT T2.PERSON_ID FROM DIM_DEMOGRAPHIC_CODES AS T1 JOIN FACT_PERSON_CORE AS T2 ON T1.DEMOGRAPHIC_CODE_ID = T2.DEMOGRAPHIC_CODE_ID JOIN FACT_HOUSEHOLD_TRACKING AS T3 ON T2.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.AGE >= 46 AND T1.MARITAL_STATUS_CODE = 'Widowed' GROUP BY T2.PERSON_ID, T2.AGE HAVING COUNT(T3.HOUSEHOLD_TRACKING_ID) >= 1 ORDER BY T2.AGE DESC",
+    "pair_id": "5de47dec",
+    "original_question_id": "b47067f3",
+    "schema_used": [
+      "DIM_DEMOGRAPHIC_CODES",
+      "FACT_PERSON_CORE",
+      "FACT_HOUSEHOLD_TRACKING"
+    ],
+    "linked_schema": {
+      "DIM_DEMOGRAPHIC_CODES": [
+        "DEMOGRAPHIC_CODE_ID",
+        "SEX_CODE",
+        "MARITAL_STATUS_CODE"
+      ],
+      "FACT_PERSON_CORE": [
+        "DEMOGRAPHIC_CODE_ID",
+        "PERSON_STATUS_ID",
+        "AGE",
+        "CURRENT_LOCATION_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_ID"
+      ],
+      "FACT_HOUSEHOLD_TRACKING": [
+        "HOUSEHOLD_TRACKING_ID",
+        "HOUSEHOLD_ID",
+        "SAME_ADDRESS_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_person_core`.`person_id` from `fact_person_core` join `dim_demographic_codes` on `fact_person_core`.`demographic_code_id` = `dim_demographic_codes`.`demographic_code_id` join `fact_household_core` on `fact_person_core`.`household_id` = `fact_household_core`.`household_id` join `fact_household_tracking` on `fact_household_core`.`household_id` = `fact_household_tracking`.`household_id` where `fact_person_core`.`age` >= 46 and `dim_demographic_codes`.`marital_status_code` = 'Widowed' order by `fact_person_core`.`age` desc."
+  },
+  {
+    "question": "List the person IDs for individuals aged 22 or older who have a marital status code of 'Widowed' and have at least one record of a same address indicator, grouped by their person ID and age, and ordered by age in descending order.",
+    "sql": "SELECT T2.PERSON_ID FROM DIM_DEMOGRAPHIC_CODES AS T1 JOIN FACT_PERSON_CORE AS T2 ON T1.DEMOGRAPHIC_CODE_ID = T2.DEMOGRAPHIC_CODE_ID JOIN FACT_HOUSEHOLD_TRACKING AS T3 ON T2.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.AGE >= 22 AND T1.MARITAL_STATUS_CODE = 'Widowed' GROUP BY T2.PERSON_ID, T2.AGE HAVING COUNT(T3.SAME_ADDRESS_INDICATOR) >= 1 ORDER BY T2.AGE DESC",
+    "pair_id": "e5265345",
+    "original_question_id": "b47067f3",
+    "schema_used": [
+      "DIM_DEMOGRAPHIC_CODES",
+      "FACT_PERSON_CORE",
+      "FACT_HOUSEHOLD_TRACKING"
+    ],
+    "linked_schema": {
+      "DIM_DEMOGRAPHIC_CODES": [
+        "DEMOGRAPHIC_CODE_ID",
+        "SEX_CODE",
+        "MARITAL_STATUS_CODE"
+      ],
+      "FACT_PERSON_CORE": [
+        "DEMOGRAPHIC_CODE_ID",
+        "PERSON_STATUS_ID",
+        "AGE",
+        "CURRENT_LOCATION_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_ID"
+      ],
+      "FACT_HOUSEHOLD_TRACKING": [
+        "HOUSEHOLD_TRACKING_ID",
+        "HOUSEHOLD_ID",
+        "SAME_ADDRESS_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "We need to list `fact_person_core`.`person_id` for individuals where `fact_person_core`.`age` >= 22 and `dim_demographic_codes`.`marital_status_code` = 'Widowed' and there exists at least one record in `fact_household_tracking` with `fact_household_tracking`.`same_address_indicator` = 'Yes' for the household. Join `fact_person_core` with `dim_demographic_codes` on `fact_person_core`.`demographic_code_id` = `dim_demographic_codes`.`demographic_code_id`. Join `fact_person_core` with `fact_household_core` on `fact_person_core`.`household_id` = `fact_household_core`.`household_id`. Join `fact_household_core` with `fact_household_tracking` on `fact_household_core`.`household_id` = `fact_household_tracking`.`household_id`. Filter `fact_household_tracking`.`same_address_indicator` = 'Yes'. Group by `fact_person_core`.`person_id`, `fact_person_core`.`age`. Order by `fact_person_core`.`age` DESC."
+  },
+  {
+    "question": "List each marital status code and the average age of persons associated with that code.",
+    "sql": "SELECT T1.MARITAL_STATUS_CODE, AVG(T2.AGE) FROM DIM_DEMOGRAPHIC_CODES AS T1 JOIN FACT_PERSON_CORE AS T2 ON T1.DEMOGRAPHIC_CODE_ID = T2.DEMOGRAPHIC_CODE_ID GROUP BY T1.MARITAL_STATUS_CODE",
+    "pair_id": "a52981b7",
+    "original_question_id": "ce2a0ba2",
+    "schema_used": [
+      "DIM_DEMOGRAPHIC_CODES",
+      "FACT_PERSON_CORE",
+      "FACT_MIGRANT_PERSONAL"
+    ],
+    "linked_schema": {
+      "DIM_DEMOGRAPHIC_CODES": [
+        "DEMOGRAPHIC_CODE_ID",
+        "SEX_CODE",
+        "MARITAL_STATUS_CODE"
+      ],
+      "FACT_PERSON_CORE": [
+        "PERSON_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_STATUS_ID",
+        "DEMOGRAPHIC_CODE_ID",
+        "CURRENT_LOCATION_ID",
+        "PERSON_NUMBER",
+        "AGE"
+      ],
+      "FACT_MIGRANT_PERSONAL": [
+        "MARRIED_WHEN_MIGRATED_INDICATOR",
+        "MIGRANT_ID",
+        "MARITAL_STATUS_AT_MIGRATION_CODE",
+        "EDUCATION_AT_MIGRATION_CODE",
+        "PERSON_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join fact_person_core with dim_demographic_codes on fact_person_core.demographic_code_id = dim_demographic_codes.demographic_code_id. Group by dim_demographic_codes.marital_status_code and compute AVG(fact_person_core.age)."
+  },
+  {
+    "question": "For each sex code, list the sex code and calculate the average age of the individuals.",
+    "sql": "SELECT T1.SEX_CODE, AVG(T2.AGE) FROM DIM_DEMOGRAPHIC_CODES AS T1 JOIN FACT_PERSON_CORE AS T2 ON T1.DEMOGRAPHIC_CODE_ID = T2.DEMOGRAPHIC_CODE_ID GROUP BY T1.SEX_CODE",
+    "pair_id": "1839d026",
+    "original_question_id": "ce2a0ba2",
+    "schema_used": [
+      "DIM_DEMOGRAPHIC_CODES",
+      "FACT_PERSON_CORE",
+      "FACT_MIGRANT_PERSONAL"
+    ],
+    "linked_schema": {
+      "DIM_DEMOGRAPHIC_CODES": [
+        "DEMOGRAPHIC_CODE_ID",
+        "SEX_CODE",
+        "MARITAL_STATUS_CODE"
+      ],
+      "FACT_PERSON_CORE": [
+        "PERSON_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_STATUS_ID",
+        "DEMOGRAPHIC_CODE_ID",
+        "CURRENT_LOCATION_ID",
+        "PERSON_NUMBER",
+        "AGE"
+      ],
+      "FACT_MIGRANT_PERSONAL": [
+        "MARRIED_WHEN_MIGRATED_INDICATOR",
+        "MIGRANT_ID",
+        "MARITAL_STATUS_AT_MIGRATION_CODE",
+        "EDUCATION_AT_MIGRATION_CODE",
+        "PERSON_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_person_core` with `dim_demographic_codes` on `fact_person_core`.`demographic_code_id` = `dim_demographic_codes`.`demographic_code_id`. Group by `dim_demographic_codes`.`sex_code` and compute AVG(`fact_person_core`.`age`)."
+  },
+  {
+    "question": "Show the marital status code and the average age of individuals, grouped by their marital status code.",
+    "sql": "SELECT T2.MARITAL_STATUS_CODE, AVG(T1.AGE) FROM FACT_PERSON_CORE AS T1 JOIN DIM_DEMOGRAPHIC_CODES AS T2 ON T1.DEMOGRAPHIC_CODE_ID = T2.DEMOGRAPHIC_CODE_ID GROUP BY T2.MARITAL_STATUS_CODE",
+    "pair_id": "e8de79c6",
+    "original_question_id": "ce2a0ba2",
+    "schema_used": [
+      "DIM_DEMOGRAPHIC_CODES",
+      "FACT_PERSON_CORE",
+      "FACT_MIGRANT_PERSONAL"
+    ],
+    "linked_schema": {
+      "DIM_DEMOGRAPHIC_CODES": [
+        "DEMOGRAPHIC_CODE_ID",
+        "SEX_CODE",
+        "MARITAL_STATUS_CODE"
+      ],
+      "FACT_PERSON_CORE": [
+        "PERSON_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_STATUS_ID",
+        "DEMOGRAPHIC_CODE_ID",
+        "CURRENT_LOCATION_ID",
+        "PERSON_NUMBER",
+        "AGE"
+      ],
+      "FACT_MIGRANT_PERSONAL": [
+        "MARRIED_WHEN_MIGRATED_INDICATOR",
+        "MIGRANT_ID",
+        "MARITAL_STATUS_AT_MIGRATION_CODE",
+        "EDUCATION_AT_MIGRATION_CODE",
+        "PERSON_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Get marital status from `dim_demographic_codes`.`marital_status_code` and age from `fact_person_core`.`age`. Join `fact_person_core` to `dim_demographic_codes` on `fact_person_core`.`demographic_code_id` = `dim_demographic_codes`.`demographic_code_id`. Calculate average age per marital status code using AVG() and GROUP BY `dim_demographic_codes`.`marital_status_code`."
+  },
+  {
+    "question": "For individuals with a marital status code of 'Married', list each sex code and the average age, grouped by their sex code.",
+    "sql": "SELECT T2.SEX_CODE, AVG(T1.AGE) FROM FACT_PERSON_CORE AS T1 JOIN DIM_DEMOGRAPHIC_CODES AS T2 ON T1.DEMOGRAPHIC_CODE_ID = T2.DEMOGRAPHIC_CODE_ID WHERE T2.MARITAL_STATUS_CODE = 'Married' GROUP BY T2.SEX_CODE",
+    "pair_id": "714c15d1",
+    "original_question_id": "ce2a0ba2",
+    "schema_used": [
+      "DIM_DEMOGRAPHIC_CODES",
+      "FACT_PERSON_CORE",
+      "FACT_MIGRANT_PERSONAL"
+    ],
+    "linked_schema": {
+      "DIM_DEMOGRAPHIC_CODES": [
+        "DEMOGRAPHIC_CODE_ID",
+        "SEX_CODE",
+        "MARITAL_STATUS_CODE"
+      ],
+      "FACT_PERSON_CORE": [
+        "PERSON_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_STATUS_ID",
+        "DEMOGRAPHIC_CODE_ID",
+        "CURRENT_LOCATION_ID",
+        "PERSON_NUMBER",
+        "AGE"
+      ],
+      "FACT_MIGRANT_PERSONAL": [
+        "MARRIED_WHEN_MIGRATED_INDICATOR",
+        "MIGRANT_ID",
+        "MARITAL_STATUS_AT_MIGRATION_CODE",
+        "EDUCATION_AT_MIGRATION_CODE",
+        "PERSON_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_person_core` with `dim_demographic_codes` on `fact_person_core`.`demographic_code_id` = `dim_demographic_codes`.`demographic_code_id`. Filter where `dim_demographic_codes`.`marital_status_code` = 'Married'. Group by `dim_demographic_codes`.`sex_code` and compute AVG(`fact_person_core`.`age`)."
+  },
+  {
+    "question": "List each marital status code and the average age of persons associated with that code, filtering for groups where the average age is greater than 1, and display the results in descending order of the average age.",
+    "sql": "SELECT T2.MARITAL_STATUS_CODE, AVG(T1.AGE) FROM FACT_PERSON_CORE AS T1 JOIN DIM_DEMOGRAPHIC_CODES AS T2 ON T1.DEMOGRAPHIC_CODE_ID = T2.DEMOGRAPHIC_CODE_ID GROUP BY T2.MARITAL_STATUS_CODE HAVING AVG(T1.AGE) > 1 ORDER BY AVG(T1.AGE) DESC",
+    "pair_id": "138bc390",
+    "original_question_id": "ce2a0ba2",
+    "schema_used": [
+      "DIM_DEMOGRAPHIC_CODES",
+      "FACT_PERSON_CORE",
+      "FACT_MIGRANT_PERSONAL"
+    ],
+    "linked_schema": {
+      "DIM_DEMOGRAPHIC_CODES": [
+        "DEMOGRAPHIC_CODE_ID",
+        "SEX_CODE",
+        "MARITAL_STATUS_CODE"
+      ],
+      "FACT_PERSON_CORE": [
+        "PERSON_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_STATUS_ID",
+        "DEMOGRAPHIC_CODE_ID",
+        "CURRENT_LOCATION_ID",
+        "PERSON_NUMBER",
+        "AGE"
+      ],
+      "FACT_MIGRANT_PERSONAL": [
+        "MARRIED_WHEN_MIGRATED_INDICATOR",
+        "MIGRANT_ID",
+        "MARITAL_STATUS_AT_MIGRATION_CODE",
+        "EDUCATION_AT_MIGRATION_CODE",
+        "PERSON_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_person_core` with `dim_demographic_codes` on `fact_person_core.demographic_code_id` = `dim_demographic_codes.demographic_code_id`. Group by `dim_demographic_codes.marital_status_code`. Compute AVG(`fact_person_core.age`) as average_age. Filter with HAVING average_age > 1. Order by average_age DESC."
+  },
+  {
+    "question": "List each sex code and its corresponding average age, showing only those sex codes where the average age is greater than 13, and display the results in descending order of the average age.",
+    "sql": "SELECT T2.SEX_CODE, AVG(T1.AGE) FROM FACT_PERSON_CORE AS T1 JOIN DIM_DEMOGRAPHIC_CODES AS T2 ON T1.DEMOGRAPHIC_CODE_ID = T2.DEMOGRAPHIC_CODE_ID GROUP BY T2.SEX_CODE HAVING AVG(T1.AGE) > 13 ORDER BY AVG(T1.AGE) DESC",
+    "pair_id": "3c5b0779",
+    "original_question_id": "ce2a0ba2",
+    "schema_used": [
+      "DIM_DEMOGRAPHIC_CODES",
+      "FACT_PERSON_CORE",
+      "FACT_MIGRANT_PERSONAL"
+    ],
+    "linked_schema": {
+      "DIM_DEMOGRAPHIC_CODES": [
+        "DEMOGRAPHIC_CODE_ID",
+        "SEX_CODE",
+        "MARITAL_STATUS_CODE"
+      ],
+      "FACT_PERSON_CORE": [
+        "PERSON_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_STATUS_ID",
+        "DEMOGRAPHIC_CODE_ID",
+        "CURRENT_LOCATION_ID",
+        "PERSON_NUMBER",
+        "AGE"
+      ],
+      "FACT_MIGRANT_PERSONAL": [
+        "MARRIED_WHEN_MIGRATED_INDICATOR",
+        "MIGRANT_ID",
+        "MARITAL_STATUS_AT_MIGRATION_CODE",
+        "EDUCATION_AT_MIGRATION_CODE",
+        "PERSON_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_person_core` with `dim_demographic_codes` on `fact_person_core`.`demographic_code_id` = `dim_demographic_codes`.`demographic_code_id`. Group by `dim_demographic_codes`.`sex_code`. Compute average of `fact_person_core`.`age`. Filter groups where average age > 13. Order by average age descending."
+  }
+]
