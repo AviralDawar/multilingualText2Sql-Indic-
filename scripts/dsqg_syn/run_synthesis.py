@@ -269,7 +269,7 @@ def main():
     parser.add_argument(
         '--skeletons-per-question',
         type=int,
-        default=2,
+        default=3,
         help='Number of SQL skeletons per question (default: 4)'
     )
     parser.add_argument(

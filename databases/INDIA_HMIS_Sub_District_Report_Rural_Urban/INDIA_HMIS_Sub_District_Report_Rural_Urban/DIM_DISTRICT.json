@@ -1,22 +1,27 @@
 [
   {
     "DISTRICT_ID": 1,
+    "STATE_ID": 1,
     "DISTRICT_NAME": "Nicobars"
   },
   {
     "DISTRICT_ID": 2,
+    "STATE_ID": 1,
     "DISTRICT_NAME": "North And Middle Andaman"
   },
   {
     "DISTRICT_ID": 3,
+    "STATE_ID": 1,
     "DISTRICT_NAME": "South Andamans"
   },
   {
     "DISTRICT_ID": 4,
+    "STATE_ID": 2,
     "DISTRICT_NAME": "West Godavari"
   },
   {
     "DISTRICT_ID": 5,
+    "STATE_ID": 2,
     "DISTRICT_NAME": "Spsr Nellore"
   }
 ]

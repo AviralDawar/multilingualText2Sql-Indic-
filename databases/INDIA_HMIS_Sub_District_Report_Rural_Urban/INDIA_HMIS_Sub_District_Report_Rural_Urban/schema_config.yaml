@@ -48,6 +48,7 @@ dimension_tables:
     columns:
     - source_index: 4
       target_name: YEAR_VALUE
+      transform: extract_year
   DIM_MONTH:
     key_column: MONTH_ID
     dedup_columns:
