@@ -396,7 +396,8 @@ def main():
             args.temp_nlq_synthesis
             if args.temp_nlq_synthesis is not None
             else DSQGConfig.nlq_synthesis_temperature
-        )
+        ),
+        verbose=args.verbose
     )
 
     # Initialize one LLM client for the full pipeline

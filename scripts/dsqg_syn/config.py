@@ -110,6 +110,9 @@ class DSQGConfig:
     # Database Settings
     database_type: str = "postgresql"  # postgresql, mysql, sqlite
 
+    # Debug Settings
+    verbose: bool = False
+
     # Domain Keywords (auto-extracted or manually specified)
     domain_keywords: List[str] = field(default_factory=list)
 
