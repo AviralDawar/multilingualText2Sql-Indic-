@@ -1,0 +1,3402 @@
+[
+  {
+    "question": "List all the districts located in the state of Bihar.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Bihar';",
+    "pair_id": "bf924deb",
+    "original_question_id": "d20318f7",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select (`dim_district`.`district_name`) from `dim_district` join `dim_state` on (`dim_district`.`state_id`) = (`dim_state`.`state_id`) where (`dim_state`.`state_name`) = 'Bihar'."
+  },
+  {
+    "question": "List all the districts in the state of Assam in alphabetical order.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Assam' ORDER BY T1.DISTRICT_NAME ASC",
+    "pair_id": "9b78ebf8",
+    "original_question_id": "d20318f7",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state` where (`dim_state`.`state_name` = 'Assam'), join to `dim_district` on (`dim_district`.`state_id` = `dim_state`.`state_id`), select `dim_district`.`district_name`, order by `dim_district`.`district_name` ASC."
+  },
+  {
+    "question": "Provide an alphabetized list of all districts located within the state of Bihar.",
+    "sql": "SELECT T3.DISTRICT_NAME FROM DIM_COUNTRY AS T1 INNER JOIN DIM_STATE AS T2 ON T1.COUNTRY_ID = T2.COUNTRY_ID INNER JOIN DIM_DISTRICT AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T2.STATE_NAME = 'Bihar' GROUP BY T3.DISTRICT_NAME ORDER BY T3.DISTRICT_NAME ASC",
+    "pair_id": "5e6d1189",
+    "original_question_id": "d20318f7",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_district`.`district_name` from `dim_district` join `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id` where `dim_state`.`state_name` = 'Bihar' order by `dim_district`.`district_name` asc."
+  },
+  {
+    "question": "Provide a count of districts for each state, listed in alphabetical order by state name.",
+    "sql": "SELECT T1.STATE_NAME, COUNT(T2.DISTRICT_ID) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID GROUP BY T1.STATE_NAME ORDER BY T1.STATE_NAME;",
+    "pair_id": "82925e27",
+    "original_question_id": "0a6a92ae",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_state` and `dim_district` on (`dim_state`.`state_id` = `dim_district`.`state_id`). Group by `dim_state`.`state_name` (or `dim_state`.`state_id` and `dim_state`.`state_name`). Count distinct `dim_district`.`district_id` per state. Order by `dim_state`.`state_name` ASC."
+  },
+  {
+    "question": "Rank the states by the total number of districts they contain, from highest to lowest.",
+    "sql": "SELECT T2.STATE_NAME, COUNT(T1.DISTRICT_ID) FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID GROUP BY T2.STATE_NAME ORDER BY COUNT(T1.DISTRICT_ID) DESC",
+    "pair_id": "cba77ea8",
+    "original_question_id": "0a6a92ae",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_state` and `dim_district` on (`dim_state`.`state_id` = `dim_district`.`state_id`). Group by `dim_state`.`state_name`. Count distinct `dim_district`.`district_id` as district_count. Order by district_count DESC to rank from highest to lowest."
+  },
+  {
+    "question": "Rank the states by their total number of districts, showing only those that have at least one district.",
+    "sql": "SELECT T2.STATE_NAME, COUNT(T3.DISTRICT_ID) FROM DIM_COUNTRY AS T1 JOIN DIM_STATE AS T2 ON T1.COUNTRY_ID = T2.COUNTRY_ID JOIN DIM_DISTRICT AS T3 ON T2.STATE_ID = T3.STATE_ID GROUP BY T2.STATE_NAME HAVING COUNT(T3.DISTRICT_ID) > 0 ORDER BY COUNT(T3.DISTRICT_ID) DESC",
+    "pair_id": "448422ea",
+    "original_question_id": "0a6a92ae",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Rank states by counting `dim_district`.`district_id` per `dim_state`.`state_id`. Join `dim_state` with `dim_district` on `dim_state`.`state_id` = `dim_district`.`state_id`. Group by `dim_state`.`state_name`. Filter groups having COUNT(`dim_district`.`district_id`) >= 1. Order by count descending, assign rank using RANK() OVER (ORDER BY COUNT(`dim_district`.`district_id`) DESC). Output columns: rank, state_name, district_count."
+  },
+  {
+    "question": "Which districts in Assam contain rural sub-districts?",
+    "sql": "SELECT T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME = 'Assam' AND T3.TYPE_OF_AREA = 'Rural';",
+    "pair_id": "21804801",
+    "original_question_id": "378d3ef6",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "List distinct `dim_district`.`district_name` where `dim_state`.`state_name` = 'Assam' and `dim_sub_district`.`type_of_area` = 'Rural', joining `dim_state` to `dim_district` on `dim_state`.`state_id` = `dim_district`.`state_id`, and `dim_district` to `dim_sub_district` on `dim_district`.`district_id` = `dim_sub_district`.`district_id`."
+  },
+  {
+    "question": "List the names of all districts in Assam that contain rural areas, sorted alphabetically.",
+    "sql": "SELECT T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME = 'Assam' AND T3.TYPE_OF_AREA = 'Rural' GROUP BY T2.DISTRICT_NAME ORDER BY T2.DISTRICT_NAME ASC",
+    "pair_id": "08c00393",
+    "original_question_id": "378d3ef6",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_district.district_name` from `dim_district` where `dim_state.state_name` = 'Assam' and exists (select 1 from `dim_sub_district` where `dim_sub_district.district_id` = `dim_district.district_id` and `dim_sub_district.type_of_area` = 'Rural'). Sort results alphabetically by `dim_district.district_name`."
+  },
+  {
+    "question": "List the names of districts in Assam that contain more than one rural sub-district, sorted alphabetically.",
+    "sql": "SELECT T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME = 'Assam' AND T3.TYPE_OF_AREA = 'Rural' GROUP BY T2.DISTRICT_NAME HAVING COUNT(T3.SUB_DISTRICT_ID) > 1 ORDER BY T2.DISTRICT_NAME ASC",
+    "pair_id": "d712a643",
+    "original_question_id": "378d3ef6",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state.state_name` = 'Assam'. Join `dim_district` on `dim_state.state_id` = `dim_district.state_id`. Join `dim_sub_district` on `dim_district.district_id` = `dim_sub_district.district_id` and filter `dim_sub_district.type_of_area` = 'Rural'. Group by `dim_district.district_id`, `dim_district.district_name`. Count `dim_sub_district.sub_district_id` as rural_sub_district_count. Keep groups where rural_sub_district_count > 1. Output `dim_district.district_name` sorted alphabetically."
+  },
+  {
+    "question": "Provide a list of all districts, organized alphabetically by state and then by district name.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID ORDER BY T2.STATE_NAME, T1.DISTRICT_NAME",
+    "pair_id": "3b58000c",
+    "original_question_id": "c5c50ef5",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "The question asks for a list of all districts, organized alphabetically by state and then by district name. This requires selecting `dim_district`.`district_name` and `dim_state`.`state_name`. The ordering should be first by `dim_state`.`state_name` alphabetically, then by `dim_district`.`district_name` alphabetically. The tables `dim_district` and `dim_state` must be joined on `dim_district`.`state_id` = `dim_state`.`state_id`. Since the question says 'all districts', we should include all districts regardless of whether they have a matching state (but based on foreign key constraints, they should). Use LEFT JOIN to be safe. The output should be two columns: state name and district name."
+  },
+  {
+    "question": "Provide a list of all districts, organized alphabetically by their respective states and then by district name.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID ORDER BY T2.STATE_NAME, T1.DISTRICT_NAME",
+    "pair_id": "1c9de98f",
+    "original_question_id": "c5c50ef5",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_district` with `dim_state` on `dim_district.state_id` = `dim_state.state_id`. Select `dim_state.state_name` and `dim_district.district_name`. Order by `dim_state.state_name` alphabetically, then by `dim_district.district_name` alphabetically."
+  },
+  {
+    "question": "Provide a list of all districts in India, organized alphabetically by state and then by district name.",
+    "sql": "SELECT T3.DISTRICT_NAME, T2.STATE_NAME FROM DIM_COUNTRY AS T1 JOIN DIM_STATE AS T2 ON T1.COUNTRY_ID = T2.COUNTRY_ID JOIN DIM_DISTRICT AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T1.COUNTRY_NAME = 'India' GROUP BY T2.STATE_NAME, T3.DISTRICT_NAME HAVING COUNT(T3.DISTRICT_ID) > 0 ORDER BY T2.STATE_NAME ASC, T3.DISTRICT_NAME ASC",
+    "pair_id": "aef7de13",
+    "original_question_id": "c5c50ef5",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve all districts in India by joining `dim_country` (filter `dim_country.country_name` = 'India'), `dim_state` (on `dim_state.country_id` = `dim_country.country_id`), and `dim_district` (on `dim_district.state_id` = `dim_state.state_id`). Order results by `dim_state.state_name` ASC, then `dim_district.district_name` ASC."
+  },
+  {
+    "question": "List the first five districts in the Andaman and Nicobar Islands, sorted alphabetically.",
+    "sql": "SELECT T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_NAME = 'Andaman And Nicobar Islands' ORDER BY T2.DISTRICT_NAME LIMIT 5",
+    "pair_id": "1fa33ad6",
+    "original_question_id": "385ad701",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state`.`state_name` = 'Andaman And Nicobar Islands'. Join `dim_district` on `dim_district`.`state_id` = `dim_state`.`state_id`. Select `dim_district`.`district_name`. Order by `dim_district`.`district_name` ASC. Limit 5."
+  },
+  {
+    "question": "List the last five districts of Assam when sorted in reverse alphabetical order.",
+    "sql": "SELECT T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_NAME = 'Assam' ORDER BY T2.DISTRICT_NAME DESC LIMIT 5",
+    "pair_id": "3fb5db59",
+    "original_question_id": "385ad701",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state.state_name` = 'Assam'. Join `dim_district` on `dim_district.state_id` = `dim_state.state_id`. Select `dim_district.district_name`. Order by `dim_district.district_name` DESC. Limit 5."
+  },
+  {
+    "question": "List the names of the top five districts in Assam that contain more than one sub-district, sorted in reverse alphabetical order.",
+    "sql": "SELECT T2.DISTRICT_NAME FROM DIM_STATE AS T1 INNER JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID INNER JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME = 'Assam' GROUP BY T2.DISTRICT_NAME HAVING COUNT(T3.SUB_DISTRICT_ID) > 1 ORDER BY T2.DISTRICT_NAME DESC LIMIT 5",
+    "pair_id": "bdde29f6",
+    "original_question_id": "385ad701",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Find districts where `dim_state.state_name` = 'Assam' and COUNT(`dim_sub_district.sub_district_id`) > 1. Output `dim_district.district_name` for five districts sorted by `dim_district.district_name` DESC."
+  },
+  {
+    "question": "List all districts in India along with the names of the states they belong to.",
+    "sql": "SELECT T1.DISTRICT_NAME, T2.STATE_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_COUNTRY AS T3 ON T2.COUNTRY_ID = T3.COUNTRY_ID WHERE T3.COUNTRY_NAME = 'India';",
+    "pair_id": "28d9c826",
+    "original_question_id": "fdd4b9e7",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_district` with `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id`, then join `dim_state` with `dim_country` on `dim_state`.`country_id` = `dim_country`.`country_id`. Filter where `dim_country`.`country_name` = 'India'. Select `dim_district`.`district_name` and `dim_state`.`state_name`."
+  },
+  {
+    "question": "Provide an alphabetical list of all districts in India along with their corresponding state names.",
+    "sql": "SELECT T1.DISTRICT_NAME, T2.STATE_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_COUNTRY AS T3 ON T2.COUNTRY_ID = T3.COUNTRY_ID WHERE T3.COUNTRY_NAME = 'India' ORDER BY T1.DISTRICT_NAME ASC",
+    "pair_id": "1d6af4c8",
+    "original_question_id": "fdd4b9e7",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_district` to `dim_state` on `dim_district.state_id` = `dim_state.state_id`, then join `dim_state` to `dim_country` on `dim_state.country_id` = `dim_country.country_id`. Filter where `dim_country.country_name` = 'India'. Select `dim_district.district_name` and `dim_state.state_name`, order by `dim_district.district_name` ASC."
+  },
+  {
+    "question": "Provide an alphabetized list of all districts in India, organized by their respective states.",
+    "sql": "SELECT T3.DISTRICT_NAME, T2.STATE_NAME FROM DIM_COUNTRY AS T1 INNER JOIN DIM_STATE AS T2 ON T1.COUNTRY_ID = T2.COUNTRY_ID INNER JOIN DIM_DISTRICT AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T1.COUNTRY_NAME = 'India' GROUP BY T2.STATE_NAME, T3.DISTRICT_NAME ORDER BY T2.STATE_NAME ASC, T3.DISTRICT_NAME ASC",
+    "pair_id": "076310d4",
+    "original_question_id": "fdd4b9e7",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_country.country_name` = 'India'. Join `dim_state` on `dim_country.country_id` = `dim_state.country_id`. Join `dim_district` on `dim_state.state_id` = `dim_district.state_id`. Select `dim_state.state_name` and `dim_district.district_name`. Order by `dim_state.state_name` ASC, `dim_district.district_name` ASC."
+  },
+  {
+    "question": "Identify the names of districts that are located in Assam but do not share a name with any district in Bihar.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Assam' EXCEPT SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Bihar'",
+    "pair_id": "d2704225",
+    "original_question_id": "4ea1f00c",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Find `dim_district`.`district_name` where `dim_state`.`state_name` = 'Assam' and `dim_district`.`district_name` NOT IN (SELECT `dim_district`.`district_name` FROM `dim_district` JOIN `dim_state` ON `dim_district`.`state_id` = `dim_state`.`state_id` WHERE `dim_state`.`state_name` = 'Bihar'). Use JOIN between `dim_district` and `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id` for Assam filter."
+  },
+  {
+    "question": "Identify the names of districts that are located in Assam but do not share a name with any district in Bihar.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Assam' EXCEPT SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Bihar'",
+    "pair_id": "43bf4bac",
+    "original_question_id": "4ea1f00c",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Find `dim_district`.`district_name` where `dim_state`.`state_name` = 'Assam' and `dim_district`.`district_name` NOT IN (select `dim_district`.`district_name` from `dim_district` join `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id` where `dim_state`.`state_name` = 'Bihar')."
+  },
+  {
+    "question": "Identify the districts in Assam that do not share a name with any district in Bihar.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Assam' AND T1.DISTRICT_NAME NOT IN (SELECT T3.DISTRICT_NAME FROM DIM_DISTRICT AS T3 JOIN DIM_STATE AS T4 ON T3.STATE_ID = T4.STATE_ID WHERE T4.STATE_NAME = 'Bihar')",
+    "pair_id": "ecdb5b0f",
+    "original_question_id": "4ea1f00c",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "We need to find districts in Assam state that have district names not matching any district name in Bihar state. First, identify Assam's state_id from dim_state where state_name = 'Assam'. Then get all district names from dim_district where state_id = Assam's state_id. Next, identify Bihar's state_id from dim_state where state_name = 'Bihar'. Then get all district names from dim_district where state_id = Bihar's state_id. Finally, select Assam district names that are NOT IN the list of Bihar district names. Use exact string comparison. Note: district names are in dim_district.district_name."
+  },
+  {
+    "question": "Confirm the name of the state of Assam from the list of states that have recorded district information.",
+    "sql": "SELECT DISTINCT T1.STATE_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_NAME = 'Assam';",
+    "pair_id": "0e84d553",
+    "original_question_id": "8a47448b",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "To confirm the state name 'Assam' exists among states with district records, join `dim_state` and `dim_district` on `dim_state`.`state_id` = `dim_district`.`state_id`. Select distinct `dim_state`.`state_name` where `dim_state`.`state_name` = 'Assam'. The exact case is 'Assam'."
+  },
+  {
+    "question": "Provide an alphabetical list of all states that have recorded district information.",
+    "sql": "SELECT T1.STATE_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID GROUP BY T1.STATE_NAME ORDER BY T1.STATE_NAME ASC",
+    "pair_id": "993e9795",
+    "original_question_id": "8a47448b",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct (`dim_state`.`state_name`) from `dim_state` inner join `dim_district` on (`dim_state`.`state_id`) = (`dim_district`.`state_id`) order by (`dim_state`.`state_name`) asc."
+  },
+  {
+    "question": "Provide an alphabetically ordered list of states that have at least one recorded district.",
+    "sql": "SELECT T1.STATE_NAME FROM DIM_STATE AS T1 INNER JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_NAME IN (SELECT T3.STATE_NAME FROM DIM_STATE AS T3 INNER JOIN DIM_DISTRICT AS T4 ON T3.STATE_ID = T4.STATE_ID GROUP BY T3.STATE_NAME HAVING COUNT(T4.DISTRICT_ID) >= 1) ORDER BY T1.STATE_NAME ASC",
+    "pair_id": "c4c28203",
+    "original_question_id": "8a47448b",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `dim_state`.`state_name` from `dim_state` inner join `dim_district` on `dim_state`.`state_id` = `dim_district`.`state_id` order by `dim_state`.`state_name` ASC."
+  },
+  {
+    "question": "List all the districts located within the states of Assam and the Andaman and Nicobar Islands.",
+    "sql": "SELECT T1.STATE_NAME, T2.DISTRICT_NAME FROM DIM_STATE T1 JOIN DIM_DISTRICT T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_NAME = 'Andaman And Nicobar Islands' OR T1.STATE_NAME = 'Assam';",
+    "pair_id": "3f9bf1a0",
+    "original_question_id": "8ae48e4a",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_district.district_name` for districts where `dim_state.state_name` is 'Assam' or 'Andaman And Nicobar Islands'. Join `dim_district` with `dim_state` on `dim_district.state_id = dim_state.state_id`."
+  },
+  {
+    "question": "List the states and their corresponding districts for any records associated with Assam or the Nicobars, sorted by state name.",
+    "sql": "SELECT T1.STATE_NAME, T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_NAME = 'Assam' OR T2.DISTRICT_NAME = 'Nicobars' ORDER BY T1.STATE_NAME",
+    "pair_id": "8ae30d2c",
+    "original_question_id": "8ae48e4a",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve distinct `dim_state.state_name` and `dim_district.district_name` where `dim_state.state_name` = 'Assam' OR `dim_district.district_name` = 'Nicobars', ensuring at least one linked record exists via `dim_sub_district` to any fact table. Join `dim_state` → `dim_district` → `dim_sub_district` → fact table (e.g., `fact_child_immunization_routine`). Sort by `dim_state.state_name`."
+  },
+  {
+    "question": "List the names of all states and their corresponding districts for the Andaman and Nicobar Islands or the Nicobars district, sorted alphabetically by state.",
+    "sql": "SELECT T1.STATE_NAME, T2.DISTRICT_NAME FROM DIM_STATE AS T1 INNER JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_NAME = 'Andaman And Nicobar Islands' OR T2.DISTRICT_NAME = 'Nicobars' GROUP BY T1.STATE_NAME, T2.DISTRICT_NAME ORDER BY T1.STATE_NAME ASC",
+    "pair_id": "b511c926",
+    "original_question_id": "8ae48e4a",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter: `dim_state`.`state_name` = 'Andaman And Nicobar Islands' OR `dim_district`.`district_name` = 'Nicobars'. Join `dim_state` and `dim_district` on `dim_state`.`state_id` = `dim_district`.`state_id`. Select `dim_state`.`state_name`, `dim_district`.`district_name`. Sort by `dim_state`.`state_name` ASC."
+  },
+  {
+    "question": "List the names of all sub-districts located in rural areas.",
+    "sql": "SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Rural';",
+    "pair_id": "fb9be4ee",
+    "original_question_id": "d6b8316f",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_sub_district`.`sub_district_name` from `dim_sub_district` where `dim_sub_district`.`type_of_area` = 'Rural'."
+  },
+  {
+    "question": "Provide an alphabetical list of all rural sub-districts, including their names and IDs.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T1.SUB_DISTRICT_ID FROM DIM_SUB_DISTRICT AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Rural' ORDER BY T1.SUB_DISTRICT_NAME",
+    "pair_id": "bc38904c",
+    "original_question_id": "d6b8316f",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": ""
+  },
+  {
+    "question": "Provide a list of all rural sub-districts and their IDs, sorted by ID.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T1.SUB_DISTRICT_ID FROM DIM_SUB_DISTRICT AS T1 INNER JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Rural' GROUP BY T1.SUB_DISTRICT_NAME, T1.SUB_DISTRICT_ID HAVING COUNT(T2.DISTRICT_ID) >= 1 ORDER BY T1.SUB_DISTRICT_ID ASC",
+    "pair_id": "cef01770",
+    "original_question_id": "d6b8316f",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select (`dim_sub_district`.`sub_district_id`, `dim_sub_district`.`sub_district_name`) from `dim_sub_district` where `dim_sub_district`.`type_of_area` = 'Rural' order by `dim_sub_district`.`sub_district_id`."
+  },
+  {
+    "question": "Provide a breakdown of the number of sub-districts in each state, categorized by their area type.",
+    "sql": "SELECT T1.STATE_NAME, T3.TYPE_OF_AREA, COUNT(T3.SUB_DISTRICT_ID) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID GROUP BY T1.STATE_NAME, T3.TYPE_OF_AREA ORDER BY T1.STATE_NAME",
+    "pair_id": "2abd0b7b",
+    "original_question_id": "99c52b27",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Count distinct `dim_sub_district`.`sub_district_id` grouped by `dim_state`.`state_name` and `dim_sub_district`.`type_of_area` (values: 'Urban', 'Rural'). Join `dim_sub_district` to `dim_district` on `dim_sub_district`.`district_id` = `dim_district`.`district_id`, then join `dim_district` to `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id`."
+  },
+  {
+    "question": "Provide a breakdown of the number of sub-districts by area type for each state, sorted alphabetically by state name.",
+    "sql": "SELECT T1.STATE_NAME, T3.TYPE_OF_AREA, COUNT(T3.SUB_DISTRICT_ID) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID GROUP BY T1.STATE_NAME, T3.TYPE_OF_AREA ORDER BY T1.STATE_NAME ASC",
+    "pair_id": "f84c8af1",
+    "original_question_id": "99c52b27",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Count distinct `dim_sub_district`.`sub_district_id` grouped by `dim_state`.`state_name` and `dim_sub_district`.`type_of_area` (values: 'Urban', 'Rural'), ordered by `dim_state`.`state_name` ascending. Join `dim_sub_district` → `dim_district` on `dim_sub_district`.`district_id` = `dim_district`.`district_id`, then `dim_district` → `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id`."
+  },
+  {
+    "question": "Provide a breakdown of the number of sub-districts by area type for each state, sorted alphabetically by state name and then by the highest count.",
+    "sql": "SELECT T1.STATE_NAME, T3.TYPE_OF_AREA, COUNT(T3.SUB_DISTRICT_ID) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID GROUP BY T1.STATE_NAME, T3.TYPE_OF_AREA HAVING COUNT(T3.SUB_DISTRICT_ID) > 0 ORDER BY T1.STATE_NAME ASC, COUNT(T3.SUB_DISTRICT_ID) DESC",
+    "pair_id": "01d39f0e",
+    "original_question_id": "99c52b27",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Count sub-districts from `dim_sub_district` grouped by `dim_state.state_name` and `dim_sub_district.type_of_area`. Join `dim_sub_district` to `dim_district` on `dim_sub_district.district_id` = `dim_district.district_id`, then join to `dim_state` on `dim_district.state_id` = `dim_state.state_id`. Sort by `dim_state.state_name` ASC, then by count DESC."
+  },
+  {
+    "question": "List the names of all rural sub-districts located in the Andaman and Nicobar Islands.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T3.STATE_NAME = 'Andaman And Nicobar Islands'",
+    "pair_id": "21a46a66",
+    "original_question_id": "51616118",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_sub_district`.`sub_district_name` from `dim_sub_district` join `dim_district` on `dim_sub_district`.`district_id` = `dim_district`.`district_id` join `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id` where `dim_sub_district`.`type_of_area` = 'Rural' and `dim_state`.`state_name` = 'Andaman And Nicobar Islands'."
+  },
+  {
+    "question": "List the names of all rural sub-districts located in the Andaman and Nicobar Islands, sorted alphabetically.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T3.STATE_NAME = 'Andaman And Nicobar Islands' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY T1.SUB_DISTRICT_NAME",
+    "pair_id": "d438fef8",
+    "original_question_id": "51616118",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_sub_district`.`type_of_area` = 'Rural' and `dim_state`.`state_name` = 'Andaman And Nicobar Islands'. Join `dim_sub_district` to `dim_district` on `dim_sub_district`.`district_id` = `dim_district`.`district_id`, then join `dim_district` to `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id`. Select `dim_sub_district`.`sub_district_name` and sort alphabetically ascending."
+  },
+  {
+    "question": "Provide an alphabetized list of all rural sub-districts located within the Andaman and Nicobar Islands.",
+    "sql": "SELECT T3.SUB_DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME = 'Andaman And Nicobar Islands' AND T3.TYPE_OF_AREA = 'Rural' GROUP BY T3.SUB_DISTRICT_NAME ORDER BY T3.SUB_DISTRICT_NAME ASC",
+    "pair_id": "7a6f8316",
+    "original_question_id": "51616118",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_sub_district`.`sub_district_name` from `dim_sub_district` inner join `dim_district` on `dim_sub_district`.`district_id` = `dim_district`.`district_id` inner join `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id` where `dim_state`.`state_name` = 'Andaman And Nicobar Islands' and `dim_sub_district`.`type_of_area` = 'Rural' order by `dim_sub_district`.`sub_district_name` asc."
+  },
+  {
+    "question": "List the sub-districts in Assam along with their area types, sorted alphabetically by name.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA FROM DIM_SUB_DISTRICT AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T3.STATE_NAME = 'Assam' ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "9747a082",
+    "original_question_id": "1f4d2938",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state.state_name` = 'Assam'. Join `dim_state` to `dim_district` on `dim_state.state_id` = `dim_district.state_id`. Join `dim_district` to `dim_sub_district` on `dim_district.district_id` = `dim_sub_district.district_id`. Select `dim_sub_district.sub_district_name` and `dim_sub_district.type_of_area`. Sort by `dim_sub_district.sub_district_name` alphabetically."
+  },
+  {
+    "question": "List the sub-districts and their corresponding area types located within the state of Assam, sorted alphabetically by name.",
+    "sql": "SELECT T3.SUB_DISTRICT_NAME, T3.TYPE_OF_AREA FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME = 'Assam' GROUP BY T3.TYPE_OF_AREA, T3.SUB_DISTRICT_NAME ORDER BY T3.SUB_DISTRICT_NAME ASC",
+    "pair_id": "ddfc66fd",
+    "original_question_id": "1f4d2938",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_sub_district`.`sub_district_name` and `dim_sub_district`.`type_of_area` from `dim_sub_district` join `dim_district` on `dim_sub_district`.`district_id` = `dim_district`.`district_id` join `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id` where `dim_state`.`state_name` = 'Assam' order by `dim_sub_district`.`sub_district_name` asc."
+  },
+  {
+    "question": "List the names and area types of all sub-districts located within the Andaman and Nicobar Islands, sorted alphabetically by area type and name.",
+    "sql": "SELECT T3.SUB_DISTRICT_NAME, T3.TYPE_OF_AREA FROM DIM_STATE AS T1 INNER JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID INNER JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME = 'Andaman And Nicobar Islands' GROUP BY T3.TYPE_OF_AREA, T3.SUB_DISTRICT_NAME HAVING COUNT(T3.SUB_DISTRICT_ID) >= 1 ORDER BY T3.TYPE_OF_AREA ASC, T3.SUB_DISTRICT_NAME ASC",
+    "pair_id": "c829cc67",
+    "original_question_id": "1f4d2938",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_sub_district`.`sub_district_name` and `dim_sub_district`.`type_of_area` for sub-districts in state 'Andaman And Nicobar Islands'. Join `dim_sub_district` to `dim_district` on `dim_sub_district`.`district_id` = `dim_district`.`district_id`, then join `dim_district` to `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id`. Filter where `dim_state`.`state_name` = 'Andaman And Nicobar Islands'. Sort by `dim_sub_district`.`type_of_area` then `dim_sub_district`.`sub_district_name`."
+  },
+  {
+    "question": "Which five states have the highest number of rural sub-districts?",
+    "sql": "SELECT T1.STATE_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T3.TYPE_OF_AREA = 'Rural' GROUP BY T1.STATE_NAME ORDER BY COUNT(T3.SUB_DISTRICT_ID) DESC LIMIT 5",
+    "pair_id": "201c5068",
+    "original_question_id": "38ee302d",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_sub_district`.`type_of_area` = 'Rural'. Join `dim_sub_district` to `dim_district` on `dim_sub_district`.`district_id` = `dim_district`.`district_id`, then to `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id`. Group by `dim_state`.`state_name`, count `dim_sub_district`.`sub_district_id`, order by count descending, limit 5."
+  },
+  {
+    "question": "List the names of all rural sub-districts along with their corresponding district and state.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T2.DISTRICT_NAME, T3.STATE_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T1.TYPE_OF_AREA = 'Rural';",
+    "pair_id": "92f00f21",
+    "original_question_id": "91080689",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_sub_district`.`type_of_area` = 'Rural'. Select `dim_sub_district`.`sub_district_name`, `dim_district`.`district_name`, `dim_state`.`state_name`. Join `dim_sub_district` to `dim_district` on `dim_sub_district`.`district_id` = `dim_district`.`district_id`, then join `dim_district` to `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id`."
+  },
+  {
+    "question": "Provide a list of rural sub-districts, including their corresponding district and state names, sorted alphabetically by sub-district.",
+    "sql": "SELECT T3.STATE_NAME, T2.DISTRICT_NAME, T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T1.TYPE_OF_AREA = 'Rural' ORDER BY T1.SUB_DISTRICT_NAME",
+    "pair_id": "396e9d26",
+    "original_question_id": "91080689",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Need to list rural sub-districts with their district and state names, sorted by sub-district name. Use `dim_sub_district`.`type_of_area` = 'Rural' (exact case from sample). Join `dim_sub_district` to `dim_district` on `district_id`, then to `dim_state` on `state_id`. Select `dim_sub_district`.`sub_district_name`, `dim_district`.`district_name`, `dim_state`.`state_name`. Filter where `dim_sub_district`.`type_of_area` = 'Rural'. Order by `dim_sub_district`.`sub_district_name` ASC."
+  },
+  {
+    "question": "Provide an alphabetically sorted list of rural sub-districts, including their corresponding district and state names.",
+    "sql": "SELECT T3.STATE_NAME, T2.DISTRICT_NAME, T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T1.TYPE_OF_AREA = 'Rural' GROUP BY T1.SUB_DISTRICT_NAME, T2.DISTRICT_NAME, T3.STATE_NAME ORDER BY T1.SUB_DISTRICT_NAME ASC, T2.DISTRICT_NAME ASC",
+    "pair_id": "b1cb6748",
+    "original_question_id": "91080689",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_sub_district` where `dim_sub_district`.`type_of_area` = 'Rural'. Join `dim_sub_district` to `dim_district` on `dim_sub_district`.`district_id` = `dim_district`.`district_id`. Join `dim_district` to `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id`. Select `dim_sub_district`.`sub_district_name`, `dim_district`.`district_name`, `dim_state`.`state_name`. Order by `dim_sub_district`.`sub_district_name` ASC."
+  },
+  {
+    "question": "Identify the sub-districts that are classified exclusively as urban areas and have no rural components.",
+    "sql": "SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Urban' EXCEPT SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Rural';",
+    "pair_id": "e9da9511",
+    "original_question_id": "15a03c73",
+    "schema_used": [
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_sub_district` where `dim_sub_district.type_of_area` = 'Urban' to get sub-districts exclusively classified as urban areas."
+  },
+  {
+    "question": "List the names of all urban sub-districts, excluding any classified as rural, in alphabetical order.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.SUB_DISTRICT_NAME = T2.SUB_DISTRICT_NAME WHERE T1.TYPE_OF_AREA = 'Urban' AND T2.TYPE_OF_AREA != 'Rural' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY T1.SUB_DISTRICT_NAME",
+    "pair_id": "30e8aa8b",
+    "original_question_id": "15a03c73",
+    "schema_used": [
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_sub_district`.`sub_district_name` from `dim_sub_district` where `dim_sub_district`.`type_of_area` = 'Urban' order by `dim_sub_district`.`sub_district_name`."
+  },
+  {
+    "question": "List the names of all sub-districts that are classified exclusively as urban areas, sorted alphabetically.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 WHERE T1.TYPE_OF_AREA = 'Urban' AND T1.SUB_DISTRICT_NAME NOT IN (SELECT T2.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T2 WHERE T2.TYPE_OF_AREA = 'Rural') GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(T1.SUB_DISTRICT_ID) >= 1 ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "298abc66",
+    "original_question_id": "15a03c73",
+    "schema_used": [
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Only need sub_district_name from dim_sub_district where type_of_area = 'Urban', sorted alphabetically."
+  },
+  {
+    "question": "Identify the sub-districts that contain both rural and urban areas.",
+    "sql": "SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA IN ('Rural', 'Urban') GROUP BY SUB_DISTRICT_NAME HAVING COUNT(DISTINCT TYPE_OF_AREA) = 2",
+    "pair_id": "fac7207d",
+    "original_question_id": "8bf77be6",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_OUTPATIENT_SERVICES",
+      "FACT_CHILD_IMMUNIZATION_ROUTINE"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC",
+        "MONTH_ID",
+        "SUB_DISTRICT_ID"
+      ],
+      "FACT_CHILD_IMMUNIZATION_ROUTINE": [
+        "IMMUNIZATION_ROUTINE_ID",
+        "BCG_VACCINE",
+        "MONTH_ID",
+        "SUB_DISTRICT_ID",
+        "OPV_0_BIRTH_DOSE",
+        "OPV_1"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Find `dim_sub_district.sub_district_name` where there exists at least one row with `dim_sub_district.type_of_area` = 'Urban' and at least one row with `dim_sub_district.type_of_area` = 'Rural' for the same sub-district name. Group by `dim_sub_district.sub_district_name` and filter groups having both values."
+  },
+  {
+    "question": "Identify the names of rural sub-districts that also have corresponding urban entries, provided they have recorded data for both outpatient services and routine child immunizations, and list them alphabetically.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN FACT_CHILD_IMMUNIZATION_ROUTINE AS T3 ON T1.SUB_DISTRICT_ID = T3.SUB_DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Rural' GROUP BY T1.SUB_DISTRICT_NAME HAVING T1.SUB_DISTRICT_NAME IN (SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Urban') ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "02cf37bc",
+    "original_question_id": "8bf77be6",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "FACT_OUTPATIENT_SERVICES",
+      "FACT_CHILD_IMMUNIZATION_ROUTINE"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC",
+        "MONTH_ID",
+        "SUB_DISTRICT_ID"
+      ],
+      "FACT_CHILD_IMMUNIZATION_ROUTINE": [
+        "IMMUNIZATION_ROUTINE_ID",
+        "BCG_VACCINE",
+        "MONTH_ID",
+        "SUB_DISTRICT_ID",
+        "OPV_0_BIRTH_DOSE",
+        "OPV_1"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Find rural sub-districts (`dim_sub_district.type_of_area` = 'Rural') where there exists an urban sub-district with the same `sub_district_name` (`dim_sub_district.type_of_area` = 'Urban'). The rural sub-district must have at least one record in `fact_outpatient_services` (matching `sub_district_id`) and at least one record in `fact_child_immunization_routine` (matching `sub_district_id`). Output `dim_sub_district.sub_district_name` ordered alphabetically."
+  },
+  {
+    "question": "Provide a combined list of all state names and the names of sub-districts located in rural areas.",
+    "sql": "SELECT STATE_NAME FROM DIM_STATE UNION SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Rural';",
+    "pair_id": "2fc40a39",
+    "original_question_id": "7e08051d",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Query requires a single column list combining: (1) all `dim_state`.`state_name` values, and (2) all `dim_sub_district`.`sub_district_name` values where `dim_sub_district`.`type_of_area` = 'Rural'. Use UNION ALL to combine both sets into one column."
+  },
+  {
+    "question": "Provide a list containing the name 'Andaman And Nicobar Islands' along with the names of all rural sub-districts.",
+    "sql": "SELECT STATE_NAME FROM DIM_STATE WHERE STATE_NAME = 'Andaman And Nicobar Islands' UNION SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Rural'",
+    "pair_id": "bf5a3dba",
+    "original_question_id": "7e08051d",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_state.state_name` where it equals 'Andaman And Nicobar Islands'. Also retrieve `dim_sub_district.sub_district_name` where `dim_sub_district.type_of_area` = 'Rural'. Combine both results into one list."
+  },
+  {
+    "question": "Provide a combined, alphabetically ordered list of all state names in the first country and the names of rural sub-districts.",
+    "sql": "SELECT T1.STATE_NAME FROM DIM_STATE AS T1 WHERE T1.COUNTRY_ID = 1 UNION SELECT T2.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T2 WHERE T2.TYPE_OF_AREA = 'Rural' GROUP BY T2.SUB_DISTRICT_NAME HAVING COUNT(T2.SUB_DISTRICT_ID) >= 1 ORDER BY STATE_NAME ASC",
+    "pair_id": "e4db0200",
+    "original_question_id": "7e08051d",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Combine `dim_state.state_name` for `dim_state.country_id` = 1 and `dim_sub_district.sub_district_name` for `dim_sub_district.type_of_area` = 'Rural' into a single column (e.g., name) using UNION ALL, then order alphabetically."
+  },
+  {
+    "question": "Show the allopathic outpatient attendance figures for the month of September 2020.",
+    "sql": "SELECT T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T2 ON T1.MONTH_ID = T2.MONTH_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T2.MONTH_NAME = 'September, 2020' AND T3.YEAR_VALUE = '2020'",
+    "pair_id": "7b1134c5",
+    "original_question_id": "afbd4de6",
+    "schema_used": [
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_outpatient_services.outpatient_attendance_allopathic` from `fact_outpatient_services` inner join `dim_month` on `fact_outpatient_services.month_id` = `dim_month.month_id` where `dim_month.month_name` = 'September, 2020'. The month_name value must match exactly 'September, 2020' as stored in the database."
+  },
+  {
+    "question": "How many allopathic outpatient visits were recorded during September 2020?",
+    "sql": "SELECT T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T2 ON T1.MONTH_ID = T2.MONTH_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T2.MONTH_NAME = 'September, 2020' AND T3.YEAR_VALUE = '2020'",
+    "pair_id": "7442dc35",
+    "original_question_id": "afbd4de6",
+    "schema_used": [
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_outpatient_services`.`outpatient_attendance_allopathic` where `dim_month`.`month_name` = 'September, 2020'. Join `fact_outpatient_services` to `dim_month` on `fact_outpatient_services`.`month_id` = `dim_month`.`month_id`."
+  },
+  {
+    "question": "List the outpatient IDs and their corresponding allopathic attendance counts for December 2022, focusing only on those with recorded visits, sorted from highest to lowest attendance.",
+    "sql": "SELECT T1.OUTPATIENT_ID, T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T2 ON T1.MONTH_ID = T2.MONTH_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T2.MONTH_NAME = 'December, 2022' AND T3.YEAR_VALUE = '2022' GROUP BY T1.OUTPATIENT_ID, T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC HAVING SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 0 ORDER BY T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC DESC",
+    "pair_id": "0387be49",
+    "original_question_id": "afbd4de6",
+    "schema_used": [
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `fact_outpatient_services.outpatient_id` and `fact_outpatient_services.outpatient_attendance_allopathic` from `fact_outpatient_services` JOIN `dim_month` ON `fact_outpatient_services.month_id` = `dim_month.month_id` WHERE `dim_month.month_name` = 'December, 2022' AND `fact_outpatient_services.outpatient_attendance_allopathic` IS NOT NULL AND `fact_outpatient_services.outpatient_attendance_allopathic` > 0 ORDER BY `fact_outpatient_services.outpatient_attendance_allopathic` DESC."
+  },
+  {
+    "question": "Provide a yearly breakdown of the total allopathic outpatient attendance, sorted chronologically.",
+    "sql": "SELECT T3.YEAR_VALUE, SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T2 ON T1.MONTH_ID = T2.MONTH_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID GROUP BY T3.YEAR_VALUE ORDER BY T3.YEAR_VALUE",
+    "pair_id": "b0deecc5",
+    "original_question_id": "c656e37f",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_outpatient_services`.`outpatient_attendance_allopathic` for each `dim_year`.`year_value` by joining `fact_outpatient_services` to `dim_month` on `fact_outpatient_services`.`month_id` = `dim_month`.`month_id` and `dim_month` to `dim_year` on `dim_month`.`year_id` = `dim_year`.`year_id`. Group by `dim_year`.`year_value` and order by `dim_year`.`year_value` ASC."
+  },
+  {
+    "question": "Provide a yearly breakdown of the total allopathic outpatient attendance, ordered chronologically.",
+    "sql": "SELECT T3.YEAR_VALUE, SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T2 ON T1.MONTH_ID = T2.MONTH_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID GROUP BY T3.YEAR_VALUE ORDER BY T3.YEAR_VALUE ASC",
+    "pair_id": "a70d05df",
+    "original_question_id": "c656e37f",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_outpatient_services`.`outpatient_attendance_allopathic` grouped by `dim_year`.`year_value`. Join `fact_outpatient_services` to `dim_month` on `fact_outpatient_services`.`month_id` = `dim_month`.`month_id`, then join `dim_month` to `dim_year` on `dim_month`.`year_id` = `dim_year`.`year_id`. Order by `dim_year`.`year_value` ASC."
+  },
+  {
+    "question": "Provide a yearly breakdown of the total allopathic outpatient attendance, sorted chronologically.",
+    "sql": "SELECT T3.YEAR_VALUE, SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM FACT_OUTPATIENT_SERVICES AS T1 INNER JOIN DIM_MONTH AS T2 ON T1.MONTH_ID = T2.MONTH_ID INNER JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID GROUP BY T3.YEAR_VALUE ORDER BY T3.YEAR_VALUE ASC",
+    "pair_id": "64e3e189",
+    "original_question_id": "c656e37f",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_outpatient_services`.`outpatient_attendance_allopathic` for each `dim_year`.`year_value`. Join `fact_outpatient_services` to `dim_month` on `fact_outpatient_services`.`month_id` = `dim_month`.`month_id`, then join `dim_month` to `dim_year` on `dim_month`.`year_id` = `dim_year`.`year_id`. Group by `dim_year`.`year_value` and order by `dim_year`.`year_value` ASC."
+  },
+  {
+    "question": "Which sub-districts recorded more than 5,000 allopathic outpatient visits during the year 2022?",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2022' AND T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC > 5000;",
+    "pair_id": "dfb14065",
+    "original_question_id": "118a673e",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Find sub-district names (`dim_sub_district`.`sub_district_name`) where the sum of `fact_outpatient_services`.`outpatient_attendance_allopathic` for `dim_year`.`year_value` = 2022 exceeds 5000. Join `fact_outpatient_services` to `dim_sub_district` on `sub_district_id`, to `dim_month` on `month_id`, and to `dim_year` on `year_id`. Group by `dim_sub_district`.`sub_district_id`, `dim_sub_district`.`sub_district_name` and filter aggregated sum > 5000."
+  },
+  {
+    "question": "Which sub-districts recorded more than 5,000 total allopathic outpatient visits throughout the year 2021?",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 5000",
+    "pair_id": "5d0030c8",
+    "original_question_id": "118a673e",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_outpatient_services.outpatient_attendance_allopathic` for each `dim_sub_district.sub_district_name` where `dim_year.year_value` = 2021, then filter for total > 5000. Join `fact_outpatient_services` → `dim_month` → `dim_year` and `fact_outpatient_services` → `dim_sub_district`. Group by `dim_sub_district.sub_district_id`, `dim_sub_district.sub_district_name`."
+  },
+  {
+    "question": "Identify the sub-districts that recorded more than 5,000 allopathic outpatient visits in any single month during the year 2021, listed in alphabetical order.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME, T3.MONTH_NAME HAVING SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 5000 ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "1fdac058",
+    "original_question_id": "118a673e",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Need to select distinct `dim_sub_district`.`sub_district_name` from `fact_outpatient_services` join `dim_sub_district` on `fact_outpatient_services`.`sub_district_id` = `dim_sub_district`.`sub_district_id` join `dim_month` on `fact_outpatient_services`.`month_id` = `dim_month`.`month_id` join `dim_year` on `dim_month`.`year_id` = `dim_year`.`year_id` where `fact_outpatient_services`.`outpatient_attendance_allopathic` > 5000 and `dim_year`.`year_value` = 2021 order by `dim_sub_district`.`sub_district_name`."
+  },
+  {
+    "question": "Rank the months of 2022 by their total allopathic outpatient attendance, from highest to lowest.",
+    "sql": "SELECT T2.MONTH_NAME, SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T2 ON T1.MONTH_ID = T2.MONTH_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR_VALUE = '2022' GROUP BY T2.MONTH_NAME ORDER BY SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+    "pair_id": "cf0db537",
+    "original_question_id": "5c174421",
+    "schema_used": [
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_outpatient_services.outpatient_attendance_allopathic` for each month in 2022. Join `fact_outpatient_services` to `dim_month` on `month_id`, then to `dim_year` on `year_id`. Filter where `dim_year.year_value` = 2022. Group by `dim_month.month_name` (or `dim_month.month_value`). Order by total attendance descending."
+  },
+  {
+    "question": "Rank the months of 2022 from highest to lowest based on the total number of allopathic outpatient visits.",
+    "sql": "SELECT T2.MONTH_NAME, SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T2 ON T1.MONTH_ID = T2.MONTH_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR_VALUE = '2022' GROUP BY T2.MONTH_NAME ORDER BY SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+    "pair_id": "170b0d9f",
+    "original_question_id": "5c174421",
+    "schema_used": [
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_outpatient_services`.`outpatient_attendance_allopathic` for each month in 2022. Join `fact_outpatient_services` to `dim_month` on `fact_outpatient_services`.`month_id` = `dim_month`.`month_id`, then to `dim_year` on `dim_month`.`year_id` = `dim_year`.`year_id`. Filter where `dim_year`.`year_value` = 2022. Group by `dim_month`.`month_name`. Order by total descending."
+  },
+  {
+    "question": "Provide a monthly breakdown of total allopathic outpatient attendance for the year 2022, ranked from highest to lowest volume.",
+    "sql": "SELECT T2.MONTH_NAME, SUM(T3.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_YEAR AS T1 JOIN DIM_MONTH AS T2 ON T1.YEAR_ID = T2.YEAR_ID JOIN FACT_OUTPATIENT_SERVICES AS T3 ON T2.MONTH_ID = T3.MONTH_ID WHERE T1.YEAR_VALUE = '2022' GROUP BY T2.MONTH_NAME ORDER BY SUM(T3.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+    "pair_id": "42ea1f77",
+    "original_question_id": "5c174421",
+    "schema_used": [
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_outpatient_services`.`outpatient_attendance_allopathic` grouped by `dim_month`.`month_name` where `dim_year`.`year_value` = 2022, order by total descending."
+  },
+  {
+    "question": "Which ten sub-districts had the highest total allopathic outpatient attendance in 2021?",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC LIMIT 10",
+    "pair_id": "b0864958",
+    "original_question_id": "49a1f2c9",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_outpatient_services.outpatient_attendance_allopathic` for each `dim_sub_district.sub_district_name` where `dim_year.year_value` = 2021, by joining `fact_outpatient_services` to `dim_sub_district` on `sub_district_id`, to `dim_month` on `month_id`, and to `dim_year` on `year_id`. Group by `dim_sub_district.sub_district_name`, order by total attendance descending, limit 10."
+  },
+  {
+    "question": "Which ten sub-districts recorded the highest total allopathic outpatient attendance during the year 2021?",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC LIMIT 10",
+    "pair_id": "3e86b8f0",
+    "original_question_id": "49a1f2c9",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "We need to find the top 10 sub-districts by total allopathic outpatient attendance in 2021. Use `fact_outpatient_services.outpatient_attendance_allopathic` summed per sub-district. Join `fact_outpatient_services` to `dim_sub_district` on `sub_district_id` to get `dim_sub_district.sub_district_name`. Join `fact_outpatient_services` to `dim_month` on `month_id`, then join `dim_month` to `dim_year` on `year_id`. Filter where `dim_year.year_value = 2021`. Group by `dim_sub_district.sub_district_id` and `dim_sub_district.sub_district_name`, sum the attendance, order descending, limit 10."
+  },
+  {
+    "question": "Which ten sub-districts recorded the highest total allopathic outpatient attendance during the year 2021?",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC LIMIT 10",
+    "pair_id": "566f1362",
+    "original_question_id": "49a1f2c9",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Find top 10 sub-districts by total `fact_outpatient_services`.`outpatient_attendance_allopathic` for year 2021. Join `fact_outpatient_services` with `dim_sub_district` on `sub_district_id` to get `dim_sub_district`.`sub_district_name`, and with `dim_month` on `month_id` and `dim_year` on `year_id` to filter `dim_year`.`year_value` = 2021. Group by sub-district, sum attendance, order descending, limit 10."
+  },
+  {
+    "question": "Provide a monthly breakdown of total allopathic outpatient attendance for the year 2021.",
+    "sql": "SELECT T2.MONTH_NAME, SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T2 ON T1.MONTH_ID = T2.MONTH_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR_VALUE = '2021' GROUP BY T2.MONTH_NAME, T2.MONTH_ID ORDER BY T2.MONTH_ID",
+    "pair_id": "a071e79a",
+    "original_question_id": "546e35a0",
+    "schema_used": [
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_outpatient_services`.`outpatient_attendance_allopathic` grouped by `dim_month`.`month_name` (or `dim_month`.`month_value`), filtering for `dim_year`.`year_value` = 2021. Join `fact_outpatient_services` to `dim_month` on `month_id`, then join `dim_month` to `dim_year` on `year_id`."
+  },
+  {
+    "question": "Provide a monthly breakdown of total allopathic outpatient attendance for the year 2021.",
+    "sql": "SELECT T2.MONTH_NAME, SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T2 ON T1.MONTH_ID = T2.MONTH_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR_VALUE = '2021' GROUP BY T2.MONTH_NAME, T2.MONTH_ID ORDER BY T2.MONTH_ID",
+    "pair_id": "e56dbe56",
+    "original_question_id": "546e35a0",
+    "schema_used": [
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_outpatient_services`.`outpatient_attendance_allopathic` grouped by `dim_month`.`month_value` for `dim_year`.`year_value` = 2021. Join `fact_outpatient_services` to `dim_month` on `month_id`, then to `dim_year` on `year_id`."
+  },
+  {
+    "question": "Provide a monthly breakdown of total allopathic outpatient attendance for the year 2022.",
+    "sql": "SELECT T2.MONTH_NAME, SUM(T3.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_YEAR AS T1 INNER JOIN DIM_MONTH AS T2 ON T1.YEAR_ID = T2.YEAR_ID INNER JOIN FACT_OUTPATIENT_SERVICES AS T3 ON T2.MONTH_ID = T3.MONTH_ID WHERE T1.YEAR_VALUE = '2022' GROUP BY T2.MONTH_NAME, T2.MONTH_ID ORDER BY T2.MONTH_ID ASC",
+    "pair_id": "07ca54dc",
+    "original_question_id": "546e35a0",
+    "schema_used": [
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Need total of `fact_outpatient_services`.`outpatient_attendance_allopathic` grouped by month for year 2022. Join `fact_outpatient_services` with `dim_month` on `fact_outpatient_services`.`month_id` = `dim_month`.`month_id`. Filter `dim_month`.`month_value` containing '2022' (e.g., 'April, 2022'). Group by `dim_month`.`month_value` or `dim_month`.`month_name` (both same format). Sum the attendance."
+  },
+  {
+    "question": "Which sub-districts recorded allopathic outpatient attendance in 2022 but had no such attendance in 2021?",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2022' AND T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC > 0 EXCEPT SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' AND T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC > 0",
+    "pair_id": "b67020f1",
+    "original_question_id": "d5afa5b9",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Find sub-district names (`dim_sub_district`.`sub_district_name`) where there exists at least one record in `fact_outpatient_services` for year 2022 (via `dim_month`.`year_id` = `dim_year`.`year_id` and `dim_year`.`year_value` = 2022) with `fact_outpatient_services`.`outpatient_attendance_allopathic` > 0, and for year 2021 either there is no record or `outpatient_attendance_allopathic` = 0. Join `fact_outpatient_services` with `dim_month` on `month_id`, with `dim_year` on `year_id`, and with `dim_sub_district` on `sub_district_id`."
+  },
+  {
+    "question": "Identify the sub-districts that recorded allopathic outpatient attendance in 2022 but had no such attendance reported in 2021.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2022' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 0 EXCEPT SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 0",
+    "pair_id": "095bb0c4",
+    "original_question_id": "d5afa5b9",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Find sub-district names (`dim_sub_district`.`sub_district_name`) where there exists a record in `fact_outpatient_services` for year 2022 (`dim_year`.`year_value` = 2022) with `fact_outpatient_services`.`outpatient_attendance_allopathic` > 0, and for the same sub-district, there exists a record for year 2021 (`dim_year`.`year_value` = 2021) with `fact_outpatient_services`.`outpatient_attendance_allopathic` = 0 (or possibly NULL, but sample shows numeric 0 values). Join `fact_outpatient_services` to `dim_month` on `month_id`, then to `dim_year` on `year_id`, and to `dim_sub_district` on `sub_district_id`."
+  },
+  {
+    "question": "Identify the sub-districts that recorded allopathic outpatient attendance in 2022 but had no such attendance in 2021.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2022' AND T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC > 0.0 GROUP BY T1.SUB_DISTRICT_NAME EXCEPT SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' AND T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC > 0.0 GROUP BY T1.SUB_DISTRICT_NAME",
+    "pair_id": "6629c430",
+    "original_question_id": "d5afa5b9",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Find sub-district names (`dim_sub_district`.`sub_district_name`) where there is at least one `fact_outpatient_services` record with `dim_year`.`year_value` = 2022 and `fact_outpatient_services`.`outpatient_attendance_allopathic` > 0 for that sub-district, and for the same sub-district, either no `fact_outpatient_services` records exist for `dim_year`.`year_value` = 2021 or all such records for 2021 have `fact_outpatient_services`.`outpatient_attendance_allopathic` = 0."
+  },
+  {
+    "question": "Which sub-districts recorded outpatient services in both 2021 and 2022?",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE IN ('2021', '2022') GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(DISTINCT T4.YEAR_VALUE) = 2",
+    "pair_id": "0290c971",
+    "original_question_id": "f4ab9fa7",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Find `dim_sub_district.sub_district_name` where there exists at least one row in `fact_outpatient_services` linked via `sub_district_id` and via `dim_month.month_id` and `dim_year.year_id` to `dim_year.year_value` = 2021, and also at least one row linked to `dim_year.year_value` = 2022. Group by sub-district and ensure both years are present."
+  },
+  {
+    "question": "Which sub-districts recorded outpatient services in both 2021 and 2022?",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE IN ('2021', '2022') GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(DISTINCT T4.YEAR_VALUE) = 2",
+    "pair_id": "9902c66f",
+    "original_question_id": "f4ab9fa7",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Find `dim_sub_district`.`sub_district_name` where there exists at least one record in `fact_outpatient_services` with non-zero `outpatient_attendance_allopathic` for year 2021 and at least one for year 2022. Join `fact_outpatient_services` to `dim_month` on `month_id`, then to `dim_year` on `year_id`. Filter `dim_year`.`year_value` in (2021, 2022). Group by sub-district and ensure both years are present."
+  },
+  {
+    "question": "Which sub-districts recorded outpatient services in both 2021 and 2022?",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE IN ('2021', '2022') GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(DISTINCT T4.YEAR_VALUE) = 2",
+    "pair_id": "069ec4a6",
+    "original_question_id": "f4ab9fa7",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Find `dim_sub_district.sub_district_name` where there exists at least one row in `fact_outpatient_services` for year 2021 and at least one row for year 2022. Join `fact_outpatient_services` to `dim_month` on `fact_outpatient_services.month_id` = `dim_month.month_id`, then join `dim_month` to `dim_year` on `dim_month.year_id` = `dim_year.year_id`. Filter `dim_year.year_value` = 2021 for one set and 2022 for another set. Intersect the distinct `fact_outpatient_services.sub_district_id` from both years, then join to `dim_sub_district` on `dim_sub_district.sub_district_id` = `fact_outpatient_services.sub_district_id` to get names."
+  },
+  {
+    "question": "Identify the months where either the year was 2022 or the number of allopathic outpatient visits exceeded 5,000.",
+    "sql": "SELECT DISTINCT T2.MONTH_NAME FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T2 ON T1.MONTH_ID = T2.MONTH_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC > 5000 OR T3.YEAR_VALUE = '2022';",
+    "pair_id": "ee7b2141",
+    "original_question_id": "14575cf6",
+    "schema_used": [
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": ""
+  },
+  {
+    "question": "Identify the months that either belong to the year 2022 or recorded more than 5,000 allopathic outpatient visits, sorted alphabetically.",
+    "sql": "SELECT DISTINCT T2.MONTH_NAME FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T2 ON T1.MONTH_ID = T2.MONTH_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC > 5000.0000000000000000 OR T3.YEAR_VALUE = '2022' ORDER BY T2.MONTH_NAME",
+    "pair_id": "99eb0b3c",
+    "original_question_id": "14575cf6",
+    "schema_used": [
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_month`.`month_name` from `dim_month` left join `dim_year` on `dim_month`.`year_id` = `dim_year`.`year_id` left join `fact_outpatient_services` on `dim_month`.`month_id` = `fact_outpatient_services`.`month_id` where `dim_year`.`year_value` = 2022 or `fact_outpatient_services`.`outpatient_attendance_allopathic` > 5000 order by `dim_month`.`month_name`."
+  },
+  {
+    "question": "Provide the names and IDs of all rural sub-districts.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T1.SUB_DISTRICT_ID FROM DIM_SUB_DISTRICT AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Rural';",
+    "pair_id": "11777e71",
+    "original_question_id": "491ed440",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select (`dim_sub_district`.`sub_district_id`, `dim_sub_district`.`sub_district_name`) from `dim_sub_district` where `dim_sub_district`.`type_of_area` = 'Rural'."
+  },
+  {
+    "question": "Provide a list of all rural sub-districts, including their names and IDs, sorted by their identification number.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T1.SUB_DISTRICT_ID FROM DIM_SUB_DISTRICT AS T1 INNER JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Rural' GROUP BY T1.SUB_DISTRICT_NAME, T1.SUB_DISTRICT_ID ORDER BY T1.SUB_DISTRICT_ID ASC",
+    "pair_id": "3d17e645",
+    "original_question_id": "491ed440",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_SUB_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_sub_district` where `dim_sub_district.type_of_area` = 'Rural', select `dim_sub_district.sub_district_id` and `dim_sub_district.sub_district_name`, order by `dim_sub_district.sub_district_id`."
+  },
+  {
+    "question": "Provide the annual total for allopathic outpatient attendance across all recorded years.",
+    "sql": "SELECT T3.YEAR_VALUE, SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T2 ON T1.MONTH_ID = T2.MONTH_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID GROUP BY T3.YEAR_VALUE",
+    "pair_id": "26170385",
+    "original_question_id": "001821e9",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_outpatient_services`.`outpatient_attendance_allopathic` for each `dim_year`.`year_value` by joining `fact_outpatient_services` to `dim_month` on `month_id` and then to `dim_year` on `year_id`. Group by `dim_year`.`year_value` to get annual totals across all years."
+  },
+  {
+    "question": "Provide a yearly breakdown of the total allopathic outpatient attendance, sorted chronologically.",
+    "sql": "SELECT T3.YEAR_VALUE, SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T2 ON T1.MONTH_ID = T2.MONTH_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID GROUP BY T3.YEAR_VALUE ORDER BY T3.YEAR_VALUE ASC",
+    "pair_id": "154edf6a",
+    "original_question_id": "001821e9",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_outpatient_services`.`outpatient_attendance_allopathic` for each year from `dim_year`.`year_value` by joining `fact_outpatient_services` → `dim_month` (`fact_outpatient_services`.`month_id` = `dim_month`.`month_id`) → `dim_year` (`dim_month`.`year_id` = `dim_year`.`year_id`). Group by `dim_year`.`year_value` and order by `dim_year`.`year_value` ascending."
+  },
+  {
+    "question": "Provide a yearly breakdown of total allopathic outpatient attendance across both rural and urban areas, ordered chronologically.",
+    "sql": "SELECT T2.YEAR_VALUE, SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T3 ON T1.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T2 ON T3.YEAR_ID = T2.YEAR_ID JOIN DIM_SUB_DISTRICT AS T4 ON T1.SUB_DISTRICT_ID = T4.SUB_DISTRICT_ID WHERE T4.TYPE_OF_AREA IN ('Rural', 'Urban') GROUP BY T2.YEAR_VALUE ORDER BY T2.YEAR_VALUE ASC",
+    "pair_id": "14fe55de",
+    "original_question_id": "001821e9",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_outpatient_services.outpatient_attendance_allopathic` grouped by `dim_year.year_value` and `dim_sub_district.type_of_area`. Join `fact_outpatient_services` to `dim_sub_district` via `sub_district_id`, to `dim_month` via `month_id`, and to `dim_year` via `dim_month.year_id` = `dim_year.year_id`. Order by `dim_year.year_value` ASC."
+  },
+  {
+    "question": "Which rural sub-districts recorded a total allopathic outpatient attendance of more than 5,000 during the year 2022?",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2022' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 5000",
+    "pair_id": "7a2a8dd7",
+    "original_question_id": "1dc1d21f",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_sub_district.type_of_area` = 'Rural' and `dim_year.year_value` = 2022. Join `fact_outpatient_services` to `dim_sub_district` on `sub_district_id` and to `dim_month` on `month_id`, then to `dim_year` on `year_id`. Sum `fact_outpatient_services.outpatient_attendance_allopathic` per `dim_sub_district.sub_district_name`. Keep only sums > 5000. Return `dim_sub_district.sub_district_name`."
+  },
+  {
+    "question": "Which rural sub-districts recorded a total allopathic outpatient attendance of more than 5,000 during the year 2021?",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 5000",
+    "pair_id": "f3579a90",
+    "original_question_id": "1dc1d21f",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_sub_district.type_of_area` = 'Rural' and `dim_year.year_value` = 2021. Join `fact_outpatient_services` with `dim_sub_district` on `sub_district_id`, with `dim_month` on `month_id`, and with `dim_year` on `year_id`. Group by `dim_sub_district.sub_district_id` and `dim_sub_district.sub_district_name`. Sum `fact_outpatient_services.outpatient_attendance_allopathic` and keep only sums > 5000. Return `dim_sub_district.sub_district_name`."
+  },
+  {
+    "question": "Which rural sub-districts recorded more than 5,000 total allopathic outpatient visits in 2021, ranked from highest to lowest attendance?",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 5000 ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+    "pair_id": "d48dd644",
+    "original_question_id": "1dc1d21f",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_sub_district`.`type_of_area` = 'Rural' and join with `fact_outpatient_services` on `dim_sub_district`.`sub_district_id` = `fact_outpatient_services`.`sub_district_id`. Filter year 2021 by joining with `dim_month` (on `fact_outpatient_services`.`month_id` = `dim_month`.`month_id`) and `dim_year` (on `dim_month`.`year_id` = `dim_year`.`year_id`) where `dim_year`.`year_value` = 2021. Sum `fact_outpatient_services`.`outpatient_attendance_allopathic` per sub-district. Keep only sub-districts with sum > 5000. Output `dim_sub_district`.`sub_district_name` and total attendance, ranked descending."
+  },
+  {
+    "question": "Rank the sub-districts and their area types by the total number of allopathic outpatient visits recorded throughout the year 2021, starting with the highest attendance.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+    "pair_id": "8656c2c5",
+    "original_question_id": "8ac9b343",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_outpatient_services`.`outpatient_attendance_allopathic` for each `dim_sub_district`.`sub_district_name` and `dim_sub_district`.`type_of_area`, joining `fact_outpatient_services` with `dim_sub_district` on `fact_outpatient_services`.`sub_district_id` = `dim_sub_district`.`sub_district_id` and with `dim_month` on `fact_outpatient_services`.`month_id` = `dim_month`.`month_id`, filtering `dim_month`.`month_value` LIKE '%2021%', grouping by sub-district and area type, ordering by total attendance descending."
+  },
+  {
+    "question": "Rank the sub-districts and their area types by the total number of allopathic outpatient visits recorded throughout 2021, starting with the highest attendance.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+    "pair_id": "49345135",
+    "original_question_id": "8ac9b343",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_outpatient_services.outpatient_attendance_allopathic` for 2021 (`dim_year.year_value` = 2021) by joining `fact_outpatient_services` → `dim_sub_district` on `sub_district_id` and `fact_outpatient_services` → `dim_month` on `month_id` → `dim_year` on `year_id`. Group by `dim_sub_district.sub_district_name` and `dim_sub_district.type_of_area`. Order by total attendance descending to rank from highest."
+  },
+  {
+    "question": "Rank the sub-districts and their area types by the total number of allopathic outpatient visits recorded throughout 2021, starting with the highest attendance.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+    "pair_id": "0a861189",
+    "original_question_id": "8ac9b343",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_outpatient_services.outpatient_attendance_allopathic` for records where `dim_year.year_value` = 2021, grouped by `dim_sub_district.sub_district_name` and `dim_sub_district.type_of_area`, then order by total descending."
+  },
+  {
+    "question": "Which five rural sub-districts had the highest total allopathic outpatient attendance in 2021?",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC LIMIT 5",
+    "pair_id": "74ebd19a",
+    "original_question_id": "5cb99472",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_outpatient_services`.`outpatient_attendance_allopathic` for each `dim_sub_district`.`sub_district_name` where `dim_sub_district`.`type_of_area` = 'Rural' and `dim_year`.`year_value` = 2021, then order by total attendance descending and limit 5."
+  },
+  {
+    "question": "Identify the top 5 rural sub-districts with the highest total allopathic outpatient attendance for the year 2021.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC LIMIT 5",
+    "pair_id": "aab4d36f",
+    "original_question_id": "5cb99472",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_outpatient_services`.`outpatient_attendance_allopathic` for each `dim_sub_district`.`sub_district_name` where `dim_sub_district`.`type_of_area` = 'Rural' and `dim_year`.`year_value` = 2021, joining via `fact_outpatient_services`.`sub_district_id` = `dim_sub_district`.`sub_district_id` and `fact_outpatient_services`.`month_id` = `dim_month`.`month_id` and `dim_month`.`year_id` = `dim_year`.`year_id`. Order by total attendance descending, limit 5."
+  },
+  {
+    "question": "Which five rural sub-districts recorded the highest total allopathic outpatient attendance during the year 2021?",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC LIMIT 5",
+    "pair_id": "9475afba",
+    "original_question_id": "5cb99472",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_sub_district`.`type_of_area` = 'Rural' and `dim_year`.`year_value` = 2021. Join `fact_outpatient_services` with `dim_sub_district` on `sub_district_id`, with `dim_month` on `month_id`, and with `dim_year` on `year_id`. Sum `fact_outpatient_services`.`outpatient_attendance_allopathic` for each `dim_sub_district`.`sub_district_name`. Order by total descending and limit 5."
+  },
+  {
+    "question": "Provide the total allopathic outpatient attendance for each sub-district and its corresponding area type for the year 2021.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA",
+    "pair_id": "b47d79c3",
+    "original_question_id": "7510ff83",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_outpatient_services`.`outpatient_attendance_allopathic` for each sub-district and its area type for year 2021. Join `fact_outpatient_services` to `dim_sub_district` on `sub_district_id` to get `dim_sub_district`.`sub_district_name` and `dim_sub_district`.`type_of_area`. Join `fact_outpatient_services` to `dim_month` on `month_id`, then join `dim_month` to `dim_year` on `year_id`. Filter where `dim_year`.`year_value` = 2021. Group by `dim_sub_district`.`sub_district_name`, `dim_sub_district`.`type_of_area`."
+  },
+  {
+    "question": "Rank the sub-districts and their area types by the total volume of allopathic outpatient attendance recorded throughout the year 2021, starting with the highest.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+    "pair_id": "30643449",
+    "original_question_id": "7510ff83",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_outpatient_services.outpatient_attendance_allopathic` for `dim_year.year_value` = 2021, grouped by `dim_sub_district.sub_district_name` and `dim_sub_district.type_of_area`, ordered by total descending."
+  },
+  {
+    "question": "Rank the sub-districts and their area types by the total number of allopathic outpatient visits recorded throughout the year 2021, starting with the highest attendance.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+    "pair_id": "a9c85470",
+    "original_question_id": "7510ff83",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_outpatient_services`.`outpatient_attendance_allopathic` for records where `dim_year`.`year_value` = 2021, grouped by `dim_sub_district`.`sub_district_name` and `dim_sub_district`.`type_of_area`, ordered by total attendance descending."
+  },
+  {
+    "question": "Identify the rural sub-districts that recorded allopathic outpatient attendance in 2022, excluding any sub-districts that also have urban areas with reported attendance for that same year.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2022' AND T1.TYPE_OF_AREA = 'Rural' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 0 EXCEPT SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2022' AND T1.TYPE_OF_AREA = 'Urban' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 0",
+    "pair_id": "9a414d70",
+    "original_question_id": "4151f860",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Find distinct `dim_sub_district.sub_district_name` where `dim_sub_district.type_of_area` = 'Rural' and exists in `fact_outpatient_services` for year 2022 (via `dim_month` and `dim_year` with `dim_year.year_value` = 2022). Exclude those rural sub-districts if their district (`dim_sub_district.district_id`) has any urban sub-district (`dim_sub_district.type_of_area` = 'Urban') that also has `fact_outpatient_services` records in 2022."
+  },
+  {
+    "question": "Identify the sub-districts that recorded allopathic outpatient attendance in rural areas but had no such attendance in urban areas during the year 2022.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2022' AND T1.TYPE_OF_AREA IN ('Rural', 'Urban') GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(CASE WHEN T1.TYPE_OF_AREA = 'Rural' THEN T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC ELSE 0 END) > 0 AND SUM(CASE WHEN T1.TYPE_OF_AREA = 'Urban' THEN T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC ELSE 0 END) = 0",
+    "pair_id": "4d46dead",
+    "original_question_id": "4151f860",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Query requires sub-districts where `fact_outpatient_services`.`outpatient_attendance_allopathic` exists for rural (`dim_sub_district`.`type_of_area` = 'Rural') in 2022 (`dim_year`.`year_value` = 2022) and has zero/null for urban (`dim_sub_district`.`type_of_area` = 'Urban') in 2022. Must join `dim_sub_district`, `dim_month`, `dim_year`, and `fact_outpatient_services`. Use `dim_sub_district`.`type_of_area` to filter rural/urban. Use `dim_year`.`year_value` to filter 2022. Sum attendance by sub-district and area type; compare presence vs absence."
+  },
+  {
+    "question": "Identify the sub-districts that reported outpatient services in both rural and urban areas during the year 2021.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' AND T1.TYPE_OF_AREA IN ('Rural', 'Urban') GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(DISTINCT T1.TYPE_OF_AREA) = 2",
+    "pair_id": "a155bbe3",
+    "original_question_id": "c1890729",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve distinct sub-district names (`dim_sub_district.sub_district_name`) and their area types (`dim_sub_district.type_of_area`) for sub-districts that have outpatient service records (`fact_outpatient_services.outpatient_attendance_allopathic` not null) in year 2021 (`dim_year.year_value` = 2021). Join `fact_outpatient_services` to `dim_sub_district` via `sub_district_id`, to `dim_month` via `month_id`, and to `dim_year` via `dim_month.year_id`. Filter area type to 'Urban' or 'Rural'."
+  },
+  {
+    "question": "Identify the sub-districts that provided allopathic outpatient services in both urban and rural areas during the year 2021, listed in alphabetical order.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' AND T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC > 0.0000000000000000 GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(DISTINCT T1.TYPE_OF_AREA) = 2 ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "150d4a49",
+    "original_question_id": "c1890729",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_YEAR",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR_VALUE"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `fact_outpatient_services` for `dim_year`.`year_value` = 2021 and `fact_outpatient_services`.`outpatient_attendance_allopathic` > 0. Join with `dim_sub_district` on `sub_district_id`. Group by `dim_sub_district`.`sub_district_name`. Require COUNT(DISTINCT `dim_sub_district`.`type_of_area`) = 2 (values 'Urban' and 'Rural'). Order by `dim_sub_district`.`sub_district_name` ASC."
+  },
+  {
+    "question": "Identify all rural sub-districts or those that have recorded more than 50,000 allopathic outpatient visits.",
+    "sql": "SELECT DISTINCT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Rural' OR T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC > 50000",
+    "pair_id": "fe187b96",
+    "original_question_id": "8a029132",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_sub_district`.`sub_district_id`, `dim_sub_district`.`sub_district_name` from `dim_sub_district` LEFT JOIN `fact_outpatient_services` ON `dim_sub_district`.`sub_district_id` = `fact_outpatient_services`.`sub_district_id` where `dim_sub_district`.`type_of_area` = 'Rural' OR `fact_outpatient_services`.`outpatient_attendance_allopathic` > 50000."
+  },
+  {
+    "question": "Provide an alphabetized list of rural sub-districts or those that recorded more than 50,000 allopathic outpatient visits.",
+    "sql": "SELECT DISTINCT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Rural' OR T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC > 50000 ORDER BY T1.SUB_DISTRICT_NAME",
+    "pair_id": "022b531e",
+    "original_question_id": "8a029132",
+    "schema_used": [
+      "DIM_SUB_DISTRICT",
+      "DIM_MONTH",
+      "FACT_OUTPATIENT_SERVICES"
+    ],
+    "linked_schema": {
+      "DIM_SUB_DISTRICT": [
+        "SUB_DISTRICT_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "TYPE_OF_AREA"
+      ],
+      "DIM_MONTH": [
+        "MONTH_ID",
+        "YEAR_ID",
+        "MONTH_VALUE",
+        "MONTH_NAME"
+      ],
+      "FACT_OUTPATIENT_SERVICES": [
+        "OUTPATIENT_ID",
+        "SUB_DISTRICT_ID",
+        "MONTH_ID",
+        "OUTPATIENT_ATTENDANCE_ALLOPATHIC"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `dim_sub_district`.`sub_district_name` from `dim_sub_district` left join `fact_outpatient_services` on `dim_sub_district`.`sub_district_id` = `fact_outpatient_services`.`sub_district_id` where `dim_sub_district`.`type_of_area` = 'Rural' or (select sum(`fact_outpatient_services`.`outpatient_attendance_allopathic`) from `fact_outpatient_services` where `fact_outpatient_services`.`sub_district_id` = `dim_sub_district`.`sub_district_id`) > 50000 order by `dim_sub_district`.`sub_district_name`;"
+  }
+]

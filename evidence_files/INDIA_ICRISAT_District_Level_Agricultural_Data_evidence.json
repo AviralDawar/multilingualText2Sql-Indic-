@@ -1,0 +1,3779 @@
+[
+  {
+    "question": "Provide the area, production, and yield statistics for maize and barley in Chhattisgarh for the year 1970.",
+    "sql": "SELECT T0.MAIZE_AREA_1000HA, T0.MAIZE_PRODUCTION_1000TONS, T0.MAIZE_YIELD_KG_PER_HA, T0.BARLEY_AREA_1000HA, T0.BARLEY_PRODUCTION_1000TONS, T0.BARLEY_YIELD_KG_PER_HA FROM FACT_CEREALS_MINOR T0 JOIN DIM_GEOGRAPHY T1 ON T0.GEOGRAPHY_ID = T1.GEOGRAPHY_ID JOIN DIM_YEAR T2 ON T0.YEAR_ID = T2.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T2.YEAR = '1970';",
+    "pair_id": "fa0e10bc",
+    "original_question_id": "2535f9c8",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MINOR": [
+        "CEREAL_MINOR_ID",
+        "GEOGRAPHY_ID",
+        "YEAR_ID",
+        "MAIZE_AREA_1000HA",
+        "MAIZE_PRODUCTION_1000TONS",
+        "MAIZE_YIELD_KG_PER_HA",
+        "BARLEY_AREA_1000HA",
+        "BARLEY_PRODUCTION_1000TONS",
+        "BARLEY_YIELD_KG_PER_HA"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select maize and barley area, production, yield from `fact_cereals_minor` where `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1970."
+  },
+  {
+    "question": "Provide the maize and barley production and area statistics for all districts in Chhattisgarh for the year 1970, sorted by district name.",
+    "sql": "SELECT T1.DIST_NAME, T2.YEAR, T0.MAIZE_AREA_1000HA, T0.MAIZE_PRODUCTION_1000TONS, T0.BARLEY_AREA_1000HA, T0.BARLEY_PRODUCTION_1000TONS FROM FACT_CEREALS_MINOR T0 JOIN DIM_GEOGRAPHY T1 ON T0.GEOGRAPHY_ID = T1.GEOGRAPHY_ID JOIN DIM_YEAR T2 ON T0.YEAR_ID = T2.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T2.YEAR = '1970' ORDER BY T1.DIST_NAME",
+    "pair_id": "280e8bab",
+    "original_question_id": "2535f9c8",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MINOR": [
+        "CEREAL_MINOR_ID",
+        "GEOGRAPHY_ID",
+        "YEAR_ID",
+        "MAIZE_AREA_1000HA",
+        "MAIZE_PRODUCTION_1000TONS",
+        "MAIZE_YIELD_KG_PER_HA",
+        "BARLEY_AREA_1000HA",
+        "BARLEY_PRODUCTION_1000TONS",
+        "BARLEY_YIELD_KG_PER_HA"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Query requires maize and barley production and area for districts in Chhattisgarh in 1970. Select `dim_geography`.`dist_name`, `fact_cereals_minor`.`maize_area_1000ha`, `fact_cereals_minor`.`maize_production_1000tons`, `fact_cereals_minor`.`barley_area_1000ha`, `fact_cereals_minor`.`barley_production_1000tons` from `fact_cereals_minor` join `dim_geography` on `fact_cereals_minor`.`geography_id` = `dim_geography`.`geography_id` join `dim_year` on `fact_cereals_minor`.`year_id` = `dim_year`.`year_id` where `dim_geography`.`state_name` = 'Chhattisgarh' and `dim_year`.`year` = 1970 order by `dim_geography`.`dist_name`."
+  },
+  {
+    "question": "For the year 1970 in Chhattisgarh, provide the production statistics for maize and barley across districts where more than 2,000 hectares were dedicated to maize, sorted by the largest maize area.",
+    "sql": "SELECT SUM(T1.MAIZE_AREA_1000HA), SUM(T1.MAIZE_PRODUCTION_1000TONS), AVG(T1.MAIZE_YIELD_KG_PER_HA), SUM(T1.BARLEY_AREA_1000HA), SUM(T1.BARLEY_PRODUCTION_1000TONS), AVG(T1.BARLEY_YIELD_KG_PER_HA), T2.DIST_NAME FROM FACT_CEREALS_MINOR AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T2.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' GROUP BY T2.DIST_NAME HAVING SUM(T1.MAIZE_AREA_1000HA) > 2.0 ORDER BY SUM(T1.MAIZE_AREA_1000HA) DESC",
+    "pair_id": "77e4daea",
+    "original_question_id": "2535f9c8",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MINOR": [
+        "CEREAL_MINOR_ID",
+        "GEOGRAPHY_ID",
+        "YEAR_ID",
+        "MAIZE_AREA_1000HA",
+        "MAIZE_PRODUCTION_1000TONS",
+        "MAIZE_YIELD_KG_PER_HA",
+        "BARLEY_AREA_1000HA",
+        "BARLEY_PRODUCTION_1000TONS",
+        "BARLEY_YIELD_KG_PER_HA"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_year`.`year` = 1970 and `dim_geography`.`state_name` = 'Chhattisgarh'. Join `dim_geography`, `dim_year`, and `fact_cereals_minor`. Select `dim_geography`.`dist_name`, `fact_cereals_minor`.`maize_area_1000ha`, `fact_cereals_minor`.`maize_production_1000tons`, and `fact_cereals_minor`.`barley_production_1000tons`. Filter rows where `fact_cereals_minor`.`maize_area_1000ha` > 2.0 (since 2,000 hectares = 2 in 1000ha units). Sort by `fact_cereals_minor`.`maize_area_1000ha` DESC."
+  },
+  {
+    "question": "Compare the average yields of rice and maize for each state during the year 1970.",
+    "sql": "SELECT T1.STATE_NAME, AVG(T2.RICE_YIELD_KG_PER_HA), AVG(T3.MAIZE_YIELD_KG_PER_HA) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MINOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR = '1970' GROUP BY T1.STATE_NAME",
+    "pair_id": "5dabf3f5",
+    "original_question_id": "2bab4d32",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ],
+      "FACT_CEREALS_MINOR": [
+        "MAIZE_PRODUCTION_1000TONS",
+        "YEAR_ID",
+        "MAIZE_YIELD_KG_PER_HA",
+        "MAIZE_AREA_1000HA",
+        "CEREAL_MINOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Compute average rice yield (AVG(fact_cereals_major.rice_yield_kg_per_ha)) and average maize yield (AVG(fact_cereals_minor.maize_yield_kg_per_ha)) for each state (dim_geography.state_name) for the year 1970 (dim_year.year = 1970). Join fact_cereals_major and fact_cereals_minor separately to dim_geography and dim_year (filtered on year 1970) via geography_id and year_id, then combine by state_name."
+  },
+  {
+    "question": "Provide a state-wise comparison of the average rice and maize yields for the year 1970, ordered alphabetically by state name.",
+    "sql": "SELECT T1.STATE_NAME, AVG(T2.RICE_YIELD_KG_PER_HA), AVG(T3.MAIZE_YIELD_KG_PER_HA) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MINOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR = '1970' GROUP BY T1.STATE_NAME ORDER BY T1.STATE_NAME ASC",
+    "pair_id": "dc18d5c6",
+    "original_question_id": "2bab4d32",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ],
+      "FACT_CEREALS_MINOR": [
+        "MAIZE_PRODUCTION_1000TONS",
+        "YEAR_ID",
+        "MAIZE_YIELD_KG_PER_HA",
+        "MAIZE_AREA_1000HA",
+        "CEREAL_MINOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_geography`, `dim_year`, `fact_cereals_major`, and `fact_cereals_minor` on `geography_id` and `year_id`. Filter where `dim_year.year` = 1970. Group by `dim_geography.state_name`. Compute AVG(`fact_cereals_major.rice_yield_kg_per_ha`) and AVG(`fact_cereals_minor.maize_yield_kg_per_ha`). Order by `dim_geography.state_name`."
+  },
+  {
+    "question": "For the year 1970, provide a state-wise breakdown of the average yields for rice and maize, sorted alphabetically by state name.",
+    "sql": "SELECT T1.STATE_NAME, AVG(T2.RICE_YIELD_KG_PER_HA), AVG(T3.MAIZE_YIELD_KG_PER_HA) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MINOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID AND T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR = '1970' GROUP BY T1.STATE_NAME ORDER BY T1.STATE_NAME ASC",
+    "pair_id": "ed6c8474",
+    "original_question_id": "2bab4d32",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ],
+      "FACT_CEREALS_MINOR": [
+        "MAIZE_PRODUCTION_1000TONS",
+        "YEAR_ID",
+        "MAIZE_YIELD_KG_PER_HA",
+        "MAIZE_AREA_1000HA",
+        "CEREAL_MINOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "For year 1970 (`dim_year`.`year` = 1970), join `dim_year` to `fact_cereals_major` on `dim_year`.`year_id` = `fact_cereals_major`.`year_id` and to `fact_cereals_minor` on `dim_year`.`year_id` = `fact_cereals_minor`.`year_id`. Join both fact tables to `dim_geography` on `geography_id`. Group by `dim_geography`.`state_name`. Compute average rice yield as AVG(`fact_cereals_major`.`rice_yield_kg_per_ha`) and average maize yield as AVG(`fact_cereals_minor`.`maize_yield_kg_per_ha`). Sort alphabetically by `dim_geography`.`state_name`."
+  },
+  {
+    "question": "Which districts in Chhattisgarh achieved a rice yield exceeding 828.55 kg per hectare during the year 1970?",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T2.RICE_YIELD_KG_PER_HA > 828.55 AND T3.YEAR = '1970'",
+    "pair_id": "e7da04e8",
+    "original_question_id": "4ec4a0fc",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": ""
+  },
+  {
+    "question": "Which districts in Chhattisgarh achieved a rice yield exceeding 337.59 kg per hectare during the year 1970?",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T2.RICE_YIELD_KG_PER_HA > 337.59 AND T3.YEAR = '1970'",
+    "pair_id": "78258cb9",
+    "original_question_id": "4ec4a0fc",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_cereals_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`. Filter where `dim_geography`.`state_name` = 'Chhattisgarh', `fact_cereals_major`.`rice_yield_kg_per_ha` > 337.59, and `dim_year`.`year` = 1970. Select `dim_geography`.`dist_name`."
+  },
+  {
+    "question": "Identify the districts in Chhattisgarh that achieved an average rice yield greater than 337.59 kg per hectare in 1970, ranked from highest to lowest yield.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' GROUP BY T1.DIST_NAME HAVING AVG(T2.RICE_YIELD_KG_PER_HA) > 337.59 ORDER BY AVG(T2.RICE_YIELD_KG_PER_HA) DESC",
+    "pair_id": "3afe402a",
+    "original_question_id": "4ec4a0fc",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography`.`state_name` = 'Chhattisgarh' and `dim_year`.`year` = 1970. Join `dim_geography`, `dim_year`, and `fact_cereals_major` on `geography_id` and `year_id`. Compute average of `fact_cereals_major`.`rice_yield_kg_per_ha` per district (`dim_geography`.`dist_name`). Filter average > 337.59. Order by average descending."
+  },
+  {
+    "question": "Rank the districts in Chhattisgarh by their rice yield for the year 1970, from highest to lowest.",
+    "sql": "SELECT T2.DIST_NAME, T1.RICE_YIELD_KG_PER_HA FROM FACT_CEREALS_MAJOR AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T2.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' ORDER BY T1.RICE_YIELD_KG_PER_HA DESC",
+    "pair_id": "af00268d",
+    "original_question_id": "e730b25c",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_cereals_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`. Filter where `dim_geography`.`state_name` = 'Chhattisgarh' and `dim_year`.`year` = 1970. Select `dim_geography`.`dist_name` and `fact_cereals_major`.`rice_yield_kg_per_ha`. Order by `fact_cereals_major`.`rice_yield_kg_per_ha` DESC to rank highest to lowest."
+  },
+  {
+    "question": "Rank the districts in Chhattisgarh by their rice yield for the year 1970, showing the highest yields first.",
+    "sql": "SELECT T2.DIST_NAME, T1.RICE_YIELD_KG_PER_HA FROM FACT_CEREALS_MAJOR AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T2.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' ORDER BY T1.RICE_YIELD_KG_PER_HA DESC",
+    "pair_id": "e5a53368",
+    "original_question_id": "e730b25c",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "The question asks to rank districts in Chhattisgarh by rice yield for 1970, highest yields first. Rice yield data is stored in `fact_cereals_major.rice_yield_kg_per_ha`. To get district names, join with `dim_geography` using `geography_id`. Filter by `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1970. Order by `rice_yield_kg_per_ha` descending."
+  },
+  {
+    "question": "Rank the districts of Chhattisgarh by their average rice yield for the year 1970, from highest to lowest.",
+    "sql": "SELECT T1.DIST_NAME, AVG(T2.RICE_YIELD_KG_PER_HA) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' GROUP BY T1.DIST_NAME ORDER BY AVG(T2.RICE_YIELD_KG_PER_HA) DESC",
+    "pair_id": "38b733e5",
+    "original_question_id": "e730b25c",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography`.`state_name` = 'Chhattisgarh' and `dim_year`.`year` = 1970. Join `fact_cereals_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`. Group by `dim_geography`.`dist_name` and compute AVG(`fact_cereals_major`.`rice_yield_kg_per_ha`). Order by average rice yield descending."
+  },
+  {
+    "question": "List the top 10 districts in Chhattisgarh that had the highest rice yield in 1970.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' ORDER BY T2.RICE_YIELD_KG_PER_HA DESC LIMIT 10",
+    "pair_id": "35a98356",
+    "original_question_id": "48ef900f",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_cereals_major` with `dim_geography` on `fact_cereals_major`.`geography_id` = `dim_geography`.`geography_id` and with `dim_year` on `fact_cereals_major`.`year_id` = `dim_year`.`year_id`. Filter where `dim_geography`.`state_name` = 'Chhattisgarh' and `dim_year`.`year` = 1970. Select `dim_geography`.`dist_name` and `fact_cereals_major`.`rice_yield_kg_per_ha`. Order by `fact_cereals_major`.`rice_yield_kg_per_ha` DESC limit 10."
+  },
+  {
+    "question": "List the top 10 districts in Chhattisgarh that had the highest rice yield in 1970.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' ORDER BY T2.RICE_YIELD_KG_PER_HA DESC LIMIT 10",
+    "pair_id": "6f5269f7",
+    "original_question_id": "48ef900f",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1970. Join `fact_cereals_major` with `dim_geography` on `fact_cereals_major.geography_id` = `dim_geography.geography_id` and with `dim_year` on `fact_cereals_major.year_id` = `dim_year.year_id`. Select `dim_geography.dist_name` and `fact_cereals_major.rice_yield_kg_per_ha`. Order by `fact_cereals_major.rice_yield_kg_per_ha` DESC and limit 10."
+  },
+  {
+    "question": "Which 10 districts in Chhattisgarh had an average rice yield exceeding 337.59 kg per hectare in 1970, ranked by their highest recorded yields?",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' GROUP BY T1.DIST_NAME HAVING AVG(T2.RICE_YIELD_KG_PER_HA) > 337.59 ORDER BY MAX(T2.RICE_YIELD_KG_PER_HA) DESC LIMIT 10",
+    "pair_id": "872a6132",
+    "original_question_id": "48ef900f",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_geography`, `dim_year`, and `fact_cereals_major` on `geography_id` and `year_id`. Filter `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1970. Group by `dim_geography.dist_name`, compute AVG(`fact_cereals_major.rice_yield_kg_per_ha`) as avg_yield. Filter avg_yield > 337.59. Order by avg_yield DESC. Limit 10."
+  },
+  {
+    "question": "Compare the rice and maize yields for all districts in Chhattisgarh during the year 1970.",
+    "sql": "SELECT T2.DIST_NAME, T1.RICE_YIELD_KG_PER_HA, T3.MAIZE_YIELD_KG_PER_HA FROM FACT_CEREALS_MAJOR AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MINOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T1.YEAR_ID = T4.YEAR_ID WHERE T2.STATE_NAME = 'Chhattisgarh' AND T4.YEAR = '1970';",
+    "pair_id": "970c4a0c",
+    "original_question_id": "91ed580c",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ],
+      "FACT_CEREALS_MINOR": [
+        "MAIZE_PRODUCTION_1000TONS",
+        "YEAR_ID",
+        "MAIZE_YIELD_KG_PER_HA",
+        "MAIZE_AREA_1000HA",
+        "CEREAL_MINOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography.dist_name`, `fact_cereals_major.rice_yield_kg_per_ha`, `fact_cereals_minor.maize_yield_kg_per_ha` from `dim_geography` join `fact_cereals_major` on `dim_geography.geography_id` = `fact_cereals_major.geography_id` join `fact_cereals_minor` on `dim_geography.geography_id` = `fact_cereals_minor.geography_id` join `dim_year` on `fact_cereals_major.year_id` = `dim_year.year_id` and `fact_cereals_minor.year_id` = `dim_year.year_id` where `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1970."
+  },
+  {
+    "question": "Provide a comparison of rice and maize yields across different districts in Chhattisgarh for the year 1970, sorted alphabetically by district name.",
+    "sql": "SELECT T1.DIST_NAME, T2.RICE_YIELD_KG_PER_HA, T3.MAIZE_YIELD_KG_PER_HA FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MINOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T4.YEAR = '1970' ORDER BY T1.DIST_NAME",
+    "pair_id": "d8d15fe0",
+    "original_question_id": "91ed580c",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ],
+      "FACT_CEREALS_MINOR": [
+        "MAIZE_PRODUCTION_1000TONS",
+        "YEAR_ID",
+        "MAIZE_YIELD_KG_PER_HA",
+        "MAIZE_AREA_1000HA",
+        "CEREAL_MINOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "The question asks for rice and maize yields across districts in Chhattisgarh for year 1970, sorted by district name. Rice yield is in `fact_cereals_major.rice_yield_kg_per_ha`. Maize yield is in `fact_cereals_minor.maize_yield_kg_per_ha`. Both tables link to `dim_geography` via `geography_id` and to `dim_year` via `year_id`. Need to filter `dim_geography.state_name` = 'Chhattisgarh' (exact case from sample: 'Chhattisgarh') and `dim_year.year` = 1970 (value exists per sample). Join `dim_geography` and `dim_year` to each fact table. Since yields are in separate tables, we can join them on geography_id and year_id to get both yields per district-year. Then select `dim_geography.dist_name`, `fact_cereals_major.rice_yield_kg_per_ha`, `fact_cereals_minor.maize_yield_kg_per_ha`. Sort by `dim_geography.dist_name` alphabetically."
+  },
+  {
+    "question": "For the year 1970, provide the average rice and maize yields for each district in Chhattisgarh, sorted by the highest rice productivity.",
+    "sql": "SELECT T1.DIST_NAME, AVG(T2.RICE_YIELD_KG_PER_HA), AVG(T3.MAIZE_YIELD_KG_PER_HA) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MINOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID AND T3.YEAR_ID = T4.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T4.YEAR = '1970' GROUP BY T1.DIST_NAME ORDER BY AVG(T2.RICE_YIELD_KG_PER_HA) DESC",
+    "pair_id": "4b5ae2f1",
+    "original_question_id": "91ed580c",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ],
+      "FACT_CEREALS_MINOR": [
+        "MAIZE_PRODUCTION_1000TONS",
+        "YEAR_ID",
+        "MAIZE_YIELD_KG_PER_HA",
+        "MAIZE_AREA_1000HA",
+        "CEREAL_MINOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_year`.`year` = 1970 and `dim_geography`.`state_name` = 'Chhattisgarh'. Join `dim_geography` to `fact_cereals_major` and `fact_cereals_minor` on `geography_id`, and join both fact tables to `dim_year` on `year_id`. Group by `dim_geography`.`dist_name`. Compute AVG(`fact_cereals_major`.`rice_yield_kg_per_ha`) and AVG(`fact_cereals_minor`.`maize_yield_kg_per_ha`). Sort by AVG(`fact_cereals_major`.`rice_yield_kg_per_ha`) DESC."
+  },
+  {
+    "question": "Which districts reported a positive maize yield in 1970 but had no recorded wheat production?",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MINOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MAJOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR = '1970' AND T2.MAIZE_YIELD_KG_PER_HA > 0 AND (T3.WHEAT_YIELD_KG_PER_HA IS NULL OR T3.WHEAT_YIELD_KG_PER_HA = 0) GROUP BY T1.DIST_NAME ORDER BY T1.DIST_NAME ASC",
+    "pair_id": "eb3c854f",
+    "original_question_id": "2c131324",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "WHEAT_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "YEAR_ID",
+        "WHEAT_PRODUCTION_1000TONS",
+        "WHEAT_YIELD_KG_PER_HA",
+        "GEOGRAPHY_ID"
+      ],
+      "FACT_CEREALS_MINOR": [
+        "MAIZE_PRODUCTION_1000TONS",
+        "YEAR_ID",
+        "MAIZE_YIELD_KG_PER_HA",
+        "MAIZE_AREA_1000HA",
+        "CEREAL_MINOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Find districts (`dim_geography.dist_name`) where in year 1970 (`dim_year.year` = 1970) there is a record in `fact_cereals_minor` with `fact_cereals_minor.maize_yield_kg_per_ha` > 0, and either there is no matching record in `fact_cereals_major` for that district and year, or `fact_cereals_major.wheat_production_1000tons` = 0."
+  },
+  {
+    "question": "List the names of districts that produced maize but did not produce any wheat during the year 1970, sorted alphabetically.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MINOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MAJOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR = '1970' AND T2.MAIZE_YIELD_KG_PER_HA > 0 AND T1.GEOGRAPHY_ID NOT IN ( SELECT T5.GEOGRAPHY_ID FROM FACT_CEREALS_MAJOR AS T5 JOIN DIM_YEAR AS T6 ON T5.YEAR_ID = T6.YEAR_ID WHERE T6.YEAR = '1970' AND T5.WHEAT_YIELD_KG_PER_HA > 0 ) GROUP BY T1.DIST_NAME ORDER BY T1.DIST_NAME ASC",
+    "pair_id": "a21a4cd2",
+    "original_question_id": "2c131324",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "WHEAT_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "YEAR_ID",
+        "WHEAT_PRODUCTION_1000TONS",
+        "WHEAT_YIELD_KG_PER_HA",
+        "GEOGRAPHY_ID"
+      ],
+      "FACT_CEREALS_MINOR": [
+        "MAIZE_PRODUCTION_1000TONS",
+        "YEAR_ID",
+        "MAIZE_YIELD_KG_PER_HA",
+        "MAIZE_AREA_1000HA",
+        "CEREAL_MINOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_geography.dist_name` where `dim_year.year` = 1970 and `fact_cereals_minor.maize_production_1000tons` > 0 and (`fact_cereals_major.wheat_production_1000tons` = 0 or `fact_cereals_major.wheat_production_1000tons` IS NULL), sorted alphabetically by `dim_geography.dist_name`."
+  },
+  {
+    "question": "Which districts achieved a rice yield higher than 841.27 kg/ha while also dedicating more than 2,800 hectares to maize cultivation in 1970?",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MINOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR = '1970' AND T2.RICE_YIELD_KG_PER_HA > 841.27 AND T3.MAIZE_AREA_1000HA > 2.8",
+    "pair_id": "56851d3d",
+    "original_question_id": "c7368475",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ],
+      "FACT_CEREALS_MINOR": [
+        "MAIZE_PRODUCTION_1000TONS",
+        "YEAR_ID",
+        "MAIZE_YIELD_KG_PER_HA",
+        "MAIZE_AREA_1000HA",
+        "CEREAL_MINOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Find districts (`dim_geography.dist_name`) where `fact_cereals_major.rice_yield_kg_per_ha` > 841.27 and `fact_cereals_minor.maize_area_1000ha` > 2.8 for year 1970 (`dim_year.year` = 1970). Join `fact_cereals_major` and `fact_cereals_minor` on `geography_id` and `year_id`, join with `dim_geography` on `geography_id`, and join with `dim_year` on `year_id`."
+  },
+  {
+    "question": "Which districts in 1970 achieved a rice yield higher than 841.27 kg/ha while also maintaining more than 2,800 hectares of maize cultivation?",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MINOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR = '1970' AND T2.RICE_YIELD_KG_PER_HA > 841.27 AND T3.MAIZE_AREA_1000HA > 2.8",
+    "pair_id": "a449ffea",
+    "original_question_id": "c7368475",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ],
+      "FACT_CEREALS_MINOR": [
+        "MAIZE_PRODUCTION_1000TONS",
+        "YEAR_ID",
+        "MAIZE_YIELD_KG_PER_HA",
+        "MAIZE_AREA_1000HA",
+        "CEREAL_MINOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_geography.dist_name` for records where `dim_year.year` = 1970, `fact_cereals_major.rice_yield_kg_per_ha` > 841.27, and `fact_cereals_minor.maize_area_1000ha` > 2.8. Join `fact_cereals_major` and `fact_cereals_minor` on `geography_id` and `year_id`, linking to `dim_geography` and `dim_year`."
+  },
+  {
+    "question": "List the names of districts that, in 1970, recorded a rice yield higher than 337.59 kg/ha and a maize cultivation area exceeding 2,500 hectares, sorted alphabetically.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CEREALS_MINOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID AND T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR = '1970' AND T2.RICE_YIELD_KG_PER_HA > 337.59 AND T3.MAIZE_AREA_1000HA > 2.5 GROUP BY T1.DIST_NAME HAVING COUNT(T1.GEOGRAPHY_ID) >= 1 ORDER BY T1.DIST_NAME ASC",
+    "pair_id": "2dcb36f3",
+    "original_question_id": "c7368475",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ],
+      "FACT_CEREALS_MINOR": [
+        "MAIZE_PRODUCTION_1000TONS",
+        "YEAR_ID",
+        "MAIZE_YIELD_KG_PER_HA",
+        "MAIZE_AREA_1000HA",
+        "CEREAL_MINOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Need `dim_geography.dist_name` for districts where in year 1970 (`dim_year.year` = 1970) the `fact_cereals_major.rice_yield_kg_per_ha` > 337.59 and `fact_cereals_minor.maize_area_1000ha` > 2.5, sorted alphabetically by `dim_geography.dist_name`. Join `dim_geography` to `fact_cereals_major` and `fact_cereals_minor` on `geography_id`, and both fact tables to `dim_year` on `year_id`."
+  },
+  {
+    "question": "Identify the districts and their respective states that achieved a yield of over 337.59 kg/ha for either rice or maize during the year 1970.",
+    "sql": "SELECT DISTINCT T1.DIST_NAME, T1.STATE_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID JOIN FACT_CEREALS_MINOR AS T4 ON T1.GEOGRAPHY_ID = T4.GEOGRAPHY_ID WHERE T3.YEAR = '1970' AND (T2.RICE_YIELD_KG_PER_HA > 337.59 OR T4.MAIZE_YIELD_KG_PER_HA > 337.59);",
+    "pair_id": "14dff445",
+    "original_question_id": "2e750005",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ],
+      "FACT_CEREALS_MINOR": [
+        "MAIZE_PRODUCTION_1000TONS",
+        "YEAR_ID",
+        "MAIZE_YIELD_KG_PER_HA",
+        "MAIZE_AREA_1000HA",
+        "CEREAL_MINOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography`.`dist_name` and `dim_geography`.`state_name` where (`fact_cereals_major`.`rice_yield_kg_per_ha` > 337.59 OR `fact_cereals_minor`.`maize_yield_kg_per_ha` > 337.59) and `dim_year`.`year` = 1970. Join `dim_geography` and `dim_year` to `fact_cereals_major` and `fact_cereals_minor` on `geography_id` and `year_id`."
+  },
+  {
+    "question": "List the names of districts and their respective states that recorded yields higher than 800 kg/ha for either rice or maize during the year 1970.",
+    "sql": "SELECT DISTINCT T1.DIST_NAME, T1.STATE_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID JOIN FACT_CEREALS_MINOR AS T4 ON T1.GEOGRAPHY_ID = T4.GEOGRAPHY_ID WHERE T3.YEAR = '1970' AND (T2.RICE_YIELD_KG_PER_HA > 800 OR T4.MAIZE_YIELD_KG_PER_HA > 800) ORDER BY T1.STATE_NAME",
+    "pair_id": "3ca755e2",
+    "original_question_id": "2e750005",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ],
+      "FACT_CEREALS_MINOR": [
+        "MAIZE_PRODUCTION_1000TONS",
+        "YEAR_ID",
+        "MAIZE_YIELD_KG_PER_HA",
+        "MAIZE_AREA_1000HA",
+        "CEREAL_MINOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_geography.dist_name` and `dim_geography.state_name` where `dim_year.year` = 1970 and (`fact_cereals_major.rice_yield_kg_per_ha` > 800 or `fact_cereals_minor.maize_yield_kg_per_ha` > 800). Join `dim_geography` to `fact_cereals_major` and `fact_cereals_minor` via `geography_id`, and join to `dim_year` via `year_id`. Use a UNION of two queries: one for rice yield condition and one for maize yield condition, each filtered for year 1970."
+  },
+  {
+    "question": "Identify the districts and their respective states that achieved a yield higher than 841.27 kg/ha for either rice or maize during the year 1970.",
+    "sql": "SELECT DISTINCT T1.DIST_NAME, T1.STATE_NAME FROM DIM_GEOGRAPHY AS T1 JOIN DIM_YEAR AS T2 ON T1.GEOGRAPHY_ID = T1.GEOGRAPHY_ID LEFT JOIN FACT_CEREALS_MAJOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID AND T2.YEAR_ID = T3.YEAR_ID LEFT JOIN FACT_CEREALS_MINOR AS T4 ON T1.GEOGRAPHY_ID = T4.GEOGRAPHY_ID AND T2.YEAR_ID = T4.YEAR_ID WHERE T2.YEAR = '1970' AND (T3.RICE_YIELD_KG_PER_HA > 841.27 OR T4.MAIZE_YIELD_KG_PER_HA > 841.27)",
+    "pair_id": "98b6cfe0",
+    "original_question_id": "2e750005",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR",
+      "FACT_CEREALS_MINOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ],
+      "FACT_CEREALS_MINOR": [
+        "MAIZE_PRODUCTION_1000TONS",
+        "YEAR_ID",
+        "MAIZE_YIELD_KG_PER_HA",
+        "MAIZE_AREA_1000HA",
+        "CEREAL_MINOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve distinct `dim_geography.dist_name` and `dim_geography.state_name` where (`dim_year.year` = 1970) AND (`fact_cereals_major.rice_yield_kg_per_ha` > 841.27 OR `fact_cereals_minor.maize_yield_kg_per_ha` > 841.27). Join `dim_geography` and `dim_year` to `fact_cereals_major` on `geography_id` and `year_id` for rice condition, and to `fact_cereals_minor` for maize condition, then combine results."
+  },
+  {
+    "question": "Provide a chronological overview of rice and wheat production and yield figures for the state of Chhattisgarh.",
+    "sql": "SELECT T1.RICE_PRODUCTION_1000TONS, T1.RICE_YIELD_KG_PER_HA, T1.WHEAT_PRODUCTION_1000TONS, T1.WHEAT_YIELD_KG_PER_HA FROM FACT_CEREALS_MAJOR AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.STATE_NAME = 'Chhattisgarh' ORDER BY T1.YEAR_ID",
+    "pair_id": "de49cb12",
+    "original_question_id": "e0ffb100",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "WHEAT_PRODUCTION_1000TONS",
+        "YEAR_ID",
+        "CEREAL_MAJOR_ID",
+        "WHEAT_YIELD_KG_PER_HA",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.state_name` = 'Chhattisgarh', join `fact_cereals_major` with `dim_geography` on `fact_cereals_major.geography_id` = `dim_geography.geography_id` and with `dim_year` on `fact_cereals_major.year_id` = `dim_year.year_id`, select `dim_year.year`, `fact_cereals_major.rice_production_1000tons`, `fact_cereals_major.rice_yield_kg_per_ha`, `fact_cereals_major.wheat_production_1000tons`, `fact_cereals_major.wheat_yield_kg_per_ha`, order by `dim_year.year`."
+  },
+  {
+    "question": "Provide a chronological report of rice and wheat production and yield statistics for all districts in Chhattisgarh.",
+    "sql": "SELECT T2.YEAR, T1.DIST_NAME, T0.RICE_PRODUCTION_1000TONS, T0.RICE_YIELD_KG_PER_HA, T0.WHEAT_PRODUCTION_1000TONS, T0.WHEAT_YIELD_KG_PER_HA FROM FACT_CEREALS_MAJOR T0 JOIN DIM_GEOGRAPHY T1 ON T0.GEOGRAPHY_ID = T1.GEOGRAPHY_ID JOIN DIM_YEAR T2 ON T0.YEAR_ID = T2.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' ORDER BY T2.YEAR ASC",
+    "pair_id": "8e403bec",
+    "original_question_id": "e0ffb100",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "WHEAT_PRODUCTION_1000TONS",
+        "YEAR_ID",
+        "CEREAL_MAJOR_ID",
+        "WHEAT_YIELD_KG_PER_HA",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography`.`dist_name`, `dim_year`.`year`, `fact_cereals_major`.`rice_production_1000tons`, `fact_cereals_major`.`rice_yield_kg_per_ha`, `fact_cereals_major`.`wheat_production_1000tons`, `fact_cereals_major`.`wheat_yield_kg_per_ha` from `fact_cereals_major` join `dim_geography` on `fact_cereals_major`.`geography_id` = `dim_geography`.`geography_id` join `dim_year` on `fact_cereals_major`.`year_id` = `dim_year`.`year_id` where `dim_geography`.`state_name` = 'Chhattisgarh' order by `dim_year`.`year` asc."
+  },
+  {
+    "question": "Provide a yearly breakdown of rice and wheat production and yield for districts in Chhattisgarh where rice production exceeded 185,000 tons, sorted by year and district name.",
+    "sql": "SELECT T2.DIST_NAME, T3.YEAR, AVG(T1.RICE_YIELD_KG_PER_HA), SUM(T1.RICE_PRODUCTION_1000TONS), AVG(T1.WHEAT_YIELD_KG_PER_HA), SUM(T1.WHEAT_PRODUCTION_1000TONS) FROM FACT_CEREALS_MAJOR AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T2.STATE_NAME = 'Chhattisgarh' GROUP BY T2.DIST_NAME, T3.YEAR HAVING SUM(T1.RICE_PRODUCTION_1000TONS) > 185.0 ORDER BY T3.YEAR DESC, T2.DIST_NAME ASC",
+    "pair_id": "bfba8b47",
+    "original_question_id": "e0ffb100",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "WHEAT_PRODUCTION_1000TONS",
+        "YEAR_ID",
+        "CEREAL_MAJOR_ID",
+        "WHEAT_YIELD_KG_PER_HA",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Query requires joining `fact_cereals_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`. Filter `dim_geography.state_name` = 'Chhattisgarh' and `fact_cereals_major.rice_production_1000tons` > 185 (since 185,000 tons = 185 thousand tons). Select `dim_year.year`, `dim_geography.dist_name`, `fact_cereals_major.rice_production_1000tons`, `fact_cereals_major.rice_yield_kg_per_ha`, `fact_cereals_major.wheat_production_1000tons`, `fact_cereals_major.wheat_yield_kg_per_ha`. Order by `dim_year.year` then `dim_geography.dist_name`."
+  },
+  {
+    "question": "Provide the average yields for rice and wheat across different states.",
+    "sql": "SELECT T1.STATE_NAME, AVG(T2.RICE_YIELD_KG_PER_HA), AVG(T2.WHEAT_YIELD_KG_PER_HA) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE_NAME",
+    "pair_id": "b225a856",
+    "original_question_id": "cc6e773b",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "WHEAT_PRODUCTION_1000TONS",
+        "YEAR_ID",
+        "CEREAL_MAJOR_ID",
+        "WHEAT_YIELD_KG_PER_HA",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Compute AVG(fact_cereals_major.rice_yield_kg_per_ha) and AVG(fact_cereals_major.wheat_yield_kg_per_ha) grouped by dim_geography.state_name, joining fact_cereals_major and dim_geography on geography_id."
+  },
+  {
+    "question": "Provide the average rice and wheat yields for each state, listed in alphabetical order.",
+    "sql": "SELECT T1.STATE_NAME, AVG(T2.RICE_YIELD_KG_PER_HA), AVG(T2.WHEAT_YIELD_KG_PER_HA) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE_NAME ORDER BY T1.STATE_NAME",
+    "pair_id": "8199d59c",
+    "original_question_id": "cc6e773b",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "WHEAT_PRODUCTION_1000TONS",
+        "YEAR_ID",
+        "CEREAL_MAJOR_ID",
+        "WHEAT_YIELD_KG_PER_HA",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Compute AVG(fact_cereals_major.rice_yield_kg_per_ha) and AVG(fact_cereals_major.wheat_yield_kg_per_ha) grouped by dim_geography.state_name, joining fact_cereals_major and dim_geography on geography_id. Order results by dim_geography.state_name alphabetically."
+  },
+  {
+    "question": "Rank the states by their average rice yield in descending order, also showing the average wheat yield for each.",
+    "sql": "SELECT T1.STATE_NAME, AVG(T3.RICE_YIELD_KG_PER_HA), AVG(T3.WHEAT_YIELD_KG_PER_HA) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T2 ON T3.YEAR_ID = T2.YEAR_ID GROUP BY T1.STATE_NAME HAVING COUNT(DISTINCT T2.YEAR) >= 1 ORDER BY AVG(T3.RICE_YIELD_KG_PER_HA) DESC",
+    "pair_id": "16e7eeb8",
+    "original_question_id": "cc6e773b",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "WHEAT_PRODUCTION_1000TONS",
+        "YEAR_ID",
+        "CEREAL_MAJOR_ID",
+        "WHEAT_YIELD_KG_PER_HA",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_cereals_major` with `dim_geography` on `fact_cereals_major.geography_id = dim_geography.geography_id`. Group by `dim_geography.state_name`. Compute `AVG(fact_cereals_major.rice_yield_kg_per_ha)` as avg_rice_yield and `AVG(fact_cereals_major.wheat_yield_kg_per_ha)` as avg_wheat_yield. Order by avg_rice_yield DESC."
+  },
+  {
+    "question": "Which districts in Chhattisgarh achieved a rice yield exceeding 337.59 kg per hectare during the year 1970?",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T2.RICE_YIELD_KG_PER_HA > 337.59 AND T3.YEAR = '1970'",
+    "pair_id": "f85a01b8",
+    "original_question_id": "0bae8e96",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography`.`dist_name` where `dim_geography`.`state_name` = 'Chhattisgarh' and `dim_year`.`year` = 1970 and `fact_cereals_major`.`rice_yield_kg_per_ha` > 337.59, joining `fact_cereals_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`."
+  },
+  {
+    "question": "Which districts in Chhattisgarh achieved a rice yield of more than 800 kg per hectare during the year 1970?",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' AND T2.RICE_YIELD_KG_PER_HA > 800.0",
+    "pair_id": "7705de76",
+    "original_question_id": "0bae8e96",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography`.`dist_name` from `fact_cereals_major` join `dim_geography` on `fact_cereals_major`.`geography_id` = `dim_geography`.`geography_id` join `dim_year` on `fact_cereals_major`.`year_id` = `dim_year`.`year_id` where `dim_geography`.`state_name` = 'Chhattisgarh' and `dim_year`.`year` = 1970 and `fact_cereals_major`.`rice_yield_kg_per_ha` > 800."
+  },
+  {
+    "question": "Which districts in Chhattisgarh had an average rice yield exceeding 337.59 kg/ha in 1970? Please list them in descending order of their yield.",
+    "sql": "SELECT T3.DIST_NAME FROM FACT_CEREALS_MAJOR AS T1 JOIN DIM_YEAR AS T2 ON T1.YEAR_ID = T2.YEAR_ID JOIN DIM_GEOGRAPHY AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T3.STATE_NAME = 'Chhattisgarh' AND T2.YEAR = '1970' GROUP BY T3.DIST_NAME HAVING AVG(T1.RICE_YIELD_KG_PER_HA) > 337.59 ORDER BY AVG(T1.RICE_YIELD_KG_PER_HA) DESC",
+    "pair_id": "56037206",
+    "original_question_id": "0bae8e96",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "The question asks for districts in the state Chhattisgarh with average rice yield greater than 337.59 kg/ha in year 1970. Rice yield data is in column `fact_cereals_major`.`rice_yield_kg_per_ha`. Average likely implies per district-year pair. The state name is `Chhattisgarh` (case-sensitive from sample). Year 1970 exists in `dim_year`.`year`. Need to join `fact_cereals_major`, `dim_geography`, and `dim_year`. Filter where `dim_geography`.`state_name` = 'Chhattisgarh', `dim_year`.`year` = 1970, and `fact_cereals_major`.`rice_yield_kg_per_ha` > 337.59. Then group by district (`dim_geography`.`dist_name`) to compute average yield per district, but since data is per district-year pair, each record is already per district, so simply select `dim_geography`.`dist_name` and `fact_cereals_major`.`rice_yield_kg_per_ha`. Then sort descending by yield. Note: There may be multiple entries per district-year? No, given schema, each geography_id-year_id pair appears once per fact table. So no averaging needed. But if there are multiple entries per district (different years or sub-districts?), but given state and year fixed, one record per district. So we select district name and rice yield, filter on state, year, and yield threshold, order by yield descending."
+  },
+  {
+    "question": "Rank the districts in Chhattisgarh by their average wheat yield, from highest to lowest.",
+    "sql": "SELECT T1.DIST_NAME, AVG(T2.WHEAT_YIELD_KG_PER_HA) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.STATE_NAME = 'Chhattisgarh' GROUP BY T1.DIST_NAME ORDER BY AVG(T2.WHEAT_YIELD_KG_PER_HA) DESC",
+    "pair_id": "a7d5446b",
+    "original_question_id": "0ada52ec",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "WHEAT_AREA_1000HA",
+        "WHEAT_PRODUCTION_1000TONS",
+        "YEAR_ID",
+        "CEREAL_MAJOR_ID",
+        "WHEAT_YIELD_KG_PER_HA",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter (`dim_geography`.`state_name`) = 'Chhattisgarh'. Join `dim_geography` and `fact_cereals_major` on `geography_id`. Group by (`dim_geography`.`dist_name`). Compute AVG(`fact_cereals_major`.`wheat_yield_kg_per_ha`) as average_wheat_yield. Order by average_wheat_yield DESC to rank districts from highest to lowest."
+  },
+  {
+    "question": "Rank the districts in Chhattisgarh by their average wheat yield, from highest to lowest.",
+    "sql": "SELECT T1.DIST_NAME, AVG(T2.WHEAT_YIELD_KG_PER_HA) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.STATE_NAME = 'Chhattisgarh' GROUP BY T1.DIST_NAME ORDER BY AVG(T2.WHEAT_YIELD_KG_PER_HA) DESC",
+    "pair_id": "149de7e1",
+    "original_question_id": "0ada52ec",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "WHEAT_AREA_1000HA",
+        "WHEAT_PRODUCTION_1000TONS",
+        "YEAR_ID",
+        "CEREAL_MAJOR_ID",
+        "WHEAT_YIELD_KG_PER_HA",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.state_name` = 'Chhattisgarh'. Join `dim_geography` and `fact_cereals_major` on `geography_id`. Group by `dim_geography.dist_name`. Compute average of `fact_cereals_major.wheat_yield_kg_per_ha` per district. Order by average descending."
+  },
+  {
+    "question": "Rank the districts in Chhattisgarh by their average wheat yield, from highest to lowest.",
+    "sql": "SELECT T1.DIST_NAME, AVG(T2.WHEAT_YIELD_KG_PER_HA) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' GROUP BY T1.DIST_NAME ORDER BY AVG(T2.WHEAT_YIELD_KG_PER_HA) DESC",
+    "pair_id": "a8a7a511",
+    "original_question_id": "0ada52ec",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "WHEAT_AREA_1000HA",
+        "WHEAT_PRODUCTION_1000TONS",
+        "YEAR_ID",
+        "CEREAL_MAJOR_ID",
+        "WHEAT_YIELD_KG_PER_HA",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter (`dim_geography`.`state_name`) = 'Chhattisgarh'. Join `dim_geography` and `fact_cereals_major` on (`dim_geography`.`geography_id`) = (`fact_cereals_major`.`geography_id`). Group by (`dim_geography`.`dist_name`). Compute AVG(`fact_cereals_major`.`wheat_yield_kg_per_ha`) as average_yield. Order by average_yield DESC to rank districts from highest to lowest."
+  },
+  {
+    "question": "Which five districts in Chhattisgarh had the highest rice yields in 1970?",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' ORDER BY T2.RICE_YIELD_KG_PER_HA DESC LIMIT 5",
+    "pair_id": "64ae16b5",
+    "original_question_id": "5d656d2b",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter (`dim_geography`.`state_name`) = 'Chhattisgarh' and (`dim_year`.`year`) = 1970. Join `fact_cereals_major` with `dim_geography` on (`fact_cereals_major`.`geography_id`) = (`dim_geography`.`geography_id`) and with `dim_year` on (`fact_cereals_major`.`year_id`) = (`dim_year`.`year_id`). Select (`dim_geography`.`dist_name`) and (`fact_cereals_major`.`rice_yield_kg_per_ha`). Order by (`fact_cereals_major`.`rice_yield_kg_per_ha`) DESC, limit 5."
+  },
+  {
+    "question": "List the top five districts in Chhattisgarh that had the highest rice yield in 1970.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' ORDER BY T2.RICE_YIELD_KG_PER_HA DESC LIMIT 5",
+    "pair_id": "1d57da3d",
+    "original_question_id": "5d656d2b",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1970. Join `dim_geography` and `dim_year` to `fact_cereals_major` via geography_id and year_id. Select `dim_geography.dist_name` and `fact_cereals_major.rice_yield_kg_per_ha`. Order by `fact_cereals_major.rice_yield_kg_per_ha` DESC, limit 5."
+  },
+  {
+    "question": "Identify the top 5 districts in Chhattisgarh with the highest average rice yield recorded in 1970.",
+    "sql": "SELECT T1.DIST_NAME, AVG(T3.RICE_YIELD_KG_PER_HA) FROM DIM_GEOGRAPHY AS T1 JOIN DIM_YEAR AS T2 ON T1.GEOGRAPHY_ID = T1.GEOGRAPHY_ID JOIN FACT_CEREALS_MAJOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T2.YEAR = '1970' GROUP BY T1.DIST_NAME ORDER BY AVG(T3.RICE_YIELD_KG_PER_HA) DESC LIMIT 5",
+    "pair_id": "4f70dfbb",
+    "original_question_id": "5d656d2b",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1970. Join `fact_cereals_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`. Compute average of `fact_cereals_major.rice_yield_kg_per_ha` per `dim_geography.dist_name`. Order by average rice yield descending and limit 5."
+  },
+  {
+    "question": "Which districts and states achieved a rice yield exceeding 841.27 kg per hectare in 1970?",
+    "sql": "SELECT T1.DIST_NAME, T1.STATE_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T2.RICE_YIELD_KG_PER_HA > 841.27 AND T3.YEAR = '1970';",
+    "pair_id": "43628eb4",
+    "original_question_id": "9ce0b878",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "To answer: Join `fact_cereals_major` with `dim_geography` on `fact_cereals_major.geography_id = dim_geography.geography_id` and with `dim_year` on `fact_cereals_major.year_id = dim_year.year_id`. Filter where `dim_year.year = 1970` and `fact_cereals_major.rice_yield_kg_per_ha > 841.27`. Return `dim_geography.dist_name` and `dim_geography.state_name`."
+  },
+  {
+    "question": "List the names of districts and their respective states that achieved a rice yield greater than 337.59 kg per hectare in 1970, ordered alphabetically by district.",
+    "sql": "SELECT T1.DIST_NAME, T1.STATE_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T2.RICE_YIELD_KG_PER_HA > 337.59 AND T3.YEAR = '1970' ORDER BY T1.DIST_NAME ASC",
+    "pair_id": "11ac4852",
+    "original_question_id": "9ce0b878",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join fact_cereals_major, dim_geography, and dim_year. Filter where dim_year.year = 1970 and fact_cereals_major.rice_yield_kg_per_ha > 337.59. Select dim_geography.dist_name and dim_geography.state_name. Order by dim_geography.dist_name ASC."
+  },
+  {
+    "question": "Identify the districts and their corresponding states that achieved an average rice yield exceeding 337.59 kg per hectare during the year 1970, sorted alphabetically by state.",
+    "sql": "SELECT T1.DIST_NAME, T1.STATE_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T2.RICE_YIELD_KG_PER_HA > 337.59 AND T3.YEAR = '1970' GROUP BY T1.DIST_NAME, T1.STATE_NAME HAVING AVG(T2.RICE_YIELD_KG_PER_HA) > 337.59 ORDER BY T1.STATE_NAME ASC",
+    "pair_id": "c76f0569",
+    "original_question_id": "9ce0b878",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Need `dim_geography.state_name`, `dim_geography.dist_name` for districts and states. Filter `dim_year.year` = 1970 and `fact_cereals_major.rice_yield_kg_per_ha` > 337.59. Join `fact_cereals_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`. Sort results by `dim_geography.state_name` alphabetically."
+  },
+  {
+    "question": "Which districts in Chhattisgarh achieved a rice yield exceeding 841.27 kg/ha and a wheat yield over 454.55 kg/ha during the year 1970?",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' AND T2.RICE_YIELD_KG_PER_HA > 841.27 AND T2.WHEAT_YIELD_KG_PER_HA > 454.55",
+    "pair_id": "de4b0786",
+    "original_question_id": "1724b730",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "WHEAT_YIELD_KG_PER_HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography`.`dist_name` where `dim_geography`.`state_name` = 'Chhattisgarh' and `dim_year`.`year` = 1970 and `fact_cereals_major`.`rice_yield_kg_per_ha` > 841.27 and `fact_cereals_major`.`wheat_yield_kg_per_ha` > 454.55."
+  },
+  {
+    "question": "List the districts in Chhattisgarh that achieved yields of over 337.59 kg/ha for both rice and wheat during the year 1970, sorted alphabetically.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' AND T2.RICE_YIELD_KG_PER_HA > 337.59 AND T2.WHEAT_YIELD_KG_PER_HA > 337.59 ORDER BY T1.DIST_NAME ASC",
+    "pair_id": "e6a25966",
+    "original_question_id": "1724b730",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "WHEAT_YIELD_KG_PER_HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1970. Join `dim_geography` and `dim_year` to `fact_cereals_major` via geography_id and year_id. Select `dim_geography.dist_name` where `fact_cereals_major.rice_yield_kg_per_ha` > 337.59 and `fact_cereals_major.wheat_yield_kg_per_ha` > 337.59. Sort results by `dim_geography.dist_name` ASC."
+  },
+  {
+    "question": "Which districts in Chhattisgarh achieved a maximum yield of over 337.59 kg/ha for rice and 454.55 kg/ha for wheat during the year 1970? Please list them in alphabetical order.",
+    "sql": "SELECT T2.DIST_NAME FROM FACT_CEREALS_MAJOR AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T2.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' GROUP BY T2.DIST_NAME HAVING MAX(T1.RICE_YIELD_KG_PER_HA) > 337.59 AND MAX(T1.WHEAT_YIELD_KG_PER_HA) > 454.55 ORDER BY T2.DIST_NAME ASC",
+    "pair_id": "06037fbc",
+    "original_question_id": "1724b730",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "RICE_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "WHEAT_YIELD_KG_PER_HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1970. Join `dim_geography`, `dim_year`, and `fact_cereals_major` on geography_id and year_id. Select `dim_geography.dist_name` where `fact_cereals_major.rice_yield_kg_per_ha` > 337.59 and `fact_cereals_major.wheat_yield_kg_per_ha` > 454.55. Order by `dim_geography.dist_name` alphabetically."
+  },
+  {
+    "question": "Identify the districts that have produced more than 500,000 tons of either rice or wheat.",
+    "sql": "SELECT DISTINCT T1.DIST_NAME FROM FACT_CEREALS_MAJOR AS T0 JOIN DIM_GEOGRAPHY AS T1 ON T0.GEOGRAPHY_ID = T1.GEOGRAPHY_ID WHERE T0.RICE_PRODUCTION_1000TONS > 500 OR T0.WHEAT_PRODUCTION_1000TONS > 500;",
+    "pair_id": "30ce8349",
+    "original_question_id": "e63a3b4d",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "WHEAT_PRODUCTION_1000TONS",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Find distinct `dim_geography.dist_name` by joining `fact_cereals_major` with `dim_geography` on `geography_id` where `fact_cereals_major.rice_production_1000tons > 500` OR `fact_cereals_major.wheat_production_1000tons > 500` (since 500 in column units = 500,000 tons)."
+  },
+  {
+    "question": "Identify the districts that have produced more than 400,800 tons of rice or more than 26,500 tons of wheat.",
+    "sql": "SELECT DISTINCT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.RICE_PRODUCTION_1000TONS > 400.8 OR T2.WHEAT_PRODUCTION_1000TONS > 26.5",
+    "pair_id": "5e24510b",
+    "original_question_id": "e63a3b4d",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "WHEAT_PRODUCTION_1000TONS",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Find distinct `dim_geography.dist_name` where `fact_cereals_major.rice_production_1000tons` > 400.8 OR `fact_cereals_major.wheat_production_1000tons` > 26.5. Join `fact_cereals_major` with `dim_geography` on `geography_id`."
+  },
+  {
+    "question": "Identify the districts that have recorded rice production over 400,800 tons or wheat production exceeding 26,500 tons, and whose combined yield of these cereals totals more than 185,000 tons.",
+    "sql": "SELECT DISTINCT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CEREALS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T2.RICE_PRODUCTION_1000TONS > 400.8 OR T2.WHEAT_PRODUCTION_1000TONS > 26.5 GROUP BY T1.DIST_NAME HAVING SUM(T2.RICE_PRODUCTION_1000TONS + T2.WHEAT_PRODUCTION_1000TONS) > 185.0 ORDER BY T1.DIST_NAME ASC",
+    "pair_id": "9a169c06",
+    "original_question_id": "e63a3b4d",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_CEREALS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_CEREALS_MAJOR": [
+        "RICE_PRODUCTION_1000TONS",
+        "WHEAT_PRODUCTION_1000TONS",
+        "YEAR_ID",
+        "RICE_AREA_1000HA",
+        "CEREAL_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography`.`dist_name` from `fact_cereals_major` join `dim_geography` on `fact_cereals_major`.`geography_id` = `dim_geography`.`geography_id` where (`fact_cereals_major`.`rice_production_1000tons` > 400.8 or `fact_cereals_major`.`wheat_production_1000tons` > 26.5) and (`fact_cereals_major`.`rice_production_1000tons` + `fact_cereals_major`.`wheat_production_1000tons` > 185)."
+  },
+  {
+    "question": "Provide the area and production figures for pearl millet in the Durg district of Chhattisgarh for the year 1970.",
+    "sql": "SELECT T1.PEARL_MILLET_AREA_1000HA, T1.PEARL_MILLET_PRODUCTION_1000TONS FROM FACT_MILLETS AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T2.STATE_NAME = 'Chhattisgarh' AND T2.DIST_NAME = 'Durg' AND T3.YEAR = '1970'",
+    "pair_id": "e850ad7a",
+    "original_question_id": "1b48f4cf",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_MILLETS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_MILLETS": [
+        "PEARL_MILLET_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "PEARL_MILLET_PRODUCTION_1000TONS",
+        "MILLET_ID",
+        "GEOGRAPHY_ID",
+        "PEARL_MILLET_AREA_1000HA"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join fact_millets with dim_geography on geography_id and dim_year on year_id. Filter where dim_geography.dist_name = 'Durg' and dim_geography.state_name = 'Chhattisgarh' and dim_year.year = 1970. Select fact_millets.pearl_millet_area_1000ha and fact_millets.pearl_millet_production_1000tons."
+  },
+  {
+    "question": "For the year 1970, provide the pearl millet cultivation area and production totals for all districts in Chhattisgarh, ordered by the size of the area planted.",
+    "sql": "SELECT T1.STATE_NAME, T1.DIST_NAME, T2.PEARL_MILLET_AREA_1000HA, T2.PEARL_MILLET_PRODUCTION_1000TONS FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MILLETS AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' ORDER BY T2.PEARL_MILLET_AREA_1000HA",
+    "pair_id": "6110cb0f",
+    "original_question_id": "1b48f4cf",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_MILLETS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_MILLETS": [
+        "PEARL_MILLET_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "PEARL_MILLET_PRODUCTION_1000TONS",
+        "MILLET_ID",
+        "GEOGRAPHY_ID",
+        "PEARL_MILLET_AREA_1000HA"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography.dist_name`, `fact_millets.pearl_millet_area_1000ha`, `fact_millets.pearl_millet_production_1000tons` from `fact_millets` join `dim_geography` on `fact_millets.geography_id` = `dim_geography.geography_id` join `dim_year` on `fact_millets.year_id` = `dim_year.year_id` where `dim_year.year` = 1970 and `dim_geography.state_name` = 'Chhattisgarh' order by `fact_millets.pearl_millet_area_1000ha` desc."
+  },
+  {
+    "question": "Provide a district-wise breakdown of the total area and production of pearl millet in Chhattisgarh for the year 1970, ranked by production volume.",
+    "sql": "SELECT T1.DIST_NAME, T1.STATE_NAME, SUM(T2.PEARL_MILLET_AREA_1000HA), SUM(T2.PEARL_MILLET_PRODUCTION_1000TONS) FROM DIM_GEOGRAPHY AS T1 INNER JOIN FACT_MILLETS AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' GROUP BY T1.DIST_NAME, T1.STATE_NAME HAVING SUM(T2.PEARL_MILLET_AREA_1000HA) >= 0.0 ORDER BY SUM(T2.PEARL_MILLET_PRODUCTION_1000TONS) DESC",
+    "pair_id": "2c32040a",
+    "original_question_id": "1b48f4cf",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_MILLETS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_MILLETS": [
+        "PEARL_MILLET_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "PEARL_MILLET_PRODUCTION_1000TONS",
+        "MILLET_ID",
+        "GEOGRAPHY_ID",
+        "PEARL_MILLET_AREA_1000HA"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1970. Join `dim_geography`, `dim_year`, and `fact_millets` on geography_id and year_id. Group by `dim_geography.dist_name`. Sum `fact_millets.pearl_millet_area_1000ha` as total_area and `fact_millets.pearl_millet_production_1000tons` as total_production. Order by total_production DESC."
+  },
+  {
+    "question": "Provide a state-wise summary of the average yield and total production for both pearl and finger millets between 1966 and 1970.",
+    "sql": "SELECT AVG(T1.PEARL_MILLET_YIELD_KG_PER_HA), SUM(T1.PEARL_MILLET_PRODUCTION_1000TONS), AVG(T1.FINGER_MILLET_YIELD_KG_PER_HA), SUM(T1.FINGER_MILLET_PRODUCTION_1000TONS), T2.STATE_NAME FROM FACT_MILLETS T1 JOIN DIM_GEOGRAPHY T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR BETWEEN '1966' AND '1970' GROUP BY T2.STATE_NAME",
+    "pair_id": "7c208163",
+    "original_question_id": "bb7da943",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_MILLETS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_MILLETS": [
+        "PEARL_MILLET_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "FINGER_MILLET_PRODUCTION_1000TONS",
+        "PEARL_MILLET_PRODUCTION_1000TONS",
+        "FINGER_MILLET_YIELD_KG_PER_HA",
+        "MILLET_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": ""
+  },
+  {
+    "question": "Provide a state-wise summary of the average yields and total production for pearl and finger millets between 1966 and 1970.",
+    "sql": "SELECT T2.STATE_NAME, AVG(T1.PEARL_MILLET_YIELD_KG_PER_HA), AVG(T1.FINGER_MILLET_YIELD_KG_PER_HA), SUM(T1.PEARL_MILLET_PRODUCTION_1000TONS), SUM(T1.FINGER_MILLET_PRODUCTION_1000TONS) FROM FACT_MILLETS AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR BETWEEN '1966' AND '1970' GROUP BY T2.STATE_NAME",
+    "pair_id": "34fbb349",
+    "original_question_id": "bb7da943",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_MILLETS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_MILLETS": [
+        "PEARL_MILLET_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "FINGER_MILLET_PRODUCTION_1000TONS",
+        "PEARL_MILLET_PRODUCTION_1000TONS",
+        "FINGER_MILLET_YIELD_KG_PER_HA",
+        "MILLET_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Query must return state-wise summary: group by `dim_geography.state_name`. For each state, compute average of `fact_millets.pearl_millet_yield_kg_per_ha` and `fact_millets.finger_millet_yield_kg_per_ha`, and sum of `fact_millets.pearl_millet_production_1000tons` and `fact_millets.finger_millet_production_1000tons`. Filter `dim_year.year` between 1966 and 1970 inclusive. Join `fact_millets` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`."
+  },
+  {
+    "question": "Provide a state-wise summary of average yields and total production for pearl and finger millets between 1966 and 1970.",
+    "sql": "SELECT T2.STATE_NAME, AVG(T1.PEARL_MILLET_YIELD_KG_PER_HA), AVG(T1.FINGER_MILLET_YIELD_KG_PER_HA), SUM(T1.PEARL_MILLET_PRODUCTION_1000TONS), SUM(T1.FINGER_MILLET_PRODUCTION_1000TONS) FROM FACT_MILLETS AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR BETWEEN '1966' AND '1970' GROUP BY T2.STATE_NAME HAVING COUNT(T1.MILLET_ID) > 0 ORDER BY T2.STATE_NAME ASC",
+    "pair_id": "8d36c189",
+    "original_question_id": "bb7da943",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_MILLETS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_MILLETS": [
+        "PEARL_MILLET_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "FINGER_MILLET_PRODUCTION_1000TONS",
+        "PEARL_MILLET_PRODUCTION_1000TONS",
+        "FINGER_MILLET_YIELD_KG_PER_HA",
+        "MILLET_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_geography.state_name`. Compute AVG(`fact_millets.pearl_millet_yield_kg_per_ha`) as avg_pearl_yield, AVG(`fact_millets.finger_millet_yield_kg_per_ha`) as avg_finger_yield, SUM(`fact_millets.pearl_millet_production_1000tons`) as total_pearl_production, SUM(`fact_millets.finger_millet_production_1000tons`) as total_finger_production. Filter `dim_year.year` BETWEEN 1966 AND 1970. Join `fact_millets` to `dim_geography` on `geography_id` and to `dim_year` on `year_id`."
+  },
+  {
+    "question": "Rank the districts in Chhattisgarh by their pearl millet yield from highest to lowest for the year 1970.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MILLETS AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' ORDER BY T2.PEARL_MILLET_YIELD_KG_PER_HA DESC",
+    "pair_id": "d8fe79a7",
+    "original_question_id": "de458355",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_MILLETS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_MILLETS": [
+        "PEARL_MILLET_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "PEARL_MILLET_PRODUCTION_1000TONS",
+        "MILLET_ID",
+        "GEOGRAPHY_ID",
+        "PEARL_MILLET_AREA_1000HA"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1970. Join `fact_millets` with `dim_geography` on `fact_millets.geography_id` = `dim_geography.geography_id` and with `dim_year` on `fact_millets.year_id` = `dim_year.year_id`. Select `dim_geography.dist_name` and `fact_millets.pearl_millet_yield_kg_per_ha`. Order by `fact_millets.pearl_millet_yield_kg_per_ha` DESC to rank districts from highest to lowest yield."
+  },
+  {
+    "question": "List the districts in Chhattisgarh ranked by their pearl millet yield from highest to lowest for the year 1970.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MILLETS AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' ORDER BY T2.PEARL_MILLET_YIELD_KG_PER_HA DESC",
+    "pair_id": "0c99ebea",
+    "original_question_id": "de458355",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_MILLETS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_MILLETS": [
+        "PEARL_MILLET_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "PEARL_MILLET_PRODUCTION_1000TONS",
+        "MILLET_ID",
+        "GEOGRAPHY_ID",
+        "PEARL_MILLET_AREA_1000HA"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1970. Join `fact_millets` with `dim_geography` on `fact_millets.geography_id` = `dim_geography.geography_id` and with `dim_year` on `fact_millets.year_id` = `dim_year.year_id`. Select `dim_geography.dist_name` and `fact_millets.pearl_millet_yield_kg_per_ha`. Order by `fact_millets.pearl_millet_yield_kg_per_ha` DESC."
+  },
+  {
+    "question": "Rank the districts in Chhattisgarh by their average pearl millet yield for the year 1970, from highest to lowest.",
+    "sql": "SELECT T1.DIST_NAME, AVG(T3.PEARL_MILLET_YIELD_KG_PER_HA) FROM DIM_GEOGRAPHY AS T1 INNER JOIN FACT_MILLETS AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID INNER JOIN DIM_YEAR AS T2 ON T3.YEAR_ID = T2.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T2.YEAR = '1970' GROUP BY T1.DIST_NAME HAVING AVG(T3.PEARL_MILLET_YIELD_KG_PER_HA) >= 0.0 ORDER BY AVG(T3.PEARL_MILLET_YIELD_KG_PER_HA) DESC",
+    "pair_id": "90f44fe6",
+    "original_question_id": "de458355",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_MILLETS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_MILLETS": [
+        "PEARL_MILLET_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "PEARL_MILLET_PRODUCTION_1000TONS",
+        "MILLET_ID",
+        "GEOGRAPHY_ID",
+        "PEARL_MILLET_AREA_1000HA"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "The question requires ranking districts in Chhattisgarh by average pearl millet yield for year 1970. Pearl millet yield data is in `fact_millets`.`pearl_millet_yield_kg_per_ha`. Need to filter by state 'Chhattisgarh' (exact case from sample: 'Chhattisgarh') using `dim_geography`.`state_name` = 'Chhattisgarh'. Year filter uses `dim_year`.`year` = 1970 (sample shows '1970' exists). Join `fact_millets` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`. Calculate average pearl millet yield per district (`dim_geography`.`dist_name`). Order by average yield descending."
+  },
+  {
+    "question": "Identify the top 10 districts in Chhattisgarh that had the highest pearl millet production in 1970.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MILLETS AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' ORDER BY T2.PEARL_MILLET_PRODUCTION_1000TONS DESC LIMIT 10",
+    "pair_id": "9d834f65",
+    "original_question_id": "b1f20aed",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_MILLETS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_MILLETS": [
+        "PEARL_MILLET_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "PEARL_MILLET_PRODUCTION_1000TONS",
+        "MILLET_ID",
+        "GEOGRAPHY_ID",
+        "PEARL_MILLET_AREA_1000HA"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1970. Join `fact_millets` with `dim_geography` on `fact_millets.geography_id` = `dim_geography.geography_id` and with `dim_year` on `fact_millets.year_id` = `dim_year.year_id`. Select `dim_geography.dist_name` and `fact_millets.pearl_millet_production_1000tons`. Order by `fact_millets.pearl_millet_production_1000tons` DESC, limit 10."
+  },
+  {
+    "question": "List the top 10 districts in Chhattisgarh that had the highest pearl millet production in 1970.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MILLETS AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' ORDER BY T2.PEARL_MILLET_PRODUCTION_1000TONS DESC LIMIT 10",
+    "pair_id": "ab0e3056",
+    "original_question_id": "b1f20aed",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_MILLETS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_MILLETS": [
+        "PEARL_MILLET_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "PEARL_MILLET_PRODUCTION_1000TONS",
+        "MILLET_ID",
+        "GEOGRAPHY_ID",
+        "PEARL_MILLET_AREA_1000HA"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1970. Join `fact_millets` with `dim_geography` on `fact_millets.geography_id` = `dim_geography.geography_id` and with `dim_year` on `fact_millets.year_id` = `dim_year.year_id`. Select `dim_geography.dist_name` and `fact_millets.pearl_millet_production_1000tons`. Order by `fact_millets.pearl_millet_production_1000tons` DESC and limit 10."
+  },
+  {
+    "question": "Identify the top 10 districts in Chhattisgarh with the highest pearl millet production in 1970.",
+    "sql": "SELECT T1.DIST_NAME, SUM(T2.PEARL_MILLET_PRODUCTION_1000TONS) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MILLETS AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' GROUP BY T1.DIST_NAME ORDER BY SUM(T2.PEARL_MILLET_PRODUCTION_1000TONS) DESC LIMIT 10",
+    "pair_id": "f10a4723",
+    "original_question_id": "b1f20aed",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_MILLETS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_MILLETS": [
+        "PEARL_MILLET_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "PEARL_MILLET_PRODUCTION_1000TONS",
+        "MILLET_ID",
+        "GEOGRAPHY_ID",
+        "PEARL_MILLET_AREA_1000HA"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": ""
+  },
+  {
+    "question": "Provide the pearl millet yields for districts in Chhattisgarh between 1966 and 1970.",
+    "sql": "SELECT T2.DIST_NAME, T3.YEAR, T1.PEARL_MILLET_YIELD_KG_PER_HA FROM FACT_MILLETS AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T2.STATE_NAME = 'Chhattisgarh' AND T3.YEAR BETWEEN '1966' AND '1970'",
+    "pair_id": "a8aa84a1",
+    "original_question_id": "11e08433",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_MILLETS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_MILLETS": [
+        "PEARL_MILLET_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "PEARL_MILLET_PRODUCTION_1000TONS",
+        "MILLET_ID",
+        "GEOGRAPHY_ID",
+        "PEARL_MILLET_AREA_1000HA"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Query `fact_millets.pearl_millet_yield_kg_per_ha` and `dim_geography.dist_name` for districts in Chhattisgarh (`dim_geography.state_name` = 'Chhattisgarh') between years 1966 and 1970 inclusive (`dim_year.year` between 1966 and 1970). Join `fact_millets` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`."
+  },
+  {
+    "question": "Provide the pearl millet yields for districts in Chhattisgarh between 1966 and 1970, ordered chronologically.",
+    "sql": "SELECT T2.DIST_NAME, T3.YEAR, T1.PEARL_MILLET_YIELD_KG_PER_HA FROM FACT_MILLETS AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T2.STATE_NAME = 'Chhattisgarh' AND T3.YEAR BETWEEN '1966' AND '1970' ORDER BY T3.YEAR",
+    "pair_id": "f91a0a83",
+    "original_question_id": "11e08433",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_MILLETS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_MILLETS": [
+        "PEARL_MILLET_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "PEARL_MILLET_PRODUCTION_1000TONS",
+        "MILLET_ID",
+        "GEOGRAPHY_ID",
+        "PEARL_MILLET_AREA_1000HA"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `fact_millets.pearl_millet_yield_kg_per_ha` and `dim_geography.dist_name` for districts where `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` between 1966 and 1970, joining `fact_millets` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`, ordered by `dim_year.year` ascending."
+  },
+  {
+    "question": "Provide a yearly breakdown of pearl millet yields for districts in Chhattisgarh between 1966 and 1970, sorted chronologically with the highest yields appearing first.",
+    "sql": "SELECT T1.DIST_NAME, T2.YEAR, SUM(T3.PEARL_MILLET_YIELD_KG_PER_HA) FROM DIM_GEOGRAPHY AS T1 INNER JOIN FACT_MILLETS AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID INNER JOIN DIM_YEAR AS T2 ON T3.YEAR_ID = T2.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T2.YEAR BETWEEN '1966' AND '1970' GROUP BY T1.DIST_NAME, T2.YEAR HAVING SUM(T3.PEARL_MILLET_YIELD_KG_PER_HA) >= 0.0 ORDER BY T2.YEAR ASC, SUM(T3.PEARL_MILLET_YIELD_KG_PER_HA) DESC",
+    "pair_id": "04a7ea75",
+    "original_question_id": "11e08433",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_MILLETS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_MILLETS": [
+        "PEARL_MILLET_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "PEARL_MILLET_PRODUCTION_1000TONS",
+        "MILLET_ID",
+        "GEOGRAPHY_ID",
+        "PEARL_MILLET_AREA_1000HA"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "The question asks for a yearly breakdown of pearl millet yields for districts in Chhattisgarh between 1966 and 1970, sorted chronologically with the highest yields appearing first. This requires selecting `dim_geography`.`dist_name`, `dim_year`.`year`, and `fact_millets`.`pearl_millet_yield_kg_per_ha` from the `fact_millets` table, joining with `dim_geography` on `geography_id` and `dim_year` on `year_id`. Filter where `dim_geography`.`state_name` = 'Chhattisgarh' (exact case from sample) and `dim_year`.`year` between 1966 and 1970 inclusive. Sort by `dim_year`.`year` ascending, then by `fact_millets`.`pearl_millet_yield_kg_per_ha` descending."
+  },
+  {
+    "question": "List the districts in Chhattisgarh that produced exactly 200 tons of finger millet and at least some pearl millet during the year 1970, sorted alphabetically.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MILLETS AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' AND T2.PEARL_MILLET_PRODUCTION_1000TONS >= 0.0 AND T2.FINGER_MILLET_PRODUCTION_1000TONS = 0.2 GROUP BY T1.DIST_NAME ORDER BY T1.DIST_NAME",
+    "pair_id": "6c50ba29",
+    "original_question_id": "c43760d6",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_MILLETS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_MILLETS": [
+        "YEAR_ID",
+        "FINGER_MILLET_PRODUCTION_1000TONS",
+        "PEARL_MILLET_PRODUCTION_1000TONS",
+        "MILLET_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_cereals_major`.`rice_production_1000tons` for records where `dim_geography`.`state_name` = 'Chhattisgarh' and `dim_year`.`year` = 1970. Join `fact_cereals_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`."
+  },
+  {
+    "question": "Identify the districts in Chhattisgarh that recorded pearl millet production in 1970 but had no instances of finger millet production exceeding 200 tons.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MILLETS AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' AND T2.PEARL_MILLET_PRODUCTION_1000TONS >= 0.0 GROUP BY T1.DIST_NAME HAVING COUNT(CASE WHEN T2.FINGER_MILLET_PRODUCTION_1000TONS > 0.2 THEN 1 END) = 0 ORDER BY T1.DIST_NAME ASC",
+    "pair_id": "d6f918f4",
+    "original_question_id": "c43760d6",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_MILLETS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_MILLETS": [
+        "YEAR_ID",
+        "FINGER_MILLET_PRODUCTION_1000TONS",
+        "PEARL_MILLET_PRODUCTION_1000TONS",
+        "MILLET_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1970. Join `fact_millets` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`. Require `fact_millets.pearl_millet_production_1000tons` > 0 (or not null) and `fact_millets.finger_millet_production_1000tons` <= 0.2 (since 200 tons = 0.2 thousand tons). Return `dim_geography.dist_name`."
+  },
+  {
+    "question": "Which districts produced both pearl millet and more than 200 tons of finger millet in 1970?",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MILLETS AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR = '1970' AND T2.PEARL_MILLET_PRODUCTION_1000TONS > 0.0 AND T2.FINGER_MILLET_PRODUCTION_1000TONS > 0.2",
+    "pair_id": "c8b55fc5",
+    "original_question_id": "20584e19",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_MILLETS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_MILLETS": [
+        "YEAR_ID",
+        "FINGER_MILLET_PRODUCTION_1000TONS",
+        "PEARL_MILLET_PRODUCTION_1000TONS",
+        "MILLET_ID",
+        "GEOGRAPHY_ID",
+        "PEARL_MILLET_AREA_1000HA"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Find `dim_geography.dist_name` where `dim_year.year` = 1970 and `fact_millets.pearl_millet_production_1000tons` > 0 and `fact_millets.finger_millet_production_1000tons` > 0.2."
+  },
+  {
+    "question": "Which districts produced both pearl millet and more than 200 tons of finger millet in 1970? Please list them in alphabetical order.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MILLETS AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR = '1970' AND T2.PEARL_MILLET_PRODUCTION_1000TONS > 0.0 AND T2.FINGER_MILLET_PRODUCTION_1000TONS > 0.2 GROUP BY T1.DIST_NAME ORDER BY T1.DIST_NAME ASC",
+    "pair_id": "6a42ddd6",
+    "original_question_id": "20584e19",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_MILLETS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_MILLETS": [
+        "YEAR_ID",
+        "FINGER_MILLET_PRODUCTION_1000TONS",
+        "PEARL_MILLET_PRODUCTION_1000TONS",
+        "MILLET_ID",
+        "GEOGRAPHY_ID",
+        "PEARL_MILLET_AREA_1000HA"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": ""
+  },
+  {
+    "question": "Which districts in Chhattisgarh produced more than 200 tons of either finger millet or pearl millet in 1970?",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MILLETS AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' AND T2.FINGER_MILLET_PRODUCTION_1000TONS > 0.2 UNION SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MILLETS AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' AND T2.PEARL_MILLET_PRODUCTION_1000TONS > 0.2",
+    "pair_id": "509e8538",
+    "original_question_id": "995138da",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_MILLETS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_MILLETS": [
+        "YEAR_ID",
+        "FINGER_MILLET_PRODUCTION_1000TONS",
+        "PEARL_MILLET_PRODUCTION_1000TONS",
+        "MILLET_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1970. Join `dim_geography`, `dim_year`, and `fact_millets`. Select `dim_geography.dist_name` where `fact_millets.finger_millet_production_1000tons` > 0.2 OR `fact_millets.pearl_millet_production_1000tons` > 0.2."
+  },
+  {
+    "question": "Which districts in Chhattisgarh produced more than 200 tons of either finger millet or pearl millet in 1970?",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MILLETS AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR = '1970' AND T1.STATE_NAME = 'Chhattisgarh' AND T2.FINGER_MILLET_PRODUCTION_1000TONS > 0.2 UNION SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MILLETS AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR = '1970' AND T1.STATE_NAME = 'Chhattisgarh' AND T2.PEARL_MILLET_PRODUCTION_1000TONS > 0.2",
+    "pair_id": "8d022825",
+    "original_question_id": "995138da",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_MILLETS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_MILLETS": [
+        "YEAR_ID",
+        "FINGER_MILLET_PRODUCTION_1000TONS",
+        "PEARL_MILLET_PRODUCTION_1000TONS",
+        "MILLET_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter by `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1970. From `fact_millets`, select districts (`dim_geography.dist_name`) where `fact_millets.finger_millet_production_1000tons` > 0.2 OR `fact_millets.pearl_millet_production_1000tons` > 0.2."
+  },
+  {
+    "question": "Which districts in Chhattisgarh produced more than 200 tons of either finger millet or pearl millet in 1970?",
+    "sql": "SELECT T2.DIST_NAME FROM FACT_MILLETS AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T2.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' AND T1.FINGER_MILLET_PRODUCTION_1000TONS > 0.2 UNION SELECT T2.DIST_NAME FROM FACT_MILLETS AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T2.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' AND T1.PEARL_MILLET_PRODUCTION_1000TONS > 0.2",
+    "pair_id": "59e9d89d",
+    "original_question_id": "995138da",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_MILLETS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_MILLETS": [
+        "YEAR_ID",
+        "FINGER_MILLET_PRODUCTION_1000TONS",
+        "PEARL_MILLET_PRODUCTION_1000TONS",
+        "MILLET_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Find districts (`dim_geography.dist_name`) where `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1970 and (`fact_millets.finger_millet_production_1000tons` > 0.2 OR `fact_millets.pearl_millet_production_1000tons` > 0.2). Note: production values are in thousand tons, so 200 tons = 0.2 thousand tons."
+  },
+  {
+    "question": "Provide the production and yield statistics for chickpeas and pigeon peas in Chhattisgarh for the year 1970.",
+    "sql": "SELECT T1.CHICKPEA_PRODUCTION_1000TONS, T1.CHICKPEA_YIELD_KG_PER_HA, T1.PIGEONPEA_PRODUCTION_1000TONS, T1.PIGEONPEA_YIELD_KG_PER_HA, T1.PULSE_MAJOR_ID FROM FACT_PULSES_MAJOR AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T2.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970';",
+    "pair_id": "5e131a39",
+    "original_question_id": "b1d17f7a",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_PULSES_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_PULSES_MAJOR": [
+        "CHICKPEA_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "PIGEONPEA_PRODUCTION_1000TONS",
+        "PIGEONPEA_YIELD_KG_PER_HA",
+        "CHICKPEA_PRODUCTION_1000TONS",
+        "PULSE_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `fact_pulses_major.chickpea_production_1000tons`, `fact_pulses_major.chickpea_yield_kg_per_ha`, `fact_pulses_major.pigeonpea_production_1000tons`, `fact_pulses_major.pigeonpea_yield_kg_per_ha` from `fact_pulses_major` joined with `dim_geography` on `fact_pulses_major.geography_id` = `dim_geography.geography_id` and joined with `dim_year` on `fact_pulses_major.year_id` = `dim_year.year_id` where `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1970."
+  },
+  {
+    "question": "Provide the production and yield statistics for chickpeas and pigeon peas across all districts in Chhattisgarh for the year 1970, ordered by district name.",
+    "sql": "SELECT T1.DIST_NAME, T0.CHICKPEA_PRODUCTION_1000TONS, T0.CHICKPEA_YIELD_KG_PER_HA, T0.PIGEONPEA_PRODUCTION_1000TONS, T0.PIGEONPEA_YIELD_KG_PER_HA FROM FACT_PULSES_MAJOR T0 JOIN DIM_GEOGRAPHY T1 ON T0.GEOGRAPHY_ID = T1.GEOGRAPHY_ID JOIN DIM_YEAR T2 ON T0.YEAR_ID = T2.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T2.YEAR = '1970' ORDER BY T1.DIST_NAME",
+    "pair_id": "915af3e4",
+    "original_question_id": "b1d17f7a",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_PULSES_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_PULSES_MAJOR": [
+        "CHICKPEA_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "PIGEONPEA_PRODUCTION_1000TONS",
+        "PIGEONPEA_YIELD_KG_PER_HA",
+        "CHICKPEA_PRODUCTION_1000TONS",
+        "PULSE_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Query requires joining `fact_pulses_major` with `dim_geography` on `geography_id` and `dim_year` on `year_id`. Select `dim_geography.dist_name`, `fact_pulses_major.chickpea_production_1000tons`, `fact_pulses_major.chickpea_yield_kg_per_ha`, `fact_pulses_major.pigeonpea_production_1000tons`, `fact_pulses_major.pigeonpea_yield_kg_per_ha`. Filter where `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1970. Order results by `dim_geography.dist_name`."
+  },
+  {
+    "question": "List the names and codes for districts in Chhattisgarh that produced more than 10,000 tons of chickpeas in 1970, ordered alphabetically by district name.",
+    "sql": "SELECT T1.YEAR, T3.DIST_NAME, T3.STATE_NAME, T3.DIST_CODE, T3.STATE_CODE FROM DIM_YEAR AS T1 INNER JOIN FACT_PULSES_MAJOR AS T2 ON T1.YEAR_ID = T2.YEAR_ID INNER JOIN DIM_GEOGRAPHY AS T3 ON T2.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T1.YEAR = '1970' AND T3.STATE_NAME = 'Chhattisgarh' GROUP BY T1.YEAR, T3.DIST_NAME, T3.STATE_NAME, T3.DIST_CODE, T3.STATE_CODE HAVING SUM(T2.CHICKPEA_PRODUCTION_1000TONS) > 10.0 ORDER BY T3.DIST_NAME ASC",
+    "pair_id": "3b2a0a07",
+    "original_question_id": "b1d17f7a",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_PULSES_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_PULSES_MAJOR": [
+        "CHICKPEA_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "PIGEONPEA_PRODUCTION_1000TONS",
+        "PIGEONPEA_YIELD_KG_PER_HA",
+        "CHICKPEA_PRODUCTION_1000TONS",
+        "PULSE_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1970. Join `fact_pulses_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`. Select `dim_geography.dist_name` and `dim_geography.dist_code` where `fact_pulses_major.chickpea_production_1000tons` > 10 (since 10 = 10,000 tons). Order by `dim_geography.dist_name` alphabetically."
+  },
+  {
+    "question": "Calculate the average yield for chickpeas and pigeon peas in each state for the period between 1966 and 1970.",
+    "sql": "SELECT T1.STATE_NAME, AVG(T3.CHICKPEA_YIELD_KG_PER_HA), AVG(T3.PIGEONPEA_YIELD_KG_PER_HA) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PULSES_MAJOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T2 ON T3.YEAR_ID = T2.YEAR_ID WHERE T2.YEAR BETWEEN '1966' AND '1970' GROUP BY T1.STATE_NAME",
+    "pair_id": "42505940",
+    "original_question_id": "d0681c21",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_PULSES_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_PULSES_MAJOR": [
+        "CHICKPEA_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "PIGEONPEA_PRODUCTION_1000TONS",
+        "PIGEONPEA_YIELD_KG_PER_HA",
+        "CHICKPEA_PRODUCTION_1000TONS",
+        "PULSE_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Use `fact_pulses_major` for chickpea and pigeonpea yields (`fact_pulses_major.chickpea_yield_kg_per_ha`, `fact_pulses_major.pigeonpea_yield_kg_per_ha`). Join with `dim_geography` on `geography_id` to get `dim_geography.state_name`. Join with `dim_year` on `year_id` to filter `dim_year.year` between 1966 and 1970 (inclusive). Group by `dim_geography.state_name` and compute AVG for each yield column."
+  },
+  {
+    "question": "Calculate the average yield for chickpeas and pigeon peas in each state for the period between 1966 and 1970.",
+    "sql": "SELECT T1.STATE_NAME, AVG(T2.CHICKPEA_YIELD_KG_PER_HA), AVG(T2.PIGEONPEA_YIELD_KG_PER_HA) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PULSES_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR BETWEEN '1966' AND '1970' GROUP BY T1.STATE_NAME",
+    "pair_id": "82828626",
+    "original_question_id": "d0681c21",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_PULSES_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_PULSES_MAJOR": [
+        "CHICKPEA_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "PIGEONPEA_PRODUCTION_1000TONS",
+        "PIGEONPEA_YIELD_KG_PER_HA",
+        "CHICKPEA_PRODUCTION_1000TONS",
+        "PULSE_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_year`.`year` between 1966 and 1970 (inclusive). Join `fact_pulses_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`. Group by `dim_geography`.`state_name`. Compute average of `fact_pulses_major`.`chickpea_yield_kg_per_ha` and `fact_pulses_major`.`pigeonpea_yield_kg_per_ha` for each state."
+  },
+  {
+    "question": "For states with data available for more than one year, show the average yields of chickpeas and pigeon peas recorded between 1966 and 1970, ordered alphabetically by state.",
+    "sql": "SELECT T1.STATE_NAME, AVG(T2.CHICKPEA_YIELD_KG_PER_HA), AVG(T2.PIGEONPEA_YIELD_KG_PER_HA) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PULSES_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR BETWEEN '1966' AND '1970' GROUP BY T1.STATE_NAME HAVING COUNT(T3.YEAR) > 1 ORDER BY T1.STATE_NAME ASC",
+    "pair_id": "726051c2",
+    "original_question_id": "d0681c21",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_PULSES_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_PULSES_MAJOR": [
+        "CHICKPEA_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "PIGEONPEA_PRODUCTION_1000TONS",
+        "PIGEONPEA_YIELD_KG_PER_HA",
+        "CHICKPEA_PRODUCTION_1000TONS",
+        "PULSE_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_pulses_major` with `dim_geography` on `geography_id` and `dim_year` on `year_id`. Filter where `dim_year`.`year` between 1966 and 1970. Group by `dim_geography`.`state_name`. Compute AVG(`fact_pulses_major`.`chickpea_yield_kg_per_ha`) and AVG(`fact_pulses_major`.`pigeonpea_yield_kg_per_ha`). Use HAVING COUNT(DISTINCT `dim_year`.`year`) > 1. Order by `dim_geography`.`state_name` ASC."
+  },
+  {
+    "question": "Which districts in Chhattisgarh achieved a chickpea yield of more than 500 kg per hectare during the year 1967?",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PULSES_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T2.CHICKPEA_YIELD_KG_PER_HA > 500.0 AND T3.YEAR = '1967'",
+    "pair_id": "c3062698",
+    "original_question_id": "ff576ec1",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_PULSES_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_PULSES_MAJOR": [
+        "PULSE_MAJOR_ID",
+        "GEOGRAPHY_ID",
+        "YEAR_ID",
+        "CHICKPEA_AREA_1000HA",
+        "CHICKPEA_PRODUCTION_1000TONS",
+        "CHICKPEA_YIELD_KG_PER_HA",
+        "PIGEONPEA_AREA_1000HA",
+        "PIGEONPEA_PRODUCTION_1000TONS",
+        "PIGEONPEA_YIELD_KG_PER_HA"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": ""
+  },
+  {
+    "question": "List the districts in Chhattisgarh that achieved a chickpea yield higher than 448.34 kg per hectare in 1968, ordered from highest to lowest yield.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PULSES_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1968' AND T2.CHICKPEA_YIELD_KG_PER_HA > 448.34 ORDER BY T2.CHICKPEA_YIELD_KG_PER_HA DESC",
+    "pair_id": "75a923e5",
+    "original_question_id": "ff576ec1",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_PULSES_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_PULSES_MAJOR": [
+        "PULSE_MAJOR_ID",
+        "GEOGRAPHY_ID",
+        "YEAR_ID",
+        "CHICKPEA_AREA_1000HA",
+        "CHICKPEA_PRODUCTION_1000TONS",
+        "CHICKPEA_YIELD_KG_PER_HA",
+        "PIGEONPEA_AREA_1000HA",
+        "PIGEONPEA_PRODUCTION_1000TONS",
+        "PIGEONPEA_YIELD_KG_PER_HA"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1968, join `fact_pulses_major` with `dim_geography` on `fact_pulses_major.geography_id` = `dim_geography.geography_id` and with `dim_year` on `fact_pulses_major.year_id` = `dim_year.year_id`. Select `dim_geography.dist_name` and `fact_pulses_major.chickpea_yield_kg_per_ha` where `fact_pulses_major.chickpea_yield_kg_per_ha` > 448.34, order by `fact_pulses_major.chickpea_yield_kg_per_ha` DESC."
+  },
+  {
+    "question": "Which districts in Chhattisgarh achieved an average chickpea yield of more than 400 kg per hectare during 1970? Please list them in descending order of their average yield.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PULSES_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' GROUP BY T1.DIST_NAME HAVING AVG(T2.CHICKPEA_YIELD_KG_PER_HA) > 400 ORDER BY AVG(T2.CHICKPEA_YIELD_KG_PER_HA) DESC",
+    "pair_id": "1dbe03b4",
+    "original_question_id": "ff576ec1",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_PULSES_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_PULSES_MAJOR": [
+        "PULSE_MAJOR_ID",
+        "GEOGRAPHY_ID",
+        "YEAR_ID",
+        "CHICKPEA_AREA_1000HA",
+        "CHICKPEA_PRODUCTION_1000TONS",
+        "CHICKPEA_YIELD_KG_PER_HA",
+        "PIGEONPEA_AREA_1000HA",
+        "PIGEONPEA_PRODUCTION_1000TONS",
+        "PIGEONPEA_YIELD_KG_PER_HA"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1970, join `fact_pulses_major` on `fact_pulses_major.geography_id` = `dim_geography.geography_id` and `fact_pulses_major.year_id` = `dim_year.year_id`, select `dim_geography.dist_name` where `fact_pulses_major.chickpea_yield_kg_per_ha` > 400, order by `fact_pulses_major.chickpea_yield_kg_per_ha` DESC."
+  },
+  {
+    "question": "Rank the districts in Chhattisgarh by their chickpea yield for the year 1970, from highest to lowest.",
+    "sql": "SELECT T2.DIST_NAME, T1.CHICKPEA_YIELD_KG_PER_HA FROM FACT_PULSES_MAJOR AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T2.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' ORDER BY T1.CHICKPEA_YIELD_KG_PER_HA DESC",
+    "pair_id": "0d48eac5",
+    "original_question_id": "5b24b40f",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_PULSES_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_PULSES_MAJOR": [
+        "CHICKPEA_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "CHICKPEA_AREA_1000HA",
+        "CHICKPEA_PRODUCTION_1000TONS",
+        "PULSE_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1970. Join `fact_pulses_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`. Select `dim_geography.dist_name` and `fact_pulses_major.chickpea_yield_kg_per_ha`. Order by `fact_pulses_major.chickpea_yield_kg_per_ha` DESC to rank districts from highest to lowest yield."
+  },
+  {
+    "question": "Rank the districts in Chhattisgarh by their chickpea yield per hectare for the year 1970, starting with the highest.",
+    "sql": "SELECT T2.DIST_NAME, T1.CHICKPEA_YIELD_KG_PER_HA FROM FACT_PULSES_MAJOR AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T2.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' ORDER BY T1.CHICKPEA_YIELD_KG_PER_HA DESC",
+    "pair_id": "1867d769",
+    "original_question_id": "5b24b40f",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_PULSES_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_PULSES_MAJOR": [
+        "CHICKPEA_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "CHICKPEA_AREA_1000HA",
+        "CHICKPEA_PRODUCTION_1000TONS",
+        "PULSE_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "The question asks to rank districts in Chhattisgarh by chickpea yield per hectare for the year 1970, starting with the highest. Chickpea yield data is stored in `fact_pulses_major`.`chickpea_yield_kg_per_ha`. Need to filter by state Chhattisgarh using `dim_geography`.`state_name` = 'Chhattisgarh' (exact case from sample). Need to filter by year 1970 using `dim_year`.`year` = 1970 (value exists per sample). Join `fact_pulses_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`. Select `dim_geography`.`dist_name` and `fact_pulses_major`.`chickpea_yield_kg_per_ha`. Order by yield descending to get highest first. Note: year is integer, so use 1970."
+  },
+  {
+    "question": "Rank the districts in Chhattisgarh by their average chickpea yield for the year 1970, from highest to lowest.",
+    "sql": "SELECT T1.DIST_NAME, AVG(T2.CHICKPEA_YIELD_KG_PER_HA) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PULSES_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T3.YEAR = '1970' GROUP BY T1.DIST_NAME ORDER BY AVG(T2.CHICKPEA_YIELD_KG_PER_HA) DESC",
+    "pair_id": "7cd00713",
+    "original_question_id": "5b24b40f",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_PULSES_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_PULSES_MAJOR": [
+        "CHICKPEA_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "CHICKPEA_AREA_1000HA",
+        "CHICKPEA_PRODUCTION_1000TONS",
+        "PULSE_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1970. Join `dim_geography` with `fact_pulses_major` on `geography_id` and with `dim_year` on `year_id`. Group by `dim_geography.dist_name` and compute AVG(`fact_pulses_major.chickpea_yield_kg_per_ha`) as average_yield. Order by average_yield DESC to rank districts from highest to lowest."
+  },
+  {
+    "question": "List the top 10 districts with the highest chickpea yields recorded in 1970.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PULSES_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR = '1970' ORDER BY T2.CHICKPEA_YIELD_KG_PER_HA DESC LIMIT 10",
+    "pair_id": "56058aaf",
+    "original_question_id": "896c505e",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_PULSES_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_PULSES_MAJOR": [
+        "CHICKPEA_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "CHICKPEA_AREA_1000HA",
+        "CHICKPEA_PRODUCTION_1000TONS",
+        "PULSE_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_pulses_major` with `dim_geography` on `fact_pulses_major`.`geography_id` = `dim_geography`.`geography_id` and with `dim_year` on `fact_pulses_major`.`year_id` = `dim_year`.`year_id`. Filter where `dim_year`.`year` = 1970. Select `dim_geography`.`dist_name` and `fact_pulses_major`.`chickpea_yield_kg_per_ha`. Order by `fact_pulses_major`.`chickpea_yield_kg_per_ha` DESC. Limit 10."
+  },
+  {
+    "question": "Which ten districts recorded the highest chickpea yields in 1970?",
+    "sql": "SELECT T2.DIST_NAME, T1.CHICKPEA_YIELD_KG_PER_HA FROM FACT_PULSES_MAJOR AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR = '1970' ORDER BY T1.CHICKPEA_YIELD_KG_PER_HA DESC LIMIT 10",
+    "pair_id": "3b8d7fab",
+    "original_question_id": "896c505e",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_PULSES_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_PULSES_MAJOR": [
+        "CHICKPEA_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "CHICKPEA_AREA_1000HA",
+        "CHICKPEA_PRODUCTION_1000TONS",
+        "PULSE_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_pulses_major` with `dim_year` on (`fact_pulses_major`.`year_id` = `dim_year`.`year_id`) and with `dim_geography` on (`fact_pulses_major`.`geography_id` = `dim_geography`.`geography_id`). Filter where `dim_year`.`year` = 1970. Order by `fact_pulses_major`.`chickpea_yield_kg_per_ha` DESC. Limit 10. Select `dim_geography`.`dist_name` and `fact_pulses_major`.`chickpea_yield_kg_per_ha`."
+  },
+  {
+    "question": "Identify the top 10 districts with the highest average chickpea yield recorded in 1970.",
+    "sql": "SELECT T1.DIST_NAME, AVG(T2.CHICKPEA_YIELD_KG_PER_HA) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PULSES_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR = '1970' GROUP BY T1.DIST_NAME ORDER BY AVG(T2.CHICKPEA_YIELD_KG_PER_HA) DESC LIMIT 10",
+    "pair_id": "e61ea214",
+    "original_question_id": "896c505e",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_PULSES_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_PULSES_MAJOR": [
+        "CHICKPEA_YIELD_KG_PER_HA",
+        "YEAR_ID",
+        "CHICKPEA_AREA_1000HA",
+        "CHICKPEA_PRODUCTION_1000TONS",
+        "PULSE_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_year`.`year` = 1970. Join `fact_pulses_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`. Compute AVG(`fact_pulses_major`.`chickpea_yield_kg_per_ha`) per district (`dim_geography`.`dist_name`). Order by average yield DESC, limit 10."
+  },
+  {
+    "question": "Provide the chickpea and pigeon pea yields for each district and state recorded during the year 1970.",
+    "sql": "SELECT T1.DIST_NAME, T1.STATE_NAME, T2.CHICKPEA_YIELD_KG_PER_HA, T2.PIGEONPEA_YIELD_KG_PER_HA FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PULSES_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR = '1970';",
+    "pair_id": "0cf76c9b",
+    "original_question_id": "2af546b4",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_PULSES_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_PULSES_MAJOR": [
+        "PULSE_MAJOR_ID",
+        "GEOGRAPHY_ID",
+        "YEAR_ID",
+        "CHICKPEA_AREA_1000HA",
+        "CHICKPEA_PRODUCTION_1000TONS",
+        "CHICKPEA_YIELD_KG_PER_HA",
+        "PIGEONPEA_AREA_1000HA",
+        "PIGEONPEA_PRODUCTION_1000TONS",
+        "PIGEONPEA_YIELD_KG_PER_HA"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "The question asks for chickpea and pigeonpea yields for each district and state in year 1970. Chickpea yield is `fact_pulses_major`.`chickpea_yield_kg_per_ha`. Pigeonpea yield is `fact_pulses_major`.`pigeonpea_yield_kg_per_ha`. District name is `dim_geography`.`dist_name`. State name is `dim_geography`.`state_name`. Year is `dim_year`.`year`. Need to join `fact_pulses_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`. Filter where `dim_year`.`year` = 1970. Sample SQL results show '1970' exists in `dim_year`.`year`. Output should include district, state, chickpea yield, pigeonpea yield."
+  },
+  {
+    "question": "Provide the chickpea and pigeon pea yields for each district and state recorded in 1970, ordered alphabetically by district name.",
+    "sql": "SELECT T1.DIST_NAME, T1.STATE_NAME, T2.CHICKPEA_YIELD_KG_PER_HA, T2.PIGEONPEA_YIELD_KG_PER_HA FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PULSES_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR = '1970' ORDER BY T1.DIST_NAME",
+    "pair_id": "f868d129",
+    "original_question_id": "2af546b4",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_PULSES_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_PULSES_MAJOR": [
+        "PULSE_MAJOR_ID",
+        "GEOGRAPHY_ID",
+        "YEAR_ID",
+        "CHICKPEA_AREA_1000HA",
+        "CHICKPEA_PRODUCTION_1000TONS",
+        "CHICKPEA_YIELD_KG_PER_HA",
+        "PIGEONPEA_AREA_1000HA",
+        "PIGEONPEA_PRODUCTION_1000TONS",
+        "PIGEONPEA_YIELD_KG_PER_HA"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography`.`dist_name`, `dim_geography`.`state_name`, `fact_pulses_major`.`chickpea_yield_kg_per_ha`, `fact_pulses_major`.`pigeonpea_yield_kg_per_ha` from `fact_pulses_major` join `dim_geography` on `fact_pulses_major`.`geography_id` = `dim_geography`.`geography_id` join `dim_year` on `fact_pulses_major`.`year_id` = `dim_year`.`year_id` where `dim_year`.`year` = 1970 order by `dim_geography`.`dist_name`."
+  },
+  {
+    "question": "Rank the districts and states by their average chickpea yield from 1970, also showing the average pigeon pea yield for that year.",
+    "sql": "SELECT T1.DIST_NAME, T1.STATE_NAME, AVG(T2.CHICKPEA_YIELD_KG_PER_HA), AVG(T2.PIGEONPEA_YIELD_KG_PER_HA) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PULSES_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR = '1970' GROUP BY T1.DIST_NAME, T1.STATE_NAME ORDER BY AVG(T2.CHICKPEA_YIELD_KG_PER_HA) DESC",
+    "pair_id": "21358e15",
+    "original_question_id": "2af546b4",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_PULSES_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_PULSES_MAJOR": [
+        "PULSE_MAJOR_ID",
+        "GEOGRAPHY_ID",
+        "YEAR_ID",
+        "CHICKPEA_AREA_1000HA",
+        "CHICKPEA_PRODUCTION_1000TONS",
+        "CHICKPEA_YIELD_KG_PER_HA",
+        "PIGEONPEA_AREA_1000HA",
+        "PIGEONPEA_PRODUCTION_1000TONS",
+        "PIGEONPEA_YIELD_KG_PER_HA"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_year`.`year` = 1970. Join `fact_pulses_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`. For districts: group by `dim_geography`.`dist_name`, `dim_geography`.`state_name`, compute AVG(`fact_pulses_major`.`chickpea_yield_kg_per_ha`) as avg_chickpea_yield, AVG(`fact_pulses_major`.`pigeonpea_yield_kg_per_ha`) as avg_pigeonpea_yield, rank districts by avg_chickpea_yield DESC. For states: group by `dim_geography`.`state_name`, compute same averages, rank states by avg_chickpea_yield DESC."
+  },
+  {
+    "question": "Which districts in Chhattisgarh produced more than 15,000 tons of chickpeas but no more than 35,200 tons of pigeon peas during the year 1970?",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PULSES_MAJOR AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_YEAR AS T2 ON T3.YEAR_ID = T2.YEAR_ID WHERE T1.STATE_NAME = 'Chhattisgarh' AND T2.YEAR = '1970' GROUP BY T1.DIST_NAME HAVING SUM(T3.CHICKPEA_PRODUCTION_1000TONS) > 15.0 AND NOT SUM(T3.PIGEONPEA_PRODUCTION_1000TONS) > 35.2",
+    "pair_id": "2843f388",
+    "original_question_id": "9763408e",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_PULSES_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_PULSES_MAJOR": [
+        "YEAR_ID",
+        "PIGEONPEA_PRODUCTION_1000TONS",
+        "CHICKPEA_AREA_1000HA",
+        "CHICKPEA_PRODUCTION_1000TONS",
+        "PULSE_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Find `dim_geography.dist_name` where `dim_geography.state_name` = 'Chhattisgarh' and `dim_year.year` = 1970, with `fact_pulses_major.chickpea_production_1000tons` > 15.0 and `fact_pulses_major.pigeonpea_production_1000tons` ≤ 35.2. Join `fact_pulses_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`."
+  },
+  {
+    "question": "Which districts produced more than 23,000 tons of chickpeas and 15,000 tons of pigeon peas in 1970?",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PULSES_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR = '1970' AND T2.CHICKPEA_PRODUCTION_1000TONS > 23.0 AND T2.PIGEONPEA_PRODUCTION_1000TONS > 15.0",
+    "pair_id": "536b9c1b",
+    "original_question_id": "1bb3b34a",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_PULSES_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_PULSES_MAJOR": [
+        "YEAR_ID",
+        "PIGEONPEA_PRODUCTION_1000TONS",
+        "PIGEONPEA_AREA_1000HA",
+        "CHICKPEA_AREA_1000HA",
+        "CHICKPEA_PRODUCTION_1000TONS",
+        "PULSE_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Find districts (`dim_geography.dist_name`) where in year 1970 (`dim_year.year` = 1970) the chickpea production (`fact_pulses_major.chickpea_production_1000tons`) > 23.0 (i.e., >23,000 tons) and pigeonpea production (`fact_pulses_major.pigeonpea_production_1000tons`) > 15.0 (i.e., >15,000 tons)."
+  },
+  {
+    "question": "Which districts produced more than 23,000 tons of chickpeas and over 15,000 tons of pigeon peas in 1970?",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PULSES_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR = '1970' AND T2.CHICKPEA_PRODUCTION_1000TONS > 23.0 AND T2.PIGEONPEA_PRODUCTION_1000TONS > 15.0",
+    "pair_id": "5191b952",
+    "original_question_id": "1bb3b34a",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_PULSES_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_PULSES_MAJOR": [
+        "YEAR_ID",
+        "PIGEONPEA_PRODUCTION_1000TONS",
+        "PIGEONPEA_AREA_1000HA",
+        "CHICKPEA_AREA_1000HA",
+        "CHICKPEA_PRODUCTION_1000TONS",
+        "PULSE_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Find `dim_geography.dist_name` where `fact_pulses_major.chickpea_production_1000tons` > 23.0 and `fact_pulses_major.pigeonpea_production_1000tons` > 15.0 for `dim_year.year` = 1970. Join `fact_pulses_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`."
+  },
+  {
+    "question": "Identify the districts that produced more than 15,000 tons of both chickpeas and pigeon peas in 1970, listed in alphabetical order.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PULSES_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR = '1970' GROUP BY T1.DIST_NAME HAVING SUM(T2.CHICKPEA_PRODUCTION_1000TONS) > 15.0 AND SUM(T2.PIGEONPEA_PRODUCTION_1000TONS) > 15.0 ORDER BY T1.DIST_NAME ASC",
+    "pair_id": "3612cbe6",
+    "original_question_id": "1bb3b34a",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_PULSES_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_PULSES_MAJOR": [
+        "YEAR_ID",
+        "PIGEONPEA_PRODUCTION_1000TONS",
+        "PIGEONPEA_AREA_1000HA",
+        "CHICKPEA_AREA_1000HA",
+        "CHICKPEA_PRODUCTION_1000TONS",
+        "PULSE_MAJOR_ID",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography`.`dist_name` from `fact_pulses_major` join `dim_geography` on `fact_pulses_major`.`geography_id` = `dim_geography`.`geography_id` join `dim_year` on `fact_pulses_major`.`year_id` = `dim_year`.`year_id` where `dim_year`.`year` = 1970 and `fact_pulses_major`.`chickpea_production_1000tons` > 15 and `fact_pulses_major`.`pigeonpea_production_1000tons` > 15 order by `dim_geography`.`dist_name`."
+  },
+  {
+    "question": "Which districts recorded a yield higher than 448.34 kg/ha for chickpeas or 784.31 kg/ha for pigeon peas during the year 1970?",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PULSES_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR = '1970' AND (T2.CHICKPEA_YIELD_KG_PER_HA > 448.34 OR T2.PIGEONPEA_YIELD_KG_PER_HA > 784.31)",
+    "pair_id": "efd4dde0",
+    "original_question_id": "deb4fa27",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_PULSES_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_PULSES_MAJOR": [
+        "PULSE_MAJOR_ID",
+        "GEOGRAPHY_ID",
+        "YEAR_ID",
+        "CHICKPEA_AREA_1000HA",
+        "CHICKPEA_PRODUCTION_1000TONS",
+        "CHICKPEA_YIELD_KG_PER_HA",
+        "PIGEONPEA_AREA_1000HA",
+        "PIGEONPEA_PRODUCTION_1000TONS",
+        "PIGEONPEA_YIELD_KG_PER_HA"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Query `dim_geography`.`dist_name` from `fact_pulses_major` joined with `dim_geography` on `geography_id` and with `dim_year` on `year_id`, where `dim_year`.`year` = 1970 and (`fact_pulses_major`.`chickpea_yield_kg_per_ha` > 448.34 OR `fact_pulses_major`.`pigeonpea_yield_kg_per_ha` > 784.31)."
+  },
+  {
+    "question": "Which districts recorded a yield higher than 448.34 kg/ha for chickpeas or 784.31 kg/ha for pigeon peas during the year 1970?",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PULSES_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR = '1970' AND (T2.CHICKPEA_YIELD_KG_PER_HA > 448.34 OR T2.PIGEONPEA_YIELD_KG_PER_HA > 784.31)",
+    "pair_id": "83a45a88",
+    "original_question_id": "deb4fa27",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_PULSES_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_PULSES_MAJOR": [
+        "PULSE_MAJOR_ID",
+        "GEOGRAPHY_ID",
+        "YEAR_ID",
+        "CHICKPEA_AREA_1000HA",
+        "CHICKPEA_PRODUCTION_1000TONS",
+        "CHICKPEA_YIELD_KG_PER_HA",
+        "PIGEONPEA_AREA_1000HA",
+        "PIGEONPEA_PRODUCTION_1000TONS",
+        "PIGEONPEA_YIELD_KG_PER_HA"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Query districts (`dim_geography.dist_name`) from `fact_pulses_major` where (`dim_year.year` = 1970) AND (`fact_pulses_major.chickpea_yield_kg_per_ha` > 448.34 OR `fact_pulses_major.pigeonpea_yield_kg_per_ha` > 784.31). Note that `dim_year.year` sample includes 1970, so exact match is possible."
+  },
+  {
+    "question": "Identify the districts that recorded a maximum yield of over 400 kg/ha for chickpeas or over 700 kg/ha for pigeon peas during the year 1970, listed in alphabetical order.",
+    "sql": "SELECT T1.DIST_NAME FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PULSES_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR = '1970' GROUP BY T1.DIST_NAME HAVING MAX(T2.CHICKPEA_YIELD_KG_PER_HA) > 400.0 OR MAX(T2.PIGEONPEA_YIELD_KG_PER_HA) > 700.0 ORDER BY T1.DIST_NAME ASC",
+    "pair_id": "8a60621e",
+    "original_question_id": "deb4fa27",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_PULSES_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_PULSES_MAJOR": [
+        "PULSE_MAJOR_ID",
+        "GEOGRAPHY_ID",
+        "YEAR_ID",
+        "CHICKPEA_AREA_1000HA",
+        "CHICKPEA_PRODUCTION_1000TONS",
+        "CHICKPEA_YIELD_KG_PER_HA",
+        "PIGEONPEA_AREA_1000HA",
+        "PIGEONPEA_PRODUCTION_1000TONS",
+        "PIGEONPEA_YIELD_KG_PER_HA"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_pulses_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`. Filter where `dim_year.year` = 1970. Group by `dim_geography.dist_name`. Compute MAX(`fact_pulses_major.chickpea_yield_kg_per_ha`) as max_chickpea_yield and MAX(`fact_pulses_major.pigeonpea_yield_kg_per_ha`) as max_pigeonpea_yield. Keep districts where max_chickpea_yield > 400 OR max_pigeonpea_yield > 700. Order by `dim_geography.dist_name` ASC."
+  },
+  {
+    "question": "Provide a yearly breakdown of area and production figures for groundnut and soybean crops across districts in Chhattisgarh, ordered chronologically.",
+    "sql": "SELECT T2.DIST_NAME, T3.YEAR, T1.GROUNDNUT_AREA_1000HA, T1.GROUNDNUT_PRODUCTION_1000TONS, T1.SOYABEAN_AREA_1000HA, T1.SOYABEAN_PRODUCTION_1000TONS FROM FACT_OILSEEDS_MAJOR AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T2.STATE_NAME = 'Chhattisgarh' ORDER BY T3.YEAR",
+    "pair_id": "424ad0e6",
+    "original_question_id": "97b4dfbe",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_OILSEEDS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_OILSEEDS_MAJOR": [
+        "GROUNDNUT_AREA_1000HA",
+        "YEAR_ID",
+        "SOYABEAN_AREA_1000HA",
+        "OILSEED_MAJOR_ID",
+        "GROUNDNUT_PRODUCTION_1000TONS",
+        "SOYABEAN_PRODUCTION_1000TONS",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Query must return yearly district-level data for Chhattisgarh. Filter `dim_geography`.`state_name` = 'Chhattisgarh'. Select `dim_year`.`year`, `dim_geography`.`dist_name`, `fact_oilseeds_major`.`groundnut_area_1000ha`, `fact_oilseeds_major`.`groundnut_production_1000tons`, `fact_oilseeds_major`.`soyabean_area_1000ha`, `fact_oilseeds_major`.`soyabean_production_1000tons`. Join `fact_oilseeds_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`. Order by `dim_year`.`year` ASC."
+  },
+  {
+    "question": "Provide a yearly breakdown of groundnut and soybean cultivation area and production totals for districts in Chhattisgarh, specifically for years where groundnut was actually grown, sorted from most recent to oldest.",
+    "sql": "SELECT T2.DIST_NAME, T3.YEAR, SUM(T1.GROUNDNUT_AREA_1000HA), SUM(T1.GROUNDNUT_PRODUCTION_1000TONS), SUM(T1.SOYABEAN_AREA_1000HA), SUM(T1.SOYABEAN_PRODUCTION_1000TONS) FROM FACT_OILSEEDS_MAJOR AS T1 INNER JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN DIM_YEAR AS T3 ON T1.YEAR_ID = T3.YEAR_ID WHERE T2.STATE_NAME = 'Chhattisgarh' GROUP BY T2.DIST_NAME, T3.YEAR HAVING SUM(T1.GROUNDNUT_AREA_1000HA) > 0.0 ORDER BY T3.YEAR DESC",
+    "pair_id": "ce6a9f22",
+    "original_question_id": "97b4dfbe",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_OILSEEDS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_OILSEEDS_MAJOR": [
+        "GROUNDNUT_AREA_1000HA",
+        "YEAR_ID",
+        "SOYABEAN_AREA_1000HA",
+        "OILSEED_MAJOR_ID",
+        "GROUNDNUT_PRODUCTION_1000TONS",
+        "SOYABEAN_PRODUCTION_1000TONS",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Query requires: `dim_geography.state_name` = 'Chhattisgarh', join `dim_geography` and `dim_year` with `fact_oilseeds_major`. Select `dim_year.year`, `dim_geography.dist_name`, `fact_oilseeds_major.groundnut_area_1000ha`, `fact_oilseeds_major.groundnut_production_1000tons`, `fact_oilseeds_major.soyabean_area_1000ha`, `fact_oilseeds_major.soyabean_production_1000tons`. Filter where `fact_oilseeds_major.groundnut_area_1000ha` > 0. Order by `dim_year.year` DESC."
+  },
+  {
+    "question": "Provide the average yields for soybeans and groundnuts by state for the period between 1966 and 1970.",
+    "sql": "SELECT T1.STATE_NAME, AVG(T2.SOYABEAN_YIELD_KG_PER_HA), AVG(T2.GROUNDNUT_YIELD_KG_PER_HA) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OILSEEDS_MAJOR AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR BETWEEN '1966' AND '1970' GROUP BY T1.STATE_NAME",
+    "pair_id": "2e03f917",
+    "original_question_id": "a9543e61",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_YEAR",
+      "FACT_OILSEEDS_MAJOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "DIST_CODE",
+        "STATE_CODE",
+        "STATE_NAME",
+        "DIST_NAME"
+      ],
+      "DIM_YEAR": [
+        "YEAR_ID",
+        "YEAR"
+      ],
+      "FACT_OILSEEDS_MAJOR": [
+        "YEAR_ID",
+        "GROUNDNUT_YIELD_KG_PER_HA",
+        "SOYABEAN_AREA_1000HA",
+        "OILSEED_MAJOR_ID",
+        "SOYABEAN_YIELD_KG_PER_HA",
+        "GEOGRAPHY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Compute average `fact_oilseeds_major.soyabean_yield_kg_per_ha` and `fact_oilseeds_major.groundnut_yield_kg_per_ha` grouped by `dim_geography.state_name` for years where `dim_year.year` is between 1966 and 1970 inclusive. Join `fact_oilseeds_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`."
+  }
+]
