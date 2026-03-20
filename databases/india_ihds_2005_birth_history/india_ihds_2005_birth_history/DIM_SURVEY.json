@@ -1,0 +1,22 @@
+[
+  {
+    "SURVEY_ID": 1,
+    "INTERVIEW_DATE_IMPUTED_CMC": "2004-11 (CMC 1259)"
+  },
+  {
+    "SURVEY_ID": 2,
+    "INTERVIEW_DATE_IMPUTED_CMC": "2004-12 (CMC 1260)"
+  },
+  {
+    "SURVEY_ID": 3,
+    "INTERVIEW_DATE_IMPUTED_CMC": "2005-01 (CMC 1261)"
+  },
+  {
+    "SURVEY_ID": 4,
+    "INTERVIEW_DATE_IMPUTED_CMC": "2005-02 (CMC 1262)"
+  },
+  {
+    "SURVEY_ID": 5,
+    "INTERVIEW_DATE_IMPUTED_CMC": "2005-03 (CMC 1263)"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "HOUSEHOLD_ID": 1,
+    "PSU_VILLAGE_ID": 1,
+    "HOUSEHOLD_ID_ORIGINAL": "5",
+    "SPLIT_HOUSEHOLD_ID": "1"
+  },
+  {
+    "HOUSEHOLD_ID": 2,
+    "PSU_VILLAGE_ID": 2,
+    "HOUSEHOLD_ID_ORIGINAL": "1",
+    "SPLIT_HOUSEHOLD_ID": "1"
+  },
+  {
+    "HOUSEHOLD_ID": 3,
+    "PSU_VILLAGE_ID": 3,
+    "HOUSEHOLD_ID_ORIGINAL": "31",
+    "SPLIT_HOUSEHOLD_ID": "1"
+  },
+  {
+    "HOUSEHOLD_ID": 4,
+    "PSU_VILLAGE_ID": 3,
+    "HOUSEHOLD_ID_ORIGINAL": "33",
+    "SPLIT_HOUSEHOLD_ID": "1"
+  },
+  {
+    "HOUSEHOLD_ID": 5,
+    "PSU_VILLAGE_ID": 3,
+    "HOUSEHOLD_ID_ORIGINAL": "37",
+    "SPLIT_HOUSEHOLD_ID": "1"
+  }
+]

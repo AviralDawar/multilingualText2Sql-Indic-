@@ -1,0 +1,27 @@
+[
+  {
+    "DISTRICT_ID": 1,
+    "STATE_ID": 1,
+    "DISTRICT_NAME": "Ludhiana"
+  },
+  {
+    "DISTRICT_ID": 2,
+    "STATE_ID": 2,
+    "DISTRICT_NAME": "Sonipat"
+  },
+  {
+    "DISTRICT_ID": 3,
+    "STATE_ID": 2,
+    "DISTRICT_NAME": "Hissar"
+  },
+  {
+    "DISTRICT_ID": 4,
+    "STATE_ID": 3,
+    "DISTRICT_NAME": "Sultanpur"
+  },
+  {
+    "DISTRICT_ID": 5,
+    "STATE_ID": 4,
+    "DISTRICT_NAME": "Bhopal"
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "PSU_VILLAGE_ID": 1,
+    "DISTRICT_ID": 1,
+    "PSU_VILLAGE_CODE": "4"
+  },
+  {
+    "PSU_VILLAGE_ID": 2,
+    "DISTRICT_ID": 2,
+    "PSU_VILLAGE_CODE": "1"
+  },
+  {
+    "PSU_VILLAGE_ID": 3,
+    "DISTRICT_ID": 2,
+    "PSU_VILLAGE_CODE": "4"
+  },
+  {
+    "PSU_VILLAGE_ID": 4,
+    "DISTRICT_ID": 3,
+    "PSU_VILLAGE_CODE": "5"
+  },
+  {
+    "PSU_VILLAGE_ID": 5,
+    "DISTRICT_ID": 4,
+    "PSU_VILLAGE_CODE": "5"
+  }
+]

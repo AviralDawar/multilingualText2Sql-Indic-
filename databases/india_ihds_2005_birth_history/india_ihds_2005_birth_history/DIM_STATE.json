@@ -1,0 +1,22 @@
+[
+  {
+    "STATE_ID": 1,
+    "STATE_NAME": "Punjab"
+  },
+  {
+    "STATE_ID": 2,
+    "STATE_NAME": "Haryana"
+  },
+  {
+    "STATE_ID": 3,
+    "STATE_NAME": "Uttar Pradesh"
+  },
+  {
+    "STATE_ID": 4,
+    "STATE_NAME": "Madhya Pradesh"
+  },
+  {
+    "STATE_ID": 5,
+    "STATE_NAME": "Himachal Pradesh"
+  }
+]
