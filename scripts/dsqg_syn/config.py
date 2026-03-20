@@ -90,7 +90,7 @@ class DSQGConfig:
     max_join_depth: int = 3  # Maximum tables to join in a query
 
     # SQL Skeleton Settings
-    skeletons_per_question: int = 2  # Default target split: 1 easy, 2 medium, 1 hard
+    skeletons_per_question: int = 3  # Default target split: 1 easy, 2 medium, 1 hard
 
     # SQL Generation Settings
     sqls_per_skeleton: int = 1  # One SQL per skeleton to control per-difficulty counts
@@ -109,6 +109,9 @@ class DSQGConfig:
 
     # Database Settings
     database_type: str = "postgresql"  # postgresql, mysql, sqlite
+
+    # Debug Settings
+    verbose: bool = False
 
     # Domain Keywords (auto-extracted or manually specified)
     domain_keywords: List[str] = field(default_factory=list)

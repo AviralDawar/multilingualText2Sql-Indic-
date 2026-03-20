@@ -248,7 +248,24 @@ class SemanticOptimizer:
                     show_results=False,
                     fetch_one=True
                 )
-                pair.is_valid = result is not None and len(result.get('rows', [])) > 0
+                
+                # Check if execution failed or returned no rows
+                has_rows = result is not None and len(result.get('rows', [])) > 0
+                
+                if result is None:
+                    # execute_query already prints the error, but we can add more context
+                    if self.config.verbose:
+                        print(f"        [SQL Validation] FAILED: {pair.sql}")
+                    pair.is_valid = False
+                elif not has_rows:
+                    if self.config.verbose:
+                        print(f"        [SQL Validation] ZERO ROWS: {pair.sql}")
+                    # Allow queries with 0 rows? The user said "return 0 queries should not be allowed"
+                    # so we keep them as invalid if they return 0 rows.
+                    pair.is_valid = False
+                else:
+                    pair.is_valid = True
+                    
                 validated.append(pair)
 
             return validated

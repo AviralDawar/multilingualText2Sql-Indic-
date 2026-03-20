@@ -685,29 +685,33 @@ Output in JSON format:
         # Now, it's your turn. Just return 1 user query in JSON format.
         #
         #
-        # Output in JSON format:
+                # Output in JSON format:
         # {{
         #     "question": "<your natural language question>"
         # }}
         # """
         return f"""You are an expert Data Scientist specializing in Text-to-SQL dataset curation. Your goal is to transform a SQL query into a high-fidelity Natural Language Question (NLQ).
 
-### CRITICAL RULES:
-1. **Selection Completeness:** Every single column in the `SELECT` clause MUST be explicitly requested in the question. Do not summarize or omit columns like IDs, categories, or status indicators.
-2. **CTE & Logic Transparency:** If the SQL uses a CTE (`WITH` clause) or a complex subquery, the question must explicitly mention the logic (e.g., "First find the maximum year," or "Considering only the most recent records").
-3. **Adjective-to-Column Mapping:** If a column is used as a filter (e.g., `WHERE location = 'Rural'`), do not just say "rural schools." Say "the school location and ... for rural schools" if the location column is also in the SELECT clause.
-4. **Group-By Visibility:** If the SQL is grouped by a column, the question must explicitly ask to list or show that grouping column.
+### NATURALNESS GUIDELINES:
+1. **Selection Conciseness:** You may not list every single column from the `SELECT` clause if a collective term (e.g., "details," "information," "profile") is more natural.
+2. **Implicit Filters:** Integrate filter criteria naturally as adjectives or qualifiers (e.g., "rural schools") rather than literal mappings (e.g., "schools where the location is 'Rural'").
+3. **Intent-based CTEs:** For queries using CTEs or complex subqueries, describe the *functional intent* (e.g., "For the most recently recorded data...") rather than the *execution logic* (e.g., "Find the maximum year and then...").
+4. **Varied Phrasing:** Use a mix of questions, commands ("List all..."), and requests ("Show the...") to maintain variety.
+5. **No Logic Leakage:** Ensure the question does not explicitly "leak" the internal SQL structure (like JOIN conditions or specific table aliases). Use domain terminology.
 
 ### EXAMPLES:
 
-Input SQL: "SELECT SCHOOL_LOCATION, AVG(INSTRUCTIONAL_DAYS_PRIMARY) FROM DIM_LOCATION_ADDRESS JOIN FACT_STUDENT_METRICS ON ... WHERE SCHOOL_LOCATION = '1 - Rural' GROUP BY SCHOOL_LOCATION"
-Output JSON: {{ "question": "What is the school location and the average number of primary instructional days for schools located in rural areas?" }}
+#### Example 1 (Easy: Single Table, Simple Filter)
+Input SQL: "SELECT STATION_NAME, TYPE_OF_WATER_BODY FROM DIM_STATION WHERE STATE_ID = 'ST_001' AND TYPE_OF_WATER_BODY = 'LAKE'"
+Output JSON: {{ "question": "What are the names and water body types of all stations located near lakes in the first state?" }}
 
-Input SQL: "WITH recent_year AS (SELECT MAX(year) FROM FACT_STUDENT_METRICS) SELECT SCHOOL_NAME, MANAGEMENT_OF_THE_SCHOOL FROM DIM_SCHOOL_IDENTITY JOIN recent_year ON year = max_year"
-Output JSON: {{ "question": "For the most recent year available, list the school names along with their management type." }}
+#### Example 2 (Medium: Join, Aggregation, Group By)
+Input SQL: "SELECT T1.STATE_NAME, AVG(T3.MAX_TEMPERATURE_C) FROM DIM_STATE AS T1 JOIN DIM_STATION AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN FACT_THERMAL AS T3 ON T2.STATION_ID = T3.STATION_ID GROUP BY T1.STATE_NAME"
+Output JSON: {{ "question": "Show the average maximum temperature for each state based on available thermal station data." }}
 
-Input SQL: "SELECT OPERATIONS_ID, RESIDENTIAL_OR_NON_RESIDENTIAL, AVAILABILITY_OF_SPECIAL_NEEDS_FOR_CHILDREN FROM DIM_SCHOOL_OPERATIONS WHERE RESIDENTIAL_OR_NON_RESIDENTIAL = '1 - Yes'"
-Output JSON: {{ "question": "Provide the operations ID, the residential status, and the special needs availability for schools that are residential." }}
+#### Example 3 (Hard: CTE, Multiple Joins, Specific Filter)
+Input SQL: "WITH top_districts AS (SELECT district_id FROM fact_census WHERE population > 1000000) SELECT d.district_name, s.school_name, s.total_students FROM top_districts td JOIN dim_district d ON td.district_id = d.district_id JOIN dim_school s ON d.district_id = s.district_id WHERE s.school_type = 'Secondary'"
+Output JSON: {{ "question": "For districts with a population over one million, list the names of secondary schools along with their total student counts." }}
 
 ### TASK:
 Input SQL: "{sql}"

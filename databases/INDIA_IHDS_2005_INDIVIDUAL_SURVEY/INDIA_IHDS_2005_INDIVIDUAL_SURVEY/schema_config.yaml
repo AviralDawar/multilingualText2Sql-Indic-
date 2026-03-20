@@ -1,4 +1,4 @@
-database_name: INDIA_IHDS_2005_HOUSEHOLD_SURVEY
+database_name: INDIA_IHDS_2005_INDIVIDUAL_SURVEY
 source_file: total_data.csv
 dimension_tables:
   DIM_GEOGRAPHY:

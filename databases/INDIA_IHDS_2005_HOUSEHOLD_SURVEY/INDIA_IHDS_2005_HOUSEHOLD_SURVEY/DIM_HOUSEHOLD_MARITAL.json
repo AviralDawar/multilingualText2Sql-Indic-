@@ -1,26 +1,31 @@
 [
   {
     "MARITAL_ID": 1,
+    "HOUSEHOLD_ID": 1,
     "DATE_OF_MARRIAGE": "171",
     "DATE_OF_GAUNA": "171"
   },
   {
     "MARITAL_ID": 2,
+    "HOUSEHOLD_ID": 2,
     "DATE_OF_MARRIAGE": "600",
     "DATE_OF_GAUNA": "600"
   },
   {
     "MARITAL_ID": 3,
+    "HOUSEHOLD_ID": 3,
     "DATE_OF_MARRIAGE": "983",
     "DATE_OF_GAUNA": "983"
   },
   {
     "MARITAL_ID": 4,
+    "HOUSEHOLD_ID": 4,
     "DATE_OF_MARRIAGE": "518",
     "DATE_OF_GAUNA": "518"
   },
   {
     "MARITAL_ID": 5,
+    "HOUSEHOLD_ID": 5,
     "DATE_OF_MARRIAGE": "181",
     "DATE_OF_GAUNA": "181"
   }
