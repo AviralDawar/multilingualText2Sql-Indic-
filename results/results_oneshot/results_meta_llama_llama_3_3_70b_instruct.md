@@ -1,0 +1,89 @@
+# Text2SQL Evaluation Results: meta-llama/llama-3.3-70b-instruct
+*(Sampled 100 questions per DB - Updated after INDIA_IHDS_2005_INDIVIDUAL_SURVEY)*
+
+| Database | Language | Results (EM, EX) |
+| --- | --- | --- |
+| INDIA_Economic_Census_Firms | English | 8/100 (EM), 65/100 (EX) |
+| INDIA_Economic_Census_Firms | Hinglish | 7/100 (EM), 58/100 (EX) |
+| INDIA_Economic_Census_Firms | Hindi | 6/100 (EM), 56/100 (EX) |
+| INDIA_Economic_Census_Firms | Bengali | 5/100 (EM), 37/100 (EX) |
+| INDIA_Economic_Census_Firms | Tamil | 2/100 (EM), 36/100 (EX) |
+| INDIA_Economic_Census_Firms | Telugu | 4/100 (EM), 31/100 (EX) |
+| INDIA_Economic_Census_Firms | Marathi | 4/100 (EM), 41/100 (EX) |
+| INDIA_HMIS_Sub_District_Report_Facility_wise | English | 4/100 (EM), 31/100 (EX) |
+| INDIA_HMIS_Sub_District_Report_Facility_wise | Hinglish | 3/100 (EM), 18/100 (EX) |
+| INDIA_HMIS_Sub_District_Report_Facility_wise | Hindi | 3/100 (EM), 15/100 (EX) |
+| INDIA_HMIS_Sub_District_Report_Facility_wise | Bengali | 1/100 (EM), 18/100 (EX) |
+| INDIA_HMIS_Sub_District_Report_Facility_wise | Tamil | 2/100 (EM), 15/100 (EX) |
+| INDIA_HMIS_Sub_District_Report_Facility_wise | Telugu | 1/100 (EM), 16/100 (EX) |
+| INDIA_HMIS_Sub_District_Report_Facility_wise | Marathi | 1/100 (EM), 22/100 (EX) |
+| INDIA_HMIS_Sub_District_Report_Rural_Urban | English | 3/100 (EM), 49/100 (EX) |
+| INDIA_HMIS_Sub_District_Report_Rural_Urban | Hinglish | 2/100 (EM), 34/100 (EX) |
+| INDIA_HMIS_Sub_District_Report_Rural_Urban | Hindi | 7/100 (EM), 39/100 (EX) |
+| INDIA_HMIS_Sub_District_Report_Rural_Urban | Bengali | 1/100 (EM), 40/100 (EX) |
+| INDIA_HMIS_Sub_District_Report_Rural_Urban | Tamil | 2/100 (EM), 38/100 (EX) |
+| INDIA_HMIS_Sub_District_Report_Rural_Urban | Telugu | 4/100 (EM), 33/100 (EX) |
+| INDIA_HMIS_Sub_District_Report_Rural_Urban | Marathi | 7/100 (EM), 33/100 (EX) |
+| INDIA_ICRISAT_District_Level_Agricultural_Data | English | 3/100 (EM), 48/100 (EX) |
+| INDIA_ICRISAT_District_Level_Agricultural_Data | Hinglish | 3/100 (EM), 48/100 (EX) |
+| INDIA_ICRISAT_District_Level_Agricultural_Data | Hindi | 2/100 (EM), 37/100 (EX) |
+| INDIA_ICRISAT_District_Level_Agricultural_Data | Bengali | 2/100 (EM), 33/100 (EX) |
+| INDIA_ICRISAT_District_Level_Agricultural_Data | Tamil | 1/100 (EM), 23/100 (EX) |
+| INDIA_ICRISAT_District_Level_Agricultural_Data | Telugu | 2/100 (EM), 29/100 (EX) |
+| INDIA_ICRISAT_District_Level_Agricultural_Data | Marathi | 0/100 (EM), 18/100 (EX) |
+| INDIA_IHDS_2005_HOUSEHOLD_SURVEY | English | 6/100 (EM), 63/100 (EX) |
+| INDIA_IHDS_2005_HOUSEHOLD_SURVEY | Hinglish | 0/100 (EM), 35/100 (EX) |
+| INDIA_IHDS_2005_HOUSEHOLD_SURVEY | Hindi | 5/100 (EM), 40/100 (EX) |
+| INDIA_IHDS_2005_HOUSEHOLD_SURVEY | Bengali | 4/100 (EM), 34/100 (EX) |
+| INDIA_IHDS_2005_HOUSEHOLD_SURVEY | Tamil | 2/100 (EM), 28/100 (EX) |
+| INDIA_IHDS_2005_HOUSEHOLD_SURVEY | Telugu | 2/100 (EM), 35/100 (EX) |
+| INDIA_IHDS_2005_HOUSEHOLD_SURVEY | Marathi | 3/100 (EM), 31/100 (EX) |
+| INDIA_IHDS_2005_INDIVIDUAL_SURVEY | English | 5/100 (EM), 53/100 (EX) |
+| INDIA_IHDS_2005_INDIVIDUAL_SURVEY | Hinglish | 2/100 (EM), 38/100 (EX) |
+| INDIA_IHDS_2005_INDIVIDUAL_SURVEY | Hindi | 8/100 (EM), 39/100 (EX) |
+| INDIA_IHDS_2005_INDIVIDUAL_SURVEY | Bengali | 4/100 (EM), 34/100 (EX) |
+| INDIA_IHDS_2005_INDIVIDUAL_SURVEY | Tamil | 3/100 (EM), 34/100 (EX) |
+| INDIA_IHDS_2005_INDIVIDUAL_SURVEY | Telugu | 4/100 (EM), 39/100 (EX) |
+| INDIA_IHDS_2005_INDIVIDUAL_SURVEY | Marathi | 2/100 (EM), 33/100 (EX) |
+| INDIA_IHDS_2011_TRACKING_SURVEY | English | 30/100 (EM), 77/100 (EX) |
+| INDIA_IHDS_2011_TRACKING_SURVEY | Hinglish | 25/100 (EM), 69/100 (EX) |
+| INDIA_IHDS_2011_TRACKING_SURVEY | Hindi | 20/100 (EM), 59/100 (EX) |
+| INDIA_IHDS_2011_TRACKING_SURVEY | Bengali | 19/100 (EM), 61/100 (EX) |
+| INDIA_IHDS_2011_TRACKING_SURVEY | Tamil | 22/100 (EM), 62/100 (EX) |
+| INDIA_IHDS_2011_TRACKING_SURVEY | Telugu | 24/100 (EM), 63/100 (EX) |
+| INDIA_IHDS_2011_TRACKING_SURVEY | Marathi | 21/100 (EM), 63/100 (EX) |
+| INDIA_NWMP_Water_Quality_Data | English | 17/100 (EM), 57/100 (EX) |
+| INDIA_NWMP_Water_Quality_Data | Hinglish | N/A |
+| INDIA_NWMP_Water_Quality_Data | Hindi | 18/100 (EM), 52/100 (EX) |
+| INDIA_NWMP_Water_Quality_Data | Bengali | 14/100 (EM), 52/100 (EX) |
+| INDIA_NWMP_Water_Quality_Data | Tamil | 19/100 (EM), 48/100 (EX) |
+| INDIA_NWMP_Water_Quality_Data | Telugu | 16/100 (EM), 51/100 (EX) |
+| INDIA_NWMP_Water_Quality_Data | Marathi | 19/100 (EM), 51/100 (EX) |
+| INDIA_PRIMARY_POPULATION_CENSUS_1991 | English | 10/63 (EM), 34/63 (EX) |
+| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Hinglish | 4/63 (EM), 26/63 (EX) |
+| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Hindi | 4/63 (EM), 26/63 (EX) |
+| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Bengali | 5/63 (EM), 33/63 (EX) |
+| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Tamil | 4/63 (EM), 25/63 (EX) |
+| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Telugu | 4/63 (EM), 19/63 (EX) |
+| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Marathi | 4/63 (EM), 32/63 (EX) |
+| INDIA_ROAD_ACCIDENTS_DATASET_2001 | English | 8/69 (EM), 55/69 (EX) |
+| INDIA_ROAD_ACCIDENTS_DATASET_2001 | Hinglish | 7/69 (EM), 49/69 (EX) |
+| INDIA_ROAD_ACCIDENTS_DATASET_2001 | Hindi | 7/69 (EM), 43/69 (EX) |
+| INDIA_ROAD_ACCIDENTS_DATASET_2001 | Bengali | 7/69 (EM), 54/69 (EX) |
+| INDIA_ROAD_ACCIDENTS_DATASET_2001 | Tamil | 8/69 (EM), 51/69 (EX) |
+| INDIA_ROAD_ACCIDENTS_DATASET_2001 | Telugu | 4/69 (EM), 32/69 (EX) |
+| INDIA_ROAD_ACCIDENTS_DATASET_2001 | Marathi | 10/69 (EM), 37/69 (EX) |
+| INDIA_UDISE_Right_To_Education_RTE_and_School_Management_data | English | 11/95 (EM), 26/95 (EX) |
+| INDIA_UDISE_Right_To_Education_RTE_and_School_Management_data | Hinglish | N/A |
+| INDIA_UDISE_Right_To_Education_RTE_and_School_Management_data | Hindi | N/A |
+| INDIA_UDISE_Right_To_Education_RTE_and_School_Management_data | Bengali | 9/100 (EM), 62/100 (EX) |
+| INDIA_UDISE_Right_To_Education_RTE_and_School_Management_data | Tamil | 2/100 (EM), 42/100 (EX) |
+| INDIA_UDISE_Right_To_Education_RTE_and_School_Management_data | Telugu | 7/100 (EM), 53/100 (EX) |
+| INDIA_UDISE_Right_To_Education_RTE_and_School_Management_data | Marathi | 16/100 (EM), 67/100 (EX) |
+| INDIA_Village_Amenities_Directory_2001 | English | 13/100 (EM), 62/100 (EX) |
+| INDIA_Village_Amenities_Directory_2001 | Hinglish | 11/100 (EM), 46/100 (EX) |
+| INDIA_Village_Amenities_Directory_2001 | Hindi | 10/100 (EM), 46/100 (EX) |
+| INDIA_Village_Amenities_Directory_2001 | Bengali | 8/100 (EM), 40/100 (EX) |
+| INDIA_Village_Amenities_Directory_2001 | Tamil | 4/100 (EM), 46/100 (EX) |
+| INDIA_Village_Amenities_Directory_2001 | Telugu | 8/100 (EM), 42/100 (EX) |
+| INDIA_Village_Amenities_Directory_2001 | Marathi | 6/100 (EM), 43/100 (EX) |
