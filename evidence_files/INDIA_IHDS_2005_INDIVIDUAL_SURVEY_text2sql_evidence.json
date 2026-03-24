@@ -1,0 +1,3995 @@
+[
+  {
+    "question": "Identify all rural households that have more than five members.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM FACT_HOUSEHOLD_COMPOSITION AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' AND T1.HOUSEHOLD_MEMBER_COUNT > 5",
+    "pair_id": "ead70652",
+    "original_question_id": "2532e24b",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_PERSON_DEMOGRAPHICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "SURVEY_METHODOLOGY_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MARRIED_MEN_COUNT"
+      ],
+      "FACT_PERSON_DEMOGRAPHICS": [
+        "HOUSEHOLD_ID",
+        "PERSON_MARITAL_STATUS",
+        "PERSON_GENDER",
+        "PERSON_ID",
+        "PERSON_RELATIONSHIP_TO_HOUSEHOLD_HEAD",
+        "PERSON_AGE_YEARS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select household_id from fact_household_composition join dim_geography on fact_household_composition.geography_id = dim_geography.geography_id where dim_geography.census_2001_urban_rural_flag = 'Rural' and fact_household_composition.household_member_count > 5."
+  },
+  {
+    "question": "List the IDs of rural households with more than five members, ordered by the size of the household.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM FACT_HOUSEHOLD_COMPOSITION AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' AND T1.HOUSEHOLD_MEMBER_COUNT > 5 ORDER BY T1.HOUSEHOLD_MEMBER_COUNT",
+    "pair_id": "555f9857",
+    "original_question_id": "2532e24b",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_PERSON_DEMOGRAPHICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "SURVEY_METHODOLOGY_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MARRIED_MEN_COUNT"
+      ],
+      "FACT_PERSON_DEMOGRAPHICS": [
+        "HOUSEHOLD_ID",
+        "PERSON_MARITAL_STATUS",
+        "PERSON_GENDER",
+        "PERSON_ID",
+        "PERSON_RELATIONSHIP_TO_HOUSEHOLD_HEAD",
+        "PERSON_AGE_YEARS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_household_composition`.`household_id` from `fact_household_composition` inner join `dim_geography` on `fact_household_composition`.`geography_id` = `dim_geography`.`geography_id` where `dim_geography`.`census_2001_urban_rural_flag` = 'Rural' and `fact_household_composition`.`household_member_count` > 5 order by `fact_household_composition`.`household_member_count` desc."
+  },
+  {
+    "question": "Identify large rural households from the 2001 census that have more than five members, listing their IDs and total member counts in descending order.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T1.HOUSEHOLD_MEMBER_COUNT FROM FACT_HOUSEHOLD_COMPOSITION AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_PERSON_DEMOGRAPHICS AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' GROUP BY T1.HOUSEHOLD_ID, T1.HOUSEHOLD_MEMBER_COUNT HAVING SUM(T1.HOUSEHOLD_MEMBER_COUNT) > 5 ORDER BY T1.HOUSEHOLD_MEMBER_COUNT DESC",
+    "pair_id": "2d829204",
+    "original_question_id": "2532e24b",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_PERSON_DEMOGRAPHICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "SURVEY_METHODOLOGY_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MARRIED_MEN_COUNT"
+      ],
+      "FACT_PERSON_DEMOGRAPHICS": [
+        "HOUSEHOLD_ID",
+        "PERSON_MARITAL_STATUS",
+        "PERSON_GENDER",
+        "PERSON_ID",
+        "PERSON_RELATIONSHIP_TO_HOUSEHOLD_HEAD",
+        "PERSON_AGE_YEARS"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter households where `dim_geography.census_2001_urban_rural_flag` = 'Rural' and `fact_household_composition.household_member_count` > 5. Select `fact_household_composition.household_id` and `fact_household_composition.household_member_count`, order by `fact_household_composition.household_member_count` DESC."
+  },
+  {
+    "question": "Provide a breakdown by state and urban/rural status showing the average household size and the total number of households recorded.",
+    "sql": "SELECT T1.STATE, T1.CENSUS_2001_URBAN_RURAL_FLAG, AVG(T2.HOUSEHOLD_MEMBER_COUNT), COUNT(T2.HOUSEHOLD_ID) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE, T1.CENSUS_2001_URBAN_RURAL_FLAG",
+    "pair_id": "ec543cbd",
+    "original_question_id": "d23f06b7",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_PERSON_DEMOGRAPHICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_PERSON_DEMOGRAPHICS": [
+        "HOUSEHOLD_ID",
+        "PERSON_MARITAL_STATUS",
+        "PERSON_GENDER",
+        "PERSON_ID",
+        "PERSON_RELATIONSHIP_TO_HOUSEHOLD_HEAD",
+        "PERSON_AGE_YEARS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_geography`.`state` and `dim_geography`.`census_2001_urban_rural_flag`. Compute AVG(`fact_household_composition`.`household_member_count`) as average household size and COUNT(`fact_household_composition`.`household_id`) as total households. Join `fact_household_composition` with `dim_geography` on `fact_household_composition`.`geography_id` = `dim_geography`.`geography_id`."
+  },
+  {
+    "question": "Provide a state-wise breakdown of the average household size and total number of households, categorized by urban and rural areas according to the 2001 Census.",
+    "sql": "SELECT T1.STATE, T1.CENSUS_2001_URBAN_RURAL_FLAG, AVG(T2.HOUSEHOLD_MEMBER_COUNT), COUNT(T2.HOUSEHOLD_ID) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE, T1.CENSUS_2001_URBAN_RURAL_FLAG ORDER BY T1.STATE ASC",
+    "pair_id": "93cd9258",
+    "original_question_id": "d23f06b7",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_PERSON_DEMOGRAPHICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_PERSON_DEMOGRAPHICS": [
+        "HOUSEHOLD_ID",
+        "PERSON_MARITAL_STATUS",
+        "PERSON_GENDER",
+        "PERSON_ID",
+        "PERSON_RELATIONSHIP_TO_HOUSEHOLD_HEAD",
+        "PERSON_AGE_YEARS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_geography`.`state` and `dim_geography`.`census_2001_urban_rural_flag` (values 'Urban', 'Rural'). For each group, compute AVG(`fact_household_composition`.`household_member_count`) as average household size and COUNT(`fact_household_composition`.`household_id`) as total households. Join `fact_household_composition` to `dim_geography` on `fact_household_composition`.`geography_id` = `dim_geography`.`geography_id`."
+  },
+  {
+    "question": "Identify all urban households that have more than three children aged 14 and under.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM FACT_HOUSEHOLD_COMPOSITION AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban' AND T1.HOUSEHOLD_CHILDREN_0_TO_14_COUNT > 3",
+    "pair_id": "d7f8eca5",
+    "original_question_id": "6430f514",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_PERSON_DEMOGRAPHICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "SURVEY_METHODOLOGY_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MARRIED_MEN_COUNT"
+      ],
+      "FACT_PERSON_DEMOGRAPHICS": [
+        "HOUSEHOLD_ID",
+        "PERSON_MARITAL_STATUS",
+        "PERSON_GENDER",
+        "PERSON_ID",
+        "PERSON_RELATIONSHIP_TO_HOUSEHOLD_HEAD",
+        "PERSON_AGE_YEARS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_composition` with `dim_geography` on `fact_household_composition`.`geography_id` = `dim_geography`.`geography_id`. Filter where `dim_geography`.`census_2001_urban_rural_flag` = 'Urban' and `fact_household_composition`.`household_children_0_to_14_count` > 3."
+  },
+  {
+    "question": "Identify urban households that have more than three children between the ages of 0 and 14.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM FACT_HOUSEHOLD_COMPOSITION AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban' GROUP BY T1.HOUSEHOLD_ID HAVING SUM(T1.HOUSEHOLD_CHILDREN_0_TO_14_COUNT) > 3",
+    "pair_id": "6505d96e",
+    "original_question_id": "6430f514",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_PERSON_DEMOGRAPHICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "SURVEY_METHODOLOGY_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MARRIED_MEN_COUNT"
+      ],
+      "FACT_PERSON_DEMOGRAPHICS": [
+        "HOUSEHOLD_ID",
+        "PERSON_MARITAL_STATUS",
+        "PERSON_GENDER",
+        "PERSON_ID",
+        "PERSON_RELATIONSHIP_TO_HOUSEHOLD_HEAD",
+        "PERSON_AGE_YEARS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter households where `dim_geography.census_2001_urban_rural_flag` = 'Urban' and `fact_household_composition.household_children_0_to_14_count` > 3. Join `fact_household_composition` to `dim_geography` on `geography_id`."
+  },
+  {
+    "question": "Identify all urban households that have more than three children aged 0 to 14, listed in ascending order of their household ID.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM FACT_HOUSEHOLD_COMPOSITION AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_PERSON_DEMOGRAPHICS AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban' GROUP BY T1.HOUSEHOLD_ID HAVING SUM(T1.HOUSEHOLD_CHILDREN_0_TO_14_COUNT) > 3 ORDER BY T1.HOUSEHOLD_ID ASC",
+    "pair_id": "dd7711c6",
+    "original_question_id": "6430f514",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_PERSON_DEMOGRAPHICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "SURVEY_METHODOLOGY_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MARRIED_MEN_COUNT"
+      ],
+      "FACT_PERSON_DEMOGRAPHICS": [
+        "HOUSEHOLD_ID",
+        "PERSON_MARITAL_STATUS",
+        "PERSON_GENDER",
+        "PERSON_ID",
+        "PERSON_RELATIONSHIP_TO_HOUSEHOLD_HEAD",
+        "PERSON_AGE_YEARS"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_composition` with `dim_geography` on `fact_household_composition`.`geography_id` = `dim_geography`.`geography_id`. Filter where `dim_geography`.`census_2001_urban_rural_flag` = 'Urban' and `fact_household_composition`.`household_children_0_to_14_count` > 3. Order by `fact_household_composition`.`household_id` ASC."
+  },
+  {
+    "question": "Rank the districts within each state by the average number of children aged 0 to 14 per household, from highest to lowest.",
+    "sql": "SELECT T1.STATE, T1.DISTRICT, AVG(T2.HOUSEHOLD_CHILDREN_0_TO_14_COUNT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE, T1.DISTRICT ORDER BY AVG(T2.HOUSEHOLD_CHILDREN_0_TO_14_COUNT) DESC",
+    "pair_id": "4e3bea32",
+    "original_question_id": "a4ac3af1",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Compute the average of `fact_household_composition.household_children_0_to_14_count` per `dim_geography.district` within each `dim_geography.state`. Then rank districts within each state by this average descending (highest average = rank 1). Use `RANK() OVER (PARTITION BY dim_geography.state ORDER BY AVG(fact_household_composition.household_children_0_to_14_count) DESC)`. Join `fact_household_composition` to `dim_geography` on `geography_id`."
+  },
+  {
+    "question": "Rank the districts within each state by the average number of children aged 0 to 14 per household, only including areas where household data is available.",
+    "sql": "SELECT T1.STATE, T1.DISTRICT, AVG(T2.HOUSEHOLD_CHILDREN_0_TO_14_COUNT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE, T1.DISTRICT HAVING COUNT(T2.HOUSEHOLD_ID) > 0 ORDER BY AVG(T2.HOUSEHOLD_CHILDREN_0_TO_14_COUNT) DESC",
+    "pair_id": "78236f72",
+    "original_question_id": "a4ac3af1",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_composition` with `dim_geography` on `geography_id`. Group by `dim_geography.state` and `dim_geography.district`. Compute AVG(`fact_household_composition.household_children_0_to_14_count`) as avg_children. Rank districts within each state by avg_children descending (highest average gets rank 1)."
+  },
+  {
+    "question": "Which ten rural districts have the highest average household sizes?",
+    "sql": "SELECT T1.DISTRICT, AVG(T2.HOUSEHOLD_MEMBER_COUNT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' GROUP BY T1.DISTRICT ORDER BY AVG(T2.HOUSEHOLD_MEMBER_COUNT) DESC LIMIT 10",
+    "pair_id": "24658635",
+    "original_question_id": "c9819d7f",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.census_2001_urban_rural_flag` = 'Rural'. Join `fact_household_composition` with `dim_geography` on `geography_id`. Group by `dim_geography.district`. Compute average of `fact_household_composition.household_member_count` per district. Order by average descending, limit 10."
+  },
+  {
+    "question": "List the top 10 rural districts with the highest average household size.",
+    "sql": "SELECT T1.DISTRICT, AVG(T2.HOUSEHOLD_MEMBER_COUNT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' GROUP BY T1.DISTRICT ORDER BY AVG(T2.HOUSEHOLD_MEMBER_COUNT) DESC LIMIT 10",
+    "pair_id": "cf95a848",
+    "original_question_id": "c9819d7f",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.census_2001_urban_rural_flag` = 'Rural'. Join `fact_household_composition` on `fact_household_composition.geography_id` = `dim_geography.geography_id`. Compute average of `fact_household_composition.household_member_count` per `dim_geography.district`. Order by average descending, limit 10."
+  },
+  {
+    "question": "Identify the top 10 rural districts with the highest average household member counts, specifically focusing on those within the second neighborhood category.",
+    "sql": "SELECT T1.DISTRICT, AVG(T2.HOUSEHOLD_MEMBER_COUNT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' AND T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE = '2' GROUP BY T1.DISTRICT ORDER BY AVG(T2.HOUSEHOLD_MEMBER_COUNT) DESC LIMIT 10",
+    "pair_id": "11dce580",
+    "original_question_id": "c9819d7f",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography`.`census_2001_urban_rural_flag` = 'Rural' and `dim_geography`.`psu_village_or_neighborhood_code` = 2. Join `fact_household_composition` on `geography_id`. Group by `dim_geography`.`district`, compute AVG(`fact_household_composition`.`household_member_count`) as avg_members. Order by avg_members DESC, limit 10."
+  },
+  {
+    "question": "Provide a breakdown by state of the total number of household members and married women living in urban areas.",
+    "sql": "SELECT T1.STATE, SUM(T2.HOUSEHOLD_MEMBER_COUNT), SUM(T2.HOUSEHOLD_MARRIED_WOMEN_COUNT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban' GROUP BY T1.STATE",
+    "pair_id": "35464adb",
+    "original_question_id": "0f01c988",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_PERSON_DEMOGRAPHICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "SURVEY_METHODOLOGY_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MARRIED_MEN_COUNT"
+      ],
+      "FACT_PERSON_DEMOGRAPHICS": [
+        "HOUSEHOLD_ID",
+        "PERSON_MARITAL_STATUS",
+        "PERSON_GENDER",
+        "PERSON_ID",
+        "PERSON_RELATIONSHIP_TO_HOUSEHOLD_HEAD",
+        "PERSON_AGE_YEARS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_household_composition`.`household_member_count` and `fact_household_composition`.`household_married_women_count` for households where `dim_geography`.`census_2001_urban_rural_flag` = 'Urban', grouped by `dim_geography`.`state`. Join `fact_household_composition` to `dim_geography` on `geography_id`."
+  },
+  {
+    "question": "Provide a state-wise breakdown of the total number of household members and married women living in urban areas, ordered alphabetically by state.",
+    "sql": "SELECT T1.STATE, SUM(T2.HOUSEHOLD_MEMBER_COUNT), SUM(T2.HOUSEHOLD_MARRIED_WOMEN_COUNT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban' GROUP BY T1.STATE ORDER BY T1.STATE",
+    "pair_id": "f171674e",
+    "original_question_id": "0f01c988",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_PERSON_DEMOGRAPHICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "SURVEY_METHODOLOGY_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MARRIED_MEN_COUNT"
+      ],
+      "FACT_PERSON_DEMOGRAPHICS": [
+        "HOUSEHOLD_ID",
+        "PERSON_MARITAL_STATUS",
+        "PERSON_GENDER",
+        "PERSON_ID",
+        "PERSON_RELATIONSHIP_TO_HOUSEHOLD_HEAD",
+        "PERSON_AGE_YEARS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_household_composition`.`household_member_count` and `fact_household_composition`.`household_married_women_count` grouped by `dim_geography`.`state` where `dim_geography`.`census_2001_urban_rural_flag` = 'Urban', ordered by `dim_geography`.`state` ASC."
+  },
+  {
+    "question": "Provide a state-wise breakdown of the total number of household members and married women living in urban areas, focusing only on states with more than five household members and sorting the results by the highest count of married women.",
+    "sql": "SELECT T1.STATE, SUM(T2.HOUSEHOLD_MEMBER_COUNT), SUM(T2.HOUSEHOLD_MARRIED_WOMEN_COUNT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_PERSON_DEMOGRAPHICS AS T3 ON T2.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban' GROUP BY T1.STATE HAVING SUM(T2.HOUSEHOLD_MEMBER_COUNT) > 5 ORDER BY SUM(T2.HOUSEHOLD_MARRIED_WOMEN_COUNT) DESC",
+    "pair_id": "8f6869cc",
+    "original_question_id": "0f01c988",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_PERSON_DEMOGRAPHICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "SURVEY_METHODOLOGY_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MARRIED_MEN_COUNT"
+      ],
+      "FACT_PERSON_DEMOGRAPHICS": [
+        "HOUSEHOLD_ID",
+        "PERSON_MARITAL_STATUS",
+        "PERSON_GENDER",
+        "PERSON_ID",
+        "PERSON_RELATIONSHIP_TO_HOUSEHOLD_HEAD",
+        "PERSON_AGE_YEARS"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_geography.state`. For each state, sum `fact_household_composition.household_member_count` as total_household_members and sum `fact_household_composition.household_married_women_count` as total_married_women. Filter households where `dim_geography.census_2001_urban_rural_flag` = 'Urban' and `fact_household_composition.household_member_count` > 5. Order results by total_married_women descending."
+  },
+  {
+    "question": "Identify the states that consist entirely of rural areas according to the 2001 census.",
+    "sql": "SELECT STATE FROM DIM_GEOGRAPHY WHERE CENSUS_2001_URBAN_RURAL_FLAG IN ('Rural', 'Urban') GROUP BY STATE HAVING SUM(CASE WHEN CENSUS_2001_URBAN_RURAL_FLAG = 'Urban' THEN 1 ELSE 0 END) = 0",
+    "pair_id": "ee91561d",
+    "original_question_id": "f4bc9763",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_SURVEY_METHODOLOGY",
+      "DIM_HOUSEHOLD_SOCIOECONOMIC",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_SURVEY_METHODOLOGY": [
+        "SURVEY_METHODOLOGY_ID",
+        "SURVEY_DESIGN_WEIGHT",
+        "IS_REINTERVIEW_HOUSEHOLD"
+      ],
+      "DIM_HOUSEHOLD_SOCIOECONOMIC": [
+        "SOCIOECONOMIC_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Find states (`dim_geography.state`) where all records in `dim_geography` for that state have `dim_geography.census_2001_urban_rural_flag = 'Rural'` and none have `dim_geography.census_2001_urban_rural_flag = 'Urban'`. Group by state and filter out states with any 'Urban' flag."
+  },
+  {
+    "question": "Which states consist entirely of rural areas according to the household composition data?",
+    "sql": "SELECT T1.STATE FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE HAVING SUM(CASE WHEN T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban' THEN 1 ELSE 0 END) = 0",
+    "pair_id": "c3c2341c",
+    "original_question_id": "f4bc9763",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_SURVEY_METHODOLOGY",
+      "DIM_HOUSEHOLD_SOCIOECONOMIC",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_SURVEY_METHODOLOGY": [
+        "SURVEY_METHODOLOGY_ID",
+        "SURVEY_DESIGN_WEIGHT",
+        "IS_REINTERVIEW_HOUSEHOLD"
+      ],
+      "DIM_HOUSEHOLD_SOCIOECONOMIC": [
+        "SOCIOECONOMIC_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Find `dim_geography.state` where all associated `dim_geography.census_2001_urban_rural_flag` values are 'Rural', based on `fact_household_composition` records. Join `fact_household_composition` with `dim_geography` on `geography_id`. Group by `dim_geography.state` and filter groups having zero records where `dim_geography.census_2001_urban_rural_flag` != 'Rural' (or equivalently, where count of all records equals count of records with `census_2001_urban_rural_flag` = 'Rural')."
+  },
+  {
+    "question": "Which states consist exclusively of rural areas that have recorded household composition data?",
+    "sql": "SELECT T1.STATE FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' GROUP BY T1.STATE HAVING COUNT(DISTINCT T1.DISTRICT) > 0 AND T1.STATE NOT IN (SELECT STATE FROM DIM_GEOGRAPHY WHERE CENSUS_2001_URBAN_RURAL_FLAG = 'Urban')",
+    "pair_id": "437df170",
+    "original_question_id": "f4bc9763",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_SURVEY_METHODOLOGY",
+      "DIM_HOUSEHOLD_SOCIOECONOMIC",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_SURVEY_METHODOLOGY": [
+        "SURVEY_METHODOLOGY_ID",
+        "SURVEY_DESIGN_WEIGHT",
+        "IS_REINTERVIEW_HOUSEHOLD"
+      ],
+      "DIM_HOUSEHOLD_SOCIOECONOMIC": [
+        "SOCIOECONOMIC_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Find `dim_geography.state` where all `dim_geography.census_2001_urban_rural_flag` values are 'Rural' and the state is linked to at least one household in `fact_household_composition` via `fact_household_composition.geography_id` = `dim_geography.geography_id`. Exclude any state that has any 'Urban' flag."
+  },
+  {
+    "question": "Identify the geography IDs for households that contain at least three youths aged 15 to 21 and were part of a re-interview survey.",
+    "sql": "SELECT T1.GEOGRAPHY_ID FROM FACT_HOUSEHOLD_COMPOSITION AS T1 JOIN DIM_SURVEY_METHODOLOGY AS T2 ON T1.SURVEY_METHODOLOGY_ID = T2.SURVEY_METHODOLOGY_ID WHERE T1.HOUSEHOLD_YOUTH_15_TO_21_COUNT >= 3 AND T2.IS_REINTERVIEW_HOUSEHOLD = 'Yes';",
+    "pair_id": "6d449523",
+    "original_question_id": "9e91dba5",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_SURVEY_METHODOLOGY",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_SURVEY_METHODOLOGY": [
+        "SURVEY_METHODOLOGY_ID",
+        "SURVEY_DESIGN_WEIGHT",
+        "IS_REINTERVIEW_HOUSEHOLD"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_household_composition`.`geography_id` from `fact_household_composition` join `dim_survey_methodology` on `fact_household_composition`.`survey_methodology_id` = `dim_survey_methodology`.`survey_methodology_id` where `fact_household_composition`.`household_youth_15_to_21_count` >= 3 and `dim_survey_methodology`.`is_reinterview_household` = 'Yes'."
+  },
+  {
+    "question": "Identify the geographic areas that included at least three youths aged 15 to 21 per household, specifically focusing on data collected from re-interviewed households.",
+    "sql": "SELECT T1.GEOGRAPHY_ID FROM FACT_HOUSEHOLD_COMPOSITION AS T1 JOIN DIM_SURVEY_METHODOLOGY AS T2 ON T1.SURVEY_METHODOLOGY_ID = T2.SURVEY_METHODOLOGY_ID WHERE T1.HOUSEHOLD_YOUTH_15_TO_21_COUNT >= 3 AND T2.IS_REINTERVIEW_HOUSEHOLD = 'Yes' GROUP BY T1.GEOGRAPHY_ID ORDER BY T1.GEOGRAPHY_ID",
+    "pair_id": "3e445bd8",
+    "original_question_id": "9e91dba5",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_SURVEY_METHODOLOGY",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_SURVEY_METHODOLOGY": [
+        "SURVEY_METHODOLOGY_ID",
+        "SURVEY_DESIGN_WEIGHT",
+        "IS_REINTERVIEW_HOUSEHOLD"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join fact_household_composition, dim_geography, and dim_survey_methodology. Filter: fact_household_composition.household_youth_15_to_21_count >= 3 and dim_survey_methodology.is_reinterview_household = 'Yes'. Return distinct dim_geography.state and dim_geography.district."
+  },
+  {
+    "question": "Identify the IDs of geographic areas where there is at least one re-interviewed household containing three or more youths aged 15 to 21, sorted numerically.",
+    "sql": "SELECT T1.GEOGRAPHY_ID FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_SURVEY_METHODOLOGY AS T3 ON T2.SURVEY_METHODOLOGY_ID = T3.SURVEY_METHODOLOGY_ID WHERE T2.HOUSEHOLD_YOUTH_15_TO_21_COUNT >= 3 AND T3.IS_REINTERVIEW_HOUSEHOLD = 'Yes' GROUP BY T1.GEOGRAPHY_ID HAVING COUNT(T2.HOUSEHOLD_ID) > 0 ORDER BY T1.GEOGRAPHY_ID ASC",
+    "pair_id": "52475ed3",
+    "original_question_id": "9e91dba5",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_SURVEY_METHODOLOGY",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_SURVEY_METHODOLOGY": [
+        "SURVEY_METHODOLOGY_ID",
+        "SURVEY_DESIGN_WEIGHT",
+        "IS_REINTERVIEW_HOUSEHOLD"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `dim_geography`.`geography_id` from `dim_geography` join `fact_household_composition` on `dim_geography`.`geography_id` = `fact_household_composition`.`geography_id` join `dim_survey_methodology` on `fact_household_composition`.`survey_methodology_id` = `dim_survey_methodology`.`survey_methodology_id` where `dim_survey_methodology`.`is_reinterview_household` = 'Yes' and `fact_household_composition`.`household_youth_15_to_21_count` >= 3 order by `dim_geography`.`geography_id`."
+  },
+  {
+    "question": "Identify the states and districts that are either classified as urban or contain households with more than three residents aged 15 to 21.",
+    "sql": "SELECT DISTINCT T1.STATE, T1.DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.HOUSEHOLD_YOUTH_15_TO_21_COUNT > 3 OR T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban'",
+    "pair_id": "85f3abb5",
+    "original_question_id": "7c371e4a",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_PERSON_DEMOGRAPHICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_PERSON_DEMOGRAPHICS": [
+        "HOUSEHOLD_ID",
+        "PERSON_MARITAL_STATUS",
+        "PERSON_GENDER",
+        "PERSON_ID",
+        "PERSON_RELATIONSHIP_TO_HOUSEHOLD_HEAD",
+        "PERSON_AGE_YEARS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve distinct `dim_geography.state` and `dim_geography.district` where either `dim_geography.census_2001_urban_rural_flag` = 'Urban' OR `fact_household_composition.household_youth_15_to_21_count` > 3, joining `dim_geography` and `fact_household_composition` on `geography_id`."
+  },
+  {
+    "question": "Identify the states and districts that are either classified as urban areas or contain households with more than three young residents aged 15 to 21.",
+    "sql": "SELECT DISTINCT T1.STATE, T1.DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.HOUSEHOLD_YOUTH_15_TO_21_COUNT > 3 OR T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban'",
+    "pair_id": "a23200bf",
+    "original_question_id": "7c371e4a",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_PERSON_DEMOGRAPHICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_PERSON_DEMOGRAPHICS": [
+        "HOUSEHOLD_ID",
+        "PERSON_MARITAL_STATUS",
+        "PERSON_GENDER",
+        "PERSON_ID",
+        "PERSON_RELATIONSHIP_TO_HOUSEHOLD_HEAD",
+        "PERSON_AGE_YEARS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct (`dim_geography`.`state`, `dim_geography`.`district`) where `dim_geography`.`census_2001_urban_rural_flag` = 'Urban' OR `fact_household_composition`.`household_youth_15_to_21_count` > 3. Join `fact_household_composition` on `dim_geography`.`geography_id` = `fact_household_composition`.`geography_id`."
+  },
+  {
+    "question": "List the states and districts that are either classified as urban or have more than three residents aged 15 to 21, sorted by state and district name.",
+    "sql": "SELECT T1.STATE, T1.DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban' OR T2.GEOGRAPHY_ID IN (SELECT GEOGRAPHY_ID FROM FACT_HOUSEHOLD_COMPOSITION GROUP BY GEOGRAPHY_ID HAVING SUM(HOUSEHOLD_YOUTH_15_TO_21_COUNT) > 3) ORDER BY T1.STATE, T1.DISTRICT",
+    "pair_id": "1d8fe1f5",
+    "original_question_id": "7c371e4a",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_PERSON_DEMOGRAPHICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_PERSON_DEMOGRAPHICS": [
+        "HOUSEHOLD_ID",
+        "PERSON_MARITAL_STATUS",
+        "PERSON_GENDER",
+        "PERSON_ID",
+        "PERSON_RELATIONSHIP_TO_HOUSEHOLD_HEAD",
+        "PERSON_AGE_YEARS"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `dim_geography`.`state`, `dim_geography`.`district` from `dim_geography` left join `fact_household_composition` on `dim_geography`.`geography_id` = `fact_household_composition`.`geography_id` where `dim_geography`.`census_2001_urban_rural_flag` = 'Urban' or `fact_household_composition`.`household_youth_15_to_21_count` > 3 order by `dim_geography`.`state`, `dim_geography`.`district`."
+  },
+  {
+    "question": "Provide the household IDs and asset indices for rural Dalit households located in Uttar Pradesh.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX FROM FACT_HOUSEHOLD_COMPOSITION AS T1 JOIN DIM_HOUSEHOLD_SOCIOECONOMIC AS T2 ON T1.SOCIOECONOMIC_ID = T2.SOCIOECONOMIC_ID JOIN DIM_GEOGRAPHY AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T3.STATE = 'Uttar Pradesh' AND T3.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' AND T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Dalit'",
+    "pair_id": "9c2e5f54",
+    "original_question_id": "3aa79449",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_HOUSEHOLD_SOCIOECONOMIC",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_HOUSEHOLD_SOCIOECONOMIC": [
+        "SOCIOECONOMIC_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter households where `dim_geography`.`state` = 'Uttar Pradesh', `dim_geography`.`census_2001_urban_rural_flag` = 'Rural', and `dim_household_socioeconomic`.`caste_religion_group_8_category` = 'Dalit'. Join `fact_household_composition` with `dim_geography` on `geography_id` and with `dim_household_socioeconomic` on `socioeconomic_id`. Output `fact_household_composition`.`household_id` and `dim_household_socioeconomic`.`household_assets_index`."
+  },
+  {
+    "question": "List the household IDs and their corresponding asset indices for Dalit households located in rural areas of Uttar Pradesh, ordered by their asset index.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX FROM FACT_HOUSEHOLD_COMPOSITION AS T1 JOIN DIM_HOUSEHOLD_SOCIOECONOMIC AS T2 ON T1.SOCIOECONOMIC_ID = T2.SOCIOECONOMIC_ID JOIN DIM_GEOGRAPHY AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T3.STATE = 'Uttar Pradesh' AND T3.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' AND T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Dalit' ORDER BY T2.HOUSEHOLD_ASSETS_INDEX",
+    "pair_id": "f28e2a1a",
+    "original_question_id": "3aa79449",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_HOUSEHOLD_SOCIOECONOMIC",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_HOUSEHOLD_SOCIOECONOMIC": [
+        "SOCIOECONOMIC_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_household_composition`.`household_id` and `dim_household_socioeconomic`.`household_assets_index` from `fact_household_composition` join `dim_household_socioeconomic` on `fact_household_composition`.`socioeconomic_id` = `dim_household_socioeconomic`.`socioeconomic_id` join `dim_geography` on `fact_household_composition`.`geography_id` = `dim_geography`.`geography_id` where `dim_household_socioeconomic`.`caste_religion_group_8_category` = 'Dalit' and `dim_geography`.`census_2001_urban_rural_flag` = 'Rural' and `dim_geography`.`state` = 'Uttar Pradesh' order by `dim_household_socioeconomic`.`household_assets_index`."
+  },
+  {
+    "question": "Provide the household IDs and asset indices for Dalit households in rural Uttar Pradesh, ordered from lowest to highest asset index.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX FROM FACT_HOUSEHOLD_COMPOSITION AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIOECONOMIC AS T2 ON T1.SOCIOECONOMIC_ID = T2.SOCIOECONOMIC_ID INNER JOIN DIM_GEOGRAPHY AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T3.STATE = 'Uttar Pradesh' AND T3.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' AND T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Dalit' GROUP BY T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX ORDER BY T2.HOUSEHOLD_ASSETS_INDEX ASC",
+    "pair_id": "450b90c3",
+    "original_question_id": "3aa79449",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_HOUSEHOLD_SOCIOECONOMIC",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_HOUSEHOLD_SOCIOECONOMIC": [
+        "SOCIOECONOMIC_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `fact_household_composition.household_id` and `dim_household_socioeconomic.household_assets_index` by joining `fact_household_composition` with `dim_geography` on `geography_id` and with `dim_household_socioeconomic` on `socioeconomic_id`. Filter where `dim_household_socioeconomic.caste_religion_group_8_category` = 'Dalit', `dim_geography.state` = 'Uttar Pradesh', and `dim_geography.census_2001_urban_rural_flag` = 'Rural'. Order by `dim_household_socioeconomic.household_assets_index` ASC."
+  },
+  {
+    "question": "Provide the average household size and the average number of married women per household, broken down by caste/religion group and urban or rural classification.",
+    "sql": "SELECT AVG(T1.HOUSEHOLD_MEMBER_COUNT), AVG(T1.HOUSEHOLD_MARRIED_WOMEN_COUNT), T2.CASTE_RELIGION_GROUP_8_CATEGORY, T3.CENSUS_2001_URBAN_RURAL_FLAG FROM FACT_HOUSEHOLD_COMPOSITION AS T1 JOIN DIM_HOUSEHOLD_SOCIOECONOMIC AS T2 ON T1.SOCIOECONOMIC_ID = T2.SOCIOECONOMIC_ID JOIN DIM_GEOGRAPHY AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY, T3.CENSUS_2001_URBAN_RURAL_FLAG",
+    "pair_id": "4675e1ed",
+    "original_question_id": "6578dcbc",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_HOUSEHOLD_SOCIOECONOMIC",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_HOUSEHOLD_SOCIOECONOMIC": [
+        "SOCIOECONOMIC_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Compute average of `fact_household_composition`.`household_member_count` and average of `fact_household_composition`.`household_married_women_count`, grouped by `dim_household_socioeconomic`.`caste_religion_group_8_category` and `dim_geography`.`census_2001_urban_rural_flag`. Join `fact_household_composition` with `dim_household_socioeconomic` on `socioeconomic_id` and with `dim_geography` on `geography_id`."
+  },
+  {
+    "question": "Provide a breakdown of the average household size and the average number of married women per household, categorized by religious or caste groups, urban-rural status, and state.",
+    "sql": "SELECT AVG(T1.HOUSEHOLD_MEMBER_COUNT), AVG(T1.HOUSEHOLD_MARRIED_WOMEN_COUNT), T2.CASTE_RELIGION_GROUP_8_CATEGORY, T3.CENSUS_2001_URBAN_RURAL_FLAG, T3.STATE FROM FACT_HOUSEHOLD_COMPOSITION AS T1 JOIN DIM_HOUSEHOLD_SOCIOECONOMIC AS T2 ON T1.SOCIOECONOMIC_ID = T2.SOCIOECONOMIC_ID JOIN DIM_GEOGRAPHY AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY, T3.CENSUS_2001_URBAN_RURAL_FLAG, T3.STATE",
+    "pair_id": "0f6d8b08",
+    "original_question_id": "6578dcbc",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_HOUSEHOLD_SOCIOECONOMIC",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_HOUSEHOLD_SOCIOECONOMIC": [
+        "SOCIOECONOMIC_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Compute average of `fact_household_composition`.`household_member_count` and average of `fact_household_composition`.`household_married_women_count`, grouped by `dim_household_socioeconomic`.`caste_religion_group_8_category`, `dim_geography`.`census_2001_urban_rural_flag`, and `dim_geography`.`state`. Join `fact_household_composition` with `dim_household_socioeconomic` on `socioeconomic_id` and with `dim_geography` on `geography_id`."
+  },
+  {
+    "question": "Identify all rural households that have more than three children aged 14 and under.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM FACT_HOUSEHOLD_COMPOSITION AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' AND T1.HOUSEHOLD_CHILDREN_0_TO_14_COUNT > 3",
+    "pair_id": "831a8ff4",
+    "original_question_id": "90005335",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_PERSON_DEMOGRAPHICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "SURVEY_METHODOLOGY_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MARRIED_MEN_COUNT"
+      ],
+      "FACT_PERSON_DEMOGRAPHICS": [
+        "PERSON_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_ROSTER_SEQUENCE_NUMBER",
+        "PERSON_GENDER",
+        "PERSON_RELATIONSHIP_TO_HOUSEHOLD_HEAD",
+        "PERSON_AGE_YEARS",
+        "PERSON_MARITAL_STATUS",
+        "NUMBER_OF_JOBS_HELD",
+        "WORKED_ANY_JOB_INDICATOR",
+        "WORKED_ON_FAMILY_FARM_INDICATOR",
+        "WORKED_IN_ANIMAL_CARE_INDICATOR",
+        "HEIGHT_MEASUREMENT",
+        "HEIGHT_MEASUREMENT_POSITION",
+        "WEIGHT_FIRST_MEASUREMENT"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_composition` with `dim_geography` on `geography_id`. Filter where `dim_geography`.`census_2001_urban_rural_flag` = 'Rural' and `fact_household_composition`.`household_children_0_to_14_count` > 3."
+  },
+  {
+    "question": "Identify all rural households that have more than three children aged 14 or younger, listed in ascending order of their ID.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM FACT_HOUSEHOLD_COMPOSITION AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_PERSON_DEMOGRAPHICS AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' GROUP BY T1.HOUSEHOLD_ID HAVING SUM(T1.HOUSEHOLD_CHILDREN_0_TO_14_COUNT) > 3 ORDER BY T1.HOUSEHOLD_ID ASC",
+    "pair_id": "d391687d",
+    "original_question_id": "90005335",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_PERSON_DEMOGRAPHICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "SURVEY_METHODOLOGY_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MARRIED_MEN_COUNT"
+      ],
+      "FACT_PERSON_DEMOGRAPHICS": [
+        "PERSON_ID",
+        "HOUSEHOLD_ID",
+        "PERSON_ROSTER_SEQUENCE_NUMBER",
+        "PERSON_GENDER",
+        "PERSON_RELATIONSHIP_TO_HOUSEHOLD_HEAD",
+        "PERSON_AGE_YEARS",
+        "PERSON_MARITAL_STATUS",
+        "NUMBER_OF_JOBS_HELD",
+        "WORKED_ANY_JOB_INDICATOR",
+        "WORKED_ON_FAMILY_FARM_INDICATOR",
+        "WORKED_IN_ANIMAL_CARE_INDICATOR",
+        "HEIGHT_MEASUREMENT",
+        "HEIGHT_MEASUREMENT_POSITION",
+        "WEIGHT_FIRST_MEASUREMENT"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_composition` with `dim_geography` on `fact_household_composition`.`geography_id` = `dim_geography`.`geography_id`. Filter where `dim_geography`.`census_2001_urban_rural_flag` = 'Rural' and `fact_household_composition`.`household_children_0_to_14_count` > 3. Order by `fact_household_composition`.`household_id` ASC."
+  },
+  {
+    "question": "Rank the states by the average number of children aged 0 to 14 per household, from highest to lowest.",
+    "sql": "SELECT T1.STATE, AVG(T2.HOUSEHOLD_CHILDREN_0_TO_14_COUNT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE ORDER BY AVG(T2.HOUSEHOLD_CHILDREN_0_TO_14_COUNT) DESC",
+    "pair_id": "ea3c8811",
+    "original_question_id": "0ae2bd59",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_PERSON_DEMOGRAPHICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_PERSON_DEMOGRAPHICS": [
+        "HOUSEHOLD_ID",
+        "PERSON_MARITAL_STATUS",
+        "PERSON_GENDER",
+        "PERSON_ID",
+        "PERSON_RELATIONSHIP_TO_HOUSEHOLD_HEAD",
+        "PERSON_AGE_YEARS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_composition` with `dim_geography` on `fact_household_composition`.`geography_id` = `dim_geography`.`geography_id`. Compute AVG(`fact_household_composition`.`household_children_0_to_14_count`) per `dim_geography`.`state`. Rank results by this average descending."
+  },
+  {
+    "question": "Rank the states by the average number of children aged 0 to 14 per household, from highest to lowest.",
+    "sql": "SELECT T1.STATE, AVG(T2.HOUSEHOLD_CHILDREN_0_TO_14_COUNT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE ORDER BY AVG(T2.HOUSEHOLD_CHILDREN_0_TO_14_COUNT) DESC",
+    "pair_id": "138c1027",
+    "original_question_id": "0ae2bd59",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_PERSON_DEMOGRAPHICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_PERSON_DEMOGRAPHICS": [
+        "HOUSEHOLD_ID",
+        "PERSON_MARITAL_STATUS",
+        "PERSON_GENDER",
+        "PERSON_ID",
+        "PERSON_RELATIONSHIP_TO_HOUSEHOLD_HEAD",
+        "PERSON_AGE_YEARS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_composition` with `dim_geography` on `geography_id`. Group by `dim_geography.state`. Compute average of `fact_household_composition.household_children_0_to_14_count` per state. Order by average descending to rank states from highest to lowest average number of children aged 0-14 per household."
+  },
+  {
+    "question": "Rank the states by the average number of children aged 0 to 14 per household, including only those states with more than one recorded household.",
+    "sql": "SELECT T1.STATE, AVG(T2.HOUSEHOLD_CHILDREN_0_TO_14_COUNT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE HAVING COUNT(T2.HOUSEHOLD_ID) > 1 ORDER BY AVG(T2.HOUSEHOLD_CHILDREN_0_TO_14_COUNT) DESC",
+    "pair_id": "a2974222",
+    "original_question_id": "0ae2bd59",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_PERSON_DEMOGRAPHICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_PERSON_DEMOGRAPHICS": [
+        "HOUSEHOLD_ID",
+        "PERSON_MARITAL_STATUS",
+        "PERSON_GENDER",
+        "PERSON_ID",
+        "PERSON_RELATIONSHIP_TO_HOUSEHOLD_HEAD",
+        "PERSON_AGE_YEARS"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_composition` with `dim_geography` on `geography_id`. Group by `dim_geography.state`. Compute AVG(`fact_household_composition`.`household_children_0_to_14_count`) as avg_children, COUNT(`fact_household_composition`.`household_id`) as household_count. Filter to household_count > 1. Order by avg_children DESC to rank states from highest to lowest average children per household."
+  },
+  {
+    "question": "Identify the top five districts in rural Uttar Pradesh with the highest average household size.",
+    "sql": "SELECT T1.DISTRICT, AVG(T2.HOUSEHOLD_MEMBER_COUNT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.STATE = 'Uttar Pradesh' AND T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' GROUP BY T1.DISTRICT ORDER BY AVG(T2.HOUSEHOLD_MEMBER_COUNT) DESC LIMIT 5",
+    "pair_id": "928db1b6",
+    "original_question_id": "a68a3881",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_HOUSEHOLD_SOCIOECONOMIC",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_HOUSEHOLD_SOCIOECONOMIC": [
+        "SOCIOECONOMIC_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "SURVEY_METHODOLOGY_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MARRIED_MEN_COUNT"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.state` = 'Uttar Pradesh' and `dim_geography.census_2001_urban_rural_flag` = 'Rural'. Join `fact_household_composition` on `fact_household_composition.geography_id` = `dim_geography.geography_id`. Group by `dim_geography.district`. Compute AVG(`fact_household_composition.household_member_count`) as average household size. Order by average household size DESC, limit 5."
+  },
+  {
+    "question": "Identify the top 5 rural districts in Uttar Pradesh with the highest average household size, considering only those districts with more than one recorded household.",
+    "sql": "SELECT T1.DISTRICT, AVG(T2.HOUSEHOLD_MEMBER_COUNT) FROM DIM_GEOGRAPHY AS T1 INNER JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN DIM_HOUSEHOLD_SOCIOECONOMIC AS T3 ON T2.SOCIOECONOMIC_ID = T3.SOCIOECONOMIC_ID WHERE T1.STATE = 'Uttar Pradesh' AND T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' GROUP BY T1.DISTRICT HAVING COUNT(T2.HOUSEHOLD_ID) > 1 ORDER BY AVG(T2.HOUSEHOLD_MEMBER_COUNT) DESC LIMIT 5",
+    "pair_id": "c1e05207",
+    "original_question_id": "a68a3881",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_HOUSEHOLD_SOCIOECONOMIC",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_HOUSEHOLD_SOCIOECONOMIC": [
+        "SOCIOECONOMIC_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "SURVEY_METHODOLOGY_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MARRIED_MEN_COUNT"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.state` = 'Uttar Pradesh' and `dim_geography.census_2001_urban_rural_flag` = 'Rural'. Join `fact_household_composition` on `geography_id`. Group by `dim_geography.district`. Compute AVG(`fact_household_composition.household_member_count`) as avg_household_size and COUNT(`fact_household_composition.household_id`) as household_count. Keep only groups with household_count > 1. Order by avg_household_size DESC, limit 5."
+  },
+  {
+    "question": "For households in the highest asset index category, provide the average number of members and the total count of married women for each state.",
+    "sql": "SELECT T1.STATE, AVG(T2.HOUSEHOLD_MEMBER_COUNT), SUM(T2.HOUSEHOLD_MARRIED_WOMEN_COUNT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_SOCIOECONOMIC AS T3 ON T2.SOCIOECONOMIC_ID = T3.SOCIOECONOMIC_ID WHERE T3.HOUSEHOLD_ASSETS_INDEX = '15' GROUP BY T1.STATE",
+    "pair_id": "ef34161a",
+    "original_question_id": "c2c023e7",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_HOUSEHOLD_SOCIOECONOMIC",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_HOUSEHOLD_SOCIOECONOMIC": [
+        "SOCIOECONOMIC_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter households where `dim_household_socioeconomic`.`household_assets_index` equals the maximum value of that column across the dataset. Then join `fact_household_composition` (using `socioeconomic_id`), and `dim_geography` (using `geography_id`). Group by `dim_geography`.`state` and compute: average of `fact_household_composition`.`household_member_count` and sum of `fact_household_composition`.`household_married_women_count`."
+  },
+  {
+    "question": "For households within the 15th asset index category, provide the average number of members and the total count of married women, grouped and ordered by state.",
+    "sql": "SELECT T1.STATE, AVG(T2.HOUSEHOLD_MEMBER_COUNT), SUM(T2.HOUSEHOLD_MARRIED_WOMEN_COUNT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_SOCIOECONOMIC AS T3 ON T2.SOCIOECONOMIC_ID = T3.SOCIOECONOMIC_ID WHERE T3.HOUSEHOLD_ASSETS_INDEX = '15' GROUP BY T1.STATE ORDER BY T1.STATE",
+    "pair_id": "3c19c4d6",
+    "original_question_id": "c2c023e7",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_HOUSEHOLD_SOCIOECONOMIC",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_HOUSEHOLD_SOCIOECONOMIC": [
+        "SOCIOECONOMIC_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_household_socioeconomic`.`household_assets_index` = 15. Join `fact_household_composition` with `dim_household_socioeconomic` on `socioeconomic_id` and with `dim_geography` on `geography_id`. Group by `dim_geography`.`state`. Compute AVG(`fact_household_composition`.`household_member_count`) and SUM(`fact_household_composition`.`household_married_women_count`). Order by `dim_geography`.`state`."
+  },
+  {
+    "question": "For states where the average household size exceeds five members, rank the states by the total number of married women, focusing specifically on households within the 15th asset index bracket.",
+    "sql": "SELECT T1.STATE, AVG(T2.HOUSEHOLD_MEMBER_COUNT), SUM(T2.HOUSEHOLD_MARRIED_WOMEN_COUNT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_SOCIOECONOMIC AS T3 ON T2.SOCIOECONOMIC_ID = T3.SOCIOECONOMIC_ID WHERE T3.HOUSEHOLD_ASSETS_INDEX = '15' GROUP BY T1.STATE HAVING AVG(T2.HOUSEHOLD_MEMBER_COUNT) > 5 ORDER BY SUM(T2.HOUSEHOLD_MARRIED_WOMEN_COUNT) DESC",
+    "pair_id": "82569943",
+    "original_question_id": "c2c023e7",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_HOUSEHOLD_SOCIOECONOMIC",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_HOUSEHOLD_SOCIOECONOMIC": [
+        "SOCIOECONOMIC_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter households where `dim_household_socioeconomic`.`household_assets_index` = 15. Group by `dim_geography`.`state`. Compute average `fact_household_composition`.`household_member_count` per state, keep states where average > 5. Sum `fact_household_composition`.`household_married_women_count` per state. Rank states by total married women descending."
+  },
+  {
+    "question": "Which districts in Rajasthan have no households belonging to the Dalit caste group among those with a household assets index of 15?",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_SOCIOECONOMIC AS T3 ON T2.SOCIOECONOMIC_ID = T3.SOCIOECONOMIC_ID WHERE T1.STATE = 'Rajasthan' AND T3.HOUSEHOLD_ASSETS_INDEX = '15' GROUP BY T1.DISTRICT HAVING SUM(CASE WHEN T3.CASTE_RELIGION_GROUP_8_CATEGORY = 'Dalit' THEN 1 ELSE 0 END) = 0",
+    "pair_id": "55e1a9f3",
+    "original_question_id": "120ca6a3",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_HOUSEHOLD_SOCIOECONOMIC",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_HOUSEHOLD_SOCIOECONOMIC": [
+        "SOCIOECONOMIC_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Find districts in Rajasthan with no households that are Dalit and have assets index 15. Use: `dim_geography.state` = 'Rajasthan', `dim_household_socioeconomic.caste_religion_group_8_category` = 'Dalit', `dim_household_socioeconomic.household_assets_index` = 15. Output `dim_geography.district`. Exclude districts having any such household."
+  },
+  {
+    "question": "Which districts in Rajasthan have no households belonging to the Dalit category among those with a household asset index of 21?",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_SOCIOECONOMIC AS T3 ON T2.SOCIOECONOMIC_ID = T3.SOCIOECONOMIC_ID WHERE T1.STATE = 'Rajasthan' AND T3.HOUSEHOLD_ASSETS_INDEX = '21' GROUP BY T1.DISTRICT HAVING SUM(CASE WHEN T3.CASTE_RELIGION_GROUP_8_CATEGORY = 'Dalit' THEN 1 ELSE 0 END) = 0",
+    "pair_id": "cebd6502",
+    "original_question_id": "120ca6a3",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_HOUSEHOLD_SOCIOECONOMIC",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_HOUSEHOLD_SOCIOECONOMIC": [
+        "SOCIOECONOMIC_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Find `dim_geography.district` where `dim_geography.state` = 'Rajasthan' and there are no households in that district with `dim_household_socioeconomic.household_assets_index` = 21 and `dim_household_socioeconomic.caste_religion_group_8_category` = 'Dalit'. Link via `fact_household_composition` joining `dim_geography.geography_id` = `fact_household_composition.geography_id` and `dim_household_socioeconomic.socioeconomic_id` = `fact_household_composition.socioeconomic_id`."
+  },
+  {
+    "question": "Which states have at least one district with recorded household data for Dalit communities?",
+    "sql": "SELECT T1.STATE FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_SOCIOECONOMIC AS T3 ON T2.SOCIOECONOMIC_ID = T3.SOCIOECONOMIC_ID WHERE T3.CASTE_RELIGION_GROUP_8_CATEGORY = 'Dalit' GROUP BY T1.STATE HAVING COUNT(DISTINCT T1.DISTRICT) >= 1",
+    "pair_id": "28cc878b",
+    "original_question_id": "c68bfe2f",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_HOUSEHOLD_SOCIOECONOMIC",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_HOUSEHOLD_SOCIOECONOMIC": [
+        "SOCIOECONOMIC_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Find distinct `dim_geography`.`state` where exists at least one household in `fact_household_composition` linked to `dim_geography` and `dim_household_socioeconomic` with `dim_household_socioeconomic`.`caste_religion_group_8_category` = 'Dalit'."
+  },
+  {
+    "question": "List the states that have Dalit households categorized in the 15th asset index, sorted alphabetically.",
+    "sql": "SELECT T1.STATE FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_SOCIOECONOMIC AS T3 ON T2.SOCIOECONOMIC_ID = T3.SOCIOECONOMIC_ID WHERE T3.CASTE_RELIGION_GROUP_8_CATEGORY = 'Dalit' AND T3.HOUSEHOLD_ASSETS_INDEX = '15' GROUP BY T1.STATE ORDER BY T1.STATE ASC",
+    "pair_id": "64f92f62",
+    "original_question_id": "c68bfe2f",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_HOUSEHOLD_SOCIOECONOMIC",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_HOUSEHOLD_SOCIOECONOMIC": [
+        "SOCIOECONOMIC_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter households where (`dim_household_socioeconomic`.`caste_religion_group_8_category` = 'Dalit') AND (`dim_household_socioeconomic`.`household_assets_index` = 15). Join `dim_household_socioeconomic` to `fact_household_composition` via `socioeconomic_id`, then join `fact_household_composition` to `dim_geography` via `geography_id`. Output distinct `dim_geography`.`state` sorted alphabetically."
+  },
+  {
+    "question": "Which states contain at least one district with Dalit households and also report households with an asset index of 15?",
+    "sql": "SELECT T1.STATE FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_SOCIOECONOMIC AS T3 ON T2.SOCIOECONOMIC_ID = T3.SOCIOECONOMIC_ID WHERE T3.HOUSEHOLD_ASSETS_INDEX = '15' GROUP BY T1.STATE INTERSECT SELECT T1.STATE FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_SOCIOECONOMIC AS T3 ON T2.SOCIOECONOMIC_ID = T3.SOCIOECONOMIC_ID WHERE T3.CASTE_RELIGION_GROUP_8_CATEGORY = 'Dalit' GROUP BY T1.STATE HAVING COUNT(DISTRICT) >= 1 ORDER BY STATE ASC",
+    "pair_id": "72e99af0",
+    "original_question_id": "c68bfe2f",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_HOUSEHOLD_SOCIOECONOMIC",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_HOUSEHOLD_SOCIOECONOMIC": [
+        "SOCIOECONOMIC_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Find states where there exists at least one household with `dim_household_socioeconomic`.`caste_religion_group_8_category` = 'Dalit' and at least one household (possibly different) with `dim_household_socioeconomic`.`household_assets_index` = 15. Join `fact_household_composition` to `dim_geography` on `geography_id` and to `dim_household_socioeconomic` on `socioeconomic_id`. Group by `dim_geography`.`state` and ensure both conditions are met for the same state."
+  },
+  {
+    "question": "Identify the states and districts that contain households either belonging to the Brahmin group or ranking 21 on the household assets index.",
+    "sql": "SELECT DISTINCT T1.STATE, T1.DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_SOCIOECONOMIC AS T3 ON T2.SOCIOECONOMIC_ID = T3.SOCIOECONOMIC_ID WHERE T3.CASTE_RELIGION_GROUP_8_CATEGORY = 'Brahmin' OR T3.HOUSEHOLD_ASSETS_INDEX = '21'",
+    "pair_id": "e493cc36",
+    "original_question_id": "b1a11f5b",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_HOUSEHOLD_SOCIOECONOMIC",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_HOUSEHOLD_SOCIOECONOMIC": [
+        "SOCIOECONOMIC_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Return distinct `dim_geography`.`state` and `dim_geography`.`district` for households where (`dim_household_socioeconomic`.`caste_religion_group_8_category` = 'Brahmin') OR (`dim_household_socioeconomic`.`household_assets_index` = 21). Join `fact_household_composition` to `dim_geography` on `geography_id` and to `dim_household_socioeconomic` on `socioeconomic_id`."
+  },
+  {
+    "question": "Identify the states and districts that contain households either belonging to the Brahmin group or ranking 21 on the household assets index, sorted alphabetically by state.",
+    "sql": "SELECT DISTINCT T1.STATE, T1.DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_SOCIOECONOMIC AS T3 ON T2.SOCIOECONOMIC_ID = T3.SOCIOECONOMIC_ID WHERE T3.CASTE_RELIGION_GROUP_8_CATEGORY = 'Brahmin' OR T3.HOUSEHOLD_ASSETS_INDEX = '21' ORDER BY T1.STATE ASC",
+    "pair_id": "fbf26291",
+    "original_question_id": "b1a11f5b",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_HOUSEHOLD_SOCIOECONOMIC",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_HOUSEHOLD_SOCIOECONOMIC": [
+        "SOCIOECONOMIC_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve distinct `dim_geography`.`state` and `dim_geography`.`district` where the household belongs to `dim_household_socioeconomic`.`caste_religion_group_8_category` = 'Brahmin' OR `dim_household_socioeconomic`.`household_assets_index` = 21. Join `dim_geography` with `fact_household_composition` on `geography_id`, and join `dim_household_socioeconomic` on `socioeconomic_id`. Sort alphabetically by `dim_geography`.`state` and then `dim_geography`.`district`."
+  },
+  {
+    "question": "Identify the states and districts that contain at least one household belonging to the Brahmin group or those ranked at a 21 on the household assets index, sorted alphabetically by state.",
+    "sql": "SELECT DISTINCT T1.STATE, T1.DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD_SOCIOECONOMIC AS T3 ON T2.SOCIOECONOMIC_ID = T3.SOCIOECONOMIC_ID WHERE T3.CASTE_RELIGION_GROUP_8_CATEGORY = 'Brahmin' OR T3.HOUSEHOLD_ASSETS_INDEX = '21' GROUP BY T1.STATE, T1.DISTRICT HAVING COUNT(T2.HOUSEHOLD_ID) >= 1 ORDER BY T1.STATE ASC",
+    "pair_id": "5c7160c0",
+    "original_question_id": "b1a11f5b",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_HOUSEHOLD_SOCIOECONOMIC",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_HOUSEHOLD_SOCIOECONOMIC": [
+        "SOCIOECONOMIC_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_household_socioeconomic`.`caste_religion_group_8_category` = 'Brahmin' OR `dim_household_socioeconomic`.`household_assets_index` = 21. Join `fact_household_composition` on `socioeconomic_id`, then `dim_geography` on `geography_id`. Select distinct `dim_geography`.`state`, `dim_geography`.`district`. Order by `dim_geography`.`state`."
+  },
+  {
+    "question": "Identify the household IDs and corresponding village or neighborhood codes for rural households in Rajasthan that have more than two married women.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T2.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE FROM FACT_HOUSEHOLD_COMPOSITION AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.STATE = 'Rajasthan' AND T2.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' AND T1.HOUSEHOLD_MARRIED_WOMEN_COUNT > 2",
+    "pair_id": "fe91dc7f",
+    "original_question_id": "842ae99d",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_PERSON_DEMOGRAPHICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "SURVEY_METHODOLOGY_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MARRIED_MEN_COUNT"
+      ],
+      "FACT_PERSON_DEMOGRAPHICS": [
+        "HOUSEHOLD_ID",
+        "PERSON_MARITAL_STATUS",
+        "PERSON_GENDER",
+        "PERSON_ID",
+        "PERSON_RELATIONSHIP_TO_HOUSEHOLD_HEAD",
+        "PERSON_AGE_YEARS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_household_composition`.`household_id` and `dim_geography`.`psu_village_or_neighborhood_code` from `fact_household_composition` join `dim_geography` on `fact_household_composition`.`geography_id` = `dim_geography`.`geography_id` where `dim_geography`.`state` = 'Rajasthan' and `dim_geography`.`census_2001_urban_rural_flag` = 'Rural' and `fact_household_composition`.`household_married_women_count` > 2."
+  },
+  {
+    "question": "Identify rural households in Himachal Pradesh that have more than two married women, providing their household IDs and local neighborhood or village codes.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T2.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE FROM FACT_HOUSEHOLD_COMPOSITION AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.STATE = 'Himachal Pradesh' AND T2.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' GROUP BY T1.HOUSEHOLD_ID, T2.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE HAVING SUM(T1.HOUSEHOLD_MARRIED_WOMEN_COUNT) > 2 ORDER BY T1.HOUSEHOLD_ID",
+    "pair_id": "ed561a23",
+    "original_question_id": "842ae99d",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_PERSON_DEMOGRAPHICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "SURVEY_METHODOLOGY_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MARRIED_MEN_COUNT"
+      ],
+      "FACT_PERSON_DEMOGRAPHICS": [
+        "HOUSEHOLD_ID",
+        "PERSON_MARITAL_STATUS",
+        "PERSON_GENDER",
+        "PERSON_ID",
+        "PERSON_RELATIONSHIP_TO_HOUSEHOLD_HEAD",
+        "PERSON_AGE_YEARS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography`.`state` = 'Himachal Pradesh' and `dim_geography`.`census_2001_urban_rural_flag` = 'Rural'. Join `fact_household_composition` on `geography_id`. Filter `fact_household_composition`.`household_married_women_count` > 2. Output `fact_household_composition`.`household_id` and `dim_geography`.`psu_village_or_neighborhood_code`."
+  },
+  {
+    "question": "Identify the household IDs and their corresponding village or neighborhood codes for rural households in Himachal Pradesh that have more than two married women.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T2.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE FROM FACT_HOUSEHOLD_COMPOSITION AS T1 INNER JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN FACT_PERSON_DEMOGRAPHICS AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.STATE = 'Himachal Pradesh' AND T2.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' GROUP BY T1.HOUSEHOLD_ID, T2.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE HAVING SUM(T1.HOUSEHOLD_MARRIED_WOMEN_COUNT) > 2 ORDER BY T1.HOUSEHOLD_ID ASC",
+    "pair_id": "352ac2f0",
+    "original_question_id": "842ae99d",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_PERSON_DEMOGRAPHICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "SURVEY_METHODOLOGY_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MARRIED_MEN_COUNT"
+      ],
+      "FACT_PERSON_DEMOGRAPHICS": [
+        "HOUSEHOLD_ID",
+        "PERSON_MARITAL_STATUS",
+        "PERSON_GENDER",
+        "PERSON_ID",
+        "PERSON_RELATIONSHIP_TO_HOUSEHOLD_HEAD",
+        "PERSON_AGE_YEARS"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `fact_household_composition`.`household_id` and `dim_geography`.`psu_village_or_neighborhood_code` for households where `dim_geography`.`state` = 'Himachal Pradesh', `dim_geography`.`census_2001_urban_rural_flag` = 'Rural', and `fact_household_composition`.`household_married_women_count` > 2."
+  },
+  {
+    "question": "Provide a breakdown by state and urban/rural status showing the average number of married women and the total number of children aged 0 to 14 per household.",
+    "sql": "SELECT AVG(T2.HOUSEHOLD_MARRIED_WOMEN_COUNT), SUM(T2.HOUSEHOLD_CHILDREN_0_TO_14_COUNT), T1.STATE, T1.CENSUS_2001_URBAN_RURAL_FLAG FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE, T1.CENSUS_2001_URBAN_RURAL_FLAG",
+    "pair_id": "52ae62b9",
+    "original_question_id": "27816187",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_composition` with `dim_geography` on `fact_household_composition.geography_id` = `dim_geography.geography_id`. Group by `dim_geography.state` and `dim_geography.census_2001_urban_rural_flag`. Compute AVG(`fact_household_composition.household_married_women_count`) as average_married_women_per_household and SUM(`fact_household_composition.household_children_0_to_14_count`) as total_children_0_to_14. Order by state and urban/rural status if needed."
+  },
+  {
+    "question": "Provide a state-wise breakdown of the average number of married women and the total number of children under 15 per household, categorized by urban and rural areas.",
+    "sql": "SELECT T1.STATE, T1.CENSUS_2001_URBAN_RURAL_FLAG, AVG(T2.HOUSEHOLD_MARRIED_WOMEN_COUNT), SUM(T2.HOUSEHOLD_CHILDREN_0_TO_14_COUNT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE, T1.CENSUS_2001_URBAN_RURAL_FLAG ORDER BY T1.STATE",
+    "pair_id": "b5c134e6",
+    "original_question_id": "27816187",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_composition` with `dim_geography` on `fact_household_composition`.`geography_id` = `dim_geography`.`geography_id`. Group by `dim_geography`.`state` and `dim_geography`.`census_2001_urban_rural_flag`. Compute AVG(`fact_household_composition`.`household_married_women_count`) as average married women per household, and SUM(`fact_household_composition`.`household_children_0_to_14_count`) as total children under 15 across households. The `dim_geography`.`census_2001_urban_rural_flag` values are exactly 'Urban' or 'Rural'."
+  },
+  {
+    "question": "Provide a breakdown by state and urban/rural status showing the average number of married women and the total number of children under 15 per household, focusing only on areas where households average more than one married woman and ranking the results by the highest child population.",
+    "sql": "SELECT T1.STATE, T1.CENSUS_2001_URBAN_RURAL_FLAG, AVG(T2.HOUSEHOLD_MARRIED_WOMEN_COUNT), SUM(T2.HOUSEHOLD_CHILDREN_0_TO_14_COUNT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE, T1.CENSUS_2001_URBAN_RURAL_FLAG HAVING AVG(T2.HOUSEHOLD_MARRIED_WOMEN_COUNT) > 1 ORDER BY SUM(T2.HOUSEHOLD_CHILDREN_0_TO_14_COUNT) DESC",
+    "pair_id": "5755ad38",
+    "original_question_id": "27816187",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_geography`.`state` and `dim_geography`.`census_2001_urban_rural_flag`. Compute AVG(CAST(`fact_household_composition`.`household_married_women_count` AS numeric)) as avg_married_women, SUM(CAST(`fact_household_composition`.`household_children_0_to_14_count` AS numeric)) as total_children_under_15. Filter groups where avg_married_women > 1. Order by total_children_under_15 DESC."
+  },
+  {
+    "question": "Identify all urban households that have more than three children aged 14 and under.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM FACT_HOUSEHOLD_COMPOSITION AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban' AND T1.HOUSEHOLD_CHILDREN_0_TO_14_COUNT > 3",
+    "pair_id": "3bdd4879",
+    "original_question_id": "0f94381b",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "BELOW_POVERTY_LINE_INDICATOR",
+        "PER_CAPITA_POVERTY_LINE",
+        "HOUSEHOLD_POVERTY_METRICS_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_composition` and `dim_geography` on `fact_household_composition`.`geography_id` = `dim_geography`.`geography_id`. Filter where `dim_geography`.`census_2001_urban_rural_flag` = 'Urban' and `fact_household_composition`.`household_children_0_to_14_count` > 3. Select `fact_household_composition`.`household_id`."
+  },
+  {
+    "question": "Identify all urban households that have more than three children aged 0 to 14, ordered by the total number of children in each household.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM FACT_HOUSEHOLD_COMPOSITION AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban' GROUP BY T1.HOUSEHOLD_ID HAVING SUM(T1.HOUSEHOLD_CHILDREN_0_TO_14_COUNT) > 3 ORDER BY SUM(T1.HOUSEHOLD_CHILDREN_0_TO_14_COUNT) DESC",
+    "pair_id": "791c40d6",
+    "original_question_id": "0f94381b",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "BELOW_POVERTY_LINE_INDICATOR",
+        "PER_CAPITA_POVERTY_LINE",
+        "HOUSEHOLD_POVERTY_METRICS_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_composition` with `dim_geography` on `geography_id`. Filter where `dim_geography.census_2001_urban_rural_flag` = 'Urban' and `fact_household_composition.household_children_0_to_14_count` > 3. Select `fact_household_composition.household_id` and `fact_household_composition.household_children_0_to_14_count`. Order by `fact_household_composition.household_children_0_to_14_count` DESC."
+  },
+  {
+    "question": "Identify all urban households that have more than three children aged 0 to 14, listed in ascending order of their IDs.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM FACT_HOUSEHOLD_COMPOSITION AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_POVERTY_METRICS AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban' GROUP BY T1.HOUSEHOLD_ID HAVING SUM(T1.HOUSEHOLD_CHILDREN_0_TO_14_COUNT) > 3 ORDER BY T1.HOUSEHOLD_ID ASC",
+    "pair_id": "798b51a8",
+    "original_question_id": "0f94381b",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "BELOW_POVERTY_LINE_INDICATOR",
+        "PER_CAPITA_POVERTY_LINE",
+        "HOUSEHOLD_POVERTY_METRICS_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_composition` with `dim_geography` on `fact_household_composition`.`geography_id` = `dim_geography`.`geography_id`. Filter where `dim_geography`.`census_2001_urban_rural_flag` = 'Urban' and `fact_household_composition`.`household_children_0_to_14_count` > 3. Order by `fact_household_composition`.`household_id` ASC."
+  },
+  {
+    "question": "Rank the districts by the average number of married women per household in rural areas, from highest to lowest.",
+    "sql": "SELECT T1.DISTRICT, AVG(T2.HOUSEHOLD_MARRIED_WOMEN_COUNT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' GROUP BY T1.DISTRICT ORDER BY AVG(T2.HOUSEHOLD_MARRIED_WOMEN_COUNT) DESC",
+    "pair_id": "623e1342",
+    "original_question_id": "6d71cfca",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_PERSON_DEMOGRAPHICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MARRIED_MEN_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_PERSON_DEMOGRAPHICS": [
+        "HOUSEHOLD_ID",
+        "PERSON_MARITAL_STATUS",
+        "PERSON_GENDER",
+        "PERSON_ID",
+        "PERSON_RELATIONSHIP_TO_HOUSEHOLD_HEAD",
+        "PERSON_AGE_YEARS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_geography.district`. Filter `dim_geography.census_2001_urban_rural_flag = 'Rural'`. Compute average of `fact_household_composition.household_married_women_count` per district. Order by average descending."
+  },
+  {
+    "question": "Rank the rural districts by the average number of married women per household, including only those districts with more than one household record.",
+    "sql": "SELECT T1.DISTRICT, AVG(T2.HOUSEHOLD_MARRIED_WOMEN_COUNT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' GROUP BY T1.DISTRICT HAVING COUNT(T2.HOUSEHOLD_ID) > 1 ORDER BY AVG(T2.HOUSEHOLD_MARRIED_WOMEN_COUNT) DESC",
+    "pair_id": "80994157",
+    "original_question_id": "6d71cfca",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_PERSON_DEMOGRAPHICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MARRIED_MEN_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_PERSON_DEMOGRAPHICS": [
+        "HOUSEHOLD_ID",
+        "PERSON_MARITAL_STATUS",
+        "PERSON_GENDER",
+        "PERSON_ID",
+        "PERSON_RELATIONSHIP_TO_HOUSEHOLD_HEAD",
+        "PERSON_AGE_YEARS"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.census_2001_urban_rural_flag` = 'Rural'. Join `fact_household_composition` and `dim_geography` on `geography_id`. Group by `dim_geography.district`. Compute AVG(`fact_household_composition.household_married_women_count`) as average_married_women_per_household. Include only districts with COUNT(`fact_household_composition.household_id`) > 1. Rank districts by average_married_women_per_household DESC."
+  },
+  {
+    "question": "Identify the top five rural districts with the highest average number of married women per household.",
+    "sql": "SELECT T1.DISTRICT, AVG(T2.HOUSEHOLD_MARRIED_WOMEN_COUNT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' GROUP BY T1.DISTRICT ORDER BY AVG(T2.HOUSEHOLD_MARRIED_WOMEN_COUNT) DESC LIMIT 5",
+    "pair_id": "4bede29d",
+    "original_question_id": "0f5fc2bd",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MARRIED_MEN_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.census_2001_urban_rural_flag` = 'Rural'. Join `fact_household_composition` with `dim_geography` on `geography_id`. Group by `dim_geography.district`. Compute average of `fact_household_composition.household_married_women_count` per district. Order by average descending. Limit to top 5 districts."
+  },
+  {
+    "question": "Identify the five rural districts with the highest average number of married women per household.",
+    "sql": "SELECT T1.DISTRICT, AVG(T2.HOUSEHOLD_MARRIED_WOMEN_COUNT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' GROUP BY T1.DISTRICT ORDER BY AVG(T2.HOUSEHOLD_MARRIED_WOMEN_COUNT) DESC LIMIT 5",
+    "pair_id": "c213d252",
+    "original_question_id": "0f5fc2bd",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MARRIED_MEN_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "We need rural districts from (`dim_geography`.`census_2001_urban_rural_flag` = 'Rural'), join `fact_household_composition` to get (`fact_household_composition`.`household_married_women_count`). Group by (`dim_geography`.`district`), compute average married women count per household, then rank and limit to top 5."
+  },
+  {
+    "question": "Identify the top 5 rural districts with the highest average number of married women per household, considering only those districts with more than one household record.",
+    "sql": "SELECT T1.DISTRICT, AVG(T2.HOUSEHOLD_MARRIED_WOMEN_COUNT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' GROUP BY T1.DISTRICT HAVING COUNT(T2.HOUSEHOLD_ID) > 1 ORDER BY AVG(T2.HOUSEHOLD_MARRIED_WOMEN_COUNT) DESC LIMIT 5",
+    "pair_id": "0d75150d",
+    "original_question_id": "0f5fc2bd",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MARRIED_MEN_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_composition` and `dim_geography` on `geography_id`. Filter where `dim_geography`.`census_2001_urban_rural_flag` = 'Rural'. Group by `dim_geography`.`district`. Compute average(`fact_household_composition`.`household_married_women_count`) as avg_married_women_per_household. Count(`fact_household_composition`.`household_id`) as household_count. Filter groups with household_count > 1. Order by avg_married_women_per_household DESC, limit 5."
+  },
+  {
+    "question": "Calculate the total number of married women and children aged 0 to 14 living in urban areas based on the 2001 census.",
+    "sql": "SELECT SUM(FACT_HOUSEHOLD_COMPOSITION.HOUSEHOLD_MARRIED_WOMEN_COUNT), SUM(FACT_HOUSEHOLD_COMPOSITION.HOUSEHOLD_CHILDREN_0_TO_14_COUNT) FROM FACT_HOUSEHOLD_COMPOSITION JOIN DIM_GEOGRAPHY ON FACT_HOUSEHOLD_COMPOSITION.GEOGRAPHY_ID = DIM_GEOGRAPHY.GEOGRAPHY_ID WHERE DIM_GEOGRAPHY.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban'",
+    "pair_id": "34bba140",
+    "original_question_id": "a3d013ac",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "PER_CAPITA_POVERTY_LINE",
+        "BELOW_POVERTY_LINE_INDICATOR",
+        "HOUSEHOLD_POVERTY_METRICS_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_household_composition.household_married_women_count` and `fact_household_composition.household_children_0_to_14_count` separately for households where `dim_geography.census_2001_urban_rural_flag` = 'Urban', joining `fact_household_composition.geography_id` = `dim_geography.geography_id`."
+  },
+  {
+    "question": "Provide a district-wise breakdown of the total number of married women and children aged 0 to 14 living in urban households, sorted alphabetically by district.",
+    "sql": "SELECT SUM(T1.HOUSEHOLD_MARRIED_WOMEN_COUNT), SUM(T1.HOUSEHOLD_CHILDREN_0_TO_14_COUNT) FROM FACT_HOUSEHOLD_COMPOSITION AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban' GROUP BY T2.DISTRICT ORDER BY T2.DISTRICT",
+    "pair_id": "926cec22",
+    "original_question_id": "a3d013ac",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "PER_CAPITA_POVERTY_LINE",
+        "BELOW_POVERTY_LINE_INDICATOR",
+        "HOUSEHOLD_POVERTY_METRICS_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_household_composition`.`household_married_women_count` and `fact_household_composition`.`household_children_0_to_14_count` for households where `dim_geography`.`census_2001_urban_rural_flag` = 'Urban', grouped by `dim_geography`.`district`, ordered by `dim_geography`.`district` alphabetically."
+  },
+  {
+    "question": "Provide the total number of married women and children aged 0 to 14 living in urban areas, specifically for regions with more than one recorded household.",
+    "sql": "SELECT SUM(T1.HOUSEHOLD_MARRIED_WOMEN_COUNT), SUM(T1.HOUSEHOLD_CHILDREN_0_TO_14_COUNT), T2.CENSUS_2001_URBAN_RURAL_FLAG FROM FACT_HOUSEHOLD_COMPOSITION AS T1 INNER JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN FACT_HOUSEHOLD_POVERTY_METRICS AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban' GROUP BY T2.CENSUS_2001_URBAN_RURAL_FLAG HAVING COUNT(T1.HOUSEHOLD_ID) > 1 ORDER BY SUM(T1.HOUSEHOLD_MARRIED_WOMEN_COUNT) DESC",
+    "pair_id": "35a338b3",
+    "original_question_id": "a3d013ac",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "PER_CAPITA_POVERTY_LINE",
+        "BELOW_POVERTY_LINE_INDICATOR",
+        "HOUSEHOLD_POVERTY_METRICS_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Sum fact_household_composition.household_married_women_count and fact_household_composition.household_children_0_to_14_count for households in dim_geography with census_2001_urban_rural_flag = 'Urban', grouped by dim_geography.state, having count(distinct fact_household_composition.household_id) > 1."
+  },
+  {
+    "question": "Identify the urban districts where no households were selected for a re-interview during the survey.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_SURVEY_METHODOLOGY AS T3 ON T2.SURVEY_METHODOLOGY_ID = T3.SURVEY_METHODOLOGY_ID WHERE T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban' GROUP BY T1.DISTRICT HAVING SUM(CASE WHEN T3.IS_REINTERVIEW_HOUSEHOLD = 'Yes' THEN 1 ELSE 0 END) = 0",
+    "pair_id": "682a8146",
+    "original_question_id": "304c9899",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_SURVEY_METHODOLOGY",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_SURVEY_METHODOLOGY": [
+        "SURVEY_METHODOLOGY_ID",
+        "SURVEY_DESIGN_WEIGHT",
+        "IS_REINTERVIEW_HOUSEHOLD"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Find distinct `dim_geography.district` where `dim_geography.census_2001_urban_rural_flag` = 'Urban' and no household in that district has `dim_survey_methodology.is_reinterview_household` = 'Yes'. Join `dim_geography` to `fact_household_composition` on `geography_id`, then to `dim_survey_methodology` on `survey_methodology_id`. Filter for 'Urban' and exclude districts with any 'Yes' re-interview households."
+  },
+  {
+    "question": "Identify the urban districts where no households were selected for a re-interview during the survey.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_SURVEY_METHODOLOGY AS T3 ON T2.SURVEY_METHODOLOGY_ID = T3.SURVEY_METHODOLOGY_ID WHERE T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban' GROUP BY T1.DISTRICT HAVING SUM(CASE WHEN T3.IS_REINTERVIEW_HOUSEHOLD = 'Yes' THEN 1 ELSE 0 END) = 0",
+    "pair_id": "46d436f4",
+    "original_question_id": "304c9899",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_SURVEY_METHODOLOGY",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_SURVEY_METHODOLOGY": [
+        "SURVEY_METHODOLOGY_ID",
+        "SURVEY_DESIGN_WEIGHT",
+        "IS_REINTERVIEW_HOUSEHOLD"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Find districts (`dim_geography.district`) where `dim_geography.census_2001_urban_rural_flag` = 'Urban' and no household in that district has `dim_survey_methodology.is_reinterview_household` = 'Yes'. Instead, all households in the district must have `dim_survey_methodology.is_reinterview_household` = 'Valid blank'."
+  },
+  {
+    "question": "Identify all urban districts where no household surveys were conducted via re-interviews, listed in alphabetical order.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_SURVEY_METHODOLOGY AS T3 ON T2.SURVEY_METHODOLOGY_ID = T3.SURVEY_METHODOLOGY_ID WHERE T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban' GROUP BY T1.DISTRICT HAVING SUM(CASE WHEN T3.IS_REINTERVIEW_HOUSEHOLD = 'Yes' THEN 1 ELSE 0 END) = 0 ORDER BY T1.DISTRICT ASC",
+    "pair_id": "a7f924f8",
+    "original_question_id": "304c9899",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_SURVEY_METHODOLOGY",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_SURVEY_METHODOLOGY": [
+        "SURVEY_METHODOLOGY_ID",
+        "SURVEY_DESIGN_WEIGHT",
+        "IS_REINTERVIEW_HOUSEHOLD"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `dim_geography`.`district` from `fact_household_composition` join `dim_geography` on `fact_household_composition`.`geography_id` = `dim_geography`.`geography_id` join `dim_survey_methodology` on `fact_household_composition`.`survey_methodology_id` = `dim_survey_methodology`.`survey_methodology_id` where `dim_geography`.`census_2001_urban_rural_flag` = 'Urban' and `dim_survey_methodology`.`is_reinterview_household` = 'Valid blank' order by `dim_geography`.`district` asc."
+  },
+  {
+    "question": "Identify the urban districts that have at least one household with a married woman.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban' AND T2.HOUSEHOLD_MARRIED_WOMEN_COUNT >= 1 GROUP BY T1.DISTRICT HAVING COUNT(DISTINCT T1.CENSUS_2001_URBAN_RURAL_FLAG) > 0",
+    "pair_id": "9177f179",
+    "original_question_id": "b6928457",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MARRIED_MEN_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Find distinct (`dim_geography`.`district`) where (`dim_geography`.`census_2001_urban_rural_flag`) = 'Urban' and there exists at least one household in that district (via `fact_household_composition`.`geography_id` = `dim_geography`.`geography_id`) with (`fact_household_composition`.`household_married_women_count`) >= 1."
+  },
+  {
+    "question": "List the names of urban districts, in alphabetical order, that contain at least one household with a married woman.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban' AND T2.HOUSEHOLD_MARRIED_WOMEN_COUNT >= 1 GROUP BY T1.DISTRICT HAVING COUNT(DISTINCT T1.CENSUS_2001_URBAN_RURAL_FLAG) > 0 ORDER BY T1.DISTRICT",
+    "pair_id": "7f3337e1",
+    "original_question_id": "b6928457",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MARRIED_MEN_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List distinct `dim_geography.district` where `dim_geography.census_2001_urban_rural_flag` = 'Urban' and exists at least one household in `fact_household_composition` linked via `fact_household_composition.geography_id = dim_geography.geography_id` with `fact_household_composition.household_married_women_count >= 1`. Order alphabetically by `dim_geography.district`."
+  },
+  {
+    "question": "Which districts in Himachal Pradesh have at least one household with married women in both their urban and rural areas? List them in alphabetical order.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.STATE = 'Himachal Pradesh' GROUP BY T1.DISTRICT HAVING SUM(CASE WHEN T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban' AND T2.HOUSEHOLD_MARRIED_WOMEN_COUNT >= 1 THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' AND T2.HOUSEHOLD_MARRIED_WOMEN_COUNT >= 1 THEN 1 ELSE 0 END) > 0 ORDER BY T1.DISTRICT ASC",
+    "pair_id": "8e29de42",
+    "original_question_id": "b6928457",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MARRIED_MEN_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Find districts (`dim_geography.district`) where `dim_geography.state` = 'Himachal Pradesh' and there exists at least one household with `fact_household_composition.household_married_women_count` > 0 in both `dim_geography.census_2001_urban_rural_flag` = 'Urban' and 'Rural' for the same district. List distinct district names in alphabetical order."
+  },
+  {
+    "question": "Identify all districts that either are classified as urban areas or have conducted household re-interviews.",
+    "sql": "SELECT DISTINCT T1.DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_SURVEY_METHODOLOGY AS T3 ON T2.SURVEY_METHODOLOGY_ID = T3.SURVEY_METHODOLOGY_ID WHERE T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban' OR T3.IS_REINTERVIEW_HOUSEHOLD = 'Yes'",
+    "pair_id": "c60fb866",
+    "original_question_id": "531c33bc",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_SURVEY_METHODOLOGY",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_SURVEY_METHODOLOGY": [
+        "SURVEY_METHODOLOGY_ID",
+        "SURVEY_DESIGN_WEIGHT",
+        "IS_REINTERVIEW_HOUSEHOLD"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Find distinct `dim_geography`.`district` where `dim_geography`.`census_2001_urban_rural_flag` = 'Urban' or `dim_survey_methodology`.`is_reinterview_household` = 'Yes', linking via `fact_household_composition`."
+  },
+  {
+    "question": "Provide an alphabetized list of districts that are either classified as urban or contain households that participated in re-interview surveys.",
+    "sql": "SELECT DISTINCT T1.DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_SURVEY_METHODOLOGY AS T3 ON T2.SURVEY_METHODOLOGY_ID = T3.SURVEY_METHODOLOGY_ID WHERE T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban' OR T3.IS_REINTERVIEW_HOUSEHOLD = 'Yes' ORDER BY T1.DISTRICT",
+    "pair_id": "2bb5b6b1",
+    "original_question_id": "531c33bc",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_SURVEY_METHODOLOGY",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_SURVEY_METHODOLOGY": [
+        "SURVEY_METHODOLOGY_ID",
+        "SURVEY_DESIGN_WEIGHT",
+        "IS_REINTERVIEW_HOUSEHOLD"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve distinct `dim_geography.district` where `dim_geography.census_2001_urban_rural_flag` = 'Urban' OR `dim_survey_methodology.is_reinterview_household` = 'Yes', joining `fact_household_composition` on `geography_id` and `survey_methodology_id`, then order alphabetically by district."
+  },
+  {
+    "question": "List the names of urban districts or those containing re-interviewed households, sorted alphabetically.",
+    "sql": "SELECT DISTINCT T1.DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_SURVEY_METHODOLOGY AS T3 ON T2.SURVEY_METHODOLOGY_ID = T3.SURVEY_METHODOLOGY_ID WHERE T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban' OR T3.IS_REINTERVIEW_HOUSEHOLD = 'Yes' GROUP BY T1.DISTRICT HAVING COUNT(T2.HOUSEHOLD_ID) >= 1 ORDER BY T1.DISTRICT ASC",
+    "pair_id": "8f8791bd",
+    "original_question_id": "531c33bc",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "DIM_SURVEY_METHODOLOGY",
+      "FACT_HOUSEHOLD_COMPOSITION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "DIM_SURVEY_METHODOLOGY": [
+        "SURVEY_METHODOLOGY_ID",
+        "SURVEY_DESIGN_WEIGHT",
+        "IS_REINTERVIEW_HOUSEHOLD"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List distinct `dim_geography.district` where `dim_geography.census_2001_urban_rural_flag` = 'Urban' OR `dim_survey_methodology.is_reinterview_household` = 'Yes', sorted alphabetically. Join `dim_geography` to `fact_household_composition` on `dim_geography.geography_id` = `fact_household_composition.geography_id`, then join `fact_household_composition` to `dim_survey_methodology` on `fact_household_composition.survey_methodology_id` = `dim_survey_methodology.survey_methodology_id`."
+  },
+  {
+    "question": "Identify the household IDs in rural Uttar Pradesh that are classified as being above the poverty line.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM FACT_HOUSEHOLD_COMPOSITION AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_POVERTY_METRICS AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.STATE = 'Uttar Pradesh' AND T2.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' AND T3.BELOW_POVERTY_LINE_INDICATOR = 'No';",
+    "pair_id": "458fdc50",
+    "original_question_id": "4c2c0d07",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_POVERTY_METRICS_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "PER_CAPITA_POVERTY_LINE",
+        "BELOW_POVERTY_LINE_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_household_composition`.`household_id` where `dim_geography`.`state` = 'Uttar Pradesh' and `dim_geography`.`census_2001_urban_rural_flag` = 'Rural' and `fact_household_poverty_metrics`.`below_poverty_line_indicator` = 'No'. Join `fact_household_composition` with `dim_geography` on `geography_id` and with `fact_household_poverty_metrics` on `household_id`."
+  },
+  {
+    "question": "Identify the household IDs in rural Uttar Pradesh that are currently classified as being above the poverty line.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM FACT_HOUSEHOLD_COMPOSITION AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_POVERTY_METRICS AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.STATE = 'Uttar Pradesh' AND T2.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' AND T3.BELOW_POVERTY_LINE_INDICATOR = 'No'",
+    "pair_id": "1ede09f3",
+    "original_question_id": "4c2c0d07",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_POVERTY_METRICS_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "PER_CAPITA_POVERTY_LINE",
+        "BELOW_POVERTY_LINE_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_household_composition`.`household_id` where `dim_geography`.`state` = 'Uttar Pradesh' and `dim_geography`.`census_2001_urban_rural_flag` = 'Rural' and `fact_household_poverty_metrics`.`below_poverty_line_indicator` = 'No'. Join `fact_household_composition` to `dim_geography` via `geography_id` and to `fact_household_poverty_metrics` via `household_id`."
+  },
+  {
+    "question": "List the IDs and member counts for households in rural Uttar Pradesh that are not classified as living below the poverty line.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T1.HOUSEHOLD_MEMBER_COUNT, T2.STATE FROM FACT_HOUSEHOLD_COMPOSITION AS T1 INNER JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN FACT_HOUSEHOLD_POVERTY_METRICS AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.STATE = 'Uttar Pradesh' AND T2.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' AND T3.BELOW_POVERTY_LINE_INDICATOR = 'No' GROUP BY T1.HOUSEHOLD_ID, T1.HOUSEHOLD_MEMBER_COUNT, T2.STATE HAVING COUNT(T3.HOUSEHOLD_POVERTY_METRICS_ID) >= 1 ORDER BY T1.HOUSEHOLD_ID ASC",
+    "pair_id": "4f79fc66",
+    "original_question_id": "4c2c0d07",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_POVERTY_METRICS_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "PER_CAPITA_POVERTY_LINE",
+        "BELOW_POVERTY_LINE_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_household_composition`.`household_id` and `fact_household_composition`.`household_member_count` from `fact_household_composition` join `dim_geography` on `fact_household_composition`.`geography_id` = `dim_geography`.`geography_id` join `fact_household_poverty_metrics` on `fact_household_composition`.`household_id` = `fact_household_poverty_metrics`.`household_id` where `dim_geography`.`state` = 'Uttar Pradesh' and `dim_geography`.`census_2001_urban_rural_flag` = 'Rural' and `fact_household_poverty_metrics`.`below_poverty_line_indicator` = 'No'."
+  },
+  {
+    "question": "For households above the poverty line, provide the average monthly per capita consumption and the total household count, broken down by state and urban-rural classification.",
+    "sql": "SELECT T1.STATE, T1.CENSUS_2001_URBAN_RURAL_FLAG, AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA), COUNT(T2.HOUSEHOLD_ID) FROM DIM_GEOGRAPHY T1 JOIN FACT_HOUSEHOLD_COMPOSITION T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_POVERTY_METRICS T3 ON T2.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T3.BELOW_POVERTY_LINE_INDICATOR = 'No' GROUP BY T1.STATE, T1.CENSUS_2001_URBAN_RURAL_FLAG",
+    "pair_id": "5c66aab4",
+    "original_question_id": "6a41118c",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_POVERTY_METRICS_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "PER_CAPITA_POVERTY_LINE",
+        "BELOW_POVERTY_LINE_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter: `fact_household_poverty_metrics`.`below_poverty_line_indicator` = 'No'. Group by `dim_geography`.`state` and `dim_geography`.`census_2001_urban_rural_flag`. Compute AVG(`fact_household_poverty_metrics`.`monthly_consumption_per_capita`) and COUNT(DISTINCT `fact_household_composition`.`household_id`). Join `fact_household_poverty_metrics` → `fact_household_composition` on `household_id` → `dim_geography` on `geography_id`."
+  },
+  {
+    "question": "Provide a state-wise breakdown of the average monthly per capita consumption and the total number of households for families living above the poverty line, categorized by their 2001 urban or rural status.",
+    "sql": "SELECT T1.STATE, T1.CENSUS_2001_URBAN_RURAL_FLAG, AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA), COUNT(T3.HOUSEHOLD_ID) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_POVERTY_METRICS AS T3 ON T2.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T3.BELOW_POVERTY_LINE_INDICATOR = 'No' GROUP BY T1.STATE, T1.CENSUS_2001_URBAN_RURAL_FLAG ORDER BY T1.STATE ASC",
+    "pair_id": "994047b1",
+    "original_question_id": "6a41118c",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_POVERTY_METRICS_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "PER_CAPITA_POVERTY_LINE",
+        "BELOW_POVERTY_LINE_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `fact_household_poverty_metrics.below_poverty_line_indicator` = 'No'. Join `fact_household_poverty_metrics` to `fact_household_composition` on `household_id`, then join `fact_household_composition` to `dim_geography` on `geography_id`. Group by `dim_geography.state` and `dim_geography.census_2001_urban_rural_flag`. Compute average(`fact_household_poverty_metrics.monthly_consumption_per_capita`) and count distinct `fact_household_composition.household_id`."
+  },
+  {
+    "question": "Compare the average monthly per capita consumption and total household count across different states and urban/rural areas, focusing only on households above the poverty line.",
+    "sql": "SELECT T1.STATE, T1.CENSUS_2001_URBAN_RURAL_FLAG, AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA), COUNT(T2.HOUSEHOLD_ID) FROM DIM_GEOGRAPHY AS T1 INNER JOIN FACT_HOUSEHOLD_COMPOSITION AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID INNER JOIN FACT_HOUSEHOLD_POVERTY_METRICS AS T2 ON T3.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.BELOW_POVERTY_LINE_INDICATOR = 'No' GROUP BY T1.STATE, T1.CENSUS_2001_URBAN_RURAL_FLAG HAVING COUNT(T2.HOUSEHOLD_ID) > 0 ORDER BY AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA) DESC",
+    "pair_id": "a8715a74",
+    "original_question_id": "6a41118c",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_POVERTY_METRICS_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "PER_CAPITA_POVERTY_LINE",
+        "BELOW_POVERTY_LINE_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `fact_household_poverty_metrics`.`below_poverty_line_indicator` = 'No'. Join `fact_household_poverty_metrics` to `fact_household_composition` on `household_id`, then join `fact_household_composition` to `dim_geography` on `geography_id`. Group by `dim_geography`.`state`, `dim_geography`.`census_2001_urban_rural_flag`. Compute AVG(`fact_household_poverty_metrics`.`monthly_consumption_per_capita`) and COUNT(DISTINCT `fact_household_composition`.`household_id`)."
+  },
+  {
+    "question": "Identify the household IDs for all rural households that are currently living above the poverty line.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM FACT_HOUSEHOLD_COMPOSITION AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' AND T1.HOUSEHOLD_ID IN (SELECT HOUSEHOLD_ID FROM FACT_HOUSEHOLD_POVERTY_METRICS WHERE BELOW_POVERTY_LINE_INDICATOR = 'No');",
+    "pair_id": "3f4b07ab",
+    "original_question_id": "2eab056f",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_POVERTY_METRICS_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "PER_CAPITA_POVERTY_LINE",
+        "BELOW_POVERTY_LINE_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_household_composition`.`household_id` from `fact_household_composition` join `dim_geography` on `fact_household_composition`.`geography_id` = `dim_geography`.`geography_id` join `fact_household_poverty_metrics` on `fact_household_composition`.`household_id` = `fact_household_poverty_metrics`.`household_id` where `dim_geography`.`census_2001_urban_rural_flag` = 'Rural' and `fact_household_poverty_metrics`.`below_poverty_line_indicator` = 'No'."
+  },
+  {
+    "question": "Identify the IDs of rural households that are currently living above the poverty line.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM FACT_HOUSEHOLD_POVERTY_METRICS AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_GEOGRAPHY AS T3 ON T2.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T3.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' AND T1.BELOW_POVERTY_LINE_INDICATOR = 'No';",
+    "pair_id": "8f769eea",
+    "original_question_id": "2eab056f",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_POVERTY_METRICS_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "PER_CAPITA_POVERTY_LINE",
+        "BELOW_POVERTY_LINE_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_household_composition`.`household_id` from `fact_household_composition` inner join `dim_geography` on `fact_household_composition`.`geography_id` = `dim_geography`.`geography_id` inner join `fact_household_poverty_metrics` on `fact_household_composition`.`household_id` = `fact_household_poverty_metrics`.`household_id` where `dim_geography`.`census_2001_urban_rural_flag` = 'Rural' and `fact_household_poverty_metrics`.`below_poverty_line_indicator` = 'No'."
+  },
+  {
+    "question": "Identify all rural households that are living above the poverty line, listed in ascending order by their ID.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM FACT_HOUSEHOLD_COMPOSITION AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_POVERTY_METRICS AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' AND T3.BELOW_POVERTY_LINE_INDICATOR = 'No' GROUP BY T1.HOUSEHOLD_ID HAVING COUNT(T1.HOUSEHOLD_ID) >= 1 ORDER BY T1.HOUSEHOLD_ID ASC",
+    "pair_id": "d80cab02",
+    "original_question_id": "2eab056f",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_POVERTY_METRICS_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "PER_CAPITA_POVERTY_LINE",
+        "BELOW_POVERTY_LINE_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_household_composition`.`household_id` from `fact_household_composition` inner join `dim_geography` on `fact_household_composition`.`geography_id` = `dim_geography`.`geography_id` inner join `fact_household_poverty_metrics` on `fact_household_composition`.`household_id` = `fact_household_poverty_metrics`.`household_id` where `dim_geography`.`census_2001_urban_rural_flag` = 'Rural' and `fact_household_poverty_metrics`.`below_poverty_line_indicator` = 'No' order by `fact_household_composition`.`household_id` ASC."
+  },
+  {
+    "question": "Rank the states by their average monthly per capita consumption for households that are above the poverty line.",
+    "sql": "SELECT T1.STATE, AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_POVERTY_METRICS AS T3 ON T2.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T3.BELOW_POVERTY_LINE_INDICATOR = 'No' GROUP BY T1.STATE ORDER BY AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA) DESC",
+    "pair_id": "c67084eb",
+    "original_question_id": "0e6fa73c",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "SURVEY_METHODOLOGY_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MARRIED_MEN_COUNT"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_POVERTY_METRICS_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "PER_CAPITA_POVERTY_LINE",
+        "BELOW_POVERTY_LINE_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `fact_household_poverty_metrics`.`below_poverty_line_indicator` = 'No' for above poverty line. Join `fact_household_poverty_metrics` to `fact_household_composition` on `household_id`, then to `dim_geography` on `geography_id`. Compute AVG(`fact_household_poverty_metrics`.`monthly_consumption_per_capita`) grouped by `dim_geography`.`state`. Order by average descending to rank states from highest to lowest consumption."
+  },
+  {
+    "question": "Rank the states by the average monthly per capita consumption for households that are above the poverty line.",
+    "sql": "SELECT T1.STATE, AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_POVERTY_METRICS AS T3 ON T2.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T3.BELOW_POVERTY_LINE_INDICATOR = 'No' GROUP BY T1.STATE ORDER BY AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA) DESC",
+    "pair_id": "0538aef5",
+    "original_question_id": "0e6fa73c",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "SURVEY_METHODOLOGY_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MARRIED_MEN_COUNT"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_POVERTY_METRICS_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "PER_CAPITA_POVERTY_LINE",
+        "BELOW_POVERTY_LINE_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `fact_household_poverty_metrics`.`below_poverty_line_indicator` = 'No'. Join `fact_household_poverty_metrics` to `fact_household_composition` on `household_id`, then to `dim_geography` on `geography_id`. Group by `dim_geography`.`state`, compute AVG(`fact_household_poverty_metrics`.`monthly_consumption_per_capita`), and rank by this average descending."
+  },
+  {
+    "question": "Rank the states by their average monthly per capita consumption for households that are above the poverty line.",
+    "sql": "SELECT T1.STATE, AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_POVERTY_METRICS AS T3 ON T2.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T3.BELOW_POVERTY_LINE_INDICATOR = 'No' GROUP BY T1.STATE ORDER BY AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA) DESC",
+    "pair_id": "b7509c07",
+    "original_question_id": "0e6fa73c",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "SURVEY_METHODOLOGY_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MARRIED_MEN_COUNT"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_POVERTY_METRICS_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "PER_CAPITA_POVERTY_LINE",
+        "BELOW_POVERTY_LINE_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `fact_household_poverty_metrics`.`below_poverty_line_indicator` = 'No'. Join `fact_household_poverty_metrics` → `fact_household_composition` (on `household_id`) → `dim_geography` (on `geography_id`). Group by `dim_geography`.`state`, compute AVG(`fact_household_poverty_metrics`.`monthly_consumption_per_capita`). Order by average descending to rank states."
+  },
+  {
+    "question": "Identify the top 10 urban districts with the highest average monthly per capita consumption, including their respective poverty line thresholds.",
+    "sql": "SELECT T1.DISTRICT, AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA), T2.PER_CAPITA_POVERTY_LINE FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_POVERTY_METRICS AS T2 ON T3.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban' GROUP BY T1.DISTRICT, T2.PER_CAPITA_POVERTY_LINE ORDER BY AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA) DESC LIMIT 10",
+    "pair_id": "f7581d11",
+    "original_question_id": "1b214e71",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_POVERTY_METRICS_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "PER_CAPITA_POVERTY_LINE",
+        "BELOW_POVERTY_LINE_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography`.`census_2001_urban_rural_flag` = 'Urban'. Join `fact_household_poverty_metrics` to `fact_household_composition` on `household_id`, then to `dim_geography` on `geography_id`. Group by `dim_geography`.`district`. Compute AVG(`fact_household_poverty_metrics`.`monthly_consumption_per_capita`) and AVG(`fact_household_poverty_metrics`.`per_capita_poverty_line`). Order by avg_consumption DESC. Limit 10."
+  },
+  {
+    "question": "Identify the top 10 urban districts with the highest average monthly per capita consumption, including their respective poverty lines.",
+    "sql": "SELECT T1.DISTRICT, AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA), T3.PER_CAPITA_POVERTY_LINE FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_POVERTY_METRICS AS T3 ON T2.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban' GROUP BY T1.DISTRICT, T3.PER_CAPITA_POVERTY_LINE ORDER BY AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA) DESC LIMIT 10",
+    "pair_id": "1c44f97f",
+    "original_question_id": "1b214e71",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_POVERTY_METRICS_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "PER_CAPITA_POVERTY_LINE",
+        "BELOW_POVERTY_LINE_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography.census_2001_urban_rural_flag` = 'Urban'. Join `fact_household_poverty_metrics` to `fact_household_composition` on `household_id`, then to `dim_geography` on `geography_id`. Group by `dim_geography.district`. Compute average(`fact_household_poverty_metrics.monthly_consumption_per_capita`) as avg_consumption and average(`fact_household_poverty_metrics.per_capita_poverty_line`) as avg_poverty_line. Order by avg_consumption DESC limit 10."
+  },
+  {
+    "question": "Identify the top 10 urban districts with the highest average monthly per capita consumption, including their respective poverty lines.",
+    "sql": "SELECT T1.DISTRICT, AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA), T2.PER_CAPITA_POVERTY_LINE FROM DIM_GEOGRAPHY AS T1 INNER JOIN FACT_HOUSEHOLD_COMPOSITION AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID INNER JOIN FACT_HOUSEHOLD_POVERTY_METRICS AS T2 ON T3.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban' GROUP BY T1.DISTRICT, T2.PER_CAPITA_POVERTY_LINE HAVING COUNT(T3.HOUSEHOLD_ID) > 0 ORDER BY AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA) DESC LIMIT 10",
+    "pair_id": "56d1d010",
+    "original_question_id": "1b214e71",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_POVERTY_METRICS_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "PER_CAPITA_POVERTY_LINE",
+        "BELOW_POVERTY_LINE_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_geography` → `fact_household_composition` → `fact_household_poverty_metrics`. Filter `dim_geography.census_2001_urban_rural_flag` = 'Urban'. Group by `dim_geography.district`. Compute AVG(`fact_household_poverty_metrics.monthly_consumption_per_capita`) and AVG(`fact_household_poverty_metrics.per_capita_poverty_line`). Order by avg monthly consumption descending, limit 10."
+  },
+  {
+    "question": "Identify districts where the average monthly per capita consumption is less than 500 despite being above the poverty line, and show the total number of children aged 0 to 14 in those areas.",
+    "sql": "SELECT T1.STATE, T1.DISTRICT, SUM(T2.HOUSEHOLD_CHILDREN_0_TO_14_COUNT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_POVERTY_METRICS AS T3 ON T2.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T3.BELOW_POVERTY_LINE_INDICATOR = 'No' GROUP BY T1.STATE, T1.DISTRICT HAVING AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA) < 500",
+    "pair_id": "f5d069a2",
+    "original_question_id": "e07323b6",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_POVERTY_METRICS_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "PER_CAPITA_POVERTY_LINE",
+        "BELOW_POVERTY_LINE_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter households where `fact_household_poverty_metrics`.`monthly_consumption_per_capita` < 500 and `fact_household_poverty_metrics`.`below_poverty_line_indicator` = 'No'. Join `fact_household_poverty_metrics` to `fact_household_composition` on `household_id`, and join to `dim_geography` on `geography_id`. Group by `dim_geography`.`district`. For each district, compute AVG(`fact_household_poverty_metrics`.`monthly_consumption_per_capita`) and SUM(`fact_household_composition`.`household_children_0_to_14_count`)."
+  },
+  {
+    "question": "For districts where the average monthly per capita consumption is less than 500, calculate the total number of children aged 0 to 14 living in households that are above the poverty line, grouped by state and district.",
+    "sql": "SELECT T1.STATE, T1.DISTRICT, SUM(T2.HOUSEHOLD_CHILDREN_0_TO_14_COUNT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_POVERTY_METRICS AS T3 ON T2.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T3.BELOW_POVERTY_LINE_INDICATOR = 'No' GROUP BY T1.STATE, T1.DISTRICT HAVING AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA) < 500",
+    "pair_id": "40811bb4",
+    "original_question_id": "e07323b6",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_POVERTY_METRICS_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "PER_CAPITA_POVERTY_LINE",
+        "BELOW_POVERTY_LINE_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Compute average of `fact_household_poverty_metrics`.`monthly_consumption_per_capita` per district, filter districts where average < 500, then sum `fact_household_composition`.`household_children_0_to_14_count` for households with `fact_household_poverty_metrics`.`below_poverty_line_indicator` = 'No', grouped by `dim_geography`.`state` and `dim_geography`.`district`."
+  },
+  {
+    "question": "Identify rural districts and their states where the average monthly per capita consumption is below 996, ranked by the total number of children aged 0 to 14 living in households.",
+    "sql": "SELECT T1.STATE, T1.DISTRICT, SUM(T2.HOUSEHOLD_CHILDREN_0_TO_14_COUNT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_POVERTY_METRICS AS T3 ON T2.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' GROUP BY T1.STATE, T1.DISTRICT HAVING AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA) < 996 ORDER BY SUM(T2.HOUSEHOLD_CHILDREN_0_TO_14_COUNT) DESC",
+    "pair_id": "7abaf81e",
+    "original_question_id": "e07323b6",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_POVERTY_METRICS_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "PER_CAPITA_POVERTY_LINE",
+        "BELOW_POVERTY_LINE_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography`.`census_2001_urban_rural_flag` = 'Rural'. Group by `dim_geography`.`state`, `dim_geography`.`district`. Compute AVG(`fact_household_poverty_metrics`.`monthly_consumption_per_capita`) per district and SUM(`fact_household_composition`.`household_children_0_to_14_count`) per district. Keep districts where AVG(consumption) < 996. Order by total children count DESC."
+  },
+  {
+    "question": "Identify the districts that contain rural households living above the poverty line, but do not have any urban households above the poverty line.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_POVERTY_METRICS AS T3 ON T2.HOUSEHOLD_ID = T3.HOUSEHOLD_ID GROUP BY T1.DISTRICT HAVING SUM(CASE WHEN T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' AND T3.BELOW_POVERTY_LINE_INDICATOR = 'No' THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban' AND T3.BELOW_POVERTY_LINE_INDICATOR = 'No' THEN 1 ELSE 0 END) = 0",
+    "pair_id": "d7317edc",
+    "original_question_id": "b4e91cd2",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_POVERTY_METRICS_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "PER_CAPITA_POVERTY_LINE",
+        "BELOW_POVERTY_LINE_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Find districts (`dim_geography`.`district`) where there is at least one rural household (`dim_geography`.`census_2001_urban_rural_flag` = 'Rural') with poverty indicator 'No' (`fact_household_poverty_metrics`.`below_poverty_line_indicator` = 'No'), and no urban household (`dim_geography`.`census_2001_urban_rural_flag` = 'Urban') with poverty indicator 'No'. Link households via `fact_household_composition`.`household_id` to `fact_household_poverty_metrics`.`household_id` and `fact_household_composition`.`geography_id` to `dim_geography`.`geography_id`."
+  },
+  {
+    "question": "Identify the rural districts that contain households living above the poverty line, excluding any urban districts that also have households above the poverty line.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_POVERTY_METRICS AS T3 ON T2.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' AND T3.BELOW_POVERTY_LINE_INDICATOR = 'No' GROUP BY T1.DISTRICT HAVING COUNT(T2.HOUSEHOLD_ID) > 0 EXCEPT SELECT T1.DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_POVERTY_METRICS AS T3 ON T2.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Urban' AND T3.BELOW_POVERTY_LINE_INDICATOR = 'No';",
+    "pair_id": "4b1a5490",
+    "original_question_id": "b4e91cd2",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_POVERTY_METRICS_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "PER_CAPITA_POVERTY_LINE",
+        "BELOW_POVERTY_LINE_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Find distinct `dim_geography.district` where `dim_geography.census_2001_urban_rural_flag` = 'Rural' for all PSUs in that district (i.e., no 'Urban' values in that district) and where `fact_household_poverty_metrics.below_poverty_line_indicator` = 'No' for households in that district. Join `dim_geography` → `fact_household_composition` → `fact_household_poverty_metrics`."
+  },
+  {
+    "question": "Which states have rural households where the number of residents aged 15 to 21 exceeds the number of children under 15?",
+    "sql": "SELECT T1.STATE FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_POVERTY_METRICS AS T3 ON T2.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_YOUTH_15_TO_21_COUNT > T2.HOUSEHOLD_CHILDREN_0_TO_14_COUNT AND T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' GROUP BY T1.STATE",
+    "pair_id": "93d6e9cd",
+    "original_question_id": "3118cf89",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "BELOW_POVERTY_LINE_INDICATOR",
+        "PER_CAPITA_POVERTY_LINE",
+        "HOUSEHOLD_POVERTY_METRICS_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Find distinct `dim_geography.state` where `dim_geography.census_2001_urban_rural_flag` = 'Rural' and `fact_household_composition.household_youth_15_to_21_count` > `fact_household_composition.household_children_0_to_14_count`, joining `fact_household_composition` to `dim_geography` on `geography_id`."
+  },
+  {
+    "question": "List the states, in alphabetical order, that contain rural households where the number of residents aged 15 to 21 exceeds the number of children under 15.",
+    "sql": "SELECT T1.STATE FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_POVERTY_METRICS AS T3 ON T2.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_YOUTH_15_TO_21_COUNT > T2.HOUSEHOLD_CHILDREN_0_TO_14_COUNT AND T1.CENSUS_2001_URBAN_RURAL_FLAG = 'Rural' GROUP BY T1.STATE ORDER BY T1.STATE ASC",
+    "pair_id": "8345cbc1",
+    "original_question_id": "3118cf89",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "BELOW_POVERTY_LINE_INDICATOR",
+        "PER_CAPITA_POVERTY_LINE",
+        "HOUSEHOLD_POVERTY_METRICS_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `dim_geography`.`state` from `fact_household_composition` join `dim_geography` on `fact_household_composition`.`geography_id` = `dim_geography`.`geography_id` where `dim_geography`.`census_2001_urban_rural_flag` = 'Rural' and `fact_household_composition`.`household_youth_15_to_21_count` > `fact_household_composition`.`household_children_0_to_14_count` order by `dim_geography`.`state`."
+  },
+  {
+    "question": "Identify all states that contain at least one household where youth aged 15 to 21 outnumber children under 14, and also have at least one household living below the poverty line.",
+    "sql": "SELECT T1.STATE FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_POVERTY_METRICS AS T3 ON T2.HOUSEHOLD_ID = T3.HOUSEHOLD_ID GROUP BY T1.STATE HAVING SUM(CASE WHEN T2.HOUSEHOLD_YOUTH_15_TO_21_COUNT > T2.HOUSEHOLD_CHILDREN_0_TO_14_COUNT THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN T3.MONTHLY_CONSUMPTION_PER_CAPITA < T3.PER_CAPITA_POVERTY_LINE THEN 1 ELSE 0 END) > 0 ORDER BY T1.STATE ASC",
+    "pair_id": "4b4059cc",
+    "original_question_id": "3118cf89",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "BELOW_POVERTY_LINE_INDICATOR",
+        "PER_CAPITA_POVERTY_LINE",
+        "HOUSEHOLD_POVERTY_METRICS_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Find distinct `dim_geography`.`state` where exists at least one household with (`fact_household_composition`.`household_youth_15_to_21_count` > `fact_household_composition`.`household_children_0_to_14_count`) and at least one household with (`fact_household_poverty_metrics`.`below_poverty_line_indicator` = 'Yes'). Join `fact_household_composition` to `fact_household_poverty_metrics` on `household_id` and to `dim_geography` on `geography_id`."
+  },
+  {
+    "question": "Identify all districts that contain households with either more than five children under the age of 15 or those living above the poverty line.",
+    "sql": "SELECT DISTINCT T1.DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_POVERTY_METRICS AS T3 ON T2.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_CHILDREN_0_TO_14_COUNT > 5 OR T3.BELOW_POVERTY_LINE_INDICATOR = 'No';",
+    "pair_id": "4379abcc",
+    "original_question_id": "481c4830",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_POVERTY_METRICS_ID",
+        "BELOW_POVERTY_LINE_INDICATOR",
+        "PER_CAPITA_POVERTY_LINE"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve distinct `dim_geography`.`district` where there exists a household in that district (linked via `fact_household_composition`.`geography_id` = `dim_geography`.`geography_id`) that either has `fact_household_composition`.`household_children_0_to_14_count` > 5 or has `fact_household_poverty_metrics`.`below_poverty_line_indicator` = 'No' (linked via `fact_household_poverty_metrics`.`household_id` = `fact_household_composition`.`household_id`)."
+  },
+  {
+    "question": "Identify the districts that contain either households with more than five children under the age of 15 or households that are living above the poverty line.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_POVERTY_METRICS AS T3 ON T2.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_CHILDREN_0_TO_14_COUNT > 5 OR T3.BELOW_POVERTY_LINE_INDICATOR = 'No' GROUP BY T1.DISTRICT",
+    "pair_id": "26225132",
+    "original_question_id": "481c4830",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_HOUSEHOLD_POVERTY_METRICS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL_FLAG"
+      ],
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "SOCIOECONOMIC_ID",
+        "GEOGRAPHY_ID",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "SURVEY_METHODOLOGY_ID"
+      ],
+      "FACT_HOUSEHOLD_POVERTY_METRICS": [
+        "HOUSEHOLD_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_POVERTY_METRICS_ID",
+        "BELOW_POVERTY_LINE_INDICATOR",
+        "PER_CAPITA_POVERTY_LINE"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve distinct `dim_geography.district` where `fact_household_composition.household_children_0_to_14_count > 5` OR `fact_household_poverty_metrics.below_poverty_line_indicator = 'No'`. Join `dim_geography` to `fact_household_composition` on `geography_id`, and `fact_household_composition` to `fact_household_poverty_metrics` on `household_id`."
+  },
+  {
+    "question": "Provide the age, gender, and employment status of individuals living in households with more than eight members.",
+    "sql": "SELECT T1.PERSON_AGE_YEARS, T1.PERSON_GENDER, T1.WORKED_ANY_JOB_INDICATOR FROM FACT_PERSON_DEMOGRAPHICS AS T1 JOIN FACT_HOUSEHOLD_COMPOSITION AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_MEMBER_COUNT > 8",
+    "pair_id": "92728040",
+    "original_question_id": "9968877a",
+    "schema_used": [
+      "FACT_HOUSEHOLD_COMPOSITION",
+      "FACT_PERSON_DEMOGRAPHICS",
+      "FACT_PERSON_EDUCATION"
+    ],
+    "linked_schema": {
+      "FACT_HOUSEHOLD_COMPOSITION": [
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "SURVEY_METHODOLOGY_ID",
+        "SOCIOECONOMIC_ID",
+        "HOUSEHOLD_MEMBER_COUNT",
+        "HOUSEHOLD_CHILDREN_0_TO_14_COUNT",
+        "HOUSEHOLD_YOUTH_15_TO_21_COUNT",
+        "HOUSEHOLD_ADULTS_22_PLUS_COUNT",
+        "HOUSEHOLD_MARRIED_WOMEN_COUNT",
+        "HOUSEHOLD_MARRIED_MEN_COUNT"
+      ],
+      "FACT_PERSON_DEMOGRAPHICS": [
+        "HOUSEHOLD_ID",
+        "PERSON_GENDER",
+        "PERSON_ID",
+        "NUMBER_OF_JOBS_HELD",
+        "WORKED_ANY_JOB_INDICATOR",
+        "PERSON_AGE_YEARS"
+      ],
+      "FACT_PERSON_EDUCATION": [
+        "EDUCATION_YEARS_COMPLETED",
+        "EDUCATION_EVER_ATTENDED_SCHOOL",
+        "PERSON_ID",
+        "EDUCATION_CURRENTLY_ENROLLED",
+        "EDUCATION_LITERACY_STATUS",
+        "PERSON_EDUCATION_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select fact_person_demographics.person_age_years, fact_person_demographics.person_gender, fact_person_demographics.worked_any_job_indicator from fact_person_demographics join fact_household_composition on fact_person_demographics.household_id = fact_household_composition.household_id where fact_household_composition.household_member_count > 8."
+  }
+]

@@ -1,0 +1,4155 @@
+[
+  {
+    "question": "Provide the household ID, asset index, and secondary social network contact type for all households belonging to the OBC category.",
+    "sql": "SELECT HOUSEHOLD_ID, HOUSEHOLD_ASSETS_INDEX, SOCIAL_NETWORK_CONTACT_2_TYPE FROM DIM_HOUSEHOLD_SOCIAL WHERE CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC';",
+    "pair_id": "db637eb6",
+    "original_question_id": "1379329b",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION",
+      "FACT_UTILITY_CONSUMPTION",
+      "FACT_FOOD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ],
+      "FACT_UTILITY_CONSUMPTION": [
+        "UTILITY_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_ELECTRICITY_BILL_RS",
+        "SURVEY_DESIGN_WEIGHT"
+      ],
+      "FACT_FOOD_CONSUMPTION": [
+        "CONSUMPTION_SUGAR_EXPENDITURE_RS",
+        "CONSUMPTION_WHEAT_EXPENDITURE_RS",
+        "HOUSEHOLD_ID",
+        "CONSUMPTION_RICE_EXPENDITURE_RS",
+        "CONSUMPTION_PULSES_EXPENDITURE_RS",
+        "FOOD_CONSUMPTION_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_household_social`.`household_id`, `dim_household_social`.`household_assets_index`, `dim_household_social`.`social_network_contact_2_type` from `dim_household_social` where `dim_household_social`.`caste_religion_group_8_category` = 'OBC'."
+  },
+  {
+    "question": "List the household IDs, asset indices, and secondary social network contact types for all households in the OBC category, ordered from lowest to highest asset index.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' ORDER BY T2.HOUSEHOLD_ASSETS_INDEX ASC",
+    "pair_id": "21e0ce63",
+    "original_question_id": "1379329b",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION",
+      "FACT_UTILITY_CONSUMPTION",
+      "FACT_FOOD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ],
+      "FACT_UTILITY_CONSUMPTION": [
+        "UTILITY_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_ELECTRICITY_BILL_RS",
+        "SURVEY_DESIGN_WEIGHT"
+      ],
+      "FACT_FOOD_CONSUMPTION": [
+        "CONSUMPTION_SUGAR_EXPENDITURE_RS",
+        "CONSUMPTION_WHEAT_EXPENDITURE_RS",
+        "HOUSEHOLD_ID",
+        "CONSUMPTION_RICE_EXPENDITURE_RS",
+        "CONSUMPTION_PULSES_EXPENDITURE_RS",
+        "FOOD_CONSUMPTION_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_household_social`.`household_id`, `dim_household_social`.`household_assets_index`, `dim_household_social`.`social_network_contact_2_type` from `dim_household_social` where `dim_household_social`.`caste_religion_group_8_category` = 'OBC' order by `dim_household_social`.`household_assets_index` asc."
+  },
+  {
+    "question": "Provide the asset index and secondary social network contact types for Christian households, ordered from highest to lowest wealth.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' GROUP BY T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE HAVING COUNT(T3.CONSUMPTION_ID) >= 0 ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+    "pair_id": "c8f78b4a",
+    "original_question_id": "1379329b",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION",
+      "FACT_UTILITY_CONSUMPTION",
+      "FACT_FOOD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ],
+      "FACT_UTILITY_CONSUMPTION": [
+        "UTILITY_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_ELECTRICITY_BILL_RS",
+        "SURVEY_DESIGN_WEIGHT"
+      ],
+      "FACT_FOOD_CONSUMPTION": [
+        "CONSUMPTION_SUGAR_EXPENDITURE_RS",
+        "CONSUMPTION_WHEAT_EXPENDITURE_RS",
+        "HOUSEHOLD_ID",
+        "CONSUMPTION_RICE_EXPENDITURE_RS",
+        "CONSUMPTION_PULSES_EXPENDITURE_RS",
+        "FOOD_CONSUMPTION_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_household_social`.`household_assets_index` and `dim_household_social`.`social_network_contact_2_type` from `dim_household_social` where `dim_household_social`.`caste_religion_group_8_category` = 'Christian', ordered by `dim_household_social`.`household_assets_index` DESC."
+  },
+  {
+    "question": "Provide the asset index and secondary social network contact types for households from the OBC category that have recorded utility consumption, sorted by their wealth status.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN FACT_UTILITY_CONSUMPTION AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' GROUP BY T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE HAVING COUNT(T3.UTILITY_ID) >= 1 ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+    "pair_id": "a1d8e0fc",
+    "original_question_id": "1379329b",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION",
+      "FACT_UTILITY_CONSUMPTION",
+      "FACT_FOOD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ],
+      "FACT_UTILITY_CONSUMPTION": [
+        "UTILITY_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_ELECTRICITY_BILL_RS",
+        "SURVEY_DESIGN_WEIGHT"
+      ],
+      "FACT_FOOD_CONSUMPTION": [
+        "CONSUMPTION_SUGAR_EXPENDITURE_RS",
+        "CONSUMPTION_WHEAT_EXPENDITURE_RS",
+        "HOUSEHOLD_ID",
+        "CONSUMPTION_RICE_EXPENDITURE_RS",
+        "CONSUMPTION_PULSES_EXPENDITURE_RS",
+        "FOOD_CONSUMPTION_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_household_social`.`household_assets_index` and `dim_household_social`.`social_network_contact_2_type` from `dim_household_social` inner join `fact_utility_consumption` on `dim_household_social`.`household_id` = `fact_utility_consumption`.`household_id` where `dim_household_social`.`caste_religion_group_8_category` = 'OBC' order by `dim_household_social`.`household_assets_index` DESC."
+  },
+  {
+    "question": "Provide the asset index and secondary social network contact types for Muslim households, ordered from highest to lowest wealth.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN FACT_FOOD_CONSUMPTION AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Muslim' GROUP BY T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE HAVING COUNT(T3.FOOD_CONSUMPTION_ID) >= 0 ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+    "pair_id": "490d74ea",
+    "original_question_id": "1379329b",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION",
+      "FACT_UTILITY_CONSUMPTION",
+      "FACT_FOOD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ],
+      "FACT_UTILITY_CONSUMPTION": [
+        "UTILITY_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_ELECTRICITY_BILL_RS",
+        "SURVEY_DESIGN_WEIGHT"
+      ],
+      "FACT_FOOD_CONSUMPTION": [
+        "CONSUMPTION_SUGAR_EXPENDITURE_RS",
+        "CONSUMPTION_WHEAT_EXPENDITURE_RS",
+        "HOUSEHOLD_ID",
+        "CONSUMPTION_RICE_EXPENDITURE_RS",
+        "CONSUMPTION_PULSES_EXPENDITURE_RS",
+        "FOOD_CONSUMPTION_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_household_social`.`household_assets_index` and `dim_household_social`.`social_network_contact_2_type` from `dim_household_social` where `dim_household_social`.`caste_religion_group_8_category` = 'Muslim' order by `dim_household_social`.`household_assets_index` DESC."
+  },
+  {
+    "question": "Provide a breakdown of the average household asset index and total household count for each of the eight caste and religious categories.",
+    "sql": "SELECT CASTE_RELIGION_GROUP_8_CATEGORY, AVG(CAST(HOUSEHOLD_ASSETS_INDEX AS NUMERIC)), COUNT(HOUSEHOLD_ID) FROM DIM_HOUSEHOLD_SOCIAL GROUP BY CASTE_RELIGION_GROUP_8_CATEGORY",
+    "pair_id": "5316d550",
+    "original_question_id": "eae1b17d",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION",
+      "FACT_UTILITY_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ],
+      "FACT_UTILITY_CONSUMPTION": [
+        "UTILITY_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_ELECTRICITY_BILL_RS",
+        "SURVEY_DESIGN_WEIGHT"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Use `dim_household_social` table. Group by `dim_household_social`.`caste_religion_group_8_category`. For each group, compute AVG(`dim_household_social`.`household_assets_index`) as average asset index and COUNT(`dim_household_social`.`household_id`) as total household count. The categories include: 'High caste', 'Muslim', 'Sikh, Jain', 'Dalit', 'OBC', 'Christian', 'Adivasi', 'Brahmin' (exact case)."
+  },
+  {
+    "question": "Provide a breakdown by caste and religion group showing the average monthly per capita consumption and the total number of households for each category.",
+    "sql": "SELECT T1.CASTE_RELIGION_GROUP_8_CATEGORY, AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA), COUNT(T1.HOUSEHOLD_ID) FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID GROUP BY T1.CASTE_RELIGION_GROUP_8_CATEGORY ORDER BY T1.CASTE_RELIGION_GROUP_8_CATEGORY",
+    "pair_id": "d6239d2a",
+    "original_question_id": "eae1b17d",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION",
+      "FACT_UTILITY_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ],
+      "FACT_UTILITY_CONSUMPTION": [
+        "UTILITY_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_ELECTRICITY_BILL_RS",
+        "SURVEY_DESIGN_WEIGHT"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_household_social`.`caste_religion_group_8_category`. For each group, compute AVG(`fact_household_consumption`.`monthly_consumption_per_capita`) as average monthly per capita consumption and COUNT(DISTINCT `dim_household_social`.`household_id`) as total number of households. Join `dim_household_social` and `fact_household_consumption` on `household_id`. Ensure to include all categories present in `dim_household_social`."
+  },
+  {
+    "question": "Provide a breakdown of average monthly household spending and total household counts, categorized by social network contact types and religious or caste groups, sorted from highest to lowest expenditure.",
+    "sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.SOCIAL_NETWORK_CONTACT_2_TYPE, AVG(T1.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS), COUNT(T1.HOUSEHOLD_ID) FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN DIM_HOUSEHOLD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.SOCIAL_NETWORK_CONTACT_2_TYPE HAVING COUNT(T1.HOUSEHOLD_ID) > 0 ORDER BY AVG(T1.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) DESC",
+    "pair_id": "8ed8a672",
+    "original_question_id": "eae1b17d",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION",
+      "FACT_UTILITY_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ],
+      "FACT_UTILITY_CONSUMPTION": [
+        "UTILITY_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_ELECTRICITY_BILL_RS",
+        "SURVEY_DESIGN_WEIGHT"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Group by (`dim_household_social`.`caste_religion_group_8_category`, `dim_household_social`.`social_network_contact_2_type`). Compute AVG(`fact_household_consumption`.`monthly_total_consumption_expenditure_rs`) as average_spending and COUNT(DISTINCT `dim_household_social`.`household_id`) as household_count. Order by average_spending DESC."
+  },
+  {
+    "question": "Identify the household IDs for families that have an asset index of 27 and maintain a specific type of social network contact.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '27' AND T2.SOCIAL_NETWORK_CONTACT_2_TYPE = '1';",
+    "pair_id": "6bcd3563",
+    "original_question_id": "998f2aa7",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION",
+      "FACT_UTILITY_CONSUMPTION",
+      "FACT_FOOD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ],
+      "FACT_UTILITY_CONSUMPTION": [
+        "UTILITY_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_ELECTRICITY_BILL_RS",
+        "SURVEY_DESIGN_WEIGHT"
+      ],
+      "FACT_FOOD_CONSUMPTION": [
+        "CONSUMPTION_SUGAR_EXPENDITURE_RS",
+        "CONSUMPTION_WHEAT_EXPENDITURE_RS",
+        "HOUSEHOLD_ID",
+        "CONSUMPTION_RICE_EXPENDITURE_RS",
+        "CONSUMPTION_PULSES_EXPENDITURE_RS",
+        "FOOD_CONSUMPTION_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_household_social.household_id` from `dim_household_social` where `dim_household_social.household_assets_index` = 27 and `dim_household_social.social_network_contact_2_type` equals a specific value (possible values: 0, 1, -1). The exact value for social_network_contact_2_type is not specified in the question."
+  },
+  {
+    "question": "Identify households that have a high asset index and utilize the first type of social network contact.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.SOCIAL_NETWORK_CONTACT_2_TYPE = '1' AND T2.HOUSEHOLD_ASSETS_INDEX >= '27' GROUP BY T1.HOUSEHOLD_ID",
+    "pair_id": "c175575e",
+    "original_question_id": "998f2aa7",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION",
+      "FACT_UTILITY_CONSUMPTION",
+      "FACT_FOOD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ],
+      "FACT_UTILITY_CONSUMPTION": [
+        "UTILITY_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_ELECTRICITY_BILL_RS",
+        "SURVEY_DESIGN_WEIGHT"
+      ],
+      "FACT_FOOD_CONSUMPTION": [
+        "CONSUMPTION_SUGAR_EXPENDITURE_RS",
+        "CONSUMPTION_WHEAT_EXPENDITURE_RS",
+        "HOUSEHOLD_ID",
+        "CONSUMPTION_RICE_EXPENDITURE_RS",
+        "CONSUMPTION_PULSES_EXPENDITURE_RS",
+        "FOOD_CONSUMPTION_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "To identify households with high asset index and first type of social network contact, filter `dim_household_social` where `dim_household_social`.`social_network_contact_2_type` = 1 and `dim_household_social`.`household_assets_index` is high (numeric). Since 'high' is ambiguous, consider defining a threshold (e.g., > 10) based on sample values like 8,12,10,7,13,28,15,5,19,20. Join with `dim_household` on `household_id` if household details are needed."
+  },
+  {
+    "question": "Identify households with an asset index of 27 and a specific type of social network contact, ranked by their total monthly consumption expenditure.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '27' AND T2.SOCIAL_NETWORK_CONTACT_2_TYPE = '1' GROUP BY T1.HOUSEHOLD_ID HAVING COUNT(T2.SOCIAL_ID) >= 1 ORDER BY SUM(T3.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) DESC;",
+    "pair_id": "6abea354",
+    "original_question_id": "998f2aa7",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION",
+      "FACT_UTILITY_CONSUMPTION",
+      "FACT_FOOD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ],
+      "FACT_UTILITY_CONSUMPTION": [
+        "UTILITY_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_ELECTRICITY_BILL_RS",
+        "SURVEY_DESIGN_WEIGHT"
+      ],
+      "FACT_FOOD_CONSUMPTION": [
+        "CONSUMPTION_SUGAR_EXPENDITURE_RS",
+        "CONSUMPTION_WHEAT_EXPENDITURE_RS",
+        "HOUSEHOLD_ID",
+        "CONSUMPTION_RICE_EXPENDITURE_RS",
+        "CONSUMPTION_PULSES_EXPENDITURE_RS",
+        "FOOD_CONSUMPTION_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_household_social` where `dim_household_social.household_assets_index` = 27 and `dim_household_social.social_network_contact_2_type` = [specify value: 0, 1, or -1]. Join with `fact_household_consumption` on `household_id`. Order results by `fact_household_consumption.monthly_total_consumption_expenditure_rs` DESC."
+  },
+  {
+    "question": "List the household IDs and their corresponding caste or religious categories, ordered by their asset index.",
+    "sql": "SELECT HOUSEHOLD_ID, CASTE_RELIGION_GROUP_8_CATEGORY FROM DIM_HOUSEHOLD_SOCIAL ORDER BY HOUSEHOLD_ASSETS_INDEX;",
+    "pair_id": "705af9c7",
+    "original_question_id": "ac5a14d7",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION",
+      "FACT_UTILITY_CONSUMPTION",
+      "FACT_FOOD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ],
+      "FACT_UTILITY_CONSUMPTION": [
+        "UTILITY_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_ELECTRICITY_BILL_RS",
+        "SURVEY_DESIGN_WEIGHT"
+      ],
+      "FACT_FOOD_CONSUMPTION": [
+        "CONSUMPTION_SUGAR_EXPENDITURE_RS",
+        "CONSUMPTION_WHEAT_EXPENDITURE_RS",
+        "HOUSEHOLD_ID",
+        "CONSUMPTION_RICE_EXPENDITURE_RS",
+        "CONSUMPTION_PULSES_EXPENDITURE_RS",
+        "FOOD_CONSUMPTION_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_household_social`.`household_id` and `dim_household_social`.`caste_religion_group_8_category` from `dim_household_social`, ordered by `dim_household_social`.`household_assets_index`."
+  },
+  {
+    "question": "List the household IDs and their corresponding caste or religious group categories, ordered by their asset index.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T2.CASTE_RELIGION_GROUP_8_CATEGORY FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID ORDER BY T2.HOUSEHOLD_ASSETS_INDEX",
+    "pair_id": "7a933c3f",
+    "original_question_id": "ac5a14d7",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION",
+      "FACT_UTILITY_CONSUMPTION",
+      "FACT_FOOD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ],
+      "FACT_UTILITY_CONSUMPTION": [
+        "UTILITY_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_ELECTRICITY_BILL_RS",
+        "SURVEY_DESIGN_WEIGHT"
+      ],
+      "FACT_FOOD_CONSUMPTION": [
+        "CONSUMPTION_SUGAR_EXPENDITURE_RS",
+        "CONSUMPTION_WHEAT_EXPENDITURE_RS",
+        "HOUSEHOLD_ID",
+        "CONSUMPTION_RICE_EXPENDITURE_RS",
+        "CONSUMPTION_PULSES_EXPENDITURE_RS",
+        "FOOD_CONSUMPTION_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_household_social`.`household_id` and `dim_household_social`.`caste_religion_group_8_category` from `dim_household_social`, ordered by `dim_household_social`.`household_assets_index` ascending."
+  },
+  {
+    "question": "List the household IDs and their respective social categories for households that spend more than 300 rupees on average per month, ordered by their asset index from highest to lowest.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T2.CASTE_RELIGION_GROUP_8_CATEGORY, AVG(T3.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID GROUP BY T1.HOUSEHOLD_ID, T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.HOUSEHOLD_ASSETS_INDEX HAVING AVG(T3.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) > 300 ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+    "pair_id": "8ac75a12",
+    "original_question_id": "ac5a14d7",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION",
+      "FACT_UTILITY_CONSUMPTION",
+      "FACT_FOOD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ],
+      "FACT_UTILITY_CONSUMPTION": [
+        "UTILITY_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_ELECTRICITY_BILL_RS",
+        "SURVEY_DESIGN_WEIGHT"
+      ],
+      "FACT_FOOD_CONSUMPTION": [
+        "CONSUMPTION_SUGAR_EXPENDITURE_RS",
+        "CONSUMPTION_WHEAT_EXPENDITURE_RS",
+        "HOUSEHOLD_ID",
+        "CONSUMPTION_RICE_EXPENDITURE_RS",
+        "CONSUMPTION_PULSES_EXPENDITURE_RS",
+        "FOOD_CONSUMPTION_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_household_social`.`household_id` and `dim_household_social`.`caste_religion_group_8_category` from `dim_household_social` join `fact_household_consumption` on `dim_household_social`.`household_id` = `fact_household_consumption`.`household_id` where `fact_household_consumption`.`monthly_consumption_per_capita` > 300 order by `dim_household_social`.`household_assets_index` DESC."
+  },
+  {
+    "question": "Identify the top 10 Muslim households with the highest asset index scores.",
+    "sql": "SELECT HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL WHERE CASTE_RELIGION_GROUP_8_CATEGORY = 'Muslim' ORDER BY HOUSEHOLD_ASSETS_INDEX DESC LIMIT 10;",
+    "pair_id": "7845d3e3",
+    "original_question_id": "d2f2f6b8",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "CONSUMPTION_ID",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_household_social` where `dim_household_social`.`caste_religion_group_8_category` = 'Muslim', then select `dim_household_social`.`household_id` and `dim_household_social`.`household_assets_index`, order by `dim_household_social`.`household_assets_index` DESC, limit 10."
+  },
+  {
+    "question": "Identify the top 10 Christian households with the highest asset index scores.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC LIMIT 10",
+    "pair_id": "51085f79",
+    "original_question_id": "d2f2f6b8",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "CONSUMPTION_ID",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_household_social` where `dim_household_social`.`caste_religion_group_8_category` = 'Christian', order by `dim_household_social`.`household_assets_index` DESC, limit 10, selecting `dim_household_social`.`household_id` and `dim_household_social`.`household_assets_index`."
+  },
+  {
+    "question": "Identify the top 10 Muslim households with the highest average monthly expenditures, specifically those whose spending exceeds the overall national average.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, AVG(T2.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) FROM DIM_HOUSEHOLD AS T1 INNER JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN DIM_HOUSEHOLD_SOCIAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T3.CASTE_RELIGION_GROUP_8_CATEGORY = 'Muslim' GROUP BY T1.HOUSEHOLD_ID HAVING AVG(T2.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) > (SELECT AVG(MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) FROM FACT_HOUSEHOLD_CONSUMPTION) ORDER BY AVG(T2.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) DESC LIMIT 10",
+    "pair_id": "47e7c1a0",
+    "original_question_id": "d2f2f6b8",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "CONSUMPTION_ID",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter households where `dim_household_social`.`caste_religion_group_8_category` = 'Muslim'. Join `dim_household_social` with `fact_household_consumption` on `household_id`. Compute the national average of `fact_household_consumption`.`monthly_total_consumption_expenditure_rs` across all households. Select Muslim households where `fact_household_consumption`.`monthly_total_consumption_expenditure_rs` exceeds that national average. Order by `fact_household_consumption`.`monthly_total_consumption_expenditure_rs` DESC and limit to 10."
+  },
+  {
+    "question": "Provide the social ID, caste or religious group, and household asset index for all households where a Gauna ceremony has taken place.",
+    "sql": "SELECT T2.HOUSEHOLD_ASSETS_INDEX, T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.SOCIAL_ID FROM DIM_HOUSEHOLD_MARITAL AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.DATE_OF_GAUNA IS NOT NULL",
+    "pair_id": "818d4aec",
+    "original_question_id": "b227bd52",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "DIM_HOUSEHOLD_MARITAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "HOUSEHOLD_ID",
+        "SOCIAL_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "HOUSEHOLD_ASSETS_INDEX",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE"
+      ],
+      "DIM_HOUSEHOLD_MARITAL": [
+        "MARITAL_ID",
+        "HOUSEHOLD_ID",
+        "DATE_OF_MARRIAGE",
+        "DATE_OF_GAUNA"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_household_social`.`social_id`, `dim_household_social`.`caste_religion_group_8_category`, `dim_household_social`.`household_assets_index` from `dim_household_social` join `dim_household_marital` on `dim_household_social`.`household_id` = `dim_household_marital`.`household_id` where `dim_household_marital`.`date_of_gauna` IS NOT NULL."
+  },
+  {
+    "question": "Provide the caste or religious group, household asset index, and social network contact types for all households where the Gauna ceremony has taken place, sorted by their asset index.",
+    "sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE FROM DIM_HOUSEHOLD_MARITAL AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.DATE_OF_GAUNA IS NOT NULL GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE ORDER BY T2.HOUSEHOLD_ASSETS_INDEX",
+    "pair_id": "b88f6a77",
+    "original_question_id": "b227bd52",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "DIM_HOUSEHOLD_MARITAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "HOUSEHOLD_ID",
+        "SOCIAL_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "HOUSEHOLD_ASSETS_INDEX",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE"
+      ],
+      "DIM_HOUSEHOLD_MARITAL": [
+        "MARITAL_ID",
+        "HOUSEHOLD_ID",
+        "DATE_OF_MARRIAGE",
+        "DATE_OF_GAUNA"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_household_social`.`caste_religion_group_8_category`, `dim_household_social`.`household_assets_index`, `dim_household_social`.`social_network_contact_2_type` from `dim_household_social` join `dim_household_marital` on `dim_household_social`.`household_id` = `dim_household_marital`.`household_id` where `dim_household_marital`.`date_of_gauna` IS NOT NULL order by `dim_household_social`.`household_assets_index`."
+  },
+  {
+    "question": "Provide a breakdown of household counts by caste/religion category, asset index, and social network contact type, specifically for households where the Gauna ceremony has been performed, sorted by the highest asset index.",
+    "sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE, COUNT(T1.HOUSEHOLD_ID) FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID INNER JOIN DIM_HOUSEHOLD_MARITAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T3.DATE_OF_GAUNA IS NOT NULL AND T3.DATE_OF_GAUNA <> '600' GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE HAVING COUNT(T1.HOUSEHOLD_ID) >= 1 ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+    "pair_id": "bc92564f",
+    "original_question_id": "b227bd52",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "DIM_HOUSEHOLD_MARITAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "HOUSEHOLD_ID",
+        "SOCIAL_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "HOUSEHOLD_ASSETS_INDEX",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE"
+      ],
+      "DIM_HOUSEHOLD_MARITAL": [
+        "MARITAL_ID",
+        "HOUSEHOLD_ID",
+        "DATE_OF_MARRIAGE",
+        "DATE_OF_GAUNA"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Count households grouped by `dim_household_social`.`caste_religion_group_8_category`, `dim_household_social`.`household_assets_index`, `dim_household_social`.`social_network_contact_2_type` where `dim_household_marital`.`date_of_gauna` IS NOT NULL, sorted by `dim_household_social`.`household_assets_index` DESC. Join `dim_household_social` and `dim_household_marital` on `household_id`."
+  },
+  {
+    "question": "Identify the household IDs for families belonging to the OBC category who have a primary type of social network contact.",
+    "sql": "SELECT HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL WHERE CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' AND SOCIAL_NETWORK_CONTACT_2_TYPE = '1';",
+    "pair_id": "c97d8088",
+    "original_question_id": "92f4e68f",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_SOCIAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_household_social`.`household_id` from `dim_household_social` where `dim_household_social`.`caste_religion_group_8_category` = 'OBC' and `dim_household_social`.`social_network_contact_2_type` = 1."
+  },
+  {
+    "question": "List the IDs of households belonging to the OBC category that have a primary social network contact, sorted numerically.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' AND T2.SOCIAL_NETWORK_CONTACT_2_TYPE = '1' ORDER BY T1.HOUSEHOLD_ID ASC",
+    "pair_id": "8492d41f",
+    "original_question_id": "92f4e68f",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_SOCIAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve household IDs (`dim_household`.`household_id`) from households that are categorized as 'OBC' (`dim_household_social`.`caste_religion_group_8_category` = 'OBC') and have a primary social network contact (`dim_household_social`.`social_network_contact_2_type` = 1). Join `dim_household` and `dim_household_social` on `household_id`. Sort results by household ID numerically."
+  },
+  {
+    "question": "Identify the household and person case IDs for OBC families that have at least one type-1 social network contact, ordered by household ID.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T1.HOUSEHOLD_PERSON_CASE_ID FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' AND T2.SOCIAL_NETWORK_CONTACT_2_TYPE = '1' GROUP BY T1.HOUSEHOLD_ID, T1.HOUSEHOLD_PERSON_CASE_ID HAVING COUNT(T2.SOCIAL_NETWORK_CONTACT_2_TYPE) >= 1 ORDER BY T1.HOUSEHOLD_ID ASC",
+    "pair_id": "e4c347ae",
+    "original_question_id": "92f4e68f",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_SOCIAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_household_social` and `dim_household` on `household_id`. Filter where (`dim_household_social`.`caste_religion_group_8_category`) = 'OBC' and (`dim_household_social`.`social_network_contact_2_type`) = 1. Select (`dim_household`.`household_id`) and (`dim_household`.`household_person_case_id`). Order by (`dim_household`.`household_id`)."
+  },
+  {
+    "question": "Identify all households that are either identified as Muslim or have a recorded date for the Gauna ceremony.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_HOUSEHOLD_MARITAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.CASTE_RELIGION_GROUP_8_CATEGORY = 'Muslim' OR T2.DATE_OF_GAUNA IS NOT NULL",
+    "pair_id": "099f1ade",
+    "original_question_id": "9d6a129e",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "DIM_HOUSEHOLD_MARITAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "DIM_HOUSEHOLD_MARITAL": [
+        "MARITAL_ID",
+        "HOUSEHOLD_ID",
+        "DATE_OF_MARRIAGE",
+        "DATE_OF_GAUNA"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Find distinct household_id where (`dim_household_social`.`caste_religion_group_8_category` = 'Muslim') OR (`dim_household_marital`.`date_of_gauna` IS NOT NULL)."
+  },
+  {
+    "question": "Identify all household IDs for families that are either Christian or have a recorded date of Gauna, sorted numerically.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_HOUSEHOLD_MARITAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' OR T3.DATE_OF_GAUNA IS NOT NULL GROUP BY T1.HOUSEHOLD_ID ORDER BY T1.HOUSEHOLD_ID ASC",
+    "pair_id": "b1756fcd",
+    "original_question_id": "9d6a129e",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "DIM_HOUSEHOLD_MARITAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "DIM_HOUSEHOLD_MARITAL": [
+        "MARITAL_ID",
+        "HOUSEHOLD_ID",
+        "DATE_OF_MARRIAGE",
+        "DATE_OF_GAUNA"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve distinct `dim_household_social.household_id` where `dim_household_social.caste_religion_group_8_category` = 'Christian' OR `dim_household_marital.date_of_gauna` IS NOT NULL, sorted numerically by household ID. Both tables reference the same household IDs via foreign key to `dim_household.household_id`."
+  },
+  {
+    "question": "Identify all households that are either identified as Christian or have a recorded Gauna date, sorted by their household ID.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 LEFT JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN DIM_HOUSEHOLD_MARITAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' OR T3.DATE_OF_GAUNA IS NOT NULL GROUP BY T1.HOUSEHOLD_ID ORDER BY T1.HOUSEHOLD_ID ASC",
+    "pair_id": "76dd0073",
+    "original_question_id": "9d6a129e",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "DIM_HOUSEHOLD_MARITAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "DIM_HOUSEHOLD_MARITAL": [
+        "MARITAL_ID",
+        "HOUSEHOLD_ID",
+        "DATE_OF_MARRIAGE",
+        "DATE_OF_GAUNA"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select households where `dim_household_social`.`caste_religion_group_8_category` = 'Christian' OR `dim_household_marital`.`date_of_gauna` IS NOT NULL, sorted by `dim_household`.`household_id`. Join `dim_household_social` and `dim_household_marital` to `dim_household` using `household_id`."
+  },
+  {
+    "question": "Identify the codes for rural neighborhoods in Tamil Nadu that have access to drinking water but lack health facilities.",
+    "sql": "SELECT T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.STATE = 'Tamil Nadu' AND T1.CENSUS_2001_URBAN_RURAL = 'Rural' AND T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '0' AND T2.VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR = '1'",
+    "pair_id": "872823f9",
+    "original_question_id": "81aa84b8",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_VILLAGE_INFRASTRUCTURE"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_VILLAGE_INFRASTRUCTURE": [
+        "INFRASTRUCTURE_ID",
+        "GEOGRAPHY_ID",
+        "VILLAGE_SCHOOL_AVAILABLE_INDICATOR",
+        "VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR",
+        "VILLAGE_DRINKING_WATER_SOURCE_TYPE",
+        "VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography_hierarchy`.`psu_village_or_neighborhood_code` from `dim_geography_hierarchy` join `dim_village_infrastructure` on `dim_geography_hierarchy`.`geography_id` = `dim_village_infrastructure`.`geography_id` where `dim_geography_hierarchy`.`state` = 'Tamil Nadu' and `dim_geography_hierarchy`.`census_2001_urban_rural` = 'Rural' and `dim_village_infrastructure`.`village_drinking_water_available_indicator` = '1' and `dim_village_infrastructure`.`village_health_facility_available_indicator` = '0'."
+  },
+  {
+    "question": "Identify the IDs of rural villages in Tamil Nadu that have access to drinking water but lack health facilities, sorted by their geography ID.",
+    "sql": "SELECT T1.GEOGRAPHY_ID FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.STATE = 'Tamil Nadu' AND T1.CENSUS_2001_URBAN_RURAL = 'Rural' AND T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '0' AND T2.VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR = '1' ORDER BY T1.GEOGRAPHY_ID",
+    "pair_id": "d520a0c9",
+    "original_question_id": "81aa84b8",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_VILLAGE_INFRASTRUCTURE"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_VILLAGE_INFRASTRUCTURE": [
+        "INFRASTRUCTURE_ID",
+        "GEOGRAPHY_ID",
+        "VILLAGE_SCHOOL_AVAILABLE_INDICATOR",
+        "VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR",
+        "VILLAGE_DRINKING_WATER_SOURCE_TYPE",
+        "VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography_hierarchy`.`geography_id` from `dim_geography_hierarchy` join `dim_village_infrastructure` on `dim_geography_hierarchy`.`geography_id` = `dim_village_infrastructure`.`geography_id` where `dim_geography_hierarchy`.`state` = 'Tamil Nadu' and `dim_geography_hierarchy`.`census_2001_urban_rural` = 'Rural' and `dim_village_infrastructure`.`village_drinking_water_available_indicator` = '1' and `dim_village_infrastructure`.`village_health_facility_available_indicator` = '0' order by `dim_geography_hierarchy`.`geography_id`."
+  },
+  {
+    "question": "Identify the rural neighborhoods or villages in Tamil Nadu that have access to drinking water but lack adequate health facilities.",
+    "sql": "SELECT T1.STATE, T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_VILLAGE_INFRASTRUCTURE AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T1.STATE = 'Tamil Nadu' AND T1.CENSUS_2001_URBAN_RURAL = 'Rural' AND (T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '0' OR T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '2') AND T2.VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR = '1' GROUP BY T1.STATE, T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE HAVING COUNT(T3.INFRASTRUCTURE_ID) > 0 ORDER BY T1.STATE ASC",
+    "pair_id": "27515630",
+    "original_question_id": "81aa84b8",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_VILLAGE_INFRASTRUCTURE"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_VILLAGE_INFRASTRUCTURE": [
+        "INFRASTRUCTURE_ID",
+        "GEOGRAPHY_ID",
+        "VILLAGE_SCHOOL_AVAILABLE_INDICATOR",
+        "VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR",
+        "VILLAGE_DRINKING_WATER_SOURCE_TYPE",
+        "VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy` where (`dim_geography_hierarchy`.`state` = 'Tamil Nadu') and (`dim_geography_hierarchy`.`census_2001_urban_rural` = 'Rural'). Join with `dim_village_infrastructure` on `dim_geography_hierarchy`.`geography_id` = `dim_village_infrastructure`.`geography_id`. Then filter where (`dim_village_infrastructure`.`village_drinking_water_available_indicator` = '1') and (`dim_village_infrastructure`.`village_health_facility_available_indicator` = '0')."
+  },
+  {
+    "question": "Provide a breakdown by state and village healthcare availability showing the average monthly per capita consumption and total non-food expenditure.",
+    "sql": "SELECT AVG(T1.MONTHLY_CONSUMPTION_PER_CAPITA), SUM(T1.MONTHLY_NON_FOOD_EXPENDITURE_RS), T2.STATE, T3.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR FROM FACT_HOUSEHOLD_CONSUMPTION T1 JOIN DIM_GEOGRAPHY_HIERARCHY T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_VILLAGE_INFRASTRUCTURE T3 ON T2.GEOGRAPHY_ID = T3.GEOGRAPHY_ID GROUP BY T2.STATE, T3.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR",
+    "pair_id": "ca663f58",
+    "original_question_id": "74b7c9bc",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_VILLAGE_INFRASTRUCTURE",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_VILLAGE_INFRASTRUCTURE": [
+        "INFRASTRUCTURE_ID",
+        "GEOGRAPHY_ID",
+        "VILLAGE_SCHOOL_AVAILABLE_INDICATOR",
+        "VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR",
+        "VILLAGE_DRINKING_WATER_SOURCE_TYPE",
+        "VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "CONSUMPTION_ID",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_consumption` with `dim_geography_hierarchy` on `geography_id` to get state, and join with `dim_village_infrastructure` on `geography_id` to get village_health_facility_available_indicator. Group by `dim_geography_hierarchy.state` and `dim_village_infrastructure.village_health_facility_available_indicator`. Compute AVG(`fact_household_consumption.monthly_consumption_per_capita`) and SUM(`fact_household_consumption.monthly_non_food_expenditure_rs`)."
+  },
+  {
+    "question": "Provide a state-wise breakdown of average per capita consumption and total non-food spending, categorized by whether or not the villages have available health facilities.",
+    "sql": "SELECT AVG(T1.MONTHLY_CONSUMPTION_PER_CAPITA), SUM(T1.MONTHLY_NON_FOOD_EXPENDITURE_RS), T2.STATE, T3.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_VILLAGE_INFRASTRUCTURE AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID GROUP BY T2.STATE, T3.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR ORDER BY T2.STATE",
+    "pair_id": "8705db64",
+    "original_question_id": "74b7c9bc",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_VILLAGE_INFRASTRUCTURE",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_VILLAGE_INFRASTRUCTURE": [
+        "INFRASTRUCTURE_ID",
+        "GEOGRAPHY_ID",
+        "VILLAGE_SCHOOL_AVAILABLE_INDICATOR",
+        "VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR",
+        "VILLAGE_DRINKING_WATER_SOURCE_TYPE",
+        "VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "CONSUMPTION_ID",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Compute average of `fact_household_consumption`.`monthly_consumption_per_capita` and sum of `fact_household_consumption`.`monthly_non_food_expenditure_rs` grouped by `dim_geography_hierarchy`.`state` and a binary category derived from `dim_village_infrastructure`.`village_health_facility_available_indicator`: treat value '1' as 'available', '0' as 'not available'. Join `fact_household_consumption` with `dim_geography_hierarchy` on `geography_id` and with `dim_village_infrastructure` on `geography_id`. Filter indicator to only 0 or 1 if needed. Output columns: state, health_facility_available (as derived category), avg_per_capita_consumption, total_non_food_spending."
+  },
+  {
+    "question": "Provide a breakdown by state and health facility availability of the average monthly per capita consumption and total non-food spending, focusing only on areas where average consumption exceeds 329 and ranking the results by total expenditure.",
+    "sql": "SELECT T1.STATE, T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR, AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA), SUM(T3.MONTHLY_NON_FOOD_EXPENDITURE_RS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 INNER JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID GROUP BY T1.STATE, T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR HAVING AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA) > 329 ORDER BY SUM(T3.MONTHLY_NON_FOOD_EXPENDITURE_RS) DESC",
+    "pair_id": "0d11cbfc",
+    "original_question_id": "74b7c9bc",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_VILLAGE_INFRASTRUCTURE",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_VILLAGE_INFRASTRUCTURE": [
+        "INFRASTRUCTURE_ID",
+        "GEOGRAPHY_ID",
+        "VILLAGE_SCHOOL_AVAILABLE_INDICATOR",
+        "VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR",
+        "VILLAGE_DRINKING_WATER_SOURCE_TYPE",
+        "VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "CONSUMPTION_ID",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_geography_hierarchy`.`state` and `dim_village_infrastructure`.`village_health_facility_available_indicator`. Compute AVG(`fact_household_consumption`.`monthly_consumption_per_capita`) and SUM(`fact_household_consumption`.`monthly_non_food_expenditure_rs`). Filter groups where AVG(`fact_household_consumption`.`monthly_consumption_per_capita`) > 329. Order results by SUM(`fact_household_consumption`.`monthly_non_food_expenditure_rs`) DESC. Join `fact_household_consumption` to `dim_geography_hierarchy` on `geography_id`, then to `dim_village_infrastructure` on `geography_id`."
+  },
+  {
+    "question": "Identify the codes for rural neighborhoods or villages that have both a health facility and a school available.",
+    "sql": "SELECT T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' AND T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' AND T2.VILLAGE_SCHOOL_AVAILABLE_INDICATOR = '1'",
+    "pair_id": "c4a941e4",
+    "original_question_id": "15f20e81",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_VILLAGE_INFRASTRUCTURE"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_VILLAGE_INFRASTRUCTURE": [
+        "INFRASTRUCTURE_ID",
+        "GEOGRAPHY_ID",
+        "VILLAGE_SCHOOL_AVAILABLE_INDICATOR",
+        "VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR",
+        "VILLAGE_DRINKING_WATER_SOURCE_TYPE",
+        "VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography_hierarchy`.`psu_village_or_neighborhood_code` from `dim_geography_hierarchy` join `dim_village_infrastructure` on `dim_geography_hierarchy`.`geography_id` = `dim_village_infrastructure`.`geography_id` where `dim_geography_hierarchy`.`census_2001_urban_rural` = 'Rural' and `dim_village_infrastructure`.`village_health_facility_available_indicator` = 1 and `dim_village_infrastructure`.`village_school_available_indicator` = 1."
+  },
+  {
+    "question": "Identify the codes for rural villages or neighborhoods that have both a school and a health facility available.",
+    "sql": "SELECT T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' AND T2.VILLAGE_SCHOOL_AVAILABLE_INDICATOR = '1' AND T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' GROUP BY T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+    "pair_id": "571ef167",
+    "original_question_id": "15f20e81",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_VILLAGE_INFRASTRUCTURE"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_VILLAGE_INFRASTRUCTURE": [
+        "INFRASTRUCTURE_ID",
+        "GEOGRAPHY_ID",
+        "VILLAGE_SCHOOL_AVAILABLE_INDICATOR",
+        "VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR",
+        "VILLAGE_DRINKING_WATER_SOURCE_TYPE",
+        "VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_geography_hierarchy` and `dim_village_infrastructure` on `geography_id`. Filter `dim_geography_hierarchy.census_2001_urban_rural` = 'Rural'. Filter `dim_village_infrastructure.village_school_available_indicator` > 0 and `dim_village_infrastructure.village_health_facility_available_indicator` > 0. Select `dim_geography_hierarchy.psu_village_or_neighborhood_code`."
+  },
+  {
+    "question": "Identify all states that have rural areas containing both health facilities and schools, listed in alphabetical order.",
+    "sql": "SELECT T1.STATE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_VILLAGE_INFRASTRUCTURE AS T3 ON T2.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T1.STATE HAVING SUM(CASE WHEN T3.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN T3.VILLAGE_SCHOOL_AVAILABLE_INDICATOR = '1' THEN 1 ELSE 0 END) > 0 ORDER BY T1.STATE ASC",
+    "pair_id": "b047eb7f",
+    "original_question_id": "15f20e81",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_VILLAGE_INFRASTRUCTURE"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_VILLAGE_INFRASTRUCTURE": [
+        "INFRASTRUCTURE_ID",
+        "GEOGRAPHY_ID",
+        "VILLAGE_SCHOOL_AVAILABLE_INDICATOR",
+        "VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR",
+        "VILLAGE_DRINKING_WATER_SOURCE_TYPE",
+        "VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy.census_2001_urban_rural` = 'Rural', `dim_village_infrastructure.village_health_facility_available_indicator` = 1, and `dim_village_infrastructure.village_school_available_indicator` = 1. Join `dim_geography_hierarchy` and `dim_village_infrastructure` on `geography_id`. Select distinct `dim_geography_hierarchy.state` and order alphabetically."
+  },
+  {
+    "question": "Rank the states by their average monthly per capita consumption in rural areas, from highest to lowest.",
+    "sql": "SELECT T1.STATE, AVG(T0.MONTHLY_CONSUMPTION_PER_CAPITA) FROM FACT_HOUSEHOLD_CONSUMPTION T0 JOIN DIM_GEOGRAPHY_HIERARCHY T1 ON T0.GEOGRAPHY_ID = T1.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T1.STATE ORDER BY AVG(T0.MONTHLY_CONSUMPTION_PER_CAPITA) DESC",
+    "pair_id": "2d2b2f83",
+    "original_question_id": "316dbfb1",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "CONSUMPTION_ID",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy.census_2001_urban_rural` = 'Rural', join `fact_household_consumption` on `geography_id`, group by `dim_geography_hierarchy.state`, compute average(`fact_household_consumption.monthly_consumption_per_capita`), order by average descending."
+  },
+  {
+    "question": "Rank the states by their average monthly per capita consumption in rural areas, from highest to lowest.",
+    "sql": "SELECT T2.STATE, AVG(T1.MONTHLY_CONSUMPTION_PER_CAPITA) FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T2.STATE ORDER BY AVG(T1.MONTHLY_CONSUMPTION_PER_CAPITA) DESC",
+    "pair_id": "37711b5a",
+    "original_question_id": "316dbfb1",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "CONSUMPTION_ID",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_consumption` with `dim_geography_hierarchy` on `fact_household_consumption`.`geography_id` = `dim_geography_hierarchy`.`geography_id`. Filter where `dim_geography_hierarchy`.`census_2001_urban_rural` = 'Rural'. Group by `dim_geography_hierarchy`.`state`. Compute AVG(`fact_household_consumption`.`monthly_consumption_per_capita`) as average_consumption. Order by average_consumption DESC to rank from highest to lowest."
+  },
+  {
+    "question": "Rank the states by their average monthly per capita consumption for rural households, including only those states with recorded consumption data.",
+    "sql": "SELECT T2.STATE, AVG(T1.MONTHLY_CONSUMPTION_PER_CAPITA) FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 INNER JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN DIM_HOUSEHOLD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T2.STATE HAVING COUNT(T1.CONSUMPTION_ID) > 0 ORDER BY AVG(T1.MONTHLY_CONSUMPTION_PER_CAPITA) DESC",
+    "pair_id": "b0e06805",
+    "original_question_id": "316dbfb1",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "CONSUMPTION_ID",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_consumption` with `dim_geography_hierarchy` on `geography_id`. Filter where `dim_geography_hierarchy.census_2001_urban_rural` = 'Rural'. Group by `dim_geography_hierarchy.state`. Compute AVG(`fact_household_consumption.monthly_consumption_per_capita`) as average_consumption. Order by average_consumption DESC to rank states from highest to lowest."
+  },
+  {
+    "question": "Identify the top 10 rural neighborhoods in Uttar Pradesh with the highest average monthly per capita consumption, noting whether each has access to a village health facility.",
+    "sql": "SELECT T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE, T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR, AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T1.STATE = 'Uttar Pradesh' AND T1.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE, T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR ORDER BY AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA) DESC LIMIT 10",
+    "pair_id": "f4ecfd72",
+    "original_question_id": "d72f8ee2",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_VILLAGE_INFRASTRUCTURE",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_VILLAGE_INFRASTRUCTURE": [
+        "INFRASTRUCTURE_ID",
+        "GEOGRAPHY_ID",
+        "VILLAGE_SCHOOL_AVAILABLE_INDICATOR",
+        "VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR",
+        "VILLAGE_DRINKING_WATER_SOURCE_TYPE",
+        "VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "CONSUMPTION_ID",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy`.`state` = 'Uttar Pradesh' and `dim_geography_hierarchy`.`census_2001_urban_rural` = 'Rural'. Join `dim_geography_hierarchy` to `fact_household_consumption` on `geography_id` and to `dim_village_infrastructure` on `geography_id`. Group by `dim_geography_hierarchy`.`psu_village_or_neighborhood_code`. Compute average(`fact_household_consumption`.`monthly_consumption_per_capita`) as avg_consumption. Determine health facility access: if `dim_village_infrastructure`.`village_health_facility_available_indicator` > 0 then 'Yes' else 'No'. Order by avg_consumption DESC limit 10."
+  },
+  {
+    "question": "Identify the top 10 rural neighborhoods in Uttar Pradesh with the highest average monthly per capita consumption, noting whether they have access to a village health facility.",
+    "sql": "SELECT T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE, T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR, AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T1.STATE = 'Uttar Pradesh' AND T1.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE, T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR ORDER BY AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA) DESC LIMIT 10",
+    "pair_id": "e3720743",
+    "original_question_id": "d72f8ee2",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_VILLAGE_INFRASTRUCTURE",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_VILLAGE_INFRASTRUCTURE": [
+        "INFRASTRUCTURE_ID",
+        "GEOGRAPHY_ID",
+        "VILLAGE_SCHOOL_AVAILABLE_INDICATOR",
+        "VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR",
+        "VILLAGE_DRINKING_WATER_SOURCE_TYPE",
+        "VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "CONSUMPTION_ID",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy`.`state` = 'Uttar Pradesh' and `dim_geography_hierarchy`.`census_2001_urban_rural` = 'Rural'. Join `fact_household_consumption` on `fact_household_consumption`.`geography_id` = `dim_geography_hierarchy`.`geography_id`. Join `dim_village_infrastructure` on `dim_village_infrastructure`.`geography_id` = `dim_geography_hierarchy`.`geography_id`. Group by `dim_geography_hierarchy`.`psu_village_or_neighborhood_code` (and possibly `dim_geography_hierarchy`.`geography_id` if code is not unique across states). Compute AVG(`fact_household_consumption`.`monthly_consumption_per_capita`) as average_consumption. Include `dim_village_infrastructure`.`village_health_facility_available_indicator` in SELECT (may need aggregation like MAX or MIN if multiple values per neighborhood). Order by average_consumption DESC limit 10."
+  },
+  {
+    "question": "Provide the top 10 rural neighborhoods in Uttar Pradesh with the highest average monthly per capita consumption, indicating whether each has a village health facility.",
+    "sql": "SELECT T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE, AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA), T3.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_VILLAGE_INFRASTRUCTURE AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T1.STATE = 'Uttar Pradesh' AND T1.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE, T3.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR ORDER BY AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA) DESC LIMIT 10",
+    "pair_id": "cabd0d93",
+    "original_question_id": "d72f8ee2",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_VILLAGE_INFRASTRUCTURE",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_VILLAGE_INFRASTRUCTURE": [
+        "INFRASTRUCTURE_ID",
+        "GEOGRAPHY_ID",
+        "VILLAGE_SCHOOL_AVAILABLE_INDICATOR",
+        "VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR",
+        "VILLAGE_DRINKING_WATER_SOURCE_TYPE",
+        "VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "CONSUMPTION_ID",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy`.`state` = 'Uttar Pradesh' and `dim_geography_hierarchy`.`census_2001_urban_rural` = 'Rural'. Join `fact_household_consumption` on `dim_geography_hierarchy`.`geography_id` = `fact_household_consumption`.`geography_id`. Join `dim_village_infrastructure` on `dim_geography_hierarchy`.`geography_id` = `dim_village_infrastructure`.`geography_id`. Group by `dim_geography_hierarchy`.`psu_village_or_neighborhood_code`. Compute AVG(`fact_household_consumption`.`monthly_consumption_per_capita`) as avg_consumption. For health facility: if `dim_village_infrastructure`.`village_health_facility_available_indicator` > 0 then 'Yes' else 'No'. Order by avg_consumption DESC limit 10."
+  },
+  {
+    "question": "Calculate the average monthly per capita consumption for each state and district, focusing only on villages that have health facilities.",
+    "sql": "SELECT T1.STATE, T1.DISTRICT_CODE, AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_VILLAGE_INFRASTRUCTURE AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T3.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' GROUP BY T1.STATE, T1.DISTRICT_CODE",
+    "pair_id": "69255140",
+    "original_question_id": "5fdf920a",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_VILLAGE_INFRASTRUCTURE",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_VILLAGE_INFRASTRUCTURE": [
+        "INFRASTRUCTURE_ID",
+        "GEOGRAPHY_ID",
+        "VILLAGE_SCHOOL_AVAILABLE_INDICATOR",
+        "VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR",
+        "VILLAGE_DRINKING_WATER_SOURCE_TYPE",
+        "VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Compute average of `fact_household_consumption`.`monthly_consumption_per_capita` grouped by `dim_geography_hierarchy`.`state` and `dim_geography_hierarchy`.`district_code`. Filter: `dim_village_infrastructure`.`village_health_facility_available_indicator` = 1 and `dim_geography_hierarchy`.`census_2001_urban_rural` = 'Rural'. Join `fact_household_consumption` with `dim_geography_hierarchy` on `geography_id`, and with `dim_village_infrastructure` on `geography_id`."
+  },
+  {
+    "question": "Calculate the average monthly per capita consumption for each district and state, focusing only on areas where village health facilities are available.",
+    "sql": "SELECT T1.STATE, T1.DISTRICT_CODE, AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_VILLAGE_INFRASTRUCTURE AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T3.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' GROUP BY T1.STATE, T1.DISTRICT_CODE",
+    "pair_id": "6c68ace6",
+    "original_question_id": "5fdf920a",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_VILLAGE_INFRASTRUCTURE",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_VILLAGE_INFRASTRUCTURE": [
+        "INFRASTRUCTURE_ID",
+        "GEOGRAPHY_ID",
+        "VILLAGE_SCHOOL_AVAILABLE_INDICATOR",
+        "VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR",
+        "VILLAGE_DRINKING_WATER_SOURCE_TYPE",
+        "VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Compute AVG(fact_household_consumption.monthly_consumption_per_capita) grouped by dim_geography_hierarchy.state and dim_geography_hierarchy.district_code, filtering for dim_village_infrastructure.village_health_facility_available_indicator = 1. Join fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id and dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id."
+  },
+  {
+    "question": "Rank the districts and states by their average monthly per capita consumption, focusing only on areas with available village health facilities and more than one household record.",
+    "sql": "SELECT T1.STATE, T1.DISTRICT_CODE, AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 INNER JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' GROUP BY T1.STATE, T1.DISTRICT_CODE HAVING COUNT(T3.HOUSEHOLD_ID) > 1 ORDER BY AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA) DESC",
+    "pair_id": "b9b7c895",
+    "original_question_id": "5fdf920a",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_VILLAGE_INFRASTRUCTURE",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_VILLAGE_INFRASTRUCTURE": [
+        "INFRASTRUCTURE_ID",
+        "GEOGRAPHY_ID",
+        "VILLAGE_SCHOOL_AVAILABLE_INDICATOR",
+        "VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR",
+        "VILLAGE_DRINKING_WATER_SOURCE_TYPE",
+        "VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_village_infrastructure` (filter `village_health_facility_available_indicator = 1`) with `dim_geography_hierarchy` on `geography_id`. Join `fact_household_consumption` on `geography_id`. Group by `dim_geography_hierarchy`.`state`, `dim_geography_hierarchy`.`district_code`. Compute AVG(`fact_household_consumption`.`monthly_consumption_per_capita`). Filter groups with COUNT(DISTINCT `fact_household_consumption`.`household_id`) > 1. Order by average descending."
+  },
+  {
+    "question": "Identify the codes for districts that contain rural villages where health facilities are available but drinking water is not.",
+    "sql": "SELECT T1.DISTRICT_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T1.DISTRICT_CODE HAVING COUNT(CASE WHEN T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' THEN 1 END) > 0 AND COUNT(CASE WHEN T2.VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR = '1' THEN 1 END) = 0",
+    "pair_id": "ffa1a484",
+    "original_question_id": "37b9cf92",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_VILLAGE_INFRASTRUCTURE",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_VILLAGE_INFRASTRUCTURE": [
+        "INFRASTRUCTURE_ID",
+        "GEOGRAPHY_ID",
+        "VILLAGE_SCHOOL_AVAILABLE_INDICATOR",
+        "VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR",
+        "VILLAGE_DRINKING_WATER_SOURCE_TYPE",
+        "VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `dim_geography_hierarchy`.`district_code` where `dim_geography_hierarchy`.`census_2001_urban_rural` = 'Rural' and `dim_village_infrastructure`.`village_health_facility_available_indicator` = '1' and `dim_village_infrastructure`.`village_drinking_water_available_indicator` = '0', joining `dim_geography_hierarchy` and `dim_village_infrastructure` on `geography_id`."
+  },
+  {
+    "question": "Identify the codes of districts that contain rural villages with access to health facilities but no available drinking water, sorted by district code.",
+    "sql": "SELECT T1.DISTRICT_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T1.DISTRICT_CODE HAVING SUM(CASE WHEN T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN T2.VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR = '1' THEN 1 ELSE 0 END) = 0 ORDER BY T1.DISTRICT_CODE ASC",
+    "pair_id": "1c5b8848",
+    "original_question_id": "37b9cf92",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_VILLAGE_INFRASTRUCTURE",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_VILLAGE_INFRASTRUCTURE": [
+        "INFRASTRUCTURE_ID",
+        "GEOGRAPHY_ID",
+        "VILLAGE_SCHOOL_AVAILABLE_INDICATOR",
+        "VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR",
+        "VILLAGE_DRINKING_WATER_SOURCE_TYPE",
+        "VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_geography_hierarchy` and `dim_village_infrastructure` on `geography_id`. Filter where `dim_geography_hierarchy.census_2001_urban_rural` = 'Rural', `dim_village_infrastructure.village_health_facility_available_indicator` = '1', and `dim_village_infrastructure.village_drinking_water_available_indicator` = '0'. Select distinct `dim_geography_hierarchy.district_code` and order by `dim_geography_hierarchy.district_code`."
+  },
+  {
+    "question": "Identify the geography IDs for rural villages that have both school and health facility access.",
+    "sql": "SELECT T1.GEOGRAPHY_ID FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' AND T2.VILLAGE_SCHOOL_AVAILABLE_INDICATOR = '1' AND T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1'",
+    "pair_id": "3b1c9aff",
+    "original_question_id": "8c8fc144",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_VILLAGE_INFRASTRUCTURE",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_VILLAGE_INFRASTRUCTURE": [
+        "INFRASTRUCTURE_ID",
+        "GEOGRAPHY_ID",
+        "VILLAGE_SCHOOL_AVAILABLE_INDICATOR",
+        "VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR",
+        "VILLAGE_DRINKING_WATER_SOURCE_TYPE",
+        "VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography_hierarchy`.`geography_id` from `dim_geography_hierarchy` join `dim_village_infrastructure` on `dim_geography_hierarchy`.`geography_id` = `dim_village_infrastructure`.`geography_id` where `dim_geography_hierarchy`.`census_2001_urban_rural` = 'Rural' and `dim_village_infrastructure`.`village_school_available_indicator` > 0 and `dim_village_infrastructure`.`village_health_facility_available_indicator` > 0."
+  },
+  {
+    "question": "Identify all rural areas that have both school and health facilities available, sorted by their geography ID.",
+    "sql": "SELECT T1.GEOGRAPHY_ID FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' AND T2.VILLAGE_SCHOOL_AVAILABLE_INDICATOR = '1' AND T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' GROUP BY T1.GEOGRAPHY_ID ORDER BY T1.GEOGRAPHY_ID ASC",
+    "pair_id": "6701182a",
+    "original_question_id": "8c8fc144",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_VILLAGE_INFRASTRUCTURE",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_VILLAGE_INFRASTRUCTURE": [
+        "INFRASTRUCTURE_ID",
+        "GEOGRAPHY_ID",
+        "VILLAGE_SCHOOL_AVAILABLE_INDICATOR",
+        "VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR",
+        "VILLAGE_DRINKING_WATER_SOURCE_TYPE",
+        "VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography_hierarchy`.`geography_id` from `dim_geography_hierarchy` inner join `dim_village_infrastructure` on `dim_geography_hierarchy`.`geography_id` = `dim_village_infrastructure`.`geography_id` where `dim_geography_hierarchy`.`census_2001_urban_rural` = 'Rural' and `dim_village_infrastructure`.`village_school_available_indicator` > 0 and `dim_village_infrastructure`.`village_health_facility_available_indicator` > 0 order by `dim_geography_hierarchy`.`geography_id`."
+  },
+  {
+    "question": "Identify the IDs of rural villages that have both a school and a health facility, and have recorded at least one household consumption entry, sorted numerically.",
+    "sql": "SELECT T1.GEOGRAPHY_ID FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' AND T2.VILLAGE_SCHOOL_AVAILABLE_INDICATOR = '1' AND T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' GROUP BY T1.GEOGRAPHY_ID HAVING COUNT(T3.CONSUMPTION_ID) >= 1 ORDER BY T1.GEOGRAPHY_ID ASC",
+    "pair_id": "93782300",
+    "original_question_id": "8c8fc144",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_VILLAGE_INFRASTRUCTURE",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_VILLAGE_INFRASTRUCTURE": [
+        "INFRASTRUCTURE_ID",
+        "GEOGRAPHY_ID",
+        "VILLAGE_SCHOOL_AVAILABLE_INDICATOR",
+        "VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR",
+        "VILLAGE_DRINKING_WATER_SOURCE_TYPE",
+        "VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography_hierarchy`.`geography_id` from `dim_geography_hierarchy` join `dim_village_infrastructure` on `dim_geography_hierarchy`.`geography_id` = `dim_village_infrastructure`.`geography_id` where `dim_geography_hierarchy`.`census_2001_urban_rural` = 'Rural' and `dim_village_infrastructure`.`village_school_available_indicator` = 1 and `dim_village_infrastructure`.`village_health_facility_available_indicator` = 1 and exists (select 1 from `fact_household_consumption` where `fact_household_consumption`.`geography_id` = `dim_geography_hierarchy`.`geography_id`) order by `dim_geography_hierarchy`.`geography_id`."
+  },
+  {
+    "question": "Identify the geographic areas that either have access to village health facilities or report a monthly per capita consumption exceeding 5,000.",
+    "sql": "SELECT T1.GEOGRAPHY_ID FROM DIM_VILLAGE_INFRASTRUCTURE AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' OR T2.MONTHLY_CONSUMPTION_PER_CAPITA > 5000",
+    "pair_id": "7259cbe2",
+    "original_question_id": "616d66c3",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_VILLAGE_INFRASTRUCTURE",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_VILLAGE_INFRASTRUCTURE": [
+        "INFRASTRUCTURE_ID",
+        "GEOGRAPHY_ID",
+        "VILLAGE_SCHOOL_AVAILABLE_INDICATOR",
+        "VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR",
+        "VILLAGE_DRINKING_WATER_SOURCE_TYPE",
+        "VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "CONSUMPTION_ID",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Geographic areas are defined by `dim_geography_hierarchy.state`, `dim_geography_hierarchy.district_code`, `dim_geography_hierarchy.psu_village_or_neighborhood_code`, `dim_geography_hierarchy.census_2001_urban_rural`. Condition 1: `dim_village_infrastructure.village_health_facility_available_indicator = 1`. Condition 2: `fact_household_consumption.monthly_consumption_per_capita > 5000`. Join `dim_geography_hierarchy` to `dim_village_infrastructure` on `dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id` for condition 1. Join `dim_geography_hierarchy` to `fact_household_consumption` on `dim_geography_hierarchy.geography_id = fact_household_consumption.geography_id` for condition 2. Use OR to combine conditions. Select distinct geographic attributes."
+  },
+  {
+    "question": "Identify the geographical IDs for areas that either have a village health facility or report a monthly per capita consumption exceeding 3,667, sorted numerically.",
+    "sql": "SELECT T1.GEOGRAPHY_ID FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' OR T3.MONTHLY_CONSUMPTION_PER_CAPITA > 3667 GROUP BY T1.GEOGRAPHY_ID ORDER BY T1.GEOGRAPHY_ID ASC",
+    "pair_id": "f97c8cdd",
+    "original_question_id": "616d66c3",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_VILLAGE_INFRASTRUCTURE",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_VILLAGE_INFRASTRUCTURE": [
+        "INFRASTRUCTURE_ID",
+        "GEOGRAPHY_ID",
+        "VILLAGE_SCHOOL_AVAILABLE_INDICATOR",
+        "VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR",
+        "VILLAGE_DRINKING_WATER_SOURCE_TYPE",
+        "VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "CONSUMPTION_ID",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Get distinct geography_id from two sources: 1) dim_village_infrastructure where village_health_facility_available_indicator = 1, 2) fact_household_consumption where monthly_consumption_per_capita > 3667. Combine with UNION and order by geography_id numerically."
+  },
+  {
+    "question": "Identify the geography IDs for areas that either have a village health facility or a monthly per capita consumption exceeding 3,667, ensuring only locations with at least one recorded consumption entry are included.",
+    "sql": "SELECT T1.GEOGRAPHY_ID FROM DIM_GEOGRAPHY_HIERARCHY AS T1 LEFT JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID LEFT JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' OR T3.MONTHLY_CONSUMPTION_PER_CAPITA > 3667 GROUP BY T1.GEOGRAPHY_ID HAVING COUNT(T3.CONSUMPTION_ID) >= 1 ORDER BY T1.GEOGRAPHY_ID ASC",
+    "pair_id": "9d718365",
+    "original_question_id": "616d66c3",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_VILLAGE_INFRASTRUCTURE",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_VILLAGE_INFRASTRUCTURE": [
+        "INFRASTRUCTURE_ID",
+        "GEOGRAPHY_ID",
+        "VILLAGE_SCHOOL_AVAILABLE_INDICATOR",
+        "VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR",
+        "VILLAGE_DRINKING_WATER_SOURCE_TYPE",
+        "VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "CONSUMPTION_ID",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Find distinct `geography_id` from `dim_village_infrastructure` joined with `fact_household_consumption` on `geography_id` where (`dim_village_infrastructure`.`village_health_facility_available_indicator` = 1 OR `fact_household_consumption`.`monthly_consumption_per_capita` > 3667). The join ensures at least one consumption entry exists."
+  },
+  {
+    "question": "Identify all Muslim households for which an asset index has been recorded.",
+    "sql": "SELECT DIM_HOUSEHOLD.HOUSEHOLD_ID FROM DIM_HOUSEHOLD JOIN DIM_HOUSEHOLD_SOCIAL ON DIM_HOUSEHOLD.HOUSEHOLD_ID = DIM_HOUSEHOLD_SOCIAL.HOUSEHOLD_ID WHERE DIM_HOUSEHOLD_SOCIAL.CASTE_RELIGION_GROUP_8_CATEGORY = 'Muslim' AND DIM_HOUSEHOLD_SOCIAL.HOUSEHOLD_ASSETS_INDEX IS NOT NULL",
+    "pair_id": "4ee56523",
+    "original_question_id": "8d168356",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION",
+      "FACT_UTILITY_CONSUMPTION",
+      "FACT_FOOD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ],
+      "FACT_UTILITY_CONSUMPTION": [
+        "UTILITY_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_ELECTRICITY_BILL_RS",
+        "SURVEY_DESIGN_WEIGHT"
+      ],
+      "FACT_FOOD_CONSUMPTION": [
+        "CONSUMPTION_SUGAR_EXPENDITURE_RS",
+        "CONSUMPTION_WHEAT_EXPENDITURE_RS",
+        "HOUSEHOLD_ID",
+        "CONSUMPTION_RICE_EXPENDITURE_RS",
+        "CONSUMPTION_PULSES_EXPENDITURE_RS",
+        "FOOD_CONSUMPTION_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_household_social`.`household_id` from `dim_household_social` where `dim_household_social`.`caste_religion_group_8_category` = 'Muslim' and `dim_household_social`.`household_assets_index` is not null."
+  },
+  {
+    "question": "Provide a list of household IDs for those categorized as OBC that have a recorded asset index, sorted by their ID.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' AND T2.HOUSEHOLD_ASSETS_INDEX IS NOT NULL ORDER BY T1.HOUSEHOLD_ID",
+    "pair_id": "6493ceb6",
+    "original_question_id": "8d168356",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION",
+      "FACT_UTILITY_CONSUMPTION",
+      "FACT_FOOD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ],
+      "FACT_UTILITY_CONSUMPTION": [
+        "UTILITY_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_ELECTRICITY_BILL_RS",
+        "SURVEY_DESIGN_WEIGHT"
+      ],
+      "FACT_FOOD_CONSUMPTION": [
+        "CONSUMPTION_SUGAR_EXPENDITURE_RS",
+        "CONSUMPTION_WHEAT_EXPENDITURE_RS",
+        "HOUSEHOLD_ID",
+        "CONSUMPTION_RICE_EXPENDITURE_RS",
+        "CONSUMPTION_PULSES_EXPENDITURE_RS",
+        "FOOD_CONSUMPTION_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_household_social`.`household_id` from `dim_household_social` where `dim_household_social`.`caste_religion_group_8_category` = 'OBC' and `dim_household_social`.`household_assets_index` IS NOT NULL order by `dim_household_social`.`household_id`."
+  },
+  {
+    "question": "List the IDs of Christian households that have a recorded assets index, ordered by their household ID.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' AND T2.HOUSEHOLD_ASSETS_INDEX IS NOT NULL ORDER BY T1.HOUSEHOLD_ID",
+    "pair_id": "5c2300a9",
+    "original_question_id": "8d168356",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION",
+      "FACT_UTILITY_CONSUMPTION",
+      "FACT_FOOD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ],
+      "FACT_UTILITY_CONSUMPTION": [
+        "UTILITY_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_ELECTRICITY_BILL_RS",
+        "SURVEY_DESIGN_WEIGHT"
+      ],
+      "FACT_FOOD_CONSUMPTION": [
+        "CONSUMPTION_SUGAR_EXPENDITURE_RS",
+        "CONSUMPTION_WHEAT_EXPENDITURE_RS",
+        "HOUSEHOLD_ID",
+        "CONSUMPTION_RICE_EXPENDITURE_RS",
+        "CONSUMPTION_PULSES_EXPENDITURE_RS",
+        "FOOD_CONSUMPTION_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select dim_household_social.household_id from dim_household_social where dim_household_social.caste_religion_group_8_category = 'Christian' and dim_household_social.household_assets_index is not null order by dim_household_social.household_id."
+  },
+  {
+    "question": "Provide a list of household IDs for Muslim families that have a recorded asset index, ordered by their ID.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Muslim' AND T2.HOUSEHOLD_ASSETS_INDEX IS NOT NULL ORDER BY T1.HOUSEHOLD_ID",
+    "pair_id": "bda085ac",
+    "original_question_id": "8d168356",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION",
+      "FACT_UTILITY_CONSUMPTION",
+      "FACT_FOOD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ],
+      "FACT_UTILITY_CONSUMPTION": [
+        "UTILITY_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_ELECTRICITY_BILL_RS",
+        "SURVEY_DESIGN_WEIGHT"
+      ],
+      "FACT_FOOD_CONSUMPTION": [
+        "CONSUMPTION_SUGAR_EXPENDITURE_RS",
+        "CONSUMPTION_WHEAT_EXPENDITURE_RS",
+        "HOUSEHOLD_ID",
+        "CONSUMPTION_RICE_EXPENDITURE_RS",
+        "CONSUMPTION_PULSES_EXPENDITURE_RS",
+        "FOOD_CONSUMPTION_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_household_social`.`household_id` from `dim_household_social` where `dim_household_social`.`caste_religion_group_8_category` = 'Muslim' and `dim_household_social`.`household_assets_index` is not null order by `dim_household_social`.`household_id`."
+  },
+  {
+    "question": "Provide the asset index and average monthly spending for Christian households that spend more than 300 rupees per month on average, sorted from highest to lowest asset index.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, AVG(T3.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' AND T2.HOUSEHOLD_ASSETS_INDEX IS NOT NULL GROUP BY T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX HAVING AVG(T3.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) > 300 ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+    "pair_id": "83910589",
+    "original_question_id": "8d168356",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION",
+      "FACT_UTILITY_CONSUMPTION",
+      "FACT_FOOD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ],
+      "FACT_UTILITY_CONSUMPTION": [
+        "UTILITY_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_ELECTRICITY_BILL_RS",
+        "SURVEY_DESIGN_WEIGHT"
+      ],
+      "FACT_FOOD_CONSUMPTION": [
+        "CONSUMPTION_SUGAR_EXPENDITURE_RS",
+        "CONSUMPTION_WHEAT_EXPENDITURE_RS",
+        "HOUSEHOLD_ID",
+        "CONSUMPTION_RICE_EXPENDITURE_RS",
+        "CONSUMPTION_PULSES_EXPENDITURE_RS",
+        "FOOD_CONSUMPTION_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_household_social`.`household_assets_index` and `fact_household_consumption`.`monthly_total_consumption_expenditure_rs` from `dim_household_social` join `fact_household_consumption` on `dim_household_social`.`household_id` = `fact_household_consumption`.`household_id` where `dim_household_social`.`caste_religion_group_8_category` = 'Christian' and `fact_household_consumption`.`monthly_total_consumption_expenditure_rs` > 300 order by `dim_household_social`.`household_assets_index` desc."
+  },
+  {
+    "question": "Provide a breakdown by caste and religious category showing the average social ID and the total count of animal care workers per household.",
+    "sql": "SELECT CASTE_RELIGION_GROUP_8_CATEGORY, AVG(SOCIAL_ID), COUNT(HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS) FROM DIM_HOUSEHOLD_SOCIAL JOIN DIM_HOUSEHOLD ON DIM_HOUSEHOLD_SOCIAL.HOUSEHOLD_ID = DIM_HOUSEHOLD.HOUSEHOLD_ID GROUP BY CASTE_RELIGION_GROUP_8_CATEGORY",
+    "pair_id": "6112d144",
+    "original_question_id": "47998837",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_household_social`.`caste_religion_group_8_category`. For each category, compute AVG(`dim_household_social`.`social_id`) and SUM(`dim_household`.`household_number_of_animal_care_workers`). Join `dim_household_social` and `dim_household` on `household_id`."
+  },
+  {
+    "question": "For each caste and religious group, show the average household asset index and the total number of animal care workers, ranked from highest to lowest average wealth.",
+    "sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, AVG(CAST(T2.HOUSEHOLD_ASSETS_INDEX AS NUMERIC)), SUM(CAST(T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS AS NUMERIC)) FROM DIM_HOUSEHOLD T1 JOIN DIM_HOUSEHOLD_SOCIAL T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY ORDER BY AVG(CAST(T2.HOUSEHOLD_ASSETS_INDEX AS NUMERIC)) DESC",
+    "pair_id": "14917044",
+    "original_question_id": "47998837",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_household_social`.`caste_religion_group_8_category`. Compute AVG(`dim_household_social`.`household_assets_index`) as average_wealth and SUM(`dim_household`.`household_number_of_animal_care_workers`) as total_animal_care_workers. Join `dim_household_social` and `dim_household` on `household_id`. Order results by average_wealth DESC."
+  },
+  {
+    "question": "Provide a breakdown of the average social ID and the total number of animal care workers, grouped by caste/religion category and social network contact type, for all households with recorded members, sorted by the highest average social ID.",
+    "sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.SOCIAL_NETWORK_CONTACT_2_TYPE, AVG(T2.SOCIAL_ID), SUM(CAST(T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS AS NUMERIC)) FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.SOCIAL_NETWORK_CONTACT_2_TYPE HAVING COUNT(T1.HOUSEHOLD_PERSON_CASE_ID) > 0 ORDER BY AVG(T2.SOCIAL_ID) DESC",
+    "pair_id": "4bdaef0f",
+    "original_question_id": "47998837",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_household_social` and `dim_household` on `household_id`. Group by `dim_household_social.caste_religion_group_8_category` and `dim_household_social.social_network_contact_2_type`. Compute AVG(`dim_household_social.social_id`) and SUM(`dim_household.household_number_of_animal_care_workers`). Order by AVG(`dim_household_social.social_id`) DESC."
+  },
+  {
+    "question": "Identify the household IDs for families categorized as OBC who have an asset index score greater than 10.",
+    "sql": "SELECT HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL WHERE CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' AND HOUSEHOLD_ASSETS_INDEX > '10';",
+    "pair_id": "748d564f",
+    "original_question_id": "7da11f67",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_household_social`.`household_id` from `dim_household_social` where `dim_household_social`.`caste_religion_group_8_category` = 'OBC' and `dim_household_social`.`household_assets_index` > 10."
+  },
+  {
+    "question": "Identify all households belonging to the OBC category that have an assets index greater than 10.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' AND T2.HOUSEHOLD_ASSETS_INDEX > '10'",
+    "pair_id": "aa7dc679",
+    "original_question_id": "7da11f67",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_household_social` where `dim_household_social`.`caste_religion_group_8_category` = 'OBC' and `dim_household_social`.`household_assets_index` > 10. Return `dim_household_social`.`household_id`."
+  },
+  {
+    "question": "Identify the household and person case IDs for OBC families that have an asset index greater than 10 and an average monthly consumption expenditure exceeding 300 rupees, sorted by household ID.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T1.HOUSEHOLD_PERSON_CASE_ID FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID INNER JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' GROUP BY T1.HOUSEHOLD_ID, T1.HOUSEHOLD_PERSON_CASE_ID, T2.HOUSEHOLD_ASSETS_INDEX HAVING AVG(T3.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) > 300 AND T2.HOUSEHOLD_ASSETS_INDEX > '10' ORDER BY T1.HOUSEHOLD_ID ASC",
+    "pair_id": "613ac0aa",
+    "original_question_id": "7da11f67",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_household`.`household_id` and `dim_household`.`household_person_case_id` from `dim_household` inner join `dim_household_social` on `dim_household`.`household_id` = `dim_household_social`.`household_id` inner join `fact_household_consumption` on `dim_household`.`household_id` = `fact_household_consumption`.`household_id` where `dim_household_social`.`caste_religion_group_8_category` = 'OBC' and `dim_household_social`.`household_assets_index` > 10 and `fact_household_consumption`.`monthly_total_consumption_expenditure_rs` > 300 order by `dim_household`.`household_id`."
+  },
+  {
+    "question": "List the household IDs and their respective caste or religious group categories, ranked from highest to lowest based on their asset index.",
+    "sql": "SELECT HOUSEHOLD_ID, CASTE_RELIGION_GROUP_8_CATEGORY FROM DIM_HOUSEHOLD_SOCIAL ORDER BY HOUSEHOLD_ASSETS_INDEX DESC;",
+    "pair_id": "7f1d4779",
+    "original_question_id": "df9b1c59",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select (`dim_household_social`.`household_id`, `dim_household_social`.`caste_religion_group_8_category`) from `dim_household_social` ordered by `dim_household_social`.`household_assets_index` descending."
+  },
+  {
+    "question": "List the household IDs and their corresponding caste or religious categories, ordered from highest to lowest asset index.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T2.CASTE_RELIGION_GROUP_8_CATEGORY FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+    "pair_id": "71e1082a",
+    "original_question_id": "df9b1c59",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select (`dim_household_social`.`household_id`, `dim_household_social`.`caste_religion_group_8_category`) from `dim_household_social` ordered by `dim_household_social`.`household_assets_index` descending."
+  },
+  {
+    "question": "Identify households and their respective caste or religious categories where the average monthly consumption expenditure exceeds 300 rupees, ranked by their highest recorded monthly spending.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T2.CASTE_RELIGION_GROUP_8_CATEGORY FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID GROUP BY T1.HOUSEHOLD_ID, T2.CASTE_RELIGION_GROUP_8_CATEGORY HAVING AVG(T3.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) > 300 ORDER BY MAX(T3.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) DESC",
+    "pair_id": "6d503456",
+    "original_question_id": "df9b1c59",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_household_consumption` and `dim_household_social` on `household_id`. Select `fact_household_consumption`.`household_id` and `dim_household_social`.`caste_religion_group_8_category` where `fact_household_consumption`.`monthly_total_consumption_expenditure_rs` > 300. Order by `fact_household_consumption`.`monthly_total_consumption_expenditure_rs` DESC."
+  },
+  {
+    "question": "Identify the top 10 Christian households with the highest asset index.",
+    "sql": "SELECT HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL WHERE CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' ORDER BY HOUSEHOLD_ASSETS_INDEX DESC LIMIT 10;",
+    "pair_id": "1ccaf231",
+    "original_question_id": "ed78bc0a",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION",
+      "FACT_UTILITY_CONSUMPTION",
+      "FACT_FOOD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ],
+      "FACT_UTILITY_CONSUMPTION": [
+        "UTILITY_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_ELECTRICITY_BILL_RS",
+        "SURVEY_DESIGN_WEIGHT"
+      ],
+      "FACT_FOOD_CONSUMPTION": [
+        "CONSUMPTION_SUGAR_EXPENDITURE_RS",
+        "CONSUMPTION_WHEAT_EXPENDITURE_RS",
+        "HOUSEHOLD_ID",
+        "CONSUMPTION_RICE_EXPENDITURE_RS",
+        "CONSUMPTION_PULSES_EXPENDITURE_RS",
+        "FOOD_CONSUMPTION_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_household_social` where `dim_household_social`.`caste_religion_group_8_category` = 'Christian', order by `dim_household_social`.`household_assets_index` DESC, limit 10, selecting `dim_household_social`.`household_id` and `dim_household_social`.`household_assets_index`."
+  },
+  {
+    "question": "Identify the case IDs for the ten Christian households with the highest asset index scores.",
+    "sql": "SELECT T1.HOUSEHOLD_PERSON_CASE_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC LIMIT 10",
+    "pair_id": "98f0a045",
+    "original_question_id": "ed78bc0a",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION",
+      "FACT_UTILITY_CONSUMPTION",
+      "FACT_FOOD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ],
+      "FACT_UTILITY_CONSUMPTION": [
+        "UTILITY_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_ELECTRICITY_BILL_RS",
+        "SURVEY_DESIGN_WEIGHT"
+      ],
+      "FACT_FOOD_CONSUMPTION": [
+        "CONSUMPTION_SUGAR_EXPENDITURE_RS",
+        "CONSUMPTION_WHEAT_EXPENDITURE_RS",
+        "HOUSEHOLD_ID",
+        "CONSUMPTION_RICE_EXPENDITURE_RS",
+        "CONSUMPTION_PULSES_EXPENDITURE_RS",
+        "FOOD_CONSUMPTION_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_household_social.caste_religion_group_8_category` = 'Christian', join `dim_household_social.household_id` = `dim_household.household_id`, select `dim_household.household_person_case_id`, order by `dim_household_social.household_assets_index` DESC, limit 10."
+  },
+  {
+    "question": "Identify the top 10 Christian households with the highest asset indices and show their average monthly total consumption expenditure.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, AVG(T2.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) FROM DIM_HOUSEHOLD AS T1 INNER JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN DIM_HOUSEHOLD_SOCIAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T3.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' GROUP BY T1.HOUSEHOLD_ID HAVING COUNT(T3.SOCIAL_ID) >= 1 ORDER BY MAX(T3.HOUSEHOLD_ASSETS_INDEX) DESC LIMIT 10",
+    "pair_id": "0c9fb70c",
+    "original_question_id": "ed78bc0a",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION",
+      "FACT_UTILITY_CONSUMPTION",
+      "FACT_FOOD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ],
+      "FACT_UTILITY_CONSUMPTION": [
+        "UTILITY_ID",
+        "HOUSEHOLD_ID",
+        "MONTHLY_ELECTRICITY_BILL_RS",
+        "SURVEY_DESIGN_WEIGHT"
+      ],
+      "FACT_FOOD_CONSUMPTION": [
+        "CONSUMPTION_SUGAR_EXPENDITURE_RS",
+        "CONSUMPTION_WHEAT_EXPENDITURE_RS",
+        "HOUSEHOLD_ID",
+        "CONSUMPTION_RICE_EXPENDITURE_RS",
+        "CONSUMPTION_PULSES_EXPENDITURE_RS",
+        "FOOD_CONSUMPTION_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_household_social.caste_religion_group_8_category` = 'Christian'. Join `dim_household_social` and `fact_household_consumption` on `household_id`. Select `dim_household_social.household_id`, `dim_household_social.household_assets_index`, and AVG(`fact_household_consumption.monthly_total_consumption_expenditure_rs`) as average_monthly_total_consumption_expenditure. Group by `dim_household_social.household_id`, `dim_household_social.household_assets_index`. Order by `dim_household_social.household_assets_index` DESC. Limit 10."
+  },
+  {
+    "question": "Provide the number of animal care workers and the Gauna dates for all Christian households.",
+    "sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS, T3.DATE_OF_GAUNA FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_HOUSEHOLD_MARITAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian';",
+    "pair_id": "f21079ed",
+    "original_question_id": "171733ec",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "DIM_HOUSEHOLD_MARITAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "DIM_HOUSEHOLD_MARITAL": [
+        "MARITAL_ID",
+        "HOUSEHOLD_ID",
+        "DATE_OF_MARRIAGE",
+        "DATE_OF_GAUNA"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_household_social.caste_religion_group_8_category` = 'Christian'. Select `dim_household.household_number_of_animal_care_workers` and `dim_household_marital.date_of_gauna`. Join `dim_household_social`, `dim_household`, and `dim_household_marital` on `household_id`."
+  },
+  {
+    "question": "Provide the number of animal care workers and the Gauna dates for Christian households.",
+    "sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS, T3.DATE_OF_GAUNA FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_HOUSEHOLD_MARITAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' GROUP BY T3.DATE_OF_GAUNA, T2.CASTE_RELIGION_GROUP_8_CATEGORY, T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS ORDER BY T2.CASTE_RELIGION_GROUP_8_CATEGORY DESC",
+    "pair_id": "aa876f79",
+    "original_question_id": "171733ec",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "DIM_HOUSEHOLD_MARITAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "DIM_HOUSEHOLD_MARITAL": [
+        "MARITAL_ID",
+        "HOUSEHOLD_ID",
+        "DATE_OF_MARRIAGE",
+        "DATE_OF_GAUNA"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_household`.`household_number_of_animal_care_workers` and `dim_household_marital`.`date_of_gauna` from `dim_household_social` join `dim_household` using (`household_id`) join `dim_household_marital` using (`household_id`) where `dim_household_social`.`caste_religion_group_8_category` = 'Christian'."
+  },
+  {
+    "question": "Provide the household asset index and Gauna dates for Muslim households, grouped by these attributes, where the total household ID sum exceeds the overall average.",
+    "sql": "SELECT T2.HOUSEHOLD_ASSETS_INDEX, SUM(T1.HOUSEHOLD_ID), T3.DATE_OF_GAUNA FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN DIM_HOUSEHOLD_MARITAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Muslim' GROUP BY T2.HOUSEHOLD_ASSETS_INDEX, T3.DATE_OF_GAUNA HAVING SUM(T1.HOUSEHOLD_ID) > (SELECT AVG(HOUSEHOLD_ID) FROM DIM_HOUSEHOLD) ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+    "pair_id": "6123b06b",
+    "original_question_id": "171733ec",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "DIM_HOUSEHOLD_MARITAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "DIM_HOUSEHOLD_MARITAL": [
+        "MARITAL_ID",
+        "HOUSEHOLD_ID",
+        "DATE_OF_MARRIAGE",
+        "DATE_OF_GAUNA"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_household_social` and `dim_household_marital` on `household_id`. Filter where `dim_household_social`.`caste_religion_group_8_category` = 'Muslim'. Group by `dim_household_social`.`household_assets_index` and `dim_household_marital`.`date_of_gauna`. For each group, sum `dim_household_social`.`household_id`. Keep groups where this sum > overall average of `dim_household_social`.`household_id` across all Muslim households in the joined set. Select `dim_household_social`.`household_assets_index`, `dim_household_marital`.`date_of_gauna`, and the sum."
+  },
+  {
+    "question": "Identify the household IDs for families with an asset index of 27 where only one Gauna date has been recorded.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_HOUSEHOLD_MARITAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '27' GROUP BY T1.HOUSEHOLD_ID HAVING COUNT(T3.DATE_OF_GAUNA) = 1",
+    "pair_id": "a6daed7c",
+    "original_question_id": "6ae2ea0a",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "DIM_HOUSEHOLD_MARITAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "DIM_HOUSEHOLD_MARITAL": [
+        "MARITAL_ID",
+        "HOUSEHOLD_ID",
+        "DATE_OF_MARRIAGE",
+        "DATE_OF_GAUNA"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Find `dim_household_social.household_id` where `dim_household_social.household_assets_index = 27` and the household has exactly one record in `dim_household_marital` with a non-null `dim_household_marital.date_of_gauna`. Join `dim_household_social` and `dim_household_marital` on `household_id`."
+  },
+  {
+    "question": "Identify the household IDs for families that have a household assets index of 27 and have recorded a Gauna ceremony date.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_HOUSEHOLD_MARITAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.HOUSEHOLD_ASSETS_INDEX = '27' AND T2.DATE_OF_GAUNA IS NOT NULL",
+    "pair_id": "1cbbf0d2",
+    "original_question_id": "d6a85377",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "DIM_HOUSEHOLD_MARITAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "DIM_HOUSEHOLD_MARITAL": [
+        "MARITAL_ID",
+        "HOUSEHOLD_ID",
+        "DATE_OF_MARRIAGE",
+        "DATE_OF_GAUNA"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_household_social` and `dim_household_marital` on `household_id`. Filter where `dim_household_social`.`household_assets_index` = 27 and `dim_household_marital`.`date_of_gauna` IS NOT NULL. Select `household_id`."
+  },
+  {
+    "question": "Identify all households indexed at an asset level of 27 that have at least one recorded Gauna date.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_HOUSEHOLD_MARITAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '27' AND T3.DATE_OF_GAUNA IS NOT NULL GROUP BY T1.HOUSEHOLD_ID HAVING COUNT(T3.MARITAL_ID) >= 1",
+    "pair_id": "10704b8b",
+    "original_question_id": "d6a85377",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "DIM_HOUSEHOLD_MARITAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "DIM_HOUSEHOLD_MARITAL": [
+        "MARITAL_ID",
+        "HOUSEHOLD_ID",
+        "DATE_OF_MARRIAGE",
+        "DATE_OF_GAUNA"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `dim_household_social`.`household_id` from `dim_household_social` inner join `dim_household_marital` on `dim_household_social`.`household_id` = `dim_household_marital`.`household_id` where `dim_household_social`.`household_assets_index` = '27' and `dim_household_marital`.`date_of_gauna` IS NOT NULL."
+  },
+  {
+    "question": "Identify the household IDs of the wealthiest families, based on the asset index, where at least one member has celebrated a Gauna ceremony, sorted by their ID.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_HOUSEHOLD_MARITAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = (SELECT MAX(HOUSEHOLD_ASSETS_INDEX) FROM DIM_HOUSEHOLD_SOCIAL) GROUP BY T1.HOUSEHOLD_ID HAVING COUNT(T3.DATE_OF_GAUNA) >= 1 ORDER BY T1.HOUSEHOLD_ID ASC",
+    "pair_id": "49f1774f",
+    "original_question_id": "d6a85377",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "DIM_HOUSEHOLD_MARITAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "DIM_HOUSEHOLD_MARITAL": [
+        "MARITAL_ID",
+        "HOUSEHOLD_ID",
+        "DATE_OF_MARRIAGE",
+        "DATE_OF_GAUNA"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Wealthiest families based on asset index means highest `dim_household_social`.`household_assets_index`. At least one member celebrated a Gauna ceremony means `dim_household_marital`.`date_of_gauna` is not null (since sample values are numeric strings like '9884', not null). Need to join `dim_household_social` and `dim_household_marital` on `household_id`. Sort by household ID."
+  },
+  {
+    "question": "Identify all households that either have an asset index of 27 or have a recorded date for the Gauna ceremony.",
+    "sql": "SELECT DISTINCT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_HOUSEHOLD_MARITAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.HOUSEHOLD_ASSETS_INDEX = '27' OR T2.DATE_OF_GAUNA IS NOT NULL",
+    "pair_id": "a29f6fad",
+    "original_question_id": "d07590df",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "DIM_HOUSEHOLD_MARITAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "DIM_HOUSEHOLD_MARITAL": [
+        "MARITAL_ID",
+        "HOUSEHOLD_ID",
+        "DATE_OF_MARRIAGE",
+        "DATE_OF_GAUNA"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Find distinct `dim_household.household_id` where either `dim_household_social.household_assets_index` = '27' OR `dim_household_marital.date_of_gauna` IS NOT NULL. Join `dim_household` LEFT JOIN `dim_household_social` USING (`household_id`) LEFT JOIN `dim_household_marital` USING (`household_id`)."
+  },
+  {
+    "question": "Identify all households that either have an asset index of 27 or have a recorded Gauna date.",
+    "sql": "SELECT DISTINCT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_HOUSEHOLD_MARITAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.HOUSEHOLD_ASSETS_INDEX = '27' OR T2.DATE_OF_GAUNA IS NOT NULL",
+    "pair_id": "c6636a7c",
+    "original_question_id": "d07590df",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "DIM_HOUSEHOLD_MARITAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "DIM_HOUSEHOLD_MARITAL": [
+        "MARITAL_ID",
+        "HOUSEHOLD_ID",
+        "DATE_OF_MARRIAGE",
+        "DATE_OF_GAUNA"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Find distinct `dim_household.household_id` where either `dim_household_social.household_assets_index` = 27 OR `dim_household_marital.date_of_gauna` IS NOT NULL. Join `dim_household_social` and `dim_household_marital` to `dim_household` via `household_id`."
+  },
+  {
+    "question": "Identify all unique households that either have an asset index of 27 or have a recorded Gauna date, sorted by their ID.",
+    "sql": "SELECT DISTINCT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 LEFT JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN DIM_HOUSEHOLD_MARITAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '27' OR T3.DATE_OF_GAUNA IS NOT NULL GROUP BY T1.HOUSEHOLD_ID HAVING COUNT(T1.HOUSEHOLD_ID) >= 1 ORDER BY T1.HOUSEHOLD_ID ASC",
+    "pair_id": "e2ee09e1",
+    "original_question_id": "d07590df",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "DIM_HOUSEHOLD_MARITAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "DIM_HOUSEHOLD_MARITAL": [
+        "MARITAL_ID",
+        "HOUSEHOLD_ID",
+        "DATE_OF_MARRIAGE",
+        "DATE_OF_GAUNA"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve distinct household_id from dim_household_social where household_assets_index = '27' UNION distinct household_id from dim_household_marital where date_of_gauna IS NOT NULL, sorted by household_id ascending."
+  },
+  {
+    "question": "Provide a breakdown of the total number of household workers and asset index records for each caste and religious group.",
+    "sql": "SELECT T1.CASTE_RELIGION_GROUP_8_CATEGORY, COUNT(T2.HOUSEHOLD_NUMBER_OF_WORKERS), COUNT(T1.HOUSEHOLD_ASSETS_INDEX) FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_HOUSEHOLD AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID GROUP BY T1.CASTE_RELIGION_GROUP_8_CATEGORY",
+    "pair_id": "21ae65a1",
+    "original_question_id": "2da8b3ed",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_household_social`.`caste_religion_group_8_category`. For each group, sum `dim_household`.`household_number_of_workers` for total workers and sum `dim_household_social`.`household_assets_index` for asset index records. Join `dim_household` and `dim_household_social` on `household_id`."
+  },
+  {
+    "question": "Provide a breakdown of the total number of household asset records and worker counts for each caste and religious group category.",
+    "sql": "SELECT T1.CASTE_RELIGION_GROUP_8_CATEGORY, COUNT(T1.HOUSEHOLD_ASSETS_INDEX), COUNT(T2.HOUSEHOLD_NUMBER_OF_WORKERS) FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_HOUSEHOLD AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID GROUP BY T1.CASTE_RELIGION_GROUP_8_CATEGORY",
+    "pair_id": "a6ae852e",
+    "original_question_id": "2da8b3ed",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Count records in `dim_household_social` (asset records) and sum `dim_household`.`household_number_of_workers` (worker counts) for each distinct `dim_household_social`.`caste_religion_group_8_category`. Join `dim_household_social` and `dim_household` on `household_id`. Group by `dim_household_social`.`caste_religion_group_8_category`."
+  },
+  {
+    "question": "Provide a breakdown of average per capita consumption and total household expenditure across different social and religious groups, ranking them from highest to lowest average consumption for groups with more than one household recorded.",
+    "sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, AVG(T1.MONTHLY_CONSUMPTION_PER_CAPITA), SUM(T1.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN DIM_HOUSEHOLD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T1.MONTHLY_CONSUMPTION_PER_CAPITA IS NOT NULL GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY HAVING COUNT(T1.HOUSEHOLD_ID) > 1 ORDER BY AVG(T1.MONTHLY_CONSUMPTION_PER_CAPITA) DESC",
+    "pair_id": "e322af43",
+    "original_question_id": "2da8b3ed",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "FACT_HOUSEHOLD_CONSUMPTION"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "FACT_HOUSEHOLD_CONSUMPTION": [
+        "MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS",
+        "MONTHLY_CONSUMPTION_PER_CAPITA",
+        "HOUSEHOLD_ID",
+        "GEOGRAPHY_ID",
+        "CONSUMPTION_ID",
+        "MONTHLY_NON_FOOD_EXPENDITURE_RS"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_household_social`.`caste_religion_group_8_category` (values: 'High caste', 'Muslim', 'Sikh, Jain', 'Dalit', 'OBC', 'Christian', 'Adivasi', 'Brahmin'). For each group, compute average(`fact_household_consumption`.`monthly_consumption_per_capita`) as avg_per_capita_consumption, sum(`fact_household_consumption`.`monthly_total_consumption_expenditure_rs`) as total_household_expenditure, and count distinct `dim_household_social`.`household_id`. Filter groups having count > 1. Order results by avg_per_capita_consumption DESC."
+  },
+  {
+    "question": "Identify the household IDs for families belonging to the OBC category who are in the highest asset index bracket.",
+    "sql": "SELECT HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL WHERE CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' AND HOUSEHOLD_ASSETS_INDEX = '10';",
+    "pair_id": "82810052",
+    "original_question_id": "8c794dd0",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_SOCIAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Find household IDs from `dim_household_social` where `dim_household_social`.`caste_religion_group_8_category` = 'OBC' and `dim_household_social`.`household_assets_index` = (SELECT MAX(`dim_household_social`.`household_assets_index`) FROM `dim_household_social` WHERE `dim_household_social`.`caste_religion_group_8_category` = 'OBC')."
+  },
+  {
+    "question": "Identify the household IDs for families belonging to the OBC category who are in the highest asset index bracket, sorted numerically.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' AND T2.HOUSEHOLD_ASSETS_INDEX = '10' ORDER BY T1.HOUSEHOLD_ID",
+    "pair_id": "9304043c",
+    "original_question_id": "8c794dd0",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_SOCIAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter dim_household_social where dim_household_social.caste_religion_group_8_category = 'OBC', compute max(dim_household_social.household_assets_index) within that group, then select dim_household_social.household_id where dim_household_social.household_assets_index equals that max, order by dim_household_social.household_id ASC."
+  },
+  {
+    "question": "Provide the household and person case IDs for OBC households that fall into the highest asset index category.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T1.HOUSEHOLD_PERSON_CASE_ID, T2.CASTE_RELIGION_GROUP_8_CATEGORY FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID INNER JOIN DIM_GEOGRAPHY_HIERARCHY AS T3 ON T1.HOUSEHOLD_ID = T3.GEOGRAPHY_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' AND T2.HOUSEHOLD_ASSETS_INDEX = '10' GROUP BY T1.HOUSEHOLD_ID, T1.HOUSEHOLD_PERSON_CASE_ID, T2.CASTE_RELIGION_GROUP_8_CATEGORY HAVING COUNT(T1.HOUSEHOLD_PERSON_CASE_ID) >= 1 ORDER BY T2.CASTE_RELIGION_GROUP_8_CATEGORY DESC",
+    "pair_id": "6baffed2",
+    "original_question_id": "8c794dd0",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_SOCIAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_household`.`household_id` and `dim_household`.`household_person_case_id` from `dim_household` join `dim_household_social` on `dim_household`.`household_id` = `dim_household_social`.`household_id` where `dim_household_social`.`caste_religion_group_8_category` = 'OBC' and `dim_household_social`.`household_assets_index` = (select max(`household_assets_index`) from `dim_household_social`)."
+  },
+  {
+    "question": "List the household IDs and their respective caste or religious group categories, ranked from highest to lowest based on their asset index.",
+    "sql": "SELECT HOUSEHOLD_ID, CASTE_RELIGION_GROUP_8_CATEGORY FROM DIM_HOUSEHOLD_SOCIAL ORDER BY HOUSEHOLD_ASSETS_INDEX DESC;",
+    "pair_id": "b46106b7",
+    "original_question_id": "f82e84e6",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_household_social`.`household_id` and `dim_household_social`.`caste_religion_group_8_category` from `dim_household_social`, ordered by `dim_household_social`.`household_assets_index` descending."
+  },
+  {
+    "question": "List the household IDs and their corresponding caste or religious group categories, ordered from highest to lowest household asset index.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T2.CASTE_RELIGION_GROUP_8_CATEGORY FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+    "pair_id": "8253a6c1",
+    "original_question_id": "f82e84e6",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_household_social.household_id`, `dim_household_social.caste_religion_group_8_category`, `dim_household_social.household_assets_index` from `dim_household_social` order by `dim_household_social.household_assets_index` DESC."
+  },
+  {
+    "question": "List the household IDs and their respective social categories for Christian, OBC, or Muslim households that have an above-average social index, sorted by their asset index in descending order.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T2.CASTE_RELIGION_GROUP_8_CATEGORY FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY IN ('Christian', 'OBC', 'Muslim') GROUP BY T1.HOUSEHOLD_ID, T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.HOUSEHOLD_ASSETS_INDEX HAVING AVG(T2.SOCIAL_ID) >= (SELECT AVG(SOCIAL_ID) FROM DIM_HOUSEHOLD_SOCIAL) ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC;",
+    "pair_id": "e5bc8bc9",
+    "original_question_id": "f82e84e6",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_household_social`.`household_id` and `dim_household_social`.`caste_religion_group_8_category` from `dim_household_social` where `dim_household_social`.`caste_religion_group_8_category` IN ('Christian', 'OBC', 'Muslim') and `dim_household_social`.`household_assets_index` > (select avg(`dim_household_social`.`household_assets_index`) from `dim_household_social`) order by `dim_household_social`.`household_assets_index` DESC."
+  },
+  {
+    "question": "Identify the top 10 Christian or Muslim households with the highest asset index scores.",
+    "sql": "SELECT HOUSEHOLD_ID, HOUSEHOLD_ASSETS_INDEX FROM DIM_HOUSEHOLD_SOCIAL WHERE CASTE_RELIGION_GROUP_8_CATEGORY IN ('Christian', 'Muslim') ORDER BY HOUSEHOLD_ASSETS_INDEX DESC LIMIT 10",
+    "pair_id": "68ad9f1b",
+    "original_question_id": "f02e45eb",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_SOCIAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_household_social` where `dim_household_social`.`caste_religion_group_8_category` is 'Christian' or 'Muslim'. Select `dim_household_social`.`household_id` and `dim_household_social`.`household_assets_index`. Order by `dim_household_social`.`household_assets_index` DESC. Limit to 10 rows."
+  },
+  {
+    "question": "Identify the top 10 Christian or Muslim households with the highest asset index scores.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY IN ('Christian', 'Muslim') ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC LIMIT 10",
+    "pair_id": "c8ec7fe8",
+    "original_question_id": "f02e45eb",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_SOCIAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter dim_household_social where dim_household_social.caste_religion_group_8_category in ('Christian', 'Muslim'). Select dim_household_social.household_id, dim_household_social.household_assets_index. Order by dim_household_social.household_assets_index DESC limit 10."
+  },
+  {
+    "question": "List the top 10 household IDs and their asset indices for Muslim or OBC households that have an asset index greater than 10, sorted from highest to lowest.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY IN ('OBC', 'Muslim') GROUP BY T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX HAVING MAX(T2.HOUSEHOLD_ASSETS_INDEX) > '10' ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC LIMIT 10",
+    "pair_id": "536be16d",
+    "original_question_id": "f02e45eb",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "DIM_HOUSEHOLD_SOCIAL"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "GEOGRAPHY_ID",
+        "STATE",
+        "DISTRICT_CODE",
+        "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+        "CENSUS_2001_URBAN_RURAL"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_household_social`.`household_id` and `dim_household_social`.`household_assets_index` from `dim_household_social` where `dim_household_social`.`caste_religion_group_8_category` IN ('Muslim', 'OBC') and `dim_household_social`.`household_assets_index` > 10 order by `dim_household_social`.`household_assets_index` desc limit 10."
+  },
+  {
+    "question": "Provide the average social ID for households with children not currently enrolled in school, broken down by their caste/religion category and asset index.",
+    "sql": "SELECT T1.CASTE_RELIGION_GROUP_8_CATEGORY, T1.HOUSEHOLD_ASSETS_INDEX, AVG(T1.SOCIAL_ID) FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_EDUCATION_CHILD AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CHILD_SCHOOL_ENROLLMENT_STATUS = '-1' GROUP BY T1.CASTE_RELIGION_GROUP_8_CATEGORY, T1.HOUSEHOLD_ASSETS_INDEX ORDER BY T1.CASTE_RELIGION_GROUP_8_CATEGORY",
+    "pair_id": "3012cd8e",
+    "original_question_id": "e6e6e371",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "DIM_EDUCATION_CHILD"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "HOUSEHOLD_ID",
+        "SOCIAL_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "HOUSEHOLD_ASSETS_INDEX",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE"
+      ],
+      "DIM_EDUCATION_CHILD": [
+        "CHILD_EDUCATION_ID",
+        "CHILD_SCHOOL_ENROLLMENT_STATUS",
+        "CHILD_CURRENT_GRADE_LEVEL",
+        "HOUSEHOLD_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_education_child` and `dim_household_social` on `household_id`. Filter `dim_education_child`.`child_school_enrollment_status` for 'not enrolled' (specific value unknown). Compute AVG(`dim_household_social`.`social_id`) grouped by `dim_household_social`.`caste_religion_group_8_category` and `dim_household_social`.`household_assets_index`."
+  },
+  {
+    "question": "For children who are not currently enrolled in school, show the average education ID broken down by caste/religion group and household asset index, sorted by the social category.",
+    "sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.HOUSEHOLD_ASSETS_INDEX, AVG(T1.CHILD_EDUCATION_ID) FROM DIM_EDUCATION_CHILD T1 JOIN DIM_HOUSEHOLD_SOCIAL T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.CHILD_SCHOOL_ENROLLMENT_STATUS = '-1' GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.HOUSEHOLD_ASSETS_INDEX ORDER BY T2.CASTE_RELIGION_GROUP_8_CATEGORY ASC",
+    "pair_id": "2e736d46",
+    "original_question_id": "e6e6e371",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "DIM_EDUCATION_CHILD"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "HOUSEHOLD_ID",
+        "SOCIAL_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "HOUSEHOLD_ASSETS_INDEX",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE"
+      ],
+      "DIM_EDUCATION_CHILD": [
+        "CHILD_EDUCATION_ID",
+        "CHILD_SCHOOL_ENROLLMENT_STATUS",
+        "CHILD_CURRENT_GRADE_LEVEL",
+        "HOUSEHOLD_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_education_child.child_school_enrollment_status = 2` for not enrolled children. Compute average of `dim_education_child.child_education_id` grouped by `dim_household_social.caste_religion_group_8_category` and `dim_household_social.household_assets_index`. Sort results by `dim_household_social.caste_religion_group_8_category`. Join `dim_education_child` and `dim_household_social` on `household_id`."
+  },
+  {
+    "question": "For children who are not currently enrolled in school, provide a breakdown of household asset levels and social-religious categories, including the average social ID and total count of children for each group, ordered by the highest average social ID.",
+    "sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.HOUSEHOLD_ASSETS_INDEX, AVG(T2.SOCIAL_ID), COUNT(T1.CHILD_EDUCATION_ID) FROM DIM_EDUCATION_CHILD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID INNER JOIN DIM_HOUSEHOLD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T1.CHILD_SCHOOL_ENROLLMENT_STATUS = '-1' GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.HOUSEHOLD_ASSETS_INDEX HAVING COUNT(T1.CHILD_EDUCATION_ID) > 0 ORDER BY AVG(T2.SOCIAL_ID) DESC",
+    "pair_id": "a86b23f1",
+    "original_question_id": "e6e6e371",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "DIM_EDUCATION_CHILD"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "HOUSEHOLD_ID",
+        "SOCIAL_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "HOUSEHOLD_ASSETS_INDEX",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE"
+      ],
+      "DIM_EDUCATION_CHILD": [
+        "CHILD_EDUCATION_ID",
+        "CHILD_SCHOOL_ENROLLMENT_STATUS",
+        "CHILD_CURRENT_GRADE_LEVEL",
+        "HOUSEHOLD_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter children with `dim_education_child`.`child_school_enrollment_status` = 0 (not enrolled). Join `dim_education_child` to `dim_household_social` on `household_id`. Group by `dim_household_social`.`household_assets_index` and `dim_household_social`.`caste_religion_group_8_category`. Select `dim_household_social`.`household_assets_index`, `dim_household_social`.`caste_religion_group_8_category`, AVG(`dim_household_social`.`social_id`) as average_social_id, COUNT(`dim_education_child`.`child_education_id`) as total_children. Order by average_social_id DESC."
+  },
+  {
+    "question": "Identify the household IDs for families with an asset index of 27 where the child's school enrollment status is missing or unrecorded.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_EDUCATION_CHILD AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.HOUSEHOLD_ASSETS_INDEX = '27' AND T2.CHILD_SCHOOL_ENROLLMENT_STATUS = '-1';",
+    "pair_id": "451b3e02",
+    "original_question_id": "dff1e1cf",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "DIM_EDUCATION_CHILD"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "DIM_EDUCATION_CHILD": [
+        "CHILD_EDUCATION_ID",
+        "HOUSEHOLD_ID",
+        "CHILD_SCHOOL_ENROLLMENT_STATUS",
+        "CHILD_CURRENT_GRADE_LEVEL"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter households where `dim_household_social.household_assets_index` = 27 and `dim_education_child.child_school_enrollment_status` = -1 (missing/unrecorded). Join `dim_household_social` and `dim_education_child` on `household_id` to get the household IDs."
+  },
+  {
+    "question": "Identify the household IDs for families ranked at asset index 17 that have children with an unknown or unspecified school enrollment status.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_EDUCATION_CHILD AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.HOUSEHOLD_ASSETS_INDEX = '17' AND T2.CHILD_SCHOOL_ENROLLMENT_STATUS = '-1' GROUP BY T1.HOUSEHOLD_ID",
+    "pair_id": "565304fa",
+    "original_question_id": "dff1e1cf",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "DIM_EDUCATION_CHILD"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "DIM_EDUCATION_CHILD": [
+        "CHILD_EDUCATION_ID",
+        "HOUSEHOLD_ID",
+        "CHILD_SCHOOL_ENROLLMENT_STATUS",
+        "CHILD_CURRENT_GRADE_LEVEL"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Find `dim_household_social`.`household_id` where `dim_household_social`.`household_assets_index` = 17 and the same `household_id` exists in `dim_education_child` with `dim_education_child`.`child_school_enrollment_status` = -1."
+  },
+  {
+    "question": "Identify the IDs of all households with an asset index of 27, excluding any households where children have an unknown school enrollment status, and list them in ascending order.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '27' AND T1.HOUSEHOLD_ID NOT IN (SELECT HOUSEHOLD_ID FROM DIM_EDUCATION_CHILD WHERE CHILD_SCHOOL_ENROLLMENT_STATUS = '-1') GROUP BY T1.HOUSEHOLD_ID ORDER BY T1.HOUSEHOLD_ID ASC",
+    "pair_id": "8a7c69ea",
+    "original_question_id": "dff1e1cf",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "DIM_EDUCATION_CHILD"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "DIM_EDUCATION_CHILD": [
+        "CHILD_EDUCATION_ID",
+        "HOUSEHOLD_ID",
+        "CHILD_SCHOOL_ENROLLMENT_STATUS",
+        "CHILD_CURRENT_GRADE_LEVEL"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `dim_household`.`household_id` from `dim_household` inner join `dim_household_social` on `dim_household`.`household_id` = `dim_household_social`.`household_id` left join `dim_education_child` on `dim_household`.`household_id` = `dim_education_child`.`household_id` where `dim_household_social`.`household_assets_index` = 27 and (`dim_education_child`.`child_school_enrollment_status` is null or `dim_education_child`.`child_school_enrollment_status` != -1) order by `dim_household`.`household_id` asc."
+  },
+  {
+    "question": "Identify the households that have an asset index of 27 and include children whose school enrollment status is currently unrecorded or missing.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_EDUCATION_CHILD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '27' AND T3.CHILD_SCHOOL_ENROLLMENT_STATUS = '-1';",
+    "pair_id": "962070d7",
+    "original_question_id": "dd83ae92",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "DIM_EDUCATION_CHILD"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "DIM_EDUCATION_CHILD": [
+        "CHILD_EDUCATION_ID",
+        "HOUSEHOLD_ID",
+        "CHILD_SCHOOL_ENROLLMENT_STATUS",
+        "CHILD_CURRENT_GRADE_LEVEL"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter households where (`dim_household_social`.`household_assets_index` = 27) AND (`dim_education_child`.`child_school_enrollment_status` = -1). Join `dim_household_social` and `dim_education_child` on `household_id`."
+  },
+  {
+    "question": "Identify households with an asset index greater than 10 that have children not currently enrolled in school, sorted by their household ID.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_EDUCATION_CHILD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX > '10' AND T3.CHILD_SCHOOL_ENROLLMENT_STATUS = '-1' GROUP BY T1.HOUSEHOLD_ID ORDER BY T1.HOUSEHOLD_ID ASC",
+    "pair_id": "ba856713",
+    "original_question_id": "dd83ae92",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "DIM_EDUCATION_CHILD"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "DIM_EDUCATION_CHILD": [
+        "CHILD_EDUCATION_ID",
+        "HOUSEHOLD_ID",
+        "CHILD_SCHOOL_ENROLLMENT_STATUS",
+        "CHILD_CURRENT_GRADE_LEVEL"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `dim_household_social`.`household_id` from `dim_household_social` inner join `dim_education_child` on `dim_household_social`.`household_id` = `dim_education_child`.`household_id` where `dim_household_social`.`household_assets_index` > 10 and `dim_education_child`.`child_school_enrollment_status` = 0 order by `dim_household_social`.`household_id`."
+  },
+  {
+    "question": "Identify households with an asset index greater than 10 that have at least one child not currently enrolled in school, ordered by their wealth level.",
+    "sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_EDUCATION_CHILD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX > '10' AND T3.CHILD_SCHOOL_ENROLLMENT_STATUS = '-1' GROUP BY T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX HAVING COUNT(T3.CHILD_EDUCATION_ID) >= 1 ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+    "pair_id": "1a6ea6be",
+    "original_question_id": "dd83ae92",
+    "schema_used": [
+      "DIM_HOUSEHOLD",
+      "DIM_HOUSEHOLD_SOCIAL",
+      "DIM_EDUCATION_CHILD"
+    ],
+    "linked_schema": {
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "HOUSEHOLD_PERSON_CASE_ID",
+        "HOUSEHOLD_NUMBER_OF_WORKERS",
+        "HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS",
+        "FARM_DECISION_MAKER_ID"
+      ],
+      "DIM_HOUSEHOLD_SOCIAL": [
+        "SOCIAL_ID",
+        "HOUSEHOLD_ID",
+        "CASTE_RELIGION_GROUP_8_CATEGORY",
+        "SOCIAL_NETWORK_CONTACT_2_TYPE",
+        "HOUSEHOLD_ASSETS_INDEX"
+      ],
+      "DIM_EDUCATION_CHILD": [
+        "CHILD_EDUCATION_ID",
+        "HOUSEHOLD_ID",
+        "CHILD_SCHOOL_ENROLLMENT_STATUS",
+        "CHILD_CURRENT_GRADE_LEVEL"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `dim_household_social`.`household_id` from `dim_household_social` join `dim_education_child` on `dim_household_social`.`household_id` = `dim_education_child`.`household_id` where `dim_household_social`.`household_assets_index` > 10 and `dim_education_child`.`child_school_enrollment_status` = 0 order by `dim_household_social`.`household_assets_index` desc."
+  }
+]

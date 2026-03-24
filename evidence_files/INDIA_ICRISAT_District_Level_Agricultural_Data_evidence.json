@@ -285,7 +285,7 @@
     "skeleton_id": "skel_0",
     "difficulty": "easy",
     "similarity_score": 0.0,
-    "evidence": ""
+    "evidence": "Select `dim_geography`.`dist_name` where `dim_geography`.`state_name` = 'Chhattisgarh' and `dim_year`.`year` = 1970 and `fact_cereals_major`.`rice_yield_kg_per_ha` > 828.55, joining `fact_cereals_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`."
   },
   {
     "question": "Which districts in Chhattisgarh achieved a rice yield exceeding 337.59 kg per hectare during the year 1970?",
@@ -2083,7 +2083,7 @@
     "skeleton_id": "skel_0",
     "difficulty": "easy",
     "similarity_score": 0.0,
-    "evidence": ""
+    "evidence": "Group by `dim_geography`.`state_name`. For each state, compute average of `fact_millets`.`pearl_millet_yield_kg_per_ha` and `fact_millets`.`finger_millet_yield_kg_per_ha`, and sum of `fact_millets`.`pearl_millet_production_1000tons` and `fact_millets`.`finger_millet_production_1000tons`. Filter `dim_year`.`year` between 1966 and 1970 inclusive. Join `fact_millets` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`."
   },
   {
     "question": "Provide a state-wise summary of the average yields and total production for pearl and finger millets between 1966 and 1970.",
@@ -2373,7 +2373,7 @@
     "skeleton_id": "skel_2",
     "difficulty": "hard",
     "similarity_score": 0.0,
-    "evidence": ""
+    "evidence": "Filter `dim_geography`.`state_name` = 'Chhattisgarh' and `dim_year`.`year` = 1970. Join `fact_millets` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`. Select `dim_geography`.`dist_name` and `fact_millets`.`pearl_millet_production_1000tons`. Order by `fact_millets`.`pearl_millet_production_1000tons` DESC limit 10."
   },
   {
     "question": "Provide the pearl millet yields for districts in Chhattisgarh between 1966 and 1970.",
@@ -2623,7 +2623,7 @@
     "skeleton_id": "skel_1",
     "difficulty": "medium",
     "similarity_score": 0.0,
-    "evidence": ""
+    "evidence": "List `dim_geography.dist_name` where `dim_year.year` = 1970, `fact_millets.pearl_millet_production_1000tons` > 0, and `fact_millets.finger_millet_production_1000tons` > 0.2, ordered alphabetically by `dim_geography.dist_name`."
   },
   {
     "question": "Which districts in Chhattisgarh produced more than 200 tons of either finger millet or pearl millet in 1970?",
@@ -2989,7 +2989,7 @@
     "skeleton_id": "skel_0",
     "difficulty": "easy",
     "similarity_score": 0.0,
-    "evidence": ""
+    "evidence": "Select `dim_geography`.`dist_name` where `dim_geography`.`state_name` = 'Chhattisgarh' and `dim_year`.`year` = 1967 and `fact_pulses_major`.`chickpea_yield_kg_per_ha` > 500, joining `fact_pulses_major` with `dim_geography` on `geography_id` and with `dim_year` on `year_id`."
   },
   {
     "question": "List the districts in Chhattisgarh that achieved a chickpea yield higher than 448.34 kg per hectare in 1968, ordered from highest to lowest yield.",

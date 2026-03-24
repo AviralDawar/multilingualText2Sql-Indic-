@@ -1112,7 +1112,7 @@
     "skeleton_id": "skel_2",
     "difficulty": "hard",
     "similarity_score": 0.0,
-    "evidence": ""
+    "evidence": "Select distinct `dim_geography`.`sub_district` where `fact_outpatient_services`.`outpatient_attendance_allopathic` > 5000 and `fact_child_immunization_routine`.`bcg_vaccine` > 1000 for the same `dim_geography`.`geography_id`."
   },
   {
     "question": "Identify the rural sub-districts that have either recorded more than 5,000 allopathic outpatient visits or administered over 1,000 BCG vaccines.",
@@ -1634,7 +1634,7 @@
     "skeleton_id": "skel_0",
     "difficulty": "easy",
     "similarity_score": 0.0,
-    "evidence": ""
+    "evidence": "Filter `dim_geography.state` = 'Andaman And Nicobar Islands', `dim_geography.type_of_area` = 'Rural', `dim_time.year` = 2020. Join `dim_geography`, `dim_time`, `fact_outpatient_services`. Group by `dim_geography.sub_district`, sum `fact_outpatient_services.outpatient_attendance_allopathic`. Order descending by sum, limit 5."
   },
   {
     "question": "Identify the top 5 rural sub-districts in the Andaman and Nicobar Islands with the highest total allopathic outpatient attendance for the year 2021.",

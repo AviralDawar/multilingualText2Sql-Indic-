@@ -1,0 +1,4127 @@
+[
+  {
+    "question": "List the village codes for all PSUs located in the state of Uttar Pradesh.",
+    "sql": "SELECT T1.PSU_VILLAGE_CODE FROM DIM_PSU_VILLAGE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T3.STATE_NAME = 'Uttar Pradesh';",
+    "pair_id": "24b2449f",
+    "original_question_id": "5c137a3f",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_psu_village.psu_village_code` where `dim_state.state_name` = 'Uttar Pradesh'. Join `dim_psu_village` to `dim_district` on `dim_psu_village.district_id` = `dim_district.district_id`, then join `dim_district` to `dim_state` on `dim_district.state_id` = `dim_state.state_id`."
+  },
+  {
+    "question": "List all unique PSU village codes located within the state of Uttar Pradesh, sorted numerically.",
+    "sql": "SELECT T3.PSU_VILLAGE_CODE FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_PSU_VILLAGE AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME = 'Uttar Pradesh' GROUP BY T3.PSU_VILLAGE_CODE ORDER BY T3.PSU_VILLAGE_CODE",
+    "pair_id": "f3f8d5ec",
+    "original_question_id": "5c137a3f",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve distinct `dim_psu_village`.`psu_village_code` where `dim_state`.`state_name` = 'Uttar Pradesh' by joining `dim_psu_village` → `dim_district` → `dim_state`. Sort results numerically ascending."
+  },
+  {
+    "question": "Provide a sorted list of all unique PSU village codes located within the state of Uttar Pradesh.",
+    "sql": "SELECT T3.PSU_VILLAGE_CODE FROM DIM_STATE AS T1 INNER JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID INNER JOIN DIM_PSU_VILLAGE AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME = 'Uttar Pradesh' GROUP BY T3.PSU_VILLAGE_CODE ORDER BY T3.PSU_VILLAGE_CODE ASC",
+    "pair_id": "acd28eb0",
+    "original_question_id": "5c137a3f",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve distinct `dim_psu_village.psu_village_code` values where `dim_state.state_name` = 'Uttar Pradesh', by joining `dim_psu_village` → `dim_district` → `dim_state`. Sort the unique codes in ascending order."
+  },
+  {
+    "question": "Provide a count of the villages in each state.",
+    "sql": "SELECT count(T1.PSU_VILLAGE_ID), T3.STATE_NAME FROM DIM_PSU_VILLAGE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID GROUP BY T3.STATE_NAME",
+    "pair_id": "79f7be20",
+    "original_question_id": "75824947",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Count distinct `dim_psu_village`.`psu_village_id` grouped by `dim_state`.`state_name`. Join `dim_psu_village` to `dim_district` on `dim_psu_village`.`district_id` = `dim_district`.`district_id`, then join `dim_district` to `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id`."
+  },
+  {
+    "question": "Provide a count of PSU villages for each state.",
+    "sql": "SELECT count(T1.PSU_VILLAGE_ID), T3.STATE_NAME FROM DIM_PSU_VILLAGE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID GROUP BY T3.STATE_NAME",
+    "pair_id": "0f013a71",
+    "original_question_id": "75824947",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Count `dim_psu_village`.`psu_village_id` for each state by joining `dim_psu_village` → `dim_district` → `dim_state`. Join on `dim_psu_village`.`district_id` = `dim_district`.`district_id` and `dim_district`.`state_id` = `dim_state`.`state_id`. Group by `dim_state`.`state_name` to get count per state."
+  },
+  {
+    "question": "Provide a ranked list of states by the total number of villages they contain, excluding any states that have no village data recorded.",
+    "sql": "SELECT T1.STATE_NAME, COUNT(T3.PSU_VILLAGE_ID) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_PSU_VILLAGE AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID GROUP BY T1.STATE_NAME HAVING COUNT(T3.PSU_VILLAGE_ID) > 0 ORDER BY COUNT(T3.PSU_VILLAGE_ID) DESC",
+    "pair_id": "9947c613",
+    "original_question_id": "75824947",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Count villages (`dim_psu_village.psu_village_id`) per state by joining `dim_psu_village` → `dim_district` (`dim_psu_village.district_id` = `dim_district.district_id`) → `dim_state` (`dim_district.state_id` = `dim_state.state_id`). Group by `dim_state.state_name`, order by count descending to rank states. Exclude states with zero villages implicitly via join."
+  },
+  {
+    "question": "List all the districts located within the state of Uttar Pradesh.",
+    "sql": "SELECT DISTINCT T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_NAME = 'Uttar Pradesh';",
+    "pair_id": "10efca1f",
+    "original_question_id": "3ea6569e",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_district` with `dim_state` on (`dim_district`.`state_id` = `dim_state`.`state_id`) and filter where `dim_state`.`state_name` = 'Uttar Pradesh', then select `dim_district`.`district_name`."
+  },
+  {
+    "question": "Provide an alphabetical list of all districts in Uttar Pradesh that contain PSU villages.",
+    "sql": "SELECT DISTINCT T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_PSU_VILLAGE AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME = 'Uttar Pradesh' ORDER BY T2.DISTRICT_NAME",
+    "pair_id": "918a49ae",
+    "original_question_id": "3ea6569e",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state.state_name` = 'Uttar Pradesh'. Join `dim_state` to `dim_district` on `dim_state.state_id` = `dim_district.state_id`. Join `dim_district` to `dim_psu_village` on `dim_district.district_id` = `dim_psu_village.district_id`. Select distinct `dim_district.district_name` and order by `dim_district.district_name` alphabetically."
+  },
+  {
+    "question": "List the names of all districts in Uttar Pradesh that contain at least one PSU village, sorted alphabetically.",
+    "sql": "SELECT T2.DISTRICT_NAME FROM DIM_STATE AS T1 INNER JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID INNER JOIN DIM_PSU_VILLAGE AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME = 'Uttar Pradesh' GROUP BY T2.DISTRICT_NAME HAVING COUNT(T3.PSU_VILLAGE_ID) > 0 ORDER BY T2.DISTRICT_NAME ASC",
+    "pair_id": "7c16580e",
+    "original_question_id": "3ea6569e",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state`.`state_name` = 'Uttar Pradesh'. Join `dim_state` to `dim_district` on `dim_state`.`state_id` = `dim_district`.`state_id`. Join `dim_district` to `dim_psu_village` on `dim_district`.`district_id` = `dim_psu_village`.`district_id`. Group by `dim_district`.`district_id`, `dim_district`.`district_name` and ensure COUNT(`dim_psu_village`.`psu_village_id`) >= 1. Select `dim_district`.`district_name` and sort alphabetically."
+  },
+  {
+    "question": "Provide a list of all states and their corresponding districts, sorted alphabetically by state and district name.",
+    "sql": "SELECT T1.STATE_NAME, T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID ORDER BY T1.STATE_NAME, T2.DISTRICT_NAME",
+    "pair_id": "29ead1d1",
+    "original_question_id": "a14fad65",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_state` and `dim_district` on `dim_district`.`state_id` = `dim_state`.`state_id`. Select `dim_state`.`state_name` and `dim_district`.`district_name`. Sort alphabetically by `dim_state`.`state_name` ascending, then `dim_district`.`district_name` ascending."
+  },
+  {
+    "question": "Provide a list of all states and their corresponding districts, sorted alphabetically by state and then by district name.",
+    "sql": "SELECT T1.STATE_NAME, T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID ORDER BY T1.STATE_NAME, T2.DISTRICT_NAME",
+    "pair_id": "d26b6996",
+    "original_question_id": "a14fad65",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": ""
+  },
+  {
+    "question": "Provide a list of all states and their corresponding districts, sorted alphabetically by state and then by district name.",
+    "sql": "SELECT T1.STATE_NAME, T2.DISTRICT_NAME FROM DIM_STATE AS T1 INNER JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_ID IN (SELECT STATE_ID FROM DIM_DISTRICT GROUP BY STATE_ID HAVING COUNT(DISTRICT_ID) > 0) ORDER BY T1.STATE_NAME ASC, T2.DISTRICT_NAME ASC",
+    "pair_id": "18dc4f7a",
+    "original_question_id": "a14fad65",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_state` and `dim_district` on `dim_state`.`state_id` = `dim_district`.`state_id`. Select `dim_state`.`state_name` and `dim_district`.`district_name`. Sort alphabetically by `dim_state`.`state_name` then by `dim_district`.`district_name`."
+  },
+  {
+    "question": "Which ten districts have the highest number of PSU villages?",
+    "sql": "SELECT T1.DISTRICT_NAME, COUNT(T2.PSU_VILLAGE_ID) FROM DIM_DISTRICT AS T1 JOIN DIM_PSU_VILLAGE AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID GROUP BY T1.DISTRICT_NAME ORDER BY COUNT(T2.PSU_VILLAGE_ID) DESC LIMIT 10;",
+    "pair_id": "1460dcfe",
+    "original_question_id": "c5aea609",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Count rows in `dim_psu_village` grouped by `dim_psu_village.district_id`, join to `dim_district` to get `dim_district.district_name`, order by count descending, limit 10."
+  },
+  {
+    "question": "Which ten districts have the highest number of PSU villages?",
+    "sql": "SELECT T1.DISTRICT_NAME, COUNT(T2.PSU_VILLAGE_ID) FROM DIM_DISTRICT AS T1 JOIN DIM_PSU_VILLAGE AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID GROUP BY T1.DISTRICT_NAME ORDER BY COUNT(T2.PSU_VILLAGE_ID) DESC LIMIT 10",
+    "pair_id": "01a64702",
+    "original_question_id": "c5aea609",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Count the number of PSU villages in `dim_psu_village` per `dim_district`.`district_id`. Join `dim_psu_village` to `dim_district` on `dim_psu_village`.`district_id` = `dim_district`.`district_id`. Group by `dim_district`.`district_name` and count `dim_psu_village`.`psu_village_id`. Order by count descending and limit 10."
+  },
+  {
+    "question": "For the districts of Sonipat, Hissar, Ludhiana, Sultanpur, and Bhopal, rank the top 10 districts by the number of unique villages that participated in the first survey.",
+    "sql": "SELECT T1.DISTRICT_NAME, COUNT(DISTINCT T2.PSU_VILLAGE_ID) AS PSU_COUNT FROM DIM_DISTRICT AS T1 JOIN DIM_PSU_VILLAGE AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN FACT_BIRTH_EVENT AS T3 ON T2.PSU_VILLAGE_ID = T3.BIRTH_EVENT_ID WHERE T1.DISTRICT_NAME IN ('Sonipat', 'Hissar', 'Ludhiana', 'Sultanpur', 'Bhopal') AND T3.SURVEY_ID = 1 GROUP BY T1.DISTRICT_NAME ORDER BY PSU_COUNT DESC LIMIT 10",
+    "pair_id": "e07a3a16",
+    "original_question_id": "c5aea609",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_district.district_name` IN ('Sonipat', 'Hissar', 'Ludhiana', 'Sultanpur', 'Bhopal'). Join `dim_district` to `dim_psu_village` on `dim_district.district_id` = `dim_psu_village.district_id`, then to `dim_household` on `dim_psu_village.psu_village_id` = `dim_household.psu_village_id`, then to `fact_birth_event` on `dim_household.household_id` = `fact_birth_event.household_id`. Filter `fact_birth_event.survey_id` = 1. Group by `dim_district.district_name`, count distinct `dim_psu_village.psu_village_id` as unique_village_count. Order by unique_village_count DESC, limit 10."
+  },
+  {
+    "question": "Provide a list of village codes along with their corresponding district and state names.",
+    "sql": "SELECT T1.PSU_VILLAGE_CODE, T2.DISTRICT_NAME, T3.STATE_NAME FROM DIM_PSU_VILLAGE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID",
+    "pair_id": "83934f02",
+    "original_question_id": "62a3d1bb",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_psu_village.psu_village_code`, `dim_district.district_name`, `dim_state.state_name`. Join `dim_psu_village` to `dim_district` on `dim_psu_village.district_id` = `dim_district.district_id`, then join `dim_district` to `dim_state` on `dim_district.state_id` = `dim_state.state_id`."
+  },
+  {
+    "question": "Provide a list of village codes along with their corresponding district and state names, sorted alphabetically by state.",
+    "sql": "SELECT T1.PSU_VILLAGE_CODE, T2.DISTRICT_NAME, T3.STATE_NAME FROM DIM_PSU_VILLAGE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID ORDER BY T3.STATE_NAME",
+    "pair_id": "11a60941",
+    "original_question_id": "62a3d1bb",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_psu_village`.`psu_village_code`, `dim_district`.`district_name`, `dim_state`.`state_name` from `dim_psu_village` join `dim_district` on `dim_psu_village`.`district_id` = `dim_district`.`district_id` join `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id` order by `dim_state`.`state_name`."
+  },
+  {
+    "question": "Provide the village codes for specific districts—Sonipat, Hissar, Ludhiana, Sultanpur, and Bhopal—within the states of Himachal Pradesh, Uttar Pradesh, Madhya Pradesh, Punjab, and Haryana, organized by state and district name.",
+    "sql": "SELECT T1.PSU_VILLAGE_CODE, T2.DISTRICT_NAME, T3.STATE_NAME FROM DIM_PSU_VILLAGE AS T1 INNER JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID INNER JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T3.STATE_NAME IN ('Himachal Pradesh', 'Uttar Pradesh', 'Madhya Pradesh', 'Punjab', 'Haryana') AND T2.DISTRICT_NAME IN ('Sonipat', 'Hissar', 'Ludhiana', 'Sultanpur', 'Bhopal') GROUP BY T1.PSU_VILLAGE_CODE, T2.DISTRICT_NAME, T3.STATE_NAME ORDER BY T3.STATE_NAME ASC, T2.DISTRICT_NAME ASC",
+    "pair_id": "4b8c851a",
+    "original_question_id": "62a3d1bb",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_psu_village.psu_village_code` for villages in districts: Sonipat, Hissar, Ludhiana, Sultanpur, Bhopal within states: Himachal Pradesh, Uttar Pradesh, Madhya Pradesh, Punjab, Haryana. Join `dim_state` (state_id) to `dim_district` (state_id) to `dim_psu_village` (district_id). Filter `dim_state.state_name` IN ('Himachal Pradesh', 'Uttar Pradesh', 'Madhya Pradesh', 'Punjab', 'Haryana') and `dim_district.district_name` IN ('Sonipat', 'Hissar', 'Ludhiana', 'Sultanpur', 'Bhopal'). Output state name, district name, village code, organized by state and district."
+  },
+  {
+    "question": "Provide a list of unique district IDs for all districts located outside of Uttar Pradesh.",
+    "sql": "SELECT DISTINCT T1.DISTRICT_ID FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME != 'Uttar Pradesh';",
+    "pair_id": "748d1268",
+    "original_question_id": "61ca14ee",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `dim_district`.`district_id` from `dim_district` join `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id` where `dim_state`.`state_name` != 'Uttar Pradesh'."
+  },
+  {
+    "question": "List the IDs of all districts outside of Uttar Pradesh that contain at least one PSU village, sorted numerically.",
+    "sql": "SELECT T1.DISTRICT_ID FROM DIM_PSU_VILLAGE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T3.STATE_NAME != 'Uttar Pradesh' GROUP BY T1.DISTRICT_ID HAVING COUNT(T1.PSU_VILLAGE_ID) > 0 ORDER BY T1.DISTRICT_ID ASC",
+    "pair_id": "fb3ae391",
+    "original_question_id": "61ca14ee",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_district`.`district_id` from `dim_district` join `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id` where `dim_state`.`state_name` != 'Uttar Pradesh' and exists (select 1 from `dim_psu_village` where `dim_psu_village`.`district_id` = `dim_district`.`district_id`) order by `dim_district`.`district_id`."
+  },
+  {
+    "question": "Identify the village codes that are common to both Uttar Pradesh and Himachal Pradesh.",
+    "sql": "SELECT T1.PSU_VILLAGE_CODE FROM DIM_PSU_VILLAGE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T3.STATE_NAME = 'Uttar Pradesh' AND T1.PSU_VILLAGE_CODE IN ( SELECT T4.PSU_VILLAGE_CODE FROM DIM_PSU_VILLAGE AS T4 JOIN DIM_DISTRICT AS T5 ON T4.DISTRICT_ID = T5.DISTRICT_ID JOIN DIM_STATE AS T6 ON T5.STATE_ID = T6.STATE_ID WHERE T6.STATE_NAME = 'Himachal Pradesh' )",
+    "pair_id": "fae0388b",
+    "original_question_id": "595ae26a",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "DIM_HOUSEHOLD",
+      "DIM_SURVEY",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "PSU_VILLAGE_ID",
+        "HOUSEHOLD_ID_ORIGINAL",
+        "SPLIT_HOUSEHOLD_ID"
+      ],
+      "DIM_SURVEY": [
+        "SURVEY_ID",
+        "INTERVIEW_DATE_IMPUTED_CMC"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "CHILD_ID",
+        "MOTHER_ID",
+        "SURVEY_ID",
+        "BIRTH_EVENT_ID",
+        "HOUSEHOLD_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Find `dim_psu_village`.`psu_village_code` values that appear in both states: 'Uttar Pradesh' and 'Himachal Pradesh'. Join `dim_psu_village` → `dim_district` → `dim_state` to link villages to states. The result is the intersection of village codes from Uttar Pradesh and Himachal Pradesh."
+  },
+  {
+    "question": "Which PSU village codes are associated with locations in both Uttar Pradesh and Himachal Pradesh?",
+    "sql": "SELECT T3.PSU_VILLAGE_CODE FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_PSU_VILLAGE AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME IN ('Uttar Pradesh', 'Himachal Pradesh') GROUP BY T3.PSU_VILLAGE_CODE HAVING COUNT(DISTINCT T1.STATE_NAME) = 2",
+    "pair_id": "eae5677c",
+    "original_question_id": "595ae26a",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "DIM_HOUSEHOLD",
+      "DIM_SURVEY",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "PSU_VILLAGE_ID",
+        "HOUSEHOLD_ID_ORIGINAL",
+        "SPLIT_HOUSEHOLD_ID"
+      ],
+      "DIM_SURVEY": [
+        "SURVEY_ID",
+        "INTERVIEW_DATE_IMPUTED_CMC"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "CHILD_ID",
+        "MOTHER_ID",
+        "SURVEY_ID",
+        "BIRTH_EVENT_ID",
+        "HOUSEHOLD_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Find `dim_psu_village.psu_village_code` values that are linked to both 'Uttar Pradesh' and 'Himachal Pradesh' in `dim_state.state_name`. Join `dim_psu_village` to `dim_district` on `dim_psu_village.district_id` = `dim_district.district_id`, then join `dim_district` to `dim_state` on `dim_district.state_id` = `dim_state.state_id`. Filter for `dim_state.state_name` in ('Uttar Pradesh', 'Himachal Pradesh'). Group by `dim_psu_village.psu_village_code` and count distinct `dim_state.state_name`; keep codes with count = 2."
+  },
+  {
+    "question": "Identify the PSU village codes that are present in both Uttar Pradesh and Himachal Pradesh, listed in ascending order.",
+    "sql": "SELECT T3.PSU_VILLAGE_CODE FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_PSU_VILLAGE AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME = 'Uttar Pradesh' AND T3.PSU_VILLAGE_CODE IN (SELECT T3_sub.PSU_VILLAGE_CODE FROM DIM_STATE AS T1_sub JOIN DIM_DISTRICT AS T2_sub ON T1_sub.STATE_ID = T2_sub.STATE_ID JOIN DIM_PSU_VILLAGE AS T3_sub ON T2_sub.DISTRICT_ID = T3_sub.DISTRICT_ID WHERE T1_sub.STATE_NAME = 'Himachal Pradesh') GROUP BY T3.PSU_VILLAGE_CODE ORDER BY T3.PSU_VILLAGE_CODE ASC",
+    "pair_id": "23be0262",
+    "original_question_id": "595ae26a",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "DIM_HOUSEHOLD",
+      "DIM_SURVEY",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "PSU_VILLAGE_ID",
+        "HOUSEHOLD_ID_ORIGINAL",
+        "SPLIT_HOUSEHOLD_ID"
+      ],
+      "DIM_SURVEY": [
+        "SURVEY_ID",
+        "INTERVIEW_DATE_IMPUTED_CMC"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "CHILD_ID",
+        "MOTHER_ID",
+        "SURVEY_ID",
+        "BIRTH_EVENT_ID",
+        "HOUSEHOLD_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Find (`dim_psu_village`.`psu_village_code`) values that exist in both states: 'Uttar Pradesh' and 'Himachal Pradesh'. Join `dim_psu_village` to `dim_district` on (`dim_psu_village`.`district_id` = `dim_district`.`district_id`), then join `dim_district` to `dim_state` on (`dim_district`.`state_id` = `dim_state`.`state_id`). Filter (`dim_state`.`state_name`) = 'Uttar Pradesh' to get codes for Uttar Pradesh, and similarly for 'Himachal Pradesh'. Intersect the two sets of codes, then order by (`dim_psu_village`.`psu_village_code`) ascending."
+  },
+  {
+    "question": "Provide a list of all districts along with the names of the states they belong to.",
+    "sql": "SELECT T1.STATE_NAME, T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID",
+    "pair_id": "5d7f3df6",
+    "original_question_id": "81b8cd65",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve all rows from `dim_district` and join with `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id` to get `dim_district`.`district_name` and `dim_state`.`state_name`."
+  },
+  {
+    "question": "Provide an alphabetical list of states and their corresponding districts.",
+    "sql": "SELECT T1.STATE_NAME, T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID GROUP BY T1.STATE_NAME, T2.DISTRICT_NAME ORDER BY T1.STATE_NAME ASC",
+    "pair_id": "500f468d",
+    "original_question_id": "81b8cd65",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_state` and `dim_district` on `dim_state`.`state_id` = `dim_district`.`state_id`. Select `dim_state`.`state_name` and `dim_district`.`district_name`. Order alphabetically by `dim_state`.`state_name` ASC, then `dim_district`.`district_name` ASC."
+  },
+  {
+    "question": "Provide a list of all states and their respective districts, ordered alphabetically by state name.",
+    "sql": "SELECT T1.STATE_NAME, T2.DISTRICT_NAME FROM DIM_STATE AS T1 INNER JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID GROUP BY T1.STATE_NAME, T2.DISTRICT_NAME HAVING COUNT(T2.DISTRICT_ID) > 0 ORDER BY T1.STATE_NAME ASC",
+    "pair_id": "b124c2b7",
+    "original_question_id": "81b8cd65",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_state`.`state_name` and `dim_district`.`district_name` from `dim_state` join `dim_district` on `dim_state`.`state_id` = `dim_district`.`state_id`, ordered alphabetically by `dim_state`.`state_name` ascending."
+  },
+  {
+    "question": "List the names and IDs of all districts located within the state with ID 1.",
+    "sql": "SELECT DISTRICT_NAME, DISTRICT_ID FROM DIM_DISTRICT WHERE STATE_ID = 1;",
+    "pair_id": "d3e09cd0",
+    "original_question_id": "169dfd4f",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_district`.`district_name` and `dim_district`.`district_id` from `dim_district` where `dim_district`.`state_id` = 1."
+  },
+  {
+    "question": "List the names and IDs of all districts located in the state with ID 1, ordered by their district ID.",
+    "sql": "SELECT T2.DISTRICT_ID, T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_ID = 1 ORDER BY T2.DISTRICT_ID",
+    "pair_id": "2f6e92fa",
+    "original_question_id": "169dfd4f",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_district`.`district_id` and `dim_district`.`district_name` from `dim_district` where `dim_district`.`state_id` = 1 order by `dim_district`.`district_id`."
+  },
+  {
+    "question": "List all districts located within the state with ID 1, ordered by their district ID.",
+    "sql": "SELECT T2.DISTRICT_NAME, T2.DISTRICT_ID FROM DIM_STATE AS T1 INNER JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_ID = 1 GROUP BY T2.DISTRICT_NAME, T2.DISTRICT_ID ORDER BY T2.DISTRICT_ID ASC",
+    "pair_id": "48ae7c52",
+    "original_question_id": "169dfd4f",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_district`.`district_id` and `dim_district`.`district_name` from `dim_district` where `dim_district`.`state_id` = 1 order by `dim_district`.`district_id`."
+  },
+  {
+    "question": "Provide a count of households for each district.",
+    "sql": "SELECT T1.DISTRICT_NAME, COUNT(T3.HOUSEHOLD_ID) FROM DIM_DISTRICT AS T1 JOIN DIM_PSU_VILLAGE AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_HOUSEHOLD AS T3 ON T2.PSU_VILLAGE_ID = T3.PSU_VILLAGE_ID GROUP BY T1.DISTRICT_NAME",
+    "pair_id": "a7c6e261",
+    "original_question_id": "6e26dddb",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "DIM_HOUSEHOLD",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "PSU_VILLAGE_ID",
+        "HOUSEHOLD_ID_ORIGINAL",
+        "SPLIT_HOUSEHOLD_ID"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "CHILD_ID",
+        "MOTHER_ID",
+        "SURVEY_ID",
+        "BIRTH_EVENT_ID",
+        "HOUSEHOLD_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Count distinct `dim_household`.`household_id` grouped by `dim_district`.`district_name`. Join `dim_household` to `dim_psu_village` on `dim_household`.`psu_village_id` = `dim_psu_village`.`psu_village_id`, then join `dim_psu_village` to `dim_district` on `dim_psu_village`.`district_id` = `dim_district`.`district_id`."
+  },
+  {
+    "question": "Rank the districts by their total number of households, starting with the most populated.",
+    "sql": "SELECT T1.DISTRICT_NAME, COUNT(T3.HOUSEHOLD_ID) FROM DIM_DISTRICT AS T1 JOIN DIM_PSU_VILLAGE AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_HOUSEHOLD AS T3 ON T2.PSU_VILLAGE_ID = T3.PSU_VILLAGE_ID GROUP BY T1.DISTRICT_NAME ORDER BY COUNT(T3.HOUSEHOLD_ID) DESC",
+    "pair_id": "9c6a3004",
+    "original_question_id": "6e26dddb",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "DIM_HOUSEHOLD",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "PSU_VILLAGE_ID",
+        "HOUSEHOLD_ID_ORIGINAL",
+        "SPLIT_HOUSEHOLD_ID"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "CHILD_ID",
+        "MOTHER_ID",
+        "SURVEY_ID",
+        "BIRTH_EVENT_ID",
+        "HOUSEHOLD_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Count distinct `dim_household.household_id` per district by joining `dim_household` (via `dim_household.psu_village_id` = `dim_psu_village.psu_village_id`) to `dim_psu_village` (via `dim_psu_village.district_id` = `dim_district.district_id`) to `dim_district`. Group by `dim_district.district_id`, `dim_district.district_name`. Order by count descending to rank districts from most to least households."
+  },
+  {
+    "question": "List the districts that have more than one household, ranked by their total household count from highest to lowest.",
+    "sql": "SELECT T1.DISTRICT_NAME, COUNT(T3.HOUSEHOLD_ID) FROM DIM_DISTRICT AS T1 JOIN DIM_PSU_VILLAGE AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_HOUSEHOLD AS T3 ON T2.PSU_VILLAGE_ID = T3.PSU_VILLAGE_ID GROUP BY T1.DISTRICT_NAME HAVING COUNT(T3.HOUSEHOLD_ID) > 1 ORDER BY COUNT(T3.HOUSEHOLD_ID) DESC",
+    "pair_id": "a59b893e",
+    "original_question_id": "6e26dddb",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "DIM_HOUSEHOLD",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "PSU_VILLAGE_ID",
+        "HOUSEHOLD_ID_ORIGINAL",
+        "SPLIT_HOUSEHOLD_ID"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "CHILD_ID",
+        "MOTHER_ID",
+        "SURVEY_ID",
+        "BIRTH_EVENT_ID",
+        "HOUSEHOLD_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_household` to `dim_psu_village` on `dim_household`.`psu_village_id` = `dim_psu_village`.`psu_village_id`, then to `dim_district` on `dim_psu_village`.`district_id` = `dim_district`.`district_id`. Group by `dim_district`.`district_id`, `dim_district`.`district_name`. Count distinct `dim_household`.`household_id` as household_count. Filter WHERE household_count > 1. Order BY household_count DESC."
+  },
+  {
+    "question": "Provide the original household IDs for all households located in the Sonipat district.",
+    "sql": "SELECT T1.HOUSEHOLD_ID_ORIGINAL FROM DIM_HOUSEHOLD AS T1 JOIN DIM_PSU_VILLAGE AS T2 ON T1.PSU_VILLAGE_ID = T2.PSU_VILLAGE_ID JOIN DIM_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T3.DISTRICT_NAME = 'Sonipat'",
+    "pair_id": "c6d2116d",
+    "original_question_id": "93cd56dc",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "DIM_HOUSEHOLD",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "PSU_VILLAGE_ID",
+        "HOUSEHOLD_ID_ORIGINAL",
+        "SPLIT_HOUSEHOLD_ID"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "CHILD_ID",
+        "MOTHER_ID",
+        "SURVEY_ID",
+        "BIRTH_EVENT_ID",
+        "HOUSEHOLD_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_household.household_id_original` for households in district 'Sonipat'. Join `dim_household` to `dim_psu_village` on `dim_household.psu_village_id` = `dim_psu_village.psu_village_id`, then join `dim_psu_village` to `dim_district` on `dim_psu_village.district_id` = `dim_district.district_id`. Filter where `dim_district.district_name` = 'Sonipat'."
+  },
+  {
+    "question": "Provide a sorted list of unique household IDs located within the Sonipat district.",
+    "sql": "SELECT T3.HOUSEHOLD_ID_ORIGINAL FROM DIM_DISTRICT AS T1 JOIN DIM_PSU_VILLAGE AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_HOUSEHOLD AS T3 ON T2.PSU_VILLAGE_ID = T3.PSU_VILLAGE_ID WHERE T1.DISTRICT_NAME = 'Sonipat' GROUP BY T3.HOUSEHOLD_ID_ORIGINAL ORDER BY T3.HOUSEHOLD_ID_ORIGINAL",
+    "pair_id": "a194ae7b",
+    "original_question_id": "93cd56dc",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "DIM_HOUSEHOLD",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "PSU_VILLAGE_ID",
+        "HOUSEHOLD_ID_ORIGINAL",
+        "SPLIT_HOUSEHOLD_ID"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "CHILD_ID",
+        "MOTHER_ID",
+        "SURVEY_ID",
+        "BIRTH_EVENT_ID",
+        "HOUSEHOLD_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_district` where `dim_district.district_name` = 'Sonipat'. Join `dim_psu_village` on `dim_psu_village.district_id` = `dim_district.district_id`. Join `dim_household` on `dim_household.psu_village_id` = `dim_psu_village.psu_village_id`. Select distinct `dim_household.household_id` and sort ascending."
+  },
+  {
+    "question": "Provide a list of household IDs and their original identifiers for all households located within the Sonipat district, sorted by household ID.",
+    "sql": "SELECT T3.HOUSEHOLD_ID, T3.HOUSEHOLD_ID_ORIGINAL FROM DIM_DISTRICT AS T1 INNER JOIN DIM_PSU_VILLAGE AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID INNER JOIN DIM_HOUSEHOLD AS T3 ON T2.PSU_VILLAGE_ID = T3.PSU_VILLAGE_ID WHERE T1.DISTRICT_NAME = 'Sonipat' GROUP BY T3.HOUSEHOLD_ID, T3.HOUSEHOLD_ID_ORIGINAL HAVING COUNT(T3.HOUSEHOLD_ID) >= 1 ORDER BY T3.HOUSEHOLD_ID ASC",
+    "pair_id": "f75d0969",
+    "original_question_id": "93cd56dc",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "DIM_HOUSEHOLD",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "PSU_VILLAGE_ID",
+        "HOUSEHOLD_ID_ORIGINAL",
+        "SPLIT_HOUSEHOLD_ID"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "CHILD_ID",
+        "MOTHER_ID",
+        "SURVEY_ID",
+        "BIRTH_EVENT_ID",
+        "HOUSEHOLD_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select (`dim_household`.`household_id`), (`dim_household`.`household_id_original`) from `dim_household` join `dim_psu_village` on (`dim_household`.`psu_village_id`) = (`dim_psu_village`.`psu_village_id`) join `dim_district` on (`dim_psu_village`.`district_id`) = (`dim_district`.`district_id`) where (`dim_district`.`district_name`) = 'Sonipat' order by (`dim_household`.`household_id`)."
+  },
+  {
+    "question": "List all district names and their corresponding state IDs, sorted alphabetically by district.",
+    "sql": "SELECT DISTRICT_NAME, STATE_ID FROM DIM_DISTRICT ORDER BY DISTRICT_NAME;",
+    "pair_id": "b439a131",
+    "original_question_id": "6ee42475",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_HOUSEHOLD"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "PSU_VILLAGE_ID",
+        "HOUSEHOLD_ID_ORIGINAL",
+        "SPLIT_HOUSEHOLD_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_district`.`district_name` and `dim_district`.`state_id` from `dim_district`, ordered by `dim_district`.`district_name` ascending."
+  },
+  {
+    "question": "Provide a list of all districts and their corresponding state IDs, sorted alphabetically by district name.",
+    "sql": "SELECT T1.DISTRICT_NAME, T1.STATE_ID FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID ORDER BY T1.DISTRICT_NAME ASC",
+    "pair_id": "a83f9367",
+    "original_question_id": "6ee42475",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_HOUSEHOLD"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "PSU_VILLAGE_ID",
+        "HOUSEHOLD_ID_ORIGINAL",
+        "SPLIT_HOUSEHOLD_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_district`.`district_name` and `dim_district`.`state_id` from `dim_district`, order by `dim_district`.`district_name` ascending."
+  },
+  {
+    "question": "List the names and state IDs of districts that have at least one registered household, ordered alphabetically by district name.",
+    "sql": "SELECT T1.DISTRICT_NAME, T1.STATE_ID, COUNT(T3.HOUSEHOLD_ID) FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID LEFT JOIN DIM_HOUSEHOLD AS T3 ON T1.DISTRICT_ID = T3.PSU_VILLAGE_ID GROUP BY T1.DISTRICT_NAME, T1.STATE_ID HAVING COUNT(T3.HOUSEHOLD_ID) >= 1 ORDER BY T1.DISTRICT_NAME ASC",
+    "pair_id": "d4fbdd7c",
+    "original_question_id": "6ee42475",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_HOUSEHOLD"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "PSU_VILLAGE_ID",
+        "HOUSEHOLD_ID_ORIGINAL",
+        "SPLIT_HOUSEHOLD_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_district`.`district_name` and `dim_district`.`state_id` from `dim_district` where exists (select 1 from `dim_household` join `dim_psu_village` on `dim_household`.`psu_village_id` = `dim_psu_village`.`psu_village_id` where `dim_psu_village`.`district_id` = `dim_district`.`district_id`) order by `dim_district`.`district_name`."
+  },
+  {
+    "question": "Which ten districts have the highest number of households?",
+    "sql": "SELECT T1.DISTRICT_NAME, COUNT(T3.HOUSEHOLD_ID) FROM DIM_DISTRICT AS T1 JOIN DIM_PSU_VILLAGE AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_HOUSEHOLD AS T3 ON T2.PSU_VILLAGE_ID = T3.PSU_VILLAGE_ID GROUP BY T1.DISTRICT_NAME ORDER BY COUNT(T3.HOUSEHOLD_ID) DESC LIMIT 10",
+    "pair_id": "2485dbb2",
+    "original_question_id": "71cf7f4e",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "DIM_HOUSEHOLD",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "PSU_VILLAGE_ID",
+        "HOUSEHOLD_ID_ORIGINAL",
+        "SPLIT_HOUSEHOLD_ID"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "CHILD_ID",
+        "MOTHER_ID",
+        "SURVEY_ID",
+        "BIRTH_EVENT_ID",
+        "HOUSEHOLD_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Count distinct `dim_household`.`household_id` per `dim_district`.`district_name` by joining `dim_household` → `dim_psu_village` → `dim_district`. Order by count descending, limit 10."
+  },
+  {
+    "question": "Which ten districts have the highest number of households?",
+    "sql": "SELECT T1.DISTRICT_NAME, COUNT(T3.HOUSEHOLD_ID) FROM DIM_DISTRICT AS T1 JOIN DIM_PSU_VILLAGE AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_HOUSEHOLD AS T3 ON T2.PSU_VILLAGE_ID = T3.PSU_VILLAGE_ID GROUP BY T1.DISTRICT_NAME ORDER BY COUNT(T3.HOUSEHOLD_ID) DESC LIMIT 10",
+    "pair_id": "55d2dc9f",
+    "original_question_id": "71cf7f4e",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "DIM_HOUSEHOLD",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "PSU_VILLAGE_ID",
+        "HOUSEHOLD_ID_ORIGINAL",
+        "SPLIT_HOUSEHOLD_ID"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "CHILD_ID",
+        "MOTHER_ID",
+        "SURVEY_ID",
+        "BIRTH_EVENT_ID",
+        "HOUSEHOLD_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Count distinct `dim_household.household_id` per district by joining `dim_household` → `dim_psu_village` (on `dim_household.psu_village_id` = `dim_psu_village.psu_village_id`) → `dim_district` (on `dim_psu_village.district_id` = `dim_district.district_id`). Group by `dim_district.district_id` and `dim_district.district_name`, order by count descending, limit 10."
+  },
+  {
+    "question": "Identify the top 10 districts with the highest number of households, excluding any districts that have no recorded households.",
+    "sql": "SELECT T1.DISTRICT_NAME, COUNT(T3.HOUSEHOLD_ID) AS household_count FROM DIM_DISTRICT AS T1 JOIN DIM_PSU_VILLAGE AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_HOUSEHOLD AS T3 ON T2.PSU_VILLAGE_ID = T3.PSU_VILLAGE_ID GROUP BY T1.DISTRICT_NAME HAVING COUNT(T3.HOUSEHOLD_ID) > 0 ORDER BY household_count DESC LIMIT 10",
+    "pair_id": "385890ed",
+    "original_question_id": "71cf7f4e",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "DIM_HOUSEHOLD",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "PSU_VILLAGE_ID",
+        "HOUSEHOLD_ID_ORIGINAL",
+        "SPLIT_HOUSEHOLD_ID"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "CHILD_ID",
+        "MOTHER_ID",
+        "SURVEY_ID",
+        "BIRTH_EVENT_ID",
+        "HOUSEHOLD_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Count distinct `dim_household`.`household_id` per `dim_district`.`district_id` and `dim_district`.`district_name` via joins: `dim_district` → `dim_psu_village` (`dim_district`.`district_id` = `dim_psu_village`.`district_id`) → `dim_household` (`dim_psu_village`.`psu_village_id` = `dim_household`.`psu_village_id`). Exclude districts with count = 0. Order by count descending, limit 10."
+  },
+  {
+    "question": "Provide a list of household IDs along with their corresponding district names and village codes.",
+    "sql": "SELECT T1.HOUSEHOLD_ID, T3.DISTRICT_NAME, T2.PSU_VILLAGE_CODE FROM DIM_HOUSEHOLD AS T1 JOIN DIM_PSU_VILLAGE AS T2 ON T1.PSU_VILLAGE_ID = T2.PSU_VILLAGE_ID JOIN DIM_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID",
+    "pair_id": "f0394ff8",
+    "original_question_id": "27896d4a",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "DIM_HOUSEHOLD"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "PSU_VILLAGE_ID",
+        "HOUSEHOLD_ID_ORIGINAL",
+        "SPLIT_HOUSEHOLD_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_household` to `dim_psu_village` on `dim_household`.`psu_village_id` = `dim_psu_village`.`psu_village_id`, then join to `dim_district` on `dim_psu_village`.`district_id` = `dim_district`.`district_id`. Select `dim_household`.`household_id`, `dim_district`.`district_name`, and `dim_psu_village`.`psu_village_code`."
+  },
+  {
+    "question": "Provide a list of household IDs along with their corresponding village codes and district names, sorted by village code.",
+    "sql": "SELECT T1.HOUSEHOLD_ID_ORIGINAL, T2.PSU_VILLAGE_CODE, T3.DISTRICT_NAME FROM DIM_HOUSEHOLD AS T1 JOIN DIM_PSU_VILLAGE AS T2 ON T1.PSU_VILLAGE_ID = T2.PSU_VILLAGE_ID JOIN DIM_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID ORDER BY T2.PSU_VILLAGE_CODE",
+    "pair_id": "5b7c15b4",
+    "original_question_id": "27896d4a",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "DIM_HOUSEHOLD"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "PSU_VILLAGE_ID",
+        "HOUSEHOLD_ID_ORIGINAL",
+        "SPLIT_HOUSEHOLD_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_household`.`household_id`, `dim_psu_village`.`psu_village_code`, `dim_district`.`district_name` from `dim_household` join `dim_psu_village` on `dim_household`.`psu_village_id` = `dim_psu_village`.`psu_village_id` join `dim_district` on `dim_psu_village`.`district_id` = `dim_district`.`district_id` order by `dim_psu_village`.`psu_village_code`."
+  },
+  {
+    "question": "Provide the original household IDs and village codes for households located in villages 1, 4, or 5 within the districts of Sonipat, Hissar, and Ludhiana, sorted by their village code.",
+    "sql": "SELECT T1.HOUSEHOLD_ID_ORIGINAL, T2.PSU_VILLAGE_CODE, T3.DISTRICT_NAME FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_PSU_VILLAGE AS T2 ON T1.PSU_VILLAGE_ID = T2.PSU_VILLAGE_ID INNER JOIN DIM_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T3.DISTRICT_NAME IN ('Sonipat', 'Hissar', 'Ludhiana') AND T2.PSU_VILLAGE_CODE IN ('4', '5', '1') GROUP BY T1.HOUSEHOLD_ID_ORIGINAL, T2.PSU_VILLAGE_CODE, T3.DISTRICT_NAME ORDER BY T2.PSU_VILLAGE_CODE ASC",
+    "pair_id": "a3d66919",
+    "original_question_id": "27896d4a",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "DIM_HOUSEHOLD"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "PSU_VILLAGE_ID",
+        "HOUSEHOLD_ID_ORIGINAL",
+        "SPLIT_HOUSEHOLD_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select (`dim_household`.`household_id_original`) and (`dim_psu_village`.`psu_village_code`) from `dim_household` join `dim_psu_village` on `dim_household`.`psu_village_id` = `dim_psu_village`.`psu_village_id` join `dim_district` on `dim_psu_village`.`district_id` = `dim_district`.`district_id` where (`dim_psu_village`.`psu_village_code`) IN (1, 4, 5) and (`dim_district`.`district_name`) IN ('Sonipat', 'Hissar', 'Ludhiana') order by (`dim_psu_village`.`psu_village_code`)."
+  },
+  {
+    "question": "Identify the districts that do not contain any split households.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_PSU_VILLAGE AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_HOUSEHOLD AS T3 ON T2.PSU_VILLAGE_ID = T3.PSU_VILLAGE_ID GROUP BY T1.DISTRICT_NAME HAVING SUM(CASE WHEN T3.SPLIT_HOUSEHOLD_ID = '1' THEN 1 ELSE 0 END) = 0",
+    "pair_id": "6d670cb5",
+    "original_question_id": "3fb6b75f",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "DIM_HOUSEHOLD"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "PSU_VILLAGE_ID",
+        "HOUSEHOLD_ID_ORIGINAL",
+        "SPLIT_HOUSEHOLD_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Find districts (`dim_district`.`district_name`) where no household (`dim_household`.`household_id`) in that district (via `dim_psu_village`) has `dim_household`.`split_household_id` IS NOT NULL AND `dim_household`.`split_household_id` != 0."
+  },
+  {
+    "question": "Identify all districts that do not contain any split households, excluding areas with missing village codes.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_PSU_VILLAGE AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_HOUSEHOLD AS T3 ON T2.PSU_VILLAGE_ID = T3.PSU_VILLAGE_ID WHERE T2.PSU_VILLAGE_CODE IS NOT NULL GROUP BY T1.DISTRICT_NAME HAVING SUM(CASE WHEN T3.SPLIT_HOUSEHOLD_ID = '1' THEN 1 ELSE 0 END) = 0 ORDER BY T1.DISTRICT_NAME ASC",
+    "pair_id": "82d9f6cd",
+    "original_question_id": "3fb6b75f",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "DIM_HOUSEHOLD"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "PSU_VILLAGE_ID",
+        "HOUSEHOLD_ID_ORIGINAL",
+        "SPLIT_HOUSEHOLD_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Find districts (`dim_district`.`district_id`, `dim_district`.`district_name`) that have no households with (`dim_household`.`split_household_id`) != 0, considering only villages where (`dim_psu_village`.`psu_village_code`) IS NOT NULL. A split household is defined as (`dim_household`.`split_household_id`) != 0."
+  },
+  {
+    "question": "Identify the districts that contain at least one primary, non-split household.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_PSU_VILLAGE AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_HOUSEHOLD AS T3 ON T2.PSU_VILLAGE_ID = T3.PSU_VILLAGE_ID WHERE T3.HOUSEHOLD_ID_ORIGINAL = '1' AND T3.SPLIT_HOUSEHOLD_ID = '1' GROUP BY T1.DISTRICT_NAME HAVING COUNT(DISTINCT T3.HOUSEHOLD_ID) >= 1",
+    "pair_id": "daf94961",
+    "original_question_id": "195700e5",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "DIM_HOUSEHOLD"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "PSU_VILLAGE_ID",
+        "HOUSEHOLD_ID_ORIGINAL",
+        "SPLIT_HOUSEHOLD_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_household` where `dim_household`.`split_household_id` = 0, join to `dim_psu_village` on `dim_household`.`psu_village_id` = `dim_psu_village`.`psu_village_id`, then join to `dim_district` on `dim_psu_village`.`district_id` = `dim_district`.`district_id`, and select distinct `dim_district`.`district_name`."
+  },
+  {
+    "question": "List the names of all districts that contain at least one primary, non-split household, sorted alphabetically.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_PSU_VILLAGE AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_HOUSEHOLD AS T3 ON T2.PSU_VILLAGE_ID = T3.PSU_VILLAGE_ID WHERE T3.HOUSEHOLD_ID_ORIGINAL = '1' AND T3.SPLIT_HOUSEHOLD_ID = '1' GROUP BY T1.DISTRICT_NAME HAVING COUNT(T3.HOUSEHOLD_ID) > 0 ORDER BY T1.DISTRICT_NAME",
+    "pair_id": "3b25873f",
+    "original_question_id": "195700e5",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "DIM_HOUSEHOLD"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "PSU_VILLAGE_ID",
+        "HOUSEHOLD_ID_ORIGINAL",
+        "SPLIT_HOUSEHOLD_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Find districts with at least one household where `dim_household`.`split_household_id = 0` (non-split). Join `dim_household` to `dim_psu_village` on `dim_household`.`psu_village_id` = `dim_psu_village`.`psu_village_id`, then join to `dim_district` on `dim_psu_village`.`district_id` = `dim_district`.`district_id`. Select distinct `dim_district`.`district_name` and sort alphabetically ascending."
+  },
+  {
+    "question": "Identify all districts that contain both original households and split households.",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_PSU_VILLAGE AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_HOUSEHOLD AS T3 ON T2.PSU_VILLAGE_ID = T3.PSU_VILLAGE_ID GROUP BY T1.DISTRICT_NAME HAVING SUM(CASE WHEN T3.HOUSEHOLD_ID_ORIGINAL = '1' THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN T3.SPLIT_HOUSEHOLD_ID = '1' THEN 1 ELSE 0 END) > 0 ORDER BY T1.DISTRICT_NAME ASC",
+    "pair_id": "5260f286",
+    "original_question_id": "195700e5",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "DIM_HOUSEHOLD"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "PSU_VILLAGE_ID",
+        "HOUSEHOLD_ID_ORIGINAL",
+        "SPLIT_HOUSEHOLD_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Find districts (`dim_district.district_id`, `dim_district.district_name`) where there exists at least one household with `dim_household.household_id_original` NOT NULL AND `dim_household.household_id_original` != 0, and at least one household with `dim_household.split_household_id` NOT NULL AND `dim_household.split_household_id` != 0, within the same district. Link via `dim_household.psu_village_id` to `dim_psu_village.district_id`."
+  },
+  {
+    "question": "Provide a combined list of all unique village and district identifiers.",
+    "sql": "SELECT PSU_VILLAGE_ID FROM DIM_PSU_VILLAGE UNION SELECT DISTRICT_ID FROM DIM_DISTRICT",
+    "pair_id": "2bbda1a7",
+    "original_question_id": "9fa0dd9f",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "CHILD_ID",
+        "MOTHER_ID",
+        "SURVEY_ID",
+        "BIRTH_EVENT_ID",
+        "HOUSEHOLD_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "The question asks for a combined list of unique village and district identifiers. Village identifiers are in `dim_psu_village` (`psu_village_id` and `psu_village_code`). District identifiers are in `dim_district` (`district_id` and `district_name`). To combine, create a result set with columns: type (values 'village' or 'district'), identifier_id (the primary key: `dim_psu_village.psu_village_id` for village, `dim_district.district_id` for district), and identifier_code_or_name (`dim_psu_village.psu_village_code` for village, `dim_district.district_name` for district). Use UNION to combine distinct rows from two SELECTs: one for villages, one for districts."
+  },
+  {
+    "question": "Provide a list of village IDs and their corresponding district IDs, organized by district.",
+    "sql": "SELECT T1.PSU_VILLAGE_ID, T2.DISTRICT_ID FROM DIM_PSU_VILLAGE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID GROUP BY T1.PSU_VILLAGE_ID, T2.DISTRICT_ID ORDER BY T2.DISTRICT_ID;",
+    "pair_id": "21de0bf3",
+    "original_question_id": "9fa0dd9f",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "CHILD_ID",
+        "MOTHER_ID",
+        "SURVEY_ID",
+        "BIRTH_EVENT_ID",
+        "HOUSEHOLD_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_psu_village`.`psu_village_id` (village ID) and `dim_psu_village`.`district_id` (district ID) from `dim_psu_village`, ordered by `dim_psu_village`.`district_id` to organize by district."
+  },
+  {
+    "question": "Provide a combined list of all village IDs and the IDs of districts that contain at least one village, sorted numerically.",
+    "sql": "SELECT PSU_VILLAGE_ID FROM DIM_PSU_VILLAGE UNION SELECT T1.DISTRICT_ID FROM DIM_DISTRICT AS T1 JOIN DIM_PSU_VILLAGE AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID GROUP BY T1.DISTRICT_ID HAVING COUNT(T2.PSU_VILLAGE_ID) >= 1 ORDER BY 1 ASC",
+    "pair_id": "8a4341eb",
+    "original_question_id": "9fa0dd9f",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "CHILD_ID",
+        "MOTHER_ID",
+        "SURVEY_ID",
+        "BIRTH_EVENT_ID",
+        "HOUSEHOLD_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve all village IDs from `dim_psu_village.psu_village_id` and all district IDs from `dim_psu_village.district_id` (which are districts containing at least one village). Combine them into a single column using UNION to remove any duplicates between the two sets, then sort the result numerically in ascending order."
+  },
+  {
+    "question": "For mothers whose age at first marriage is not recorded, provide their IDs along with the date of their first Gauna ceremony.",
+    "sql": "SELECT T1.MOTHER_ID, T1.AGE_AT_FIRST_MARRIAGE_IMPUTED, T2.DATE_OF_FIRST_GAUNA_IMPUTED_CMC FROM DIM_MOTHER_MARRIAGE_EVENTS AS T1 JOIN DIM_MOTHER_GAUNA_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID WHERE T1.AGE_AT_FIRST_MARRIAGE_IMPUTED = 'UNKNOWN'",
+    "pair_id": "9e754932",
+    "original_question_id": "124f4dd5",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "DATE_OF_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_GAUNA_IMPUTED_CMC",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "AGE_AT_FIRST_GAUNA_IMPUTED"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter mothers where `dim_mother_marriage_events`.`date_of_first_marriage_flag` = 'None - all imputed'. For these mothers, retrieve `dim_mother_marriage_events`.`mother_id` and `dim_mother_gauna_events`.`date_of_first_gauna_imputed_cmc` by joining `dim_mother_marriage_events` and `dim_mother_gauna_events` on `mother_id`."
+  },
+  {
+    "question": "Provide the marriage age and Gauna date details for all mothers who were married at age 18.",
+    "sql": "SELECT T1.MOTHER_ID, T1.AGE_AT_MARRIAGE_IMPUTED, T2.DATE_OF_GAUNA_IMPUTED_CMC FROM DIM_MOTHER_MARRIAGE_EVENTS AS T1 JOIN DIM_MOTHER_GAUNA_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID WHERE T1.AGE_AT_MARRIAGE_IMPUTED = '18' ORDER BY T1.AGE_AT_MARRIAGE_IMPUTED",
+    "pair_id": "40cf25be",
+    "original_question_id": "124f4dd5",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "DATE_OF_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_GAUNA_IMPUTED_CMC",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "AGE_AT_FIRST_GAUNA_IMPUTED"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve from `dim_mother_marriage_events` and `dim_mother_gauna_events` where `dim_mother_marriage_events`.`age_at_marriage_imputed` = 18. Join on `mother_id`. Select marriage age columns (`dim_mother_marriage_events`.`age_at_marriage_imputed`, `dim_mother_marriage_events`.`age_at_first_marriage_imputed`) and Gauna date columns (`dim_mother_gauna_events`.`date_of_gauna_imputed_cmc`, `dim_mother_gauna_events`.`date_of_first_gauna_imputed_cmc`)."
+  },
+  {
+    "question": "For mothers who were married at age 17, provide their ID along with their imputed age at marriage and Gauna date (in CMC format).",
+    "sql": "SELECT T1.MOTHER_ID, T1.AGE_AT_MARRIAGE_IMPUTED, T2.DATE_OF_GAUNA_IMPUTED_CMC FROM DIM_MOTHER_MARRIAGE_EVENTS AS T1 JOIN DIM_MOTHER_GAUNA_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID WHERE T1.AGE_AT_MARRIAGE_IMPUTED = '17' ORDER BY T1.AGE_AT_MARRIAGE_IMPUTED",
+    "pair_id": "dfad0d7c",
+    "original_question_id": "124f4dd5",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "DATE_OF_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_GAUNA_IMPUTED_CMC",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "AGE_AT_FIRST_GAUNA_IMPUTED"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_mother_marriage_events`.`mother_id`, `dim_mother_marriage_events`.`age_at_marriage_imputed`, `dim_mother_gauna_events`.`date_of_gauna_imputed_cmc` from `dim_mother_marriage_events` inner join `dim_mother_gauna_events` on `dim_mother_marriage_events`.`mother_id` = `dim_mother_gauna_events`.`mother_id` where `dim_mother_marriage_events`.`age_at_marriage_imputed` = 17."
+  },
+  {
+    "question": "Provide the marriage and Gauna event details for mothers whose age at first marriage is not recorded.",
+    "sql": "SELECT T1.MOTHER_ID, T2.AGE_AT_FIRST_MARRIAGE_IMPUTED, T3.DATE_OF_FIRST_GAUNA_IMPUTED_CMC FROM DIM_MOTHER_DEMOGRAPHICS AS T1 INNER JOIN DIM_MOTHER_MARRIAGE_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID INNER JOIN DIM_MOTHER_GAUNA_EVENTS AS T3 ON T1.MOTHER_ID = T3.MOTHER_ID WHERE T2.AGE_AT_FIRST_MARRIAGE_IMPUTED = 'UNKNOWN' GROUP BY T1.MOTHER_ID, T2.AGE_AT_FIRST_MARRIAGE_IMPUTED, T3.DATE_OF_FIRST_GAUNA_IMPUTED_CMC ORDER BY T2.AGE_AT_FIRST_MARRIAGE_IMPUTED DESC",
+    "pair_id": "2349853d",
+    "original_question_id": "124f4dd5",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "DATE_OF_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_GAUNA_IMPUTED_CMC",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "AGE_AT_FIRST_GAUNA_IMPUTED"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_mother_marriage_events` and `dim_mother_gauna_events` on `mother_id`. Filter where `dim_mother_marriage_events`.`age_at_first_marriage_imputed` = 'UNKNOWN'. Select all columns from both tables for details."
+  },
+  {
+    "question": "For each recorded age group of mothers, what are the average marriage and Gauna event identifiers?",
+    "sql": "SELECT AVG(T2.MOTHER_MARRIAGE_ID), AVG(T3.MOTHER_GAUNA_ID), T1.MOTHER_AGE_IMPUTED FROM DIM_MOTHER_DEMOGRAPHICS AS T1 JOIN DIM_MOTHER_MARRIAGE_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID JOIN DIM_MOTHER_GAUNA_EVENTS AS T3 ON T1.MOTHER_ID = T3.MOTHER_ID GROUP BY T1.MOTHER_AGE_IMPUTED",
+    "pair_id": "5e53c6f9",
+    "original_question_id": "10e48ffe",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_MARRIAGE_IMPUTED_CMC",
+        "MOTHER_MARRIAGE_ID",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "DATE_OF_MARRIAGE_FLAG",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_GAUNA_FLAG",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "AGE_AT_FIRST_GAUNA_IMPUTED"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_mother_demographics.mother_age_imputed`. For each age, calculate AVG(`dim_mother_marriage_events.mother_marriage_id`) as avg_marriage_id and AVG(`dim_mother_gauna_events.mother_gauna_id`) as avg_gauna_id via LEFT JOIN from `dim_mother_demographics` to `dim_mother_marriage_events` and `dim_mother_gauna_events` on `mother_id`."
+  },
+  {
+    "question": "For each recorded age group of mothers, what are the average marriage and Gauna event identifiers?",
+    "sql": "SELECT AVG(T2.MOTHER_MARRIAGE_ID), AVG(T3.MOTHER_GAUNA_ID), T1.MOTHER_AGE_IMPUTED FROM DIM_MOTHER_DEMOGRAPHICS AS T1 JOIN DIM_MOTHER_MARRIAGE_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID JOIN DIM_MOTHER_GAUNA_EVENTS AS T3 ON T1.MOTHER_ID = T3.MOTHER_ID GROUP BY T1.MOTHER_AGE_IMPUTED",
+    "pair_id": "7bc760be",
+    "original_question_id": "10e48ffe",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_MARRIAGE_IMPUTED_CMC",
+        "MOTHER_MARRIAGE_ID",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "DATE_OF_MARRIAGE_FLAG",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_GAUNA_FLAG",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "AGE_AT_FIRST_GAUNA_IMPUTED"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_mother_demographics.mother_age_imputed`. Compute AVG(`dim_mother_marriage_events.mother_marriage_id`) and AVG(`dim_mother_gauna_events.mother_gauna_id`) for each age group. Join `dim_mother_demographics` to `dim_mother_marriage_events` and `dim_mother_gauna_events` on `mother_id`."
+  },
+  {
+    "question": "For mothers aged 45 and 46 with precisely recorded marriage and Gauna dates, show the average marriage and Gauna event identifiers grouped by age.",
+    "sql": "SELECT T1.MOTHER_AGE_IMPUTED, AVG(T2.MOTHER_MARRIAGE_ID), AVG(T3.MOTHER_GAUNA_ID) FROM DIM_MOTHER_DEMOGRAPHICS AS T1 INNER JOIN DIM_MOTHER_MARRIAGE_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID INNER JOIN DIM_MOTHER_GAUNA_EVENTS AS T3 ON T1.MOTHER_ID = T3.MOTHER_ID WHERE T1.MOTHER_AGE_IMPUTED IN ('46', '45') AND T2.DATE_OF_MARRIAGE_FLAG = 'Month and year' AND T3.DATE_OF_GAUNA_FLAG = 'Month and year' GROUP BY T1.MOTHER_AGE_IMPUTED HAVING COUNT(T1.MOTHER_ID) > 0 ORDER BY T1.MOTHER_AGE_IMPUTED ASC",
+    "pair_id": "b23e14f0",
+    "original_question_id": "10e48ffe",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_MARRIAGE_IMPUTED_CMC",
+        "MOTHER_MARRIAGE_ID",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "DATE_OF_MARRIAGE_FLAG",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_GAUNA_FLAG",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "AGE_AT_FIRST_GAUNA_IMPUTED"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_mother_demographics`.`mother_age_imputed` IN (45, 46) and `dim_mother_marriage_events`.`date_of_marriage_flag` = 'Month and year' and `dim_mother_gauna_events`.`date_of_gauna_flag` = 'Month and year'. Group by `dim_mother_demographics`.`mother_age_imputed` and compute AVG(`dim_mother_marriage_events`.`mother_marriage_id`) and AVG(`dim_mother_gauna_events`.`mother_gauna_id`)."
+  },
+  {
+    "question": "For the first five mothers who were married at age 15, list their IDs and their recorded age at the time of Gauna, sorted by their ID.",
+    "sql": "SELECT T1.MOTHER_ID, T2.AGE_AT_GAUNA_IMPUTED FROM DIM_MOTHER_MARRIAGE_EVENTS AS T1 JOIN DIM_MOTHER_GAUNA_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID WHERE T1.MOTHER_ID < 5 AND T1.AGE_AT_MARRIAGE_IMPUTED = '15' ORDER BY T1.MOTHER_ID ASC",
+    "pair_id": "9074e88d",
+    "original_question_id": "8ae7bcb1",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED",
+        "DATE_OF_FIRST_MARRIAGE_FLAG"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "AGE_AT_FIRST_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_FLAG"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_mother_marriage_events` where `dim_mother_marriage_events`.`age_at_marriage_imputed` = 15. Join with `dim_mother_gauna_events` on `dim_mother_marriage_events`.`mother_id` = `dim_mother_gauna_events`.`mother_id`. Select `dim_mother_marriage_events`.`mother_id` and `dim_mother_gauna_events`.`age_at_gauna_imputed`. Order by `dim_mother_marriage_events`.`mother_id` and limit to 5 rows."
+  },
+  {
+    "question": "Provide the IDs and the imputed age at Gauna for mothers who were married before the age of 15 and have a confirmed month and year of birth.",
+    "sql": "SELECT T1.MOTHER_ID, T3.AGE_AT_GAUNA_IMPUTED FROM DIM_MOTHER_DEMOGRAPHICS AS T1 INNER JOIN DIM_MOTHER_MARRIAGE_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID LEFT JOIN DIM_MOTHER_GAUNA_EVENTS AS T3 ON T1.MOTHER_ID = T3.MOTHER_ID WHERE T2.AGE_AT_MARRIAGE_IMPUTED < '15' AND T1.MOTHER_DATE_OF_BIRTH_FLAG = 'Month and year' GROUP BY T1.MOTHER_ID, T3.AGE_AT_GAUNA_IMPUTED HAVING COUNT(T1.MOTHER_ID) >= 1 ORDER BY T1.MOTHER_ID ASC",
+    "pair_id": "5ec667ef",
+    "original_question_id": "8ae7bcb1",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED",
+        "DATE_OF_FIRST_MARRIAGE_FLAG"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "AGE_AT_FIRST_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_FLAG"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_mother_demographics`.`mother_id` and `dim_mother_gauna_events`.`age_at_gauna_imputed` from `dim_mother_demographics` join `dim_mother_marriage_events` on `dim_mother_demographics`.`mother_id` = `dim_mother_marriage_events`.`mother_id` join `dim_mother_gauna_events` on `dim_mother_demographics`.`mother_id` = `dim_mother_gauna_events`.`mother_id` where `dim_mother_demographics`.`mother_date_of_birth_flag` = 'Month and year' and cast(`dim_mother_marriage_events`.`age_at_first_marriage_imputed` as integer) < 15."
+  },
+  {
+    "question": "Provide a list of mothers' IDs along with their ages at marriage and Gauna, sorted from the oldest to youngest age at marriage.",
+    "sql": "SELECT T1.MOTHER_ID, T1.AGE_AT_MARRIAGE_IMPUTED, T2.AGE_AT_GAUNA_IMPUTED FROM DIM_MOTHER_MARRIAGE_EVENTS AS T1 JOIN DIM_MOTHER_GAUNA_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID ORDER BY T1.AGE_AT_MARRIAGE_IMPUTED DESC",
+    "pair_id": "4594aa4c",
+    "original_question_id": "c12fe38d",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED",
+        "DATE_OF_FIRST_MARRIAGE_FLAG"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "AGE_AT_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_FIRST_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_FLAG"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_mother_marriage_events` and `dim_mother_gauna_events` on `mother_id`. Select `dim_mother_marriage_events.mother_id`, `dim_mother_marriage_events.age_at_marriage_imputed`, `dim_mother_gauna_events.age_at_gauna_imputed`. Sort by `dim_mother_marriage_events.age_at_marriage_imputed` DESC (oldest to youngest)."
+  },
+  {
+    "question": "Provide a list of mothers' IDs along with their ages at marriage and Gauna, sorted from the oldest to the youngest age at marriage.",
+    "sql": "SELECT T1.MOTHER_ID, T1.AGE_AT_MARRIAGE_IMPUTED, T2.AGE_AT_GAUNA_IMPUTED FROM DIM_MOTHER_MARRIAGE_EVENTS AS T1 JOIN DIM_MOTHER_GAUNA_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID ORDER BY T1.AGE_AT_MARRIAGE_IMPUTED DESC",
+    "pair_id": "e7441de4",
+    "original_question_id": "c12fe38d",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED",
+        "DATE_OF_FIRST_MARRIAGE_FLAG"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "AGE_AT_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_FIRST_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_FLAG"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_mother_marriage_events`.`mother_id`, `dim_mother_marriage_events`.`age_at_marriage_imputed`, and `dim_mother_gauna_events`.`age_at_gauna_imputed` by joining `dim_mother_marriage_events` and `dim_mother_gauna_events` on `mother_id`. Sort results by `dim_mother_marriage_events`.`age_at_marriage_imputed` DESC (oldest to youngest). Both age columns are integers."
+  },
+  {
+    "question": "Provide the marriage and Gauna ages for all mothers, sorted from the oldest marriage age to the youngest.",
+    "sql": "SELECT T1.MOTHER_ID, T2.AGE_AT_MARRIAGE_IMPUTED, T3.AGE_AT_GAUNA_IMPUTED FROM DIM_MOTHER_DEMOGRAPHICS AS T1 INNER JOIN DIM_MOTHER_MARRIAGE_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID LEFT JOIN DIM_MOTHER_GAUNA_EVENTS AS T3 ON T1.MOTHER_ID = T3.MOTHER_ID GROUP BY T1.MOTHER_ID, T2.AGE_AT_MARRIAGE_IMPUTED, T3.AGE_AT_GAUNA_IMPUTED HAVING T2.AGE_AT_MARRIAGE_IMPUTED IS NOT NULL ORDER BY T2.AGE_AT_MARRIAGE_IMPUTED DESC",
+    "pair_id": "c5490b51",
+    "original_question_id": "c12fe38d",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED",
+        "DATE_OF_FIRST_MARRIAGE_FLAG"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "AGE_AT_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_FIRST_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_FLAG"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_mother_marriage_events`.`mother_id`, `dim_mother_marriage_events`.`age_at_marriage_imputed`, `dim_mother_gauna_events`.`age_at_gauna_imputed` from `dim_mother_marriage_events` left join `dim_mother_gauna_events` on `dim_mother_marriage_events`.`mother_id` = `dim_mother_gauna_events`.`mother_id` order by `dim_mother_marriage_events`.`age_at_marriage_imputed` DESC."
+  },
+  {
+    "question": "Identify the ten mothers who were youngest at the time of their gauna, ensuring both their gauna and marriage ages are recorded.",
+    "sql": "SELECT T1.MOTHER_ID FROM DIM_MOTHER_GAUNA_EVENTS AS T1 JOIN DIM_MOTHER_MARRIAGE_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID WHERE T1.AGE_AT_GAUNA_IMPUTED IS NOT NULL AND T2.AGE_AT_MARRIAGE_IMPUTED IS NOT NULL ORDER BY T1.AGE_AT_GAUNA_IMPUTED ASC LIMIT 10",
+    "pair_id": "3ebf8ee9",
+    "original_question_id": "ccbdfadd",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED",
+        "DATE_OF_FIRST_MARRIAGE_FLAG"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "AGE_AT_FIRST_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_FLAG"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_mother_gauna_events` and `dim_mother_marriage_events` on `mother_id`. Filter where both (`dim_mother_gauna_events`.`age_at_gauna_imputed`) and (`dim_mother_marriage_events`.`age_at_marriage_imputed`) are not NULL. Order by (`dim_mother_gauna_events`.`age_at_gauna_imputed`) ASC. Limit 10. Output `dim_mother_gauna_events`.`mother_id`, (`dim_mother_gauna_events`.`age_at_gauna_imputed`), and (`dim_mother_marriage_events`.`age_at_marriage_imputed`)."
+  },
+  {
+    "question": "Identify the ten mothers who were youngest at the time of their gauna, ensuring that both their gauna and marriage ages are recorded.",
+    "sql": "SELECT T1.MOTHER_ID FROM DIM_MOTHER_GAUNA_EVENTS AS T1 JOIN DIM_MOTHER_MARRIAGE_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID WHERE T1.AGE_AT_GAUNA_IMPUTED IS NOT NULL AND T2.AGE_AT_MARRIAGE_IMPUTED IS NOT NULL ORDER BY T1.AGE_AT_GAUNA_IMPUTED ASC LIMIT 10",
+    "pair_id": "4ad14290",
+    "original_question_id": "ccbdfadd",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED",
+        "DATE_OF_FIRST_MARRIAGE_FLAG"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "AGE_AT_FIRST_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_FLAG"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_mother_gauna_events` and `dim_mother_marriage_events` on `mother_id`. Filter where `dim_mother_gauna_events.age_at_gauna_imputed` IS NOT NULL and `dim_mother_marriage_events.age_at_marriage_imputed` IS NOT NULL. Order by `dim_mother_gauna_events.age_at_gauna_imputed` ASC. Limit 10. Select `dim_mother_gauna_events.mother_id`, `dim_mother_gauna_events.age_at_gauna_imputed`, and `dim_mother_marriage_events.age_at_marriage_imputed`."
+  },
+  {
+    "question": "Identify the IDs of the first ten mothers who were older than 15 at the time of their Gauna, ensuring that both their Gauna and marriage ages are recorded.",
+    "sql": "SELECT T1.MOTHER_ID FROM DIM_MOTHER_DEMOGRAPHICS AS T1 INNER JOIN DIM_MOTHER_GAUNA_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID INNER JOIN DIM_MOTHER_MARRIAGE_EVENTS AS T3 ON T1.MOTHER_ID = T3.MOTHER_ID WHERE T2.AGE_AT_GAUNA_IMPUTED IS NOT NULL AND T3.AGE_AT_MARRIAGE_IMPUTED IS NOT NULL GROUP BY T1.MOTHER_ID HAVING MIN(T2.AGE_AT_GAUNA_IMPUTED) > '15' ORDER BY MIN(T2.AGE_AT_GAUNA_IMPUTED) ASC LIMIT 10",
+    "pair_id": "ad461655",
+    "original_question_id": "ccbdfadd",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED",
+        "DATE_OF_FIRST_MARRIAGE_FLAG"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "AGE_AT_FIRST_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_FLAG"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_mother_demographics.mother_id` from `dim_mother_demographics` join `dim_mother_gauna_events` on `dim_mother_demographics.mother_id` = `dim_mother_gauna_events.mother_id` join `dim_mother_marriage_events` on `dim_mother_demographics.mother_id` = `dim_mother_marriage_events.mother_id` where `dim_mother_gauna_events.age_at_gauna_imputed` > 15 and `dim_mother_marriage_events.age_at_marriage_imputed` is not null order by `dim_mother_demographics.mother_id` limit 10."
+  },
+  {
+    "question": "Compare the imputed ages at marriage and gauna for mothers who were married before the age of 18.",
+    "sql": "SELECT T1.AGE_AT_MARRIAGE_IMPUTED, T2.AGE_AT_GAUNA_IMPUTED FROM DIM_MOTHER_MARRIAGE_EVENTS AS T1 JOIN DIM_MOTHER_GAUNA_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID WHERE T1.AGE_AT_MARRIAGE_IMPUTED < '18';",
+    "pair_id": "18f66002",
+    "original_question_id": "7771db61",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "DATE_OF_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_FIRST_GAUNA_IMPUTED"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter mothers with CAST(`dim_mother_marriage_events`.`age_at_first_marriage_imputed` AS INTEGER) < 18. Join `dim_mother_marriage_events` and `dim_mother_gauna_events` on `mother_id`. Select `dim_mother_marriage_events`.`mother_id`, `dim_mother_marriage_events`.`age_at_first_marriage_imputed`, `dim_mother_gauna_events`.`age_at_first_gauna_imputed` for comparison."
+  },
+  {
+    "question": "Compare the imputed ages at marriage and gauna for mothers who were married before the age of 18, sorted by their age at marriage.",
+    "sql": "SELECT T1.AGE_AT_MARRIAGE_IMPUTED, T2.AGE_AT_GAUNA_IMPUTED FROM DIM_MOTHER_MARRIAGE_EVENTS AS T1 JOIN DIM_MOTHER_GAUNA_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID WHERE T1.AGE_AT_MARRIAGE_IMPUTED < '18' ORDER BY T1.AGE_AT_MARRIAGE_IMPUTED",
+    "pair_id": "c231bed5",
+    "original_question_id": "7771db61",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "DATE_OF_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_FIRST_GAUNA_IMPUTED"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_mother_marriage_events`.`age_at_marriage_imputed` and `dim_mother_gauna_events`.`age_at_gauna_imputed` from `dim_mother_marriage_events` inner join `dim_mother_gauna_events` on `dim_mother_marriage_events`.`mother_id` = `dim_mother_gauna_events`.`mother_id` where `dim_mother_marriage_events`.`age_at_marriage_imputed` < 18 order by `dim_mother_marriage_events`.`age_at_marriage_imputed`."
+  },
+  {
+    "question": "For the first five mothers in the records, identify those whose age at marriage differed from their age at Gauna, and show their IDs alongside both ages, sorted by marriage age from oldest to youngest.",
+    "sql": "SELECT T1.MOTHER_ID, T2.AGE_AT_MARRIAGE_IMPUTED, T3.AGE_AT_GAUNA_IMPUTED FROM DIM_MOTHER_DEMOGRAPHICS AS T1 INNER JOIN DIM_MOTHER_MARRIAGE_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID INNER JOIN DIM_MOTHER_GAUNA_EVENTS AS T3 ON T1.MOTHER_ID = T3.MOTHER_ID WHERE T2.MOTHER_ID < 5 GROUP BY T1.MOTHER_ID, T2.AGE_AT_MARRIAGE_IMPUTED, T3.AGE_AT_GAUNA_IMPUTED HAVING T2.AGE_AT_MARRIAGE_IMPUTED <> T3.AGE_AT_GAUNA_IMPUTED ORDER BY T2.AGE_AT_MARRIAGE_IMPUTED DESC",
+    "pair_id": "944a930b",
+    "original_question_id": "7771db61",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "DATE_OF_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_FIRST_GAUNA_IMPUTED"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "First, get the five smallest `mother_id` values from `dim_mother_demographics` ordered by `mother_id` ASC. Then join `dim_mother_marriage_events` and `dim_mother_gauna_events` on `mother_id` to get `dim_mother_marriage_events.age_at_marriage_imputed` and `dim_mother_gauna_events.age_at_gauna_imputed`. Filter where `age_at_marriage_imputed` != `age_at_gauna_imputed`. Finally, sort by `age_at_marriage_imputed` DESC (oldest to youngest)."
+  },
+  {
+    "question": "Identify the mothers who were exactly 18 years old at the time of both their marriage and their Gauna ceremony.",
+    "sql": "SELECT T1.MOTHER_ID FROM DIM_MOTHER_MARRIAGE_EVENTS AS T1 JOIN DIM_MOTHER_GAUNA_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID WHERE T1.AGE_AT_MARRIAGE_IMPUTED = '18' AND T2.AGE_AT_GAUNA_IMPUTED = '18'",
+    "pair_id": "6f3c74fa",
+    "original_question_id": "370cdf95",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_MARRIAGE_IMPUTED_CMC",
+        "MOTHER_MARRIAGE_ID",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "DATE_OF_MARRIAGE_FLAG",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_GAUNA_FLAG",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "AGE_AT_FIRST_GAUNA_IMPUTED"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_mother_demographics`.`mother_id` where `dim_mother_marriage_events`.`age_at_marriage_imputed` = 18 and `dim_mother_gauna_events`.`age_at_gauna_imputed` = 18, joining `dim_mother_demographics` with `dim_mother_marriage_events` and `dim_mother_gauna_events` on `mother_id`."
+  },
+  {
+    "question": "Identify all mothers who were exactly 18 years old at the time of both their marriage and their Gauna ceremony, listed in ascending order by their ID.",
+    "sql": "SELECT T1.MOTHER_ID FROM DIM_MOTHER_DEMOGRAPHICS AS T1 JOIN DIM_MOTHER_MARRIAGE_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID JOIN DIM_MOTHER_GAUNA_EVENTS AS T3 ON T1.MOTHER_ID = T3.MOTHER_ID WHERE T2.AGE_AT_MARRIAGE_IMPUTED = '18' AND T3.AGE_AT_GAUNA_IMPUTED = '18' GROUP BY T1.MOTHER_ID HAVING COUNT(T1.MOTHER_ID) >= 1 ORDER BY T1.MOTHER_ID ASC",
+    "pair_id": "563b3033",
+    "original_question_id": "370cdf95",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_MARRIAGE_IMPUTED_CMC",
+        "MOTHER_MARRIAGE_ID",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "DATE_OF_MARRIAGE_FLAG",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_GAUNA_FLAG",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "AGE_AT_FIRST_GAUNA_IMPUTED"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter mothers where `dim_mother_marriage_events`.`age_at_marriage_imputed` = 18 and `dim_mother_gauna_events`.`age_at_gauna_imputed` = 18. Join `dim_mother_demographics` with `dim_mother_marriage_events` on `mother_id` and with `dim_mother_gauna_events` on `mother_id`. Select distinct `dim_mother_demographics`.`mother_id` and order by `dim_mother_demographics`.`mother_id` ASC."
+  },
+  {
+    "question": "Identify all mothers who have recorded age information for either their first marriage or their gauna ceremony.",
+    "sql": "SELECT T1.MOTHER_ID FROM DIM_MOTHER_MARRIAGE_EVENTS AS T1 JOIN DIM_MOTHER_GAUNA_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID WHERE T1.AGE_AT_FIRST_MARRIAGE_IMPUTED IS NOT NULL OR T2.AGE_AT_FIRST_GAUNA_IMPUTED IS NOT NULL",
+    "pair_id": "84d647e8",
+    "original_question_id": "131b9f10",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED",
+        "DATE_OF_FIRST_MARRIAGE_FLAG"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "AGE_AT_FIRST_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_FLAG"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Find distinct mother_id from `dim_mother_marriage_events` where `dim_mother_marriage_events`.`age_at_first_marriage_imputed` IS NOT NULL AND `dim_mother_marriage_events`.`age_at_first_marriage_imputed` != '' UNION distinct mother_id from `dim_mother_gauna_events` where `dim_mother_gauna_events`.`age_at_first_gauna_imputed` IS NOT NULL AND `dim_mother_gauna_events`.`age_at_first_gauna_imputed` != ''."
+  },
+  {
+    "question": "Provide a sorted list of IDs for mothers who have recorded age data for either their first marriage or their Gauna ceremony.",
+    "sql": "SELECT T1.MOTHER_ID FROM DIM_MOTHER_MARRIAGE_EVENTS AS T1 JOIN DIM_MOTHER_GAUNA_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID WHERE T1.AGE_AT_FIRST_MARRIAGE_IMPUTED IS NOT NULL OR T2.AGE_AT_FIRST_GAUNA_IMPUTED IS NOT NULL GROUP BY T1.MOTHER_ID ORDER BY T1.MOTHER_ID",
+    "pair_id": "f701babc",
+    "original_question_id": "131b9f10",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED",
+        "DATE_OF_FIRST_MARRIAGE_FLAG"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "AGE_AT_FIRST_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_FLAG"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve distinct mother IDs from `dim_mother_marriage_events` where `dim_mother_marriage_events.age_at_first_marriage_imputed` IS NOT NULL, union with distinct mother IDs from `dim_mother_gauna_events` where `dim_mother_gauna_events.age_at_first_gauna_imputed` IS NOT NULL, then sort the result in ascending order."
+  },
+  {
+    "question": "Identify all mothers who have recorded age information for either their marriage or Gauna ceremony, sorted by their ID.",
+    "sql": "SELECT T1.MOTHER_ID FROM DIM_MOTHER_DEMOGRAPHICS AS T1 LEFT JOIN DIM_MOTHER_MARRIAGE_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID LEFT JOIN DIM_MOTHER_GAUNA_EVENTS AS T3 ON T1.MOTHER_ID = T3.MOTHER_ID GROUP BY T1.MOTHER_ID HAVING COUNT(T2.AGE_AT_MARRIAGE_IMPUTED) > 0 OR COUNT(T3.AGE_AT_GAUNA_IMPUTED) > 0 ORDER BY T1.MOTHER_ID ASC",
+    "pair_id": "b609be40",
+    "original_question_id": "131b9f10",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED",
+        "DATE_OF_FIRST_MARRIAGE_FLAG"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "AGE_AT_FIRST_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_FLAG"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct mothers from `dim_mother_demographics` where they have non-NULL age in either `dim_mother_marriage_events` (`age_at_marriage_imputed` or `age_at_first_marriage_imputed`) or `dim_mother_gauna_events` (`age_at_gauna_imputed` or `age_at_first_gauna_imputed`). Use LEFT JOINs on `mother_id` and check IS NOT NULL. Order by `dim_mother_demographics`.`mother_id`."
+  },
+  {
+    "question": "Provide the imputed age and date of first marriage for mothers whose age at first marriage is recorded as unknown.",
+    "sql": "SELECT AGE_AT_FIRST_MARRIAGE_IMPUTED, DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC FROM DIM_MOTHER_MARRIAGE_EVENTS WHERE AGE_AT_FIRST_MARRIAGE_IMPUTED = 'UNKNOWN';",
+    "pair_id": "5ee36528",
+    "original_question_id": "074c5758",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_SURVEY",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED",
+        "DATE_OF_FIRST_MARRIAGE_FLAG"
+      ],
+      "DIM_SURVEY": [
+        "SURVEY_ID",
+        "INTERVIEW_DATE_IMPUTED_CMC"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_mother_marriage_events`.`mother_id`, `dim_mother_marriage_events`.`age_at_first_marriage_imputed`, `dim_mother_marriage_events`.`date_of_first_marriage_imputed_cmc` from `dim_mother_marriage_events` where `dim_mother_marriage_events`.`age_at_first_marriage_imputed` = 'UNKNOWN'."
+  },
+  {
+    "question": "List the IDs and marriage dates for mothers whose age at their first marriage was not recorded, sorted chronologically by the date of the event.",
+    "sql": "SELECT T1.MOTHER_ID, T2.DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC FROM DIM_MOTHER_DEMOGRAPHICS AS T1 JOIN DIM_MOTHER_MARRIAGE_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID WHERE T2.AGE_AT_FIRST_MARRIAGE_IMPUTED = 'UNKNOWN' ORDER BY T2.DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+    "pair_id": "f0e189c3",
+    "original_question_id": "074c5758",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_SURVEY",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED",
+        "DATE_OF_FIRST_MARRIAGE_FLAG"
+      ],
+      "DIM_SURVEY": [
+        "SURVEY_ID",
+        "INTERVIEW_DATE_IMPUTED_CMC"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_mother_marriage_events`.`mother_id` and `dim_mother_marriage_events`.`date_of_first_marriage_imputed_cmc` from `dim_mother_marriage_events` where `dim_mother_marriage_events`.`date_of_first_marriage_flag` = 'None - all imputed' (this flag indicates no original age recorded). Sort by `dim_mother_marriage_events`.`date_of_first_marriage_imputed_cmc` chronologically (the string starts with YYYY-MM, so lexicographic sort works, or extract CMC number for numeric sort)."
+  },
+  {
+    "question": "Provide the IDs, birth dates, and first marriage dates for mothers who have given birth at least once but whose age at their first marriage is unknown, sorted by their birth date from youngest to oldest.",
+    "sql": "SELECT T1.MOTHER_ID, T1.MOTHER_DATE_OF_BIRTH_IMPUTED_CMC, T2.DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC FROM DIM_MOTHER_DEMOGRAPHICS AS T1 INNER JOIN DIM_MOTHER_MARRIAGE_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID INNER JOIN FACT_BIRTH_EVENT AS T3 ON T1.MOTHER_ID = T3.MOTHER_ID WHERE T2.AGE_AT_FIRST_MARRIAGE_IMPUTED = 'UNKNOWN' GROUP BY T1.MOTHER_ID, T1.MOTHER_DATE_OF_BIRTH_IMPUTED_CMC, T2.DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC HAVING COUNT(T3.BIRTH_EVENT_ID) >= 1 ORDER BY T1.MOTHER_DATE_OF_BIRTH_IMPUTED_CMC DESC",
+    "pair_id": "8bea7cb0",
+    "original_question_id": "074c5758",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_SURVEY",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED",
+        "DATE_OF_FIRST_MARRIAGE_FLAG"
+      ],
+      "DIM_SURVEY": [
+        "SURVEY_ID",
+        "INTERVIEW_DATE_IMPUTED_CMC"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_mother_demographics`.`mother_id`, `dim_mother_demographics`.`mother_date_of_birth_imputed_cmc`, `dim_mother_marriage_events`.`date_of_first_marriage_imputed_cmc` from `dim_mother_demographics` join `dim_mother_marriage_events` on `dim_mother_demographics`.`mother_id` = `dim_mother_marriage_events`.`mother_id` where `dim_mother_marriage_events`.`age_at_first_marriage_imputed` = 'UNKNOWN' and exists (select 1 from `fact_birth_event` where `fact_birth_event`.`mother_id` = `dim_mother_demographics`.`mother_id`) order by cast(substring(`dim_mother_demographics`.`mother_date_of_birth_imputed_cmc` from '\\((\\d+)\\)') as integer) desc"
+  },
+  {
+    "question": "Provide a breakdown of the average age at marriage and average age at Gauna for mothers, grouped by their current recorded age.",
+    "sql": "SELECT T1.MOTHER_AGE_IMPUTED, AVG(CAST(T2.AGE_AT_MARRIAGE_IMPUTED AS NUMERIC)), AVG(CAST(T3.AGE_AT_GAUNA_IMPUTED AS NUMERIC)) FROM DIM_MOTHER_DEMOGRAPHICS AS T1 JOIN DIM_MOTHER_MARRIAGE_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID JOIN DIM_MOTHER_GAUNA_EVENTS AS T3 ON T1.MOTHER_ID = T3.MOTHER_ID GROUP BY T1.MOTHER_AGE_IMPUTED;",
+    "pair_id": "1319e2bf",
+    "original_question_id": "9c54f06c",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED",
+        "DATE_OF_FIRST_MARRIAGE_FLAG"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "AGE_AT_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_FIRST_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_FLAG"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_mother_demographics.mother_age_imputed`. For each group, compute average of `dim_mother_marriage_events.age_at_marriage_imputed` and average of `dim_mother_gauna_events.age_at_gauna_imputed`. Join `dim_mother_demographics` with `dim_mother_marriage_events` and `dim_mother_gauna_events` on `mother_id` using LEFT JOIN to include mothers without events."
+  },
+  {
+    "question": "For each recorded age group of mothers, what are the average marriage and Gauna event identifiers?",
+    "sql": "SELECT AVG(T2.MOTHER_MARRIAGE_ID), AVG(T3.MOTHER_GAUNA_ID), T1.MOTHER_AGE_IMPUTED FROM DIM_MOTHER_DEMOGRAPHICS AS T1 JOIN DIM_MOTHER_MARRIAGE_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID JOIN DIM_MOTHER_GAUNA_EVENTS AS T3 ON T1.MOTHER_ID = T3.MOTHER_ID GROUP BY T1.MOTHER_AGE_IMPUTED",
+    "pair_id": "3c31d842",
+    "original_question_id": "9c54f06c",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED",
+        "DATE_OF_FIRST_MARRIAGE_FLAG"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "AGE_AT_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_FIRST_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_FLAG"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_mother_demographics`.`mother_age_imputed`. For each age, compute AVG(`dim_mother_marriage_events`.`mother_marriage_id`) as average_marriage_id and AVG(`dim_mother_gauna_events`.`mother_gauna_id`) as average_gauna_id. Join `dim_mother_demographics` with `dim_mother_marriage_events` on `mother_id` and with `dim_mother_gauna_events` on `mother_id`."
+  },
+  {
+    "question": "For mothers currently aged 45 or 46 whose birth dates are recorded by both month and year, compare their average age at marriage and average age at Gauna.",
+    "sql": "SELECT T1.MOTHER_AGE_IMPUTED, AVG(CAST(T2.AGE_AT_MARRIAGE_IMPUTED AS NUMERIC)), AVG(CAST(T3.AGE_AT_GAUNA_IMPUTED AS NUMERIC)) FROM DIM_MOTHER_DEMOGRAPHICS AS T1 INNER JOIN DIM_MOTHER_MARRIAGE_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID INNER JOIN DIM_MOTHER_GAUNA_EVENTS AS T3 ON T1.MOTHER_ID = T3.MOTHER_ID WHERE T1.MOTHER_DATE_OF_BIRTH_FLAG = 'Month and year' AND T1.MOTHER_AGE_IMPUTED IN ('46', '45') GROUP BY T1.MOTHER_AGE_IMPUTED ORDER BY T1.MOTHER_AGE_IMPUTED ASC",
+    "pair_id": "ad36c847",
+    "original_question_id": "9c54f06c",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED",
+        "DATE_OF_FIRST_MARRIAGE_FLAG"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "AGE_AT_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_FIRST_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_FLAG"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_mother_demographics` where `dim_mother_demographics.mother_age_imputed` IN (45, 46) and `dim_mother_demographics.mother_date_of_birth_flag` = 'Month and year'. Join to `dim_mother_marriage_events` on `mother_id` to get `dim_mother_marriage_events.age_at_marriage_imputed` and to `dim_mother_gauna_events` on `mother_id` to get `dim_mother_gauna_events.age_at_gauna_imputed`. Compute average of `age_at_marriage_imputed` and average of `age_at_gauna_imputed` for these mothers."
+  },
+  {
+    "question": "Identify all mothers who were at least 18 years old at the time of their marriage.",
+    "sql": "SELECT MOTHER_ID FROM DIM_MOTHER_MARRIAGE_EVENTS WHERE AGE_AT_MARRIAGE_IMPUTED >= '18';",
+    "pair_id": "cda08189",
+    "original_question_id": "6b1d7a3a",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "DATE_OF_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "CHILD_ID",
+        "MOTHER_ID",
+        "SURVEY_ID",
+        "BIRTH_EVENT_ID",
+        "HOUSEHOLD_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `dim_mother_demographics.mother_id` where `dim_mother_marriage_events.age_at_marriage_imputed` >= 18 (numeric comparison) by joining `dim_mother_marriage_events` and `dim_mother_demographics` on `mother_id`."
+  },
+  {
+    "question": "Provide a sorted list of IDs for mothers who were at least 18 years old at the time of their marriage.",
+    "sql": "SELECT T1.MOTHER_ID FROM DIM_MOTHER_DEMOGRAPHICS AS T1 JOIN DIM_MOTHER_MARRIAGE_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID WHERE T2.AGE_AT_MARRIAGE_IMPUTED >= '18' GROUP BY T1.MOTHER_ID ORDER BY T1.MOTHER_ID ASC",
+    "pair_id": "410df7e5",
+    "original_question_id": "6b1d7a3a",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "DATE_OF_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "CHILD_ID",
+        "MOTHER_ID",
+        "SURVEY_ID",
+        "BIRTH_EVENT_ID",
+        "HOUSEHOLD_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve distinct `dim_mother_marriage_events.mother_id` where `dim_mother_marriage_events.age_at_marriage_imputed` >= 18, sorted ascending by `dim_mother_marriage_events.mother_id`."
+  },
+  {
+    "question": "Identify mothers who were at least 18 years old when they married and have had more than one birth, ordered by their age at marriage from oldest to youngest.",
+    "sql": "SELECT T1.MOTHER_ID FROM DIM_MOTHER_DEMOGRAPHICS AS T1 JOIN DIM_MOTHER_MARRIAGE_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID JOIN FACT_BIRTH_EVENT AS T3 ON T1.MOTHER_ID = T3.MOTHER_ID WHERE T2.AGE_AT_MARRIAGE_IMPUTED >= '18' GROUP BY T1.MOTHER_ID, T2.AGE_AT_MARRIAGE_IMPUTED HAVING COUNT(T3.BIRTH_EVENT_ID) > 1 ORDER BY T2.AGE_AT_MARRIAGE_IMPUTED DESC",
+    "pair_id": "3cede645",
+    "original_question_id": "6b1d7a3a",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "DATE_OF_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "CHILD_ID",
+        "MOTHER_ID",
+        "SURVEY_ID",
+        "BIRTH_EVENT_ID",
+        "HOUSEHOLD_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_mother_marriage_events`.`age_at_marriage_imputed` >= 18. Join `dim_mother_marriage_events` with `fact_birth_event` on `mother_id`. Group by `dim_mother_marriage_events`.`mother_id` and `dim_mother_marriage_events`.`age_at_marriage_imputed`. Count `fact_birth_event`.`birth_event_id` per mother and keep those with count > 1. Order by `dim_mother_marriage_events`.`age_at_marriage_imputed` DESC."
+  },
+  {
+    "question": "Provide a comparison of the imputed ages at first marriage and first gauna for each mother, sorted from youngest to oldest age of marriage.",
+    "sql": "SELECT T1.MOTHER_ID, T1.AGE_AT_FIRST_MARRIAGE_IMPUTED, T2.AGE_AT_FIRST_GAUNA_IMPUTED FROM DIM_MOTHER_MARRIAGE_EVENTS AS T1 JOIN DIM_MOTHER_GAUNA_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID ORDER BY T1.AGE_AT_FIRST_MARRIAGE_IMPUTED ASC",
+    "pair_id": "1f8ca0ca",
+    "original_question_id": "97ebfda7",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED",
+        "DATE_OF_FIRST_MARRIAGE_FLAG"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "AGE_AT_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_FIRST_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_FLAG"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_mother_marriage_events` and `dim_mother_gauna_events` on `mother_id` to get for each mother: `dim_mother_marriage_events`.`age_at_first_marriage_imputed` and `dim_mother_gauna_events`.`age_at_first_gauna_imputed`. Sort results by `dim_mother_marriage_events`.`age_at_first_marriage_imputed` converted to integer ascending."
+  },
+  {
+    "question": "Provide a comparison of the imputed ages at first marriage and first gauna for each mother, sorted from the youngest marriage age to the oldest.",
+    "sql": "SELECT T1.MOTHER_ID, T1.AGE_AT_FIRST_MARRIAGE_IMPUTED, T2.AGE_AT_FIRST_GAUNA_IMPUTED FROM DIM_MOTHER_MARRIAGE_EVENTS AS T1 JOIN DIM_MOTHER_GAUNA_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID ORDER BY T1.AGE_AT_FIRST_MARRIAGE_IMPUTED ASC",
+    "pair_id": "8d2a028e",
+    "original_question_id": "97ebfda7",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED",
+        "DATE_OF_FIRST_MARRIAGE_FLAG"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "AGE_AT_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_FIRST_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_FLAG"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve each mother's ID, imputed age at first marriage, and imputed age at first gauna by joining `dim_mother_marriage_events` and `dim_mother_gauna_events` on `mother_id`. Cast the age columns (stored as text) to numeric for correct ordering. Sort results by `dim_mother_marriage_events.age_at_first_marriage_imputed` numerically ascending (youngest to oldest)."
+  },
+  {
+    "question": "Provide the marriage and Gauna ages for mothers who were over fifteen at the time of their marriage, sorted from youngest to oldest marriage age.",
+    "sql": "SELECT T1.MOTHER_ID, T2.AGE_AT_MARRIAGE_IMPUTED, T3.AGE_AT_GAUNA_IMPUTED FROM DIM_MOTHER_DEMOGRAPHICS AS T1 INNER JOIN DIM_MOTHER_MARRIAGE_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID INNER JOIN DIM_MOTHER_GAUNA_EVENTS AS T3 ON T1.MOTHER_ID = T3.MOTHER_ID GROUP BY T1.MOTHER_ID, T2.AGE_AT_MARRIAGE_IMPUTED, T3.AGE_AT_GAUNA_IMPUTED HAVING T2.AGE_AT_MARRIAGE_IMPUTED > '15' ORDER BY T2.AGE_AT_MARRIAGE_IMPUTED ASC",
+    "pair_id": "4bf96cc0",
+    "original_question_id": "97ebfda7",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED",
+        "DATE_OF_FIRST_MARRIAGE_FLAG"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "AGE_AT_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_FIRST_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_FLAG"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_mother_marriage_events` and `dim_mother_gauna_events` on `mother_id`. Select `dim_mother_marriage_events.age_at_marriage_imputed` and `dim_mother_gauna_events.age_at_gauna_imputed`. Filter where `dim_mother_marriage_events.age_at_marriage_imputed` > 15. Order by `dim_mother_marriage_events.age_at_marriage_imputed` ASC."
+  },
+  {
+    "question": "Provide the IDs and the age at first gauna for the ten mothers who were married at the youngest ages.",
+    "sql": "SELECT T1.MOTHER_ID, T2.AGE_AT_FIRST_GAUNA_IMPUTED FROM DIM_MOTHER_MARRIAGE_EVENTS AS T1 JOIN DIM_MOTHER_GAUNA_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID ORDER BY T1.AGE_AT_FIRST_MARRIAGE_IMPUTED ASC LIMIT 10",
+    "pair_id": "67fe30fb",
+    "original_question_id": "a699432a",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "DATE_OF_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_GAUNA_IMPUTED_CMC",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "AGE_AT_FIRST_GAUNA_IMPUTED"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_mother_marriage_events.mother_id` and `dim_mother_gauna_events.age_at_first_gauna_imputed` from `dim_mother_marriage_events` INNER JOIN `dim_mother_gauna_events` ON `dim_mother_marriage_events.mother_id` = `dim_mother_gauna_events.mother_id`. Order by CAST(`dim_mother_marriage_events.age_at_first_marriage_imputed` AS INTEGER) ASC limit 10."
+  },
+  {
+    "question": "Identify the mother IDs and their imputed ages at Gauna for the ten women who were youngest at the time of their marriage.",
+    "sql": "SELECT T1.MOTHER_ID, T2.AGE_AT_GAUNA_IMPUTED FROM DIM_MOTHER_MARRIAGE_EVENTS AS T1 JOIN DIM_MOTHER_GAUNA_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID ORDER BY T1.AGE_AT_MARRIAGE_IMPUTED ASC LIMIT 10",
+    "pair_id": "318ab0ad",
+    "original_question_id": "a699432a",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "DATE_OF_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_GAUNA_IMPUTED_CMC",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "AGE_AT_FIRST_GAUNA_IMPUTED"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_mother_marriage_events.mother_id` and `dim_mother_gauna_events.age_at_gauna_imputed` by joining `dim_mother_marriage_events` and `dim_mother_gauna_events` on `mother_id`. Order by `dim_mother_marriage_events.age_at_marriage_imputed` ASC to get the youngest at marriage, and limit to 10 rows."
+  },
+  {
+    "question": "Provide the marriage and Gauna ages for the first ten mothers recorded, sorted by their age at marriage.",
+    "sql": "SELECT T1.MOTHER_ID, T2.AGE_AT_MARRIAGE_IMPUTED, T3.AGE_AT_GAUNA_IMPUTED FROM DIM_MOTHER_DEMOGRAPHICS AS T1 JOIN DIM_MOTHER_MARRIAGE_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID JOIN DIM_MOTHER_GAUNA_EVENTS AS T3 ON T1.MOTHER_ID = T3.MOTHER_ID GROUP BY T1.MOTHER_ID, T2.AGE_AT_MARRIAGE_IMPUTED, T3.AGE_AT_GAUNA_IMPUTED HAVING MIN(T2.AGE_AT_MARRIAGE_IMPUTED) IS NOT NULL ORDER BY T2.AGE_AT_MARRIAGE_IMPUTED ASC LIMIT 10",
+    "pair_id": "dc0d6b57",
+    "original_question_id": "a699432a",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "DATE_OF_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_GAUNA_IMPUTED_CMC",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "AGE_AT_FIRST_GAUNA_IMPUTED"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_mother_marriage_events`.`mother_id`, `dim_mother_marriage_events`.`age_at_marriage_imputed`, `dim_mother_marriage_events`.`age_at_first_marriage_imputed`, `dim_mother_gauna_events`.`age_at_gauna_imputed`, `dim_mother_gauna_events`.`age_at_first_gauna_imputed` from `dim_mother_marriage_events` left join `dim_mother_gauna_events` on `dim_mother_marriage_events`.`mother_id` = `dim_mother_gauna_events`.`mother_id` order by `dim_mother_marriage_events`.`age_at_marriage_imputed` limit 10."
+  },
+  {
+    "question": "Provide a profile of mothers' ages alongside their ages at first marriage and first Gauna.",
+    "sql": "SELECT T1.MOTHER_AGE_IMPUTED, T2.AGE_AT_FIRST_MARRIAGE_IMPUTED, T3.AGE_AT_FIRST_GAUNA_IMPUTED FROM DIM_MOTHER_DEMOGRAPHICS AS T1 JOIN DIM_MOTHER_MARRIAGE_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID JOIN DIM_MOTHER_GAUNA_EVENTS AS T3 ON T1.MOTHER_ID = T3.MOTHER_ID",
+    "pair_id": "50ad9f77",
+    "original_question_id": "e24f89e2",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "DATE_OF_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_FIRST_GAUNA_IMPUTED"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_mother_demographics.mother_age_imputed`, `dim_mother_marriage_events.age_at_first_marriage_imputed`, `dim_mother_gauna_events.age_at_first_gauna_imputed` from `fact_birth_event` inner join `dim_mother_demographics` on `fact_birth_event.mother_id` = `dim_mother_demographics.mother_id` inner join `dim_mother_marriage_events` on `dim_mother_demographics.mother_id` = `dim_mother_marriage_events.mother_id` inner join `dim_mother_gauna_events` on `dim_mother_demographics.mother_id` = `dim_mother_gauna_events.mother_id`. Note: `age_at_first_marriage_imputed` and `age_at_first_gauna_imputed` are stored as strings but represent numeric ages."
+  },
+  {
+    "question": "Provide a list of mothers' ages alongside their ages at first marriage and first gauna, sorted by their current recorded age.",
+    "sql": "SELECT T1.MOTHER_AGE_IMPUTED, T2.AGE_AT_FIRST_MARRIAGE_IMPUTED, T3.AGE_AT_FIRST_GAUNA_IMPUTED FROM DIM_MOTHER_DEMOGRAPHICS AS T1 JOIN DIM_MOTHER_MARRIAGE_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID JOIN DIM_MOTHER_GAUNA_EVENTS AS T3 ON T1.MOTHER_ID = T3.MOTHER_ID ORDER BY T1.MOTHER_AGE_IMPUTED",
+    "pair_id": "4e71e615",
+    "original_question_id": "e24f89e2",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "DATE_OF_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_FIRST_GAUNA_IMPUTED"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_mother_demographics`.`mother_age_imputed` (current age), `dim_mother_marriage_events`.`age_at_first_marriage_imputed` (age at first marriage), `dim_mother_gauna_events`.`age_at_first_gauna_imputed` (age at first gauna) from `dim_mother_demographics` INNER JOIN `dim_mother_marriage_events` ON `dim_mother_demographics`.`mother_id` = `dim_mother_marriage_events`.`mother_id` INNER JOIN `dim_mother_gauna_events` ON `dim_mother_demographics`.`mother_id` = `dim_mother_gauna_events`.`mother_id` ORDER BY `dim_mother_demographics`.`mother_age_imputed` ASC."
+  },
+  {
+    "question": "Provide a breakdown of mothers' ages alongside their ages at first marriage and first Gauna, sorted from youngest to oldest mother.",
+    "sql": "SELECT T1.MOTHER_AGE_IMPUTED, T2.AGE_AT_FIRST_MARRIAGE_IMPUTED, T3.AGE_AT_FIRST_GAUNA_IMPUTED FROM DIM_MOTHER_DEMOGRAPHICS AS T1 INNER JOIN DIM_MOTHER_MARRIAGE_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID INNER JOIN DIM_MOTHER_GAUNA_EVENTS AS T3 ON T1.MOTHER_ID = T3.MOTHER_ID GROUP BY T1.MOTHER_AGE_IMPUTED, T2.AGE_AT_FIRST_MARRIAGE_IMPUTED, T3.AGE_AT_FIRST_GAUNA_IMPUTED ORDER BY T1.MOTHER_AGE_IMPUTED ASC",
+    "pair_id": "de5c41a1",
+    "original_question_id": "e24f89e2",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "DATE_OF_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_FIRST_GAUNA_IMPUTED"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_mother_demographics.mother_age_imputed`, `dim_mother_marriage_events.age_at_first_marriage_imputed`, `dim_mother_gauna_events.age_at_first_gauna_imputed` from `dim_mother_demographics` join `dim_mother_marriage_events` on `dim_mother_demographics.mother_id` = `dim_mother_marriage_events.mother_id` join `dim_mother_gauna_events` on `dim_mother_demographics.mother_id` = `dim_mother_gauna_events.mother_id` order by `dim_mother_demographics.mother_age_imputed` asc."
+  },
+  {
+    "question": "Identify the mothers who were exactly 18 years old at the time of both their marriage and their Gauna ceremony.",
+    "sql": "SELECT T1.MOTHER_ID FROM DIM_MOTHER_MARRIAGE_EVENTS AS T1 JOIN DIM_MOTHER_GAUNA_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID WHERE T1.AGE_AT_MARRIAGE_IMPUTED = '18' AND T2.AGE_AT_GAUNA_IMPUTED = '18'",
+    "pair_id": "e1e83581",
+    "original_question_id": "18aa668f",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_MARRIAGE_IMPUTED_CMC",
+        "MOTHER_MARRIAGE_ID",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "DATE_OF_MARRIAGE_FLAG",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_GAUNA_FLAG",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "AGE_AT_FIRST_GAUNA_IMPUTED"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_mother_marriage_events` and `dim_mother_gauna_events` on `mother_id`. Filter where (`dim_mother_marriage_events`.`age_at_marriage_imputed` = 18) AND (`dim_mother_gauna_events`.`age_at_gauna_imputed` = 18). Select distinct `mother_id`."
+  },
+  {
+    "question": "Identify the mothers who were eighteen years old at both the time of their marriage and their gauna ceremony.",
+    "sql": "SELECT T1.MOTHER_ID FROM DIM_MOTHER_MARRIAGE_EVENTS AS T1 JOIN DIM_MOTHER_GAUNA_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID WHERE T1.AGE_AT_MARRIAGE_IMPUTED = '18' AND T2.AGE_AT_GAUNA_IMPUTED = '18';",
+    "pair_id": "eb8043cf",
+    "original_question_id": "18aa668f",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_MARRIAGE_IMPUTED_CMC",
+        "MOTHER_MARRIAGE_ID",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "DATE_OF_MARRIAGE_FLAG",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_GAUNA_FLAG",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "AGE_AT_FIRST_GAUNA_IMPUTED"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_mother_marriage_events` for `age_at_marriage_imputed = 18` and `dim_mother_gauna_events` for `age_at_gauna_imputed = 18`, then join on `mother_id` to get common mothers."
+  },
+  {
+    "question": "Identify all mothers who were exactly 18 years old at the time of both their marriage and their Gauna ceremony.",
+    "sql": "SELECT T1.MOTHER_ID FROM DIM_MOTHER_DEMOGRAPHICS AS T1 JOIN DIM_MOTHER_MARRIAGE_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID JOIN DIM_MOTHER_GAUNA_EVENTS AS T3 ON T1.MOTHER_ID = T3.MOTHER_ID WHERE T2.AGE_AT_MARRIAGE_IMPUTED = '18' AND T3.AGE_AT_GAUNA_IMPUTED = '18' GROUP BY T1.MOTHER_ID HAVING COUNT(T1.MOTHER_ID) >= 1 ORDER BY T1.MOTHER_ID ASC",
+    "pair_id": "d952f67b",
+    "original_question_id": "18aa668f",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_MARRIAGE_IMPUTED_CMC",
+        "MOTHER_MARRIAGE_ID",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "DATE_OF_MARRIAGE_FLAG",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_GAUNA_FLAG",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "AGE_AT_FIRST_GAUNA_IMPUTED"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Find `mother_id` values that appear in both: (1) `dim_mother_marriage_events` where `dim_mother_marriage_events`.`age_at_marriage_imputed` = 18, and (2) `dim_mother_gauna_events` where `dim_mother_gauna_events`.`age_at_gauna_imputed` = 18. Join the two sets on `mother_id`."
+  },
+  {
+    "question": "Identify mothers who were either married or underwent their Gauna ceremony before the age of 15.",
+    "sql": "SELECT T1.MOTHER_ID FROM DIM_MOTHER_MARRIAGE_EVENTS AS T1 JOIN DIM_MOTHER_GAUNA_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID WHERE T1.AGE_AT_MARRIAGE_IMPUTED < '15' OR T2.AGE_AT_GAUNA_IMPUTED < '15'",
+    "pair_id": "2f4a02ac",
+    "original_question_id": "d6c40c10",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "DATE_OF_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_FIRST_GAUNA_IMPUTED"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `dim_mother_demographics`.`mother_id` where `dim_mother_marriage_events`.`age_at_marriage_imputed` < 15 OR CAST(`dim_mother_marriage_events`.`age_at_first_marriage_imputed` AS INTEGER) < 15 OR `dim_mother_gauna_events`.`age_at_gauna_imputed` < 15 OR CAST(`dim_mother_gauna_events`.`age_at_first_gauna_imputed` AS INTEGER) < 15, joining `dim_mother_demographics` to `dim_mother_marriage_events` and `dim_mother_gauna_events` on `mother_id`."
+  },
+  {
+    "question": "Identify all mothers who were married or had their gauna ceremony before the age of 15.",
+    "sql": "SELECT T1.MOTHER_ID FROM DIM_MOTHER_MARRIAGE_EVENTS AS T1 JOIN DIM_MOTHER_GAUNA_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID WHERE T1.AGE_AT_MARRIAGE_IMPUTED < '15' OR T2.AGE_AT_GAUNA_IMPUTED < '15' GROUP BY T1.MOTHER_ID ORDER BY T1.MOTHER_ID",
+    "pair_id": "4423758f",
+    "original_question_id": "d6c40c10",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "DATE_OF_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_FIRST_GAUNA_IMPUTED"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Find distinct mother_id from dim_mother_marriage_events where dim_mother_marriage_events.age_at_marriage_imputed < 15 or CAST(dim_mother_marriage_events.age_at_first_marriage_imputed AS integer) < 15, union with distinct mother_id from dim_mother_gauna_events where dim_mother_gauna_events.age_at_gauna_imputed < 15 or CAST(dim_mother_gauna_events.age_at_first_gauna_imputed AS integer) < 15."
+  },
+  {
+    "question": "Identify all mothers who were married or had their Gauna ceremony before the age of 15, listed in ascending order of their IDs.",
+    "sql": "SELECT T1.MOTHER_ID FROM DIM_MOTHER_DEMOGRAPHICS AS T1 INNER JOIN DIM_MOTHER_MARRIAGE_EVENTS AS T2 ON T1.MOTHER_ID = T2.MOTHER_ID LEFT JOIN DIM_MOTHER_GAUNA_EVENTS AS T3 ON T1.MOTHER_ID = T3.MOTHER_ID WHERE T2.AGE_AT_MARRIAGE_IMPUTED < '15' OR T3.AGE_AT_GAUNA_IMPUTED < '15' GROUP BY T1.MOTHER_ID ORDER BY T1.MOTHER_ID ASC",
+    "pair_id": "7abc4f08",
+    "original_question_id": "d6c40c10",
+    "schema_used": [
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_ID",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "MOTHER_MARRIAGE_ID",
+        "DATE_OF_MARRIAGE_IMPUTED_CMC",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_ID",
+        "MOTHER_GAUNA_ID",
+        "DATE_OF_GAUNA_IMPUTED_CMC",
+        "AGE_AT_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "AGE_AT_FIRST_GAUNA_IMPUTED"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_2",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Find distinct `dim_mother_demographics`.`mother_id` where either `dim_mother_marriage_events`.`age_at_first_marriage_imputed` < 15 or `dim_mother_gauna_events`.`age_at_first_gauna_imputed` < 15. Cast `dim_mother_gauna_events`.`age_at_first_gauna_imputed` to integer for comparison. Use LEFT JOINs from `dim_mother_demographics` to `dim_mother_marriage_events` and `dim_mother_gauna_events` on `mother_id`. Order results by `dim_mother_demographics`.`mother_id` ASC."
+  },
+  {
+    "question": "Provide the birth dates and current ages for all children who are currently living with the respondent.",
+    "sql": "SELECT T2.CHILD_DATE_OF_BIRTH_IMPUTED_CMC, T2.CHILD_AGE_AT_DEATH_IMPUTED FROM FACT_BIRTH_EVENT AS T1 JOIN DIM_CHILD_DEMOGRAPHICS AS T2 ON T1.CHILD_ID = T2.CHILD_ID WHERE T2.CHILD_LIVING_STATUS = 'Living with respondent';",
+    "pair_id": "ed3e5890",
+    "original_question_id": "dfc6b582",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_PSU_VILLAGE",
+      "DIM_HOUSEHOLD",
+      "DIM_MOTHER_DEMOGRAPHICS",
+      "DIM_MOTHER_MARRIAGE_EVENTS",
+      "DIM_MOTHER_GAUNA_EVENTS",
+      "DIM_CHILD_DEMOGRAPHICS",
+      "DIM_SURVEY",
+      "FACT_BIRTH_EVENT"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_PSU_VILLAGE": [
+        "PSU_VILLAGE_ID",
+        "DISTRICT_ID",
+        "PSU_VILLAGE_CODE"
+      ],
+      "DIM_HOUSEHOLD": [
+        "HOUSEHOLD_ID",
+        "PSU_VILLAGE_ID",
+        "HOUSEHOLD_ID_ORIGINAL",
+        "SPLIT_HOUSEHOLD_ID"
+      ],
+      "DIM_MOTHER_DEMOGRAPHICS": [
+        "MOTHER_ID",
+        "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC",
+        "MOTHER_DATE_OF_BIRTH_FLAG",
+        "MOTHER_AGE_IMPUTED"
+      ],
+      "DIM_MOTHER_MARRIAGE_EVENTS": [
+        "MOTHER_MARRIAGE_ID",
+        "MOTHER_ID",
+        "DATE_OF_MARRIAGE_IMPUTED_CMC",
+        "DATE_OF_MARRIAGE_FLAG",
+        "AGE_AT_MARRIAGE_IMPUTED",
+        "DATE_OF_FIRST_MARRIAGE_IMPUTED_CMC",
+        "DATE_OF_FIRST_MARRIAGE_FLAG",
+        "AGE_AT_FIRST_MARRIAGE_IMPUTED"
+      ],
+      "DIM_MOTHER_GAUNA_EVENTS": [
+        "MOTHER_GAUNA_ID",
+        "MOTHER_ID",
+        "DATE_OF_GAUNA_IMPUTED_CMC",
+        "DATE_OF_GAUNA_FLAG",
+        "AGE_AT_GAUNA_IMPUTED",
+        "DATE_OF_FIRST_GAUNA_IMPUTED_CMC",
+        "DATE_OF_FIRST_GAUNA_FLAG",
+        "AGE_AT_FIRST_GAUNA_IMPUTED"
+      ],
+      "DIM_CHILD_DEMOGRAPHICS": [
+        "CHILD_ID",
+        "CHILD_SEX",
+        "CHILD_DATE_OF_BIRTH_IMPUTED_CMC",
+        "CHILD_DATE_OF_BIRTH_FLAG",
+        "CHILD_AGE_AT_DEATH_IMPUTED",
+        "CHILD_AGE_AT_DEATH_FLAG",
+        "CHILD_LIVING_STATUS"
+      ],
+      "DIM_SURVEY": [
+        "SURVEY_ID",
+        "INTERVIEW_DATE_IMPUTED_CMC"
+      ],
+      "FACT_BIRTH_EVENT": [
+        "BIRTH_EVENT_ID",
+        "CHILD_ID",
+        "MOTHER_ID",
+        "HOUSEHOLD_ID",
+        "SURVEY_ID",
+        "BIRTH_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter children where `dim_child_demographics.child_living_status` = 'Living with respondent'. For each such child, get `dim_child_demographics.child_date_of_birth_imputed_cmc` as birth date. Compute current age at survey by extracting CMC number from `dim_child_demographics.child_date_of_birth_imputed_cmc` and `dim_survey.interview_date_imputed_cmc` (via `fact_birth_event` join), then age in years = (interview_cmc - birth_cmc) / 12. Join `dim_child_demographics` → `fact_birth_event` → `dim_survey` to link child with survey date."
+  }
+]

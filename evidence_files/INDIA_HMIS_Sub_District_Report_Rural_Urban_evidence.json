@@ -876,7 +876,7 @@
     "skeleton_id": "skel_1",
     "difficulty": "medium",
     "similarity_score": 0.0,
-    "evidence": ""
+    "evidence": "Select `dim_sub_district`.`sub_district_name` and `dim_sub_district`.`sub_district_id` from `dim_sub_district` where `dim_sub_district`.`type_of_area` = 'Rural', ordered alphabetically by `dim_sub_district`.`sub_district_name`."
   },
   {
     "question": "Provide a list of all rural sub-districts and their IDs, sorted by ID.",
@@ -2480,7 +2480,7 @@
     "skeleton_id": "skel_0",
     "difficulty": "easy",
     "similarity_score": 0.0,
-    "evidence": ""
+    "evidence": "Join `fact_outpatient_services` with `dim_month` on `fact_outpatient_services.month_id` = `dim_month.month_id`. Join `dim_month` with `dim_year` on `dim_month.year_id` = `dim_year.year_id`. Filter where `dim_year.year_value` = 2022 OR `fact_outpatient_services.outpatient_attendance_allopathic` > 5000. Select distinct `dim_month.month_name` as the month identifier."
   },
   {
     "question": "Identify the months that either belong to the year 2022 or recorded more than 5,000 allopathic outpatient visits, sorted alphabetically.",
