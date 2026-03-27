@@ -1,0 +1,2542 @@
+[
+  {
+    "question": "1991 ஆம் ஆண்டின் மக்கள் தொகை கணக்கெடுப்பிற்காக, அந்தமான் மற்றும் நிக்கோபார் தீவுகள் மாநிலத்தின் கிராமப்புற பகுதிகளுக்கான இருப்பிட பெயர்கள், மொத்த மக்கள் தொகை மற்றும் மொத்த வீட்டு எண்ணிக்கையை, மொத்த மக்கள் தொகையின் அடிப்படையில் இறங்கு வரிசையில் பட்டியலிடுக.",
+    "sql": "SELECT T1.LOCATION_NAME, SUM(T3.TOTAL_POPULATION), SUM(T2.NUMBER_OF_HOUSEHOLDS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T1.LOCATION_TYPE = 'Rural' AND T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.LOCATION_NAME ORDER BY SUM(T3.TOTAL_POPULATION) DESC",
+    "pair_id": "c0b67113",
+    "original_question_id": "5139fa93",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands', `dim_geography_hierarchy`.`location_type` = 'Rural', `fact_population_core`.`census_year` = 1991, `fact_housing`.`census_year` = 1991. Join `dim_geography_hierarchy` with `fact_population_core` and `fact_housing` on `hierarchy_id`. Select `dim_geography_hierarchy`.`location_name`, `fact_population_core`.`total_population`, `fact_housing`.`number_of_households`. Order by `fact_population_core`.`total_population` DESC."
+  },
+  {
+    "question": "'அந்தமான் மற்றும் நிகோபார் தீவுகள்' மாநிலத்திற்கும், 'கிராமப்புறம்' என வகைப்படுத்தப்பட்ட இடங்களுக்கும், 1991 மக்கள் தொகை கணக்கெடுப்பின்படி, மொத்த குடும்பங்களின் எண்ணிக்கை 100-ஐ மீறும் இடங்களின் பெயர்களை, மொத்த மக்கள் தொகை மற்றும் மொத்த குடும்பங்களின் எண்ணிக்கையுடன் பட்டியலிட்டு, முடிவுகளை மொத்த குடும்பங்களின் எண்ணிக்கையின் அடிப்படையில் இறங்கு வரிசையில் வரிசைப்படுத்தவும்.",
+    "sql": "SELECT T1.LOCATION_NAME, SUM(T3.TOTAL_POPULATION), SUM(T2.NUMBER_OF_HOUSEHOLDS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 INNER JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID INNER JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T1.LOCATION_TYPE = 'Rural' AND T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.LOCATION_NAME HAVING SUM(T2.NUMBER_OF_HOUSEHOLDS) > 100 ORDER BY SUM(T2.NUMBER_OF_HOUSEHOLDS) DESC",
+    "pair_id": "d48192c6",
+    "original_question_id": "5139fa93",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy`.`state` = 'Andaman and Nicobar Islands', `dim_geography_hierarchy`.`location_type` = 'Rural', `fact_housing`.`census_year` = 1991, `fact_population_core`.`census_year` = 1991, and `fact_housing`.`number_of_households` > 100. Join `dim_geography_hierarchy` with `fact_housing` and `fact_population_core` on `hierarchy_id`. Select `dim_geography_hierarchy`.`location_name`, `fact_population_core`.`total_population`, `fact_housing`.`number_of_households`. Order by `fact_housing`.`number_of_households` DESC."
+  },
+  {
+    "question": "குடும்பங்களின் எண்ணிக்கை 500 ஐ மீறுகிறது அல்லது மொத்த பெண் மக்கள் தொகை மொத்த ஆண் மக்கள் தொகையை விட அதிகமாக உள்ள பகுதிகளின் இருப்பிட பெயர்களை பட்டியலிடுங்கள்.",
+    "sql": "SELECT T1.LOCATION_NAME FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.NUMBER_OF_HOUSEHOLDS > 500 OR T3.TOTAL_FEMALE_POPULATION > T3.TOTAL_MALE_POPULATION",
+    "pair_id": "7637c0ed",
+    "original_question_id": "ebd18843",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_geography_hierarchy`.`location_name` where either `fact_housing`.`number_of_households` > 500 OR `fact_population_core`.`total_female_population` > `fact_population_core`.`total_male_population`. Join `dim_geography_hierarchy` with `fact_housing` on `hierarchy_id` and with `fact_population_core` on `hierarchy_id`. Use LEFT JOINs to include areas that may have missing data in one fact table."
+  },
+  {
+    "question": "இருப்பிடப் பெயர்களை அகரவரிசைப்படி பட்டியலிடுங்கள், மொத்த வீடுகளின் எண்ணிக்கை 500 ஐ மீறும் அல்லது மொத்த பெண் மக்கள் தொகை மொத்த ஆண் மக்கள் தொகையை விட அதிகமாக இருக்கும் பகுதிகளுக்கு.",
+    "sql": "SELECT T1.LOCATION_NAME FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID GROUP BY T1.LOCATION_NAME HAVING SUM(T2.NUMBER_OF_HOUSEHOLDS) > 500 OR SUM(T3.TOTAL_FEMALE_POPULATION) > SUM(T3.TOTAL_MALE_POPULATION) ORDER BY T1.LOCATION_NAME ASC",
+    "pair_id": "25dde5f6",
+    "original_question_id": "ebd18843",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List location names (`dim_geography_hierarchy`.`location_name`) alphabetically for locations where either (`fact_housing`.`number_of_occupied_residential_houses`) > 500 OR (`fact_population_core`.`total_female_population`) > (`fact_population_core`.`total_male_population`). Join via `hierarchy_id`. Use `fact_housing`.`number_of_occupied_residential_houses` (not `number_of_households`). Sample values show '500' exists exactly; female population > male occurs (e.g., 1740 > 877)."
+  },
+  {
+    "question": "'அந்தமான் மற்றும் நிக்கோபார் தீவுகள்' மாநிலத்தில் 1991 மக்கள் தொகை கணக்கெடுப்பு ஆண்டில் மொத்த மக்கள் தொகை 500-க்கும் அதிகமாக இருந்த பகுதிகளின் இருப்பிடப் பெயர் மற்றும் துணை மாவட்டத்தை, இருப்பிடப் பெயர் மற்றும் துணை மாவட்டத்தின் அடிப்படையில் குழுவாக்கி, இருப்பிடப் பெயரின் அகரவரிசைப்படி வரிசைப்படுத்தி பட்டியலிடுக.",
+    "sql": "SELECT T1.LOCATION_NAME, T1.SUB_DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.LOCATION_NAME, T1.SUB_DISTRICT HAVING SUM(T2.TOTAL_POPULATION) > 500 ORDER BY T1.LOCATION_NAME ASC",
+    "pair_id": "74511fb4",
+    "original_question_id": "72b7290d",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": ""
+  },
+  {
+    "question": "'அந்தமான் மற்றும் நிக்கோபார் தீவுகள்' மாநிலத்தில் 1991 மக்கள் தொகை கணக்கெடுப்பு ஆண்டில், 'உத்தரா (Rv)' மற்றும் 'பெஜாய் நகர் (Rv)' ஆகிய இடங்களுக்கான இடப் பெயர் மற்றும் துணை-மாவட்டத்தை பட்டியலிடுக, மொத்த மக்கள் தொகை கூட்டுத்தொகை 500 ஐ விட அதிகமாக இருக்கும் இடங்களுக்கு மட்டும், முடிவுகளை மொத்த மக்கள் தொகையின் அடிப்படையில் இறங்கு வரிசையில் ஒழுங்கமைக்கவும்.",
+    "sql": "SELECT T1.LOCATION_NAME, T1.SUB_DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 INNER JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 AND T1.LOCATION_NAME IN ('Uttara (Rv)', 'Bejoy Nagar (Rv)') GROUP BY T1.LOCATION_NAME, T1.SUB_DISTRICT HAVING SUM(T2.TOTAL_POPULATION) > 500 ORDER BY SUM(T2.TOTAL_POPULATION) DESC",
+    "pair_id": "07600930",
+    "original_question_id": "72b7290d",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": ""
+  },
+  {
+    "question": "1991 ஆம் ஆண்டு மக்கள் தொகை கணக்கெடுப்பின்படி, ஒவ்வொரு மாவட்டத்தின் மொத்த மக்கள் தொகை மற்றும் மொத்த வீட்டு எண்ணிக்கையின் கூட்டுத்தொகையை பட்டியலிடுங்கள். மொத்த மக்கள் தொகை 500-ஐ மீறும் மாவட்டங்களை மட்டும் வடிகட்டி, மொத்த மக்கள் தொகைக்கும் வீட்டு எண்ணிக்கைக்கும் உள்ள விகிதத்தின் அடிப்படையில் இறங்கு வரிசையில் முடிவுகளை ஒழுங்குபடுத்துங்கள்.",
+    "sql": "SELECT T1.DISTRICT, SUM(T3.TOTAL_POPULATION), SUM(T2.NUMBER_OF_HOUSEHOLDS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT HAVING SUM(T3.TOTAL_POPULATION) > 500 ORDER BY SUM(T3.TOTAL_POPULATION) / SUM(T2.NUMBER_OF_HOUSEHOLDS) DESC",
+    "pair_id": "e4a7719d",
+    "original_question_id": "17105268",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Query must join `dim_geography_hierarchy` with `fact_population_core` and `fact_housing` on `hierarchy_id`. Filter where `fact_population_core.census_year` = 1991 and `fact_housing.census_year` = 1991 and `fact_population_core.total_population` > 500. Group by `dim_geography_hierarchy.district`. For each district, compute SUM(`fact_population_core.total_population`) as total_population_sum, SUM(`fact_housing.number_of_households`) as total_households_sum, and ratio = SUM(`fact_population_core.total_population`) / SUM(`fact_housing.number_of_households`). Order results by ratio DESC."
+  },
+  {
+    "question": "இந்தியா நாட்டிற்கும் 1991 ஆம் ஆண்டு மக்கள் தொகை கணக்கெடுப்பிற்கும், மொத்த மக்கள் தொகை பூஜ்யத்தை விட அதிகமாக உள்ள மாவட்டங்களில், கணக்கிடப்பட்ட வீட்டு அடர்த்தி (மொத்த வீடுகளின் எண்ணிக்கையை மொத்த மக்கள் தொகையால் வகுத்து கணக்கிடப்பட்டது) அடிப்படையில் அதிகபட்சம் முதல் குறைந்தபட்சம் வரை வரிசைப்படுத்தப்பட்ட முதல் 10 மாவட்டங்களையும் அவற்றின் கணக்கிடப்பட்ட வீட்டு அடர்த்தியையும் பட்டியலிடுக.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.NUMBER_OF_HOUSEHOLDS) / CAST(SUM(T3.TOTAL_POPULATION) AS FLOAT) AS household_density FROM DIM_GEOGRAPHY_HIERARCHY AS T1 INNER JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID INNER JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.COUNTRY = 'India' AND T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT HAVING SUM(T3.TOTAL_POPULATION) > 0 ORDER BY household_density DESC LIMIT 10",
+    "pair_id": "14459121",
+    "original_question_id": "790f1dfd",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "COUNTRY",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter: `dim_geography_hierarchy`.`country` = 'India', `fact_population_core`.`census_year` = 1991, `fact_housing`.`census_year` = 1991, `fact_population_core`.`total_population` > 0. Aggregate by `dim_geography_hierarchy`.`district`. Calculate housing density as SUM(`fact_housing`.`number_of_occupied_residential_houses`) / SUM(`fact_population_core`.`total_population`). Sort by density DESC. Limit 10."
+  },
+  {
+    "question": "வீட்டுக் குடும்பங்களின் எண்ணிக்கை ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் எண்ணிக்கையை விட அதிகமாக உள்ள பகுதிகளுக்கான இருப்பிடப் பெயர், மாநிலம் மற்றும் மாவட்டத்தை பட்டியலிடுங்கள், வீட்டுக் குடும்பங்களின் எண்ணிக்கை அதிகம் முதல் குறைவு வரை வரிசைப்படுத்தப்பட்டது.",
+    "sql": "SELECT T1.LOCATION_NAME, T1.STATE, T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T2.NUMBER_OF_HOUSEHOLDS > T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES ORDER BY T2.NUMBER_OF_HOUSEHOLDS DESC",
+    "pair_id": "7ad5c30b",
+    "original_question_id": "833a4cdc",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography_hierarchy`.`location_name`, `dim_geography_hierarchy`.`state`, `dim_geography_hierarchy`.`district` from `fact_housing` join `dim_geography_hierarchy` on `fact_housing`.`hierarchy_id` = `dim_geography_hierarchy`.`hierarchy_id` where `fact_housing`.`number_of_households` > `fact_housing`.`number_of_occupied_residential_houses` order by `fact_housing`.`number_of_households` DESC."
+  },
+  {
+    "question": "'அந்தமான் மற்றும் நிகோபார் தீவுகள்' பகுதியில் உள்ள கிராமப்புற இடங்களில், மொத்த வீட்டு எண்ணிக்கை ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் எண்ணிக்கையை விட அதிகமாக உள்ள இடங்களின் பெயர், மாநிலம் மற்றும் மாவட்டத்தை பட்டியலிடவும். முடிவுகளை மொத்த வீட்டு எண்ணிக்கையின் அடிப்படையில் இறங்கு வரிசையில் வரிசைப்படுத்தவும்.",
+    "sql": "SELECT T1.LOCATION_NAME, T1.STATE, T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T1.LOCATION_TYPE = 'Rural' GROUP BY T1.LOCATION_NAME, T1.STATE, T1.DISTRICT HAVING SUM(T2.NUMBER_OF_HOUSEHOLDS) > SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) ORDER BY SUM(T2.NUMBER_OF_HOUSEHOLDS) DESC",
+    "pair_id": "2453f477",
+    "original_question_id": "833a4cdc",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `dim_geography_hierarchy`.`location_type` = 'Rural'. Join `dim_geography_hierarchy` with `fact_housing` on `hierarchy_id`. Select `dim_geography_hierarchy`.`location_name`, `dim_geography_hierarchy`.`state`, `dim_geography_hierarchy`.`district` where `fact_housing`.`number_of_households` > `fact_housing`.`number_of_occupied_residential_houses`. Order by `fact_housing`.`number_of_households` DESC."
+  },
+  {
+    "question": "1991 ஆம் ஆண்டு மக்கள் தொகை கணக்கெடுப்பு நடைபெற்ற பகுதிகளில், மொத்த மக்கள் தொகை 50,000-க்கும் அதிகமாகவும், வீடுகளின் எண்ணிக்கை 10,000-க்கும் அதிகமாகவும் உள்ள இடங்களின் பெயர்களை, இடத்தின் பெயரின் அடிப்படையில் குழுவாக்கி அகரவரிசைப்படி வரிசைப்படுத்தப்பட்ட பட்டியலை வழங்கவும்.",
+    "sql": "SELECT T1.LOCATION_NAME FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.TOTAL_POPULATION > 50000 AND T2.NUMBER_OF_HOUSEHOLDS > 10000 GROUP BY T1.LOCATION_NAME ORDER BY T1.LOCATION_NAME ASC",
+    "pair_id": "17abcd37",
+    "original_question_id": "bfa3c2e3",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography_hierarchy`.`location_name` from `dim_geography_hierarchy` join `fact_population_core` on `dim_geography_hierarchy`.`hierarchy_id` = `fact_population_core`.`hierarchy_id` join `fact_housing` on `dim_geography_hierarchy`.`hierarchy_id` = `fact_housing`.`hierarchy_id` where `fact_population_core`.`census_year` = 1991 and `fact_housing`.`census_year` = 1991 and `fact_population_core`.`total_population` > 50000 and `fact_housing`.`number_of_occupied_residential_houses` > 10000 group by `dim_geography_hierarchy`.`location_name` order by `dim_geography_hierarchy`.`location_name` asc."
+  },
+  {
+    "question": "1991 ஆம் ஆண்டு மக்கள் தொகை கணக்கெடுப்பின்படி, மொத்த மக்கள் தொகை 50,000-க்கும் அதிகமாகவும், வீட்டுப் பட்டியல் எண்ணிக்கை 10,000-க்கும் அதிகமாகவும் உள்ள இடங்களின் பெயர்களை, மொத்த வீட்டுப் பட்டியல் எண்ணிக்கையின் அடிப்படையில் இறங்கு வரிசையில் பட்டியலிடுக.",
+    "sql": "SELECT T1.LOCATION_NAME FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.LOCATION_NAME HAVING SUM(T3.TOTAL_POPULATION) > 50000 AND SUM(T2.NUMBER_OF_HOUSEHOLDS) > 10000 ORDER BY SUM(T2.NUMBER_OF_HOUSEHOLDS) DESC",
+    "pair_id": "8fd2cd5e",
+    "original_question_id": "bfa3c2e3",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `fact_population_core` for `census_year` = 1991 and `total_population` > 50000. Filter `fact_housing` for `census_year` = 1991 and `number_of_households` > 10000. Join both fact tables with `dim_geography_hierarchy` on `hierarchy_id`. Select `dim_geography_hierarchy.location_name` and `fact_housing.number_of_households`. Order by `fact_housing.number_of_households` DESC."
+  },
+  {
+    "question": "அந்தமான் மற்றும் நிகோபார் தீவுகள்' மாநிலத்திற்கும் 1991 ஆம் ஆண்டு மக்கள் தொகை கணக்கெடுப்பிற்கும், இருப்பிடப் பெயர் மற்றும் இருப்பிட வகையுடன், மொத்த வீட்டு எண்ணிக்கையை, இருப்பிடப் பெயர் மற்றும் இருப்பிட வகை வாரியாக குழுவாக்கி வரிசைப்படுத்தி பட்டியலிடுக.",
+    "sql": "SELECT T1.LOCATION_NAME, T1.LOCATION_TYPE, SUM(T2.NUMBER_OF_HOUSEHOLDS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.LOCATION_NAME, T1.LOCATION_TYPE ORDER BY T1.LOCATION_NAME",
+    "pair_id": "d5bba9de",
+    "original_question_id": "ac3e9f84",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `fact_housing`.`census_year` = 1991. Join `dim_geography_hierarchy` and `fact_housing` on `hierarchy_id`. Select `dim_geography_hierarchy`.`location_name`, `dim_geography_hierarchy`.`location_type`, `fact_housing`.`number_of_households`. Group by `dim_geography_hierarchy`.`location_name`, `dim_geography_hierarchy`.`location_type`. Order by `dim_geography_hierarchy`.`location_name`, `dim_geography_hierarchy`.`location_type`."
+  },
+  {
+    "question": "1991 மக்கள் தொகை கணக்கெடுப்பு ஆண்டில், 'அந்தமான் மற்றும் நிக்கோபார் தீவுகள்' மாநிலத்தில் உள்ள இடங்களுக்கு, இடத்தின் பெயர், இடத்தின் வகை மற்றும் மொத்த வீடுகளின் எண்ணிக்கையை பட்டியலிடவும். மொத்த வீடுகளின் எண்ணிக்கை 100-ஐ மீறும் இடங்களை மட்டும் தேர்ந்தெடுத்து, முடிவுகளை மொத்த வீடுகளின் எண்ணிக்கையின் அடிப்படையில் இறங்குவரிசையில் வரிசைப்படுத்தவும்.",
+    "sql": "SELECT T1.LOCATION_NAME, T1.LOCATION_TYPE, SUM(T2.NUMBER_OF_HOUSEHOLDS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.LOCATION_NAME, T1.LOCATION_TYPE HAVING SUM(T2.NUMBER_OF_HOUSEHOLDS) > 100 ORDER BY SUM(T2.NUMBER_OF_HOUSEHOLDS) DESC",
+    "pair_id": "25c6f14b",
+    "original_question_id": "ac3e9f84",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_geography_hierarchy`.`location_name`, `dim_geography_hierarchy`.`location_type`, and `fact_housing`.`number_of_occupied_residential_houses` (as total houses) for locations in state 'Andaman And Nicobar Islands' for census year 1991, where `fact_housing`.`number_of_occupied_residential_houses` > 100, ordered by `fact_housing`.`number_of_occupied_residential_houses` descending."
+  },
+  {
+    "question": "1991 ஆம் ஆண்டின் மக்கள் தொகை கணக்கெடுப்பின்படி, ஒவ்வொரு மாநிலத்தின் குடும்பங்களின் மொத்த எண்ணிக்கை மற்றும் ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் சராசரி எண்ணிக்கை ஆகியவற்றை மாநில வாரியாக பட்டியலிடுக.",
+    "sql": "SELECT T1.STATE, SUM(T2.NUMBER_OF_HOUSEHOLDS), AVG(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 GROUP BY T1.STATE",
+    "pair_id": "de0da2c9",
+    "original_question_id": "b6a8efe0",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "COUNTRY",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `fact_housing` where `fact_housing.census_year` = 1991. Join with `dim_geography_hierarchy` on `hierarchy_id`. Group by `dim_geography_hierarchy.state`. For each state, compute sum(`fact_housing.number_of_households`) as total households and avg(`fact_housing.number_of_occupied_residential_houses`) as average occupied houses."
+  },
+  {
+    "question": "1991 ஆம் ஆண்டு மக்கள் தொகை கணக்கெடுப்பின்படி, மொத்த வீட்டு எண்ணிக்கை 100 ஐ விட அதிகமாக உள்ள மாநிலங்களை மட்டும் தேர்ந்தெடுத்து, ஒவ்வொரு மாநிலத்தின் மொத்த வீட்டு எண்ணிக்கை மற்றும் சராசரி ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் எண்ணிக்கையை பட்டியலிட்டு, சராசரி ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் எண்ணிக்கையின் அடிப்படையில் இறங்கு வரிசையில் ஒழுங்குபடுத்தவும்.",
+    "sql": "SELECT T1.STATE, SUM(T2.NUMBER_OF_HOUSEHOLDS), AVG(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 INNER JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 GROUP BY T1.STATE HAVING SUM(T2.NUMBER_OF_HOUSEHOLDS) > 100 ORDER BY AVG(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) DESC",
+    "pair_id": "5b9e47bd",
+    "original_question_id": "b6a8efe0",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "COUNTRY",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `fact_housing`.`census_year` = 1991. Join `fact_housing` with `dim_geography_hierarchy` on `hierarchy_id`. Group by `dim_geography_hierarchy`.`state`. Filter groups where SUM(`fact_housing`.`number_of_households`) > 100. Select `dim_geography_hierarchy`.`state`, SUM(`fact_housing`.`number_of_households`) as total_households, AVG(`fact_housing`.`number_of_occupied_residential_houses`) as avg_occupied_houses. Order by avg_occupied_houses DESC."
+  },
+  {
+    "question": "1991 ஆம் ஆண்டு மக்கள் தொகை கணக்கெடுப்பின்படி, ஒவ்வொரு மாவட்டத்தையும் அதன் மொத்த வீடுகளின் எண்ணிக்கையுடன், மொத்த வீடுகளின் எண்ணிக்கையின் அடிப்படையில் இறங்கு வரிசையில் பட்டியலிடுக.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.NUMBER_OF_HOUSEHOLDS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT ORDER BY SUM(T2.NUMBER_OF_HOUSEHOLDS) DESC",
+    "pair_id": "b6f23857",
+    "original_question_id": "261edce0",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_CORE": [
+        "HIERARCHY_ID",
+        "TOTAL_FEMALE_POPULATION",
+        "POPULATION_CORE_ID",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "CENSUS_YEAR"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List each district (`dim_geography_hierarchy`.`district`) and the total number of houses (`fact_housing`.`number_of_occupied_residential_houses`) for the census year (`fact_housing`.`census_year`) = 1991, sorted in descending order by total number of houses. Use `dim_geography_hierarchy`.`hierarchy_id` to join with `fact_housing`.`hierarchy_id`. Ensure grouping by district because districts are repeated in the hierarchy table (multiple sub-districts per district). Aggregate `fact_housing`.`number_of_occupied_residential_houses` sum for each district."
+  },
+  {
+    "question": "1991 ஆம் ஆண்டு கணக்கெடுப்பின்படி, 'அந்தமான் மற்றும் நிக்கோபார் தீவுகள்' மாநிலத்திற்கு, ஒவ்வொரு மாவட்டத்தையும் அதன் கணக்கிடப்பட்ட குடும்ப அடர்த்தியை—மொத்த குடும்பங்களின் எண்ணிக்கையை மொத்த ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் எண்ணிக்கையால் வகுப்பதாக வரையறுக்கப்படுகிறது—பட்டியலிடுங்கள், மொத்த ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகள் பூஜ்யத்தை விட அதிகமாக இருப்பதை உறுதிசெய்து, அதிக அடர்த்தி கொண்ட முதல் 10 மாவட்டங்களைக் காட்டுங்கள்.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.NUMBER_OF_HOUSEHOLDS) / SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) AS household_density FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT HAVING SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) > 0 ORDER BY household_density DESC LIMIT 10",
+    "pair_id": "3cd19b25",
+    "original_question_id": "b8aecf83",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `fact_housing`.`census_year` = 1991. Join `dim_geography_hierarchy` and `fact_housing` on `hierarchy_id`. Ensure `fact_housing`.`number_of_occupied_residential_houses` > 0. For each district (`dim_geography_hierarchy`.`district`), calculate household density as SUM(`fact_housing`.`number_of_households`) / SUM(`fact_housing`.`number_of_occupied_residential_houses`). Order by density descending and limit to 10 districts."
+  },
+  {
+    "question": "வீடுகளின் எண்ணிக்கை ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் எண்ணிக்கையை விட அதிகமாக உள்ள இடங்களுக்கு, இடத்தின் பெயர், மாநிலம், மாவட்டம், மொத்த ஆண் பட்டியல் சாதி மக்கள் தொகை மற்றும் மொத்த பெண் பட்டியல் சாதி மக்கள் தொகை ஆகியவற்றை இடத்தின் பெயர் வரிசைப்படி குழுவாக்கி பட்டியலிடவும்.",
+    "sql": "SELECT T1.LOCATION_NAME, T1.STATE, T1.DISTRICT, SUM(T3.MALE_SCHEDULED_CASTE_POPULATION), SUM(T3.FEMALE_SCHEDULED_CASTE_POPULATION) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_SOCIAL_CATEGORY AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.NUMBER_OF_HOUSEHOLDS > T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES GROUP BY T1.LOCATION_NAME, T1.STATE, T1.DISTRICT ORDER BY T1.LOCATION_NAME",
+    "pair_id": "f8bf9d4d",
+    "original_question_id": "e066abe4",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_SOCIAL_CATEGORY"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_SOCIAL_CATEGORY": [
+        "HIERARCHY_ID",
+        "MALE_SCHEDULED_TRIBE_POPULATION",
+        "MALE_SCHEDULED_CASTE_POPULATION",
+        "POPULATION_SOCIAL_ID",
+        "FEMALE_SCHEDULED_CASTE_POPULATION",
+        "CENSUS_YEAR"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography_hierarchy`.`location_name`, `dim_geography_hierarchy`.`state`, `dim_geography_hierarchy`.`district`, `fact_population_social_category`.`male_scheduled_caste_population`, `fact_population_social_category`.`female_scheduled_caste_population` from `dim_geography_hierarchy` join `fact_housing` on `dim_geography_hierarchy`.`hierarchy_id` = `fact_housing`.`hierarchy_id` join `fact_population_social_category` on `dim_geography_hierarchy`.`hierarchy_id` = `fact_population_social_category`.`hierarchy_id` where `fact_housing`.`number_of_households` > `fact_housing`.`number_of_occupied_residential_houses` group by `dim_geography_hierarchy`.`location_name`, `dim_geography_hierarchy`.`state`, `dim_geography_hierarchy`.`district`, `fact_population_social_category`.`male_scheduled_caste_population`, `fact_population_social_category`.`female_scheduled_caste_population` order by `dim_geography_hierarchy`.`location_name`."
+  },
+  {
+    "question": "இடத்தின் பெயர், மாநிலம், மாவட்டம், மொத்த ஆண் பட்டியல் சாதி மக்கள் தொகை மற்றும் மொத்த பெண் பட்டியல் சாதி மக்கள் தொகை ஆகியவற்றை பட்டியலிடுக; வீட்டு எண்ணிக்கை ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் எண்ணிக்கையை விட அதிகமாக உள்ள பகுதிகளுக்கு, குறைந்தது ஒரு வீட்டுப் பதிவு இருப்பதை உறுதிப்படுத்திக் கொள்ளுங்கள்; முடிவுகளை இடத்தின் பெயர், மாநிலம் மற்றும் மாவட்டம் வாரியாக குழுவாக்கி, மொத்த ஆண் பட்டியல் சாதி மக்கள் தொகையின் அடிப்படையில் இறங்கு வரிசையில் வரிசைப்படுத்துங்கள்.",
+    "sql": "SELECT T1.LOCATION_NAME, T1.STATE, T1.DISTRICT, SUM(T3.MALE_SCHEDULED_CASTE_POPULATION), SUM(T3.FEMALE_SCHEDULED_CASTE_POPULATION) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_SOCIAL_CATEGORY AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.NUMBER_OF_HOUSEHOLDS > T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES GROUP BY T1.LOCATION_NAME, T1.STATE, T1.DISTRICT HAVING COUNT(T2.HOUSING_ID) > 0 ORDER BY SUM(T3.MALE_SCHEDULED_CASTE_POPULATION) DESC",
+    "pair_id": "65a1bb85",
+    "original_question_id": "e066abe4",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_SOCIAL_CATEGORY"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_SOCIAL_CATEGORY": [
+        "HIERARCHY_ID",
+        "MALE_SCHEDULED_TRIBE_POPULATION",
+        "MALE_SCHEDULED_CASTE_POPULATION",
+        "POPULATION_SOCIAL_ID",
+        "FEMALE_SCHEDULED_CASTE_POPULATION",
+        "CENSUS_YEAR"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "",
+    "evidence_error": "Response ended prematurely"
+  },
+  {
+    "question": "1991 ஆம் ஆண்டு மக்கள் தொகை கணக்கெடுப்பில் 'கிராமப்புற' வகையைச் சேர்ந்த இடங்களில், ஆண் பட்டியல் சாதி மக்கள் தொகை சரியாக 0.000 ஆக உள்ள இடங்களின் பெயர்களைப் பட்டியலிடுங்கள். மேலும், அந்த இடங்களில் ஆண் பட்டியல் பழங்குடியினர் மக்கள் தொகையின் மொத்த கூட்டுத்தொகையும் 0.000 ஆக இருப்பவற்றை மட்டும் வடிகட்டுங்கள்.",
+    "sql": "SELECT T1.LOCATION_NAME FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_SOCIAL_CATEGORY AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.LOCATION_TYPE = 'Rural' AND T2.CENSUS_YEAR = 1991 AND T2.MALE_SCHEDULED_CASTE_POPULATION = 0.000 GROUP BY T1.LOCATION_NAME HAVING SUM(T2.MALE_SCHEDULED_TRIBE_POPULATION) = 0.000",
+    "pair_id": "0f85ea76",
+    "original_question_id": "425b730d",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_SOCIAL_CATEGORY"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_SOCIAL_CATEGORY": [
+        "POPULATION_SOCIAL_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_SCHEDULED_CASTE_POPULATION",
+        "FEMALE_SCHEDULED_CASTE_POPULATION",
+        "MALE_SCHEDULED_TRIBE_POPULATION",
+        "FEMALE_SCHEDULED_TRIBE_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy`.`location_type` = 'Rural' and `fact_population_social_category`.`census_year` = 1991. Join `dim_geography_hierarchy` and `fact_population_social_category` on `hierarchy_id`. Select `dim_geography_hierarchy`.`location_name` where `fact_population_social_category`.`male_scheduled_caste_population` = 0.000 and `fact_population_social_category`.`male_scheduled_tribe_population` = 0.000."
+  },
+  {
+    "question": "1991 ஆம் ஆண்டிற்கான வீட்டுவசதி மற்றும் மக்கள்தொகை பதிவுகள் இரண்டிலும் உள்ள பகுதிகளுக்கான இருப்பிட பெயர்களை அகரவரிசைப்படி பட்டியலிடுக, குறிப்பாக மொத்த வீட்டு எண்ணிக்கை பூஜ்யத்தை விட அதிகமாக உள்ள மற்றும் ஆண் மற்றும் பெண் பட்டியல் பழங்குடியினர் மக்கள்தொகையின் கூட்டுத்தொகை சரியாக பூஜ்யமாக உள்ள இருப்பிடங்களை வடிகட்டுக.",
+    "sql": "SELECT T1.LOCATION_NAME FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_SOCIAL_CATEGORY AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.LOCATION_NAME HAVING SUM(T2.NUMBER_OF_HOUSEHOLDS) > 0.000 AND SUM(T3.MALE_SCHEDULED_TRIBE_POPULATION + T3.FEMALE_SCHEDULED_TRIBE_POPULATION) = 0.000 ORDER BY T1.LOCATION_NAME ASC",
+    "pair_id": "536e47ae",
+    "original_question_id": "425b730d",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_SOCIAL_CATEGORY"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_SOCIAL_CATEGORY": [
+        "POPULATION_SOCIAL_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_SCHEDULED_CASTE_POPULATION",
+        "FEMALE_SCHEDULED_CASTE_POPULATION",
+        "MALE_SCHEDULED_TRIBE_POPULATION",
+        "FEMALE_SCHEDULED_TRIBE_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_geography_hierarchy`.`location_name` alphabetically for areas with records in both `fact_housing` and `fact_population_social_category` for `census_year` = 1991, where `fact_housing`.`number_of_households` > 0 and (`fact_population_social_category`.`male_scheduled_tribe_population` + `fact_population_social_category`.`female_scheduled_tribe_population`) = 0. Join `dim_geography_hierarchy` with `fact_housing` and `fact_population_social_category` on `hierarchy_id`."
+  },
+  {
+    "question": "1991 ஆம் ஆண்டு மக்கள்தொகை கணக்கெடுப்பின்படி, ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் எண்ணிக்கை 5000 ஐ விட அதிகமாகவும், பெண் பட்டியல் பழங்குடியினர் மக்கள்தொகை 1000 ஐ விட அதிகமாகவும் உள்ள பகுதிகளின் இருப்பிட பெயர்களை பட்டியலிடுக.",
+    "sql": "SELECT T1.LOCATION_NAME FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_SOCIAL_CATEGORY AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES > 5000 AND T3.FEMALE_SCHEDULED_TRIBE_POPULATION > 1000",
+    "pair_id": "f1dd5048",
+    "original_question_id": "35cb5a8a",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_SOCIAL_CATEGORY"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_SOCIAL_CATEGORY": [
+        "HIERARCHY_ID",
+        "MALE_SCHEDULED_TRIBE_POPULATION",
+        "MALE_SCHEDULED_CASTE_POPULATION",
+        "POPULATION_SOCIAL_ID",
+        "FEMALE_SCHEDULED_TRIBE_POPULATION",
+        "FEMALE_SCHEDULED_CASTE_POPULATION",
+        "CENSUS_YEAR"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `fact_housing` and `fact_population_social_category` where `census_year` = 1991. Join them on `hierarchy_id` and `census_year`. Then join with `dim_geography_hierarchy` on `hierarchy_id`. Select `dim_geography_hierarchy.location_name` where `fact_housing.number_of_occupied_residential_houses` > 5000 and `fact_population_social_category.female_scheduled_tribe_population` > 1000."
+  },
+  {
+    "question": "1991 மக்கள் தொகை கணக்கெடுப்பு தரவுகளின் அடிப்படையில், மொத்த ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் எண்ணிக்கை 5000-ஐ மீறிய மற்றும் மொத்த பெண் பட்டியல் பழங்குடியினர் மக்கள் தொகை 1000-க்கும் அதிகமாக இருந்த இடங்களின் பெயர்களை பட்டியலிடவும், முடிவுகளை இடப் பெயரின் அகரவரிசைப்படி வரிசைப்படுத்தவும்.",
+    "sql": "SELECT T1.LOCATION_NAME FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_SOCIAL_CATEGORY AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.LOCATION_NAME HAVING SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) > 5000 AND SUM(T3.FEMALE_SCHEDULED_TRIBE_POPULATION) > 1000 ORDER BY T1.LOCATION_NAME ASC",
+    "pair_id": "c9605267",
+    "original_question_id": "35cb5a8a",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_SOCIAL_CATEGORY"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_SOCIAL_CATEGORY": [
+        "HIERARCHY_ID",
+        "MALE_SCHEDULED_TRIBE_POPULATION",
+        "MALE_SCHEDULED_CASTE_POPULATION",
+        "POPULATION_SOCIAL_ID",
+        "FEMALE_SCHEDULED_TRIBE_POPULATION",
+        "FEMALE_SCHEDULED_CASTE_POPULATION",
+        "CENSUS_YEAR"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `fact_housing` where `fact_housing.census_year` = 1991 and `fact_housing.number_of_occupied_residential_houses` > 5000. Filter `fact_population_social_category` where `fact_population_social_category.census_year` = 1991 and `fact_population_social_category.female_scheduled_tribe_population` > 1000. Join both fact tables on `hierarchy_id` (both refer to same geographic location for 1991). Join result with `dim_geography_hierarchy` on `hierarchy_id` to get `dim_geography_hierarchy.location_name`. Sort output by `dim_geography_hierarchy.location_name` in ascending alphabetical order."
+  },
+  {
+    "question": "இடங்களின் பெயர்களை பட்டியலிடுங்கள், அங்கு மொத்த மக்கள் தொகைக்கும் மொத்த ஆண் மக்கள் தொகைக்கும் உள்ள சராசரி விகிதம் 5 ஐ விட அதிகமாக இருந்தால், அல்லது பெண் பட்டியல் பழங்குடியினர் மக்கள் தொகையின் மொத்த கூட்டுத்தொகை 500 ஐ மீறினால்.",
+    "sql": "SELECT T1.LOCATION_NAME FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_SOCIAL_CATEGORY AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID GROUP BY T1.LOCATION_NAME HAVING AVG(T2.TOTAL_POPULATION / NULLIF(T2.TOTAL_MALE_POPULATION, 0)) > 5 OR SUM(T3.FEMALE_SCHEDULED_TRIBE_POPULATION) > 500",
+    "pair_id": "ad510a30",
+    "original_question_id": "6a5bac01",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE",
+      "FACT_POPULATION_SOCIAL_CATEGORY"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ],
+      "FACT_POPULATION_SOCIAL_CATEGORY": [
+        "POPULATION_SOCIAL_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_SCHEDULED_CASTE_POPULATION",
+        "FEMALE_SCHEDULED_CASTE_POPULATION",
+        "MALE_SCHEDULED_TRIBE_POPULATION",
+        "FEMALE_SCHEDULED_TRIBE_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography_hierarchy`.`location_name` where either AVG(`fact_population_core`.`total_population` / `fact_population_core`.`total_male_population`) > 5 per location or SUM(`fact_population_social_category`.`female_scheduled_tribe_population`) > 500 per location. Join `dim_geography_hierarchy` with `fact_population_core` and `fact_population_social_category` on `hierarchy_id`."
+  },
+  {
+    "question": "1991 ஆம் ஆண்டு மக்கள் தொகை கணக்கெடுப்பின் போது 'அந்தமான் மற்றும் நிக்கோபார் தீவுகள்' மாநிலத்திற்கு, ஒவ்வொரு இடத்தின் பெயரையும், ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் மொத்த எண்ணிக்கை மற்றும் குடும்பங்களின் மொத்த எண்ணிக்கையுடன், இடத்தின் பெயரால் குழுவாக்கி வரிசைப்படுத்தி பட்டியலிடுக.",
+    "sql": "SELECT T1.LOCATION_NAME, SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES), SUM(T2.NUMBER_OF_HOUSEHOLDS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.LOCATION_NAME ORDER BY T1.LOCATION_NAME",
+    "pair_id": "44eec8d9",
+    "original_question_id": "fb849d0d",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy.state` = 'Andaman And Nicobar Islands' and `fact_housing.census_year` = 1991. Join `dim_geography_hierarchy` and `fact_housing` on `hierarchy_id`. Select `dim_geography_hierarchy.location_name`, SUM(`fact_housing.number_of_occupied_residential_houses`) as total_occupied_houses, SUM(`fact_housing.number_of_households`) as total_households. Group by `dim_geography_hierarchy.location_name`. Order by `dim_geography_hierarchy.location_name`."
+  },
+  {
+    "question": "1991 ஆம் ஆண்டின் மக்கள் தொகை கணக்கெடுப்பின்படி, 'அந்தமான் மற்றும் நிக்கோபார் தீவுகள்' மாநிலத்தில், மொத்த ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் எண்ணிக்கை 100-ஐ மீறும் ஒவ்வொரு இடத்திற்கும், இடத்தின் பெயர்கள், மொத்த ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் எண்ணிக்கை மற்றும் மொத்த குடும்பங்களின் எண்ணிக்கை ஆகியவற்றை, மொத்த குடும்பங்களின் எண்ணிக்கையின் அடிப்படையில் இறங்கு வரிசையில் பட்டியலிடுக.",
+    "sql": "SELECT T1.LOCATION_NAME, SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES), SUM(T2.NUMBER_OF_HOUSEHOLDS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 INNER JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.LOCATION_NAME HAVING SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) > 100 ORDER BY SUM(T2.NUMBER_OF_HOUSEHOLDS) DESC",
+    "pair_id": "055515a1",
+    "original_question_id": "fb849d0d",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `fact_housing`.`census_year` = 1991. Join `dim_geography_hierarchy` and `fact_housing` on `hierarchy_id`. Select `dim_geography_hierarchy`.`location_name`, `fact_housing`.`number_of_occupied_residential_houses`, `fact_housing`.`number_of_households`. Filter where `fact_housing`.`number_of_occupied_residential_houses` > 100. Sort descending by `fact_housing`.`number_of_households`."
+  },
+  {
+    "question": "1991 ஆம் ஆண்டின் மக்கள் தொகை கணக்கெடுப்பின்படி, ஒவ்வொரு மாநிலத்தையும் அதன் மொத்த ஆண் வேலை செய்யும் மக்கள் தொகை, மொத்த பெண் வேலை செய்யும் மக்கள் தொகை மற்றும் சராசரி வீட்டு எண்ணிக்கை ஆகியவற்றுடன், மாநில வாரியாக பட்டியலிடுக.",
+    "sql": "SELECT T1.STATE, SUM(T2.MALE_WORKING_POPULATION), SUM(T2.FEMALE_WORKING_POPULATION), AVG(T3.NUMBER_OF_HOUSEHOLDS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKFORCE_STATUS AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_HOUSING AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.STATE",
+    "pair_id": "1fbdbf62",
+    "original_question_id": "f5b95d52",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKFORCE_STATUS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKFORCE_STATUS": [
+        "WORKFORCE_STATUS_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKING_POPULATION",
+        "FEMALE_WORKING_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "For census_year = 1991, group by `dim_geography_hierarchy`.`state`. For each state, sum `fact_workforce_status`.`male_working_population` as total male working population, sum `fact_workforce_status`.`female_working_population` as total female working population, and average `fact_housing`.`number_of_households` as average household count. Join `dim_geography_hierarchy` with `fact_workforce_status` and `fact_housing` on `hierarchy_id`."
+  },
+  {
+    "question": "1991 ஆம் ஆண்டின் மக்கள் தொகை கணக்கெடுப்பின்படி, ஒன்றுக்கும் மேற்பட்ட மாவட்டங்களைக் கொண்ட மாநிலங்களுக்கு மட்டும், ஒவ்வொரு மாநிலத்தையும் அதன் மொத்த ஆண் பணிபுரியும் மக்கள் தொகை, மொத்த பெண் பணிபுரியும் மக்கள் தொகை மற்றும் சராசரி குடும்பங்களின் எண்ணிக்கை ஆகியவற்றுடன் பட்டியலிடுங்கள். முடிவுகளை மொத்த ஆண் பணிபுரியும் மக்கள் தொகையின் அடிப்படையில் இறங்கு வரிசையில் ஒழுங்குபடுத்துங்கள்.",
+    "sql": "SELECT T1.STATE, SUM(T2.MALE_WORKING_POPULATION), SUM(T2.FEMALE_WORKING_POPULATION), AVG(T3.NUMBER_OF_HOUSEHOLDS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKFORCE_STATUS AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_HOUSING AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.STATE HAVING COUNT(DISTRICT) > 1 ORDER BY SUM(T2.MALE_WORKING_POPULATION) DESC",
+    "pair_id": "c9422004",
+    "original_question_id": "f5b95d52",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKFORCE_STATUS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKFORCE_STATUS": [
+        "WORKFORCE_STATUS_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKING_POPULATION",
+        "FEMALE_WORKING_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter records where `fact_workforce_status.census_year` = 1991 and `fact_housing.census_year` = 1991. Join `dim_geography_hierarchy` with `fact_workforce_status` and `fact_housing` on `hierarchy_id`. Group by `dim_geography_hierarchy.state`. Select state, SUM(`fact_workforce_status.male_working_population`) as total_male_working_population, SUM(`fact_workforce_status.female_working_population`) as total_female_working_population, AVG(`fact_housing.number_of_households`) as avg_households. Include only states having COUNT(DISTINCT `dim_geography_hierarchy.district`) > 1. Order by total_male_working_population DESC."
+  },
+  {
+    "question": "'அந்தமான் மற்றும் நிக்கோபார் தீவுகள்' மாநிலத்திற்கு, ஒவ்வொரு மாவட்டத்தையும் அதன் குடும்ப அடர்த்தியையும் பட்டியலிடுக. குடும்ப அடர்த்தி என்பது மொத்த குடும்பங்களின் எண்ணிக்கையை ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் மொத்த எண்ணிக்கையால் வகுப்பதன் மூலம் கணக்கிடப்படுகிறது. ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் மொத்த எண்ணிக்கை 100-க்கு மேல் உள்ள மாவட்டங்களுக்கு மட்டும் இது பொருந்தும். முடிவுகளை குடும்ப அடர்த்தியின் அடிப்படையில் இறங்கு வரிசையில் வரிசைப்படுத்தவும்.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.NUMBER_OF_HOUSEHOLDS) / SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) AS household_density FROM DIM_GEOGRAPHY_HIERARCHY AS T1 INNER JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' GROUP BY T1.DISTRICT HAVING SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) > 100 ORDER BY household_density DESC",
+    "pair_id": "68b7c3cd",
+    "original_question_id": "2b7e1478",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy` where `dim_geography_hierarchy.state` = 'Andaman And Nicobar Islands' and `dim_geography_hierarchy.location_type` = 'district'. Join with `fact_housing` on `dim_geography_hierarchy.hierarchy_id` = `fact_housing.hierarchy_id`. Calculate household density as `fact_housing.number_of_households` / `fact_housing.number_of_occupied_residential_houses`. Filter where `fact_housing.number_of_occupied_residential_houses` > 100. Select `dim_geography_hierarchy.district` and the calculated density. Order by density descending."
+  },
+  {
+    "question": "1991 ஆம் ஆண்டு மக்கள் தொகை கணக்கெடுப்பின்படி, அதிக பெண் பணிபுரியும் மக்கள் தொகை கொண்ட முதல் 10 பதிவுகளுக்கான மாவட்டம் மற்றும் பெண் பணிபுரியும் மக்கள் தொகையை பட்டியலிடுக.",
+    "sql": "SELECT T1.DISTRICT, T2.FEMALE_WORKING_POPULATION FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKFORCE_STATUS AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 ORDER BY T2.FEMALE_WORKING_POPULATION DESC LIMIT 10",
+    "pair_id": "367cce91",
+    "original_question_id": "4cbbfe0e",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE",
+      "FACT_WORKFORCE_STATUS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ],
+      "FACT_WORKFORCE_STATUS": [
+        "WORKFORCE_STATUS_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKING_POPULATION",
+        "FEMALE_WORKING_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "For census_year = 1991, join `dim_geography_hierarchy` and `fact_workforce_status` on `hierarchy_id`. Select (`dim_geography_hierarchy`.`district`) and (`fact_workforce_status`.`female_working_population`). Order by (`fact_workforce_status`.`female_working_population`) DESC, limit 10 rows."
+  },
+  {
+    "question": "1991 மக்கள் தொகை கணக்கெடுப்பு ஆண்டில், பணியாளர் மற்றும் மக்கள் தொகை பதிவுகள் இரண்டிலும் வடிகட்டப்பட்டு, ஒவ்வொரு மாவட்டத்திற்கும் மாவட்டம் மற்றும் மொத்த பெண் பணிபுரியும் மக்கள் தொகையை பட்டியலிடுங்கள், மேலும் அதிக மொத்த பெண் பணிபுரியும் மக்கள் தொகை கொண்ட முதல் 10 மாவட்டங்களை மட்டும் காட்டுங்கள்.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.FEMALE_WORKING_POPULATION) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKFORCE_STATUS AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT ORDER BY SUM(T2.FEMALE_WORKING_POPULATION) DESC LIMIT 10",
+    "pair_id": "51aebed4",
+    "original_question_id": "4cbbfe0e",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE",
+      "FACT_WORKFORCE_STATUS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ],
+      "FACT_WORKFORCE_STATUS": [
+        "WORKFORCE_STATUS_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKING_POPULATION",
+        "FEMALE_WORKING_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "The question asks: For the census year 1991, filter in both workforce and population records, list each district with district name and total female working population, and show only the top 10 districts by total female working population. We need `dim_geography_hierarchy`.`district`, `fact_workforce_status`.`female_working_population` for 1991 census year. Must join `dim_geography_hierarchy` with `fact_workforce_status` on `hierarchy_id`. Also need to filter `fact_workforce_status`.`census_year` = 1991. Then group by district, sum `fact_workforce_status`.`female_working_population`, order descending, limit 10."
+  },
+  {
+    "question": "1991 ஆம் ஆண்டு மக்கள் தொகை கணக்கெடுப்பின்படி, ஒவ்வொரு இருப்பிடப் பெயரையும், அந்த இருப்பிடப் பெயரின் கீழ் குழுவாக்கப்பட்டு, மொத்த வேலை செய்யும் மக்கள் தொகை (ஆண் மற்றும் பெண் வேலை செய்யும் மக்கள் தொகையின் கூட்டுத்தொகையாகக் கணக்கிடப்பட்டது) மற்றும் மொத்த வீட்டுக் குடும்பங்களின் எண்ணிக்கை ஆகியவற்றுடன் பட்டியலிடுக.",
+    "sql": "SELECT T1.LOCATION_NAME, SUM(T2.MALE_WORKING_POPULATION + T2.FEMALE_WORKING_POPULATION), SUM(T3.NUMBER_OF_HOUSEHOLDS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKFORCE_STATUS AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_HOUSING AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.LOCATION_NAME",
+    "pair_id": "5e8052d8",
+    "original_question_id": "622ebd17",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKFORCE_STATUS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKFORCE_STATUS": [
+        "WORKFORCE_STATUS_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKING_POPULATION",
+        "FEMALE_WORKING_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "For census_year = 1991, join `dim_geography_hierarchy` (dgh) with `fact_workforce_status` (fws) and `fact_housing` (fh) on `dgh`.`hierarchy_id` = `fws`.`hierarchy_id` = `fh`.`hierarchy_id`. Select `dgh`.`location_name`, sum of `fws`.`male_working_population` + `fws`.`female_working_population` as total_working_population, and sum of `fh`.`number_of_households` as total_households. Group by `dgh`.`location_name`."
+  },
+  {
+    "question": "1991 ஆம் ஆண்டு மக்கள் தொகை கணக்கெடுப்பின்படி, மொத்த வேலை செய்யும் மக்கள் தொகை (ஆண் மற்றும் பெண் வேலை செய்யும் மக்கள் தொகையின் கூட்டுத்தொகையாக கணக்கிடப்பட்டது) மற்றும் மொத்த வீட்டு எண்ணிக்கை ஆகியவற்றுடன் ஒவ்வொரு இடத்தின் பெயரையும் பட்டியலிடுங்கள், குறிப்பாக மொத்த வீட்டு எண்ணிக்கை 100-ஐ மீறும் இடங்களுக்கு மட்டும், முடிவுகளை மொத்த வேலை செய்யும் மக்கள் தொகையின் அடிப்படையில் இறங்கு வரிசையில் வரிசைப்படுத்துங்கள்.",
+    "sql": "SELECT T1.LOCATION_NAME, SUM(T2.MALE_WORKING_POPULATION + T2.FEMALE_WORKING_POPULATION), SUM(T3.NUMBER_OF_HOUSEHOLDS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKFORCE_STATUS AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_HOUSING AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.LOCATION_NAME HAVING SUM(T3.NUMBER_OF_HOUSEHOLDS) > 100 ORDER BY SUM(T2.MALE_WORKING_POPULATION + T2.FEMALE_WORKING_POPULATION) DESC",
+    "pair_id": "e9846881",
+    "original_question_id": "622ebd17",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKFORCE_STATUS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKFORCE_STATUS": [
+        "WORKFORCE_STATUS_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKING_POPULATION",
+        "FEMALE_WORKING_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_geography_hierarchy`, `fact_workforce_status`, and `fact_housing` on `hierarchy_id`. Filter where `fact_workforce_status.census_year` = 1991 and `fact_housing.census_year` = 1991 and `fact_housing.number_of_households` > 100. Select `dim_geography_hierarchy.location_name`, total working population as (`fact_workforce_status.male_working_population` + `fact_workforce_status.female_working_population`), and `fact_housing.number_of_households`. Sort descending by total working population."
+  },
+  {
+    "question": "1991 ஆம் ஆண்டு மக்கள் தொகை கணக்கெடுப்பின்படி, பெண் வேலை செய்யும் மக்கள் தொகை 64,000 ஐ விட அதிகமாகவும், அதே ஆண்டில் ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் அதிகபட்ச எண்ணிக்கை 291,000 ஐ மீறாத மாவட்டங்களை அகரவரிசைப்படி பட்டியலிடுக.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKFORCE_STATUS AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_HOUSING AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.COUNTRY = 'India' AND T2.CENSUS_YEAR = 1991 AND T2.FEMALE_WORKING_POPULATION > 64.000 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT HAVING MAX(T3.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) <= 291.000 ORDER BY T1.DISTRICT",
+    "pair_id": "7d177c0e",
+    "original_question_id": "77c9503d",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKFORCE_STATUS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "COUNTRY",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKFORCE_STATUS": [
+        "WORKFORCE_STATUS_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKING_POPULATION",
+        "FEMALE_WORKING_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter for `fact_workforce_status.census_year` = 1991 and `fact_housing.census_year` = 1991. Join `dim_geography_hierarchy` to `fact_workforce_status` on `hierarchy_id` and to `fact_housing` on `hierarchy_id`. Group by `dim_geography_hierarchy.district`. Compute sum(`fact_workforce_status.female_working_population`) and max(`fact_housing.number_of_occupied_residential_houses`) per district. Keep districts where sum > 64000 and max ≤ 291000. Order results by `dim_geography_hierarchy.district` alphabetically."
+  },
+  {
+    "question": "'அந்தமான் மற்றும் நிக்கோபார் தீவுகள்' மாநிலத்தில் 'கிராமப்புறம்' என வகைப்படுத்தப்பட்ட இடங்களுக்கு, இடத்தின் பெயர், குடும்பங்களின் எண்ணிக்கை மற்றும் ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் எண்ணிக்கை ஆகியவற்றை, இடத்தின் பெயரின் அகரவரிசைப்படி பட்டியலிடுக.",
+    "sql": "SELECT T1.LOCATION_NAME, T2.NUMBER_OF_HOUSEHOLDS, T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T1.LOCATION_TYPE = 'Rural' ORDER BY T1.LOCATION_NAME",
+    "pair_id": "a243f062",
+    "original_question_id": "eb9ec886",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `dim_geography_hierarchy`.`location_type` = 'Rural'. Join `dim_geography_hierarchy` with `fact_housing` on `hierarchy_id`. Select `dim_geography_hierarchy`.`location_name`, `fact_housing`.`number_of_households`, `fact_housing`.`number_of_occupied_residential_houses`. Order by `dim_geography_hierarchy`.`location_name` ASC."
+  },
+  {
+    "question": "'அந்தமான் மற்றும் நிகோபார் தீவுகள்' மாநிலத்தில் 'கிராமப்புற' இருப்பிட வகையைக் கொண்ட இடங்களுக்கு, ஒவ்வொரு இடத்தின் பெயர், மொத்த வீட்டுக் குடும்பங்களின் எண்ணிக்கை மற்றும் ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் மொத்த எண்ணிக்கை ஆகியவற்றைப் பட்டியலிடுங்கள், ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் மொத்த எண்ணிக்கை 100-ஐ மீறும் இடங்களை வடிகட்டி, முடிவுகளை மொத்த வீட்டுக் குடும்பங்களின் எண்ணிக்கையின் அடிப்படையில் இறங்கு வரிசையில் வரிசைப்படுத்துங்கள்.",
+    "sql": "SELECT T1.LOCATION_NAME, SUM(T2.NUMBER_OF_HOUSEHOLDS), SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 INNER JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T1.LOCATION_TYPE = 'Rural' GROUP BY T1.LOCATION_NAME HAVING SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) > 100 ORDER BY SUM(T2.NUMBER_OF_HOUSEHOLDS) DESC",
+    "pair_id": "6fa7b143",
+    "original_question_id": "eb9ec886",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy.state` = 'Andaman And Nicobar Islands' and `dim_geography_hierarchy.location_type` = 'Rural'. Select `dim_geography_hierarchy.location_name`, `fact_housing.number_of_households`, `fact_housing.number_of_occupied_residential_houses`. Join `dim_geography_hierarchy` and `fact_housing` on `hierarchy_id`. Filter where `fact_housing.number_of_occupied_residential_houses` > 100. Order by `fact_housing.number_of_households` DESC."
+  },
+  {
+    "question": "1991 மக்கள் தொகை கணக்கெடுப்பு ஆண்டிற்கு, ஒவ்வொரு மாநிலத்தையும் அதன் மொத்த குடும்பங்களின் எண்ணிக்கை மற்றும் விவசாயிகளாக உள்ள ஆண் முக்கிய தொழிலாளர்களின் சராசரி எண்ணிக்கையுடன், மாநில வாரியாக பட்டியலிடுக.",
+    "sql": "SELECT T1.STATE, SUM(T2.NUMBER_OF_HOUSEHOLDS), AVG(T3.MALE_MAIN_WORKERS_CULTIVATORS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_WORKERS_PRIMARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.STATE",
+    "pair_id": "1768321a",
+    "original_question_id": "2d5377a2",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKERS_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "COUNTRY",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKERS_PRIMARY_SECTOR": [
+        "WORKERS_PRIMARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_MAIN_WORKERS_CULTIVATORS",
+        "FEMALE_MAIN_WORKERS_CULTIVATORS",
+        "MALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "MALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "FEMALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "MALE_MAIN_WORKERS_MINING_QUARRYING",
+        "FEMALE_MAIN_WORKERS_MINING_QUARRYING"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "For census_year = 1991, join `dim_geography_hierarchy` with `fact_housing` and `fact_workers_primary_sector` on `hierarchy_id`. Group by `dim_geography_hierarchy.state`. Compute sum(`fact_housing.number_of_households`) as total households and avg(`fact_workers_primary_sector.male_main_workers_cultivators`) as average male cultivators per state."
+  },
+  {
+    "question": "1991 ஆம் ஆண்டின் மக்கள் தொகை கணக்கெடுப்பின்படி, மாநிலங்களின் பட்டியலை, மொத்த வீடுகளின் எண்ணிக்கை மற்றும் சராசரி ஆண் முக்கிய தொழிலாளர்களில் விவசாயிகளின் எண்ணிக்கையுடன், மாநிலங்களாக குழுவாக்கி, மொத்த வீடுகளின் எண்ணிக்கையின் அடிப்படையில் இறங்கு வரிசையில் வரிசைப்படுத்தவும்.",
+    "sql": "SELECT T1.STATE, SUM(T2.NUMBER_OF_HOUSEHOLDS), AVG(T3.MALE_MAIN_WORKERS_CULTIVATORS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_WORKERS_PRIMARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.STATE ORDER BY SUM(T2.NUMBER_OF_HOUSEHOLDS) DESC",
+    "pair_id": "9f51cb53",
+    "original_question_id": "2d5377a2",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKERS_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "COUNTRY",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKERS_PRIMARY_SECTOR": [
+        "WORKERS_PRIMARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_MAIN_WORKERS_CULTIVATORS",
+        "FEMALE_MAIN_WORKERS_CULTIVATORS",
+        "MALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "MALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "FEMALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "MALE_MAIN_WORKERS_MINING_QUARRYING",
+        "FEMALE_MAIN_WORKERS_MINING_QUARRYING"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "For census_year = 1991, select `dim_geography_hierarchy`.`state`, SUM(`fact_housing`.`number_of_occupied_residential_houses`) as total_houses, AVG(`fact_workers_primary_sector`.`male_main_workers_cultivators`) as avg_male_cultivators. Join `dim_geography_hierarchy` with `fact_housing` and `fact_workers_primary_sector` on `hierarchy_id`. Group by `dim_geography_hierarchy`.`state`. Order by total_houses DESC."
+  },
+  {
+    "question": "1991 ஆம் ஆண்டு மக்கள்தொகை கணக்கெடுப்பு ஆண்டாக உள்ள மாவட்டங்களை பட்டியலிடுங்கள், அங்கு விவசாயத் தொழிலாளர்களாக பதிவு செய்யப்பட்ட பெண் முக்கிய தொழிலாளர்கள் உள்ளனர், குறிப்பாக விவசாயத் தொழிலாளர்களாக உள்ள பெண் முக்கிய தொழிலாளர்களின் மொத்த தொகை 5000 ஐ மீறும் மாவட்டங்களை வடிகட்டி, அதிகபட்சத்திலிருந்து குறைந்தபட்சம் வரை வரிசைப்படுத்துங்கள்.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_WORKERS_PRIMARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS > 0.000 GROUP BY T1.DISTRICT HAVING SUM(T3.FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS) > 5000 ORDER BY SUM(T3.FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS) DESC",
+    "pair_id": "dd2c3b18",
+    "original_question_id": "577eebd0",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE",
+      "FACT_WORKERS_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ],
+      "FACT_WORKERS_PRIMARY_SECTOR": [
+        "WORKERS_PRIMARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_MAIN_WORKERS_CULTIVATORS",
+        "FEMALE_MAIN_WORKERS_CULTIVATORS",
+        "MALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "MALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "FEMALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "MALE_MAIN_WORKERS_MINING_QUARRYING",
+        "FEMALE_MAIN_WORKERS_MINING_QUARRYING"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `fact_workers_primary_sector`.`census_year` = 1991 and `fact_workers_primary_sector`.`female_main_workers_agricultural_labourers` > 5000. Join `fact_workers_primary_sector` with `dim_geography_hierarchy` on `hierarchy_id` to get `dim_geography_hierarchy`.`district`. Sort results by `fact_workers_primary_sector`.`female_main_workers_agricultural_labourers` in descending order."
+  },
+  {
+    "question": "'அந்தமான் மற்றும் நிக்கோபார் தீவுகள்' மாநிலத்திற்கும் 1991 ஆம் ஆண்டு மக்கள் தொகை கணக்கெடுப்பிற்கும், ஒவ்வொரு மாவட்டத்தையும் மற்றும் விவசாயக் கூலித் தொழிலாளர்களாக உள்ள பெண் முக்கிய தொழிலாளர்களின் மொத்த எண்ணிக்கையை, இந்தத் தொழிலாளர்களின் மொத்த எண்ணிக்கையின் அடிப்படையில் இறங்கு வரிசையில் பட்டியலிடுக.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKERS_PRIMARY_SECTOR AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT ORDER BY SUM(T2.FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS) DESC",
+    "pair_id": "03b4027c",
+    "original_question_id": "23d5b6ad",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE",
+      "FACT_WORKERS_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ],
+      "FACT_WORKERS_PRIMARY_SECTOR": [
+        "WORKERS_PRIMARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_MAIN_WORKERS_CULTIVATORS",
+        "FEMALE_MAIN_WORKERS_CULTIVATORS",
+        "MALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "MALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "FEMALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "MALE_MAIN_WORKERS_MINING_QUARRYING",
+        "FEMALE_MAIN_WORKERS_MINING_QUARRYING"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List each district (`dim_geography_hierarchy`.`district`) and the total number of female main workers agricultural labourers (`fact_workers_primary_sector`.`female_main_workers_agricultural_labourers`) for the state 'Andaman And Nicobar Islands' (`dim_geography_hierarchy`.`state`) and census year 1991 (`fact_workers_primary_sector`.`census_year`), ordered descending by `fact_workers_primary_sector`.`female_main_workers_agricultural_labourers`. Join `dim_geography_hierarchy` and `fact_workers_primary_sector` on `hierarchy_id`."
+  },
+  {
+    "question": "அந்தமான் மற்றும் நிக்கோபார் தீவுகள்' மாநிலத்திற்கும் 1991 ஆம் ஆண்டு மக்கள் தொகை கணக்கெடுப்பிற்கும், ஒவ்வொரு மாவட்டத்தையும் மற்றும் வேளாண் கூலித் தொழிலாளர்களாக உள்ள பெண் முக்கிய தொழிலாளர்களின் மொத்த எண்ணிக்கையையும், அதிகபட்சத்திலிருந்து குறைந்தபட்சம் வரை வரிசைப்படுத்தி பட்டியலிடுக.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKERS_PRIMARY_SECTOR AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT ORDER BY SUM(T2.FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS) DESC",
+    "pair_id": "fab91bd3",
+    "original_question_id": "23d5b6ad",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE",
+      "FACT_WORKERS_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ],
+      "FACT_WORKERS_PRIMARY_SECTOR": [
+        "WORKERS_PRIMARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_MAIN_WORKERS_CULTIVATORS",
+        "FEMALE_MAIN_WORKERS_CULTIVATORS",
+        "MALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "MALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "FEMALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "MALE_MAIN_WORKERS_MINING_QUARRYING",
+        "FEMALE_MAIN_WORKERS_MINING_QUARRYING"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": ""
+  },
+  {
+    "question": "1991 மக்கள் தொகை கணக்கெடுப்பின் அடிப்படையில், 'அந்தமான் மற்றும் நிக்கோபார் தீவுகள்' மாநிலத்தில் உள்ள மாவட்டங்களை, சாகுபடி செய்யும் ஆண் முக்கிய தொழிலாளர்களின் எண்ணிக்கையின் அடிப்படையில் இறங்கு வரிசையில் பட்டியலிட்டு, முதல் 10 முடிவுகளை மட்டும் காட்டுக.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKERS_PRIMARY_SECTOR AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 ORDER BY T2.MALE_MAIN_WORKERS_CULTIVATORS DESC LIMIT 10",
+    "pair_id": "b2012785",
+    "original_question_id": "63884fd3",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE",
+      "FACT_WORKERS_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ],
+      "FACT_WORKERS_PRIMARY_SECTOR": [
+        "WORKERS_PRIMARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_MAIN_WORKERS_CULTIVATORS",
+        "FEMALE_MAIN_WORKERS_CULTIVATORS",
+        "MALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "MALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "FEMALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "MALE_MAIN_WORKERS_MINING_QUARRYING",
+        "FEMALE_MAIN_WORKERS_MINING_QUARRYING"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Query districts from `dim_geography_hierarchy` where `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands', join with `fact_workers_primary_sector` on `hierarchy_id` where `fact_workers_primary_sector`.`census_year` = 1991, order by `fact_workers_primary_sector`.`male_main_workers_cultivators` descending, limit 10."
+  },
+  {
+    "question": "1991 ஆம் ஆண்டு மக்கள் தொகை கணக்கெடுப்பின்படி, 'அந்தமான் மற்றும் நிக்கோபார் தீவுகள்' மாநிலத்தில், ஆண் முக்கிய தொழிலாளர்களில் விவசாயிகளின் மொத்த எண்ணிக்கை பூஜ்யத்தை விட அதிகமாக உள்ள மாவட்டங்களை பட்டியலிட்டு, அவற்றில் ஆண் முக்கிய விவசாய தொழிலாளர்களின் மொத்த எண்ணிக்கையின் அடிப்படையில் இறங்கு வரிசையில் முதல் 10 மாவட்டங்களைக் காண்பிக்கவும்.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.MALE_MAIN_WORKERS_CULTIVATORS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKERS_PRIMARY_SECTOR AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT HAVING SUM(T2.MALE_MAIN_WORKERS_CULTIVATORS) > 0 ORDER BY SUM(T2.MALE_MAIN_WORKERS_CULTIVATORS) DESC LIMIT 10",
+    "pair_id": "4f5a5f50",
+    "original_question_id": "63884fd3",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE",
+      "FACT_WORKERS_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ],
+      "FACT_WORKERS_PRIMARY_SECTOR": [
+        "WORKERS_PRIMARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_MAIN_WORKERS_CULTIVATORS",
+        "FEMALE_MAIN_WORKERS_CULTIVATORS",
+        "MALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "MALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "FEMALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "MALE_MAIN_WORKERS_MINING_QUARRYING",
+        "FEMALE_MAIN_WORKERS_MINING_QUARRYING"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Query requires: join `dim_geography_hierarchy` and `fact_workers_primary_sector` on `hierarchy_id`. Filter where `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands', `dim_geography_hierarchy`.`location_type` = 'District', `fact_workers_primary_sector`.`census_year` = 1991, and `fact_workers_primary_sector`.`male_main_workers_cultivators` > 0. Select `dim_geography_hierarchy`.`location_name` as district, and sum or value of `fact_workers_primary_sector`.`male_main_workers_agricultural_labourers`. Order by `fact_workers_primary_sector`.`male_main_workers_agricultural_labourers` DESC limit 10."
+  },
+  {
+    "question": "குடும்பங்களின் எண்ணிக்கை ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் எண்ணிக்கையை விட அதிகமாக உள்ள மாவட்டங்களுக்கு, ஒவ்வொரு மாவட்டத்தையும், சுரங்கம் மற்றும் குவாரி தொழிலில் ஈடுபட்டுள்ள மொத்த ஆண் முக்கிய தொழிலாளர்கள் மற்றும் சுரங்கம் மற்றும் குவாரி தொழிலில் ஈடுபட்டுள்ள மொத்த பெண் முக்கிய தொழிலாளர்கள் எண்ணிக்கையுடன் பட்டியலிடுங்கள்.",
+    "sql": "SELECT T1.DISTRICT, SUM(T3.MALE_MAIN_WORKERS_MINING_QUARRYING), SUM(T3.FEMALE_MAIN_WORKERS_MINING_QUARRYING) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_WORKERS_PRIMARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.NUMBER_OF_HOUSEHOLDS > T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES GROUP BY T1.DISTRICT",
+    "pair_id": "417ef626",
+    "original_question_id": "4fd30291",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKERS_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKERS_PRIMARY_SECTOR": [
+        "HIERARCHY_ID",
+        "MALE_MAIN_WORKERS_CULTIVATORS",
+        "FEMALE_MAIN_WORKERS_MINING_QUARRYING",
+        "WORKERS_PRIMARY_ID",
+        "CENSUS_YEAR",
+        "MALE_MAIN_WORKERS_MINING_QUARRYING"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter districts where `fact_housing`.`number_of_households` > `fact_housing`.`number_of_occupied_residential_houses` for census_year = 1991. Then join with `fact_workers_primary_sector` to get sum of `male_main_workers_mining_quarrying` and `female_main_workers_mining_quarrying` for each such district. Use `dim_geography_hierarchy`.`district`."
+  },
+  {
+    "question": "ஒவ்வொரு மாவட்டத்திலும் குடும்பங்களின் எண்ணிக்கை ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் எண்ணிக்கையை விட அதிகமாக இருந்தால், அந்த மாவட்டத்தின் பெயர், சுரங்கம் மற்றும் குவாரி தொழிலில் ஈடுபட்டுள்ள மொத்த ஆண் முக்கிய தொழிலாளர்களின் எண்ணிக்கை, மற்றும் சுரங்கம் மற்றும் குவாரி தொழிலில் ஈடுபட்டுள்ள மொத்த பெண் முக்கிய தொழிலாளர்களின் எண்ணிக்கை ஆகியவற்றை பட்டியலிடவும். ஒவ்வொரு மாவட்டத்திற்கும் குறைந்தது ஒரு பதிவு இருப்பதை உறுதிசெய்து, சுரங்கம் மற்றும் குவாரி தொழிலில் ஈடுபட்டுள்ள மொத்த ஆண் தொழிலாளர்களின் எண்ணிக்கையின் அடிப்படையில் இறங்கு வரிசையில் முடிவுகளை வரிசைப்படுத்தவும்.",
+    "sql": "SELECT T1.DISTRICT, SUM(T3.MALE_MAIN_WORKERS_MINING_QUARRYING), SUM(T3.FEMALE_MAIN_WORKERS_MINING_QUARRYING) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_WORKERS_PRIMARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.NUMBER_OF_HOUSEHOLDS > T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES GROUP BY T1.DISTRICT HAVING COUNT(T1.HIERARCHY_ID) >= 1 ORDER BY SUM(T3.MALE_MAIN_WORKERS_MINING_QUARRYING) DESC",
+    "pair_id": "8d0cd404",
+    "original_question_id": "4fd30291",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKERS_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKERS_PRIMARY_SECTOR": [
+        "HIERARCHY_ID",
+        "MALE_MAIN_WORKERS_CULTIVATORS",
+        "FEMALE_MAIN_WORKERS_MINING_QUARRYING",
+        "WORKERS_PRIMARY_ID",
+        "CENSUS_YEAR",
+        "MALE_MAIN_WORKERS_MINING_QUARRYING"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "For each district, sum the male and female mining/quarrying workers where the number of households exceeds occupied residential houses in 1991. Use tables: `dim_geography_hierarchy` (for district), `fact_housing` (for household and occupied house counts), `fact_workers_primary_sector` (for mining/quarrying workers). Join on `hierarchy_id`. Filter `fact_housing.census_year = 1991` and `fact_workers_primary_sector.census_year = 1991`. Condition: `fact_housing.number_of_households` > `fact_housing.number_of_occupied_residential_houses`. Group by `dim_geography_hierarchy.district`. Compute sums: SUM(`fact_workers_primary_sector.male_main_workers_mining_quarrying`) and SUM(`fact_workers_primary_sector.female_main_workers_mining_quarrying`). Order by SUM(`fact_workers_primary_sector.male_main_workers_mining_quarrying`) DESC."
+  },
+  {
+    "question": "1991 ஆம் ஆண்டு மக்கள் தொகை கணக்கெடுப்பின்படி, 'அந்தமான் மற்றும் நிக்கோபார் தீவுகள்' மாநிலத்தில் உள்ள மாவட்டங்களில், சுரங்கம் மற்றும் குவாரி தொழில்களில் பெண் முக்கிய தொழிலாளர்களின் எண்ணிக்கை குறைந்தது 0.000 ஆக உள்ளவற்றை, கால்நடை, வனவியல் மற்றும் மீன்பிடித் தொழில்களில் பெண் முக்கிய தொழிலாளர்களின் மொத்த எண்ணிக்கை சரியாக 0.000 ஆக உள்ள மாவட்டங்களை மட்டும் வடிகட்டி, மாவட்ட பெயரின் அடிப்படையில் வரிசைப்படுத்தவும்.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKERS_PRIMARY_SECTOR AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.FEMALE_MAIN_WORKERS_MINING_QUARRYING >= 0.000 AND T2.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT HAVING SUM(T2.FEMALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING) = 0.000 ORDER BY T1.DISTRICT",
+    "pair_id": "e6db98f9",
+    "original_question_id": "a2de346b",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE",
+      "FACT_WORKERS_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ],
+      "FACT_WORKERS_PRIMARY_SECTOR": [
+        "WORKERS_PRIMARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_MAIN_WORKERS_CULTIVATORS",
+        "FEMALE_MAIN_WORKERS_CULTIVATORS",
+        "MALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "MALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "FEMALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "MALE_MAIN_WORKERS_MINING_QUARRYING",
+        "FEMALE_MAIN_WORKERS_MINING_QUARRYING"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter districts in state 'Andaman And Nicobar Islands' for census_year 1991 where `fact_workers_primary_sector`.`female_main_workers_mining_quarrying` >= 0 and `fact_workers_primary_sector`.`female_main_workers_livestock_forestry_fishing` = 0. Join `dim_geography_hierarchy` with `fact_workers_primary_sector` on `hierarchy_id`. Order results by `dim_geography_hierarchy`.`district`."
+  },
+  {
+    "question": "1991 மக்கள் தொகை கணக்கெடுப்பின்படி, சுரங்கம் மற்றும் குவாரியில் பெண் முக்கிய தொழிலாளர்களின் எண்ணிக்கை குறைந்தது 0.000 ஆக உள்ள மாவட்டங்களையும், ஒவ்வொரு மாவட்டத்திலும் கால்நடை, வனவியல் மற்றும் மீன்பிடித்தலில் பெண் முக்கிய தொழிலாளர்களின் மொத்த எண்ணிக்கை சரியாக 0.000 ஆக உள்ள மாவட்டங்களையும், மாவட்ட பெயர் அகரவரிசைப்படி வரிசைப்படுத்தி பட்டியலிடுக.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_WORKERS_PRIMARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.FEMALE_MAIN_WORKERS_MINING_QUARRYING >= 0.000 GROUP BY T1.DISTRICT HAVING SUM(T3.FEMALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING) = 0.000 ORDER BY T1.DISTRICT ASC",
+    "pair_id": "354d5dce",
+    "original_question_id": "a2de346b",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE",
+      "FACT_WORKERS_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ],
+      "FACT_WORKERS_PRIMARY_SECTOR": [
+        "WORKERS_PRIMARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_MAIN_WORKERS_CULTIVATORS",
+        "FEMALE_MAIN_WORKERS_CULTIVATORS",
+        "MALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "MALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "FEMALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "MALE_MAIN_WORKERS_MINING_QUARRYING",
+        "FEMALE_MAIN_WORKERS_MINING_QUARRYING"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `fact_workers_primary_sector` for `census_year` = 1991, join with `dim_geography_hierarchy` on `hierarchy_id`, where `female_main_workers_mining_quarrying` >= 0 and `female_main_workers_livestock_forestry_fishing` = 0, then select `dim_geography_hierarchy`.`district` and sort alphabetically."
+  },
+  {
+    "question": "ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் எண்ணிக்கை 5000 ஐ விட அதிகமாக உள்ள மற்றும் சுரங்கம் மற்றும் குவாரி துறையில் பெண் முக்கிய தொழிலாளர்களின் எண்ணிக்கை குறைந்தது 0.000 ஆக உள்ள பகுதிகளின் இருப்பிட பெயர்களை பட்டியலிடுங்கள்.",
+    "sql": "SELECT T1.LOCATION_NAME FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_WORKERS_PRIMARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES > 5000 AND T3.FEMALE_MAIN_WORKERS_MINING_QUARRYING >= 0.000 GROUP BY T1.LOCATION_NAME",
+    "pair_id": "d76c3502",
+    "original_question_id": "081d4e3a",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKERS_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKERS_PRIMARY_SECTOR": [
+        "WORKERS_PRIMARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_MAIN_WORKERS_CULTIVATORS",
+        "FEMALE_MAIN_WORKERS_CULTIVATORS",
+        "MALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "MALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "FEMALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "MALE_MAIN_WORKERS_MINING_QUARRYING",
+        "FEMALE_MAIN_WORKERS_MINING_QUARRYING"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_geography_hierarchy`.`location_name` where `fact_housing`.`number_of_occupied_residential_houses` > 5000 and `fact_workers_primary_sector`.`female_main_workers_mining_quarrying` >= 0.0. Join `fact_housing` and `fact_workers_primary_sector` with `dim_geography_hierarchy` via `hierarchy_id`. Filter by `census_year` = 1991."
+  },
+  {
+    "question": "இடங்களின் பெயர்களை அகரவரிசைப்படி பட்டியலிடுக, அங்கு ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் எண்ணிக்கை 128,000 ஐ விட அதிகமாகவும், சுரங்கம் மற்றும் குவாரி துறையில் பெண் முக்கிய தொழிலாளர்களின் மொத்த எண்ணிக்கை குறைந்தது 0.000 ஆகவும் இருக்கும்.",
+    "sql": "SELECT T1.LOCATION_NAME FROM DIM_GEOGRAPHY_HIERARCHY AS T1 INNER JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID INNER JOIN FACT_WORKERS_PRIMARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES > 128.000 GROUP BY T1.LOCATION_NAME HAVING SUM(T3.FEMALE_MAIN_WORKERS_MINING_QUARRYING) >= 0.000 ORDER BY T1.LOCATION_NAME ASC",
+    "pair_id": "364764aa",
+    "original_question_id": "081d4e3a",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKERS_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKERS_PRIMARY_SECTOR": [
+        "WORKERS_PRIMARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_MAIN_WORKERS_CULTIVATORS",
+        "FEMALE_MAIN_WORKERS_CULTIVATORS",
+        "MALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "MALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "FEMALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "MALE_MAIN_WORKERS_MINING_QUARRYING",
+        "FEMALE_MAIN_WORKERS_MINING_QUARRYING"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_geography_hierarchy`.`location_name` alphabetically where `fact_housing`.`number_of_occupied_residential_houses` > 128000 and `fact_workers_primary_sector`.`female_main_workers_mining_quarrying` >= 0. Join `dim_geography_hierarchy` with `fact_housing` and `fact_workers_primary_sector` on `hierarchy_id` and `census_year` (census_year is 1991 in sample data)."
+  },
+  {
+    "question": "1991 ஆம் ஆண்டு மக்கள் தொகை கணக்கெடுப்பின்படி, அந்தமான் மற்றும் நிக்கோபார் தீவுகளின் தெற்கு அந்தமான் மாவட்டத்தில், ஒவ்வொரு இடத்தின் பெயரையும், ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் மொத்த எண்ணிக்கை மற்றும் குடும்பங்களின் மொத்த எண்ணிக்கையுடன், இடத்தின் பெயரால் குழுவாக்கி வரிசைப்படுத்தி பட்டியலிடுங்கள்.",
+    "sql": "SELECT T1.LOCATION_NAME, SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES), SUM(T2.NUMBER_OF_HOUSEHOLDS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T1.DISTRICT = 'South Andamans' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.LOCATION_NAME ORDER BY T1.LOCATION_NAME",
+    "pair_id": "25d52c7e",
+    "original_question_id": "9ffd929b",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_geography_hierarchy`.`location_name`, sum(`fact_housing`.`number_of_occupied_residential_houses`) as total_occupied_houses, and sum(`fact_housing`.`number_of_households`) as total_households for census year 1991, where `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `dim_geography_hierarchy`.`district` = 'South Andamans'. Join `dim_geography_hierarchy` and `fact_housing` on `hierarchy_id`. Group by `dim_geography_hierarchy`.`location_name` and order by `dim_geography_hierarchy`.`location_name`."
+  },
+  {
+    "question": "1991 ஆம் ஆண்டு மக்கள் தொகை கணக்கெடுப்பின்படி, அந்தமான் மற்றும் நிக்கோபார் தீவுகளின் வடக்கு மற்றும் மத்திய அந்தமான் மாவட்டத்தில், ஒவ்வொரு இடத்தின் பெயரையும், ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் மொத்த எண்ணிக்கை மற்றும் குடும்பங்களின் மொத்த எண்ணிக்கையுடன், ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் மொத்த எண்ணிக்கையின் அடிப்படையில் இறங்கு வரிசையில் பட்டியலிடுக.",
+    "sql": "SELECT T1.LOCATION_NAME, SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES), SUM(T2.NUMBER_OF_HOUSEHOLDS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T1.DISTRICT = 'North And Middle Andaman' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.LOCATION_NAME ORDER BY SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) DESC",
+    "pair_id": "e9b1e510",
+    "original_question_id": "9ffd929b",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `dim_geography_hierarchy`.`district` = 'North and Central Andaman'. Join `dim_geography_hierarchy` with `fact_housing` on `hierarchy_id` where `fact_housing`.`census_year` = 1991. Select `dim_geography_hierarchy`.`location_name`, `fact_housing`.`number_of_occupied_residential_houses`, `fact_housing`.`number_of_households`. Sort by `fact_housing`.`number_of_occupied_residential_houses` DESC."
+  },
+  {
+    "question": "1991 ஆம் ஆண்டு மக்கள் தொகை கணக்கெடுப்பின்படி, மாநில வாரியாக குழுப்படுத்தப்பட்டு, ஒவ்வொரு மாநிலத்தின் மொத்த வீட்டு எண்ணிக்கை மற்றும் வணிகம் மற்றும் வாணிகத்தில் ஈடுபட்டுள்ள ஆண் தொழிலாளர்களின் சராசரி எண்ணிக்கையை பட்டியலிடுக.",
+    "sql": "SELECT T1.STATE, SUM(T2.NUMBER_OF_HOUSEHOLDS), AVG(T3.MALE_WORKERS_TRADE_COMMERCE) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_WORKERS_TERTIARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.STATE",
+    "pair_id": "9b6602e7",
+    "original_question_id": "7b6b6e86",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKERS_TERTIARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "COUNTRY",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKERS_TERTIARY_SECTOR": [
+        "WORKERS_TERTIARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKERS_TRADE_COMMERCE",
+        "FEMALE_WORKERS_TRADE_COMMERCE",
+        "MALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "FEMALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "MALE_WORKERS_OTHER_SERVICES",
+        "FEMALE_WORKERS_OTHER_SERVICES"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "For census_year 1991, group by dim_geography_hierarchy.state. For each state, sum fact_housing.number_of_households and average fact_workers_tertiary_sector.male_workers_trade_commerce. Join dim_geography_hierarchy with fact_housing and fact_workers_tertiary_sector on hierarchy_id, filtering both fact tables for census_year = 1991."
+  },
+  {
+    "question": "1991 ஆம் ஆண்டு மக்கள் தொகை கணக்கெடுப்பின்படி, ஒவ்வொரு மாநிலத்தையும் மொத்த வீடுகளின் எண்ணிக்கை மற்றும் வணிகம் மற்றும் வாணிபத்தில் ஈடுபட்டுள்ள ஆண் தொழிலாளர்களின் சராசரி எண்ணிக்கையுடன் பட்டியலிடுங்கள், மொத்த வீடுகளின் எண்ணிக்கையின் அடிப்படையில் இறங்கு வரிசையில் வரிசைப்படுத்துங்கள்.",
+    "sql": "SELECT T1.STATE, SUM(T2.NUMBER_OF_HOUSEHOLDS), AVG(T3.MALE_WORKERS_TRADE_COMMERCE) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_WORKERS_TERTIARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.STATE ORDER BY SUM(T2.NUMBER_OF_HOUSEHOLDS) DESC",
+    "pair_id": "2b3f7441",
+    "original_question_id": "7b6b6e86",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKERS_TERTIARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "COUNTRY",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKERS_TERTIARY_SECTOR": [
+        "WORKERS_TERTIARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKERS_TRADE_COMMERCE",
+        "FEMALE_WORKERS_TRADE_COMMERCE",
+        "MALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "FEMALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "MALE_WORKERS_OTHER_SERVICES",
+        "FEMALE_WORKERS_OTHER_SERVICES"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": ""
+  },
+  {
+    "question": "'அந்தமான் மற்றும் நிக்கோபார் தீவுகள்' மாநிலத்தில் உள்ள மாவட்டங்களின் பட்டியலை, வணிகம் மற்றும் வர்த்தகத்தில் ஈடுபட்டுள்ள பெண் தொழிலாளர்களின் மொத்த எண்ணிக்கையுடன், பெண் தொழிலாளர்களின் கூட்டுத்தொகையின் அடிப்படையில் இறங்கு வரிசையில் வரிசைப்படுத்தவும்.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.FEMALE_WORKERS_TRADE_COMMERCE) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKERS_TERTIARY_SECTOR AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' GROUP BY T1.DISTRICT ORDER BY SUM(T2.FEMALE_WORKERS_TRADE_COMMERCE) DESC",
+    "pair_id": "e1e0c874",
+    "original_question_id": "614103e4",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE",
+      "FACT_WORKERS_TERTIARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "HIERARCHY_ID",
+        "TOTAL_FEMALE_POPULATION",
+        "POPULATION_CORE_ID",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "CENSUS_YEAR"
+      ],
+      "FACT_WORKERS_TERTIARY_SECTOR": [
+        "WORKERS_TERTIARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKERS_TRADE_COMMERCE",
+        "FEMALE_WORKERS_TRADE_COMMERCE",
+        "MALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "FEMALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "MALE_WORKERS_OTHER_SERVICES",
+        "FEMALE_WORKERS_OTHER_SERVICES"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List districts (`dim_geography_hierarchy.district`) in state 'Andaman And Nicobar Islands' (`dim_geography_hierarchy.state`), with total female workers in trade/commerce (`fact_workers_tertiary_sector.female_workers_trade_commerce`) for each district. Join `dim_geography_hierarchy` and `fact_workers_tertiary_sector` on `hierarchy_id`. Group by district, sum female workers, order by sum descending. Census year is 1991 (as per data)."
+  },
+  {
+    "question": "'அந்தமான் மற்றும் நிக்கோபார் தீவுகள்' மாநிலத்திற்கு, ஒவ்வொரு மாவட்டத்தையும் மற்றும் வணிகம் மற்றும் வாணிபத்தில் உள்ள பெண் தொழிலாளர்களின் மொத்த எண்ணிக்கையை பட்டியலிடுங்கள், மொத்தம் பூஜ்ஜியத்தை விட அதிகமாக உள்ள மாவட்டங்கள் மட்டுமே சேர்க்கப்பட வேண்டும், மற்றும் முடிவுகளை அதிகபட்சத்திலிருந்து குறைந்தபட்ச மொத்தத்திற்கு வரிசைப்படுத்துங்கள்.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.FEMALE_WORKERS_TRADE_COMMERCE) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKERS_TERTIARY_SECTOR AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' GROUP BY T1.DISTRICT HAVING SUM(T2.FEMALE_WORKERS_TRADE_COMMERCE) > 0.000 ORDER BY SUM(T2.FEMALE_WORKERS_TRADE_COMMERCE) DESC",
+    "pair_id": "90656e29",
+    "original_question_id": "614103e4",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE",
+      "FACT_WORKERS_TERTIARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "HIERARCHY_ID",
+        "TOTAL_FEMALE_POPULATION",
+        "POPULATION_CORE_ID",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "CENSUS_YEAR"
+      ],
+      "FACT_WORKERS_TERTIARY_SECTOR": [
+        "WORKERS_TERTIARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKERS_TRADE_COMMERCE",
+        "FEMALE_WORKERS_TRADE_COMMERCE",
+        "MALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "FEMALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "MALE_WORKERS_OTHER_SERVICES",
+        "FEMALE_WORKERS_OTHER_SERVICES"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy.state` = 'Andaman And Nicobar Islands'. For each district (`dim_geography_hierarchy.district`), sum `fact_workers_tertiary_sector.female_workers_trade_commerce`. Include only districts where the sum > 0. Order results by the sum descending (max to min). Join `dim_geography_hierarchy.hierarchy_id` = `fact_workers_tertiary_sector.hierarchy_id`."
+  },
+  {
+    "question": "1991 ஆம் ஆண்டு மக்கள் தொகை கணக்கெடுப்பின்படி, வணிகம் மற்றும் வர்த்தகத்தில் ஈடுபட்டுள்ள ஆண் தொழிலாளர்களின் எண்ணிக்கையின் அடிப்படையில் இந்தியாவின் மாவட்டங்களை இறங்கு வரிசையில் பட்டியலிட்டு, முதல் 10 முடிவுகளை மட்டும் காட்டுக.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKERS_TERTIARY_SECTOR AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.COUNTRY = 'India' AND T2.CENSUS_YEAR = 1991 ORDER BY T2.MALE_WORKERS_TRADE_COMMERCE DESC LIMIT 10",
+    "pair_id": "564f4cac",
+    "original_question_id": "56d0492d",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE",
+      "FACT_WORKERS_TERTIARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "COUNTRY",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ],
+      "FACT_WORKERS_TERTIARY_SECTOR": [
+        "WORKERS_TERTIARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKERS_TRADE_COMMERCE",
+        "FEMALE_WORKERS_TRADE_COMMERCE",
+        "MALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "FEMALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "MALE_WORKERS_OTHER_SERVICES",
+        "FEMALE_WORKERS_OTHER_SERVICES"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "For census_year = 1991, join `fact_workers_tertiary_sector` and `dim_geography_hierarchy` on `hierarchy_id`. Filter `dim_geography_hierarchy`.`country` = 'India'. Select `dim_geography_hierarchy`.`district` and `fact_workers_tertiary_sector`.`male_workers_trade_commerce`. Order by `fact_workers_tertiary_sector`.`male_workers_trade_commerce` DESC and limit to 10 rows."
+  },
+  {
+    "question": "1991 ஆம் ஆண்டு இந்தியாவின் அந்தமான் மற்றும் நிக்கோபார் தீவுகள் மாநிலத்திற்கான மக்கள்தொகை கணக்கெடுப்பு ஆண்டில், வணிகம் மற்றும் வாணிகத்தில் ஈடுபட்டுள்ள ஆண் தொழிலாளர்களின் மொத்த எண்ணிக்கையை ஒவ்வொரு மாவட்டத்திற்கும் பட்டியலிடுங்கள், அந்த தொகை பூஜ்ஜியத்தை விட அதிகமாக உள்ள மாவட்டங்களை மட்டும் வடிகட்டி, அதிகபட்ச மொத்தங்களைக் கொண்ட முதல் 10 மாவட்டங்களைக் காண்பியுங்கள்.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.MALE_WORKERS_TRADE_COMMERCE) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 INNER JOIN FACT_WORKERS_TERTIARY_SECTOR AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID INNER JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.COUNTRY = 'India' AND T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT HAVING SUM(T2.MALE_WORKERS_TRADE_COMMERCE) > 0 ORDER BY SUM(T2.MALE_WORKERS_TRADE_COMMERCE) DESC LIMIT 10",
+    "pair_id": "ed2e3a76",
+    "original_question_id": "56d0492d",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE",
+      "FACT_WORKERS_TERTIARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "COUNTRY",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ],
+      "FACT_WORKERS_TERTIARY_SECTOR": [
+        "WORKERS_TERTIARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKERS_TRADE_COMMERCE",
+        "FEMALE_WORKERS_TRADE_COMMERCE",
+        "MALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "FEMALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "MALE_WORKERS_OTHER_SERVICES",
+        "FEMALE_WORKERS_OTHER_SERVICES"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Query `dim_geography_hierarchy`.`district` and sum(`fact_workers_tertiary_sector`.`male_workers_trade_commerce`) for `dim_geography_hierarchy`.`country` = 'India' and `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `fact_workers_tertiary_sector`.`census_year` = 1991. Join `dim_geography_hierarchy` and `fact_workers_tertiary_sector` on `hierarchy_id`. Filter where sum > 0. Order by sum descending and limit to 10 districts."
+  },
+  {
+    "question": "1991 ஆம் ஆண்டு மக்கள் தொகை கணக்கெடுப்பின்படி, 'அந்தமான் மற்றும் நிக்கோபார் தீவுகள்' மாநிலத்திற்கு, ஒவ்வொரு மாவட்டத்தின் பெயரையும், அந்த மாவட்டத்தில் உள்ள ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் மொத்த எண்ணிக்கையையும், வணிகம் மற்றும் வாணிபத்தில் ஈடுபட்டுள்ள ஆண் தொழிலாளர்களின் மொத்த எண்ணிக்கையையும், மாவட்ட பெயரின் அடிப்படையில் குழுவாக்கி வரிசைப்படுத்தி பட்டியலிடுக.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES), SUM(T3.MALE_WORKERS_TRADE_COMMERCE) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_WORKERS_TERTIARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT ORDER BY T1.DISTRICT",
+    "pair_id": "90793a9d",
+    "original_question_id": "b3bb3625",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKERS_TERTIARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKERS_TERTIARY_SECTOR": [
+        "WORKERS_TERTIARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKERS_TRADE_COMMERCE",
+        "FEMALE_WORKERS_TRADE_COMMERCE",
+        "MALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "FEMALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "MALE_WORKERS_OTHER_SERVICES",
+        "FEMALE_WORKERS_OTHER_SERVICES"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": ""
+  },
+  {
+    "question": "1991 மக்கள் தொகை கணக்கெடுப்பு ஆண்டில் 'அந்தமான் மற்றும் நிக்கோபார் தீவுகள்' மாநிலத்திற்கு, ஒவ்வொரு மாவட்டத்தையும் அதன் ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் மொத்த எண்ணிக்கை மற்றும் வணிகம் மற்றும் வாணிபத்தில் ஈடுபட்ட ஆண் தொழிலாளர்களின் மொத்த எண்ணிக்கையுடன் பட்டியலிடுங்கள், ஆக்கிரமிக்கப்பட்ட குடியிருப்பு வீடுகளின் மொத்த எண்ணிக்கையின் அடிப்படையில் அதிகபட்சத்திலிருந்து குறைந்தபட்சமாக வரிசைப்படுத்துங்கள்.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES), SUM(T3.MALE_WORKERS_TRADE_COMMERCE) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_WORKERS_TERTIARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT ORDER BY SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) DESC",
+    "pair_id": "1947560a",
+    "original_question_id": "b3bb3625",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKERS_TERTIARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKERS_TERTIARY_SECTOR": [
+        "WORKERS_TERTIARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKERS_TRADE_COMMERCE",
+        "FEMALE_WORKERS_TRADE_COMMERCE",
+        "MALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "FEMALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "MALE_WORKERS_OTHER_SERVICES",
+        "FEMALE_WORKERS_OTHER_SERVICES"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `fact_housing`.`census_year` = 1991 and `fact_workers_tertiary_sector`.`census_year` = 1991. Select `dim_geography_hierarchy`.`district`, sum(`fact_housing`.`number_of_occupied_residential_houses`) as total_houses, sum(`fact_workers_tertiary_sector`.`male_workers_trade_commerce`) as total_male_trade_workers. Join `dim_geography_hierarchy` with `fact_housing` and `fact_workers_tertiary_sector` on `hierarchy_id`. Group by district. Order by total_houses DESC."
+  },
+  {
+    "question": "5000 க்கும் மேற்பட்ட வீடுகள் மற்றும் வணிகத் துறையில் 1000 க்கும் மேற்பட்ட ஆண் தொழிலாளர்கள் உள்ள பகுதிகளின் இடப்பெயர்களைப் பட்டியலிடுக.",
+    "sql": "SELECT T1.LOCATION_NAME FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_WORKERS_TERTIARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.NUMBER_OF_HOUSEHOLDS > 5000 AND T3.MALE_WORKERS_TRADE_COMMERCE > 1000",
+    "pair_id": "33b9a642",
+    "original_question_id": "c64bce2e",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKERS_TERTIARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKERS_TERTIARY_SECTOR": [
+        "HIERARCHY_ID",
+        "MALE_WORKERS_TRADE_COMMERCE",
+        "MALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "FEMALE_WORKERS_TRADE_COMMERCE",
+        "WORKERS_TERTIARY_ID",
+        "CENSUS_YEAR"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select (`dim_geography_hierarchy`.`location_name`) where (`fact_housing`.`number_of_occupied_residential_houses` > 5000) and (`fact_workers_tertiary_sector`.`male_workers_trade_commerce` > 1000). Join `dim_geography_hierarchy` with `fact_housing` and `fact_workers_tertiary_sector` on (`dim_geography_hierarchy`.`hierarchy_id` = `fact_housing`.`hierarchy_id` and `dim_geography_hierarchy`.`hierarchy_id` = `fact_workers_tertiary_sector`.`hierarchy_id`) and optionally on `census_year` if needed for consistency."
+  },
+  {
+    "question": "5000 க்கும் மேற்பட்ட வீடுகள் எண்ணிக்கை மற்றும் 1000 க்கும் மேற்பட்ட வணிகத்தில் ஆண் தொழிலாளர்கள் எண்ணிக்கை உள்ள பகுதிகளுக்கான இருப்பிட பெயர்களை பட்டியலிடுங்கள், ஒவ்வொரு இருப்பிடத்திற்கும் குறைந்தது ஒரு தொடர்புடைய பதிவு இருப்பதை உறுதிசெய்து, முடிவுகளை வீடுகள் எண்ணிக்கையின் அடிப்படையில் இறங்குவரிசையில் வரிசைப்படுத்துங்கள்.",
+    "sql": "SELECT T1.LOCATION_NAME FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_WORKERS_TERTIARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.NUMBER_OF_HOUSEHOLDS > 5000 AND T3.MALE_WORKERS_TRADE_COMMERCE > 1000 GROUP BY T1.LOCATION_NAME, T2.NUMBER_OF_HOUSEHOLDS HAVING COUNT(T1.HIERARCHY_ID) >= 1 ORDER BY T2.NUMBER_OF_HOUSEHOLDS DESC",
+    "pair_id": "2a8023bc",
+    "original_question_id": "c64bce2e",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKERS_TERTIARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKERS_TERTIARY_SECTOR": [
+        "HIERARCHY_ID",
+        "MALE_WORKERS_TRADE_COMMERCE",
+        "MALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "FEMALE_WORKERS_TRADE_COMMERCE",
+        "WORKERS_TERTIARY_ID",
+        "CENSUS_YEAR"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_geography_hierarchy`.`location_name` for locations where `fact_housing`.`number_of_occupied_residential_houses` > 5000 and `fact_workers_tertiary_sector`.`male_workers_trade_commerce` > 1000. Join `dim_geography_hierarchy` with `fact_housing` on `hierarchy_id` and with `fact_workers_tertiary_sector` on `hierarchy_id`. Order results by `fact_housing`.`number_of_occupied_residential_houses` DESC."
+  },
+  {
+    "question": "வீட்டு எண்ணிக்கை 500-ஐ மீறும் அல்லது வணிகம் மற்றும் வாணிபத்தில் ஆண் தொழிலாளர்களின் எண்ணிக்கை 10,000-ஐ விட அதிகமாக உள்ள பகுதிகளின் இடப் பெயர்களை பட்டியலிடுக.",
+    "sql": "SELECT T1.LOCATION_NAME FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_WORKERS_TERTIARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.NUMBER_OF_HOUSEHOLDS > 500 OR T3.MALE_WORKERS_TRADE_COMMERCE > 10000",
+    "pair_id": "aff62915",
+    "original_question_id": "5dc28fff",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKERS_TERTIARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKERS_TERTIARY_SECTOR": [
+        "WORKERS_TERTIARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKERS_TRADE_COMMERCE",
+        "FEMALE_WORKERS_TRADE_COMMERCE",
+        "MALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "FEMALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "MALE_WORKERS_OTHER_SERVICES",
+        "FEMALE_WORKERS_OTHER_SERVICES"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List distinct `dim_geography_hierarchy`.`location_name` where `fact_housing`.`number_of_households` > 500 OR `fact_workers_tertiary_sector`.`male_workers_trade_commerce` > 10000, joining `dim_geography_hierarchy` with `fact_housing` and `fact_workers_tertiary_sector` on `hierarchy_id`."
+  }
+]

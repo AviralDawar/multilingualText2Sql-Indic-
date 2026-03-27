@@ -1,0 +1,2541 @@
+[
+  {
+    "question": "1991 ke census year ke liye, Andaman And Nicobar Islands state ke rural areas ke location names, population ka total sum, aur households ki total number batao, jise total population ke descending order mein arrange karo.",
+    "sql": "SELECT T1.LOCATION_NAME, SUM(T3.TOTAL_POPULATION), SUM(T2.NUMBER_OF_HOUSEHOLDS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T1.LOCATION_TYPE = 'Rural' AND T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.LOCATION_NAME ORDER BY SUM(T3.TOTAL_POPULATION) DESC",
+    "pair_id": "c0b67113",
+    "original_question_id": "5139fa93",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography_hierarchy`.`location_name`, SUM(`fact_population_core`.`total_population`) as total_population_sum, SUM(`fact_housing`.`number_of_households`) as total_households from `dim_geography_hierarchy` join `fact_population_core` on `dim_geography_hierarchy`.`hierarchy_id` = `fact_population_core`.`hierarchy_id` join `fact_housing` on `dim_geography_hierarchy`.`hierarchy_id` = `fact_housing`.`hierarchy_id` where `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `dim_geography_hierarchy`.`location_type` = 'Rural' and `fact_population_core`.`census_year` = 1991 and `fact_housing`.`census_year` = 1991 group by `dim_geography_hierarchy`.`location_name` order by total_population_sum desc."
+  },
+  {
+    "question": "'Andaman And Nicobar Islands' state ke liye aur 'Rural' category wale locations ke liye, har location ka naam, total population aur 1991 census ke hisaab se total households ki sankhya list karo, lekin sirf un locations ke liye jahan total households 100 se zyada hain. Results ko total households ke descending order mein sort karo.",
+    "sql": "SELECT T1.LOCATION_NAME, SUM(T3.TOTAL_POPULATION), SUM(T2.NUMBER_OF_HOUSEHOLDS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 INNER JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID INNER JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T1.LOCATION_TYPE = 'Rural' AND T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.LOCATION_NAME HAVING SUM(T2.NUMBER_OF_HOUSEHOLDS) > 100 ORDER BY SUM(T2.NUMBER_OF_HOUSEHOLDS) DESC",
+    "pair_id": "d48192c6",
+    "original_question_id": "5139fa93",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `dim_geography_hierarchy`.`location_type` = 'Rural'. Join `dim_geography_hierarchy` with `fact_housing` and `fact_population_core` on `hierarchy_id`. Select `dim_geography_hierarchy`.`location_name`, `fact_population_core`.`total_population`, `fact_housing`.`number_of_households`. Filter `fact_housing`.`census_year` = 1991 and `fact_population_core`.`census_year` = 1991 and `fact_housing`.`number_of_households` > 100. Order by `fact_housing`.`number_of_households` DESC."
+  },
+  {
+    "question": "Location names dikhaao jahaan ya toh gharon ki sankhya 500 se zyada ho ya total female population total male population se zyada ho.",
+    "sql": "SELECT T1.LOCATION_NAME FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.NUMBER_OF_HOUSEHOLDS > 500 OR T3.TOTAL_FEMALE_POPULATION > T3.TOTAL_MALE_POPULATION",
+    "pair_id": "7637c0ed",
+    "original_question_id": "ebd18843",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `dim_geography_hierarchy`.`location_name` from `dim_geography_hierarchy` left join `fact_housing` on `dim_geography_hierarchy`.`hierarchy_id` = `fact_housing`.`hierarchy_id` left join `fact_population_core` on `dim_geography_hierarchy`.`hierarchy_id` = `fact_population_core`.`hierarchy_id` where `fact_housing`.`number_of_occupied_residential_houses` > 500 or `fact_population_core`.`total_female_population` > `fact_population_core`.`total_male_population`."
+  },
+  {
+    "question": "Location names dikhaao, alphabetically order mein, un areas ke liye jahaan ya toh total number of households 500 se zyada hai ya total female population total male population se zyada hai.",
+    "sql": "SELECT T1.LOCATION_NAME FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID GROUP BY T1.LOCATION_NAME HAVING SUM(T2.NUMBER_OF_HOUSEHOLDS) > 500 OR SUM(T3.TOTAL_FEMALE_POPULATION) > SUM(T3.TOTAL_MALE_POPULATION) ORDER BY T1.LOCATION_NAME ASC",
+    "pair_id": "25dde5f6",
+    "original_question_id": "ebd18843",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography_hierarchy`.`location_name` from `dim_geography_hierarchy` left join `fact_housing` on `dim_geography_hierarchy`.`hierarchy_id` = `fact_housing`.`hierarchy_id` and `fact_housing`.`census_year` = 1991 left join `fact_population_core` on `dim_geography_hierarchy`.`hierarchy_id` = `fact_population_core`.`hierarchy_id` and `fact_population_core`.`census_year` = 1991 where `fact_housing`.`number_of_households` > 500 or `fact_population_core`.`total_female_population` > `fact_population_core`.`total_male_population` order by `dim_geography_hierarchy`.`location_name` asc."
+  },
+  {
+    "question": "Andaman And Nicobar Islands state mein un areas ke liye location name aur sub-district dikhaiye jinki 1991 census year mein total population 500 se zyada thi. Inhe location name aur sub-district ke hisaab se group karein aur location name ke anusaar alphabetically order mein arrange karein.",
+    "sql": "SELECT T1.LOCATION_NAME, T1.SUB_DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.LOCATION_NAME, T1.SUB_DISTRICT HAVING SUM(T2.TOTAL_POPULATION) > 500 ORDER BY T1.LOCATION_NAME ASC",
+    "pair_id": "74511fb4",
+    "original_question_id": "72b7290d",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy.state` = 'Andaman And Nicobar Islands' and join with `fact_population_core` on `hierarchy_id` where `fact_population_core.census_year` = 1991 and `fact_population_core.total_population` > 500. Select `dim_geography_hierarchy.location_name` and `dim_geography_hierarchy.sub_district`, group by both columns, and order by `dim_geography_hierarchy.location_name` alphabetically."
+  },
+  {
+    "question": "Uttara (Rv) aur Bejoy Nagar (Rv) locations ke liye, Andaman And Nicobar Islands state mein, 1991 census year ke liye, location name aur sub-district list karo jahan total population sum 500 se zyada ho, aur results ko total population ke descending order mein arrange karo.",
+    "sql": "SELECT T1.LOCATION_NAME, T1.SUB_DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 INNER JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 AND T1.LOCATION_NAME IN ('Uttara (Rv)', 'Bejoy Nagar (Rv)') GROUP BY T1.LOCATION_NAME, T1.SUB_DISTRICT HAVING SUM(T2.TOTAL_POPULATION) > 500 ORDER BY SUM(T2.TOTAL_POPULATION) DESC",
+    "pair_id": "07600930",
+    "original_question_id": "72b7290d",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_geography_hierarchy` and `fact_population_core` on `hierarchy_id`. Filter where `dim_geography_hierarchy`.`location_name` IN ('Uttara (Rv)', 'Bejoy Nagar (Rv)') and `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `fact_population_core`.`census_year` = 1991 and `fact_population_core`.`total_population` > 500. Select `dim_geography_hierarchy`.`location_name` and `dim_geography_hierarchy`.`sub_district`. Order by `fact_population_core`.`total_population` DESC."
+  },
+  {
+    "question": "1991 ke census year ke liye, har district ko list karo jismein uski total population ka sum aur households ki sankhya ka sum ho, un districts ko filter karo jahan total population 500 se zyada hai, aur results ko total population aur households ki sankhya ke ratio ke hisaab se descending order mein arrange karo.",
+    "sql": "SELECT T1.DISTRICT, SUM(T3.TOTAL_POPULATION), SUM(T2.NUMBER_OF_HOUSEHOLDS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT HAVING SUM(T3.TOTAL_POPULATION) > 500 ORDER BY SUM(T3.TOTAL_POPULATION) / SUM(T2.NUMBER_OF_HOUSEHOLDS) DESC",
+    "pair_id": "e4a7719d",
+    "original_question_id": "17105268",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "For census_year 1991, list each `dim_geography_hierarchy`.`district` with the sum of `fact_population_core`.`total_population` and sum of `fact_housing`.`number_of_households`. Filter districts where the sum of `fact_population_core`.`total_population` > 500. Order results by (sum(`fact_population_core`.`total_population`) / sum(`fact_housing`.`number_of_households`)) descending. Join `dim_geography_hierarchy` with `fact_population_core` and `fact_housing` on `hierarchy_id`, and filter both fact tables on `census_year` = 1991."
+  },
+  {
+    "question": "India ke liye aur census year 1991 ke liye, un top 10 districts ko list karo jinki total population zero se zyada hai, aur unki calculated household density—jo ki households ki sankhya ka total population se bhag kar nikala gaya hai—ko highest to lowest order mein density ke hisaab se arrange karo.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.NUMBER_OF_HOUSEHOLDS) / CAST(SUM(T3.TOTAL_POPULATION) AS FLOAT) AS household_density FROM DIM_GEOGRAPHY_HIERARCHY AS T1 INNER JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID INNER JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.COUNTRY = 'India' AND T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT HAVING SUM(T3.TOTAL_POPULATION) > 0 ORDER BY household_density DESC LIMIT 10",
+    "pair_id": "14459121",
+    "original_question_id": "790f1dfd",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "COUNTRY",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy`.`country` = 'India' and `fact_housing`.`census_year` = 1991 and `fact_population_core`.`census_year` = 1991 and `fact_population_core`.`total_population` > 0. Join `dim_geography_hierarchy` with `fact_housing` and `fact_population_core` on `hierarchy_id`. Calculate household density as `fact_housing`.`number_of_households` / `fact_population_core`.`total_population`. Select top 10 `dim_geography_hierarchy`.`district` and density, order by density descending."
+  },
+  {
+    "question": "Location name, state, aur district list karein jahan households ki sankhya occupied residential houses se zyada ho, aur households ki sankhya ke hisaab se highest to lowest order mein arrange karein.",
+    "sql": "SELECT T1.LOCATION_NAME, T1.STATE, T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T2.NUMBER_OF_HOUSEHOLDS > T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES ORDER BY T2.NUMBER_OF_HOUSEHOLDS DESC",
+    "pair_id": "7ad5c30b",
+    "original_question_id": "833a4cdc",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_geography_hierarchy` and `fact_housing` on `hierarchy_id`. Select `dim_geography_hierarchy.location_name`, `dim_geography_hierarchy.state`, `dim_geography_hierarchy.district` where `fact_housing.number_of_households` > `fact_housing.number_of_occupied_residential_houses`. Order results by `fact_housing.number_of_households` descending."
+  },
+  {
+    "question": "Andaman And Nicobar Islands ke rural locations mein jahan total households ki sankhya total occupied residential houses se zyada hai, un locations ka naam, state aur district dikha do. Results ko total households ke hisaab se descending order mein arrange karo.",
+    "sql": "SELECT T1.LOCATION_NAME, T1.STATE, T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T1.LOCATION_TYPE = 'Rural' GROUP BY T1.LOCATION_NAME, T1.STATE, T1.DISTRICT HAVING SUM(T2.NUMBER_OF_HOUSEHOLDS) > SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) ORDER BY SUM(T2.NUMBER_OF_HOUSEHOLDS) DESC",
+    "pair_id": "2453f477",
+    "original_question_id": "833a4cdc",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Find locations where `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `dim_geography_hierarchy`.`location_type` = 'Rural', and where `fact_housing`.`number_of_households` > `fact_housing`.`number_of_occupied_residential_houses`. Show `dim_geography_hierarchy`.`location_name`, `dim_geography_hierarchy`.`state`, `dim_geography_hierarchy`.`district`. Order by `fact_housing`.`number_of_households` DESC."
+  },
+  {
+    "question": "Dikhaiye un areas ke location names jahan census year 1991 ho, total population 50,000 se zyada ho, aur households ki sankhya 10,000 se adhik ho, inhe location name ke hisaab se group karke alphabetical order mein arrange karein.",
+    "sql": "SELECT T1.LOCATION_NAME FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.TOTAL_POPULATION > 50000 AND T2.NUMBER_OF_HOUSEHOLDS > 10000 GROUP BY T1.LOCATION_NAME ORDER BY T1.LOCATION_NAME ASC",
+    "pair_id": "17abcd37",
+    "original_question_id": "bfa3c2e3",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve distinct `dim_geography_hierarchy.location_name` where `fact_population_core.census_year` = 1991 and `fact_population_core.total_population` > 50000 and `fact_housing.census_year` = 1991 and `fact_housing.number_of_households` > 10000, joining `dim_geography_hierarchy` with `fact_population_core` and `fact_housing` on `hierarchy_id`. Order results alphabetically by `dim_geography_hierarchy.location_name`."
+  },
+  {
+    "question": "1991 census year mein jin location names ka total population 50,000 se zyada tha aur households ki sankhya 10,000 se zyada thi, unhe list karo. Results ko total households ke hisaab se descending order mein arrange karo.",
+    "sql": "SELECT T1.LOCATION_NAME FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.LOCATION_NAME HAVING SUM(T3.TOTAL_POPULATION) > 50000 AND SUM(T2.NUMBER_OF_HOUSEHOLDS) > 10000 ORDER BY SUM(T2.NUMBER_OF_HOUSEHOLDS) DESC",
+    "pair_id": "8fd2cd5e",
+    "original_question_id": "bfa3c2e3",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography_hierarchy`.`location_name` and `fact_housing`.`number_of_households` from `dim_geography_hierarchy` join `fact_population_core` on `dim_geography_hierarchy`.`hierarchy_id` = `fact_population_core`.`hierarchy_id` join `fact_housing` on `dim_geography_hierarchy`.`hierarchy_id` = `fact_housing`.`hierarchy_id` where `fact_population_core`.`census_year` = 1991 and `fact_population_core`.`total_population` > 50000 and `fact_housing`.`census_year` = 1991 and `fact_housing`.`number_of_households` > 10000 order by `fact_housing`.`number_of_households` desc."
+  },
+  {
+    "question": "'Andaman And Nicobar Islands' state ke liye aur 1991 census year ke liye, location name aur location type ke saath total households ki sankhya list karo, location name aur location type ke hisaab se group karke aur order mein.",
+    "sql": "SELECT T1.LOCATION_NAME, T1.LOCATION_TYPE, SUM(T2.NUMBER_OF_HOUSEHOLDS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.LOCATION_NAME, T1.LOCATION_TYPE ORDER BY T1.LOCATION_NAME",
+    "pair_id": "d5bba9de",
+    "original_question_id": "ac3e9f84",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `fact_housing`.`census_year` = 1991. Join `dim_geography_hierarchy` and `fact_housing` on `hierarchy_id`. Select `dim_geography_hierarchy`.`location_name`, `dim_geography_hierarchy`.`location_type`, and SUM(`fact_housing`.`number_of_households`) as total_households. Group by `dim_geography_hierarchy`.`location_name`, `dim_geography_hierarchy`.`location_type`. Order by `dim_geography_hierarchy`.`location_name`, `dim_geography_hierarchy`.`location_type`."
+  },
+  {
+    "question": "'Andaman And Nicobar Islands' state mein 1991 census year ke liye un locations ki location name, location type, aur total number of households dikhaiye jahan total number of households 100 se zyada ho, aur results ko total number of households ke hisaab se descending order mein rank karein.",
+    "sql": "SELECT T1.LOCATION_NAME, T1.LOCATION_TYPE, SUM(T2.NUMBER_OF_HOUSEHOLDS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.LOCATION_NAME, T1.LOCATION_TYPE HAVING SUM(T2.NUMBER_OF_HOUSEHOLDS) > 100 ORDER BY SUM(T2.NUMBER_OF_HOUSEHOLDS) DESC",
+    "pair_id": "25c6f14b",
+    "original_question_id": "ac3e9f84",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `fact_housing`.`census_year` = 1991 and `fact_housing`.`number_of_households` > 100. Select `dim_geography_hierarchy`.`location_name`, `dim_geography_hierarchy`.`location_type`, `fact_housing`.`number_of_households`. Join `dim_geography_hierarchy`.`hierarchy_id` = `fact_housing`.`hierarchy_id`. Order by `fact_housing`.`number_of_households` DESC."
+  },
+  {
+    "question": "Census year 1991 ke liye, har state ko list karo jisme total households ki sankhya aur average occupied residential houses ki sankhya ho, grouped by state.",
+    "sql": "SELECT T1.STATE, SUM(T2.NUMBER_OF_HOUSEHOLDS), AVG(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 GROUP BY T1.STATE",
+    "pair_id": "de0da2c9",
+    "original_question_id": "b6a8efe0",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "COUNTRY",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `fact_housing.census_year` = 1991. Join `fact_housing` with `dim_geography_hierarchy` on `fact_housing.hierarchy_id` = `dim_geography_hierarchy.hierarchy_id`. Group by `dim_geography_hierarchy.state`. Compute sum(`fact_housing.number_of_households`) as total households and avg(`fact_housing.number_of_occupied_residential_houses`) as average occupied houses per state."
+  },
+  {
+    "question": "1991 ke census year ke liye, har state ko list karo jismein total number of households aur average number of occupied residential houses ho, un states ko filter karo jahan total number of households 100 se zyada hai, aur results ko average number of occupied residential houses ke hisaab se descending order mein arrange karo.",
+    "sql": "SELECT T1.STATE, SUM(T2.NUMBER_OF_HOUSEHOLDS), AVG(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 INNER JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 GROUP BY T1.STATE HAVING SUM(T2.NUMBER_OF_HOUSEHOLDS) > 100 ORDER BY AVG(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) DESC",
+    "pair_id": "5b9e47bd",
+    "original_question_id": "b6a8efe0",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "COUNTRY",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Query requires: join `fact_housing` and `dim_geography_hierarchy` on `hierarchy_id`, filter `fact_housing`.`census_year` = 1991, group by `dim_geography_hierarchy`.`state`, compute SUM(`fact_housing`.`number_of_households`) as total_households and AVG(`fact_housing`.`number_of_occupied_residential_houses`) as avg_occupied_houses, having SUM(`fact_housing`.`number_of_households`) > 100, order by avg_occupied_houses DESC."
+  },
+  {
+    "question": "Census year 1991 ke liye, har district aur total households ki sankhya list karo, jise total households ke hisaab se descending order mein sort karna hai.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.NUMBER_OF_HOUSEHOLDS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT ORDER BY SUM(T2.NUMBER_OF_HOUSEHOLDS) DESC",
+    "pair_id": "b6f23857",
+    "original_question_id": "261edce0",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_CORE": [
+        "HIERARCHY_ID",
+        "TOTAL_FEMALE_POPULATION",
+        "POPULATION_CORE_ID",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "CENSUS_YEAR"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_geography_hierarchy` and `fact_housing` on `hierarchy_id`. Filter where `fact_housing`.`census_year` = 1991. Group by `dim_geography_hierarchy`.`district`. For each district, sum `fact_housing`.`number_of_households` as total households. Order by total households descending."
+  },
+  {
+    "question": "'Andaman And Nicobar Islands' state ke liye 1991 census year mein, har district aur uski calculated household density list karo—jisme household density ko total households divided by total occupied residential houses define kiya gaya hai—ensure karo ki total occupied residential houses zero se zyada ho, aur top 10 districts with highest density dikhao.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.NUMBER_OF_HOUSEHOLDS) / SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) AS household_density FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT HAVING SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) > 0 ORDER BY household_density DESC LIMIT 10",
+    "pair_id": "3cd19b25",
+    "original_question_id": "b8aecf83",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy.state` = 'Andaman And Nicobar Islands' and `fact_housing.census_year` = 1991. Join `dim_geography_hierarchy` and `fact_housing` on `hierarchy_id`. Calculate household density as `fact_housing.number_of_households` / `fact_housing.number_of_occupied_residential_houses`. Ensure `fact_housing.number_of_occupied_residential_houses` > 0. Group by `dim_geography_hierarchy.district`. Order by density descending, limit 10."
+  },
+  {
+    "question": "Jahan par households ki sankhya occupied residential houses se zyada ho, wahan ke location name, state, aur district ke saath total male scheduled caste population aur total female scheduled caste population list karo, location name ke hisaab se group aur order karke.",
+    "sql": "SELECT T1.LOCATION_NAME, T1.STATE, T1.DISTRICT, SUM(T3.MALE_SCHEDULED_CASTE_POPULATION), SUM(T3.FEMALE_SCHEDULED_CASTE_POPULATION) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_SOCIAL_CATEGORY AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.NUMBER_OF_HOUSEHOLDS > T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES GROUP BY T1.LOCATION_NAME, T1.STATE, T1.DISTRICT ORDER BY T1.LOCATION_NAME",
+    "pair_id": "f8bf9d4d",
+    "original_question_id": "e066abe4",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_SOCIAL_CATEGORY"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_SOCIAL_CATEGORY": [
+        "HIERARCHY_ID",
+        "MALE_SCHEDULED_TRIBE_POPULATION",
+        "MALE_SCHEDULED_CASTE_POPULATION",
+        "POPULATION_SOCIAL_ID",
+        "FEMALE_SCHEDULED_CASTE_POPULATION",
+        "CENSUS_YEAR"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter rows where `fact_housing`.`number_of_households` > `fact_housing`.`number_of_occupied_residential_houses`. Then join `dim_geography_hierarchy` with `fact_housing` on `dim_geography_hierarchy`.`hierarchy_id` = `fact_housing`.`hierarchy_id`. Also join `fact_population_social_category` on `fact_population_social_category`.`hierarchy_id` = `dim_geography_hierarchy`.`hierarchy_id` and `fact_population_social_category`.`census_year` = `fact_housing`.`census_year`. Select `dim_geography_hierarchy`.`location_name`, `dim_geography_hierarchy`.`state`, `dim_geography_hierarchy`.`district`, SUM(`fact_population_social_category`.`male_scheduled_caste_population`) as total_male_scheduled_caste_population, SUM(`fact_population_social_category`.`female_scheduled_caste_population`) as total_female_scheduled_caste_population. Group by `dim_geography_hierarchy`.`location_name`, `dim_geography_hierarchy`.`state`, `dim_geography_hierarchy`.`district`. Order by `dim_geography_hierarchy`.`location_name`."
+  },
+  {
+    "question": "Location name, state, aur district dikhaiye, saath hi total male scheduled caste population aur total female scheduled caste population un areas ke liye jahan households ki sankhya occupied residential houses se zyada ho, aur yeh ensure karein ki kam se kam ek housing record maujood ho; results ko location name, state, aur district ke hisaab se group karein aur unhe total male scheduled caste population ke descending order mein arrange karein.",
+    "sql": "SELECT T1.LOCATION_NAME, T1.STATE, T1.DISTRICT, SUM(T3.MALE_SCHEDULED_CASTE_POPULATION), SUM(T3.FEMALE_SCHEDULED_CASTE_POPULATION) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_SOCIAL_CATEGORY AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.NUMBER_OF_HOUSEHOLDS > T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES GROUP BY T1.LOCATION_NAME, T1.STATE, T1.DISTRICT HAVING COUNT(T2.HOUSING_ID) > 0 ORDER BY SUM(T3.MALE_SCHEDULED_CASTE_POPULATION) DESC",
+    "pair_id": "65a1bb85",
+    "original_question_id": "e066abe4",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_SOCIAL_CATEGORY"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_SOCIAL_CATEGORY": [
+        "HIERARCHY_ID",
+        "MALE_SCHEDULED_TRIBE_POPULATION",
+        "MALE_SCHEDULED_CASTE_POPULATION",
+        "POPULATION_SOCIAL_ID",
+        "FEMALE_SCHEDULED_CASTE_POPULATION",
+        "CENSUS_YEAR"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_geography_hierarchy` with `fact_population_social_category` and `fact_housing` on `hierarchy_id`. Select `dim_geography_hierarchy`.`location_name`, `dim_geography_hierarchy`.`state`, `dim_geography_hierarchy`.`district`, `fact_population_social_category`.`male_scheduled_caste_population`, `fact_population_social_category`.`female_scheduled_caste_population`. Filter where `fact_housing`.`number_of_households` > `fact_housing`.`number_of_occupied_residential_houses`. Group by `dim_geography_hierarchy`.`location_name`, `dim_geography_hierarchy`.`state`, `dim_geography_hierarchy`.`district`. Order by `fact_population_social_category`.`male_scheduled_caste_population` DESC."
+  },
+  {
+    "question": "'Rural' type ke locations ke naam list karo jahan census year 1991 hai aur male scheduled caste population exactly 0.000 hai, aur phir un locations ko filter karo jahan male scheduled tribe population ka total sum bhi 0.000 hai.",
+    "sql": "SELECT T1.LOCATION_NAME FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_SOCIAL_CATEGORY AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.LOCATION_TYPE = 'Rural' AND T2.CENSUS_YEAR = 1991 AND T2.MALE_SCHEDULED_CASTE_POPULATION = 0.000 GROUP BY T1.LOCATION_NAME HAVING SUM(T2.MALE_SCHEDULED_TRIBE_POPULATION) = 0.000",
+    "pair_id": "0f85ea76",
+    "original_question_id": "425b730d",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_SOCIAL_CATEGORY"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_SOCIAL_CATEGORY": [
+        "POPULATION_SOCIAL_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_SCHEDULED_CASTE_POPULATION",
+        "FEMALE_SCHEDULED_CASTE_POPULATION",
+        "MALE_SCHEDULED_TRIBE_POPULATION",
+        "FEMALE_SCHEDULED_TRIBE_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_geography_hierarchy.location_name` where `dim_geography_hierarchy.location_type` = 'Rural', join with `fact_population_social_category` on `hierarchy_id`, where `fact_population_social_category.census_year` = 1991, `fact_population_social_category.male_scheduled_caste_population` = 0, and `fact_population_social_category.male_scheduled_tribe_population` = 0."
+  },
+  {
+    "question": "Location names ki list alphabetical order mein do, jahan census year 1991 ho dono housing aur population records ke liye. Specifically un locations ko filter karo jahan total households ka number zero se zyada ho aur jahan male aur female scheduled tribe population ka combined sum exactly zero ho.",
+    "sql": "SELECT T1.LOCATION_NAME FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_SOCIAL_CATEGORY AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.LOCATION_NAME HAVING SUM(T2.NUMBER_OF_HOUSEHOLDS) > 0.000 AND SUM(T3.MALE_SCHEDULED_TRIBE_POPULATION + T3.FEMALE_SCHEDULED_TRIBE_POPULATION) = 0.000 ORDER BY T1.LOCATION_NAME ASC",
+    "pair_id": "536e47ae",
+    "original_question_id": "425b730d",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_SOCIAL_CATEGORY"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_SOCIAL_CATEGORY": [
+        "POPULATION_SOCIAL_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_SCHEDULED_CASTE_POPULATION",
+        "FEMALE_SCHEDULED_CASTE_POPULATION",
+        "MALE_SCHEDULED_TRIBE_POPULATION",
+        "FEMALE_SCHEDULED_TRIBE_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography_hierarchy`.`location_name` from `dim_geography_hierarchy` join `fact_housing` on `dim_geography_hierarchy`.`hierarchy_id` = `fact_housing`.`hierarchy_id` join `fact_population_social_category` on `dim_geography_hierarchy`.`hierarchy_id` = `fact_population_social_category`.`hierarchy_id` where `fact_housing`.`census_year` = 1991 and `fact_population_social_category`.`census_year` = 1991 and `fact_housing`.`number_of_households` > 0 and (`fact_population_social_category`.`male_scheduled_tribe_population` + `fact_population_social_category`.`female_scheduled_tribe_population`) = 0 order by `dim_geography_hierarchy`.`location_name`."
+  },
+  {
+    "question": "1991 census year mein jin areas mein occupied residential houses ki sankhya 5000 se zyada thi aur female scheduled tribe population 1000 se zyada thi, un location names ki list batao.",
+    "sql": "SELECT T1.LOCATION_NAME FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_SOCIAL_CATEGORY AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES > 5000 AND T3.FEMALE_SCHEDULED_TRIBE_POPULATION > 1000",
+    "pair_id": "f1dd5048",
+    "original_question_id": "35cb5a8a",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_SOCIAL_CATEGORY"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_SOCIAL_CATEGORY": [
+        "HIERARCHY_ID",
+        "MALE_SCHEDULED_TRIBE_POPULATION",
+        "MALE_SCHEDULED_CASTE_POPULATION",
+        "POPULATION_SOCIAL_ID",
+        "FEMALE_SCHEDULED_TRIBE_POPULATION",
+        "FEMALE_SCHEDULED_CASTE_POPULATION",
+        "CENSUS_YEAR"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_geography_hierarchy.location_name` where `fact_housing.census_year` = 1991 and `fact_housing.number_of_occupied_residential_houses` > 5000, and `fact_population_social_category.census_year` = 1991 and `fact_population_social_category.female_scheduled_tribe_population` > 1000, joining `dim_geography_hierarchy` with `fact_housing` and `fact_population_social_category` on `hierarchy_id`."
+  },
+  {
+    "question": "1991 census ke data ke hisaab se, un location names batao jinke liye occupied residential houses ki total sankhya 5000 se zyada thi aur total female scheduled tribe population 1000 se zyada thi. Results ko location name ke hisaab se alphabetically sort karo.",
+    "sql": "SELECT T1.LOCATION_NAME FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_SOCIAL_CATEGORY AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.LOCATION_NAME HAVING SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) > 5000 AND SUM(T3.FEMALE_SCHEDULED_TRIBE_POPULATION) > 1000 ORDER BY T1.LOCATION_NAME ASC",
+    "pair_id": "c9605267",
+    "original_question_id": "35cb5a8a",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_SOCIAL_CATEGORY"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_SOCIAL_CATEGORY": [
+        "HIERARCHY_ID",
+        "MALE_SCHEDULED_TRIBE_POPULATION",
+        "MALE_SCHEDULED_CASTE_POPULATION",
+        "POPULATION_SOCIAL_ID",
+        "FEMALE_SCHEDULED_TRIBE_POPULATION",
+        "FEMALE_SCHEDULED_CASTE_POPULATION",
+        "CENSUS_YEAR"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `fact_housing` and `fact_population_social_category` where `census_year` = 1991. Join both fact tables with `dim_geography_hierarchy` on `hierarchy_id`. Select `dim_geography_hierarchy`.`location_name` where `fact_housing`.`number_of_occupied_residential_houses` > 5000 and `fact_population_social_category`.`female_scheduled_tribe_population` > 1000. Order results by `dim_geography_hierarchy`.`location_name` ascending."
+  },
+  {
+    "question": "Un locations ki list banao jahan ya to total population aur total male population ka average ratio 5 se zyada ho, ya phir female scheduled tribe population ka total sum 500 se exceed karta ho.",
+    "sql": "SELECT T1.LOCATION_NAME FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_SOCIAL_CATEGORY AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID GROUP BY T1.LOCATION_NAME HAVING AVG(T2.TOTAL_POPULATION / NULLIF(T2.TOTAL_MALE_POPULATION, 0)) > 5 OR SUM(T3.FEMALE_SCHEDULED_TRIBE_POPULATION) > 500",
+    "pair_id": "ad510a30",
+    "original_question_id": "6a5bac01",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_POPULATION_CORE",
+      "FACT_POPULATION_SOCIAL_CATEGORY"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ],
+      "FACT_POPULATION_SOCIAL_CATEGORY": [
+        "POPULATION_SOCIAL_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_SCHEDULED_CASTE_POPULATION",
+        "FEMALE_SCHEDULED_CASTE_POPULATION",
+        "MALE_SCHEDULED_TRIBE_POPULATION",
+        "FEMALE_SCHEDULED_TRIBE_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_geography_hierarchy.location_name` for locations where either: (1) the ratio `fact_population_core.total_population` / `fact_population_core.total_male_population` > 5 per location (assuming one row per location in fact tables), OR (2) the sum of `fact_population_social_category.female_scheduled_tribe_population` > 500 per location. Join `dim_geography_hierarchy` with `fact_population_core` and `fact_population_social_category` on `hierarchy_id`. Group by `dim_geography_hierarchy.hierarchy_id` and `dim_geography_hierarchy.location_name`."
+  },
+  {
+    "question": "'Andaman And Nicobar Islands' state ke liye 1991 census year mein, har location name ke saath total occupied residential houses aur total households ki sankhya list karo, location name ke hisaab se group karke order mein.",
+    "sql": "SELECT T1.LOCATION_NAME, SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES), SUM(T2.NUMBER_OF_HOUSEHOLDS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.LOCATION_NAME ORDER BY T1.LOCATION_NAME",
+    "pair_id": "44eec8d9",
+    "original_question_id": "fb849d0d",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `fact_housing`.`census_year` = 1991. Join `dim_geography_hierarchy` and `fact_housing` on `hierarchy_id`. Select `dim_geography_hierarchy`.`location_name`, SUM(`fact_housing`.`number_of_occupied_residential_houses`) as total_occupied_houses, SUM(`fact_housing`.`number_of_households`) as total_households. Group by `dim_geography_hierarchy`.`location_name`. Order by `dim_geography_hierarchy`.`location_name`."
+  },
+  {
+    "question": "'Andaman And Nicobar Islands' state ke liye, census year 1991 mein, har location ka naam, total occupied residential houses ki sankhya, aur total households ki sankhya list karo, jahan total occupied residential houses 100 se zyada ho, aur results ko total households ke hisaab se descending order mein arrange karo.",
+    "sql": "SELECT T1.LOCATION_NAME, SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES), SUM(T2.NUMBER_OF_HOUSEHOLDS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 INNER JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.LOCATION_NAME HAVING SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) > 100 ORDER BY SUM(T2.NUMBER_OF_HOUSEHOLDS) DESC",
+    "pair_id": "055515a1",
+    "original_question_id": "fb849d0d",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_geography_hierarchy` and `fact_housing` on `dim_geography_hierarchy`.`hierarchy_id` = `fact_housing`.`hierarchy_id`. Filter where `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `fact_housing`.`census_year` = 1991 and `fact_housing`.`number_of_occupied_residential_houses` > 100. Select `dim_geography_hierarchy`.`location_name`, `fact_housing`.`number_of_occupied_residential_houses`, `fact_housing`.`number_of_households`. Order by `fact_housing`.`number_of_households` DESC."
+  },
+  {
+    "question": "Census year 1991 ke liye, har state ki list banao jisme total male working population, total female working population, aur average households ki sankhya ho, state ke hisaab se group karke.",
+    "sql": "SELECT T1.STATE, SUM(T2.MALE_WORKING_POPULATION), SUM(T2.FEMALE_WORKING_POPULATION), AVG(T3.NUMBER_OF_HOUSEHOLDS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKFORCE_STATUS AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_HOUSING AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.STATE",
+    "pair_id": "1fbdbf62",
+    "original_question_id": "f5b95d52",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKFORCE_STATUS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKFORCE_STATUS": [
+        "WORKFORCE_STATUS_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKING_POPULATION",
+        "FEMALE_WORKING_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter by census_year = 1991 in both fact_workforce_status and fact_housing. Join dim_geography_hierarchy with fact_workforce_status and fact_housing on hierarchy_id. Group by dim_geography_hierarchy.state. Compute SUM(fact_workforce_status.male_working_population) as total male working population, SUM(fact_workforce_status.female_working_population) as total female working population, and AVG(fact_housing.number_of_households) as average households per state."
+  },
+  {
+    "question": "1991 ke census year ke liye, har state ko list karo jisme total male working population, total female working population, aur average number of households ho, specifically un states ke liye jinke paas ek se zyada districts hain, aur results ko total male working population ke descending order mein arrange karo.",
+    "sql": "SELECT T1.STATE, SUM(T2.MALE_WORKING_POPULATION), SUM(T2.FEMALE_WORKING_POPULATION), AVG(T3.NUMBER_OF_HOUSEHOLDS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKFORCE_STATUS AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_HOUSING AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.STATE HAVING COUNT(DISTRICT) > 1 ORDER BY SUM(T2.MALE_WORKING_POPULATION) DESC",
+    "pair_id": "c9422004",
+    "original_question_id": "f5b95d52",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKFORCE_STATUS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKFORCE_STATUS": [
+        "WORKFORCE_STATUS_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKING_POPULATION",
+        "FEMALE_WORKING_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Need to compute aggregated data for each state for census year 1991. Must filter states that have more than one district. Use fact_workforce_status for male and female working population totals, fact_housing for average number_of_households. Join via hierarchy_id to dim_geography_hierarchy to get state and district. Group by state (`dim_geography_hierarchy`.`state`). For states with multiple districts, count distinct districts (`dim_geography_hierarchy`.`district`) per state and retain where count > 1. Sum `fact_workforce_status`.`male_working_population` and `fact_workforce_status`.`female_working_population` per state, average `fact_housing`.`number_of_households` per state (using AVG). Filter `fact_workforce_status`.`census_year` = 1991 and `fact_housing`.`census_year` = 1991. Order results by sum of male working population descending."
+  },
+  {
+    "question": "'Andaman And Nicobar Islands' state ke liye, har district aur uski household density list karo, jo ki total households ki sankhya ko total occupied residential houses se divide karke calculate hoti hai, un districts ke liye jahan total occupied residential houses 100 se zyada hain, aur results ko household density ke hisaab se descending order mein sort karo.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.NUMBER_OF_HOUSEHOLDS) / SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) AS household_density FROM DIM_GEOGRAPHY_HIERARCHY AS T1 INNER JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' GROUP BY T1.DISTRICT HAVING SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) > 100 ORDER BY household_density DESC",
+    "pair_id": "68b7c3cd",
+    "original_question_id": "2b7e1478",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy.state` = 'Andaman And Nicobar Islands'. Join `dim_geography_hierarchy` with `fact_housing` on `hierarchy_id`. Select `dim_geography_hierarchy.district`, `fact_housing.number_of_households`, `fact_housing.number_of_occupied_residential_houses`. Calculate household density as `fact_housing.number_of_households` / `fact_housing.number_of_occupied_residential_houses`. Filter where `fact_housing.number_of_occupied_residential_houses` > 100. Order by household density DESC."
+  },
+  {
+    "question": "Census year 1991 ke liye, district aur female working population list karo, jahan female working population sabse zyada ho, top 10 records ke liye.",
+    "sql": "SELECT T1.DISTRICT, T2.FEMALE_WORKING_POPULATION FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKFORCE_STATUS AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 ORDER BY T2.FEMALE_WORKING_POPULATION DESC LIMIT 10",
+    "pair_id": "367cce91",
+    "original_question_id": "4cbbfe0e",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE",
+      "FACT_WORKFORCE_STATUS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ],
+      "FACT_WORKFORCE_STATUS": [
+        "WORKFORCE_STATUS_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKING_POPULATION",
+        "FEMALE_WORKING_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography_hierarchy`.`district` and `fact_workforce_status`.`female_working_population` from `dim_geography_hierarchy` inner join `fact_workforce_status` on `dim_geography_hierarchy`.`hierarchy_id` = `fact_workforce_status`.`hierarchy_id` where `fact_workforce_status`.`census_year` = 1991 order by `fact_workforce_status`.`female_working_population` desc limit 10."
+  },
+  {
+    "question": "Har district ke liye district aur total female working population list karo, 1991 census year ke liye filter karke dono workforce aur population records mein, aur sirf top 10 districts dikhao jinki total female working population sabse zyada hai.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.FEMALE_WORKING_POPULATION) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKFORCE_STATUS AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT ORDER BY SUM(T2.FEMALE_WORKING_POPULATION) DESC LIMIT 10",
+    "pair_id": "51aebed4",
+    "original_question_id": "4cbbfe0e",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE",
+      "FACT_WORKFORCE_STATUS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ],
+      "FACT_WORKFORCE_STATUS": [
+        "WORKFORCE_STATUS_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKING_POPULATION",
+        "FEMALE_WORKING_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_geography_hierarchy` with `fact_workforce_status` and `fact_population_core` on `hierarchy_id`. Filter both fact tables for `census_year` = 1991. Group by `dim_geography_hierarchy.district`. Sum `fact_workforce_status.female_working_population` as total_female_working_population. Order by total_female_working_population descending, limit 10."
+  },
+  {
+    "question": "1991 ke census year ke liye, har location name ke saath total working population (jo male aur female working populations ka sum hai) aur total households ki sankhya list karo, location name ke hisaab se group karke.",
+    "sql": "SELECT T1.LOCATION_NAME, SUM(T2.MALE_WORKING_POPULATION + T2.FEMALE_WORKING_POPULATION), SUM(T3.NUMBER_OF_HOUSEHOLDS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKFORCE_STATUS AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_HOUSING AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.LOCATION_NAME",
+    "pair_id": "5e8052d8",
+    "original_question_id": "622ebd17",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKFORCE_STATUS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKFORCE_STATUS": [
+        "WORKFORCE_STATUS_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKING_POPULATION",
+        "FEMALE_WORKING_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "For census_year = 1991, join `dim_geography_hierarchy` with `fact_workforce_status` and `fact_housing` on `hierarchy_id`. Select `dim_geography_hierarchy.location_name`, sum(`fact_workforce_status.male_working_population` + `fact_workforce_status.female_working_population`) as total_working_population, and `fact_housing.number_of_households` as total_households. Group by `dim_geography_hierarchy.location_name`."
+  },
+  {
+    "question": "Census year 1991 ke liye, har location ka naam, total working population (jismein male aur female working populations ka sum hai), aur total households ki sankhya list karo. Specifically un locations ke liye jahan total households ki sankhya 100 se zyada hai, aur results ko total working population ke hisaab se descending order mein arrange karo.",
+    "sql": "SELECT T1.LOCATION_NAME, SUM(T2.MALE_WORKING_POPULATION + T2.FEMALE_WORKING_POPULATION), SUM(T3.NUMBER_OF_HOUSEHOLDS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKFORCE_STATUS AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_HOUSING AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.LOCATION_NAME HAVING SUM(T3.NUMBER_OF_HOUSEHOLDS) > 100 ORDER BY SUM(T2.MALE_WORKING_POPULATION + T2.FEMALE_WORKING_POPULATION) DESC",
+    "pair_id": "e9846881",
+    "original_question_id": "622ebd17",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKFORCE_STATUS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKFORCE_STATUS": [
+        "WORKFORCE_STATUS_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKING_POPULATION",
+        "FEMALE_WORKING_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_geography_hierarchy` with `fact_workforce_status` and `fact_housing` on `hierarchy_id`. Filter where `fact_workforce_status.census_year` = 1991 and `fact_housing.census_year` = 1991 and `fact_housing.number_of_households` > 100. Select `dim_geography_hierarchy.location_name`, (`fact_workforce_status.male_working_population` + `fact_workforce_status.female_working_population`) as total_working_population, `fact_housing.number_of_households`. Order by total_working_population DESC."
+  },
+  {
+    "question": "1991 census year ke liye India ke un districts ki list banao jahan female working population 64,000 se zyada thi aur usi saal mein occupied residential houses ki maximum sankhya 291,000 se zyada nahi thi. List ko district ke naam ke hisaab se alphabetical order mein arrange karo.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKFORCE_STATUS AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_HOUSING AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.COUNTRY = 'India' AND T2.CENSUS_YEAR = 1991 AND T2.FEMALE_WORKING_POPULATION > 64.000 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT HAVING MAX(T3.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) <= 291.000 ORDER BY T1.DISTRICT",
+    "pair_id": "7d177c0e",
+    "original_question_id": "77c9503d",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKFORCE_STATUS"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "COUNTRY",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKFORCE_STATUS": [
+        "WORKFORCE_STATUS_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKING_POPULATION",
+        "FEMALE_WORKING_POPULATION"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography_hierarchy`.`district` where `dim_geography_hierarchy`.`country` = 'India' and `fact_workforce_status`.`census_year` = 1991 and `fact_workforce_status`.`female_working_population` > 64000 and `fact_housing`.`census_year` = 1991 and `fact_housing`.`number_of_occupied_residential_houses` <= 291000, joining `dim_geography_hierarchy` with `fact_workforce_status` and `fact_housing` on `hierarchy_id`. Order by `dim_geography_hierarchy`.`district` alphabetically."
+  },
+  {
+    "question": "'Andaman And Nicobar Islands' state mein jo locations 'Rural' category mein hain, unke location name, households ki sankhya, aur occupied residential houses ki sankhya list karo, aur location name ke hisaab se alphabetical order mein arrange karo.",
+    "sql": "SELECT T1.LOCATION_NAME, T2.NUMBER_OF_HOUSEHOLDS, T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T1.LOCATION_TYPE = 'Rural' ORDER BY T1.LOCATION_NAME",
+    "pair_id": "a243f062",
+    "original_question_id": "eb9ec886",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `dim_geography_hierarchy`.`location_type` = 'Rural'. Join `dim_geography_hierarchy` with `fact_housing` on `hierarchy_id`. Select `dim_geography_hierarchy`.`location_name`, `fact_housing`.`number_of_households`, `fact_housing`.`number_of_occupied_residential_houses`. Order by `dim_geography_hierarchy`.`location_name` alphabetically."
+  },
+  {
+    "question": "'Andaman And Nicobar Islands' state mein 'Rural' location type wale locations ke liye, har location ka naam, total households ki sankhya, aur total occupied residential houses ki sankhya list karo. Unhe filter karo jahan total occupied residential houses 100 se zyada hain, aur results ko total households ki sankhya ke hisaab se descending order mein arrange karo.",
+    "sql": "SELECT T1.LOCATION_NAME, SUM(T2.NUMBER_OF_HOUSEHOLDS), SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 INNER JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T1.LOCATION_TYPE = 'Rural' GROUP BY T1.LOCATION_NAME HAVING SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) > 100 ORDER BY SUM(T2.NUMBER_OF_HOUSEHOLDS) DESC",
+    "pair_id": "6fa7b143",
+    "original_question_id": "eb9ec886",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select (`dim_geography_hierarchy`.`location_name`), (`fact_housing`.`number_of_households`), (`fact_housing`.`number_of_occupied_residential_houses`) from `dim_geography_hierarchy` join `fact_housing` on `dim_geography_hierarchy`.`hierarchy_id` = `fact_housing`.`hierarchy_id` where `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `dim_geography_hierarchy`.`location_type` = 'Rural' and `fact_housing`.`number_of_occupied_residential_houses` > 100 order by `fact_housing`.`number_of_households` desc."
+  },
+  {
+    "question": "1991 census ke liye, har state ke saath list karo total households ki sankhya aur average male main workers jo cultivators hain, state ke hisaab se group karke.",
+    "sql": "SELECT T1.STATE, SUM(T2.NUMBER_OF_HOUSEHOLDS), AVG(T3.MALE_MAIN_WORKERS_CULTIVATORS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_WORKERS_PRIMARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.STATE",
+    "pair_id": "1768321a",
+    "original_question_id": "2d5377a2",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKERS_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "COUNTRY",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKERS_PRIMARY_SECTOR": [
+        "WORKERS_PRIMARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_MAIN_WORKERS_CULTIVATORS",
+        "FEMALE_MAIN_WORKERS_CULTIVATORS",
+        "MALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "MALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "FEMALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "MALE_MAIN_WORKERS_MINING_QUARRYING",
+        "FEMALE_MAIN_WORKERS_MINING_QUARRYING"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Sum (`fact_housing`.`number_of_households`) as total_households and average (`fact_workers_primary_sector`.`male_main_workers_cultivators`) as avg_male_cultivators for census_year = 1991, grouped by (`dim_geography_hierarchy`.`state`). Join `dim_geography_hierarchy` with `fact_housing` and `fact_workers_primary_sector` on `hierarchy_id`."
+  },
+  {
+    "question": "Census year 1991 ke liye, har state ko list karo jisme total households ki sankhya aur male main workers jo cultivators hain unka average number ho, state ke hisaab se group karke aur total households ki sankhya ke descending order mein arrange karo.",
+    "sql": "SELECT T1.STATE, SUM(T2.NUMBER_OF_HOUSEHOLDS), AVG(T3.MALE_MAIN_WORKERS_CULTIVATORS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_WORKERS_PRIMARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.STATE ORDER BY SUM(T2.NUMBER_OF_HOUSEHOLDS) DESC",
+    "pair_id": "9f51cb53",
+    "original_question_id": "2d5377a2",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKERS_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "COUNTRY",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKERS_PRIMARY_SECTOR": [
+        "WORKERS_PRIMARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_MAIN_WORKERS_CULTIVATORS",
+        "FEMALE_MAIN_WORKERS_CULTIVATORS",
+        "MALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "MALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "FEMALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "MALE_MAIN_WORKERS_MINING_QUARRYING",
+        "FEMALE_MAIN_WORKERS_MINING_QUARRYING"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "For census_year = 1991, group by `dim_geography_hierarchy`.`state`. Compute sum(`fact_housing`.`number_of_households`) as total_households and avg(`fact_workers_primary_sector`.`male_main_workers_cultivators`) as avg_male_cultivators. Order by total_households DESC."
+  },
+  {
+    "question": "Dikha do un districts ko jahan census year 1991 hai aur female main workers jo agricultural labourers hain unka record hai, specifically un districts ko filter karo jahan female main workers jo agricultural labourers hain unka total sum 5000 se zyada hai, aur order karo highest sum se lowest sum tak.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_WORKERS_PRIMARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS > 0.000 GROUP BY T1.DISTRICT HAVING SUM(T3.FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS) > 5000 ORDER BY SUM(T3.FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS) DESC",
+    "pair_id": "dd2c3b18",
+    "original_question_id": "577eebd0",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE",
+      "FACT_WORKERS_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ],
+      "FACT_WORKERS_PRIMARY_SECTOR": [
+        "WORKERS_PRIMARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_MAIN_WORKERS_CULTIVATORS",
+        "FEMALE_MAIN_WORKERS_CULTIVATORS",
+        "MALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "MALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "FEMALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "MALE_MAIN_WORKERS_MINING_QUARRYING",
+        "FEMALE_MAIN_WORKERS_MINING_QUARRYING"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_geography_hierarchy` and `fact_workers_primary_sector` on `hierarchy_id`. Filter where `fact_workers_primary_sector`.`census_year` = 1991. Group by `dim_geography_hierarchy`.`district`. Sum `fact_workers_primary_sector`.`female_main_workers_agricultural_labourers` per district. Keep only districts where sum > 5000. Order by sum descending."
+  },
+  {
+    "question": "'Andaman And Nicobar Islands' state aur 1991 census year ke liye, har district ko list karo aur total female main workers joh agricultural labourers hain, unka total number descending order mein sort karke.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKERS_PRIMARY_SECTOR AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT ORDER BY SUM(T2.FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS) DESC",
+    "pair_id": "03b4027c",
+    "original_question_id": "23d5b6ad",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE",
+      "FACT_WORKERS_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ],
+      "FACT_WORKERS_PRIMARY_SECTOR": [
+        "WORKERS_PRIMARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_MAIN_WORKERS_CULTIVATORS",
+        "FEMALE_MAIN_WORKERS_CULTIVATORS",
+        "MALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "MALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "FEMALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "MALE_MAIN_WORKERS_MINING_QUARRYING",
+        "FEMALE_MAIN_WORKERS_MINING_QUARRYING"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy.state` = 'Andaman And Nicobar Islands' and `fact_workers_primary_sector.census_year` = 1991. Group by `dim_geography_hierarchy.district` and sum `fact_workers_primary_sector.female_main_workers_agricultural_labourers`. Order descending by the sum."
+  },
+  {
+    "question": "'Andaman And Nicobar Islands' state ke liye aur census year 1991 ke liye, har district aur un female main workers ki total sankhya list karo jo agricultural labourers hain, highest se lowest sum ke hisaab se order mein.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKERS_PRIMARY_SECTOR AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT ORDER BY SUM(T2.FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS) DESC",
+    "pair_id": "fab91bd3",
+    "original_question_id": "23d5b6ad",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE",
+      "FACT_WORKERS_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ],
+      "FACT_WORKERS_PRIMARY_SECTOR": [
+        "WORKERS_PRIMARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_MAIN_WORKERS_CULTIVATORS",
+        "FEMALE_MAIN_WORKERS_CULTIVATORS",
+        "MALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "MALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "FEMALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "MALE_MAIN_WORKERS_MINING_QUARRYING",
+        "FEMALE_MAIN_WORKERS_MINING_QUARRYING"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy.state` = 'Andaman And Nicobar Islands' and `fact_workers_primary_sector.census_year` = 1991. Join on `hierarchy_id`. Group by `dim_geography_hierarchy.district`. Sum `fact_workers_primary_sector.female_main_workers_agricultural_labourers` for each district. Order by sum descending."
+  },
+  {
+    "question": "1991 census ke hisaab se 'Andaman And Nicobar Islands' state mein jo districts hain, unhe list karo. Male main workers jo cultivators hain, unki sankhya ke hisaab se descending order mein arrange karo aur sirf top 10 results dikhao.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKERS_PRIMARY_SECTOR AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 ORDER BY T2.MALE_MAIN_WORKERS_CULTIVATORS DESC LIMIT 10",
+    "pair_id": "b2012785",
+    "original_question_id": "63884fd3",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE",
+      "FACT_WORKERS_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ],
+      "FACT_WORKERS_PRIMARY_SECTOR": [
+        "WORKERS_PRIMARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_MAIN_WORKERS_CULTIVATORS",
+        "FEMALE_MAIN_WORKERS_CULTIVATORS",
+        "MALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "MALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "FEMALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "MALE_MAIN_WORKERS_MINING_QUARRYING",
+        "FEMALE_MAIN_WORKERS_MINING_QUARRYING"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy.state` = 'Andaman And Nicobar Islands' and `fact_workers_primary_sector.census_year` = 1991. Join `dim_geography_hierarchy` and `fact_workers_primary_sector` on `hierarchy_id`. Select `dim_geography_hierarchy.district` and `fact_workers_primary_sector.male_main_workers_cultivators`. Order by `fact_workers_primary_sector.male_main_workers_cultivators` DESC. Limit to top 10 results."
+  },
+  {
+    "question": "1991 ke census year ke liye, 'Andaman And Nicobar Islands' state mein, un districts ko list karo jahan male main workers jo cultivators hain, unka total number zero se zyada ho. Aur top 10 districts ko dikhao, jo male main workers cultivators ke total number ke hisaab se descending order mein sorted ho.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.MALE_MAIN_WORKERS_CULTIVATORS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKERS_PRIMARY_SECTOR AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT HAVING SUM(T2.MALE_MAIN_WORKERS_CULTIVATORS) > 0 ORDER BY SUM(T2.MALE_MAIN_WORKERS_CULTIVATORS) DESC LIMIT 10",
+    "pair_id": "4f5a5f50",
+    "original_question_id": "63884fd3",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE",
+      "FACT_WORKERS_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ],
+      "FACT_WORKERS_PRIMARY_SECTOR": [
+        "WORKERS_PRIMARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_MAIN_WORKERS_CULTIVATORS",
+        "FEMALE_MAIN_WORKERS_CULTIVATORS",
+        "MALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "MALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "FEMALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "MALE_MAIN_WORKERS_MINING_QUARRYING",
+        "FEMALE_MAIN_WORKERS_MINING_QUARRYING"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy.state` = 'Andaman And Nicobar Islands' and `fact_workers_primary_sector.census_year` = 1991. Join `dim_geography_hierarchy` with `fact_workers_primary_sector` on `hierarchy_id`. Select `dim_geography_hierarchy.district` and `fact_workers_primary_sector.male_main_workers_cultivators` where `male_main_workers_cultivators` > 0. Order by `male_main_workers_cultivators` DESC. Limit 10."
+  },
+  {
+    "question": "Jin districts mein households ki sankhya occupied residential houses se zyada hai, unke liye har district ko list karo, saath mein mining and quarrying mein total male main workers aur total female main workers ki sankhya bhi batao.",
+    "sql": "SELECT T1.DISTRICT, SUM(T3.MALE_MAIN_WORKERS_MINING_QUARRYING), SUM(T3.FEMALE_MAIN_WORKERS_MINING_QUARRYING) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_WORKERS_PRIMARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.NUMBER_OF_HOUSEHOLDS > T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES GROUP BY T1.DISTRICT",
+    "pair_id": "417ef626",
+    "original_question_id": "4fd30291",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKERS_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKERS_PRIMARY_SECTOR": [
+        "HIERARCHY_ID",
+        "MALE_MAIN_WORKERS_CULTIVATORS",
+        "FEMALE_MAIN_WORKERS_MINING_QUARRYING",
+        "WORKERS_PRIMARY_ID",
+        "CENSUS_YEAR",
+        "MALE_MAIN_WORKERS_MINING_QUARRYING"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter districts where sum(`fact_housing`.`number_of_households`) > sum(`fact_housing`.`number_of_occupied_residential_houses`) for census_year = 1991. For each such district, output `dim_geography_hierarchy`.`district`, sum(`fact_workers_primary_sector`.`male_main_workers_mining_quarrying`) as total_male_mining_workers, and sum(`fact_workers_primary_sector`.`female_main_workers_mining_quarrying`) as total_female_mining_workers. Join `dim_geography_hierarchy` with `fact_housing` and `fact_workers_primary_sector` on `hierarchy_id` and filter by `fact_housing`.`census_year` = 1991 and `fact_workers_primary_sector`.`census_year` = 1991. Group by `dim_geography_hierarchy`.`district`."
+  },
+  {
+    "question": "Har district ke liye jahan households ki sankhya occupied residential houses se zyada ho, district name ke saath mining and quarrying mein total male main workers aur total female main workers ki sankhya list karo, yeh ensure karte hue ki kam se kam ek record per district ho aur results ko mining and quarrying mein total male workers ke hisaab se descending order mein arrange karo.",
+    "sql": "SELECT T1.DISTRICT, SUM(T3.MALE_MAIN_WORKERS_MINING_QUARRYING), SUM(T3.FEMALE_MAIN_WORKERS_MINING_QUARRYING) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_WORKERS_PRIMARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.NUMBER_OF_HOUSEHOLDS > T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES GROUP BY T1.DISTRICT HAVING COUNT(T1.HIERARCHY_ID) >= 1 ORDER BY SUM(T3.MALE_MAIN_WORKERS_MINING_QUARRYING) DESC",
+    "pair_id": "8d0cd404",
+    "original_question_id": "4fd30291",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKERS_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKERS_PRIMARY_SECTOR": [
+        "HIERARCHY_ID",
+        "MALE_MAIN_WORKERS_CULTIVATORS",
+        "FEMALE_MAIN_WORKERS_MINING_QUARRYING",
+        "WORKERS_PRIMARY_ID",
+        "CENSUS_YEAR",
+        "MALE_MAIN_WORKERS_MINING_QUARRYING"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_geography_hierarchy` with `fact_housing` and `fact_workers_primary_sector` on `hierarchy_id`. Filter where `fact_housing`.`number_of_households` > `fact_housing`.`number_of_occupied_residential_houses`. Group by `dim_geography_hierarchy`.`district`. For each district, sum `fact_workers_primary_sector`.`male_main_workers_mining_quarrying` as total_male_workers and sum `fact_workers_primary_sector`.`female_main_workers_mining_quarrying` as total_female_workers. Order results by total_male_workers descending."
+  },
+  {
+    "question": "1991 ke census year ke liye, 'Andaman And Nicobar Islands' state mein un districts ki list banao jahan mining and quarrying mein female main workers ki sankhya kam se kam 0.000 ho, aur sirf unhi districts ko include karo jahan livestock, forestry, aur fishing mein female main workers ka total sum exactly 0.000 ho, aur results ko district name ke hisaab se order karo.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKERS_PRIMARY_SECTOR AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.FEMALE_MAIN_WORKERS_MINING_QUARRYING >= 0.000 AND T2.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT HAVING SUM(T2.FEMALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING) = 0.000 ORDER BY T1.DISTRICT",
+    "pair_id": "e6db98f9",
+    "original_question_id": "a2de346b",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE",
+      "FACT_WORKERS_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ],
+      "FACT_WORKERS_PRIMARY_SECTOR": [
+        "WORKERS_PRIMARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_MAIN_WORKERS_CULTIVATORS",
+        "FEMALE_MAIN_WORKERS_CULTIVATORS",
+        "MALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "MALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "FEMALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "MALE_MAIN_WORKERS_MINING_QUARRYING",
+        "FEMALE_MAIN_WORKERS_MINING_QUARRYING"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `fact_workers_primary_sector`.`census_year` = 1991. Join `dim_geography_hierarchy` and `fact_workers_primary_sector` on `hierarchy_id`. Select `dim_geography_hierarchy`.`district` where `fact_workers_primary_sector`.`female_main_workers_mining_quarrying` >= 0.000 and `fact_workers_primary_sector`.`female_main_workers_livestock_forestry_fishing` = 0.000. Order by `dim_geography_hierarchy`.`district`."
+  },
+  {
+    "question": "1991 census ke districts list karo jahan mining and quarrying mein female main workers ki sankhya kam se kam 0.000 ho, aur har district ke liye livestock, forestry, aur fishing mein female main workers ka total sum exactly 0.000 ho, district ke naam ke hisaab se alphabetical order mein.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_POPULATION_CORE AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_WORKERS_PRIMARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.FEMALE_MAIN_WORKERS_MINING_QUARRYING >= 0.000 GROUP BY T1.DISTRICT HAVING SUM(T3.FEMALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING) = 0.000 ORDER BY T1.DISTRICT ASC",
+    "pair_id": "354d5dce",
+    "original_question_id": "a2de346b",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE",
+      "FACT_WORKERS_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ],
+      "FACT_WORKERS_PRIMARY_SECTOR": [
+        "WORKERS_PRIMARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_MAIN_WORKERS_CULTIVATORS",
+        "FEMALE_MAIN_WORKERS_CULTIVATORS",
+        "MALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "MALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "FEMALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "MALE_MAIN_WORKERS_MINING_QUARRYING",
+        "FEMALE_MAIN_WORKERS_MINING_QUARRYING"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_geography_hierarchy` with `fact_workers_primary_sector` on `hierarchy_id`. Filter where `fact_workers_primary_sector`.`census_year` = 1991 and CAST(`fact_workers_primary_sector`.`female_main_workers_mining_quarrying` AS numeric) >= 0 and CAST(`fact_workers_primary_sector`.`female_main_workers_livestock_forestry_fishing` AS numeric) = 0. Select `dim_geography_hierarchy`.`district` and order by `dim_geography_hierarchy`.`district` ASC."
+  },
+  {
+    "question": "Wo location names list karo jahan par occupied residential houses ki sankhya 5000 se zyada ho aur mining and quarrying sector mein female main workers ki count kam se kam 0.000 ho.",
+    "sql": "SELECT T1.LOCATION_NAME FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_WORKERS_PRIMARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES > 5000 AND T3.FEMALE_MAIN_WORKERS_MINING_QUARRYING >= 0.000 GROUP BY T1.LOCATION_NAME",
+    "pair_id": "d76c3502",
+    "original_question_id": "081d4e3a",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKERS_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKERS_PRIMARY_SECTOR": [
+        "WORKERS_PRIMARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_MAIN_WORKERS_CULTIVATORS",
+        "FEMALE_MAIN_WORKERS_CULTIVATORS",
+        "MALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "MALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "FEMALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "MALE_MAIN_WORKERS_MINING_QUARRYING",
+        "FEMALE_MAIN_WORKERS_MINING_QUARRYING"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_geography_hierarchy`.`location_name` where `fact_housing`.`number_of_occupied_residential_houses` > 5000 and `fact_workers_primary_sector`.`female_main_workers_mining_quarrying` >= 0. Join `dim_geography_hierarchy` with `fact_housing` and `fact_workers_primary_sector` on `hierarchy_id` and `census_year` (both tables have `census_year` = 1991 in the sample)."
+  },
+  {
+    "question": "Location names ki list banao, alphabetically order mein, jin areas mein occupied residential houses ki sankhya 128.000 se zyada hai aur mining and quarrying sector mein total female main workers ki sankhya kam se kam 0.000 hai.",
+    "sql": "SELECT T1.LOCATION_NAME FROM DIM_GEOGRAPHY_HIERARCHY AS T1 INNER JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID INNER JOIN FACT_WORKERS_PRIMARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES > 128.000 GROUP BY T1.LOCATION_NAME HAVING SUM(T3.FEMALE_MAIN_WORKERS_MINING_QUARRYING) >= 0.000 ORDER BY T1.LOCATION_NAME ASC",
+    "pair_id": "364764aa",
+    "original_question_id": "081d4e3a",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKERS_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKERS_PRIMARY_SECTOR": [
+        "WORKERS_PRIMARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_MAIN_WORKERS_CULTIVATORS",
+        "FEMALE_MAIN_WORKERS_CULTIVATORS",
+        "MALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "FEMALE_MAIN_WORKERS_AGRICULTURAL_LABOURERS",
+        "MALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "FEMALE_MAIN_WORKERS_LIVESTOCK_FORESTRY_FISHING",
+        "MALE_MAIN_WORKERS_MINING_QUARRYING",
+        "FEMALE_MAIN_WORKERS_MINING_QUARRYING"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography_hierarchy`.`location_name` from `dim_geography_hierarchy` inner join `fact_housing` on `dim_geography_hierarchy`.`hierarchy_id` = `fact_housing`.`hierarchy_id` inner join `fact_workers_primary_sector` on `dim_geography_hierarchy`.`hierarchy_id` = `fact_workers_primary_sector`.`hierarchy_id` where `fact_housing`.`number_of_occupied_residential_houses` > 128.000 and `fact_workers_primary_sector`.`female_main_workers_mining_quarrying` >= 0.000 order by `dim_geography_hierarchy`.`location_name`."
+  },
+  {
+    "question": "1991 ke census ke liye, Andaman and Nicobar Islands ke South Andamans district mein, har location ka naam, total occupied residential houses ki sankhya aur total households ki sankhya list karo, location name ke hisaab se group karke aur order karke.",
+    "sql": "SELECT T1.LOCATION_NAME, SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES), SUM(T2.NUMBER_OF_HOUSEHOLDS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T1.DISTRICT = 'South Andamans' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.LOCATION_NAME ORDER BY T1.LOCATION_NAME",
+    "pair_id": "25d52c7e",
+    "original_question_id": "9ffd929b",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy.state` = 'Andaman And Nicobar Islands' and `dim_geography_hierarchy.district` = 'South Andamans'. Join `dim_geography_hierarchy` with `fact_housing` on `hierarchy_id` where `fact_housing.census_year` = 1991. Group by `dim_geography_hierarchy.location_name` and sum `fact_housing.number_of_occupied_residential_houses` and `fact_housing.number_of_households`. Order by `dim_geography_hierarchy.location_name`."
+  },
+  {
+    "question": "1991 ke census year ke liye, Andaman And Nicobar Islands ke North And Middle Andaman district mein, har location ka naam, total occupied residential houses ki sankhya, aur total households ki sankhya list karo, jise total occupied residential houses ke descending order mein sort karna hai.",
+    "sql": "SELECT T1.LOCATION_NAME, SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES), SUM(T2.NUMBER_OF_HOUSEHOLDS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T1.DISTRICT = 'North And Middle Andaman' AND T2.CENSUS_YEAR = 1991 GROUP BY T1.LOCATION_NAME ORDER BY SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) DESC",
+    "pair_id": "e9b1e510",
+    "original_question_id": "9ffd929b",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `fact_housing` for `census_year` = 1991 and join with `dim_geography_hierarchy` on `hierarchy_id`. Filter `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `dim_geography_hierarchy`.`district` = 'North And Middle Andaman'. Select `dim_geography_hierarchy`.`location_name`, `fact_housing`.`number_of_occupied_residential_houses`, `fact_housing`.`number_of_households`. Sort results descending by `fact_housing`.`number_of_occupied_residential_houses`."
+  },
+  {
+    "question": "1991 ke census year ke liye, har state ko list karo jisme total households ki sankhya aur trade and commerce mein male workers ki average sankhya ho, state ke hisaab se grouped.",
+    "sql": "SELECT T1.STATE, SUM(T2.NUMBER_OF_HOUSEHOLDS), AVG(T3.MALE_WORKERS_TRADE_COMMERCE) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_WORKERS_TERTIARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.STATE",
+    "pair_id": "9b6602e7",
+    "original_question_id": "7b6b6e86",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKERS_TERTIARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "COUNTRY",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKERS_TERTIARY_SECTOR": [
+        "WORKERS_TERTIARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKERS_TRADE_COMMERCE",
+        "FEMALE_WORKERS_TRADE_COMMERCE",
+        "MALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "FEMALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "MALE_WORKERS_OTHER_SERVICES",
+        "FEMALE_WORKERS_OTHER_SERVICES"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "For census_year = 1991, join `dim_geography_hierarchy` with `fact_housing` and `fact_workers_tertiary_sector` on `hierarchy_id`. Group by `dim_geography_hierarchy.state`. Sum `fact_housing.number_of_households` and average `fact_workers_tertiary_sector.male_workers_trade_commerce` per state."
+  },
+  {
+    "question": "Census year 1991 ke liye, har state ki list nikalo jisme total households ki sankhya aur trade and commerce mein male workers ki average sankhya ho, aur ise total households ki sankhya ke hisaab se descending order mein sort karo.",
+    "sql": "SELECT T1.STATE, SUM(T2.NUMBER_OF_HOUSEHOLDS), AVG(T3.MALE_WORKERS_TRADE_COMMERCE) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_WORKERS_TERTIARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.STATE ORDER BY SUM(T2.NUMBER_OF_HOUSEHOLDS) DESC",
+    "pair_id": "2b3f7441",
+    "original_question_id": "7b6b6e86",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKERS_TERTIARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "COUNTRY",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKERS_TERTIARY_SECTOR": [
+        "WORKERS_TERTIARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKERS_TRADE_COMMERCE",
+        "FEMALE_WORKERS_TRADE_COMMERCE",
+        "MALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "FEMALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "MALE_WORKERS_OTHER_SERVICES",
+        "FEMALE_WORKERS_OTHER_SERVICES"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "For census_year = 1991, join `dim_geography_hierarchy` with `fact_housing` and `fact_workers_tertiary_sector` on `hierarchy_id`. Group by `dim_geography_hierarchy.state`. Compute SUM(`fact_housing.number_of_households`) as total_households and AVG(`fact_workers_tertiary_sector.male_workers_trade_commerce`) as avg_male_trade_commerce. Order by total_households DESC."
+  },
+  {
+    "question": "Har district aur un districts mein trade aur commerce mein female workers ki total sankhya list karo jo 'Andaman And Nicobar Islands' state mein hain, aur female workers ke sum ke hisaab se descending order mein sort karo.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.FEMALE_WORKERS_TRADE_COMMERCE) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKERS_TERTIARY_SECTOR AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' GROUP BY T1.DISTRICT ORDER BY SUM(T2.FEMALE_WORKERS_TRADE_COMMERCE) DESC",
+    "pair_id": "e1e0c874",
+    "original_question_id": "614103e4",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE",
+      "FACT_WORKERS_TERTIARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "HIERARCHY_ID",
+        "TOTAL_FEMALE_POPULATION",
+        "POPULATION_CORE_ID",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "CENSUS_YEAR"
+      ],
+      "FACT_WORKERS_TERTIARY_SECTOR": [
+        "WORKERS_TERTIARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKERS_TRADE_COMMERCE",
+        "FEMALE_WORKERS_TRADE_COMMERCE",
+        "MALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "FEMALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "MALE_WORKERS_OTHER_SERVICES",
+        "FEMALE_WORKERS_OTHER_SERVICES"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List each district (`dim_geography_hierarchy.district`) and the total sum of `fact_workers_tertiary_sector.female_workers_trade_commerce` for districts located in state 'Andaman And Nicobar Islands'. Group by district, sum the female workers, and order by the sum in descending order."
+  },
+  {
+    "question": "'Andaman And Nicobar Islands' state ke liye, har district aur trade and commerce mein female workers ki total sankhya list karo. Sirf un districts ko include karo jinki sum zero se zyada ho, aur results ko highest se lowest total ke order mein arrange karo.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.FEMALE_WORKERS_TRADE_COMMERCE) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKERS_TERTIARY_SECTOR AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' GROUP BY T1.DISTRICT HAVING SUM(T2.FEMALE_WORKERS_TRADE_COMMERCE) > 0.000 ORDER BY SUM(T2.FEMALE_WORKERS_TRADE_COMMERCE) DESC",
+    "pair_id": "90656e29",
+    "original_question_id": "614103e4",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE",
+      "FACT_WORKERS_TERTIARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "HIERARCHY_ID",
+        "TOTAL_FEMALE_POPULATION",
+        "POPULATION_CORE_ID",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "CENSUS_YEAR"
+      ],
+      "FACT_WORKERS_TERTIARY_SECTOR": [
+        "WORKERS_TERTIARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKERS_TRADE_COMMERCE",
+        "FEMALE_WORKERS_TRADE_COMMERCE",
+        "MALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "FEMALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "MALE_WORKERS_OTHER_SERVICES",
+        "FEMALE_WORKERS_OTHER_SERVICES"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy.state` = 'Andaman And Nicobar Islands' and join with `fact_workers_tertiary_sector` on `hierarchy_id`. Group by `dim_geography_hierarchy.district` and sum `fact_workers_tertiary_sector.female_workers_trade_commerce` for `census_year` = 1991. Include only districts where sum > 0. Order results by sum descending."
+  },
+  {
+    "question": "1991 census ke liye India ke districts list karo, jahan trade and commerce mein male workers ki sankhya ke hisaab se descending order mein arrange karo, aur sirf top 10 results dikhaiye.",
+    "sql": "SELECT T1.DISTRICT FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_WORKERS_TERTIARY_SECTOR AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID WHERE T1.COUNTRY = 'India' AND T2.CENSUS_YEAR = 1991 ORDER BY T2.MALE_WORKERS_TRADE_COMMERCE DESC LIMIT 10",
+    "pair_id": "564f4cac",
+    "original_question_id": "56d0492d",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE",
+      "FACT_WORKERS_TERTIARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "COUNTRY",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ],
+      "FACT_WORKERS_TERTIARY_SECTOR": [
+        "WORKERS_TERTIARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKERS_TRADE_COMMERCE",
+        "FEMALE_WORKERS_TRADE_COMMERCE",
+        "MALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "FEMALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "MALE_WORKERS_OTHER_SERVICES",
+        "FEMALE_WORKERS_OTHER_SERVICES"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy.country` = 'India' and `fact_workers_tertiary_sector.census_year` = 1991. Join `dim_geography_hierarchy` and `fact_workers_tertiary_sector` on `hierarchy_id`. Select `dim_geography_hierarchy.district` and `fact_workers_tertiary_sector.male_workers_trade_commerce`. Order by `fact_workers_tertiary_sector.male_workers_trade_commerce` descending. Limit to top 10 rows."
+  },
+  {
+    "question": "1991 ki census year ke liye, Andaman And Nicobar Islands state mein, har district aur trade and commerce mein male workers ki total sankhya list karo, jahan woh sum zero se zyada ho, aur top 10 districts with highest totals dikhao.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.MALE_WORKERS_TRADE_COMMERCE) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 INNER JOIN FACT_WORKERS_TERTIARY_SECTOR AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID INNER JOIN FACT_POPULATION_CORE AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.COUNTRY = 'India' AND T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT HAVING SUM(T2.MALE_WORKERS_TRADE_COMMERCE) > 0 ORDER BY SUM(T2.MALE_WORKERS_TRADE_COMMERCE) DESC LIMIT 10",
+    "pair_id": "ed2e3a76",
+    "original_question_id": "56d0492d",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_POPULATION_CORE",
+      "FACT_WORKERS_TERTIARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "COUNTRY",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "LOCATION_TYPE"
+      ],
+      "FACT_POPULATION_CORE": [
+        "POPULATION_CORE_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "TOTAL_POPULATION",
+        "TOTAL_MALE_POPULATION",
+        "TOTAL_FEMALE_POPULATION"
+      ],
+      "FACT_WORKERS_TERTIARY_SECTOR": [
+        "WORKERS_TERTIARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKERS_TRADE_COMMERCE",
+        "FEMALE_WORKERS_TRADE_COMMERCE",
+        "MALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "FEMALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "MALE_WORKERS_OTHER_SERVICES",
+        "FEMALE_WORKERS_OTHER_SERVICES"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands' and `fact_workers_tertiary_sector`.`census_year` = 1991. Join `dim_geography_hierarchy` and `fact_workers_tertiary_sector` on `hierarchy_id`. Group by `dim_geography_hierarchy`.`district`. Sum `fact_workers_tertiary_sector`.`male_workers_trade_commerce` as total_male_trade_commerce. Keep only groups where sum > 0. Order by total_male_trade_commerce descending. Limit 10."
+  },
+  {
+    "question": "1991 census year ke liye 'Andaman And Nicobar Islands' state mein, har district ki list nikalo jismein total occupied residential houses aur trade and commerce mein total male workers ki sankhya ho, district name ke hisaab se group aur order karke.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES), SUM(T3.MALE_WORKERS_TRADE_COMMERCE) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_WORKERS_TERTIARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT ORDER BY T1.DISTRICT",
+    "pair_id": "90793a9d",
+    "original_question_id": "b3bb3625",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKERS_TERTIARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKERS_TERTIARY_SECTOR": [
+        "WORKERS_TERTIARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKERS_TRADE_COMMERCE",
+        "FEMALE_WORKERS_TRADE_COMMERCE",
+        "MALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "FEMALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "MALE_WORKERS_OTHER_SERVICES",
+        "FEMALE_WORKERS_OTHER_SERVICES"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy` where `dim_geography_hierarchy`.`state` = 'Andaman And Nicobar Islands'. Join with `fact_housing` on `dim_geography_hierarchy`.`hierarchy_id` = `fact_housing`.`hierarchy_id` and `fact_housing`.`census_year` = 1991. Join with `fact_workers_tertiary_sector` on `dim_geography_hierarchy`.`hierarchy_id` = `fact_workers_tertiary_sector`.`hierarchy_id` and `fact_workers_tertiary_sector`.`census_year` = 1991. Group by `dim_geography_hierarchy`.`district`. Sum `fact_housing`.`number_of_occupied_residential_houses` as total_occupied_houses and sum `fact_workers_tertiary_sector`.`male_workers_trade_commerce` as total_male_trade_commerce_workers. Order by `dim_geography_hierarchy`.`district`."
+  },
+  {
+    "question": "'Andaman And Nicobar Islands' state ke liye, 1991 census year mein, har district ko list karo jisme occupied residential houses ki total sankhya aur trade and commerce mein male workers ki total sankhya ho, aur order karo occupied residential houses ki total sankhya ke hisaab se sabse zyada se sabse kam.",
+    "sql": "SELECT T1.DISTRICT, SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES), SUM(T3.MALE_WORKERS_TRADE_COMMERCE) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_WORKERS_TERTIARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.CENSUS_YEAR = 1991 AND T3.CENSUS_YEAR = 1991 GROUP BY T1.DISTRICT ORDER BY SUM(T2.NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES) DESC",
+    "pair_id": "1947560a",
+    "original_question_id": "b3bb3625",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKERS_TERTIARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKERS_TERTIARY_SECTOR": [
+        "WORKERS_TERTIARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKERS_TRADE_COMMERCE",
+        "FEMALE_WORKERS_TRADE_COMMERCE",
+        "MALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "FEMALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "MALE_WORKERS_OTHER_SERVICES",
+        "FEMALE_WORKERS_OTHER_SERVICES"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_geography_hierarchy.state` = 'Andaman And Nicobar Islands' and `fact_housing.census_year` = 1991 and `fact_workers_tertiary_sector.census_year` = 1991. Join `dim_geography_hierarchy` with `fact_housing` and `fact_workers_tertiary_sector` on `hierarchy_id`. Group by `dim_geography_hierarchy.district`. Select `dim_geography_hierarchy.district`, SUM(`fact_housing.number_of_occupied_residential_houses`) as total_houses, SUM(`fact_workers_tertiary_sector.male_workers_trade_commerce`) as total_male_trade_workers. Order by total_houses DESC."
+  },
+  {
+    "question": "Location names ki list banao jahan households ki sankhya 5000 se zyada ho aur trade and commerce sector mein 1000 se zyada male workers hon.",
+    "sql": "SELECT T1.LOCATION_NAME FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_WORKERS_TERTIARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.NUMBER_OF_HOUSEHOLDS > 5000 AND T3.MALE_WORKERS_TRADE_COMMERCE > 1000",
+    "pair_id": "33b9a642",
+    "original_question_id": "c64bce2e",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKERS_TERTIARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKERS_TERTIARY_SECTOR": [
+        "HIERARCHY_ID",
+        "MALE_WORKERS_TRADE_COMMERCE",
+        "MALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "FEMALE_WORKERS_TRADE_COMMERCE",
+        "WORKERS_TERTIARY_ID",
+        "CENSUS_YEAR"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_geography_hierarchy`.`location_name` where `fact_housing`.`number_of_households` > 5000 and `fact_workers_tertiary_sector`.`male_workers_trade_commerce` > 1000. Join `dim_geography_hierarchy` with `fact_housing` on `dim_geography_hierarchy`.`hierarchy_id` = `fact_housing`.`hierarchy_id` and with `fact_workers_tertiary_sector` on `dim_geography_hierarchy`.`hierarchy_id` = `fact_workers_tertiary_sector`.`hierarchy_id` (and also match `fact_housing`.`census_year` = `fact_workers_tertiary_sector`.`census_year` for consistency)."
+  },
+  {
+    "question": "Un location ke naam dikhaao jahan gharon ki sankhya 5000 se zyada hai aur trade and commerce mein purush kaamgaar ki sankhya 1000 se zyada hai, har location ka kam se kam ek associated record ho, aur results ko households ki sankhya ke hisaab se descending order mein arrange karo.",
+    "sql": "SELECT T1.LOCATION_NAME FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_WORKERS_TERTIARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.NUMBER_OF_HOUSEHOLDS > 5000 AND T3.MALE_WORKERS_TRADE_COMMERCE > 1000 GROUP BY T1.LOCATION_NAME, T2.NUMBER_OF_HOUSEHOLDS HAVING COUNT(T1.HIERARCHY_ID) >= 1 ORDER BY T2.NUMBER_OF_HOUSEHOLDS DESC",
+    "pair_id": "2a8023bc",
+    "original_question_id": "c64bce2e",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKERS_TERTIARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKERS_TERTIARY_SECTOR": [
+        "HIERARCHY_ID",
+        "MALE_WORKERS_TRADE_COMMERCE",
+        "MALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "FEMALE_WORKERS_TRADE_COMMERCE",
+        "WORKERS_TERTIARY_ID",
+        "CENSUS_YEAR"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography_hierarchy`.`location_name` where `fact_housing`.`number_of_occupied_residential_houses` > 5000 and `fact_workers_tertiary_sector`.`male_workers_trade_commerce` > 1000. Join `dim_geography_hierarchy` with `fact_housing` and `fact_workers_tertiary_sector` on `hierarchy_id` (and possibly `census_year` if needed). Order results by `fact_housing`.`number_of_households` DESC."
+  },
+  {
+    "question": "Location names dikha do jahan ya toh households ki sankhya 500 se zyada ho ya phir trade and commerce mein male workers ki ginti 10,000 se zyada ho.",
+    "sql": "SELECT T1.LOCATION_NAME FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSING AS T2 ON T1.HIERARCHY_ID = T2.HIERARCHY_ID JOIN FACT_WORKERS_TERTIARY_SECTOR AS T3 ON T1.HIERARCHY_ID = T3.HIERARCHY_ID WHERE T2.NUMBER_OF_HOUSEHOLDS > 500 OR T3.MALE_WORKERS_TRADE_COMMERCE > 10000",
+    "pair_id": "aff62915",
+    "original_question_id": "5dc28fff",
+    "schema_used": [
+      "DIM_GEOGRAPHY_HIERARCHY",
+      "FACT_HOUSING",
+      "FACT_WORKERS_TERTIARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_GEOGRAPHY_HIERARCHY": [
+        "HIERARCHY_ID",
+        "LOCATION_NAME",
+        "PARENT_ID",
+        "DISTRICT",
+        "STATE",
+        "SUB_DISTRICT",
+        "LOCATION_TYPE"
+      ],
+      "FACT_HOUSING": [
+        "HOUSING_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "NUMBER_OF_OCCUPIED_RESIDENTIAL_HOUSES",
+        "NUMBER_OF_HOUSEHOLDS"
+      ],
+      "FACT_WORKERS_TERTIARY_SECTOR": [
+        "WORKERS_TERTIARY_ID",
+        "HIERARCHY_ID",
+        "CENSUS_YEAR",
+        "MALE_WORKERS_TRADE_COMMERCE",
+        "FEMALE_WORKERS_TRADE_COMMERCE",
+        "MALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "FEMALE_WORKERS_TRANSPORT_STORAGE_COMMUNICATION",
+        "MALE_WORKERS_OTHER_SERVICES",
+        "FEMALE_WORKERS_OTHER_SERVICES"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_geography_hierarchy`.`location_name` by joining `dim_geography_hierarchy` with `fact_housing` on `hierarchy_id` and with `fact_workers_tertiary_sector` on `hierarchy_id`. Filter where either `fact_housing`.`number_of_households` > 500 OR `fact_workers_tertiary_sector`.`male_workers_trade_commerce` > 10000. Include all census years."
+  }
+]
