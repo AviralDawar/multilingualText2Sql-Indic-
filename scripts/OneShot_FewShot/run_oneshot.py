@@ -332,7 +332,8 @@ def main():
     parser.add_argument("--database-dir", default="../databases")
     parser.add_argument("--input", required=True, help="Input file or directory (task_files)")
     parser.add_argument("--output", help="Output file or directory (eval_files_oneshot)")
-    parser.add_argument("--knowledge")
+    parser.add_argument("--knowledge", help="Path to single global knowledge JSON file")
+    parser.add_argument("--lang-knowledge-dir", help="Path to directory containing language-specific knowledge JSON files")
     parser.add_argument("--examples")
     parser.add_argument("--provider", default="openrouter", choices=["anthropic", "openrouter"])
     parser.add_argument("--model", default="claude-3-5-haiku-20241022")
@@ -341,6 +342,7 @@ def main():
     parser.add_argument("--pg-db", default="indicdb")
     parser.add_argument("--limit", type=int)
     parser.add_argument("--workers", type=int, default=10)
+    parser.add_argument("--require-evidence", action="store_true", help="Only process tasks that have corresponding evidence")
     args = parser.parse_args()
 
     # Paths
@@ -361,16 +363,45 @@ def main():
     context = {
         'backend': backend, 'pg_config': pg_config, 'sys_prompt': build_system_prompt(),
         'ddl_text': load_ddl(target_db_dir), 'sample_text': load_sample_data(target_db_dir),
-        'knowledge_map': load_knowledge(Path(args.knowledge)) if args.knowledge else {},
         'examples_path': Path(args.examples) if args.examples else None
     }
+    
+    global_knowledge = load_knowledge(Path(args.knowledge)) if args.knowledge else {}
 
     for in_file in input_files:
         logger.info(f"Processing: {in_file.name}")
+        
+        # Determine language for dynamic knowledge loading
+        lang = "english"
+        for l in ["hindi", "bengali", "tamil", "telugu", "marathi", "hinglish"]:
+            if f"_{l}.jsonl" in in_file.name.lower():
+                lang = l
+                break
+                
+        # Load language-specific knowledge if directory provided
+        current_knowledge = global_knowledge
+        if args.lang_knowledge_dir and lang != "english":
+            lang_k_path = Path(args.lang_knowledge_dir) / f"{db_id}_evidence_{lang}.json"
+            if lang_k_path.exists():
+                logger.info(f"Loading language-specific knowledge from {lang_k_path.name}")
+                current_knowledge = load_knowledge(lang_k_path)
+            else:
+                logger.warning(f"Expected language knowledge {lang_k_path.name} not found. Falling back to global.")
+
+        context['knowledge_map'] = current_knowledge
         out_file = output_dir / f"{in_file.stem}_evaluated.jsonl"
         with open(in_file, 'r', encoding='utf-8') as f:
             tasks = [json.loads(line) for line in f if line.strip()]
         if args.limit: tasks = tasks[:args.limit]
+
+        if args.require_evidence:
+            original_len = len(tasks)
+            tasks = [t for t in tasks if context['knowledge_map'].get(t.get('pair_id'), '').strip()]
+            logger.info(f"Filtered tasks based on evidence: {original_len} -> {len(tasks)}")
+        
+        if not tasks:
+            logger.warning(f"No tasks to process for {in_file.name} after evidence filtering. Skipping.")
+            continue
 
         results, em_total, ex_total = [], 0, 0
         with ThreadPoolExecutor(max_workers=args.workers) as executor:

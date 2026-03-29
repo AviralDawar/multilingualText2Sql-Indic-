@@ -1,0 +1,12 @@
+# Text2SQL Evaluation Results: deepseek_deepseek_v3_2
+*(Sampled 100 questions per DB - Updated after INDIA_PRIMARY_POPULATION_CENSUS_1991)*
+
+| Database | Language | Knowledge File | Results (EM, EX) |
+| --- | --- | --- | --- |
+| INDIA_PRIMARY_POPULATION_CENSUS_1991 | English | INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence.json | 10/63 (EM), 47/63 (EX) |
+| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Hinglish | INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence_hinglish.json | 11/63 (EM), 42/63 (EX) |
+| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Hindi | INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence_hindi.json | 8/63 (EM), 37/63 (EX) |
+| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Bengali | INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence_bengali.json | 9/62 (EM), 40/62 (EX) |
+| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Tamil | INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence_tamil.json | 8/57 (EM), 32/57 (EX) |
+| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Telugu | INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence_telugu.json | 7/57 (EM), 33/57 (EX) |
+| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Marathi | INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence_marathi.json | 8/61 (EM), 39/61 (EX) |
