@@ -195,8 +195,9 @@ def main():
     args = parser.parse_args()
 
     if not args.api_key and not os.environ.get("OPENROUTER_API_KEY"):
-        # Fallback to known key if none provided
-        args.api_key = "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"
+        # Ensure users supply their API key via CLI or environment
+        print("Error: OPENROUTER_API_KEY environment variable or --api-key argument is required.")
+        exit(1)
 
     all_stats = {}
     if args.dbs:
