@@ -1,0 +1,12 @@
+# Text2SQL Evaluation Results: meta-llama/llama-3.3-70b-instruct
+*(Sampled 100 questions per DB - Updated after INDIA_PRIMARY_POPULATION_CENSUS_1991)*
+
+| Database | Language | Knowledge File | Results (EM, EX) |
+| --- | --- | --- | --- |
+| INDIA_PRIMARY_POPULATION_CENSUS_1991 | English | INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence.json | 11/63 (EM), 47/63 (EX) |
+| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Hinglish | INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence_hinglish.json | 7/63 (EM), 38/63 (EX) |
+| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Hindi | INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence_hindi.json | 6/63 (EM), 33/63 (EX) |
+| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Bengali | INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence_bengali.json | 4/62 (EM), 33/62 (EX) |
+| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Tamil | INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence_tamil.json | 7/57 (EM), 30/57 (EX) |
+| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Telugu | INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence_telugu.json | 5/57 (EM), 19/57 (EX) |
+| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Marathi | INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence_marathi.json | 6/61 (EM), 37/61 (EX) |

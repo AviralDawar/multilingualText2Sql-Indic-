@@ -125,6 +125,19 @@ def run_evaluation(db_name: str, sampled_dir: Path, args):
     if knowledge_file:
         cmd += ["--knowledge", str(knowledge_file)]
 
+    if args.use_lang_knowledge:
+        # Automatically find the language-specific knowledge directory for this DB
+        lang_k_dir = None
+        for p in (PROJECT_ROOT / "evidence_files").iterdir():
+            if p.is_dir() and p.name.lower() == db_name.lower():
+                lang_k_dir = p
+                break
+        
+        if lang_k_dir:
+            cmd += ["--lang-knowledge-dir", str(lang_k_dir)]
+        else:
+            print(f"Warning: --use-lang-knowledge set but no directory found for {db_name} inside evidence_files/")
+
     if args.require_evidence:
         cmd += ["--require-evidence"]
 
@@ -178,6 +191,7 @@ def main():
     parser.add_argument("--limit", type=int, help="Limit number of DBs for testing")
     parser.add_argument("--dbs", help="Comma-separated list of DB names to run")
     parser.add_argument("--require-evidence", action="store_true", help="Pass --require-evidence to oneshot evaluator")
+    parser.add_argument("--use-lang-knowledge", action="store_true", help="Pass language-specific evidence flag to oneshot evaluator")
     args = parser.parse_args()
 
     if not args.api_key and not os.environ.get("OPENROUTER_API_KEY"):
@@ -208,14 +222,22 @@ def main():
         with open(results_file, "w") as f:
             f.write(f"# Text2SQL Evaluation Results: {args.model}\n")
             f.write(f"*(Sampled 100 questions per DB - Updated after {db_name})*\n\n")
-            f.write("| Database | Language | Results (EM, EX) |\n")
-            f.write("| --- | --- | --- |\n")
+            f.write("| Database | Language | Knowledge File | Results (EM, EX) |\n")
+            f.write("| --- | --- | --- | --- |\n")
             
             for db in sorted(all_stats.keys()):
                 langs = ["English", "Hinglish", "Hindi", "Bengali", "Tamil", "Telugu", "Marathi"]
                 for lang in langs:
                     res = all_stats[db].get(lang, "N/A")
-                    f.write(f"| {db} | {lang} | {res} |\n")
+                    
+                    k_file = "N/A"
+                    if res != "N/A":
+                        if args.use_lang_knowledge and lang != "English":
+                            k_file = f"{db}_evidence_{lang.lower()}.json"
+                        else:
+                            k_file = f"{db}_evidence.json"
+                            
+                    f.write(f"| {db} | {lang} | {k_file} | {res} |\n")
         
         print(f"Incremental results saved to {results_file}")
     
