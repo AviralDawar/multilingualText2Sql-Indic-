@@ -341,6 +341,7 @@ def main():
     parser.add_argument("--pg-db", default="indicdb")
     parser.add_argument("--limit", type=int)
     parser.add_argument("--workers", type=int, default=10)
+    parser.add_argument("--require-evidence", action="store_true", help="Only process tasks that have corresponding evidence")
     args = parser.parse_args()
 
     # Paths
@@ -371,6 +372,15 @@ def main():
         with open(in_file, 'r', encoding='utf-8') as f:
             tasks = [json.loads(line) for line in f if line.strip()]
         if args.limit: tasks = tasks[:args.limit]
+
+        if args.require_evidence:
+            original_len = len(tasks)
+            tasks = [t for t in tasks if context['knowledge_map'].get(t.get('pair_id'), '').strip()]
+            logger.info(f"Filtered tasks based on evidence: {original_len} -> {len(tasks)}")
+        
+        if not tasks:
+            logger.warning(f"No tasks to process for {in_file.name} after evidence filtering. Skipping.")
+            continue
 
         results, em_total, ex_total = [], 0, 0
         with ThreadPoolExecutor(max_workers=args.workers) as executor:

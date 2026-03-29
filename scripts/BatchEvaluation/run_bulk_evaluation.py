@@ -103,11 +103,30 @@ def run_evaluation(db_name: str, sampled_dir: Path, args):
     if args.api_key:
         cmd += ["--api-key", args.api_key]
 
-    # Special case for NWMP knowledge files
-    if "NWMP" in db_name:
-        knowledge_file = KNOWLEDGE_DIR / f"{db_name}_evidence.json"
-        if knowledge_file.exists():
-            cmd += ["--knowledge", str(knowledge_file)]
+    # Find knowledge file dynamically
+    patterns = [
+        PROJECT_ROOT / "evidence_files" / f"{db_name}_evidence.json",
+        PROJECT_ROOT / "evidence_files" / f"{db_name}_text2sql_evidence.json",
+        OUTPUT_DIR / "knowledge_files_db" / f"{db_name}_evidence.json",
+        OUTPUT_DIR / "knowledge_files_db" / f"{db_name}_text2sql_evidence.json"
+    ]
+    knowledge_file = None
+    for p in patterns:
+        if p.exists():
+            knowledge_file = p
+            break
+    
+    if not knowledge_file:
+        import glob
+        found = glob.glob(str(PROJECT_ROOT / f"evidence_files/*{db_name}*.json")) + glob.glob(str(OUTPUT_DIR / f"knowledge_files_db/*{db_name}*.json"))
+        if found:
+            knowledge_file = Path(found[0])
+
+    if knowledge_file:
+        cmd += ["--knowledge", str(knowledge_file)]
+
+    if args.require_evidence:
+        cmd += ["--require-evidence"]
 
     # Removed capture_output=True to allow progress visibility (tqdm) in terminal
     result = subprocess.run(cmd)
@@ -158,6 +177,7 @@ def main():
     parser.add_argument("--api-key")
     parser.add_argument("--limit", type=int, help="Limit number of DBs for testing")
     parser.add_argument("--dbs", help="Comma-separated list of DB names to run")
+    parser.add_argument("--require-evidence", action="store_true", help="Pass --require-evidence to oneshot evaluator")
     args = parser.parse_args()
 
     if not args.api_key and not os.environ.get("OPENROUTER_API_KEY"):
