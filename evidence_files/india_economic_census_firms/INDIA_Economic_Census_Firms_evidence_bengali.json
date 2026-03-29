@@ -1,0 +1,3493 @@
+[
+  {
+    "question": "'অন্ধ্রপ্রদেশ' রাজ্যে অবস্থিত সমস্ত জেলার নাম জেলার নাম অনুসারে বর্ণানুক্রমে সাজানো হোক।",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Andhra Pradesh' ORDER BY T1.DISTRICT_NAME",
+    "pair_id": "685ad1fb",
+    "original_question_id": "80c44e85",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state`.`state_name` = 'Andhra Pradesh', join `dim_district` on `dim_district`.`state_id` = `dim_state`.`state_id`, select `dim_district`.`district_name`, order by `dim_district`.`district_name`."
+  },
+  {
+    "question": "'অন্ধ্র প্রদেশ' নামক রাজ্যের জেলার নামগুলো জেলার নাম অনুসারে বর্ণানুক্রমিকভাবে দলবদ্ধ ও সাজানো হয়েছে।",
+    "sql": "SELECT T3.DISTRICT_NAME FROM DIM_COUNTRY AS T1 INNER JOIN DIM_STATE AS T2 ON T1.COUNTRY_ID = T2.COUNTRY_ID INNER JOIN DIM_DISTRICT AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T2.STATE_NAME = 'Andhra Pradesh' GROUP BY T3.DISTRICT_NAME ORDER BY T3.DISTRICT_NAME ASC",
+    "pair_id": "29c4da79",
+    "original_question_id": "80c44e85",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state`.`state_name` = 'Andhra Pradesh'. Join `dim_district` on `dim_state`.`state_id` = `dim_district`.`state_id`. Select `dim_district`.`district_name`, group by `dim_district`.`district_name`, order by `dim_district`.`district_name` alphabetically."
+  },
+  {
+    "question": "প্রতিটি রাজ্যের নাম এবং তার সাথে সম্পর্কিত জেলা আইডির মোট সংখ্যা তালিকাভুক্ত করুন, সর্বাধিক জেলা থেকে সর্বনিম্ন জেলার সংখ্যায় ক্রমানুসারে।",
+    "sql": "SELECT T1.STATE_NAME, COUNT(T2.DISTRICT_ID) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID GROUP BY T1.STATE_NAME ORDER BY COUNT(T2.DISTRICT_ID) DESC",
+    "pair_id": "57e740c7",
+    "original_question_id": "eba76296",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "For each state, list `dim_state.state_name` and the count of `dim_district.district_id` (total districts). Group by `dim_state.state_id`, `dim_state.state_name`. Order by count descending, then by `dim_state.state_name` ascending for ties."
+  },
+  {
+    "question": "'ভারত' নামক দেশের জন্য, প্রতিটি রাজ্যের নাম এবং সেই রাজ্যের মধ্যে জেলার মোট সংখ্যা তালিকাভুক্ত করুন, নিশ্চিত করুন যে শুধুমাত্র অন্তত একটি জেলা সহ রাজ্যগুলি অন্তর্ভুক্ত করা হয়েছে এবং ফলাফলগুলি সর্বোচ্চ থেকে সর্বনিম্ন জেলা সংখ্যা অনুসারে সাজানো হয়েছে।",
+    "sql": "SELECT T2.STATE_NAME, COUNT(T3.DISTRICT_ID) FROM DIM_COUNTRY AS T1 JOIN DIM_STATE AS T2 ON T1.COUNTRY_ID = T2.COUNTRY_ID JOIN DIM_DISTRICT AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T1.COUNTRY_NAME = 'India' GROUP BY T2.STATE_NAME HAVING COUNT(T3.DISTRICT_ID) > 0 ORDER BY COUNT(T3.DISTRICT_ID) DESC;",
+    "pair_id": "cfe28a36",
+    "original_question_id": "eba76296",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_country` where `dim_country.country_name` = 'India'. Join `dim_state` on `dim_country.country_id` = `dim_state.country_id`. Join `dim_district` on `dim_state.state_id` = `dim_district.state_id`. Group by `dim_state.state_id`, `dim_state.state_name`. Count `dim_district.district_id` as district_count. Include only states with district_count >= 1. Order by district_count DESC."
+  },
+  {
+    "question": "'অন্ধ্রপ্রদেশ' রাজ্যে অবস্থিত সমস্ত জেলার নাম জেলার নাম অনুসারে বর্ণানুক্রমে সাজানো হোক।",
+    "sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Andhra Pradesh' ORDER BY T1.DISTRICT_NAME",
+    "pair_id": "7a3b84bc",
+    "original_question_id": "a44be75a",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_district` for districts belonging to state 'Andhra Pradesh' in `dim_state`.`state_name`. Join `dim_district` with `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id`. Select `dim_district`.`district_name` and order by `dim_district`.`district_name` ascending."
+  },
+  {
+    "question": "'অন্ধ্রপ্রদেশ' রাজ্যে অবস্থিত জেলার নামগুলো জেলার নাম অনুসারে গ্রুপ করে এবং জেলার নাম অনুসারে বর্ণানুক্রমিকভাবে সাজিয়ে তালিকাভুক্ত করুন।",
+    "sql": "SELECT T3.DISTRICT_NAME FROM DIM_COUNTRY AS T1 INNER JOIN DIM_STATE AS T2 ON T1.COUNTRY_ID = T2.COUNTRY_ID INNER JOIN DIM_DISTRICT AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T2.STATE_NAME = 'Andhra Pradesh' GROUP BY T3.DISTRICT_NAME ORDER BY T3.DISTRICT_NAME ASC",
+    "pair_id": "f154a9ed",
+    "original_question_id": "a44be75a",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter districts where `dim_state`.`state_name` = 'Andhra Pradesh'. Join `dim_state` with `dim_district` on `dim_state`.`state_id` = `dim_district`.`state_id`. Select `dim_district`.`district_name`, group by `dim_district`.`district_name`, and order by `dim_district`.`district_name` ASC."
+  },
+  {
+    "question": "'ভারত' নামক দেশের জন্য, রাজ্যের নাম এবং তারপর জেলার নাম অনুসারে বর্ণানুক্রমে সাজানো জেলার নাম এবং রাজ্যের নাম তালিকাভুক্ত করুন।",
+    "sql": "SELECT T3.DISTRICT_NAME, T2.STATE_NAME FROM DIM_COUNTRY AS T1 JOIN DIM_STATE AS T2 ON T1.COUNTRY_ID = T2.COUNTRY_ID JOIN DIM_DISTRICT AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T1.COUNTRY_NAME = 'India' ORDER BY T2.STATE_NAME, T3.DISTRICT_NAME",
+    "pair_id": "fd1e185d",
+    "original_question_id": "d338b291",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_country.country_name` = 'India'. Join `dim_state` on `dim_state.country_id` = `dim_country.country_id`. Join `dim_district` on `dim_district.state_id` = `dim_state.state_id`. Select `dim_district.district_name` and `dim_state.state_name`. Order by `dim_state.state_name` ASC, then `dim_district.district_name` ASC."
+  },
+  {
+    "question": "'চিত্তুর' নামের জেলাগুলির জন্য দেশের নাম, রাজ্যের নাম এবং জেলার নাম তালিকাভুক্ত করুন, নিশ্চিত করুন যে এই এন্ট্রিগুলির জন্য কমপক্ষে একটি দেশের রেকর্ড বিদ্যমান আছে, এবং ফলাফলগুলি রাজ্যের নাম অনুসারে বর্ণানুক্রমিকভাবে এবং তারপর দেশের নাম অনুসারে সাজান।",
+    "sql": "SELECT T3.COUNTRY_NAME, T2.STATE_NAME, T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 INNER JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID INNER JOIN DIM_COUNTRY AS T3 ON T2.COUNTRY_ID = T3.COUNTRY_ID WHERE T1.DISTRICT_NAME = 'Chittoor' GROUP BY T3.COUNTRY_NAME, T2.STATE_NAME, T1.DISTRICT_NAME HAVING COUNT(T3.COUNTRY_ID) >= 1 ORDER BY T2.STATE_NAME ASC, T3.COUNTRY_NAME ASC",
+    "pair_id": "4e414781",
+    "original_question_id": "d338b291",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "The question asks to list country name, state name, and district name for districts named 'Chittoor', ensuring at least one country record exists for these entries, and order results by state name alphabetically then by country name. The sample SQL results show that `dim_district`.`district_name` contains 'Chittoor' (exact match). Need to join `dim_district` with `dim_state` (via `dim_district`.`state_id` = `dim_state`.`state_id`) and `dim_state` with `dim_country` (via `dim_state`.`country_id` = `dim_country`.`country_id`). Filter where `dim_district`.`district_name` = 'Chittoor' (case-sensitive as per sample). Ensure at least one country record exists by joining to `dim_country`. Order by `dim_state`.`state_name` ASC, then `dim_country`.`country_name` ASC."
+  },
+  {
+    "question": "রাজ্যের নাম এবং প্রতিটি রাজ্যের জেলা আইডির মোট সংখ্যা তালিকাভুক্ত করুন, জেলার সংখ্যা অনুসারে অবরোহী ক্রমে সাজানো হবে এবং শুধুমাত্র শীর্ষ ৫টি ফলাফল দেখান।",
+    "sql": "SELECT T1.STATE_NAME, COUNT(T2.DISTRICT_ID) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID GROUP BY T1.STATE_NAME ORDER BY COUNT(T2.DISTRICT_ID) DESC LIMIT 5",
+    "pair_id": "58dafef6",
+    "original_question_id": "dc994c0b",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `dim_state` and `dim_district` on `dim_state.state_id` = `dim_district.state_id`. Group by `dim_state.state_name`. Count `dim_district.district_id` as district_count. Order by district_count DESC. Limit to 5 rows."
+  },
+  {
+    "question": "'ভারত' দেশের প্রতিটি রাজ্যের জন্য রাজ্যের নাম এবং জেলা আইডির মোট সংখ্যা তালিকাভুক্ত করুন, শুধুমাত্র এমন রাজ্যগুলি অন্তর্ভুক্ত করুন যাদের শূন্যের বেশি জেলা রয়েছে, এবং সর্বাধিক জেলা সংখ্যার শীর্ষ ৫টি রাজ্য প্রদর্শন করুন।",
+    "sql": "SELECT T2.STATE_NAME, COUNT(T3.DISTRICT_ID) FROM DIM_COUNTRY AS T1 JOIN DIM_STATE AS T2 ON T1.COUNTRY_ID = T2.COUNTRY_ID JOIN DIM_DISTRICT AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T1.COUNTRY_NAME = 'India' GROUP BY T2.STATE_NAME HAVING COUNT(T3.DISTRICT_ID) > 0 ORDER BY COUNT(T3.DISTRICT_ID) DESC LIMIT 5",
+    "pair_id": "c0d57f54",
+    "original_question_id": "dc994c0b",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter by (`dim_country`.`country_name` = 'India'). Join `dim_country` → `dim_state` → `dim_district`. Group by (`dim_state`.`state_name`) and count (`dim_district`.`district_id`). Filter where count > 0. Order by count descending, limit 5. Output (`dim_state`.`state_name`) and district count."
+  },
+  {
+    "question": "List the district name, the state name, and the country name for all entries, ordered alphabetically by the name of the district.",
+    "sql": "SELECT T1.DISTRICT_NAME, T2.STATE_NAME, T3.COUNTRY_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_COUNTRY AS T3 ON T2.COUNTRY_ID = T3.COUNTRY_ID ORDER BY T1.DISTRICT_NAME",
+    "pair_id": "9432abec",
+    "original_question_id": "a3d14875",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_district`.`district_name`, `dim_state`.`state_name`, `dim_country`.`country_name` from `dim_district` join `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id` join `dim_country` on `dim_state`.`country_id` = `dim_country`.`country_id` order by `dim_district`.`district_name`."
+  },
+  {
+    "question": "ভারতের অসম, অন্ধ্রপ্রদেশ, বিহার, অরুণাচল প্রদেশ বা আন্দামান ও নিকোবর দ্বীপপুঞ্জ রাজ্যগুলির মধ্যে অবস্থিত সমস্ত জেলার জন্য দেশের নাম, রাজ্যের নাম এবং জেলার নাম তালিকাভুক্ত করুন, দেশ, রাজ্য এবং জেলা অনুসারে গ্রুপ করে এবং জেলার নাম অনুসারে বর্ণানুক্রমিকভাবে সাজানো।",
+    "sql": "SELECT T3.COUNTRY_NAME, T2.STATE_NAME, T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 INNER JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID INNER JOIN DIM_COUNTRY AS T3 ON T2.COUNTRY_ID = T3.COUNTRY_ID WHERE T3.COUNTRY_NAME = 'India' AND T2.STATE_NAME IN ('Assam', 'Andhra Pradesh', 'Bihar', 'Arunachal Pradesh', 'Andaman And Nicobar Islands') GROUP BY T3.COUNTRY_NAME, T2.STATE_NAME, T1.DISTRICT_NAME ORDER BY T1.DISTRICT_NAME ASC",
+    "pair_id": "6d101131",
+    "original_question_id": "a3d14875",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_country`.`country_name`, `dim_state`.`state_name`, `dim_district`.`district_name` from `dim_country` join `dim_state` on `dim_country`.`country_id` = `dim_state`.`country_id` join `dim_district` on `dim_state`.`state_id` = `dim_district`.`state_id` where `dim_country`.`country_name` = 'India' and `dim_state`.`state_name` in ('Assam', 'Andhra Pradesh', 'Bihar', 'Arunachal Pradesh', 'Andaman And Nicobar Islands') group by `dim_country`.`country_name`, `dim_state`.`state_name`, `dim_district`.`district_name` order by `dim_district`.`district_name` asc."
+  },
+  {
+    "question": "'ভারত' দেশের যে রাজ্যগুলোতে কমপক্ষে একটি 'চিত্তুর' নামের জেলা আছে কিন্তু কোনো 'নিকোবার' নামের জেলা নেই, সেই রাজ্যগুলোর নাম বর্ণানুক্রমে তালিকাভুক্ত করুন।",
+    "sql": "SELECT T2.STATE_NAME FROM DIM_COUNTRY AS T1 JOIN DIM_STATE AS T2 ON T1.COUNTRY_ID = T2.COUNTRY_ID JOIN DIM_DISTRICT AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T1.COUNTRY_NAME = 'India' GROUP BY T2.STATE_NAME HAVING SUM(CASE WHEN T3.DISTRICT_NAME = 'Chittoor' THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN T3.DISTRICT_NAME = 'Nicobars' THEN 1 ELSE 0 END) = 0 ORDER BY T2.STATE_NAME ASC",
+    "pair_id": "c3058ca0",
+    "original_question_id": "2181be2f",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Find `dim_state.state_name` for states in `dim_country` with `dim_country.country_name` = 'India' that have at least one district in `dim_district` with `dim_district.district_name` = 'Chittoor' and no district with `dim_district.district_name` = 'Nicobars'. Order results alphabetically by `dim_state.state_name`."
+  },
+  {
+    "question": "ভারতের যে রাজ্যগুলোর নামে 'চিত্তুর' এবং 'প্রকাশম' উভয় জেলার নাম অন্তর্ভুক্ত আছে, সেগুলো রাজ্যের নাম অনুসারে বর্ণানুক্রমে তালিকাভুক্ত করুন।",
+    "sql": "SELECT T2.STATE_NAME FROM DIM_COUNTRY AS T1 JOIN DIM_STATE AS T2 ON T1.COUNTRY_ID = T2.COUNTRY_ID JOIN DIM_DISTRICT AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T1.COUNTRY_NAME = 'India' GROUP BY T2.STATE_NAME HAVING COUNT(DISTINCT CASE WHEN T3.DISTRICT_NAME = 'Chittoor' THEN T3.DISTRICT_ID END) > 0 AND COUNT(DISTINCT CASE WHEN T3.DISTRICT_NAME = 'Prakasam' THEN T3.DISTRICT_ID END) > 0 ORDER BY T2.STATE_NAME ASC",
+    "pair_id": "2f365ac6",
+    "original_question_id": "716de0c6",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Find `dim_state.state_name` where `dim_country.country_name` = 'India' and the state has at least one district with `dim_district.district_name` = 'Chittoor' and at least one district with `dim_district.district_name` = 'Prakasam'. Order results alphabetically by `dim_state.state_name`."
+  },
+  {
+    "question": "'অন্ধ্রপ্রদেশ' বা 'আসাম' রাজ্যগুলির জন্য অনন্য রাজ্যের নামগুলি রাজ্যের নাম অনুসারে বর্ণানুক্রমিকভাবে সাজানো হয়েছে।",
+    "sql": "SELECT DISTINCT T1.STATE_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_NAME = 'Andhra Pradesh' OR T1.STATE_NAME = 'Assam' ORDER BY T1.STATE_NAME ASC",
+    "pair_id": "48638e2d",
+    "original_question_id": "a877aaab",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `dim_state`.`state_name` from `dim_state` where `dim_state`.`state_name` in ('Andhra Pradesh', 'Assam') order by `dim_state`.`state_name`."
+  },
+  {
+    "question": "'ভারত' দেশে অবস্থিত অনন্য রাজ্যের নামগুলির একটি তালিকা তৈরি করুন এবং সেগুলিকে 'অন্ধ্রপ্রদেশ' রাজ্যে প্রাপ্ত অনন্য জেলার নামগুলির একটি তালিকার সাথে একত্রিত করুন।",
+    "sql": "SELECT DISTINCT T1.STATE_NAME FROM DIM_STATE AS T1 JOIN DIM_COUNTRY AS T2 ON T1.COUNTRY_ID = T2.COUNTRY_ID WHERE T2.COUNTRY_NAME = 'India' UNION SELECT DISTINCT T3.DISTRICT_NAME FROM DIM_DISTRICT AS T3 JOIN DIM_STATE AS T4 ON T3.STATE_ID = T4.STATE_ID WHERE T4.STATE_NAME = 'Andhra Pradesh';",
+    "pair_id": "ecf4ae55",
+    "original_question_id": "a877aaab",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List unique state names (`dim_state`.`state_name`) for the country India (`dim_country`.`country_name` = 'India'). List unique district names (`dim_district`.`district_name`) for the state Andhra Pradesh (`dim_state`.`state_name` = 'Andhra Pradesh'). Then union both lists."
+  },
+  {
+    "question": "অন্ধ্রপ্রদেশ রাজ্যে অবস্থিত ULB, RLB বা গ্রামগুলির নাম তালিকা করুন, যা গ্রামের নাম অনুসারে বর্ণানুক্রমিকভাবে দলবদ্ধ এবং সাজানো হয়েছে।",
+    "sql": "SELECT T3.ULB_RLB_VILLAGE_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_LOCATION AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME = 'Andhra Pradesh' GROUP BY T3.ULB_RLB_VILLAGE_NAME ORDER BY T3.ULB_RLB_VILLAGE_NAME",
+    "pair_id": "ca1147c3",
+    "original_question_id": "cb006508",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List unique `dim_location`.`ulb_rlb_village_name` values for locations in the state where `dim_state`.`state_name` = 'Andhra Pradesh'. Join `dim_location` → `dim_district` → `dim_state`. Group by `dim_location`.`ulb_rlb_village_name` and order alphabetically by `dim_location`.`ulb_rlb_village_name`."
+  },
+  {
+    "question": "বিহার রাজ্যের জন্য, গ্রামের নাম অনুসারে বর্ণানুক্রমিকভাবে দলবদ্ধ এবং সাজানো অবস্থায় ইউএলবি/আরএলবি গ্রামের নাম এবং উপ-জেলার নাম তালিকাভুক্ত করুন।",
+    "sql": "SELECT T3.ULB_RLB_VILLAGE_NAME, T3.SUB_DISTRICT_NAME FROM DIM_STATE AS T1 INNER JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID INNER JOIN DIM_LOCATION AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME = 'Bihar' GROUP BY T3.ULB_RLB_VILLAGE_NAME, T3.SUB_DISTRICT_NAME ORDER BY T3.ULB_RLB_VILLAGE_NAME ASC",
+    "pair_id": "70555425",
+    "original_question_id": "cb006508",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state.state_name` = 'Bihar'. Join `dim_location` → `dim_district` → `dim_state`. Select `dim_location.ulb_rlb_village_name` and `dim_location.sub_district_name`. Group by both columns to get unique combinations. Order by `dim_location.ulb_rlb_village_name` alphabetically."
+  },
+  {
+    "question": "প্রতিটি রাজ্যের নাম এবং তার সাথে সম্পর্কিত অবস্থান আইডির সংখ্যা তালিকাভুক্ত করুন, রাজ্যের নাম অনুসারে গ্রুপ করে এবং সর্বোচ্চ থেকে সর্বনিম্ন সংখ্যার ক্রমে সাজানো।",
+    "sql": "SELECT T1.STATE_NAME, COUNT(T3.LOCATION_ID) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_LOCATION AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID GROUP BY T1.STATE_NAME ORDER BY COUNT(T3.LOCATION_ID) DESC",
+    "pair_id": "5b6160c2",
+    "original_question_id": "97ee2808",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Count distinct `dim_location`.`location_id` for each `dim_state`.`state_name`. Join `dim_state` to `dim_district` on `dim_state`.`state_id` = `dim_district`.`state_id`, then join `dim_district` to `dim_location` on `dim_district`.`district_id` = `dim_location`.`district_id`. Group by `dim_state`.`state_name` and order by count descending."
+  },
+  {
+    "question": "প্রতিটি রাজ্যের নাম এবং সেই রাজ্যের জন্য অবস্থান আইডির মোট সংখ্যা তালিকাভুক্ত করুন, শুধুমাত্র এমন রাজ্যগুলিতে ফোকাস করুন যাদের একাধিক অবস্থান আইডি রয়েছে, এবং অবস্থান আইডির সংখ্যা অনুসারে ফলাফলগুলি অবরোহী ক্রমে সাজান।",
+    "sql": "SELECT T1.STATE_NAME, COUNT(T3.LOCATION_ID) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_LOCATION AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID GROUP BY T1.STATE_NAME HAVING COUNT(T3.LOCATION_ID) > 1 ORDER BY COUNT(T3.LOCATION_ID) DESC",
+    "pair_id": "1a0c3a1c",
+    "original_question_id": "97ee2808",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List each `dim_state`.`state_name` and the count of distinct `dim_location`.`location_id` for that state. Join `dim_location` to `dim_district` on `dim_location`.`district_id` = `dim_district`.`district_id`, then join `dim_district` to `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id`. Filter to only states where the count of distinct `dim_location`.`location_id` > 1. Order results descending by the count of location IDs."
+  },
+  {
+    "question": "'আন্ধ্রপ্রদেশ' রাজ্যের 'চিত্তুর' জেলায় অবস্থিত ইউএলবি, আরএলবি বা গ্রামগুলির নাম তালিকাভুক্ত করুন, যা গ্রামের নাম অনুসারে বর্ণানুক্রমিকভাবে গোষ্ঠীবদ্ধ ও সাজানো হবে।",
+    "sql": "SELECT T3.ULB_RLB_VILLAGE_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_LOCATION AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME = 'Andhra Pradesh' AND T2.DISTRICT_NAME = 'Chittoor' GROUP BY T3.ULB_RLB_VILLAGE_NAME ORDER BY T3.ULB_RLB_VILLAGE_NAME ASC",
+    "pair_id": "a6f826b8",
+    "original_question_id": "bd67047c",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve distinct `dim_location`.`ulb_rlb_village_name` from `dim_location` JOIN `dim_district` ON `dim_location`.`district_id` = `dim_district`.`district_id` JOIN `dim_state` ON `dim_district`.`state_id` = `dim_state`.`state_id` WHERE `dim_state`.`state_name` = 'Andhra Pradesh' AND `dim_district`.`district_name` = 'Chittoor' ORDER BY `dim_location`.`ulb_rlb_village_name`."
+  },
+  {
+    "question": "'অন্ধ্র প্রদেশ' রাজ্যের এবং 'চিত্তুর' জেলার অবস্থিত ইউএলবি আরএলবি গ্রামের নামগুলি গ্রামের নাম অনুসারে বর্ণানুক্রমিকভাবে গোষ্ঠীবদ্ধ ও সাজানো হয়েছে।",
+    "sql": "SELECT T3.ULB_RLB_VILLAGE_NAME FROM DIM_STATE AS T1 INNER JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID INNER JOIN DIM_LOCATION AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME = 'Andhra Pradesh' AND T2.DISTRICT_NAME = 'Chittoor' GROUP BY T3.ULB_RLB_VILLAGE_NAME ORDER BY T3.ULB_RLB_VILLAGE_NAME ASC",
+    "pair_id": "bd14e998",
+    "original_question_id": "bd67047c",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_location`.`ulb_rlb_village_name` for locations in `dim_state`.`state_name` = 'Andhra Pradesh' and `dim_district`.`district_name` = 'Chittoor'. Join `dim_location` to `dim_district` on `dim_location`.`district_id` = `dim_district`.`district_id`, then join `dim_district` to `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id`. Group by `dim_location`.`ulb_rlb_village_name` and order alphabetically by village name."
+  },
+  {
+    "question": "সমস্ত অবস্থানের জন্য রাজ্যের নাম, দেশ আইডি, জেলার নাম এবং ইউএলবি/আরএলবি গ্রামের নাম তালিকাভুক্ত করুন, গ্রামের নাম অনুসারে এবং তারপর জেলার নাম অনুসারে সাজানো।",
+    "sql": "SELECT T3.STATE_NAME, T3.COUNTRY_ID, T2.DISTRICT_NAME, T1.ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID ORDER BY T1.ULB_RLB_VILLAGE_NAME, T2.DISTRICT_NAME",
+    "pair_id": "18a2fb3f",
+    "original_question_id": "7b2959dc",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_state`.`state_name`, `dim_state`.`country_id`, `dim_district`.`district_name`, `dim_location`.`ulb_rlb_village_name` from `dim_location` LEFT JOIN `dim_district` on `dim_location`.`district_id` = `dim_district`.`district_id` LEFT JOIN `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id` order by `dim_location`.`ulb_rlb_village_name`, `dim_district`.`district_name`."
+  },
+  {
+    "question": "রাজ্যের নাম, দেশ আইডি, জেলার নাম এবং ইউএলবি/আরএলবি গ্রামের নাম তালিকাভুক্ত করুন, এই চারটি বৈশিষ্ট্য দ্বারা গ্রুপ করে এবং গ্রামের নাম অনুসারে অক্ষর ক্রমে সাজিয়ে, তারপর জেলার নাম অনুসারে সাজানো।",
+    "sql": "SELECT T3.STATE_NAME, T3.COUNTRY_ID, T2.DISTRICT_NAME, T1.ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION AS T1 INNER JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID INNER JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID GROUP BY T1.ULB_RLB_VILLAGE_NAME, T2.DISTRICT_NAME, T3.STATE_NAME, T3.COUNTRY_ID ORDER BY T1.ULB_RLB_VILLAGE_NAME ASC, T2.DISTRICT_NAME ASC",
+    "pair_id": "3a6f0c0d",
+    "original_question_id": "7b2959dc",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_state`.`state_name`, `dim_state`.`country_id`, `dim_district`.`district_name`, `dim_location`.`ulb_rlb_village_name` from `dim_state` join `dim_district` on `dim_district`.`state_id` = `dim_state`.`state_id` join `dim_location` on `dim_location`.`district_id` = `dim_district`.`district_id` group by `dim_state`.`state_name`, `dim_state`.`country_id`, `dim_district`.`district_name`, `dim_location`.`ulb_rlb_village_name` order by `dim_location`.`ulb_rlb_village_name`, `dim_district`.`district_name`"
+  },
+  {
+    "question": "অন্ধ্র প্রদেশ রাজ্যের জন্য, জেলার নাম এবং স্বতন্ত্র ইউএলবি/আরএলবি গ্রামের নামের সংখ্যা তালিকাভুক্ত করুন, জেলার নাম অনুসারে গোষ্ঠীবদ্ধ করে এবং সর্বাধিক গ্রামের সংখ্যা অনুসারে সাজিয়ে, শুধুমাত্র শীর্ষ ১০টি ফলাফল দেখান।",
+    "sql": "SELECT T2.DISTRICT_NAME, COUNT(DISTINCT T3.ULB_RLB_VILLAGE_NAME) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_LOCATION AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME = 'Andhra Pradesh' GROUP BY T2.DISTRICT_NAME ORDER BY COUNT(DISTINCT T3.ULB_RLB_VILLAGE_NAME) DESC LIMIT 10",
+    "pair_id": "a63fc1b8",
+    "original_question_id": "7904789e",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state.state_name` = 'Andhra Pradesh'. Join `dim_district` on `dim_state.state_id` = `dim_district.state_id`. Join `dim_location` on `dim_district.district_id` = `dim_location.district_id`. Group by `dim_district.district_name`. Count distinct `dim_location.ulb_rlb_village_name`. Order by count descending. Limit 10."
+  },
+  {
+    "question": "'বিহার' রাজ্যের জন্য, প্রতিটি জেলার নাম এবং স্বতন্ত্র ইউএলবি/আরএলবি গ্রামের নামের মোট সংখ্যা তালিকাভুক্ত করুন, শুধুমাত্র শূন্যের বেশি গ্রাম সহ জেলাগুলি অন্তর্ভুক্ত করে এবং সর্বাধিক সংখ্যক গ্রাম সহ শীর্ষ ১০টি জেলা প্রদর্শন করুন।",
+    "sql": "SELECT T2.DISTRICT_NAME, COUNT(DISTINCT T3.ULB_RLB_VILLAGE_NAME) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_LOCATION AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME = 'Bihar' GROUP BY T2.DISTRICT_NAME HAVING COUNT(DISTINCT T3.ULB_RLB_VILLAGE_NAME) > 0 ORDER BY COUNT(DISTINCT T3.ULB_RLB_VILLAGE_NAME) DESC LIMIT 10",
+    "pair_id": "8ec520f2",
+    "original_question_id": "7904789e",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter by `dim_state`.`state_name` = 'Bihar'. Join `dim_state` to `dim_district` on `dim_state`.`state_id` = `dim_district`.`state_id`. Then join `dim_district` to `dim_location` on `dim_district`.`district_id` = `dim_location`.`district_id`. Count distinct `dim_location`.`ulb_rlb_village_name` per district, grouping by `dim_district`.`district_name`. Include only districts where count > 0. Order by count descending and limit to top 10 districts."
+  },
+  {
+    "question": "রাজ্যের নাম, জেলার নাম এবং ইউএলবি/আরএলবি গ্রামের নাম তালিকাভুক্ত করুন, রাজ্য, জেলা এবং গ্রামের নাম অনুসারে গ্রুপ করে এবং গ্রামের নাম অনুসারে বর্ণানুক্রমিকভাবে সাজিয়ে।",
+    "sql": "SELECT T3.STATE_NAME, T2.DISTRICT_NAME, T1.ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID GROUP BY T3.STATE_NAME, T2.DISTRICT_NAME, T1.ULB_RLB_VILLAGE_NAME ORDER BY T1.ULB_RLB_VILLAGE_NAME;",
+    "pair_id": "5fca6279",
+    "original_question_id": "413299a2",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_state`.`state_name`, `dim_district`.`district_name`, `dim_location`.`ulb_rlb_village_name` from `dim_location` join `dim_district` on `dim_location`.`district_id` = `dim_district`.`district_id` join `dim_state` on `dim_district`.`state_id` = `dim_state`.`state_id` group by `dim_state`.`state_name`, `dim_district`.`district_name`, `dim_location`.`ulb_rlb_village_name` order by `dim_location`.`ulb_rlb_village_name` asc."
+  },
+  {
+    "question": "আসাম, অন্ধ্রপ্রদেশ বা বিহার রাজ্যের অবস্থানগুলির জন্য রাজ্যের নাম, জেলার নাম এবং ইউএলবি/আরএলবি গ্রামের নাম তালিকাভুক্ত করুন, প্রকাশম জেলার অবস্থানগুলি ব্যতীত, রাজ্য, জেলা এবং গ্রামের নাম অনুসারে গ্রুপ করে এবং গ্রাম ও জেলার বর্ণানুক্রমে সাজানো।",
+    "sql": "SELECT T3.STATE_NAME, T2.DISTRICT_NAME, T1.ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION AS T1 INNER JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID INNER JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T3.STATE_NAME IN ('Assam', 'Andhra Pradesh', 'Bihar') AND T2.DISTRICT_NAME NOT IN ('Prakasam') GROUP BY T3.STATE_NAME, T2.DISTRICT_NAME, T1.ULB_RLB_VILLAGE_NAME ORDER BY T1.ULB_RLB_VILLAGE_NAME ASC, T2.DISTRICT_NAME ASC",
+    "pair_id": "bc7a27e8",
+    "original_question_id": "413299a2",
+    "schema_used": [
+      "DIM_STATE",
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "linked_schema": {
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_state`.`state_name`, `dim_district`.`district_name`, `dim_location`.`ulb_rlb_village_name` for locations in states Assam, Andhra Pradesh, or Bihar, excluding Prakasam district. Join `dim_location` to `dim_district` via `dim_location`.`district_id` = `dim_district`.`district_id`, then `dim_district` to `dim_state` via `dim_district`.`state_id` = `dim_state`.`state_id`. Filter: `dim_state`.`state_name` IN ('Assam', 'Andhra Pradesh', 'Bihar') AND `dim_district`.`district_name` != 'Prakasam'. Group by `dim_state`.`state_name`, `dim_district`.`district_name`, `dim_location`.`ulb_rlb_village_name`. Order by `dim_location`.`ulb_rlb_village_name`, `dim_district`.`district_name`."
+  },
+  {
+    "question": "'চিত্তুর' জেলার জন্য, উপ-জেলার নাম এবং ইউএলবি/আরএলবি গ্রামের নাম তালিকাভুক্ত করুন, 'প্রকাশম' জেলায়ও উপস্থিত যেকোনো উপ-জেলা বাদ দিয়ে, উপ-জেলা এবং গ্রামের নাম অনুসারে গ্রুপ করে এবং গ্রামের নাম অনুসারে সাজিয়ে।",
+    "sql": "SELECT T2.SUB_DISTRICT_NAME, T2.ULB_RLB_VILLAGE_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_LOCATION AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T1.DISTRICT_NAME = 'Chittoor' AND T2.SUB_DISTRICT_NAME NOT IN (SELECT T2.SUB_DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_LOCATION AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T1.DISTRICT_NAME = 'Prakasam') GROUP BY T2.SUB_DISTRICT_NAME, T2.ULB_RLB_VILLAGE_NAME ORDER BY T2.ULB_RLB_VILLAGE_NAME",
+    "pair_id": "aa6f397e",
+    "original_question_id": "c229262c",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_location.sub_district_name` and `dim_location.ulb_rlb_village_name` for locations in `dim_district` where `dim_district.district_name` = 'Chittoor'. Exclude any sub-district that also appears in `dim_location` for `dim_district.district_name` = 'Prakasam'. Group by `dim_location.sub_district_name`, `dim_location.ulb_rlb_village_name` and order by `dim_location.ulb_rlb_village_name`."
+  },
+  {
+    "question": "'চিত্তুর' জেলায় অবস্থিত উপ-জেলার নাম এবং ইউএলবি/আরএলবি গ্রামের নাম তালিকাভুক্ত করুন, 'প্রকাশম' জেলায় পাওয়া যায় এমন কোনও উপ-জেলা বাদ দিয়ে, উপ-জেলা এবং গ্রামের নাম অনুসারে গোষ্ঠীভুক্ত করে এবং উপ-জেলা অনুসারে বর্ণানুক্রমিকভাবে সাজানো।",
+    "sql": "SELECT T2.SUB_DISTRICT_NAME, T2.ULB_RLB_VILLAGE_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_LOCATION AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T1.DISTRICT_NAME = 'Chittoor' AND T2.SUB_DISTRICT_NAME NOT IN (SELECT T4.SUB_DISTRICT_NAME FROM DIM_DISTRICT AS T3 JOIN DIM_LOCATION AS T4 ON T3.DISTRICT_ID = T4.DISTRICT_ID WHERE T3.DISTRICT_NAME = 'Prakasam') GROUP BY T2.SUB_DISTRICT_NAME, T2.ULB_RLB_VILLAGE_NAME ORDER BY T2.SUB_DISTRICT_NAME ASC",
+    "pair_id": "57faa295",
+    "original_question_id": "c229262c",
+    "schema_used": [
+      "DIM_DISTRICT",
+      "DIM_LOCATION"
+    ],
+    "linked_schema": {
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ],
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_location.sub_district_name` and `dim_location.ulb_rlb_village_name` for locations where `dim_district.district_name` = 'Chittoor', excluding any `dim_location.sub_district_name` that also appears in locations where `dim_district.district_name` = 'Prakasam'. Group by `dim_location.sub_district_name`, `dim_location.ulb_rlb_village_name` and order by `dim_location.sub_district_name` alphabetically."
+  },
+  {
+    "question": "যে সমস্ত উপজেলার নামে 'গ্রামীণ' এবং 'শহুরে' উভয় খাত বিভাগ রয়েছে তাদের তালিকা করুন, প্রতিটি উপজেলার নাম প্রদর্শিত হয়েছে এবং ফলাফলগুলি উপজেলার নাম অনুসারে বর্ণানুক্রমিকভাবে সাজানো হয়েছে।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_LOCATION AS T1 JOIN FACT_ESTABLISHMENT_TOTALS AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_SECTOR_CATEGORY AS T3 ON T2.SECTOR_ID = T3.SECTOR_ID WHERE T3.SECTOR_CATEGORY = 'Rural' OR T3.SECTOR_CATEGORY = 'Urban' GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(DISTINCT T3.SECTOR_CATEGORY) = 2 ORDER BY T1.SUB_DISTRICT_NAME",
+    "pair_id": "e95b6c0d",
+    "original_question_id": "5df7ba1e",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_SECTOR_CATEGORY",
+      "FACT_ESTABLISHMENT_TOTALS"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_SECTOR_CATEGORY": [
+        "SECTOR_ID",
+        "SECTOR_CATEGORY"
+      ],
+      "FACT_ESTABLISHMENT_TOTALS": [
+        "FACT_ESTABLISHMENT_TOTALS_ID",
+        "LOCATION_ID",
+        "EST_RESIDENTIAL_COMMERCIAL",
+        "TOTAL_ESTABLISHMENTS",
+        "TIME_ID",
+        "SECTOR_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Find sub-districts (`dim_location`.`sub_district_name`) that have both 'Rural' and 'Urban' sector categories (`dim_sector_category`.`sector_category`). Join `dim_location` with any fact table (e.g., `fact_establishment_totals`) on `dim_location`.`location_id` = `fact_establishment_totals`.`location_id`, then join `dim_sector_category` on `fact_establishment_totals`.`sector_id` = `dim_sector_category`.`sector_id`. Filter `dim_sector_category`.`sector_category` IN ('Rural', 'Urban'). Group by `dim_location`.`sub_district_name`. Use HAVING COUNT(DISTINCT `dim_sector_category`.`sector_category`) = 2. Select `dim_location`.`sub_district_name`. Order by `dim_location`.`sub_district_name` ASC."
+  },
+  {
+    "question": "যে সমস্ত উপজেলার নাম বর্ণানুক্রমে তালিকাভুক্ত করুন, যেখানে অন্তত একটি 'গ্রামীণ' শ্রেণিবদ্ধ সেক্টর এবং অন্তত একটি 'নগর' শ্রেণিবদ্ধ সেক্টর রয়েছে।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_LOCATION AS T1 JOIN FACT_ESTABLISHMENT_TOTALS AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_SECTOR_CATEGORY AS T3 ON T2.SECTOR_ID = T3.SECTOR_ID GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(DISTINCT CASE WHEN T3.SECTOR_CATEGORY = 'Rural' THEN T3.SECTOR_CATEGORY END) > 0 AND COUNT(DISTINCT CASE WHEN T3.SECTOR_CATEGORY = 'Urban' THEN T3.SECTOR_CATEGORY END) > 0 ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "4ba18ccf",
+    "original_question_id": "5df7ba1e",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_SECTOR_CATEGORY",
+      "FACT_ESTABLISHMENT_TOTALS"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_SECTOR_CATEGORY": [
+        "SECTOR_ID",
+        "SECTOR_CATEGORY"
+      ],
+      "FACT_ESTABLISHMENT_TOTALS": [
+        "FACT_ESTABLISHMENT_TOTALS_ID",
+        "LOCATION_ID",
+        "EST_RESIDENTIAL_COMMERCIAL",
+        "TOTAL_ESTABLISHMENTS",
+        "TIME_ID",
+        "SECTOR_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_location`.`sub_district_name` in alphabetical order where there exists at least one record with `dim_sector_category`.`sector_category` = 'Rural' and at least one record with `dim_sector_category`.`sector_category` = 'Urban' for that sub-district. Join `dim_location` with fact tables (e.g., `fact_establishment_totals`) via `location_id` and `dim_sector_category` via `sector_id` to check sector categories."
+  },
+  {
+    "question": "'অন্ধ্র প্রদেশ' বা 'আসাম' রাজ্যে অবস্থিত সমস্ত জেলার জন্য রাজ্যের নাম এবং জেলার নাম তালিকাভুক্ত করুন এবং ফলাফলগুলি রাজ্যের নাম অনুসারে সাজান।",
+    "sql": "SELECT T1.STATE_NAME, T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_NAME = 'Andhra Pradesh' OR T1.STATE_NAME = 'Assam' ORDER BY T1.STATE_NAME",
+    "pair_id": "5d1894c5",
+    "original_question_id": "a0a75f0c",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_state` where `dim_state`.`state_name` in ('Andhra Pradesh', 'Assam'). Join with `dim_district` on `dim_district`.`state_id` = `dim_state`.`state_id`. Select `dim_state`.`state_name` and `dim_district`.`district_name`. Order by `dim_state`.`state_name`."
+  },
+  {
+    "question": "রাজ্যের নাম এবং জেলার নাম তালিকাভুক্ত করুন, যেখানে রাজ্য এবং জেলা অনুসারে গ্রুপ করা হয়েছে, যে রেকর্ডগুলির জন্য রাজ্যের নাম 'অন্ধ্রপ্রদেশ' বা জেলার নাম 'চিত্তুর' এবং নিশ্চিত করুন যে শুধুমাত্র সেই গ্রুপগুলি অন্তর্ভুক্ত করা হয়েছে যেখানে অন্তত একটি জেলা আইডি রয়েছে, এবং ফলাফলগুলি রাজ্যের নাম অনুসারে বর্ণানুক্রমিকভাবে সাজান।",
+    "sql": "SELECT T2.STATE_NAME, T3.DISTRICT_NAME FROM DIM_COUNTRY AS T1 INNER JOIN DIM_STATE AS T2 ON T1.COUNTRY_ID = T2.COUNTRY_ID LEFT JOIN DIM_DISTRICT AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T2.STATE_NAME = 'Andhra Pradesh' OR T3.DISTRICT_NAME = 'Chittoor' GROUP BY T2.STATE_NAME, T3.DISTRICT_NAME HAVING COUNT(T3.DISTRICT_ID) >= 1 ORDER BY T2.STATE_NAME ASC",
+    "pair_id": "a7cdc36d",
+    "original_question_id": "a0a75f0c",
+    "schema_used": [
+      "DIM_COUNTRY",
+      "DIM_STATE",
+      "DIM_DISTRICT"
+    ],
+    "linked_schema": {
+      "DIM_COUNTRY": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+      ],
+      "DIM_STATE": [
+        "STATE_ID",
+        "COUNTRY_ID",
+        "STATE_NAME"
+      ],
+      "DIM_DISTRICT": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_state`.`state_name` and `dim_district`.`district_name`, grouped by state and district, where `dim_state`.`state_name` = 'Andhra Pradesh' OR `dim_district`.`district_name` = 'Chittoor'. Ensure only groups with at least one district ID are included (i.e., filter out groups where `dim_district`.`district_id` is NULL). Order results alphabetically by `dim_state`.`state_name`."
+  },
+  {
+    "question": "২০১৩ সালের জনগণনা বছর এবং 'গ্রামীণ' হিসাবে শ্রেণীবদ্ধ খাতগুলির জন্য, অনুমানিক পশুসম্পদ মূল্য এবং অনুমানিক মৎস্য ও জলজ চাষের মূল্যগুলি কী কী, জনগণনা বছর অনুসারে অবরোহী ক্রমে সাজানো হয়েছে?",
+    "sql": "SELECT T1.EST_LIVESTOCK, T1.EST_FISHING_AQUACULTURE FROM FACT_PRIMARY_SECTOR AS T1 JOIN DIM_SECTOR_CATEGORY AS T2 ON T1.SECTOR_ID = T2.SECTOR_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T2.SECTOR_CATEGORY = 'Rural' AND T3.CENSUS_YEAR = '2013' ORDER BY T3.CENSUS_YEAR DESC",
+    "pair_id": "222805e7",
+    "original_question_id": "21d293d7",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_SECTOR_CATEGORY",
+      "FACT_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "DIM_SECTOR_CATEGORY": [
+        "SECTOR_ID",
+        "SECTOR_CATEGORY"
+      ],
+      "FACT_PRIMARY_SECTOR": [
+        "EST_AGRICULTURE",
+        "FACT_PRIMARY_SECTOR_ID",
+        "LOCATION_ID",
+        "EST_FISHING_AQUACULTURE",
+        "EST_LIVESTOCK",
+        "TIME_ID",
+        "SECTOR_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_primary_sector`.`est_livestock` and `fact_primary_sector`.`est_fishing_aquaculture` from `fact_primary_sector` join `dim_time` on `fact_primary_sector`.`time_id` = `dim_time`.`time_id` join `dim_sector_category` on `fact_primary_sector`.`sector_id` = `dim_sector_category`.`sector_id` where `dim_time`.`census_year` = 2013 and `dim_sector_category`.`sector_category` = 'Rural' order by `dim_time`.`census_year` desc."
+  },
+  {
+    "question": "সর্বশেষ উপলব্ধ আদমশুমারির বছরের জন্য, 'গ্রামীণ' হিসাবে শ্রেণীবদ্ধ খাতগুলির জন্য মোট আনুমানিক পশুসম্পদ এবং মোট আনুমানিক মৎস্য চাষের পরিমাণ কত, বিশেষভাবে সেই বছরের জন্য যেখানে পশুসম্পদ এবং মৎস্য চাষের সম্মিলিত যোগফল শূন্যের চেয়ে বেশি, এবং একইসাথে আদমশুমারির বছরটি প্রদর্শন করুন?",
+    "sql": "SELECT SUM(T1.EST_LIVESTOCK), SUM(T1.EST_FISHING_AQUACULTURE) FROM FACT_PRIMARY_SECTOR AS T1 JOIN DIM_SECTOR_CATEGORY AS T2 ON T1.SECTOR_ID = T2.SECTOR_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T2.SECTOR_CATEGORY = 'Rural' AND T3.CENSUS_YEAR = (SELECT MAX(CENSUS_YEAR) FROM DIM_TIME) GROUP BY T3.CENSUS_YEAR HAVING SUM(T1.EST_LIVESTOCK + T1.EST_FISHING_AQUACULTURE) > 0.000 ORDER BY T3.CENSUS_YEAR DESC",
+    "pair_id": "be415630",
+    "original_question_id": "21d293d7",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_SECTOR_CATEGORY",
+      "FACT_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "DIM_SECTOR_CATEGORY": [
+        "SECTOR_ID",
+        "SECTOR_CATEGORY"
+      ],
+      "FACT_PRIMARY_SECTOR": [
+        "EST_AGRICULTURE",
+        "FACT_PRIMARY_SECTOR_ID",
+        "LOCATION_ID",
+        "EST_FISHING_AQUACULTURE",
+        "EST_LIVESTOCK",
+        "TIME_ID",
+        "SECTOR_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_primary_sector`.`est_livestock` and `fact_primary_sector`.`est_fishing_aquaculture` for `dim_sector_category`.`sector_category` = 'Rural' and `dim_time`.`census_year` = 2013, filtering rows where `fact_primary_sector`.`est_livestock` + `fact_primary_sector`.`est_fishing_aquaculture` > 0, and show the census year."
+  },
+  {
+    "question": "প্রতিটি আদমশুমারির বছরের জন্য, আদমশুমারির বছর এবং 'গ্রামীণ' খাত বিভাগের জন্য কৃষি, পশুসম্পদ এবং মৎস্য চাষের মোট অনুমানগুলি তালিকাভুক্ত করুন, বছর অনুসারে সাজানো।",
+    "sql": "SELECT T2.CENSUS_YEAR, SUM(T1.EST_AGRICULTURE), SUM(T1.EST_LIVESTOCK), SUM(T1.EST_FISHING_AQUACULTURE) FROM FACT_PRIMARY_SECTOR AS T1 JOIN DIM_TIME AS T2 ON T1.TIME_ID = T2.TIME_ID JOIN DIM_SECTOR_CATEGORY AS T3 ON T1.SECTOR_ID = T3.SECTOR_ID WHERE T3.SECTOR_CATEGORY = 'Rural' GROUP BY T2.CENSUS_YEAR ORDER BY T2.CENSUS_YEAR",
+    "pair_id": "eef44175",
+    "original_question_id": "09020f8e",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "DIM_SECTOR_CATEGORY",
+      "FACT_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "DIM_SECTOR_CATEGORY": [
+        "SECTOR_ID",
+        "SECTOR_CATEGORY"
+      ],
+      "FACT_PRIMARY_SECTOR": [
+        "EST_AGRICULTURE",
+        "FACT_PRIMARY_SECTOR_ID",
+        "LOCATION_ID",
+        "EST_FISHING_AQUACULTURE",
+        "EST_LIVESTOCK",
+        "TIME_ID",
+        "SECTOR_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_time`.`census_year`, SUM(`fact_primary_sector`.`est_agriculture`) as total_agriculture, SUM(`fact_primary_sector`.`est_livestock`) as total_livestock, SUM(`fact_primary_sector`.`est_fishing_aquaculture`) as total_fishing_aquaculture from `fact_primary_sector` join `dim_time` on `fact_primary_sector`.`time_id` = `dim_time`.`time_id` join `dim_sector_category` on `fact_primary_sector`.`sector_id` = `dim_sector_category`.`sector_id` where `dim_sector_category`.`sector_category` = 'Rural' group by `dim_time`.`census_year` order by `dim_time`.`census_year`."
+  },
+  {
+    "question": "২০১৩ সালের আদমশুমারির জন্য, সেই খাত বিভাগগুলির তালিকা তৈরি করুন যেখানে মোট প্রতিষ্ঠানের সংখ্যা ৫০,০০০-এর বেশি, বিশেষভাবে সেই রেকর্ডগুলি ফিল্টার করুন যেখানে আবাসিক বা বাণিজ্যিক অবস্থা ০.০০০, এবং ফলাফল হিসাবে প্রাপ্ত খাত বিভাগগুলিকে অবরোহী ক্রমে সাজান।",
+    "sql": "SELECT T2.SECTOR_CATEGORY FROM FACT_ESTABLISHMENT_TOTALS AS T1 JOIN DIM_SECTOR_CATEGORY AS T2 ON T1.SECTOR_ID = T2.SECTOR_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' AND T1.EST_RESIDENTIAL_COMMERCIAL = 0.000 GROUP BY T2.SECTOR_CATEGORY HAVING SUM(T1.TOTAL_ESTABLISHMENTS) > 50000 ORDER BY T2.SECTOR_CATEGORY DESC",
+    "pair_id": "2d406297",
+    "original_question_id": "4a8a6d89",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_SECTOR_CATEGORY",
+      "FACT_ESTABLISHMENT_TOTALS"
+    ],
+    "linked_schema": {
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "DIM_SECTOR_CATEGORY": [
+        "SECTOR_ID",
+        "SECTOR_CATEGORY"
+      ],
+      "FACT_ESTABLISHMENT_TOTALS": [
+        "FACT_ESTABLISHMENT_TOTALS_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "TOTAL_ESTABLISHMENTS",
+        "EST_RESIDENTIAL_COMMERCIAL"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_sector_category`.`sector_category` where `dim_time`.`census_year` = 2013, `fact_establishment_totals`.`total_establishments` > 50000, and `fact_establishment_totals`.`est_residential_commercial` = 0, sorted by `dim_sector_category`.`sector_category` in descending order."
+  },
+  {
+    "question": "সর্বশেষ উপলব্ধ সময়কালের জন্য, সেই খাত বিভাগগুলোর তালিকা দিন যেখানে প্রতিষ্ঠানের মোট সংখ্যা ৫০,০০০-এর বেশি, বিশেষভাবে সেই রেকর্ডগুলোর জন্য যেখানে আবাসিক বা বাণিজ্যিক অবস্থা ০.০০০, এবং ফলাফলগুলোকে প্রতিষ্ঠানের মোট সংখ্যা অনুসারে অবরোহী ক্রমে সাজান।",
+    "sql": "SELECT T2.SECTOR_CATEGORY FROM FACT_ESTABLISHMENT_TOTALS AS T1 JOIN DIM_SECTOR_CATEGORY AS T2 ON T1.SECTOR_ID = T2.SECTOR_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.TIME_ID = (SELECT MAX(TIME_ID) FROM DIM_TIME) AND T1.EST_RESIDENTIAL_COMMERCIAL = 0.000 GROUP BY T2.SECTOR_CATEGORY HAVING SUM(T1.TOTAL_ESTABLISHMENTS) > 50000 ORDER BY SUM(T1.TOTAL_ESTABLISHMENTS) DESC",
+    "pair_id": "4a0348e2",
+    "original_question_id": "4a8a6d89",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_SECTOR_CATEGORY",
+      "FACT_ESTABLISHMENT_TOTALS"
+    ],
+    "linked_schema": {
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "DIM_SECTOR_CATEGORY": [
+        "SECTOR_ID",
+        "SECTOR_CATEGORY"
+      ],
+      "FACT_ESTABLISHMENT_TOTALS": [
+        "FACT_ESTABLISHMENT_TOTALS_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "TOTAL_ESTABLISHMENTS",
+        "EST_RESIDENTIAL_COMMERCIAL"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `fact_establishment_totals` where `fact_establishment_totals`.`total_establishments` > 50000 and `fact_establishment_totals`.`est_residential_commercial` = 0.000, for the latest `dim_time`.`census_year` (which is 2013). Join with `dim_sector_category` on `sector_id` to get `dim_sector_category`.`sector_category`. Sort results descending by `fact_establishment_totals`.`total_establishments`."
+  },
+  {
+    "question": "প্রতিটি জনগণনা বছরের জন্য, জনগণনা বছর এবং মোট আনুমানিক মৎস্য ও জলজ সংস্কৃতির মূল্য তালিকাভুক্ত করুন, মোট আনুমানিক মৎস্য ও জলজ সংস্কৃতির মূল্য অনুসারে অবরোহী ক্রমে সাজানো।",
+    "sql": "SELECT T2.CENSUS_YEAR, SUM(T1.EST_FISHING_AQUACULTURE) FROM FACT_PRIMARY_SECTOR AS T1 JOIN DIM_TIME AS T2 ON T1.TIME_ID = T2.TIME_ID GROUP BY T2.CENSUS_YEAR ORDER BY SUM(T1.EST_FISHING_AQUACULTURE) DESC",
+    "pair_id": "47b99b2f",
+    "original_question_id": "9c4b0a36",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "SUB_DISTRICT_NAME",
+        "LOCATION_ID",
+        "ULB_RLB_VILLAGE_NAME",
+        "DISTRICT_ID"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_PRIMARY_SECTOR": [
+        "EST_AGRICULTURE",
+        "FACT_PRIMARY_SECTOR_ID",
+        "LOCATION_ID",
+        "EST_FISHING_AQUACULTURE",
+        "TIME_ID",
+        "SECTOR_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_primary_sector` with `dim_time` on `time_id`. Group by `dim_time`.`census_year`. Sum `fact_primary_sector`.`est_fishing_aquaculture` for each year. Order by the sum descending."
+  },
+  {
+    "question": "প্রতিটি বছরের জন্য আদমশুমারি বছর এবং মোট অনুমানিত মৎস্য চাষের পরিমাণ তালিকাভুক্ত করুন, নিশ্চিত করুন যে মোট পরিমাণ কমপক্ষে 0.000, এবং ফলাফলগুলো মোট অনুমানিত মৎস্য চাষের পরিমাণ অনুসারে অবরোহী ক্রমে সাজান।",
+    "sql": "SELECT T2.CENSUS_YEAR, SUM(T1.EST_FISHING_AQUACULTURE) FROM FACT_PRIMARY_SECTOR AS T1 JOIN DIM_TIME AS T2 ON T1.TIME_ID = T2.TIME_ID JOIN DIM_LOCATION AS T3 ON T1.LOCATION_ID = T3.LOCATION_ID GROUP BY T2.CENSUS_YEAR HAVING SUM(T1.EST_FISHING_AQUACULTURE) >= 0.000 ORDER BY SUM(T1.EST_FISHING_AQUACULTURE) DESC",
+    "pair_id": "b353514c",
+    "original_question_id": "9c4b0a36",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "SUB_DISTRICT_NAME",
+        "LOCATION_ID",
+        "ULB_RLB_VILLAGE_NAME",
+        "DISTRICT_ID"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_PRIMARY_SECTOR": [
+        "EST_AGRICULTURE",
+        "FACT_PRIMARY_SECTOR_ID",
+        "LOCATION_ID",
+        "EST_FISHING_AQUACULTURE",
+        "TIME_ID",
+        "SECTOR_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": ""
+  },
+  {
+    "question": "শীর্ষ ৫টি রেকর্ডের জন্য যেখানে আনুমানিক মৎস্য চাষের মান ০.০০০, সেগুলোর আনুমানিক মৎস্য চাষের মান এবং আদমশুমারির বছরগুলো আদমশুমারির বছর অনুসারে অবরোহী ক্রমে তালিকাভুক্ত করুন।",
+    "sql": "SELECT T1.EST_FISHING_AQUACULTURE, T2.CENSUS_YEAR FROM FACT_PRIMARY_SECTOR AS T1 JOIN DIM_TIME AS T2 ON T1.TIME_ID = T2.TIME_ID WHERE T1.EST_FISHING_AQUACULTURE = 0.000 ORDER BY T2.CENSUS_YEAR DESC LIMIT 5",
+    "pair_id": "c0975ad8",
+    "original_question_id": "548e6a70",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_SECTOR_CATEGORY",
+      "FACT_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "DIM_SECTOR_CATEGORY": [
+        "SECTOR_ID",
+        "SECTOR_CATEGORY"
+      ],
+      "FACT_PRIMARY_SECTOR": [
+        "EST_AGRICULTURE",
+        "FACT_PRIMARY_SECTOR_ID",
+        "LOCATION_ID",
+        "EST_FISHING_AQUACULTURE",
+        "TIME_ID",
+        "SECTOR_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `fact_primary_sector` where `fact_primary_sector`.`est_fishing_aquaculture` = 0. Join with `dim_time` on `fact_primary_sector`.`time_id` = `dim_time`.`time_id`. Select `fact_primary_sector`.`est_fishing_aquaculture` and `dim_time`.`census_year`. Order by `dim_time`.`census_year` DESC. Limit to 5 records."
+  },
+  {
+    "question": "শুধুমাত্র 'গ্রামীণ' খাত বিভাগের জন্য প্রতিটি বছরের আদমশুমারি বছর এবং মোট আনুমানিক মৎস্য চাষের পরিমাণ তালিকাভুক্ত করুন, যা মোট আনুমানিক মৎস্য চাষের পরিমাণ অনুসারে অবরোহী ক্রমে সাজানো এবং শুধুমাত্র শীর্ষ ৫টি ফলাফল প্রদর্শন করা হবে।",
+    "sql": "SELECT T1.CENSUS_YEAR, SUM(T2.EST_FISHING_AQUACULTURE) FROM DIM_TIME AS T1 JOIN FACT_PRIMARY_SECTOR AS T2 ON T1.TIME_ID = T2.TIME_ID JOIN DIM_SECTOR_CATEGORY AS T3 ON T2.SECTOR_ID = T3.SECTOR_ID WHERE T3.SECTOR_CATEGORY = 'Rural' GROUP BY T1.CENSUS_YEAR ORDER BY SUM(T2.EST_FISHING_AQUACULTURE) DESC LIMIT 5",
+    "pair_id": "f3b49890",
+    "original_question_id": "548e6a70",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_SECTOR_CATEGORY",
+      "FACT_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "DIM_SECTOR_CATEGORY": [
+        "SECTOR_ID",
+        "SECTOR_CATEGORY"
+      ],
+      "FACT_PRIMARY_SECTOR": [
+        "EST_AGRICULTURE",
+        "FACT_PRIMARY_SECTOR_ID",
+        "LOCATION_ID",
+        "EST_FISHING_AQUACULTURE",
+        "TIME_ID",
+        "SECTOR_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter by `dim_sector_category`.`sector_category` = 'Rural'. Join `fact_primary_sector` with `dim_sector_category` on `sector_id` and with `dim_time` on `time_id`. Select `dim_time`.`census_year` and `fact_primary_sector`.`est_fishing_aquaculture`. Sort descending by `fact_primary_sector`.`est_fishing_aquaculture`. Limit to 5 rows."
+  },
+  {
+    "question": "ULB, RRLB বা গ্রামগুলির নাম বর্ণানুক্রমে তালিকাভুক্ত করুন, যেখানে মোট পশুপালন প্রতিষ্ঠানের সংখ্যা শূন্যের বেশি, বিশেষভাবে সেই স্থানগুলি ফিল্টার করে যেখানে পৃথক পশুপালন প্রতিষ্ঠানের সংখ্যা শূন্যের বেশি এবং আবাসিক-বাণিজ্যিক প্রতিষ্ঠানের সংখ্যা ঠিক শূন্য।",
+    "sql": "SELECT T1.ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION AS T1 JOIN FACT_PRIMARY_SECTOR AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN FACT_ESTABLISHMENT_TOTALS AS T3 ON T1.LOCATION_ID = T3.LOCATION_ID WHERE T2.EST_LIVESTOCK > 0.000 AND T3.EST_RESIDENTIAL_COMMERCIAL = 0.000 GROUP BY T1.ULB_RLB_VILLAGE_NAME HAVING SUM(T2.EST_LIVESTOCK) > 0.000 ORDER BY T1.ULB_RLB_VILLAGE_NAME ASC",
+    "pair_id": "db9784c3",
+    "original_question_id": "65bc5653",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "DIM_SECTOR_CATEGORY",
+      "FACT_ESTABLISHMENT_TOTALS",
+      "FACT_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "DIM_SECTOR_CATEGORY": [
+        "SECTOR_ID",
+        "SECTOR_CATEGORY"
+      ],
+      "FACT_ESTABLISHMENT_TOTALS": [
+        "FACT_ESTABLISHMENT_TOTALS_ID",
+        "LOCATION_ID",
+        "EST_RESIDENTIAL_COMMERCIAL",
+        "TOTAL_ESTABLISHMENTS",
+        "TIME_ID",
+        "SECTOR_ID"
+      ],
+      "FACT_PRIMARY_SECTOR": [
+        "FACT_PRIMARY_SECTOR_ID",
+        "LOCATION_ID",
+        "EST_LIVESTOCK",
+        "TIME_ID",
+        "SECTOR_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_location.ulb_rlb_village_name` alphabetically where `fact_primary_sector.est_livestock` > 0 and `fact_establishment_totals.est_residential_commercial` = 0. Join `dim_location` with `fact_primary_sector` and `fact_establishment_totals` on `location_id`, `time_id`, and `sector_id`. Include all sectors (Rural/Urban)."
+  },
+  {
+    "question": "২০১৩ সালের আদমশুমারির জন্য, যেসব স্থানে অনুমানিত পশুসম্পদ সংখ্যা শূন্যের চেয়ে বেশি, কিন্তু ২০১৩ সালে অনুমানিত আবাসিক-বাণিজ্যিক সংখ্যাও শূন্যের চেয়ে বেশি ছিল এমন স্থানগুলো বাদ দিয়ে, উপজেলা ও গ্রামের নাম অনুযায়ী দলবদ্ধ করে এবং উপজেলার নাম অনুসারে বর্ণানুক্রমে সাজিয়ে, উপজেলার নাম এবং ইউএলবি/আরএলবি গ্রামের নাম তালিকাভুক্ত করুন।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T1.ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION AS T1 JOIN FACT_PRIMARY_SECTOR AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' AND T2.EST_LIVESTOCK > 0.000 AND T1.LOCATION_ID NOT IN ( SELECT T4.LOCATION_ID FROM FACT_ESTABLISHMENT_TOTALS AS T4 JOIN DIM_TIME AS T5 ON T4.TIME_ID = T5.TIME_ID WHERE T5.CENSUS_YEAR = '2013' AND T4.EST_RESIDENTIAL_COMMERCIAL > 0.000 ) GROUP BY T1.SUB_DISTRICT_NAME, T1.ULB_RLB_VILLAGE_NAME HAVING COUNT(T2.FACT_PRIMARY_SECTOR_ID) >= 1 ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "9a4faed8",
+    "original_question_id": "65bc5653",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "DIM_SECTOR_CATEGORY",
+      "FACT_ESTABLISHMENT_TOTALS",
+      "FACT_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "DIM_SECTOR_CATEGORY": [
+        "SECTOR_ID",
+        "SECTOR_CATEGORY"
+      ],
+      "FACT_ESTABLISHMENT_TOTALS": [
+        "FACT_ESTABLISHMENT_TOTALS_ID",
+        "LOCATION_ID",
+        "EST_RESIDENTIAL_COMMERCIAL",
+        "TOTAL_ESTABLISHMENTS",
+        "TIME_ID",
+        "SECTOR_ID"
+      ],
+      "FACT_PRIMARY_SECTOR": [
+        "FACT_PRIMARY_SECTOR_ID",
+        "LOCATION_ID",
+        "EST_LIVESTOCK",
+        "TIME_ID",
+        "SECTOR_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "For the 2013 census, select locations where (`fact_primary_sector`.`est_livestock` > 0) and (`fact_establishment_totals`.`est_residential_commercial` = 0) for the same `location_id` and year. Join `dim_location` with `fact_primary_sector` and `fact_establishment_totals` on `location_id`, and join both fact tables with `dim_time` on `time_id` where (`dim_time`.`census_year` = 2013). Group by `dim_location`.`sub_district_name` and `dim_location`.`ulb_rlb_village_name`. Order by `dim_location`.`sub_district_name` alphabetically. Output `dim_location`.`sub_district_name` and `dim_location`.`ulb_rlb_village_name`."
+  },
+  {
+    "question": "২০১৩ সালের জনগণনা বছরের জন্য, সেই উপজেলা নাম এবং ইউএলবি/আরএলবি গ্রামের নামগুলির তালিকা তৈরি করুন যেখানে মৎস্য ও জলজ সংস্কৃতি প্রতিষ্ঠানের সংখ্যা ০ বা তার বেশি এবং আবাসিক বাণিজ্যিক প্রতিষ্ঠানের সংখ্যা ০ বা তার বেশি, নিশ্চিত করুন যে শুধুমাত্র সেই স্থানগুলি অন্তর্ভুক্ত করা হয়েছে যেখানে প্রতিষ্ঠানের মোট সংখ্যায় কমপক্ষে একটি রেকর্ড রয়েছে, এবং ফলাফলগুলিকে উপজেলা নাম অনুসারে বর্ণানুক্রমিকভাবে সাজান।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T1.ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION AS T1 JOIN FACT_ESTABLISHMENT_TOTALS AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN FACT_PRIMARY_SECTOR AS T3 ON T1.LOCATION_ID = T3.LOCATION_ID AND T2.TIME_ID = T3.TIME_ID JOIN DIM_TIME AS T4 ON T2.TIME_ID = T4.TIME_ID WHERE T3.EST_FISHING_AQUACULTURE >= 0.000 AND T2.EST_RESIDENTIAL_COMMERCIAL >= 0.000 AND T4.CENSUS_YEAR = '2013' GROUP BY T1.SUB_DISTRICT_NAME, T1.ULB_RLB_VILLAGE_NAME HAVING COUNT(T2.FACT_ESTABLISHMENT_TOTALS_ID) >= 1 ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "f2bb09f0",
+    "original_question_id": "9cc330dd",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_ESTABLISHMENT_TOTALS",
+      "FACT_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_ESTABLISHMENT_TOTALS": [
+        "FACT_ESTABLISHMENT_TOTALS_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "TOTAL_ESTABLISHMENTS",
+        "EST_RESIDENTIAL_COMMERCIAL"
+      ],
+      "FACT_PRIMARY_SECTOR": [
+        "EST_AGRICULTURE",
+        "FACT_PRIMARY_SECTOR_ID",
+        "LOCATION_ID",
+        "EST_FISHING_AQUACULTURE",
+        "TIME_ID",
+        "SECTOR_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_location.sub_district_name` and `dim_location.ulb_rlb_village_name` for `dim_time.census_year` = 2013 where the sum of `fact_primary_sector.est_fishing_aquaculture` across sectors is >= 0 and the sum of `fact_establishment_totals.est_residential_commercial` across sectors is >= 0 and the sum of `fact_establishment_totals.total_establishments` across sectors > 0. Join `dim_location` to `fact_primary_sector` and `fact_establishment_totals` on `location_id`, and join both facts to `dim_time` on `time_id`. Group by `dim_location.location_id`, `dim_location.sub_district_name`, `dim_location.ulb_rlb_village_name`. Order by `dim_location.sub_district_name` alphabetically."
+  },
+  {
+    "question": "যেসব স্থানে বনায়ন ও কাঠ সংগ্রহ প্রতিষ্ঠানের সংখ্যা শূন্যের বেশি অথবা আবাসিক ও বাণিজ্যিক প্রতিষ্ঠানের সংখ্যা শূন্যের বেশি, সেই স্থানগুলোর ইউএলবি আরএলবি গ্রামের নাম বর্ণানুক্রমে তালিকাভুক্ত করুন।",
+    "sql": "SELECT T1.ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION AS T1 JOIN FACT_ESTABLISHMENT_TOTALS AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN FACT_PRIMARY_SECTOR AS T3 ON T2.LOCATION_ID = T3.LOCATION_ID WHERE T3.EST_FORESTRY_LOGGING > 0.000 OR T2.EST_RESIDENTIAL_COMMERCIAL > 0.000 GROUP BY T1.ULB_RLB_VILLAGE_NAME ORDER BY T1.ULB_RLB_VILLAGE_NAME ASC",
+    "pair_id": "244da596",
+    "original_question_id": "dc55c68c",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "DIM_SECTOR_CATEGORY",
+      "FACT_ESTABLISHMENT_TOTALS",
+      "FACT_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "DIM_SECTOR_CATEGORY": [
+        "SECTOR_ID",
+        "SECTOR_CATEGORY"
+      ],
+      "FACT_ESTABLISHMENT_TOTALS": [
+        "FACT_ESTABLISHMENT_TOTALS_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "TOTAL_ESTABLISHMENTS",
+        "EST_RESIDENTIAL_COMMERCIAL"
+      ],
+      "FACT_PRIMARY_SECTOR": [
+        "EST_AGRICULTURE",
+        "EST_FORESTRY_LOGGING",
+        "FACT_PRIMARY_SECTOR_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_location.ulb_rlb_village_name` alphabetically for locations where `fact_primary_sector.est_forestry_logging` > 0 OR `fact_establishment_totals.est_residential_commercial` > 0. Join `dim_location` with `fact_primary_sector` and `fact_establishment_totals` on `location_id`. Use DISTINCT to avoid duplicates. Order by `dim_location.ulb_rlb_village_name`."
+  },
+  {
+    "question": "২০১৩ সালের আদমশুমারির জন্য, সেই সমস্ত এলাকার উপজেলার নাম এবং ইউএলবি/আরএলবি গ্রামের নাম তালিকাভুক্ত করুন যেখানে বনায়ন ও কাঠ সংগ্রহ প্রতিষ্ঠানের সংখ্যা ০ এর বেশি অথবা আবাসিক/বাণিজ্যিক প্রতিষ্ঠানের সংখ্যা ০ এর বেশি, এই শর্ত নিশ্চিত করে যে কমপক্ষে একটি প্রতিষ্ঠানের রেকর্ড উপস্থিত রয়েছে, এবং ফলাফলগুলো উপজেলার নাম অনুসারে বর্ণানুক্রমে সাজান।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T1.ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION AS T1 JOIN FACT_ESTABLISHMENT_TOTALS AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID LEFT JOIN FACT_PRIMARY_SECTOR AS T4 ON T2.LOCATION_ID = T4.LOCATION_ID AND T2.TIME_ID = T4.TIME_ID WHERE T3.CENSUS_YEAR = '2013' AND (T4.EST_FORESTRY_LOGGING > 0.000 OR T2.EST_RESIDENTIAL_COMMERCIAL > 0.000) GROUP BY T1.SUB_DISTRICT_NAME, T1.ULB_RLB_VILLAGE_NAME HAVING COUNT(T2.FACT_ESTABLISHMENT_TOTALS_ID) >= 1 ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "cb13648f",
+    "original_question_id": "dc55c68c",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "DIM_SECTOR_CATEGORY",
+      "FACT_ESTABLISHMENT_TOTALS",
+      "FACT_PRIMARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "DIM_SECTOR_CATEGORY": [
+        "SECTOR_ID",
+        "SECTOR_CATEGORY"
+      ],
+      "FACT_ESTABLISHMENT_TOTALS": [
+        "FACT_ESTABLISHMENT_TOTALS_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "TOTAL_ESTABLISHMENTS",
+        "EST_RESIDENTIAL_COMMERCIAL"
+      ],
+      "FACT_PRIMARY_SECTOR": [
+        "EST_AGRICULTURE",
+        "EST_FORESTRY_LOGGING",
+        "FACT_PRIMARY_SECTOR_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_location.sub_district_name` and `dim_location.ulb_rlb_village_name` for `dim_time.census_year` = 2013 where (`fact_primary_sector.est_forestry_logging` > 0 OR `fact_establishment_totals.est_residential_commercial` > 0) AND `fact_establishment_totals.total_establishments` > 0. Order by `dim_location.sub_district_name`."
+  },
+  {
+    "question": "উপজেলার নাম এবং আদমশুমারির বছর তালিকাভুক্ত করুন, মোট প্রতিষ্ঠানের সংখ্যা এবং আবাসিক-বাণিজ্যিক প্রতিষ্ঠানের সংখ্যার সমষ্টি সহ, উপজেলা এবং আদমশুমারির বছর উভয় দ্বারা গ্রুপ করে এবং আদমশুমারির বছর অনুসারে কালানুক্রমিকভাবে সাজানো।",
+    "sql": "SELECT T2.SUB_DISTRICT_NAME, T3.CENSUS_YEAR, SUM(T1.TOTAL_ESTABLISHMENTS), SUM(T1.EST_RESIDENTIAL_COMMERCIAL) FROM FACT_ESTABLISHMENT_TOTALS AS T1 JOIN DIM_LOCATION AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID GROUP BY T2.SUB_DISTRICT_NAME, T3.CENSUS_YEAR ORDER BY T3.CENSUS_YEAR ASC",
+    "pair_id": "a1c69c64",
+    "original_question_id": "47098268",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_ESTABLISHMENT_TOTALS"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_ESTABLISHMENT_TOTALS": [
+        "FACT_ESTABLISHMENT_TOTALS_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "TOTAL_ESTABLISHMENTS",
+        "EST_RESIDENTIAL_COMMERCIAL"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_location`.`sub_district_name`, `dim_time`.`census_year`, SUM(`fact_establishment_totals`.`total_establishments`), SUM(`fact_establishment_totals`.`est_residential_commercial`) from `fact_establishment_totals` join `dim_location` on `fact_establishment_totals`.`location_id` = `dim_location`.`location_id` join `dim_time` on `fact_establishment_totals`.`time_id` = `dim_time`.`time_id` group by `dim_location`.`sub_district_name`, `dim_time`.`census_year` order by `dim_time`.`census_year`."
+  },
+  {
+    "question": "সমস্ত রেকর্ডের জন্য উপজেলার নাম এবং জনগণনা বছর, মোট প্রতিষ্ঠানের সংখ্যা এবং আবাসিক-বাণিজ্যিক প্রতিষ্ঠানের যোগফল তালিকাভুক্ত করুন, যেখানে মোট প্রতিষ্ঠানের সংখ্যা শূন্যের চেয়ে বেশি, জনগণনা বছর এবং মোট প্রতিষ্ঠান অনুসারে অবরোহী ক্রমে সাজানো।",
+    "sql": "SELECT T2.SUB_DISTRICT_NAME, T3.CENSUS_YEAR, SUM(T1.TOTAL_ESTABLISHMENTS), SUM(T1.EST_RESIDENTIAL_COMMERCIAL) FROM FACT_ESTABLISHMENT_TOTALS AS T1 INNER JOIN DIM_LOCATION AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID INNER JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID GROUP BY T2.SUB_DISTRICT_NAME, T3.CENSUS_YEAR HAVING SUM(T1.TOTAL_ESTABLISHMENTS) > 0.000 ORDER BY T3.CENSUS_YEAR DESC, SUM(T1.TOTAL_ESTABLISHMENTS) DESC",
+    "pair_id": "5bacc0fc",
+    "original_question_id": "47098268",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_ESTABLISHMENT_TOTALS"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_ESTABLISHMENT_TOTALS": [
+        "FACT_ESTABLISHMENT_TOTALS_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "TOTAL_ESTABLISHMENTS",
+        "EST_RESIDENTIAL_COMMERCIAL"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_location`.`sub_district_name`, `dim_time`.`census_year`, `fact_establishment_totals`.`total_establishments`, `fact_establishment_totals`.`est_residential_commercial` from `fact_establishment_totals` join `dim_location` on `fact_establishment_totals`.`location_id` = `dim_location`.`location_id` join `dim_time` on `fact_establishment_totals`.`time_id` = `dim_time`.`time_id` where `fact_establishment_totals`.`total_establishments` > 0 order by `dim_time`.`census_year` DESC, `fact_establishment_totals`.`total_establishments` DESC."
+  },
+  {
+    "question": "প্রতিটি উপজেলার নাম এবং ২০১৩ সালের আদমশুমারি বছরের জন্য আনুমানিক আবাসিক ও বাণিজ্যিক প্রতিষ্ঠানের মোট সংখ্যা তালিকাভুক্ত করুন, উপজেলার নাম অনুসারে গ্রুপ করে এবং সর্বোচ্চ মোট সংখ্যা থেকে সর্বনিম্ন ক্রমানুসারে সাজিয়ে।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.EST_RESIDENTIAL_COMMERCIAL) FROM DIM_LOCATION AS T1 JOIN FACT_ESTABLISHMENT_TOTALS AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.EST_RESIDENTIAL_COMMERCIAL) DESC",
+    "pair_id": "bce6d6cd",
+    "original_question_id": "b27f4df6",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_ESTABLISHMENT_TOTALS"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_ESTABLISHMENT_TOTALS": [
+        "FACT_ESTABLISHMENT_TOTALS_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "TOTAL_ESTABLISHMENTS",
+        "EST_RESIDENTIAL_COMMERCIAL"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_location`.`sub_district_name`, SUM(`fact_establishment_totals`.`est_residential_commercial`) as total_residential_commercial from `dim_location` join `fact_establishment_totals` on `dim_location`.`location_id` = `fact_establishment_totals`.`location_id` join `dim_time` on `fact_establishment_totals`.`time_id` = `dim_time`.`time_id` where `dim_time`.`census_year` = 2013 group by `dim_location`.`sub_district_name` order by total_residential_commercial DESC."
+  },
+  {
+    "question": "সর্বশেষ উপলব্ধ আদমশুমারির বছরের জন্য, প্রতিটি উপজেলার নাম এবং অনুমানিত আবাসিক বাণিজ্যিক প্রতিষ্ঠানের মোট সংখ্যা তালিকাভুক্ত করুন, যেখানে অনুমানিত আবাসিক বাণিজ্যিক মান ০.০০০ এর রেকর্ডগুলি ফিল্টার করুন এবং ফলাফলগুলি সমষ্টির অবরোহী ক্রমে সাজান।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.EST_RESIDENTIAL_COMMERCIAL) FROM DIM_LOCATION AS T1 JOIN FACT_ESTABLISHMENT_TOTALS AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = (SELECT MAX(CENSUS_YEAR) FROM DIM_TIME) AND T2.EST_RESIDENTIAL_COMMERCIAL = 0.000 GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.EST_RESIDENTIAL_COMMERCIAL) DESC",
+    "pair_id": "cd33eb91",
+    "original_question_id": "b27f4df6",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_ESTABLISHMENT_TOTALS"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_ESTABLISHMENT_TOTALS": [
+        "FACT_ESTABLISHMENT_TOTALS_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "TOTAL_ESTABLISHMENTS",
+        "EST_RESIDENTIAL_COMMERCIAL"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "For the latest census year (2013), list each sub-district name (`dim_location.sub_district_name`) and the total sum of estimated residential commercial establishments (`fact_establishment_totals.est_residential_commercial`), excluding records where `est_residential_commercial` = 0. Group by sub-district and order by the total sum in descending order."
+  },
+  {
+    "question": "২০১৩ সালের আদমশুমারির জন্য, উপজেলার নাম এবং আনুমানিক আবাসিক ও বাণিজ্যিক প্রতিষ্ঠানের মোট সংখ্যা তালিকাভুক্ত করুন, সর্বোচ্চ মোট সংখ্যাসহ শীর্ষ ১০টি উপজেলা দেখান।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.EST_RESIDENTIAL_COMMERCIAL) FROM DIM_LOCATION AS T1 JOIN FACT_ESTABLISHMENT_TOTALS AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.EST_RESIDENTIAL_COMMERCIAL) DESC LIMIT 10",
+    "pair_id": "e03e8e45",
+    "original_question_id": "922c1c6b",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_ESTABLISHMENT_TOTALS"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_ESTABLISHMENT_TOTALS": [
+        "FACT_ESTABLISHMENT_TOTALS_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "TOTAL_ESTABLISHMENTS",
+        "EST_RESIDENTIAL_COMMERCIAL"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_location.sub_district_name` and sum(`fact_establishment_totals.est_residential_commercial`) as total_residential_commercial for `dim_time.census_year` = 2013, grouped by `dim_location.sub_district_name`, ordered by total_residential_commercial DESC, limit 10."
+  },
+  {
+    "question": "শুধুমাত্র সর্বশেষ উপলব্ধ সময়কাল বিবেচনা করে, প্রতিটি উপজেলার নাম এবং মোট আনুমানিক আবাসিক ও বাণিজ্যিক প্রতিষ্ঠানের সংখ্যা কী কী, যেখানে সর্বোচ্চ মোট সংখ্যাসহ শীর্ষ ১০টি উপজেলা দেখানো হয়েছে?",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.EST_RESIDENTIAL_COMMERCIAL) FROM DIM_LOCATION AS T1 JOIN FACT_ESTABLISHMENT_TOTALS AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.TIME_ID = (SELECT MAX(TIME_ID) FROM DIM_TIME) GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.EST_RESIDENTIAL_COMMERCIAL) DESC LIMIT 10",
+    "pair_id": "0361c83d",
+    "original_question_id": "922c1c6b",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_ESTABLISHMENT_TOTALS"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_ESTABLISHMENT_TOTALS": [
+        "FACT_ESTABLISHMENT_TOTALS_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "TOTAL_ESTABLISHMENTS",
+        "EST_RESIDENTIAL_COMMERCIAL"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve the top 10 sub-districts by total estimated residential and commercial establishments for the latest census year (2013). Use `dim_location.sub_district_name` for sub-district names. Sum `fact_establishment_totals.est_residential_commercial` across all sectors (`dim_sector_category.sector_category` values 'Rural' and 'Urban') for each sub-district. Join `dim_location` on `fact_establishment_totals.location_id`, join `dim_time` on `fact_establishment_totals.time_id`. Filter where `dim_time.census_year = 2013`. Group by `dim_location.sub_district_name`. Order by the sum descending and limit to 10 rows."
+  },
+  {
+    "question": "২০১৩ সালের আদমশুমারির জন্য, প্রতিটি উপজেলার নাম এবং মোট প্রতিষ্ঠানের সংখ্যা তালিকাভুক্ত করুন যেখানে আবাসিক বা বাণিজ্যিক প্রতিষ্ঠানের মান ০.০০০, উপজেলার নাম অনুসারে গ্রুপ করা।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.TOTAL_ESTABLISHMENTS) FROM DIM_LOCATION AS T1 JOIN FACT_ESTABLISHMENT_TOTALS AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' AND T2.EST_RESIDENTIAL_COMMERCIAL = 0.000 GROUP BY T1.SUB_DISTRICT_NAME",
+    "pair_id": "cb4e3f86",
+    "original_question_id": "fbf7dc83",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_ESTABLISHMENT_TOTALS"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_ESTABLISHMENT_TOTALS": [
+        "FACT_ESTABLISHMENT_TOTALS_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "TOTAL_ESTABLISHMENTS",
+        "EST_RESIDENTIAL_COMMERCIAL"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Query must return each sub-district name (`dim_location`.`sub_district_name`) and the total number of establishments (`fact_establishment_totals`.`total_establishments`) for the 2013 census (`dim_time`.`census_year` = 2013) where the residential/commercial establishment value (`fact_establishment_totals`.`est_residential_commercial`) is 0.000, grouped by sub-district name. Join `fact_establishment_totals` with `dim_location` on `location_id` and with `dim_time` on `time_id`. Sum `fact_establishment_totals`.`total_establishments` per sub-district because multiple location records may belong to the same sub-district."
+  },
+  {
+    "question": "২০১৩ সালের আদমশুমারির জন্য, প্রতিটি উপজেলার নাম এবং প্রতিষ্ঠানের মোট সংখ্যা তালিকাভুক্ত করুন যেখানে আবাসিক বা বাণিজ্যিক অবস্থা ০.০০০, শুধুমাত্র সেই উপজেলাগুলি অন্তর্ভুক্ত করুন যাদের মোট সংখ্যা ০.০০০ এর বেশি, এবং ফলাফলগুলি প্রতিষ্ঠানের সংখ্যার উপর ভিত্তি করে অবরোহী ক্রমে সাজান।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.TOTAL_ESTABLISHMENTS) FROM DIM_LOCATION AS T1 JOIN FACT_ESTABLISHMENT_TOTALS AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' AND T2.EST_RESIDENTIAL_COMMERCIAL = 0.000 GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.TOTAL_ESTABLISHMENTS) > 0.000 ORDER BY SUM(T2.TOTAL_ESTABLISHMENTS) DESC",
+    "pair_id": "f387f406",
+    "original_question_id": "fbf7dc83",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_ESTABLISHMENT_TOTALS"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_ESTABLISHMENT_TOTALS": [
+        "FACT_ESTABLISHMENT_TOTALS_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "TOTAL_ESTABLISHMENTS",
+        "EST_RESIDENTIAL_COMMERCIAL"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_location.sub_district_name` and `fact_establishment_totals.total_establishments` where `dim_time.census_year` = 2013 and `fact_establishment_totals.est_residential_commercial` = 0 and `fact_establishment_totals.total_establishments` > 0, order by `fact_establishment_totals.total_establishments` DESC."
+  },
+  {
+    "question": "২০১৩ সালের জনগণনা বছরের জন্য সেই সমস্ত উপজেলার নাম তালিকাভুক্ত করুন যেখানে মোট প্রতিষ্ঠানের সংখ্যা শূন্যের চেয়ে বেশি এবং আবাসিক-বাণিজ্যিক প্রতিষ্ঠানের সংখ্যা ঠিক শূন্য।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_LOCATION AS T1 JOIN FACT_ESTABLISHMENT_TOTALS AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.TOTAL_ESTABLISHMENTS) > 0.000 AND SUM(T2.EST_RESIDENTIAL_COMMERCIAL) = 0.000",
+    "pair_id": "fc696454",
+    "original_question_id": "6bbe74b9",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_ESTABLISHMENT_TOTALS"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_ESTABLISHMENT_TOTALS": [
+        "FACT_ESTABLISHMENT_TOTALS_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "TOTAL_ESTABLISHMENTS",
+        "EST_RESIDENTIAL_COMMERCIAL"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter for `dim_time`.`census_year` = 2013, join `fact_establishment_totals` with `dim_location` on `location_id` and with `dim_time` on `time_id`. Select `dim_location`.`sub_district_name` where `fact_establishment_totals`.`total_establishments` > 0 and `fact_establishment_totals`.`est_residential_commercial` = 0."
+  },
+  {
+    "question": "২০১৩ সালের আদমশুমারি অনুযায়ী, মোট প্রতিষ্ঠানের সংখ্যা শূন্যের বেশি কিন্তু আবাসিক বা বাণিজ্যিক প্রতিষ্ঠান শূন্য এমন উপজেলার নামগুলো বর্ণানুক্রমে তালিকাভুক্ত করুন।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_LOCATION AS T1 JOIN FACT_ESTABLISHMENT_TOTALS AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.TOTAL_ESTABLISHMENTS) > 0.000 AND SUM(T2.EST_RESIDENTIAL_COMMERCIAL) = 0.000 ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "77a4e2c5",
+    "original_question_id": "6bbe74b9",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_ESTABLISHMENT_TOTALS"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_ESTABLISHMENT_TOTALS": [
+        "FACT_ESTABLISHMENT_TOTALS_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "TOTAL_ESTABLISHMENTS",
+        "EST_RESIDENTIAL_COMMERCIAL"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_location.sub_district_name` for records where `dim_time.census_year` = 2013, `fact_establishment_totals.total_establishments` > 0, and `fact_establishment_totals.est_residential_commercial` = 0. Join `fact_establishment_totals` with `dim_time` on `time_id` and with `dim_location` on `location_id`. Order results alphabetically by `dim_location.sub_district_name`."
+  },
+  {
+    "question": "২০১৩ সালের আদমশুমারি অনুযায়ী, মোট আবাসিক ও বাণিজ্যিক প্রতিষ্ঠানের সংখ্যা ০ বা তার বেশি যে সমস্ত উপজেলা রয়েছে, সেগুলোর মধ্যে প্রতিটির জন্য শুধুমাত্র একটি স্বতন্ত্র আদমশুমারি বছর গণনা করে, উপজেলার নাম অনুসারে বর্ণানুক্রমিকভাবে সাজিয়ে উপজেলার নামগুলোর তালিকা তৈরি করুন।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_LOCATION AS T1 JOIN FACT_ESTABLISHMENT_TOTALS AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T2.EST_RESIDENTIAL_COMMERCIAL >= 0.000 AND T3.CENSUS_YEAR IN ('2013') GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(DISTINCT T3.CENSUS_YEAR) = 1 ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "af7274a2",
+    "original_question_id": "2d5e6f8e",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_ESTABLISHMENT_TOTALS"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_ESTABLISHMENT_TOTALS": [
+        "FACT_ESTABLISHMENT_TOTALS_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "TOTAL_ESTABLISHMENTS",
+        "EST_RESIDENTIAL_COMMERCIAL"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List distinct `dim_location.sub_district_name` where `dim_time.census_year` = 2013 and `fact_establishment_totals.est_residential_commercial` >= 0, ordered alphabetically by `dim_location.sub_district_name`."
+  },
+  {
+    "question": "২০১৩ সালের আদমশুমারির জন্য সেই উপজেলার নামগুলো তালিকাভুক্ত করুন যেখানে আবাসিক-বাণিজ্যিক প্রতিষ্ঠানের সংখ্যা ০.০০০ বা তার বেশি, এবং নিশ্চিত করুন যে এই উপজেলাগুলো সেই বছরের জন্য একই মানদণ্ড পূরণকারী উপজেলার সেটেও উপস্থিত রয়েছে, এবং ফলাফলগুলো উপজেলার নাম অনুসারে আরোহী ক্রমে প্রদর্শন করুন।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_LOCATION AS T1 JOIN FACT_ESTABLISHMENT_TOTALS AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T2.EST_RESIDENTIAL_COMMERCIAL >= 0.000 AND T3.CENSUS_YEAR = '2013' AND T1.SUB_DISTRICT_NAME IN (SELECT T4.SUB_DISTRICT_NAME FROM DIM_LOCATION AS T4 JOIN FACT_ESTABLISHMENT_TOTALS AS T5 ON T4.LOCATION_ID = T5.LOCATION_ID JOIN DIM_TIME AS T6 ON T5.TIME_ID = T6.TIME_ID WHERE T5.EST_RESIDENTIAL_COMMERCIAL >= 0.000 AND T6.CENSUS_YEAR = '2013') GROUP BY T1.SUB_DISTRICT_NAME ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "63892277",
+    "original_question_id": "2d5e6f8e",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_ESTABLISHMENT_TOTALS"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_ESTABLISHMENT_TOTALS": [
+        "FACT_ESTABLISHMENT_TOTALS_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "TOTAL_ESTABLISHMENTS",
+        "EST_RESIDENTIAL_COMMERCIAL"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_location.sub_district_name` for `dim_time.census_year` = 2013 where `fact_establishment_totals.est_residential_commercial` >= 0, order by `dim_location.sub_district_name` ASC."
+  },
+  {
+    "question": "২০১৩ সালের আদমশুমারির জন্য, সেই উপ-জেলার নামগুলো বর্ণানুক্রমে তালিকাভুক্ত করুন যেখানে হয় আবাসিক বাণিজ্যিক প্রতিষ্ঠানের মোট সংখ্যা ০-এর বেশি অথবা ইউএলবি/আরএলবি গ্রামের নাম 'পিলপিলো'।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_LOCATION AS T1 JOIN FACT_ESTABLISHMENT_TOTALS AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' AND (T2.EST_RESIDENTIAL_COMMERCIAL > 0.000 OR T1.ULB_RLB_VILLAGE_NAME = 'Pilpilow') GROUP BY T1.SUB_DISTRICT_NAME ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "803f28ef",
+    "original_question_id": "44672e0f",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_ESTABLISHMENT_TOTALS"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_ESTABLISHMENT_TOTALS": [
+        "FACT_ESTABLISHMENT_TOTALS_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "TOTAL_ESTABLISHMENTS",
+        "EST_RESIDENTIAL_COMMERCIAL"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List distinct `dim_location`.`sub_district_name` in alphabetical order for the 2013 census (`dim_time`.`census_year` = 2013) where either `fact_establishment_totals`.`est_residential_commercial` > 0 OR `dim_location`.`ulb_rlb_village_name` = 'Pilpilow'. Join `fact_establishment_totals` with `dim_location` on `location_id` and with `dim_time` on `time_id`."
+  },
+  {
+    "question": "২০১৩ সালের আদমশুমারির জন্য, সেই সাব-জেলাগুলোর নাম তালিকাভুক্ত করুন যেখানে হয় আবাসিক-বাণিজ্যিক প্রতিষ্ঠানের সংখ্যা শূন্যের চেয়ে বেশি অথবা ইউএলবি/আরএলবি গ্রামের নাম 'পিলপিলাও', শর্ত থাকে যে সাব-জেলার মোট প্রতিষ্ঠানের যোগফল শূন্যের চেয়ে বেশি, এবং ফলাফলগুলো সাব-জেলার নাম অনুসারে বর্ণানুক্রমিকভাবে সাজান।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_LOCATION AS T1 JOIN FACT_ESTABLISHMENT_TOTALS AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' AND (T2.EST_RESIDENTIAL_COMMERCIAL > 0.000 OR T1.ULB_RLB_VILLAGE_NAME LIKE 'Pilpilow') GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.TOTAL_ESTABLISHMENTS) > 0.000 ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "3df90f90",
+    "original_question_id": "44672e0f",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_ESTABLISHMENT_TOTALS"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_ESTABLISHMENT_TOTALS": [
+        "FACT_ESTABLISHMENT_TOTALS_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "TOTAL_ESTABLISHMENTS",
+        "EST_RESIDENTIAL_COMMERCIAL"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `dim_location`.`sub_district_name` from `fact_establishment_totals` join `dim_location` on `fact_establishment_totals`.`location_id` = `dim_location`.`location_id` join `dim_time` on `fact_establishment_totals`.`time_id` = `dim_time`.`time_id` where `dim_time`.`census_year` = 2013 and ( `fact_establishment_totals`.`est_residential_commercial` > 0 or `dim_location`.`ulb_rlb_village_name` = 'Pilpilao' ) group by `dim_location`.`sub_district_name` having sum(`fact_establishment_totals`.`total_establishments`) > 0 order by `dim_location`.`sub_district_name` asc"
+  },
+  {
+    "question": "২০১৩ সালের আদমশুমারির জন্য, সেই উপজেলার নাম এবং ইউএলবি/আরএলবি গ্রামের নাম তালিকাভুক্ত করুন যেখানে মাধ্যমিক খাতে মোট আনুমানিক উৎপাদন ৫০-এর বেশি।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T1.ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION AS T1 JOIN FACT_SECONDARY_SECTOR AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' GROUP BY T1.SUB_DISTRICT_NAME, T1.ULB_RLB_VILLAGE_NAME HAVING SUM(T2.EST_MANUFACTURING) > 50",
+    "pair_id": "aadd4a6b",
+    "original_question_id": "cae3740e",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_SECONDARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_SECONDARY_SECTOR": [
+        "FACT_SECONDARY_SECTOR_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_MANUFACTURING",
+        "EST_ELECTRICITY_GAS",
+        "EST_WATER_SUPPLY_WASTE",
+        "EST_CONSTRUCTION"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_location`.`sub_district_name` and `dim_location`.`ulb_rlb_village_name` for `dim_time`.`census_year` = 2013 where the sum of `fact_secondary_sector`.`est_manufacturing`, `fact_secondary_sector`.`est_electricity_gas`, `fact_secondary_sector`.`est_water_supply_waste`, and `fact_secondary_sector`.`est_construction` is greater than 50."
+  },
+  {
+    "question": "২০১৩ সালের জনগণনা বছরের জন্য, উপজেলার নাম এবং ইউএলবি, আরএলবি বা গ্রামের নাম তালিকাভুক্ত করুন যেখানে মাধ্যমিক খাতে মোট আনুমানিক উৎপাদন ৫০-এর বেশি, সর্বোচ্চ থেকে সর্বনিম্ন মোট আনুমানিক উৎপাদন অনুসারে সাজানো।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T1.ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION AS T1 JOIN FACT_SECONDARY_SECTOR AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' GROUP BY T1.SUB_DISTRICT_NAME, T1.ULB_RLB_VILLAGE_NAME HAVING SUM(T2.EST_MANUFACTURING) > 50 ORDER BY SUM(T2.EST_MANUFACTURING) DESC",
+    "pair_id": "162deae6",
+    "original_question_id": "cae3740e",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_SECONDARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_SECONDARY_SECTOR": [
+        "FACT_SECONDARY_SECTOR_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_MANUFACTURING",
+        "EST_ELECTRICITY_GAS",
+        "EST_WATER_SUPPLY_WASTE",
+        "EST_CONSTRUCTION"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_location`.`sub_district_name` and `dim_location`.`ulb_rlb_village_name` for `dim_time`.`census_year` = 2013, where the sum of `fact_secondary_sector`.`est_manufacturing` + `fact_secondary_sector`.`est_electricity_gas` + `fact_secondary_sector`.`est_water_supply_waste` + `fact_secondary_sector`.`est_construction` > 50, grouped by location, ordered by total descending."
+  },
+  {
+    "question": "২০১৩ সালের জনগণনা বছরের জন্য, প্রতিটি উপজেলার নাম এবং তাদের উৎপাদন ও নির্মাণ প্রতিষ্ঠানের সমষ্টি তালিকাভুক্ত করুন, উপজেলার নাম অনুসারে বর্ণানুক্রমিকভাবে দলবদ্ধ এবং সাজানো।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.EST_MANUFACTURING + T2.EST_CONSTRUCTION) FROM DIM_LOCATION AS T1 JOIN FACT_SECONDARY_SECTOR AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "3f75c9fb",
+    "original_question_id": "6c714db3",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_SECONDARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_SECONDARY_SECTOR": [
+        "EST_MANUFACTURING",
+        "EST_CONSTRUCTION",
+        "FACT_SECONDARY_SECTOR_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "For census year 2013, list each sub-district name (`dim_location`.`sub_district_name`) and the total of manufacturing and construction establishments (sum of `fact_secondary_sector`.`est_manufacturing` and `fact_secondary_sector`.`est_construction`) for each sub-district, grouped by `dim_location`.`sub_district_name` and ordered alphabetically by sub-district name."
+  },
+  {
+    "question": "For the most recent census year available, list each sub-district name and the total sum of manufacturing and construction establishments, including only those sub-districts where this combined sum is greater than zero, and order the results by the total sum in descending order.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.EST_MANUFACTURING + T2.EST_CONSTRUCTION) FROM DIM_LOCATION AS T1 JOIN FACT_SECONDARY_SECTOR AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = (SELECT MAX(CENSUS_YEAR) FROM DIM_TIME) GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.EST_MANUFACTURING + T2.EST_CONSTRUCTION) > 0.000 ORDER BY SUM(T2.EST_MANUFACTURING + T2.EST_CONSTRUCTION) DESC",
+    "pair_id": "cc274a6c",
+    "original_question_id": "6c714db3",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_SECONDARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_SECONDARY_SECTOR": [
+        "EST_MANUFACTURING",
+        "EST_CONSTRUCTION",
+        "FACT_SECONDARY_SECTOR_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "For the maximum `dim_time`.`census_year` (most recent), list each `dim_location`.`sub_district_name` and the total sum of (`fact_secondary_sector`.`est_manufacturing` + `fact_secondary_sector`.`est_construction`) across all `sector_id`. Include only sub-districts where this sum > 0. Group by `dim_location`.`sub_district_name`. Order by total sum descending."
+  },
+  {
+    "question": "For the most recent time period available, list the names of the ULB, RLB, or villages where the total estimated manufacturing value is greater than 50.",
+    "sql": "SELECT T1.ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION AS T1 JOIN FACT_SECONDARY_SECTOR AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.TIME_ID = (SELECT MAX(TIME_ID) FROM DIM_TIME) GROUP BY T1.ULB_RLB_VILLAGE_NAME HAVING SUM(T2.EST_MANUFACTURING) > 50",
+    "pair_id": "7ead6ddc",
+    "original_question_id": "1eeb7b7c",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_SECONDARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_SECONDARY_SECTOR": [
+        "FACT_SECONDARY_SECTOR_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_MANUFACTURING",
+        "EST_ELECTRICITY_GAS",
+        "EST_WATER_SUPPLY_WASTE",
+        "EST_CONSTRUCTION"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_location`.`ulb_rlb_village_name` where `fact_secondary_sector`.`est_manufacturing` > 50 for the most recent `dim_time`.`census_year` (which is 2013). Join `fact_secondary_sector` with `dim_location` on `location_id` and with `dim_time` on `time_id`. Filter by `dim_time`.`census_year` = (SELECT MAX(`census_year`) FROM `dim_time`) and `fact_secondary_sector`.`est_manufacturing` > 50."
+  },
+  {
+    "question": "সর্বশেষ উপলব্ধ সময়কালের জন্য, সেই সমস্ত ইউএলবি, আরএলবি বা গ্রামগুলির নাম তালিকাভুক্ত করুন যাদের মোট আনুমানিক উৎপাদন মূল্য ৫০-এর বেশি, এবং এই নামগুলি তাদের মোট আনুমানিক উৎপাদনের অবরোহী ক্রমে প্রদর্শন করুন।",
+    "sql": "SELECT T1.ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION AS T1 JOIN FACT_SECONDARY_SECTOR AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.TIME_ID = (SELECT MAX(TIME_ID) FROM DIM_TIME) GROUP BY T1.ULB_RLB_VILLAGE_NAME HAVING SUM(T2.EST_MANUFACTURING) > 50 ORDER BY SUM(T2.EST_MANUFACTURING) DESC",
+    "pair_id": "3b6a0b2a",
+    "original_question_id": "1eeb7b7c",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_SECONDARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_SECONDARY_SECTOR": [
+        "FACT_SECONDARY_SECTOR_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_MANUFACTURING",
+        "EST_ELECTRICITY_GAS",
+        "EST_WATER_SUPPLY_WASTE",
+        "EST_CONSTRUCTION"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_location.ulb_rlb_village_name` for the latest census year (2013) where `fact_establishment_totals.total_establishments` > 50, ordered by `fact_establishment_totals.total_establishments` descending. Join `fact_establishment_totals` with `dim_location` on `location_id` and with `dim_time` on `time_id` where `dim_time.census_year` = 2013."
+  },
+  {
+    "question": "২০১৩ সালের আদমশুমারির জন্য, প্রতিটি উপজেলার নাম এবং মোট আনুমানিক উৎপাদন মূল্য তালিকাভুক্ত করুন, মোট আনুমানিক উৎপাদন অনুসারে অবরোহী ক্রমে সাজানো।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.EST_MANUFACTURING) FROM DIM_LOCATION AS T1 JOIN FACT_SECONDARY_SECTOR AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.EST_MANUFACTURING) DESC",
+    "pair_id": "5acff517",
+    "original_question_id": "608e4691",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_SECONDARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_SECONDARY_SECTOR": [
+        "FACT_SECONDARY_SECTOR_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_MANUFACTURING",
+        "EST_ELECTRICITY_GAS",
+        "EST_WATER_SUPPLY_WASTE",
+        "EST_CONSTRUCTION"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_location`.`sub_district_name` and SUM(`fact_establishment_totals`.`total_establishments`) as total_est. From `fact_establishment_totals` JOIN `dim_location` ON `fact_establishment_totals`.`location_id` = `dim_location`.`location_id` JOIN `dim_time` ON `fact_establishment_totals`.`time_id` = `dim_time`.`time_id` WHERE `dim_time`.`census_year` = 2013 GROUP BY `dim_location`.`sub_district_name` ORDER BY total_est DESC."
+  },
+  {
+    "question": "সর্বশেষ উপলব্ধ আদমশুমারির বছরের জন্য, প্রতিটি উপজেলার নাম এবং মোট অনুমানিত উৎপাদন মূল্য তালিকাভুক্ত করুন, যা সর্বোচ্চ থেকে সর্বনিম্ন মোট অনুমানিত উৎপাদন অনুসারে সাজানো।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.EST_MANUFACTURING) FROM DIM_LOCATION AS T1 JOIN FACT_SECONDARY_SECTOR AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = (SELECT MAX(CENSUS_YEAR) FROM DIM_TIME) GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.EST_MANUFACTURING) DESC",
+    "pair_id": "34765acb",
+    "original_question_id": "608e4691",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_SECONDARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_SECONDARY_SECTOR": [
+        "FACT_SECONDARY_SECTOR_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_MANUFACTURING",
+        "EST_ELECTRICITY_GAS",
+        "EST_WATER_SUPPLY_WASTE",
+        "EST_CONSTRUCTION"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "For the latest census year (2013), list each sub-district name (`dim_location.sub_district_name`) and the total estimated production value, which is the sum of `fact_establishment_totals.total_establishments` for that sub-district. Join `dim_location` to `fact_establishment_totals` on `location_id`, join `fact_establishment_totals` to `dim_time` on `time_id`, filter where `dim_time.census_year` = 2013, group by `dim_location.sub_district_name`, and order by the sum of `fact_establishment_totals.total_establishments` descending."
+  },
+  {
+    "question": "২০১৩ সালের আদমশুমারি বছরের জন্য শীর্ষ ১০টি উপজেলার নাম এবং তাদের মোট অনুমানিত উৎপাদন মূল্য তালিকাভুক্ত করুন, মোট অনুমানিত উৎপাদনের অবরোহী ক্রমে সাজানো।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.EST_MANUFACTURING) FROM DIM_LOCATION AS T1 JOIN FACT_SECONDARY_SECTOR AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.EST_MANUFACTURING) DESC LIMIT 10",
+    "pair_id": "e691fadf",
+    "original_question_id": "2534185b",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_SECONDARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_SECONDARY_SECTOR": [
+        "FACT_SECONDARY_SECTOR_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_MANUFACTURING",
+        "EST_ELECTRICITY_GAS",
+        "EST_WATER_SUPPLY_WASTE",
+        "EST_CONSTRUCTION"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List top 10 `dim_location`.`sub_district_name` and sum of `fact_establishment_totals`.`total_establishments` for `dim_time`.`census_year` = 2013, grouped by sub-district, ordered by total establishments descending."
+  },
+  {
+    "question": "সর্বশেষ উপলব্ধ আদমশুমারির বছরের জন্য, সর্বোচ্চ মোট উৎপাদন মূল্য সহ শীর্ষ ১০টি উপজেলার নাম এবং তাদের মোট আনুমানিক উৎপাদন মূল্য তালিকাভুক্ত করুন, যা তাদের উপজেলার নাম অনুসারে গ্রুপ করা হয়েছে।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.EST_MANUFACTURING) FROM DIM_LOCATION AS T1 JOIN FACT_SECONDARY_SECTOR AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = (SELECT MAX(CENSUS_YEAR) FROM DIM_TIME) GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.EST_MANUFACTURING) DESC LIMIT 10",
+    "pair_id": "21632d92",
+    "original_question_id": "2534185b",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_SECONDARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_SECONDARY_SECTOR": [
+        "FACT_SECONDARY_SECTOR_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_MANUFACTURING",
+        "EST_ELECTRICITY_GAS",
+        "EST_WATER_SUPPLY_WASTE",
+        "EST_CONSTRUCTION"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "For the latest census year 2013, find the top 10 sub-districts by total establishments. Sum `fact_establishment_totals`.`total_establishments` for each `dim_location`.`sub_district_name`. Join `fact_establishment_totals` with `dim_location` on `location_id` and with `dim_time` on `time_id`. Filter where `dim_time`.`census_year` = 2013. Group by `dim_location`.`sub_district_name`. Order by sum(`fact_establishment_totals`.`total_establishments`) DESC. Limit 10."
+  },
+  {
+    "question": "২০১৩ সালের আদমশুমারির জন্য, প্রতিটি উপজেলার নাম সহ মোট অনুমানিত উৎপাদন এবং মোট অনুমানিত নির্মাণ মানগুলো উপজেলার নাম অনুসারে বর্ণানুক্রমিকভাবে দলবদ্ধ এবং সাজানো হয়েছে।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.EST_MANUFACTURING), SUM(T2.EST_CONSTRUCTION) FROM DIM_LOCATION AS T1 JOIN FACT_SECONDARY_SECTOR AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "936c601a",
+    "original_question_id": "02bb2950",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_SECONDARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_SECONDARY_SECTOR": [
+        "FACT_SECONDARY_SECTOR_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_MANUFACTURING",
+        "EST_ELECTRICITY_GAS",
+        "EST_WATER_SUPPLY_WASTE",
+        "EST_CONSTRUCTION"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "For census year 2013 (`dim_time.census_year` = 2013), select `dim_location.sub_district_name`, sum(`fact_establishment_totals.total_establishments`) as total_establishments, sum(`fact_secondary_sector.est_construction`) as total_construction. Join `dim_location` to `fact_establishment_totals` on `dim_location.location_id` = `fact_establishment_totals.location_id` and to `fact_secondary_sector` on `dim_location.location_id` = `fact_secondary_sector.location_id`. Join both fact tables to `dim_time` on `fact_establishment_totals.time_id` = `dim_time.time_id` and `fact_secondary_sector.time_id` = `dim_time.time_id`. Join both fact tables to `dim_sector_category` on `sector_id` to include all sectors. Group by `dim_location.sub_district_name`. Order by `dim_location.sub_district_name` alphabetically."
+  },
+  {
+    "question": "২০১৩ সালের আদমশুমারির জন্য, প্রতিটি উপজেলার নাম সহ মোট আনুমানিক উৎপাদন এবং মোট আনুমানিক নির্মাণ মান তালিকাভুক্ত করুন, নিশ্চিত করুন যে মোট আনুমানিক উৎপাদন কমপক্ষে ০.০০০, এবং ফলাফলগুলি মোট আনুমানিক উৎপাদন অনুসারে অবরোহী ক্রমে সাজান।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.EST_MANUFACTURING), SUM(T2.EST_CONSTRUCTION) FROM DIM_LOCATION AS T1 JOIN FACT_SECONDARY_SECTOR AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.EST_MANUFACTURING) >= 0.000 ORDER BY SUM(T2.EST_MANUFACTURING) DESC",
+    "pair_id": "09a75ff6",
+    "original_question_id": "02bb2950",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_SECONDARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_SECONDARY_SECTOR": [
+        "FACT_SECONDARY_SECTOR_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_MANUFACTURING",
+        "EST_ELECTRICITY_GAS",
+        "EST_WATER_SUPPLY_WASTE",
+        "EST_CONSTRUCTION"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter by `dim_time`.`census_year` = 2013. For each `dim_location`.`sub_district_name`, compute total estimated production as SUM(`fact_primary_sector`.`est_agriculture` + `fact_primary_sector`.`est_livestock` + `fact_primary_sector`.`est_forestry_logging` + `fact_primary_sector`.`est_fishing_aquaculture` + `fact_primary_sector`.`est_mining_quarrying`). Compute total estimated construction as SUM(`fact_secondary_sector`.`est_construction`). Join `dim_location` to `fact_primary_sector` and `fact_secondary_sector` on `location_id` and `time_id` (and possibly `sector_id`). Join `dim_time` on `time_id`. Group by `dim_location`.`sub_district_name`. Filter where total estimated production >= 0.000. Order by total estimated production DESC."
+  },
+  {
+    "question": "২০১৩ সালের সেই সমস্ত উপজেলার নাম তালিকাভুক্ত করুন যেখানে আনুমানিক উৎপাদন মূল্য ০.০০০-এর বেশি এবং আনুমানিক নির্মাণ মূল্য ঠিক ০.০০০, বিশেষভাবে সেই উপজেলাগুলো ফিল্টার করে যেখানে আনুমানিক উৎপাদনের মোট যোগফল ২.০০০-এর সমান।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_LOCATION AS T1 JOIN FACT_SECONDARY_SECTOR AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' AND T2.EST_MANUFACTURING > 0.000 AND T2.EST_CONSTRUCTION = 0.000 GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.EST_MANUFACTURING) = 2.000",
+    "pair_id": "4b53ad38",
+    "original_question_id": "f2db5d51",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_SECONDARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_SECONDARY_SECTOR": [
+        "EST_MANUFACTURING",
+        "EST_CONSTRUCTION",
+        "FACT_SECONDARY_SECTOR_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_location.sub_district_name` for `dim_time.census_year` = 2013 where `fact_secondary_sector.est_manufacturing` > 0 and `fact_secondary_sector.est_construction` = 0, grouped by sub-district, and having SUM(`fact_secondary_sector.est_manufacturing`) = 2."
+  },
+  {
+    "question": "২০১৩ সালের আদমশুমারি অনুযায়ী, মোট অনুমানিত উৎপাদন ০-এর বেশি এবং মোট অনুমানিত নির্মাণ ঠিক ০ হলে সেই উপজেলাগুলোর নাম বর্ণানুক্রমে দলবদ্ধ ও সাজানো হয়েছে।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_LOCATION AS T1 JOIN FACT_SECONDARY_SECTOR AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.EST_MANUFACTURING) > 0.000 AND SUM(T2.EST_CONSTRUCTION) = 0.000 ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "cf374eef",
+    "original_question_id": "f2db5d51",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_SECONDARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_SECONDARY_SECTOR": [
+        "EST_MANUFACTURING",
+        "EST_CONSTRUCTION",
+        "FACT_SECONDARY_SECTOR_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_location`.`sub_district_name` where `dim_time`.`census_year` = 2013 and `fact_establishment_totals`.`total_establishments` > 0 and `fact_secondary_sector`.`est_construction` = 0. Join `dim_location` with `fact_establishment_totals` and `fact_secondary_sector` on `dim_location`.`location_id` = `fact_establishment_totals`.`location_id` = `fact_secondary_sector`.`location_id`, and join with `dim_time` on `fact_establishment_totals`.`time_id` = `dim_time`.`time_id` and `fact_secondary_sector`.`time_id` = `dim_time`.`time_id`. Group by `dim_location`.`sub_district_name` and order by `dim_location`.`sub_district_name` alphabetically."
+  },
+  {
+    "question": "২০১৩ সালের জনগণনা বছরের জন্য, যেসব উপজেলার আনুমানিক উৎপাদন মূল্য 0.000-এর বেশি এবং কমপক্ষে একটি মাধ্যমিক খাতের রেকর্ড রয়েছে, সেই উপজেলাগুলোর নাম উপজেলার নাম অনুসারে বর্ণানুক্রমিকভাবে সাজানো হোক।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_LOCATION AS T1 JOIN FACT_SECONDARY_SECTOR AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T2.EST_MANUFACTURING > 0.000 AND T3.CENSUS_YEAR = '2013' GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(T2.FACT_SECONDARY_SECTOR_ID) > 0 ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "e80599f6",
+    "original_question_id": "041b9889",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_SECONDARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_SECONDARY_SECTOR": [
+        "EST_MANUFACTURING",
+        "EST_CONSTRUCTION",
+        "FACT_SECONDARY_SECTOR_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_location`.`sub_district_name` from `fact_secondary_sector` join `dim_location` on `fact_secondary_sector`.`location_id` = `dim_location`.`location_id` join `dim_time` on `fact_secondary_sector`.`time_id` = `dim_time`.`time_id` where `dim_time`.`census_year` = 2013 and (`fact_secondary_sector`.`est_manufacturing` > 0 or `fact_secondary_sector`.`est_electricity_gas` > 0 or `fact_secondary_sector`.`est_water_supply_waste` > 0 or `fact_secondary_sector`.`est_construction` > 0) order by `dim_location`.`sub_district_name` asc."
+  },
+  {
+    "question": "কোন উপজেলার নামগুলি ২০১৩ সালের জনগণনা বছরে উৎপাদন প্রতিষ্ঠানের ইতিবাচক সংখ্যা এবং একই জনগণনা বছরে নির্মাণ প্রতিষ্ঠানের ইতিবাচক সংখ্যা ছিল?",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_LOCATION AS T1 JOIN FACT_SECONDARY_SECTOR AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' AND T2.EST_MANUFACTURING > 0.000 INTERSECT SELECT T1.SUB_DISTRICT_NAME FROM DIM_LOCATION AS T1 JOIN FACT_SECONDARY_SECTOR AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' AND T2.EST_CONSTRUCTION > 0.000",
+    "pair_id": "c0b07f73",
+    "original_question_id": "041b9889",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_SECONDARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_SECONDARY_SECTOR": [
+        "EST_MANUFACTURING",
+        "EST_CONSTRUCTION",
+        "FACT_SECONDARY_SECTOR_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List sub-district names (`dim_location.sub_district_name`) where, for census year 2013 (`dim_time.census_year` = 2013), both manufacturing establishments count (`fact_secondary_sector.est_manufacturing`) and construction establishments count (`fact_secondary_sector.est_construction`) are greater than 0."
+  },
+  {
+    "question": "২০১৩ সালের আদমশুমারি অনুযায়ী, উপজেলার নাম অনুসারে দলবদ্ধ করে সেই উপজেলাগুলোর নাম তালিকাভুক্ত করুন যেখানে উৎপাদন প্রতিষ্ঠানের সংখ্যা ৫০০-এর বেশি অথবা নির্মাণ প্রতিষ্ঠানের সংখ্যা ২০০-এর বেশি।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_LOCATION AS T1 JOIN FACT_SECONDARY_SECTOR AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' AND (T2.EST_MANUFACTURING > 500 OR T2.EST_CONSTRUCTION > 200) GROUP BY T1.SUB_DISTRICT_NAME",
+    "pair_id": "6ad0ce72",
+    "original_question_id": "f682576b",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_SECONDARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_SECONDARY_SECTOR": [
+        "EST_MANUFACTURING",
+        "EST_CONSTRUCTION",
+        "FACT_SECONDARY_SECTOR_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List sub-district names (`dim_location`.`sub_district_name`) where census year (`dim_time`.`census_year`) = 2013 and either manufacturing establishments (`fact_secondary_sector`.`est_manufacturing`) > 500 or construction establishments (`fact_secondary_sector`.`est_construction`) > 200, grouping by sub-district name."
+  },
+  {
+    "question": "২০১৩ সালের আদমশুমারি অনুযায়ী সেই সমস্ত উপজেলার নাম তালিকাভুক্ত করুন যেখানে মোট অনুমানিত উৎপাদন ৫০০-এর বেশি অথবা মোট অনুমানিত নির্মাণ ২০০-এর বেশি, এবং ফলাফলগুলো উপজেলার নাম অনুসারে বর্ণানুক্রমে সাজান।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_LOCATION AS T1 JOIN FACT_SECONDARY_SECTOR AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.EST_MANUFACTURING) > 500 UNION SELECT T1.SUB_DISTRICT_NAME FROM DIM_LOCATION AS T1 JOIN FACT_SECONDARY_SECTOR AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.EST_CONSTRUCTION) > 200 ORDER BY SUB_DISTRICT_NAME ASC",
+    "pair_id": "49d857a2",
+    "original_question_id": "f682576b",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_SECONDARY_SECTOR"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_SECONDARY_SECTOR": [
+        "EST_MANUFACTURING",
+        "EST_CONSTRUCTION",
+        "FACT_SECONDARY_SECTOR_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_location.sub_district_name` where `dim_time.census_year` = 2013 and (`fact_establishment_totals.total_establishments` > 500 OR `fact_secondary_sector.est_construction` > 200). Join `dim_location` with `fact_establishment_totals` and `fact_secondary_sector` on `location_id`, and join both fact tables with `dim_time` on `time_id`. Sort results alphabetically by `dim_location.sub_district_name`."
+  },
+  {
+    "question": "এই কোয়েরিটি অনুবাদ করুন:\nযেসব স্থানে আনুমানিক আবাসন ও খাদ্য ব্যয় শূন্যের চেয়ে বেশি, সেখানকার উপজেলার নাম এবং ইউএলবি, আরএলবি বা গ্রামের নাম এই দুটি কলাম অনুসারে গ্রুপ করে এবং উপজেলার নাম অনুসারে বর্ণানুক্রমে সাজিয়ে তালিকাভুক্ত করুন।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T1.ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION AS T1 JOIN FACT_TRANSPORT_HOSPITALITY AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID WHERE T2.EST_ACCOMMODATION_FOOD > 0.000 GROUP BY T1.SUB_DISTRICT_NAME, T1.ULB_RLB_VILLAGE_NAME ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "2f881d8e",
+    "original_question_id": "19ec558e",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "DIM_SECTOR_CATEGORY",
+      "FACT_TRANSPORT_HOSPITALITY"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "DIM_SECTOR_CATEGORY": [
+        "SECTOR_ID",
+        "SECTOR_CATEGORY"
+      ],
+      "FACT_TRANSPORT_HOSPITALITY": [
+        "FACT_TRANSPORT_HOSPITALITY_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_TRANSPORT_STORAGE",
+        "EST_ACCOMMODATION_FOOD"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_location`.`sub_district_name` and `dim_location`.`ulb_rlb_village_name` from `fact_transport_hospitality` join `dim_location` on `fact_transport_hospitality`.`location_id` = `dim_location`.`location_id` where `fact_transport_hospitality`.`est_accommodation_food` > 0 group by `dim_location`.`sub_district_name`, `dim_location`.`ulb_rlb_village_name` order by `dim_location`.`sub_district_name`."
+  },
+  {
+    "question": "২০১৩ সালের আদমশুমারির জন্য, সেই উপজেলার নাম এবং ইউএলবি/আরএলবি গ্রামের নাম তালিকাভুক্ত করুন যেখানে মোট অনুমানিত থাকা-খাওয়ার খরচ কমপক্ষে 0.000, এবং ফলাফলগুলো উপজেলার নাম অনুসারে বর্ণানুক্রমে সাজান।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T1.ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION AS T1 JOIN FACT_TRANSPORT_HOSPITALITY AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' GROUP BY T1.SUB_DISTRICT_NAME, T1.ULB_RLB_VILLAGE_NAME HAVING SUM(T2.EST_ACCOMMODATION_FOOD) >= 0.000 ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "ff9ec42b",
+    "original_question_id": "19ec558e",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "DIM_SECTOR_CATEGORY",
+      "FACT_TRANSPORT_HOSPITALITY"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "DIM_SECTOR_CATEGORY": [
+        "SECTOR_ID",
+        "SECTOR_CATEGORY"
+      ],
+      "FACT_TRANSPORT_HOSPITALITY": [
+        "FACT_TRANSPORT_HOSPITALITY_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_TRANSPORT_STORAGE",
+        "EST_ACCOMMODATION_FOOD"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_location`.`sub_district_name` and `dim_location`.`ulb_rlb_village_name` where `dim_time`.`census_year` = 2013 and `fact_transport_hospitality`.`est_accommodation_food` >= 0. Join `fact_transport_hospitality` with `dim_location` on `fact_transport_hospitality`.`location_id` = `dim_location`.`location_id` and with `dim_time` on `fact_transport_hospitality`.`time_id` = `dim_time`.`time_id`. Order results by `dim_location`.`sub_district_name` alphabetically."
+  },
+  {
+    "question": "২০১৩ সালের আদমশুমারির জন্য, প্রতিটি উপজেলার নাম, মোট অনুমানিত পরিবহন ও সংরক্ষণ খরচ এবং মোট অনুমানিত থাকার ও খাওয়ার খরচ উপজেলার নাম অনুসারে বর্ণানুক্রমিকভাবে দলবদ্ধ ও সাজানো হয়েছে।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.EST_TRANSPORT_STORAGE), SUM(T2.EST_ACCOMMODATION_FOOD) FROM DIM_LOCATION AS T1 JOIN FACT_TRANSPORT_HOSPITALITY AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "0fe8bc91",
+    "original_question_id": "df7113b3",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_TRANSPORT_HOSPITALITY"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_TRANSPORT_HOSPITALITY": [
+        "FACT_TRANSPORT_HOSPITALITY_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_TRANSPORT_STORAGE",
+        "EST_ACCOMMODATION_FOOD"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter by `dim_time`.`census_year` = 2013. For each `dim_location`.`sub_district_name`, sum `fact_transport_hospitality`.`est_transport_storage` and `fact_transport_hospitality`.`est_accommodation_food` across all sectors. Group by `dim_location`.`sub_district_name` and order by `dim_location`.`sub_district_name` alphabetically."
+  },
+  {
+    "question": "সর্বশেষ উপলব্ধ আদমশুমারির বছরের জন্য, উপ-জেলা নামগুলির সাথে মোট অনুমানিত পরিবহন ও সঞ্চয় খরচ এবং মোট অনুমানিত থাকার ও খাওয়ার খরচের তালিকা তৈরি করুন, যা উপ-জেলা অনুসারে দলবদ্ধ করা এবং মোট অনুমানিত পরিবহন ও সঞ্চয় খরচের উর্ধ্রক্রমে সাজানো।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.EST_TRANSPORT_STORAGE), SUM(T2.EST_ACCOMMODATION_FOOD) FROM DIM_LOCATION AS T1 JOIN FACT_TRANSPORT_HOSPITALITY AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = (SELECT MAX(CENSUS_YEAR) FROM DIM_TIME) GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.EST_TRANSPORT_STORAGE) DESC",
+    "pair_id": "f5e1ad47",
+    "original_question_id": "df7113b3",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_TRANSPORT_HOSPITALITY"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_TRANSPORT_HOSPITALITY": [
+        "FACT_TRANSPORT_HOSPITALITY_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_TRANSPORT_STORAGE",
+        "EST_ACCOMMODATION_FOOD"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "For census_year = 2013 (latest), list each dim_location.sub_district_name with total sum of fact_transport_hospitality.est_transport_storage and total sum of fact_transport_hospitality.est_accommodation_food, grouped by dim_location.sub_district_name, ordered by total sum of fact_transport_hospitality.est_transport_storage in ascending order."
+  },
+  {
+    "question": "২০১৩ সালের জনগণনা বছরের জন্য, প্রতিটি উপজেলার নাম এবং মোট আনুমানিক আবাসন ও খাদ্য খরচ তালিকাভুক্ত করুন, যা মোট খরচ অনুযায়ী অবরোহী ক্রমে সাজানো হবে।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.EST_ACCOMMODATION_FOOD) FROM DIM_LOCATION AS T1 JOIN FACT_TRANSPORT_HOSPITALITY AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.EST_ACCOMMODATION_FOOD) DESC",
+    "pair_id": "e1ccb964",
+    "original_question_id": "2fafa12b",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_TRANSPORT_HOSPITALITY"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_TRANSPORT_HOSPITALITY": [
+        "FACT_TRANSPORT_HOSPITALITY_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_TRANSPORT_STORAGE",
+        "EST_ACCOMMODATION_FOOD"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_location`.`sub_district_name`, SUM(`fact_transport_hospitality`.`est_accommodation_food`) as total_cost from `fact_transport_hospitality` join `dim_location` on `fact_transport_hospitality`.`location_id` = `dim_location`.`location_id` join `dim_time` on `fact_transport_hospitality`.`time_id` = `dim_time`.`time_id` where `dim_time`.`census_year` = 2013 group by `dim_location`.`sub_district_name` order by total_cost DESC."
+  },
+  {
+    "question": "সর্বশেষ উপলব্ধ আদমশুমারির বছরের জন্য, প্রতিটি উপজেলার নাম এবং মোট আনুমানিক আবাসন ও খাদ্য ব্যয়ের তালিকা তৈরি করুন, শুধুমাত্র সেই উপজেলাগুলো অন্তর্ভুক্ত করুন যেখানে মোট ব্যয় শূন্যের চেয়ে বেশি, এবং ফলাফলগুলো সর্বোচ্চ মোট ব্যয় থেকে সর্বনিম্ন ক্রমে সাজান।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.EST_ACCOMMODATION_FOOD) FROM DIM_LOCATION AS T1 JOIN FACT_TRANSPORT_HOSPITALITY AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = (SELECT MAX(CENSUS_YEAR) FROM DIM_TIME) GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.EST_ACCOMMODATION_FOOD) > 0.000 ORDER BY SUM(T2.EST_ACCOMMODATION_FOOD) DESC",
+    "pair_id": "9429b68e",
+    "original_question_id": "2fafa12b",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_TRANSPORT_HOSPITALITY"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_TRANSPORT_HOSPITALITY": [
+        "FACT_TRANSPORT_HOSPITALITY_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_TRANSPORT_STORAGE",
+        "EST_ACCOMMODATION_FOOD"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_location.sub_district_name` and SUM(`fact_transport_hospitality.est_accommodation_food`) as total_expenditure for the latest census year (`dim_time.census_year` = 2013). Join `fact_transport_hospitality` with `dim_location` on `location_id` and with `dim_time` on `time_id`. Filter where `fact_transport_hospitality.est_accommodation_food` > 0. Group by `dim_location.sub_district_name`. Order by total_expenditure DESC."
+  },
+  {
+    "question": "২০১৩ সালের আদমশুমারির জন্য, সর্বোচ্চ মোট খরচসহ শীর্ষ ১০টি উপজেলার নাম এবং আনুমানিক মোট আবাসন ও খাদ্য খরচের তালিকা প্রদান করুন।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.EST_ACCOMMODATION_FOOD) FROM DIM_LOCATION AS T1 JOIN FACT_TRANSPORT_HOSPITALITY AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.EST_ACCOMMODATION_FOOD) DESC LIMIT 10",
+    "pair_id": "e7fc6264",
+    "original_question_id": "0504e6ef",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_TRANSPORT_HOSPITALITY"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_TRANSPORT_HOSPITALITY": [
+        "FACT_TRANSPORT_HOSPITALITY_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_TRANSPORT_STORAGE",
+        "EST_ACCOMMODATION_FOOD"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select the top 10 sub-districts with the highest estimated accommodation and food cost for the year 2013. Use `dim_location`.`sub_district_name` for sub-district names and `fact_transport_hospitality`.`est_accommodation_food` for the cost. Filter by `dim_time`.`census_year` = 2013. Join `fact_transport_hospitality` with `dim_location` on `location_id` and with `dim_time` on `time_id`. Order by `fact_transport_hospitality`.`est_accommodation_food` descending and limit 10."
+  },
+  {
+    "question": "সর্বশেষ উপলব্ধ আদমশুমারি বছরের জন্য, প্রতিটি উপজেলার নাম এবং মোট আনুমানিক আবাসন ও খাদ্য খরচের তালিকা তৈরি করুন, যেখানে সর্বোচ্চ মোট খরচসহ শীর্ষ ১০টি উপজেলা দেখানো হবে।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.EST_ACCOMMODATION_FOOD) FROM DIM_LOCATION AS T1 JOIN FACT_TRANSPORT_HOSPITALITY AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = (SELECT MAX(CENSUS_YEAR) FROM DIM_TIME) GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.EST_ACCOMMODATION_FOOD) DESC LIMIT 10",
+    "pair_id": "332b73ce",
+    "original_question_id": "0504e6ef",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_TRANSPORT_HOSPITALITY"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_TRANSPORT_HOSPITALITY": [
+        "FACT_TRANSPORT_HOSPITALITY_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_TRANSPORT_STORAGE",
+        "EST_ACCOMMODATION_FOOD"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter by latest census year: `dim_time`.`census_year` = '2013'. For each `dim_location`.`sub_district_name`, sum `fact_transport_hospitality`.`est_accommodation_food` across all sectors. Join `fact_transport_hospitality` → `dim_location` on `location_id` and → `dim_time` on `time_id`. Group by `dim_location`.`sub_district_name`. Order by sum(`fact_transport_hospitality`.`est_accommodation_food`) DESC, limit 10."
+  },
+  {
+    "question": "সর্বশেষ আদমশুমারি সালের জন্য, প্রতিটি উপজেলার নাম এবং মোট আনুমানিক আবাসন ও খাদ্য ব্যয়ের তালিকা দিন, উপজেলা অনুসারে গ্রুপ করে এবং সর্বোচ্চ থেকে সর্বনিম্ন মোট ব্যয় অনুসারে সাজানো।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.EST_ACCOMMODATION_FOOD) FROM DIM_LOCATION AS T1 JOIN FACT_TRANSPORT_HOSPITALITY AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = (SELECT MAX(CENSUS_YEAR) FROM DIM_TIME) GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.EST_ACCOMMODATION_FOOD) DESC",
+    "pair_id": "cb391f0c",
+    "original_question_id": "372d45c8",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_TRANSPORT_HOSPITALITY"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_TRANSPORT_HOSPITALITY": [
+        "FACT_TRANSPORT_HOSPITALITY_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_TRANSPORT_STORAGE",
+        "EST_ACCOMMODATION_FOOD"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_location`.`sub_district_name` and sum(`fact_transport_hospitality`.`est_accommodation_food`) as total_expenditure for the latest census year (2013) from `dim_time`. Join `dim_location` to `fact_transport_hospitality` on `dim_location`.`location_id` = `fact_transport_hospitality`.`location_id`, and join `dim_time` on `fact_transport_hospitality`.`time_id` = `dim_time`.`time_id`. Filter where `dim_time`.`census_year` = 2013. Group by `dim_location`.`sub_district_name`. Order by total_expenditure DESC."
+  },
+  {
+    "question": "সর্বশেষ উপলব্ধ আদমশুমারির বছরের জন্য, প্রতিটি উপজেলার নাম এবং মোট আনুমানিক আবাসন ও খাদ্য ব্যয়ের পরিমাণ তালিকাভুক্ত করুন, যা উপজেলার নাম অনুসারে গোষ্ঠীবদ্ধ করে এবং সর্বোচ্চ থেকে সর্বনিম্ন মোট ব্যয় অনুসারে সাজানো হবে।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.EST_ACCOMMODATION_FOOD) FROM DIM_LOCATION AS T1 INNER JOIN FACT_TRANSPORT_HOSPITALITY AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID INNER JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = (SELECT MAX(CENSUS_YEAR) FROM DIM_TIME) GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.EST_ACCOMMODATION_FOOD) DESC",
+    "pair_id": "c6990ab5",
+    "original_question_id": "372d45c8",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_TRANSPORT_HOSPITALITY"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_TRANSPORT_HOSPITALITY": [
+        "FACT_TRANSPORT_HOSPITALITY_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_TRANSPORT_STORAGE",
+        "EST_ACCOMMODATION_FOOD"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "For the latest census year 2013 (`dim_time`.`census_year` = 2013), list each sub-district name (`dim_location`.`sub_district_name`) and the total estimated accommodation and food expenditure (sum of `fact_transport_hospitality`.`est_accommodation_food`). Join `dim_location` with `fact_transport_hospitality` on `location_id`, and join `dim_time` on `time_id`. Group by `dim_location`.`sub_district_name`. Order by total expenditure descending."
+  },
+  {
+    "question": "উপজেলার নামগুলো বর্ণানুক্রমে তালিকাভুক্ত করুন, যেখানে অনুমানিত পরিবহন ও সংরক্ষণ মূল্য 0.000 এর বেশি, কিন্তু সেই উপজেলার অনুমানিত আবাসন ও খাদ্য সেবার মোট যোগফল ঠিক 0.000।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_LOCATION AS T1 JOIN FACT_TRANSPORT_HOSPITALITY AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID WHERE T2.EST_TRANSPORT_STORAGE > 0.000 GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.EST_ACCOMMODATION_FOOD) = 0.000 ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "8efb7d2e",
+    "original_question_id": "ee75872c",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "DIM_SECTOR_CATEGORY",
+      "FACT_TRANSPORT_HOSPITALITY"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "DIM_SECTOR_CATEGORY": [
+        "SECTOR_ID",
+        "SECTOR_CATEGORY"
+      ],
+      "FACT_TRANSPORT_HOSPITALITY": [
+        "FACT_TRANSPORT_HOSPITALITY_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_TRANSPORT_STORAGE",
+        "EST_ACCOMMODATION_FOOD"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_location`.`sub_district_name` alphabetically where the sum of `fact_transport_hospitality`.`est_transport_storage` (cast to double precision) for the sub-district across all sectors and for census_year 2013 is greater than 0, and the sum of `fact_transport_hospitality`.`est_accommodation_food` (cast to double precision) for the sub-district across all sectors and for census_year 2013 is exactly 0. Join `fact_transport_hospitality` with `dim_location` on `location_id`, and with `dim_time` on `time_id` where `dim_time`.`census_year` = 2013. Group by `dim_location`.`sub_district_name`."
+  },
+  {
+    "question": "২০১৩ সালের আদমশুমারি অনুযায়ী, মোট অনুমানিত পরিবহন ও সংরক্ষণ মান শূন্যের চেয়ে বেশি ছিল এমন উপজেলার নামগুলো তালিকাভুক্ত করুন, তবে একই বছরে অনুমানিত আবাসন ও খাদ্য মান শূন্যের চেয়ে বেশি রিপোর্ট করা উপজেলাগুলো বাদ দিন এবং ফলাফলগুলো উপজেলার নাম অনুসারে বর্ণানুক্রমিকভাবে সাজান।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_LOCATION AS T1 JOIN FACT_TRANSPORT_HOSPITALITY AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.EST_TRANSPORT_STORAGE) > 0.000 AND T1.SUB_DISTRICT_NAME NOT IN (SELECT T4.SUB_DISTRICT_NAME FROM DIM_LOCATION AS T4 JOIN FACT_TRANSPORT_HOSPITALITY AS T5 ON T4.LOCATION_ID = T5.LOCATION_ID JOIN DIM_TIME AS T6 ON T5.TIME_ID = T6.TIME_ID WHERE T6.CENSUS_YEAR = '2013' AND T5.EST_ACCOMMODATION_FOOD > 0.000) ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "579e0a14",
+    "original_question_id": "ee75872c",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "DIM_SECTOR_CATEGORY",
+      "FACT_TRANSPORT_HOSPITALITY"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "DIM_SECTOR_CATEGORY": [
+        "SECTOR_ID",
+        "SECTOR_CATEGORY"
+      ],
+      "FACT_TRANSPORT_HOSPITALITY": [
+        "FACT_TRANSPORT_HOSPITALITY_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_TRANSPORT_STORAGE",
+        "EST_ACCOMMODATION_FOOD"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_location`.`sub_district_name` for `dim_time`.`census_year` = 2013 where the sum of `fact_transport_hospitality`.`est_transport_storage` across sectors is greater than 0 and the sum of `fact_transport_hospitality`.`est_accommodation_food` across sectors is 0, grouped by sub-district, sorted alphabetically by `dim_location`.`sub_district_name`."
+  },
+  {
+    "question": "২০১৩ সালের আদমশুমারি বছরের জন্য যেসব উপজেলার নাম বর্ণানুক্রমে তালিকাভুক্ত করুন যেখানে পরিবহন সংরক্ষণ এবং আবাসন খাদ্যের আনুমানিক মান উভয়ই শূন্যের চেয়ে বেশি।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_LOCATION AS T1 JOIN FACT_TRANSPORT_HOSPITALITY AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' AND T2.EST_TRANSPORT_STORAGE > 0.000 AND T2.EST_ACCOMMODATION_FOOD > 0.000 GROUP BY T1.SUB_DISTRICT_NAME ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "a29de23a",
+    "original_question_id": "11678f6d",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_TRANSPORT_HOSPITALITY"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_TRANSPORT_HOSPITALITY": [
+        "FACT_TRANSPORT_HOSPITALITY_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_TRANSPORT_STORAGE",
+        "EST_ACCOMMODATION_FOOD"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter for `dim_time`.`census_year` = 2013, where `fact_transport_hospitality`.`est_transport_storage` > 0 and `fact_transport_hospitality`.`est_accommodation_food` > 0. Return `dim_location`.`sub_district_name` ordered alphabetically."
+  },
+  {
+    "question": "২০১৩ সালের উপজেলার নামগুলো তালিকাভুক্ত করুন যেখানে পরিবহন সংরক্ষণের আনুমানিক মোট পরিমাণ কমপক্ষে ০.০০০ এবং আবাসন খাদ্যের আনুমানিক মোট পরিমাণ ০.০০০-এর বেশি, এবং ফলাফলগুলো উপজেলার নাম অনুসারে বর্ণানুক্রমে সাজান।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_LOCATION AS T1 JOIN FACT_TRANSPORT_HOSPITALITY AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.EST_TRANSPORT_STORAGE) >= 0.000 AND SUM(T2.EST_ACCOMMODATION_FOOD) > 0.000 ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "5a214bd0",
+    "original_question_id": "11678f6d",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_TRANSPORT_HOSPITALITY"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_TRANSPORT_HOSPITALITY": [
+        "FACT_TRANSPORT_HOSPITALITY_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_TRANSPORT_STORAGE",
+        "EST_ACCOMMODATION_FOOD"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter records where `dim_time.census_year` = 2013, `fact_transport_hospitality.est_transport_storage` >= 0, and `fact_transport_hospitality.est_accommodation_food` > 0. Select distinct `dim_location.sub_district_name` and sort alphabetically ascending."
+  },
+  {
+    "question": "List the names of the ULB, RLB, or villages where the estimated transport and storage value is greater than 50 or the estimated accommodation and food services value is greater than 50, ordered alphabetically by the village name.",
+    "sql": "SELECT T1.ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION AS T1 JOIN FACT_TRANSPORT_HOSPITALITY AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID WHERE T2.EST_TRANSPORT_STORAGE > 50 OR T2.EST_ACCOMMODATION_FOOD > 50 ORDER BY T1.ULB_RLB_VILLAGE_NAME",
+    "pair_id": "a7c2466f",
+    "original_question_id": "38111851",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_SECTOR_CATEGORY",
+      "FACT_TRANSPORT_HOSPITALITY"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_SECTOR_CATEGORY": [
+        "SECTOR_ID",
+        "SECTOR_CATEGORY"
+      ],
+      "FACT_TRANSPORT_HOSPITALITY": [
+        "FACT_TRANSPORT_HOSPITALITY_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_TRANSPORT_STORAGE",
+        "EST_ACCOMMODATION_FOOD"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve `dim_location.ulb_rlb_village_name` where `fact_transport_hospitality.est_transport_storage` > 50 OR `fact_transport_hospitality.est_accommodation_food` > 50. Since both columns store numeric values as text, cast them to numeric for comparison. Join `dim_location` with `fact_transport_hospitality` on `dim_location.location_id` = `fact_transport_hospitality.location_id`. Optionally join `dim_time` to filter by `dim_time.census_year` = 2013 if needed. Order results by `dim_location.ulb_rlb_village_name` in ascending alphabetical order."
+  },
+  {
+    "question": "সমস্ত রেকর্ডের জন্য যেখানে অনুমানিত মানব স্বাস্থ্য ও সামাজিক কাজের কার্যকলাপের মান 0.000 বা তার বেশি, সেগুলোকে উপজেলার নাম অনুসারে গ্রুপ করে এবং বর্ণানুক্রমে সাজিয়ে উপজেলার নাম এবং ইউএলবি/আরএলবি গ্রামের নাম তালিকাভুক্ত করুন।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T1.ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION AS T1 JOIN FACT_EDUCATION_HEALTH AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID WHERE T2.EST_HUMAN_HEALTH_SOCIAL >= 0.000 GROUP BY T1.SUB_DISTRICT_NAME, T1.ULB_RLB_VILLAGE_NAME ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "d3f0ddb6",
+    "original_question_id": "8c6efbec",
+    "schema_used": [
+      "DIM_LOCATION",
+      "FACT_EDUCATION_HEALTH"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "FACT_EDUCATION_HEALTH": [
+        "FACT_EDUCATION_HEALTH_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_EDUCATION",
+        "EST_HUMAN_HEALTH_SOCIAL"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter records where `fact_education_health`.`est_human_health_social` >= 0.000. Join `fact_education_health` with `dim_location` on `location_id`. Group by `dim_location`.`sub_district_name`, `dim_location`.`ulb_rlb_village_name` to get unique combinations. Select `dim_location`.`sub_district_name` and `dim_location`.`ulb_rlb_village_name`. Order by `dim_location`.`sub_district_name` alphabetically."
+  },
+  {
+    "question": "যেসব স্থানে অনুমানিত মানব স্বাস্থ্য ও সামাজিক কাজের কার্যকলাপের মান 0.000 বা তার বেশি, সেই স্থানগুলোর জন্য উপজেলার নাম এবং ইউএলবি/আরএলবি গ্রামের নাম তালিকাভুক্ত করুন, নিশ্চিত করুন যে প্রতিটি উপজেলা ও গ্রামের সমন্বয়ে কমপক্ষে একটি শিক্ষা স্বাস্থ্য রেকর্ড রয়েছে, এবং ফলাফলগুলো উপজেলার নাম অনুসারে বর্ণানুক্রমে সাজান।",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T1.ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION AS T1 JOIN FACT_EDUCATION_HEALTH AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID WHERE T2.EST_HUMAN_HEALTH_SOCIAL >= 0.000 GROUP BY T1.SUB_DISTRICT_NAME, T1.ULB_RLB_VILLAGE_NAME HAVING COUNT(T2.FACT_EDUCATION_HEALTH_ID) >= 1 ORDER BY T1.SUB_DISTRICT_NAME ASC",
+    "pair_id": "be99da39",
+    "original_question_id": "8c6efbec",
+    "schema_used": [
+      "DIM_LOCATION",
+      "FACT_EDUCATION_HEALTH"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "FACT_EDUCATION_HEALTH": [
+        "FACT_EDUCATION_HEALTH_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_EDUCATION",
+        "EST_HUMAN_HEALTH_SOCIAL"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct (`dim_location`.`sub_district_name`, `dim_location`.`ulb_rlb_village_name`) from `fact_education_health` join `dim_location` on `fact_education_health`.`location_id` = `dim_location`.`location_id` where `fact_education_health`.`est_human_health_social` >= 0.000 order by `dim_location`.`sub_district_name`."
+  },
+  {
+    "question": "List the sub-district name and the census year, along with the total sum of estimated education and estimated human health and social values, grouped by sub-district and census year, and ordered chronologically by census year.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T2.CENSUS_YEAR, SUM(T3.EST_EDUCATION + T3.EST_HUMAN_HEALTH_SOCIAL) FROM DIM_LOCATION AS T1 JOIN FACT_EDUCATION_HEALTH AS T3 ON T1.LOCATION_ID = T3.LOCATION_ID JOIN DIM_TIME AS T2 ON T3.TIME_ID = T2.TIME_ID GROUP BY T1.SUB_DISTRICT_NAME, T2.CENSUS_YEAR ORDER BY T2.CENSUS_YEAR ASC",
+    "pair_id": "c6cd83bf",
+    "original_question_id": "681732b5",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_EDUCATION_HEALTH"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_EDUCATION_HEALTH": [
+        "FACT_EDUCATION_HEALTH_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_EDUCATION",
+        "EST_HUMAN_HEALTH_SOCIAL"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_location`.`sub_district_name`, `dim_time`.`census_year`, and the sum of `fact_education_health`.`est_education` and `fact_education_health`.`est_human_health_social`. Join `fact_education_health` with `dim_location` on `location_id` and with `dim_time` on `time_id`. Group by `dim_location`.`sub_district_name` and `dim_time`.`census_year`. Order by `dim_time`.`census_year`."
+  },
+  {
+    "question": "List the sub-district name and the census year, along with the total sum of estimated education and estimated human health and social values, for each sub-district and census year where that sum is at least 0.000, ordered by the census year and the total sum in descending order.",
+    "sql": "SELECT T1.SUB_DISTRICT_NAME, T2.CENSUS_YEAR, SUM(T3.EST_EDUCATION + T3.EST_HUMAN_HEALTH_SOCIAL) FROM DIM_LOCATION AS T1 INNER JOIN FACT_EDUCATION_HEALTH AS T3 ON T1.LOCATION_ID = T3.LOCATION_ID INNER JOIN DIM_TIME AS T2 ON T3.TIME_ID = T2.TIME_ID GROUP BY T1.SUB_DISTRICT_NAME, T2.CENSUS_YEAR HAVING SUM(T3.EST_EDUCATION + T3.EST_HUMAN_HEALTH_SOCIAL) >= 0.000 ORDER BY T2.CENSUS_YEAR DESC, SUM(T3.EST_EDUCATION + T3.EST_HUMAN_HEALTH_SOCIAL) DESC",
+    "pair_id": "f89a1184",
+    "original_question_id": "681732b5",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_EDUCATION_HEALTH"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_EDUCATION_HEALTH": [
+        "FACT_EDUCATION_HEALTH_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_EDUCATION",
+        "EST_HUMAN_HEALTH_SOCIAL"
+      ]
+    },
+    "skeleton_id": "skel_1",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_location`.`sub_district_name`, `dim_time`.`census_year`, SUM(`fact_education_health`.`est_education` + `fact_education_health`.`est_human_health_social`) as total_sum from `fact_education_health` join `dim_location` on `fact_education_health`.`location_id` = `dim_location`.`location_id` join `dim_time` on `fact_education_health`.`time_id` = `dim_time`.`time_id` group by `dim_location`.`sub_district_name`, `dim_time`.`census_year` having total_sum >= 0.000 order by `dim_time`.`census_year`, total_sum desc."
+  },
+  {
+    "question": "২০১৩ সালের আদমশুমারির জন্য, সেই ইউএলবি আরএলবি গ্রামগুলোর নাম তালিকাভুক্ত করুন যেখানে আনুমানিক মানব স্বাস্থ্য ও সামাজিক কাজের মান ৫০-এর বেশি।",
+    "sql": "SELECT T1.ULB_RLB_VILLAGE_NAME FROM DIM_LOCATION AS T1 JOIN FACT_EDUCATION_HEALTH AS T2 ON T1.LOCATION_ID = T2.LOCATION_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.CENSUS_YEAR = '2013' AND T2.EST_HUMAN_HEALTH_SOCIAL > 50",
+    "pair_id": "57101395",
+    "original_question_id": "e5156c20",
+    "schema_used": [
+      "DIM_LOCATION",
+      "DIM_TIME",
+      "FACT_EDUCATION_HEALTH"
+    ],
+    "linked_schema": {
+      "DIM_LOCATION": [
+        "LOCATION_ID",
+        "DISTRICT_ID",
+        "SUB_DISTRICT_NAME",
+        "ULB_RLB_VILLAGE_NAME"
+      ],
+      "DIM_TIME": [
+        "TIME_ID",
+        "CENSUS_YEAR"
+      ],
+      "FACT_EDUCATION_HEALTH": [
+        "FACT_EDUCATION_HEALTH_ID",
+        "LOCATION_ID",
+        "TIME_ID",
+        "SECTOR_ID",
+        "EST_EDUCATION",
+        "EST_HUMAN_HEALTH_SOCIAL"
+      ]
+    },
+    "skeleton_id": "skel_0",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_location`.`ulb_rlb_village_name` where `fact_education_health`.`est_human_health_social` > 50 for `dim_time`.`census_year` = 2013."
+  }
+]
