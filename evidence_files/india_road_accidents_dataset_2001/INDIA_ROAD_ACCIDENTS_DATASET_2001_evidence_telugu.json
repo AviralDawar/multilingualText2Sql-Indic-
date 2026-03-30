@@ -1,0 +1,1032 @@
+[
+  {
+    "question": "ప్రమాదాల ID లను జాబితా చేయండి, ఇక్కడ ప్రమాదాలలో మరణాల సంఖ్య 2 కంటే ఎక్కువ ఉంది మరియు ప్రమాదంలో ఉన్న డ్రైవర్‌కు 1-2 సంవత్సరాల డ్రైవింగ్ అనుభవం ఉంది.",
+    "sql": "SELECT T1.ACCIDENT_ID FROM FACT_ACCIDENT AS T1 JOIN DIM_DRIVER AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID WHERE T1.NUMBER_OF_CASUALTIES > 2 AND T2.DRIVING_EXPERIENCE = '1-2yr';",
+    "pair_id": "766ad2ba",
+    "original_question_id": "ede492bf",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "List `fact_accident.accident_id` where `fact_accident.number_of_casualties` > 2 and the driver has `dim_driver.driving_experience` = '1-2yr'. Join `fact_accident` with `dim_driver` on `fact_accident.driver_id` = `dim_driver.driver_id`."
+  },
+  {
+    "question": "ఆపాతాల సంఖ్య 2 కంటే ఎక్కువ ఉన్న మరియు ప్రమాదంలో ఉన్న డ్రైవర్‌కు 1-2 సంవత్సరాల డ్రైవింగ్ అనుభవం ఉన్న అన్ని ప్రమాదాల ప్రమాద ID లను జాబితా చేయండి.",
+    "sql": "SELECT T1.ACCIDENT_ID FROM FACT_ACCIDENT AS T1 JOIN DIM_DRIVER AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID WHERE T1.NUMBER_OF_CASUALTIES > 2 AND T2.DRIVING_EXPERIENCE = '1-2yr';",
+    "pair_id": "87f86ad9",
+    "original_question_id": "ede492bf",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_accident`.`accident_id` where `fact_accident`.`number_of_casualties` > 2 and the driver has driving experience '1-2yr'. Join `fact_accident` with `dim_driver` on `fact_accident`.`driver_id` = `dim_driver`.`driver_id` and filter by `dim_driver`.`driving_experience` = '1-2yr'."
+  },
+  {
+    "question": "ప్రతి ప్రమాద తీవ్రతను జాబితా చేయండి మరియు 1-2 సంవత్సరాల డ్రైవింగ్ అనుభవం ఉన్న డ్రైవర్‌ల కోసం ప్రమాద IDల మొత్తం సంఖ్యను చూపండి, ఒకటి కంటే ఎక్కువ ప్రమాదాలు ఉన్న తీవ్రత స్థరాలను మాత్రమే చూపించండి మరియు ఫలితాలను ప్రమాద తీవ్రత ద్వారా ఆర్డర్ చేయండి.",
+    "sql": "SELECT T1.ACCIDENT_SEVERITY, COUNT(T1.ACCIDENT_ID) FROM FACT_ACCIDENT AS T1 JOIN DIM_DRIVER AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID WHERE T2.DRIVING_EXPERIENCE = '1-2yr' GROUP BY T1.ACCIDENT_SEVERITY HAVING COUNT(T1.ACCIDENT_ID) > 1 ORDER BY T1.ACCIDENT_SEVERITY",
+    "pair_id": "fbef6271",
+    "original_question_id": "ede492bf",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_driver.driving_experience` = '1-2yr'. Join `fact_accident` with `dim_driver` on `fact_accident.driver_id` = `dim_driver.driver_id`. Group by `fact_accident.accident_severity`. Count distinct `fact_accident.accident_id` as total_accidents. Keep only groups where total_accidents > 1. Order results by `fact_accident.accident_severity`."
+  },
+  {
+    "question": "1-2 సంవత్సరాల డ్రైవింగ్ అనుభవం ఉన్న డ్రైవర్‌లకు సంబంధించిన ప్రమాదాల కోసం ప్రమాద IDలను జాబితా చేయండి, ఇక్కడ ప్రతి ప్రమాదానికి మొత్తం ఆపద సంఖ్య 3 కంటే ఎక్కువ ఉంది, గరిష్ట ఆపద సంఖ్య ఆధారంగా అవరోహణ క్రమంలో ఆదేశించండి.",
+    "sql": "SELECT T2.ACCIDENT_ID FROM DIM_DRIVER AS T1 INNER JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID LEFT JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.DRIVING_EXPERIENCE = '1-2yr' GROUP BY T2.ACCIDENT_ID HAVING SUM(T2.NUMBER_OF_CASUALTIES) > 3 ORDER BY MAX(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "1c2bc7c6",
+    "original_question_id": "ede492bf",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_accident`.`accident_id` from `fact_accident` inner join `dim_driver` on `fact_accident`.`driver_id` = `dim_driver`.`driver_id` where `dim_driver`.`driving_experience` = '1-2yr' and `fact_accident`.`number_of_casualties` > 3 order by `fact_accident`.`number_of_casualties` desc."
+  },
+  {
+    "question": "ప్రతి డ్రైవర్ వయస్సు బ్యాండ్ కోసం, వయస్సు బ్యాండ్, సగటు ప్రమాదాల సంఖ్య మరియు ప్రమాద IDల మొత్తం గణనను జాబితా చేయండి.",
+    "sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), COUNT(T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.AGE_BAND_OF_DRIVER",
+    "pair_id": "3cfe7990",
+    "original_question_id": "22b75f02",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "For each distinct value in `dim_driver`.`age_band_of_driver`, list the age band, the average of `fact_accident`.`number_of_vehicles_involved`, and the count of `fact_accident`.`accident_id`. Join `dim_driver` and `fact_accident` on `dim_driver`.`driver_id` = `fact_accident`.`driver_id`. Group by `dim_driver`.`age_band_of_driver`. Age band values are exactly: 'Unknown', 'Over 51', 'Under 18', '18-30', '31-50' (case-sensitive)."
+  },
+  {
+    "question": "డ్రైవర్ యొక్క ప్రతి వయస్సు బ్యాండ్ కోసం, వయస్సు బ్యాండ్ కూడా, సగటు ప్రమాదాల సంఖ్య మరియు ప్రమాద IDల మొత్తం గణనను జాబితా చేయండి.",
+    "sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), COUNT(T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.AGE_BAND_OF_DRIVER",
+    "pair_id": "7768a6de",
+    "original_question_id": "22b75f02",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_driver`.`age_band_of_driver`. For each age band, compute AVG(`fact_accident`.`number_of_vehicles_involved`) as average_vehicles_involved and COUNT(DISTINCT `fact_accident`.`accident_id`) as total_accidents. Join `fact_accident` INNER JOIN `dim_driver` ON `fact_accident`.`driver_id` = `dim_driver`.`driver_id`."
+  },
+  {
+    "question": "డ్రైవర్ యొక్క ప్రతి వయస్సు బ్యాండ్ కోసం, వయస్సు బ్యాండ్, సగటు ప్రమాదాల సంఖ్య మరియు ప్రమాద IDల మొత్తం గణనను జాబితా చేయండి, సగటు ప్రమాదాల సంఖ్య ఒకటి కంటే ఎక్కువ ఉన్న సమూహాల కోసం ఫిల్టర్ చేసి, ఫలితాలను ప్రమాద గణన ఆధారంగా అవరోహణ క్రమంలో ఆర్డర్ చేయండి.",
+    "sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), COUNT(T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.AGE_BAND_OF_DRIVER HAVING AVG(T2.NUMBER_OF_CASUALTIES) > 1 ORDER BY COUNT(T2.ACCIDENT_ID) DESC",
+    "pair_id": "9b1772a3",
+    "original_question_id": "22b75f02",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_driver`.`age_band_of_driver`. Compute avg(`fact_accident`.`number_of_casualties`) as average casualties per accident, and count(`fact_accident`.`accident_id`) as total accident count. Join `fact_accident` with `dim_driver` on `fact_accident`.`driver_id` = `dim_driver`.`driver_id`. Filter groups where avg(`fact_accident`.`number_of_casualties`) > 1. Order results by count(`fact_accident`.`accident_id`) descending."
+  },
+  {
+    "question": "డ్రైవర్ యొక్క వయస్సు బ్యాండ్ ద్వారా గ్రూప్ చేయబడినప్పుడు, ఒకటి కంటే ఎక్కువ ప్రమాదాలలో ఉన్న డ్రైవర్ల కోసం వయస్సు బ్యాండ్, సగటు ప్రమాద సంఖ్య మరియు ప్రత్యేక ప్రమాద IDల మొత్తం సంఖ్య ఎంత, సగటు ప్రమాద సంఖ్య ఆధారంగా అవరోహణ క్రమంలో ఆర్డర్ చేయబడినది?",
+    "sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), COUNT(DISTINCT T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.AGE_BAND_OF_DRIVER HAVING COUNT(T2.ACCIDENT_ID) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "b09b770f",
+    "original_question_id": "22b75f02",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_driver`.`age_band_of_driver`. Filter to drivers with >1 accident in `fact_accident`. For each age band, compute: (1) average accident count per driver (i.e., average number of accidents for drivers in that age band who have >1 accident), and (2) total distinct `fact_accident`.`accident_id`. Order results descending by the average accident count."
+  },
+  {
+    "question": "డ్రైవర్ల యొక్క టాప్ 5 వయస్సు బ్యాండ్‌లు మరియు సర్వోచ్చ సగటు ప్రమాదాల సంఖ్యను కలిగి ఉన్న ప్రమాద తీవ్రతలను జాబితా చేయండి, ప్రతి గ్రూప్‌కు వయస్సు బ్యాండ్, సగటు ప్రమాదాల సంఖ్య మరియు ప్రమాద తీవ్రతను చూపుతూ.",
+    "sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), T3.CASUALTY_SEVERITY FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.AGE_BAND_OF_DRIVER, T3.CASUALTY_SEVERITY ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC LIMIT 5",
+    "pair_id": "046b8b21",
+    "original_question_id": "f82f9d80",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_accident` with `dim_driver` on `driver_id`. Group by `dim_driver.age_band_of_driver` and `fact_accident.accident_severity`. Compute average of `fact_accident.number_of_casualties` per group. For each age band, select the severity with the highest average casualties. Then rank age bands by that highest average in descending order and take top 5. Output columns: `dim_driver.age_band_of_driver`, `fact_accident.accident_severity`, and the highest average casualties (aliased appropriately)."
+  },
+  {
+    "question": "డ్రైవర్ యొక్క వయస్సు బ్యాండ్ మరియు ప్రతి వయస్సు బ్యాండ్ కోసం సగటు ప్రాణనష్టాల సంఖ్యను జాబితా చేయండి, సగటు ప్రాణనష్టాల సంఖ్య ఆధారంగా అవరోహణ క్రమంలో క్రమబద్ధీకరించండి, అగ్ర 5 ఫలితాలను మాత్రమే చూపించండి.",
+    "sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.AGE_BAND_OF_DRIVER ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC LIMIT 5",
+    "pair_id": "cf10373b",
+    "original_question_id": "f82f9d80",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_accident` and `dim_driver` on `fact_accident.driver_id` = `dim_driver.driver_id`. Group by `dim_driver.age_band_of_driver`. Compute AVG(`fact_accident.number_of_casualties`) as average casualties per age band. Order by average casualties DESC. Limit to 5 rows."
+  },
+  {
+    "question": "డ్రైవర్ యొక్క వయస్సు బ్యాండ్, సగటు ప్రమాదాల సంఖ్య, మరియు ప్రమాద తీవ్రతను చూపించండి, డ్రైవర్ వయస్సు బ్యాండ్ మరియు ప్రమాద తీవ్రత ద్వారా సమూహీకరించండి, సగటు ప్రమాదాల సంఖ్య ఒకటి కంటే ఎక్కువ ఉన్న సమూహాల కోసం, మరియు సగటు ప్రమాదాల యొక్క అవరోహణ క్రమంలో టాప్ 5 ఫలితాలను జాబితా చేయండి.",
+    "sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), T3.CASUALTY_SEVERITY FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.AGE_BAND_OF_DRIVER, T3.CASUALTY_SEVERITY HAVING AVG(T2.NUMBER_OF_CASUALTIES) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC LIMIT 5",
+    "pair_id": "7f0c5971",
+    "original_question_id": "f82f9d80",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_driver`.`age_band_of_driver`, `fact_accident`.`accident_severity`, COUNT(`fact_accident`.`accident_id`) as average_number_of_accidents from `fact_accident` join `dim_driver` on `fact_accident`.`driver_id` = `dim_driver`.`driver_id` group by `dim_driver`.`age_band_of_driver`, `fact_accident`.`accident_severity` having COUNT(`fact_accident`.`accident_id`) > 1 order by average_number_of_accidents desc limit 5."
+  },
+  {
+    "question": "డ్రైవర్ వయస్సు బ్యాండ్‌ను, సగటు ప్రమాదాల సంఖ్యను, మరియు ఒకటి కంటే ఎక్కువ ప్రమాదాలు ఉన్న టాప్ 5 డ్రైవర్ వయస్సు బ్యాండ్‌ల కోసం ప్రమాద తీవ్రత యొక్క మొత్తం సమ్మతిని జాబితా చేయండి, సగటు ప్రమాదాల సంఖ్య ఆధారంగా అవరోహణ క్రమంలో ఆదేశించబడింది.",
+    "sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), SUM(T3.CASUALTY_SEVERITY) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.AGE_BAND_OF_DRIVER HAVING COUNT(T2.ACCIDENT_ID) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC LIMIT 5",
+    "pair_id": "8567458b",
+    "original_question_id": "f82f9d80",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_driver.age_band_of_driver`, the count of `fact_accident.accident_id` as average_accidents, and the sum of numeric accident severity (map 'Fatal injury'=3, 'Serious Injury'=2, 'Slight Injury'=1) as total_severity, for groups where accident count > 1, grouped by age band, ordered by average_accidents descending, limit top 5."
+  },
+  {
+    "question": "క్షతిగ్రస్త వర్గం 'పాదచారి' మరియు క్షతిగ్రస్త ఫిట్‌నెస్ 'సాధారణ' ఉన్న రికార్డ్‌ల కోసం క్షతిగ్రస్త డైమెన్షన్ నుండి అన్ని నిలువు వరుసలను చూపించండి.",
+    "sql": "SELECT * FROM DIM_CASUALTY WHERE CASUALTY_CLASS = 'Pedestrian' AND FITNESS_OF_CASUALTY = 'Normal';",
+    "pair_id": "cf18af22",
+    "original_question_id": "979cc2b1",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select all columns from `dim_casualty` where `dim_casualty`.`casualty_class` = 'Pedestrian' and `dim_casualty`.`fitness_of_casualty` = 'Normal'."
+  },
+  {
+    "question": "పాదచారులుగా వర్గీకరించబడిన మరియు ఫిట్‌నెస్ సాధారణంగా నమోదు చేయబడిన అన్ని వ్యక్తుల కోసం ఆకస్మిక ID మరియు ఆకస్మిక లింగాన్ని జాబితా చేయండి, వారి లింగం ద్వారా అక్షర క্రమంలో ఆదేశించబడింది.",
+    "sql": "SELECT T1.CASUALTY_ID, T1.SEX_OF_CASUALTY FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' AND T1.FITNESS_OF_CASUALTY = 'Normal' ORDER BY T1.SEX_OF_CASUALTY ASC",
+    "pair_id": "7048add7",
+    "original_question_id": "979cc2b1",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `bridge_accident_casualty` and `dim_casualty` on `bridge_accident_casualty`.`casualty_id` = `dim_casualty`.`casualty_id`. Filter where `dim_casualty`.`casualty_class` = 'Pedestrian' and `dim_casualty`.`fitness_of_casualty` = 'Normal'. Select `bridge_accident_casualty`.`accident_id` and `dim_casualty`.`sex_of_casualty`. Order by `dim_casualty`.`sex_of_casualty` ASC."
+  },
+  {
+    "question": "కాలుబాటపై నడిచే వ్యక్తులుగా వర్గీకరించిన ఆపద IDs ను జాబితా చేయండి, ఇక్కడ ఆపద యొక్క ఫిట్‌నెస్ సాధారణమైనది, వారి ఆపద ID ద్వారా సమూహీకరించబడింది.",
+    "sql": "SELECT T1.CASUALTY_ID FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' GROUP BY T1.CASUALTY_ID HAVING T1.FITNESS_OF_CASUALTY = 'Normal';",
+    "pair_id": "c24c13f9",
+    "original_question_id": "979cc2b1",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter casualties where (`dim_casualty`.`casualty_class`) = 'Pedestrian' and (`dim_casualty`.`fitness_of_casualty`) = 'Normal'. Join `bridge_accident_casualty` on `casualty_id`. Select distinct (`bridge_accident_casualty`.`accident_id`) and group by accident ID."
+  },
+  {
+    "question": "'పెడెస్ట్రియన్' గా వర్గీకరించబడిన మరియు 'సాధారణ' ఫిట్‌నెస్ స్థాయిని కలిగిన ప్రమాదాల కోసం ప్రమాద ID, ప్రమాద తరగతి, ప్రమాదం యొక్క లింగం మరియు ప్రమాద తీవ్రతను జాబితా చేయండి, ప్రతి ప్రమాదం కనీసం ఒక ప్రమాదంతో సంబంధం కలిగి ఉందని నిশ్చితం చేసుకుని, ఫలితాలను ప్రమాద తరగతి ద్వారా ఆర్డర్ చేయండి.",
+    "sql": "SELECT T1.CASUALTY_ID, T1.CASUALTY_CLASS, T1.SEX_OF_CASUALTY, T3.ACCIDENT_SEVERITY FROM DIM_CASUALTY AS T1 INNER JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID INNER JOIN FACT_ACCIDENT AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' AND T1.FITNESS_OF_CASUALTY = 'Normal' GROUP BY T1.CASUALTY_ID, T1.CASUALTY_CLASS, T1.SEX_OF_CASUALTY, T3.ACCIDENT_SEVERITY HAVING COUNT(T2.ACCIDENT_ID) >= 1 ORDER BY T1.CASUALTY_CLASS ASC",
+    "pair_id": "3de8a963",
+    "original_question_id": "979cc2b1",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_casualty`.`casualty_class` = 'Pedestrian' AND `dim_casualty`.`fitness_of_casualty` = 'Normal'. Select `fact_accident`.`accident_id`, `dim_casualty`.`casualty_class`, `dim_casualty`.`sex_of_casualty`, `bridge_accident_casualty`.`casualty_severity`. Join `fact_accident` INNER JOIN `bridge_accident_casualty` ON `fact_accident`.`accident_id` = `bridge_accident_casualty`.`accident_id` INNER JOIN `dim_casualty` ON `bridge_accident_casualty`.`casualty_id` = `dim_casualty`.`casualty_id`. Order by `dim_casualty`.`casualty_class`."
+  },
+  {
+    "question": "పాదచారులుగా వర్గీకరించిన ప్రమాదాల కోసం, ప్రతి ప్రమాద లింగం మరియు సంబంధిత సగటు ప్రమాద తీవ్రతను జాబితా చేయండి, ప్రమాద లింగం ద్వారా సమూహీకరించబడింది.",
+    "sql": "SELECT T1.SEX_OF_CASUALTY, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' GROUP BY T1.SEX_OF_CASUALTY",
+    "pair_id": "8d7cf5db",
+    "original_question_id": "f31677d4",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_casualty`.`casualty_class` = 'Pedestrian'. Group by `dim_casualty`.`sex_of_casualty`. Compute average of `bridge_accident_casualty`.`casualty_severity` for each group."
+  },
+  {
+    "question": "పాదచారులుగా వర్గీకరించిన ప్రమాదాల కోసం, ప్రతి సెక్స్ కాసువల్టీని సగటు సెక్స్ కాసువల్టీ తీవ్రతతో కూడా జాబితా చేయండి, సెక్స్ కాసువల్టీ ద్వారా సమూహీకరించబడింది.",
+    "sql": "SELECT T1.SEX_OF_CASUALTY, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' GROUP BY T1.SEX_OF_CASUALTY",
+    "pair_id": "ae17899a",
+    "original_question_id": "f31677d4",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter casualties where (`dim_casualty`.`casualty_class` = 'Pedestrian'). Join `bridge_accident_casualty` with `dim_casualty` on `casualty_id`. Group by (`dim_casualty`.`sex_of_casualty`). For each group, compute AVG(`bridge_accident_casualty`.`casualty_severity`). List each `sex_of_casualty` and the average severity."
+  },
+  {
+    "question": "పాదచారులుగా వర్గీకరించిన ప్రమాదాల కోసం, ప్రతి సెక్స్ కాసువల్టీ మరియు వాటి సంబంధిత సగటు కాసువల్టీ తీవ్రతను జాబితా చేయండి, సగటు తీవ్రత 1 కంటే ఎక్కువ ఉన్న సమూహాల కోసం ఫిల్టర్ చేయండి మరియు ఫలితాలను కాసువల్టీ యొక్క సెక్స్ ద్వారా ఆర్డర్ చేయండి.",
+    "sql": "SELECT T1.SEX_OF_CASUALTY, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' GROUP BY T1.SEX_OF_CASUALTY HAVING AVG(T2.CASUALTY_SEVERITY) > 1 ORDER BY T1.SEX_OF_CASUALTY",
+    "pair_id": "7265cf38",
+    "original_question_id": "f31677d4",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter casualties with `dim_casualty.casualty_class` = 'Pedestrian'. Group by `dim_casualty.sex_of_casualty`. Compute AVG(`bridge_accident_casualty.casualty_severity`) per group. Filter groups where average > 1. Order by `dim_casualty.sex_of_casualty`."
+  },
+  {
+    "question": "గాయపడిన వ్యక్తి యొక్క లింగం మరియు సగటు గాయపడిన తీవ్రతను చూపించండి, వారు డ్రైవర్, రైడర్ లేదా పాదచారి మరియు 18-30 లేదా 31-50 వయస్సు బ్యాండ్‌లలో ఉన్న గాయపడిన వ్యక్తుల కోసం, వారి లింగం ద్వారా సమూహీకరించబడింది, ఇక్కడ సగటు తీవ్రత 1 కంటే ఎక్కువ, మరియు ఫలితాలను సగటు గాయపడిన తీవ్రత ఆధారంగా అవరోహణ క్రమంలో ఆర్డర్ చేయండి.",
+    "sql": "SELECT T1.SEX_OF_CASUALTY, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 INNER JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID INNER JOIN FACT_ACCIDENT AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.CASUALTY_CLASS IN ('Driver or rider', 'Pedestrian') AND T1.AGE_BAND_OF_CASUALTY IN ('31-50', '18-30') GROUP BY T1.SEX_OF_CASUALTY HAVING AVG(T2.CASUALTY_SEVERITY) > 1 ORDER BY AVG(T2.CASUALTY_SEVERITY) DESC",
+    "pair_id": "e504e82d",
+    "original_question_id": "f31677d4",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_casualty`.`sex_of_casualty` and average(`bridge_accident_casualty`.`casualty_severity`) as avg_severity from `dim_casualty` join `bridge_accident_casualty` on `dim_casualty`.`casualty_id` = `bridge_accident_casualty`.`casualty_id` where `dim_casualty`.`casualty_class` in ('Driver or rider', 'Pedestrian') and `dim_casualty`.`age_band_of_casualty` in ('18-30', '31-50') group by `dim_casualty`.`sex_of_casualty` having avg(`bridge_accident_casualty`.`casualty_severity`) > 1 order by avg_severity desc."
+  },
+  {
+    "question": "ప్రతి క్లాస్ కోసం ఆపద వర్గం మరియు సగటు ఆపద తీవ్రతను జాబితా చేయండి, అత్యధిక నుండి అత్యల్ప సగటు తీవ్రత వరకు ఆర్డర్ చేయబడింది, మరియు టాప్ 10 ఫలితాలను మాత్రమే చూపించండి.",
+    "sql": "SELECT T1.CASUALTY_CLASS, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID GROUP BY T1.CASUALTY_CLASS ORDER BY AVG(T2.CASUALTY_SEVERITY) DESC LIMIT 10",
+    "pair_id": "306138c8",
+    "original_question_id": "4c2d3b9d",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_casualty`.`casualty_class`, compute AVG(`bridge_accident_casualty`.`casualty_severity`) as average_severity, order by average_severity DESC, limit 10."
+  },
+  {
+    "question": "ప్రతి ఆపద్ వర్గానికి ఆపద్ వర్గం మరియు సగటు ఆపద్ తీవ్రతను చూపించండి, సగటు తీవ్రత ఆధారంగా అత్యధికం నుండి అత్యల్పం వరకు ఆర్డర్ చేయండి మరియు టాప్ 10 ఫలితాలను మాత్రమే జాబితా చేయండి.",
+    "sql": "SELECT T1.CASUALTY_CLASS, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID GROUP BY T1.CASUALTY_CLASS ORDER BY AVG(T2.CASUALTY_SEVERITY) DESC LIMIT 10",
+    "pair_id": "a3527c36",
+    "original_question_id": "4c2d3b9d",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_accident_event`.`cause_of_accident` as accident category. Compute average of `bridge_accident_casualty`.`casualty_severity` as average accident severity. Join `fact_accident` with `dim_accident_event` on `fact_accident`.`accident_event_id` = `dim_accident_event`.`accident_event_id`, and join `fact_accident` with `bridge_accident_casualty` on `fact_accident`.`accident_id` = `bridge_accident_casualty`.`accident_id`. Order by average severity descending, limit 10."
+  },
+  {
+    "question": "సగటు ప్రాణనష్టం తీవ్రత 1 కంటే ఎక్కువ ఉన్న ప్రాణనష్టం తరగతులను జాబితా చేయండి, సగటు తీవ్రత ఆధారంగా అత్యధికం నుండి అత్యల్పం వరకు ఆర్డర్ చేయండి, మరియు టాప్ 10 ఫలితాలను మాత్రమే చూపించండి.",
+    "sql": "SELECT T1.CASUALTY_CLASS FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID GROUP BY T1.CASUALTY_CLASS HAVING AVG(T2.CASUALTY_SEVERITY) > 1 ORDER BY AVG(T2.CASUALTY_SEVERITY) DESC LIMIT 10",
+    "pair_id": "e152aadf",
+    "original_question_id": "4c2d3b9d",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `bridge_accident_casualty` with `dim_casualty` on `bridge_accident_casualty`.`casualty_id` = `dim_casualty`.`casualty_id`. Group by `dim_casualty`.`casualty_class`. Compute average of `bridge_accident_casualty`.`casualty_severity` per group. Filter groups where average > 1. Order by average severity descending. Limit to top 10 rows."
+  },
+  {
+    "question": "ప్రతి ఆపద్ వర్గానికి ఆపద్ వర్గం మరియు సగటు ఆపద్ తీవ్రతను జాబితా చేయండి, సగటు ఆపద్ తీవ్రత ఆధారంగా అవరోహణ క్రమంలో ఆదేశించండి, టాప్ 10 ఫలితాలను మాత్రమే చూపించండి.",
+    "sql": "SELECT T1.CASUALTY_CLASS, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID GROUP BY T1.CASUALTY_CLASS ORDER BY AVG(T2.CASUALTY_SEVERITY) DESC LIMIT 10",
+    "pair_id": "d6f75ea7",
+    "original_question_id": "4c2d3b9d",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Group by `fact_accident`.`accident_severity`. For each group, compute AVG(CAST(`bridge_accident_casualty`.`casualty_severity` AS numeric)) as average_severity. Join `fact_accident` and `bridge_accident_casualty` on `fact_accident`.`accident_id` = `bridge_accident_casualty`.`accident_id`. Order by average_severity DESC. Limit to 10."
+  },
+  {
+    "question": "ప్రమాదానికి గురైన వ్యక్తి యొక్క లింగం, వయస్సు గ్రూపు మరియు పని స్థితిని, ప్రమాదానికి గురైన వ్యక్తి యొక్క తీవ్రత స్థితితో కూడా జాబితా చేయండి, తీవ్రత స్థితి ఆధారంగా అత్యధికం నుండి కనిష్టానికి క్రమబద్ధీకరించండి.",
+    "sql": "SELECT T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY, T2.CASUALTY_SEVERITY FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID ORDER BY T2.CASUALTY_SEVERITY DESC",
+    "pair_id": "280e1324",
+    "original_question_id": "b6d37303",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_casualty`.`sex_of_casualty`, `dim_casualty`.`age_band_of_casualty`, `dim_casualty`.`work_of_casualty`, `bridge_accident_casualty`.`casualty_severity` from `dim_casualty` join `bridge_accident_casualty` on `dim_casualty`.`casualty_id` = `bridge_accident_casualty`.`casualty_id` order by `bridge_accident_casualty`.`casualty_severity` DESC."
+  },
+  {
+    "question": "ప్రతి ఆపద సంభవం యొక్క లింగం, వయస్సు బ్యాండ్ మరియు పని స్థితిని, వారి ఆపద తీవ్రత కూడా జాబితా చేయండి, ఆపద తీవ్రత ఆధారంగా అవరోహణ క్రమంలో క్రమబద్ధీకరించండి.",
+    "sql": "SELECT T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY, T2.CASUALTY_SEVERITY FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID ORDER BY T2.CASUALTY_SEVERITY DESC",
+    "pair_id": "428302b5",
+    "original_question_id": "b6d37303",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_casualty`.`sex_of_casualty`, `dim_casualty`.`age_band_of_casualty`, `dim_casualty`.`work_of_casualty`, `fact_accident`.`accident_severity` from `bridge_accident_casualty` join `fact_accident` on `bridge_accident_casualty`.`accident_id` = `fact_accident`.`accident_id` join `dim_casualty` on `bridge_accident_casualty`.`casualty_id` = `dim_casualty`.`casualty_id` order by `fact_accident`.`accident_severity` desc (order: 'Fatal injury' > 'Serious Injury' > 'Slight Injury')."
+  },
+  {
+    "question": "ప్రమాదం యొక్క లింగం, ప్రమాదం యొక్క వయస్సు బ్యాండ్ మరియు ప్రమాదం యొక్క పని స్థితిని జాబితా చేయండి, ఈ ప్రతి సమూహానికి సగటు ప్రమాదం తీవ్రతతో పాటు, ఇక్కడ సగటు ప్రమాదం తీవ్రత 1 కంటే ఎక్కువ ఉంది.",
+    "sql": "SELECT T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID GROUP BY T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY HAVING AVG(T2.CASUALTY_SEVERITY) > 1",
+    "pair_id": "6526c5cd",
+    "original_question_id": "b6d37303",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Group by (`dim_casualty`.`sex_of_casualty`), (`dim_casualty`.`age_band_of_casualty`), (`dim_casualty`.`work_of_casualty`). Compute AVG(`bridge_accident_casualty`.`casualty_severity`) for each group. Filter groups where AVG(`bridge_accident_casualty`.`casualty_severity`) > 1. Join `dim_casualty` with `bridge_accident_casualty` on `casualty_id`."
+  },
+  {
+    "question": "ప్రతిটి సమూహానికి కనీసం ఒక ప్రమాదం ఉన్న చోట, ప్రమాద IDs యొక్క మొత్తం గణనతో పాటు, ప్రమాద గంభీరతను అవరోహణ క్రమంలో క్రమబద్ధీకరించి, ఆకస్మిక ఘటన యొక్క లింగం, ఆకస్మిక ఘటన యొక్క వయస్సు బ్యాండ్, ఆకస్మిక ఘటన యొక్క పని స్థితి మరియు ఆకస్మిక ఘటన గంభీరతను జాబితా చేయండి.",
+    "sql": "SELECT T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY, T2.CASUALTY_SEVERITY, COUNT(T3.ACCIDENT_ID) FROM DIM_CASUALTY AS T1 INNER JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID INNER JOIN FACT_ACCIDENT AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY, T2.CASUALTY_SEVERITY HAVING COUNT(T3.ACCIDENT_ID) >= 1 ORDER BY T2.CASUALTY_SEVERITY DESC",
+    "pair_id": "fd8870b7",
+    "original_question_id": "b6d37303",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Group by dim_casualty.sex_of_casualty, dim_casualty.age_band_of_casualty, dim_casualty.work_of_casualty, bridge_accident_casualty.casualty_severity, fact_accident.accident_severity. Count distinct fact_accident.accident_id as accident_count. Order by fact_accident.accident_severity descending (values: 'Fatal injury', 'Serious Injury', 'Slight Injury')."
+  },
+  {
+    "question": "కాసువల్టీ సెవెరిటీ లెవల్ 2 ఉన్న పెడెస్ట్రియన్‌లుగా వర్గీకరించిన కాసువల్టీల కోసం కాసువల్టీ IDలను జాబితా చేయండి.",
+    "sql": "SELECT T1.CASUALTY_ID FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' AND T2.CASUALTY_SEVERITY = 2;",
+    "pair_id": "e6ce2687",
+    "original_question_id": "850a178e",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_casualty`.`casualty_id` from `dim_casualty` JOIN `bridge_accident_casualty` ON `dim_casualty`.`casualty_id` = `bridge_accident_casualty`.`casualty_id` WHERE `bridge_accident_casualty`.`casualty_severity` = '2' AND `dim_casualty`.`casualty_class` = 'Pedestrian'."
+  },
+  {
+    "question": "పాదచారులుగా వర్గీకరించిన మరియు ఆపద తీవ్రత స్థరం 2 ఉన్న అన్ని ఆపదల కోసం ఆపద IDలను జాబితా చేయండి.",
+    "sql": "SELECT T1.CASUALTY_ID FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' AND T2.CASUALTY_SEVERITY = 2",
+    "pair_id": "946fede9",
+    "original_question_id": "850a178e",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List distinct `fact_accident`.`accident_id` where there exists at least one casualty in `bridge_accident_casualty` linked to `dim_casualty` with `dim_casualty`.`casualty_class` = 'Pedestrian' and `bridge_accident_casualty`.`casualty_severity` = '2'. Join `bridge_accident_casualty` with `dim_casualty` on `bridge_accident_casualty`.`casualty_id` = `dim_casualty`.`casualty_id`, and link to `fact_accident` on `bridge_accident_casualty`.`accident_id` = `fact_accident`.`accident_id` (or directly use `bridge_accident_casualty`.`accident_id`)."
+  },
+  {
+    "question": "క్షతిగ్రస్త వర్గం మరియు సేతువు ప్రమాదం క్షతిగ్రస్త IDల మొత్తం సంఖ్యను జాబితా చేయండి, ఇక్కడ క్షతిగ్రస్త తీవ్రత 2, ప్రత్యేకంగా 'పాదచారి' క్షతిగ్రస్త వర్గం కోసం ఫిల్టర్ చేసి చూపించండి, క్షతిగ్రస్త వర్గం ద్వారా ఆర్డర్ చేయండి.",
+    "sql": "SELECT T1.CASUALTY_CLASS, COUNT(T2.BRIDGE_ACCIDENT_CASUALTY_ID) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T2.CASUALTY_SEVERITY = 2 GROUP BY T1.CASUALTY_CLASS HAVING T1.CASUALTY_CLASS = 'Pedestrian' ORDER BY T1.CASUALTY_CLASS",
+    "pair_id": "94ebfb34",
+    "original_question_id": "850a178e",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List casualty_class and total number of bridge_accident_casualty_id where casualty_severity equals 2, specifically for casualty_class equal to 'Pedestrian', then order by casualty_class."
+  },
+  {
+    "question": "అన్ని రికార్డుల కోసం ఆపాతకర వర్గాన్ని చూపించండి, ఇక్కడ ఆపాతకర వర్గం 'పాదచారి' మరియు ఆపాతకర తీవ్రత స్థాయి 2, ఆపాతకర వర్గం ద్వారా సమూహీకరించబడి మరియు ఆదేశించబడింది.",
+    "sql": "SELECT T1.CASUALTY_CLASS FROM DIM_CASUALTY AS T1 INNER JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID INNER JOIN FACT_ACCIDENT AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' AND T2.CASUALTY_SEVERITY = 2 GROUP BY T1.CASUALTY_CLASS ORDER BY T1.CASUALTY_CLASS ASC",
+    "pair_id": "4a7c38dd",
+    "original_question_id": "850a178e",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_casualty`.`casualty_class` from `dim_casualty` join `bridge_accident_casualty` on `dim_casualty`.`casualty_id` = `bridge_accident_casualty`.`casualty_id` where `dim_casualty`.`casualty_class` = 'Pedestrian' and `bridge_accident_casualty`.`casualty_severity` = 2 group by `dim_casualty`.`casualty_class` order by `dim_casualty`.`casualty_class`."
+  },
+  {
+    "question": "సోమవారం జరిగిన ప్రమాదాల కోసం, ప్రమాదం జరిగిన ప్రతి ప్రాంతాన్ని సగటు ప్రమాద సంఖ్య మరియు ప్రమాద IDల మొత్తం సంఖ్యతో కూడా జాబితా చేయండి, ప్రమాదం జరిగిన ప్రాంతం ద్వారా సమూహీకరించండి.",
+    "sql": "SELECT T2.AREA_ACCIDENT_OCCURRED, AVG(T1.NUMBER_OF_CASUALTIES), COUNT(T1.ACCIDENT_ID) FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Monday' GROUP BY T2.AREA_ACCIDENT_OCCURRED",
+    "pair_id": "94e894a9",
+    "original_question_id": "4283002e",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter accidents where `dim_time`.`day_of_week` = 'Monday'. Join `fact_accident` with `dim_time` on `fact_accident`.`time_id` = `dim_time`.`time_id` and with `dim_geography` on `fact_accident`.`geography_id` = `dim_geography`.`geography_id`. Group by `dim_geography`.`area_accident_occurred`. For each area, compute AVG(`fact_accident`.`number_of_vehicles_involved`) as average accident number and COUNT(`fact_accident`.`accident_id`) as total number of accident IDs."
+  },
+  {
+    "question": "శుక్రవారం జరిగిన ప్రమాదాల కోసం, ప్రమాదం జరిగిన ప్రతి ప్రాంతాన్ని సగటు ప్రమాద సంఖ్య మరియు ఆ ప్రాంతాలలో ప్రతిదానికి ప్రమాద IDల మొత్తం సంఖ్యతో కూడా జాబితా చేయండి.",
+    "sql": "SELECT T2.AREA_ACCIDENT_OCCURRED, AVG(T1.NUMBER_OF_CASUALTIES), COUNT(T1.ACCIDENT_ID) FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Friday' GROUP BY T2.AREA_ACCIDENT_OCCURRED",
+    "pair_id": "9e2c6bbe",
+    "original_question_id": "4283002e",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter accidents where `dim_time`.`day_of_week` = 'Friday'. Join `fact_accident` with `dim_time` on `fact_accident`.`time_id` = `dim_time`.`time_id` and with `dim_geography` on `fact_accident`.`geography_id` = `dim_geography`.`geography_id`. Group by `dim_geography`.`area_accident_occurred`. Compute AVG(`fact_accident`.`number_of_casualties`) as average_accident_number and COUNT(`fact_accident`.`accident_id`) as total_accident_ids per area."
+  },
+  {
+    "question": "సోమవారం జరిగిన ప్రమాదాల కోసం, ప్రమాదం జరిగిన ప్రతి ప్రాంతాన్ని, ఆ ప్రాంతంలో ప్రమాదానికి సంబంధించిన సగటు ప్రమాదవశ్యుల సంఖ్యను, మరియు ప్రమాద IDల మొత్తం గణనను జాబితా చేయండి, కనీసం ఒక ప్రమాదం ఉన్న ప్రాంతాలను మాత్రమే చూపిస్తూ, సగటు ప్రమాదవశ్యుల సంఖ్య ఆధారంగా ఫలితాలను అత్యధికం నుండి కనిష్టానికి క్రమం చేయండి.",
+    "sql": "SELECT T2.AREA_ACCIDENT_OCCURRED, AVG(T1.NUMBER_OF_CASUALTIES), COUNT(T1.ACCIDENT_ID) FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Monday' GROUP BY T2.AREA_ACCIDENT_OCCURRED HAVING COUNT(T1.ACCIDENT_ID) > 0 ORDER BY AVG(T1.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "5be88ed8",
+    "original_question_id": "4283002e",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `fact_accident` records where `dim_time`.`day_of_week` = 'Monday'. Join `fact_accident` to `dim_time` via `time_id` and to `dim_geography` via `geography_id`. Group by `dim_geography`.`area_accident_occurred`. Compute AVG(`fact_accident`.`number_of_casualties`) and COUNT(`fact_accident`.`accident_id`). Show only groups with at least 1 accident. Order results by the average casualties descending."
+  },
+  {
+    "question": "సోమవారం జరిగిన ప్రమాదాల కోసం, ప్రమాదం జరిగిన ప్రతి ప్రాంతాన్ని సగటు ప్రమాద సంఖ్య మరియు ప్రమాద ID ల మొత్తం సంఖ్య కలిసి జాబితా చేయండి, ప్రాంతం ద్వారా సమూహీకరించి సగటు ప్రమాద సంఖ్య ఆధారంగా అవరోహణ క్రమంలో ఆదేశించండి.",
+    "sql": "SELECT T2.AREA_ACCIDENT_OCCURRED, AVG(T1.NUMBER_OF_CASUALTIES), COUNT(T1.ACCIDENT_ID) FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Monday' GROUP BY T2.AREA_ACCIDENT_OCCURRED HAVING COUNT(T1.ACCIDENT_ID) > 0 ORDER BY AVG(T1.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "ff0e8585",
+    "original_question_id": "4283002e",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `fact_accident` joined with `dim_time` on `fact_accident`.`time_id` = `dim_time`.`time_id` and with `dim_geography` on `fact_accident`.`geography_id` = `dim_geography`.`geography_id` where `dim_time`.`day_of_week` = 'Monday'. Group by `dim_geography`.`area_accident_occurred`. For each group, compute AVG(`fact_accident`.`number_of_casualties`) as average_casualties_per_accident and COUNT(DISTINCT `fact_accident`.`accident_id`) as total_accidents. Order by average_casualties_per_accident DESC."
+  },
+  {
+    "question": "ఐదుకంటే ఎక్కువ మరణాలు ఉన్న లేదా ఆదివారం జరిగిన ఘటనల కోసం ప్రమాదాలు సంభవించిన ప్రత్యేక ప్రాంతాలను జాబితా చేయండి.",
+    "sql": "SELECT DISTINCT T2.AREA_ACCIDENT_OCCURRED FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T1.NUMBER_OF_CASUALTIES > 5 OR T3.DAY_OF_WEEK IN ('Sunday')",
+    "pair_id": "38852ca5",
+    "original_question_id": "abfddb45",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "List distinct `dim_geography`.`area_accident_occurred` for accidents where either (`fact_accident`.`number_of_casualties` > 5 AND `fact_accident`.`accident_severity` = 'Fatal injury') OR (`dim_time`.`day_of_week` = 'Sunday')."
+  },
+  {
+    "question": "ప్రమాదం సంభవించిన ప్రాంతాన్ని జాబితా చేయండి, ఇక్కడ మరణాల సంఖ్య ఐదు కంటే ఎక్కువ లేదా వారంలో రోజు ఆదివారం అయిన అన్ని రికార్డుల కోసం.",
+    "sql": "SELECT T1.AREA_ACCIDENT_OCCURRED FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T2.NUMBER_OF_CASUALTIES > 5 OR T3.DAY_OF_WEEK IN ('Sunday');",
+    "pair_id": "fa6e1133",
+    "original_question_id": "abfddb45",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_geography.area_accident_occurred` for records where either `fact_accident.number_of_casualties` > 5 or `dim_time.day_of_week` = 'Sunday'. Join `fact_accident` with `dim_geography` on `fact_accident.geography_id` = `dim_geography.geography_id` and with `dim_time` on `fact_accident.time_id` = `dim_time.time_id`."
+  },
+  {
+    "question": "ప్రమాదాలు సంభవించిన ప్రాంతాలను వర్ణక్రమానికి సంబంధించి జాబితా చేయండి, ఆ ప్రాంతాల కోసం ఇక్కడ ఒకే ప్రమాదంలో గరిష్ట ప్రమాద సంఖ్య 5 కంటే ఎక్కువ ఉంది లేదా రికార్డ్ చేయబడిన వారం రోజుల సంఖ్య 1 కంటే ఎక్కువ ఉంది.",
+    "sql": "SELECT T1.AREA_ACCIDENT_OCCURRED FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID GROUP BY T1.AREA_ACCIDENT_OCCURRED HAVING MAX(T2.NUMBER_OF_CASUALTIES) > 5 OR COUNT(T3.DAY_OF_WEEK) > 1 ORDER BY T1.AREA_ACCIDENT_OCCURRED",
+    "pair_id": "8d4fc698",
+    "original_question_id": "abfddb45",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_geography`.`area_accident_occurred` where either the maximum `fact_accident`.`number_of_casualties` per area > 5, or the count of distinct `dim_time`.`day_of_week` per area > 1. Group by area, join `fact_accident` with `dim_geography` on `geography_id` and with `dim_time` on `time_id`."
+  },
+  {
+    "question": "కనీసం ఐదుకంటే ఎక్కువ మరణాలతో కూడిన కనీసం ఒక ప్రమాదం లేదా ఆదివారం లేదా సోమవారం జరిగిన కనీసం ఒక ప్రమాదం ఉన్న ఆ ప్రదేశాల కోసం ప్రమాదాలు సంభవించిన ప్రాంతాలను జాబితా చేయండి, మరియు ఫలితాలను ప్రాంత పేరు ద్వారా అక్షర క్రమంలో క్రమబద్ధీకరించండి.",
+    "sql": "SELECT T2.AREA_ACCIDENT_OCCURRED FROM FACT_ACCIDENT AS T1 INNER JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID GROUP BY T2.AREA_ACCIDENT_OCCURRED HAVING SUM(CASE WHEN T1.NUMBER_OF_CASUALTIES > 5 THEN 1 ELSE 0 END) > 0 OR SUM(CASE WHEN T3.DAY_OF_WEEK IN ('Sunday', 'Monday') THEN 1 ELSE 0 END) > 0 ORDER BY T2.AREA_ACCIDENT_OCCURRED ASC",
+    "pair_id": "6036219b",
+    "original_question_id": "abfddb45",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List distinct `dim_geography`.`area_accident_occurred` where there exists at least one `fact_accident` linked via `fact_accident`.`geography_id` = `dim_geography`.`geography_id` that satisfies either: (`fact_accident`.`number_of_casualties` >= 5) OR (`dim_time`.`day_of_week` IN ('Sunday', 'Monday') via `fact_accident`.`time_id` = `dim_time`.`time_id`). Order results alphabetically by `dim_geography`.`area_accident_occurred`."
+  },
+  {
+    "question": "ఆదివారం జరిగిన అన్ని ఘటనల్లో ఒకటి కంటే ఎక్కువ వాహనాలు ఉన్న ఆ ఘటనల్లో ప్రమాదాలు జరిగిన ప్రాంతాలను జాబితా చేయండి, ప్రమాద ప్రాంతం ద్వారా సమూహీకరించి మరియు ఆర్డర్ చేయండి.",
+    "sql": "SELECT T2.AREA_ACCIDENT_OCCURRED FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Sunday' AND T1.NUMBER_OF_VEHICLES_INVOLVED > 1 AND T3.DAY_OF_WEEK = 'Sunday' GROUP BY T2.AREA_ACCIDENT_OCCURRED ORDER BY T2.AREA_ACCIDENT_OCCURRED",
+    "pair_id": "d26b618e",
+    "original_question_id": "652c6517",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_geography`.`area_accident_occurred` from `fact_accident` join `dim_time` on `fact_accident`.`time_id` = `dim_time`.`time_id` join `dim_geography` on `fact_accident`.`geography_id` = `dim_geography`.`geography_id` where `dim_time`.`day_of_week` = 'Sunday' and `fact_accident`.`number_of_vehicles_involved` > 1 group by `dim_geography`.`area_accident_occurred` order by `dim_geography`.`area_accident_occurred`."
+  },
+  {
+    "question": "ఒక సप్తాహం రోజున్న ఆదివారం రోజున ఒకటికంటే ఎక్కువ వాహనాలు ఉన్న ఘటనలలో ప్రమాదాలు సంభవించిన ప్రాంతాలను జాబితా చేయండి, ప్రత్యేకించి సోమవారం రోజున ఎటువంటి ప్రమాదాలు సంభవించని ప్రాంతాలకు.",
+    "sql": "SELECT T2.AREA_ACCIDENT_OCCURRED FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Sunday' AND T1.NUMBER_OF_VEHICLES_INVOLVED > 1 GROUP BY T2.AREA_ACCIDENT_OCCURRED HAVING COUNT(CASE WHEN T3.DAY_OF_WEEK = 'Monday' THEN 1 END) = 0",
+    "pair_id": "9f67d6f2",
+    "original_question_id": "652c6517",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Find `dim_geography`.`area_accident_occurred` where there exists at least one accident on Sunday (`dim_time`.`day_of_week` = 'Sunday') with `fact_accident`.`number_of_vehicles_involved` > 1, and where the same `dim_geography`.`geography_id` has no accidents on Monday (`dim_time`.`day_of_week` = 'Monday'). Join `fact_accident` with `dim_time` on `fact_accident`.`time_id` = `dim_time`.`time_id` and with `dim_geography` on `fact_accident`.`geography_id` = `dim_geography`.`geography_id`."
+  },
+  {
+    "question": "ప్రతి ప్రమాదం సంభవించిన ప్రాంతానికి, ప్రాంత పేరు మరియు సగటు ప్రాణనష్టాల సంఖ్యను జాబితా చేయండి, అత్యధిక నుండి అత్యల్ప సగటు ప్రాణనష్టాల ద్వారా క్రమబద్ధీకరించబడింది.",
+    "sql": "SELECT T1.AREA_ACCIDENT_OCCURRED, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.AREA_ACCIDENT_OCCURRED ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "b844e893",
+    "original_question_id": "fd5041c4",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_accident` and `dim_geography` on `geography_id`. Group by `dim_geography.area_accident_occurred`. Compute AVG(`fact_accident.number_of_casualties`) as average casualties per area. Order by average casualties DESC. Output: area name and average casualties."
+  },
+  {
+    "question": "ప్రతి ప్రమాదం సంభవించిన ప్రాంతానికి, ప్రాంత పేరు మరియు సగటు ప్రాణనష్టాల సంఖ్యను జాబితా చేయండి, సగటు ప్రాణనష్టాల సంఖ్య ద్వారా అవరోహణ క্రమంలో క్రమబద్ధీకరించండి.",
+    "sql": "SELECT T1.AREA_ACCIDENT_OCCURRED, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.AREA_ACCIDENT_OCCURRED ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "df672efe",
+    "original_question_id": "fd5041c4",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List each distinct `dim_geography.area_accident_occurred` and the average of `fact_accident.number_of_casualties` for that area. Join `fact_accident` with `dim_geography` on `fact_accident.geography_id` = `dim_geography.geography_id`. Group by `dim_geography.area_accident_occurred`. Compute AVG(`fact_accident.number_of_casualties`) as average_casualties. Order by average_casualties DESC."
+  },
+  {
+    "question": "ప్రమాదాలు సంభవించిన ప్రాంతాలను జాబితా చేయండి, వీటిలో సగటు ప్రాణనష్టాల సంఖ్య 1 కంటే ఎక్కువ ఉంది, మరియు ఫలితాలను ఈ సగటు ఆధారంగా అవరోహణ క్రమంలో ఆర్డర్ చేయండి.",
+    "sql": "SELECT T1.AREA_ACCIDENT_OCCURRED FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.AREA_ACCIDENT_OCCURRED HAVING AVG(T2.NUMBER_OF_CASUALTIES) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "49d23186",
+    "original_question_id": "fd5041c4",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_geography.area_accident_occurred` values where the average of `fact_accident.number_of_casualties` per area is greater than 1. Join `fact_accident` and `dim_geography` on `fact_accident.geography_id = dim_geography.geography_id`. Group by `dim_geography.area_accident_occurred`. Filter groups having AVG(`fact_accident.number_of_casualties`) > 1. Order results by AVG(`fact_accident.number_of_casualties`) descending."
+  },
+  {
+    "question": "ప్రతి ప్రాంతానికి ఒక ప్రమాదం సంభవించిన చోట, ఒకటి కంటే ఎక్కువ ప్రమాదాలు నమోదు చేయబడిన చోట, ప్రాంత పేరు మరియు సగటు ప్రమాదవశులైన వారి సంఖ్యను జాబితా చేయండి, అత్యధిక సగటు నుండి అత్యల్ప సగటు వరకు క్రమబద్ధీకరించబడింది.",
+    "sql": "SELECT T1.AREA_ACCIDENT_OCCURRED, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.AREA_ACCIDENT_OCCURRED HAVING COUNT(T2.ACCIDENT_ID) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "9f31bb55",
+    "original_question_id": "fd5041c4",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List each distinct `dim_geography`.`area_accident_occurred` and the average of `fact_accident`.`number_of_casualties` for that area, but only include areas where the count of distinct `fact_accident`.`accident_id` is greater than 1. Group by `dim_geography`.`area_accident_occurred`. Order the results by the average number of casualties descending (highest average to lowest)."
+  },
+  {
+    "question": "రెండు కంటే ఎక్కువ సంఖ్యలో ప్రాణనష్టాలు ఉన్న ప్రమాదాల కోసం కాంతి పరిస్థితులను జాబితా చేయండి, ప్రత్యేకంగా రికార్డులలో ఒకటి కంటే ఎక్కువ సార్లు కనిపించే కాంతి పరిస్థితుల కోసం.",
+    "sql": "SELECT T2.LIGHT_CONDITIONS FROM FACT_ACCIDENT AS T1 JOIN DIM_ENVIRONMENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID WHERE T1.NUMBER_OF_CASUALTIES > 2 GROUP BY T2.LIGHT_CONDITIONS HAVING COUNT(T2.LIGHT_CONDITIONS) > 1",
+    "pair_id": "2736c3fd",
+    "original_question_id": "8c7df621",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_environment`.`light_conditions` from `fact_accident` join `dim_environment` on `fact_accident`.`environment_id` = `dim_environment`.`environment_id` where `fact_accident`.`number_of_casualties` > 2 group by `dim_environment`.`light_conditions` having count(*) > 1."
+  },
+  {
+    "question": "ఆపాతాల కోసం విభిన్న కాంతి పరిస్థితులను జాబితా చేయండి, ఇక్కడ ప్రాణనష్టాల సంఖ్య రెండు కంటే ఎక్కువ మరియు వారం యొక్క రోజు ఆదివారం కాదు, కాంతి పరిస్థితుల ద్వారా అక్షర క్రమానికి ఆదేశించబడింది.",
+    "sql": "SELECT DISTINCT T2.LIGHT_CONDITIONS FROM FACT_ACCIDENT AS T1 JOIN DIM_ENVIRONMENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T1.NUMBER_OF_CASUALTIES > 2 AND T3.DAY_OF_WEEK != 'Sunday' ORDER BY T2.LIGHT_CONDITIONS ASC",
+    "pair_id": "71d5f8f4",
+    "original_question_id": "8c7df621",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `dim_environment`.`light_conditions` from `fact_accident` join `dim_time` on `fact_accident`.`time_id` = `dim_time`.`time_id` join `dim_environment` on `fact_accident`.`environment_id` = `dim_environment`.`environment_id` where `fact_accident`.`number_of_casualties` > 2 and `dim_time`.`day_of_week` != 'Sunday' order by `dim_environment`.`light_conditions`."
+  },
+  {
+    "question": "కాంతి పరిస్థితులు, వాతావరణ పరిస్థితులు మరియు మొత్తం ప్రాణనష్టాల సంఖ్యను చూపించండి, కాంతి మరియు వాతావరణ పరిస్థితుల ద్వారా సమూహీకరించి, ప్రాణనష్టాల మొత్తం నుండి అత్యధికం నుండి అత్యల్పం వరకు ఆదేశించండి.",
+    "sql": "SELECT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS, SUM(T2.NUMBER_OF_CASUALTIES) FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS ORDER BY SUM(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "cddd642a",
+    "original_question_id": "0d8fdda5",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_environment`.`light_conditions`, `dim_environment`.`weather_conditions`, and sum of `fact_accident`.`number_of_casualties`. Group by `dim_environment`.`light_conditions` and `dim_environment`.`weather_conditions`. Order by total casualties descending (highest to lowest)."
+  },
+  {
+    "question": "ప్రకాశ పరిస్థితులు మరియు వాతావరణ పరిస్థితులను ప్రతి సమ్మేళనం కోసం మొత్తం ప్రాణనష్టాల సంఖ్య కలిసి జాబితా చేయండి, ప్రకాశ మరియు వాతావరణ పరిస్థితుల ద్వారా సమూహీకరించి మరియు మొత్తం ప్రాణనష్టాల ద్వారా అవరోహణ క్రమంలో ఆదేశించండి.",
+    "sql": "SELECT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS, SUM(T2.NUMBER_OF_CASUALTIES) FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS ORDER BY SUM(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "0bb2c4d3",
+    "original_question_id": "0d8fdda5",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_accident.number_of_casualties` for each combination of `dim_environment.light_conditions` and `dim_environment.weather_conditions`. Join `fact_accident` and `dim_environment` on `fact_accident.environment_id` = `dim_environment.environment_id`. Group by `dim_environment.light_conditions`, `dim_environment.weather_conditions`. Order by total casualties descending."
+  },
+  {
+    "question": "మొత్తం ప్రాణనష్టం 2 కంటే ఎక్కువ ఉన్న అన్ని పరిసర సెట్టింగ్‌ల కోసం కాంతి పరిస్థితులు మరియు వాతావరణ పరిస్థితులను జాబితా చేయండి, మరియు ఈ ఫలితాలను మొత్తం ప్రాణనష్టం మొత్తం ఆధారంగా అవరోహణ క్రమంలో ప్రదర్శించండి.",
+    "sql": "SELECT T2.LIGHT_CONDITIONS, T2.WEATHER_CONDITIONS FROM FACT_ACCIDENT AS T1 JOIN DIM_ENVIRONMENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T2.LIGHT_CONDITIONS, T2.WEATHER_CONDITIONS HAVING SUM(T1.NUMBER_OF_CASUALTIES) > 2 ORDER BY SUM(T1.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "bbc25a79",
+    "original_question_id": "0d8fdda5",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_accident` and `dim_environment` on `environment_id`. Filter where `fact_accident`.`number_of_casualties` > 2. Group by `dim_environment`.`light_conditions` and `dim_environment`.`weather_conditions`. For each group, sum `fact_accident`.`number_of_casualties` as total_casualties. Order by total_casualties descending. Select `dim_environment`.`light_conditions`, `dim_environment`.`weather_conditions`, and the sum."
+  },
+  {
+    "question": "ప్రతి కలయికకు కాశ్మీర్ సంఖ్య 2 కంటే ఎక్కువ ఉన్న చోట, కాశ్మీర్ సంఖ్య ఎక్కువ నుండి తక్కువకు క్రమం చేసి, కాశ్మీర్ సంఖ్య కలిసి ప్రకాశ పరిస్థితులు మరియు వాతావరణ పరిస్థితులను జాబితా చేయండి.",
+    "sql": "SELECT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS, SUM(T2.NUMBER_OF_CASUALTIES) FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS HAVING SUM(T2.NUMBER_OF_CASUALTIES) > 2 ORDER BY SUM(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "a914e6b9",
+    "original_question_id": "0d8fdda5",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_accident`.`number_of_casualties`, `dim_environment`.`light_conditions`, `dim_environment`.`weather_conditions` from `fact_accident` join `dim_environment` on `fact_accident`.`environment_id` = `dim_environment`.`environment_id` where `fact_accident`.`number_of_casualties` > 2 order by `fact_accident`.`number_of_casualties` desc."
+  },
+  {
+    "question": "అన్ని ప్రమాదాల కోసం నమోదు చేయిన విభిన్న కాంతి పరిస్థితులు మరియు వాతావరణ పరిస్థితులను జాబితా చేయండి, మరియు ఫలితాలను కాంతి పరిస్థితుల ద్వారా క్రమబద్ధీకరించండి.",
+    "sql": "SELECT DISTINCT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID ORDER BY T1.LIGHT_CONDITIONS",
+    "pair_id": "7e40fd48",
+    "original_question_id": "4ad9e406",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve distinct combinations of (`dim_environment`.`light_conditions`, `dim_environment`.`weather_conditions`) from `fact_accident` joined with `dim_environment` on `fact_accident`.`environment_id` = `dim_environment`.`environment_id`. Order the results by `dim_environment`.`light_conditions`."
+  },
+  {
+    "question": "ప్రమాదాల కోసం రికార్డ్ చేయబడిన విభిన్న కాంతి పరిస్థితులు మరియు వాతావరణ పరిస్థితులను జాబితా చేయండి, కాంతి పరిస్థితుల ద్వారా అక్షర క్రమానికి ఆదేశించండి.",
+    "sql": "SELECT DISTINCT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID ORDER BY T1.LIGHT_CONDITIONS ASC",
+    "pair_id": "5e66cfee",
+    "original_question_id": "4ad9e406",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct pairs of `dim_environment.light_conditions` and `dim_environment.weather_conditions` from the `dim_environment` table, ordered by `dim_environment.light_conditions` in ascending alphabetical order."
+  },
+  {
+    "question": "ప్రతి ప్రత్యేక కాంబినేషన్ కోసం కాంతి పరిస్థితులు మరియు వాతావరణ పరిస్థితులను జాబితా చేయండి, ఇది కనీసం ఒక ప్రమాదంతో సంబంధం కలిగి ఉంటుంది.",
+    "sql": "SELECT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS HAVING COUNT(T2.ACCIDENT_ID) >= 1",
+    "pair_id": "38a1b6a9",
+    "original_question_id": "4ad9e406",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Find distinct combinations of `dim_environment.light_conditions` and `dim_environment.weather_conditions` where the `dim_environment.environment_id` appears in `fact_accident` (i.e., at least one accident linked to that environment)."
+  },
+  {
+    "question": "కనీసం ఒక ప్రమాదం నమోదు చేయబడిన అన్ని పরిసరాల కోసం విభిన్న కాంతి పరిస్థితులు మరియు వాతావరణ పరిస్థితులను జాబితా చేయండి, మరియు ఫలితాలను కాంతి పరిస్థితుల ద్వారా అక్షర క్రమంలో క్రమబద్ధీకరించండి.",
+    "sql": "SELECT DISTINCT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS HAVING COUNT(T2.ACCIDENT_ID) >= 1 ORDER BY T1.LIGHT_CONDITIONS ASC",
+    "pair_id": "c589abbd",
+    "original_question_id": "4ad9e406",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `dim_environment`.`light_conditions`, `dim_environment`.`weather_conditions` from `dim_environment` inner join `fact_accident` on `dim_environment`.`environment_id` = `fact_accident`.`environment_id` order by `dim_environment`.`light_conditions` asc."
+  },
+  {
+    "question": "ఆపాతాల సంఖ్య 2 కంటే ఎక్కువ ఉన్న మరియు కాంతి పరిస్థితులు 'చీకటి - లైటింగ్ లేనిది' అయిన అన్ని ప్రమాదాల ప్రమాద ID లను జాబితా చేయండి, ఆపాతాల సంఖ్య ఆధారంగా అవరోహణ క్రమంలో క్రమబద్ధీకరించండి.",
+    "sql": "SELECT T1.ACCIDENT_ID FROM FACT_ACCIDENT AS T1 JOIN DIM_ENVIRONMENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID WHERE T1.NUMBER_OF_CASUALTIES > 2 AND T2.LIGHT_CONDITIONS = 'Darkness - no lighting' ORDER BY T1.NUMBER_OF_CASUALTIES DESC",
+    "pair_id": "5b96834d",
+    "original_question_id": "83ddaf55",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "DIM_ACCIDENT_EVENT",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter accidents where `fact_accident`.`number_of_casualties` > 2 and `dim_environment`.`light_conditions` = 'Darkness - lights unlit'. Join `fact_accident` with `dim_environment` on `fact_accident`.`environment_id` = `dim_environment`.`environment_id`. Select `fact_accident`.`accident_id` and sort descending by `fact_accident`.`number_of_casualties`."
+  },
+  {
+    "question": "'Darkness - no lighting' అనే కాంతి పరిస్థితులు ఉన్న పরిసరాల కోసం, ప్రతి పరిసర ID మరియు ప్రమాదం IDల యొక్క మొత్తం సంఖ్యను జాబితా చేయండి, ఆ పరిసర ID కోసం ప్రమాదస్థులు సంఖ్య యొక్క మొత్తం 5 కంటే ఎక్కువ ఉందని అందించారు.",
+    "sql": "SELECT T1.ENVIRONMENT_ID, COUNT(T2.ACCIDENT_ID) FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID WHERE T1.LIGHT_CONDITIONS = 'Darkness - no lighting' GROUP BY T1.ENVIRONMENT_ID HAVING SUM(T2.NUMBER_OF_CASUALTIES) > 5",
+    "pair_id": "1640e576",
+    "original_question_id": "83ddaf55",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "DIM_ACCIDENT_EVENT",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_environment.light_conditions` = 'Darkness - no lighting'. Join `fact_accident` on `fact_accident.environment_id` = `dim_environment.environment_id`. First, sum `fact_accident.number_of_casualties` per `dim_environment.environment_id` to get total casualties per environment. Keep environments where this sum > 5. Then, for those environments, list each (`dim_environment.environment_id`, `fact_accident.accident_id`) along with `fact_accident.number_of_casualties` (the casualties for that accident)."
+  },
+  {
+    "question": "ప్రతి ప్రమాదం కోసం ప్రమాద ID మరియు మొత్తం ప్రమాదాల సంఖ్యను జాబితా చేయండి, ఇక్కడ కాంతి పరిస్థితులు 'చీకటి - లైటింగ్ లేనిది' మరియు ఘర్షణ రకం 'వాహనం వాహనం ఘర్షణ', ప్రత్యేకంగా ఆ ప్రమాదాల కోసం ఇక్కడ మొత్తం ప్రమాదాల సంఖ్య 5 కంటే ఎక్కువ, అత్యధిక సంఖ్యలో ప్రమాదాల నుండి అత్యల్ప సంఖ్యకు ఆదేశించబడింది.",
+    "sql": "SELECT T1.ACCIDENT_ID, SUM(T1.NUMBER_OF_CASUALTIES) FROM FACT_ACCIDENT AS T1 INNER JOIN DIM_ENVIRONMENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID INNER JOIN DIM_ACCIDENT_EVENT AS T3 ON T1.ACCIDENT_EVENT_ID = T3.ACCIDENT_EVENT_ID WHERE T2.LIGHT_CONDITIONS = 'Darkness - no lighting' AND T3.TYPE_OF_COLLISION = 'Vehicle with vehicle collision' GROUP BY T1.ACCIDENT_ID HAVING SUM(T1.NUMBER_OF_CASUALTIES) > 5 ORDER BY SUM(T1.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "547dfb70",
+    "original_question_id": "83ddaf55",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "DIM_ACCIDENT_EVENT",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List `fact_accident.accident_id` and sum(`fact_accident.number_of_casualties`) as total_casualties for accidents where `dim_environment.light_conditions` = 'Darkness - lights unlit' and `dim_accident_event.type_of_collision` = 'Vehicle with vehicle collision'. Group by `fact_accident.accident_id` and filter having total_casualties > 5. Order by total_casualties DESC."
+  },
+  {
+    "question": "1-2 సంవత్సరాల డ్రైవింగ్ అనుభవం ఉన్న డ్రైవర్‌ల కోసం ప్రతి ప్రమాద తీవ్రత మరియు ఆ తీవ్రత యొక్క సంభవాల సంఖ్యను జాబితా చేయండి, ఇక్కడ సమూహం యొక్క సగటు ప్రమాద ID 1 కంటే ఎక్కువ ఉంది, ప్రమాద తీవ్రత ద్వారా ఆర్డర్ చేయబడింది.",
+    "sql": "SELECT T1.ACCIDENT_SEVERITY, COUNT(T1.ACCIDENT_SEVERITY) FROM FACT_ACCIDENT AS T1 JOIN DIM_DRIVER AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID WHERE T2.DRIVING_EXPERIENCE = '1-2yr' GROUP BY T1.ACCIDENT_SEVERITY HAVING AVG(T1.ACCIDENT_ID) > 1 ORDER BY T1.ACCIDENT_SEVERITY",
+    "pair_id": "b73a538f",
+    "original_question_id": "a6af3ff2",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_driver.driving_experience` = '1-2yr'. Join `fact_accident` with `dim_driver` on `driver_id`. Group by `fact_accident.accident_severity`. For each group, compute COUNT(*) as number of occurrences and AVG(`fact_accident.accident_id`) as average_accident_id. Keep groups where average_accident_id > 1. Order results by `fact_accident.accident_severity`."
+  },
+  {
+    "question": "డ్రైవర్ డైమెన్షన్ నుండి అన్ని కాలమ్‌లు మరియు వివరాలను చూపించండి, వీరిలో 1-2 సంవత్సరాల డ్రైవింగ్ అనుభవం ఉన్న డ్రైవర్‌లకు లేదా వారి విద్యా స్థాయి జూనియర్ హైస్కూల్ ఉన్న వారికి.",
+    "sql": "SELECT * FROM DIM_DRIVER WHERE DRIVING_EXPERIENCE = '1-2yr' OR EDUCATIONAL_LEVEL = 'Junior high school';",
+    "pair_id": "d3c43b0a",
+    "original_question_id": "39b87aeb",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select all columns from `dim_driver` where `dim_driver`.`driving_experience` = '1-2yr' OR `dim_driver`.`educational_level` = 'Junior high school'."
+  },
+  {
+    "question": "డ్రైవర్ ID మరియు డ్రైవర్ యొక్క వయస్సు బ్యాండ్‌ను జాబితా చేయండి, డ్రైవింగ్ అనుభవం '1-2yr' లేదా విద్యా స్థరం 'జూనియర్ హైస్కూల్' అయిన అన్ని రికార్డ్‌ల కోసం, డ్రైవర్ ID ద్వారా ఆర్డర్ చేయబడింది.",
+    "sql": "SELECT DRIVER_ID, AGE_BAND_OF_DRIVER FROM DIM_DRIVER WHERE DRIVING_EXPERIENCE = '1-2yr' OR EDUCATIONAL_LEVEL = 'Junior high school' ORDER BY DRIVER_ID",
+    "pair_id": "4958cea5",
+    "original_question_id": "39b87aeb",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_driver`.`driver_id` and `dim_driver`.`age_band_of_driver` from `dim_driver` where `dim_driver`.`driving_experience` = '1-2yr' or `dim_driver`.`educational_level` = 'Junior high school' order by `dim_driver`.`driver_id`."
+  },
+  {
+    "question": "'1-2yr' డ్రైవింగ్ అనుభవం లేదా 'జూనియర్ హైస్కూల్' విద్యా స్థాయి ఉన్న డ్రైవర్‌ల కోసం డ్రైవింగ్ అనుభవ స్థాయిలను జాబితా చేయండి మరియు ప్రమాద ID ల మొత్తం సంఖ్యను చూపండి, ఫలితాలను డ్రైవింగ్ అనుభవం ద్వారా సమూహపరచండి మరియు 1 కంటే ఎక్కువ ప్రమాదాలు ఉన్న సమూహాలను మాత్రమే చేర్చండి.",
+    "sql": "SELECT T1.DRIVING_EXPERIENCE, COUNT(T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID WHERE T1.DRIVING_EXPERIENCE = '1-2yr' OR T1.EDUCATIONAL_LEVEL = 'Junior high school' GROUP BY T1.DRIVING_EXPERIENCE HAVING COUNT(T2.ACCIDENT_ID) > 1",
+    "pair_id": "e1d7950c",
+    "original_question_id": "39b87aeb",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_driver` where `dim_driver.driving_experience` = '1-2yr' OR `dim_driver.educational_level` = 'Junior high school'. Join `fact_accident` on `fact_accident.driver_id` = `dim_driver.driver_id`. Group by `dim_driver.driving_experience`. Count distinct `fact_accident.accident_id`. Keep groups where count > 1."
+  },
+  {
+    "question": "డ్రైవర్ ID, డ్రైవర్ యొక్క వయస్సు బ్యాండ్ మరియు డ్రైవర్ యొక్క లింగం, ప్రతి డ్రైవర్ కోసం మొత్తం ప్రమాదాల సంఖ్య, ప్రత్యేకంగా 1-2 సంవత్సరాల డ్రైవింగ్ అనుభవం ఉన్నవారు లేదా విద్యా స్థాయి 'జూనియర్ హైస్కూల్' ఉన్నవారు, సున్నా ప్రమాదాలు ఉన్నవారితో సహా, మరియు ఫలితాలను ప్రమాద సంఖ్య ఆధారంగా అవరోహణ క్రమంలో ఆర్డర్ చేయండి.",
+    "sql": "SELECT T1.DRIVER_ID, T1.AGE_BAND_OF_DRIVER, T1.SEX_OF_DRIVER, COUNT(T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 LEFT JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID LEFT JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.DRIVING_EXPERIENCE = '1-2yr' OR T1.EDUCATIONAL_LEVEL = 'Junior high school' GROUP BY T1.DRIVER_ID, T1.AGE_BAND_OF_DRIVER, T1.SEX_OF_DRIVER HAVING COUNT(T2.ACCIDENT_ID) >= 0 ORDER BY COUNT(T2.ACCIDENT_ID) DESC",
+    "pair_id": "cab01d87",
+    "original_question_id": "39b87aeb",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List all drivers where `dim_driver.driving_experience` = '1-2yr' OR `dim_driver.educational_level` = 'Junior high school'. For each driver, show `dim_driver.driver_id`, `dim_driver.age_band_of_driver`, `dim_driver.sex_of_driver`, and the count of accidents from `fact_accident` (including zero). Use LEFT JOIN between `dim_driver` and `fact_accident` on `dim_driver.driver_id` = `fact_accident.driver_id`. Group by driver attributes and order by accident count descending."
+  },
+  {
+    "question": "ప్రతి విద్యాసంబంధమైన స్థితి మరియు డ్రైవింగ్ అనుభవం యొక్క సమ్మేళనం కోసం విద్యాసంబంధమైన స్థితి, డ్రైవింగ్ అనుభవం మరియు సగటు ప్రాణనష్టాల సంఖ్యను జాబితా చేయండి, సగటు ప్రాణనష్టాల సంఖ్య ద్వారా ఆదేశించబడింది.",
+    "sql": "SELECT T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE ORDER BY AVG(T2.NUMBER_OF_CASUALTIES)",
+    "pair_id": "2376f2ec",
+    "original_question_id": "a069466e",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Group by (`dim_driver`.`educational_level`, `dim_driver`.`driving_experience`). Compute AVG(`fact_accident`.`number_of_casualties`). Join `dim_driver` and `fact_accident` on `dim_driver`.`driver_id` = `fact_accident`.`driver_id`. Order by AVG(`fact_accident`.`number_of_casualties`)."
+  },
+  {
+    "question": "డ్రైవర్ల విద్యా స్థరం మరియు డ్రైవింగ్ అనుభవాన్ని జాబితా చేయండి, ప్రతి ప్రమాదానికి సగటు ప్రమాద సంఖ్య కూడా చేర్చండి, వాటిని విద్యా స్థరం మరియు డ్రైవింగ్ అనుభవం ద్వారా సమూహపరచండి, మరియు సగటు ప్రమాద సంఖ్య ఆధారంగా అవరోహణ క్రమంలో క్రమబద్ధీకరించండి.",
+    "sql": "SELECT T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "0c81d217",
+    "original_question_id": "a069466e",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_driver`.`educational_level`, `dim_driver`.`driving_experience`, and the average of `fact_accident`.`number_of_casualties` per accident. Group by `dim_driver`.`educational_level` and `dim_driver`.`driving_experience`. Sort by the average `fact_accident`.`number_of_casualties` in descending order."
+  },
+  {
+    "question": "డ్రైవర్ల విద్యా స్థరం మరియు డ్రైవింగ్ అనుభవాన్ని ఈ రెండు లక్షణాల ద్వారా సమూహపరచి జాబితా చేయండి, ఇక్కడ ప్రమాదాలలో సగటు ప్రాణనష్టం ఒకటి కంటే ఎక్కువ ఉంది, మరియు ఫలితాలను ఆ సగటు విలువ ద్వారా క్రమబద్ధీకరించండి.",
+    "sql": "SELECT T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE HAVING AVG(T2.NUMBER_OF_CASUALTIES) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES);",
+    "pair_id": "b4058904",
+    "original_question_id": "a069466e",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_driver`.`educational_level` and `dim_driver`.`driving_experience`, compute AVG(`bridge_accident_casualty`.`casualty_severity`) for each group, filter groups having AVG(`bridge_accident_casualty`.`casualty_severity`) > 1, and order results by that average value."
+  },
+  {
+    "question": "31-50 లేదా 18-30 వయస్సు గ్రూపుల్లో ఉన్న పురుష డ్రైవర్ల కోసం, వారి విద్యా స్థాయి మరియు డ్రైవింగ్ అనుభవాన్ని ప్రమాదానికి సంబంధించిన సగటు ప్రాణనష్టాల సంఖ్య కూడా జాబితా చేయండి, ప్రత్యేకంగా ఒకటి కంటే ఎక్కువ ప్రమాదాలు ఉన్న గ్రూపుల కోసం, మరియు ఫలితాలను సగటు ప్రాణనష్ట సంఖ్య ఆధారంగా అవరోహణ క్రమంలో ఆర్డర్ చేయండి.",
+    "sql": "SELECT T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.AGE_BAND_OF_DRIVER IN ('31-50', '18-30') AND T1.SEX_OF_DRIVER = 'Male' GROUP BY T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE HAVING COUNT(T2.ACCIDENT_ID) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC;",
+    "pair_id": "0b93f640",
+    "original_question_id": "a069466e",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_driver.sex_of_driver` = 'Male' and `dim_driver.age_band_of_driver` IN ('31-50', '18-30'). Group by `dim_driver.educational_level` and `dim_driver.driving_experience`. For each group, calculate average(`fact_accident.number_of_casualties`) as avg_casualties and count(distinct `fact_accident.accident_id`) as accident_count. Keep only groups where accident_count > 1. Order results by avg_casualties descending."
+  },
+  {
+    "question": "కనీసం ఒక ఆదివారం రోజున సంభవించిన ప్రమాదంలో పాల్గొన్న డ్రైవర్ల విద్యా స్థాయిలను జాబితా చేయండి, మరియు ఈ విద్యా స్థాయిలను ఆరోహణ వర్ణక్రమ క్రమంలో ప్రదర్శించండి.",
+    "sql": "SELECT T1.EDUCATIONAL_LEVEL FROM DIM_DRIVER T1 JOIN FACT_ACCIDENT T0 ON T1.DRIVER_ID = T0.DRIVER_ID JOIN DIM_TIME T2 ON T0.TIME_ID = T2.TIME_ID WHERE T2.DAY_OF_WEEK = 'Sunday' GROUP BY T1.EDUCATIONAL_LEVEL HAVING COUNT(T0.ACCIDENT_ID) > 0 ORDER BY T1.EDUCATIONAL_LEVEL ASC",
+    "pair_id": "0469fe97",
+    "original_question_id": "129555ef",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_DRIVER",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `fact_accident` where `dim_time.day_of_week` = 'Sunday' via `fact_accident.time_id` = `dim_time.time_id`. Then get distinct `dim_driver.educational_level` from `dim_driver` linked via `fact_accident.driver_id`. Order results by `dim_driver.educational_level` ASC."
+  }
+]
