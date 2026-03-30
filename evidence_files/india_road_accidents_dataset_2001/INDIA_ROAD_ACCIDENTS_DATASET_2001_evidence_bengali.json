@@ -1,0 +1,1032 @@
+[
+  {
+    "question": "দুর্ঘটনার আইডি তালিকা করুন যেখানে হতাহতের সংখ্যা ২ এর চেয়ে বেশি এবং জড়িত চালক ১-২ বছরের ড্রাইভিং অভিজ্ঞতা রাখেন।",
+    "sql": "SELECT T1.ACCIDENT_ID FROM FACT_ACCIDENT AS T1 JOIN DIM_DRIVER AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID WHERE T1.NUMBER_OF_CASUALTIES > 2 AND T2.DRIVING_EXPERIENCE = '1-2yr';",
+    "pair_id": "766ad2ba",
+    "original_question_id": "ede492bf",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "List `fact_accident`.`accident_id` where `fact_accident`.`number_of_casualties` > 2 and the related `dim_driver`.`driving_experience` is '1-2yr'."
+  },
+  {
+    "question": "দুর্ঘটনার আইডি তালিকাভুক্ত করুন যেখানে হতাহতের সংখ্যা ২ এর বেশি এবং জড়িত চালকের ১-২ বছরের ড্রাইভিং অভিজ্ঞতা রয়েছে।",
+    "sql": "SELECT T1.ACCIDENT_ID FROM FACT_ACCIDENT AS T1 JOIN DIM_DRIVER AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID WHERE T1.NUMBER_OF_CASUALTIES > 2 AND T2.DRIVING_EXPERIENCE = '1-2yr';",
+    "pair_id": "87f86ad9",
+    "original_question_id": "ede492bf",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `fact_accident`.`accident_id` where `fact_accident`.`number_of_casualties` > 2 and the driver involved has `dim_driver`.`driving_experience` = '1-2yr'. Join `fact_accident` with `dim_driver` on `fact_accident`.`driver_id` = `dim_driver`.`driver_id`."
+  },
+  {
+    "question": "প্রতিটি দুর্ঘটনার গুরুত্ব এবং ১-২ বছরের ড্রাইভিং অভিজ্ঞতা সম্পন্ন চালকদের জন্য দুর্ঘটনা আইডির মোট সংখ্যা তালিকাভুক্ত করুন, শুধুমাত্র সেই গুরুত্ব স্তরগুলি দেখান যেখানে একাধিক দুর্ঘটনা রয়েছে, এবং ফলাফলগুলি দুর্ঘটনার গুরুত্ব অনুযায়ী সাজান।",
+    "sql": "SELECT T1.ACCIDENT_SEVERITY, COUNT(T1.ACCIDENT_ID) FROM FACT_ACCIDENT AS T1 JOIN DIM_DRIVER AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID WHERE T2.DRIVING_EXPERIENCE = '1-2yr' GROUP BY T1.ACCIDENT_SEVERITY HAVING COUNT(T1.ACCIDENT_ID) > 1 ORDER BY T1.ACCIDENT_SEVERITY",
+    "pair_id": "fbef6271",
+    "original_question_id": "ede492bf",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Count distinct `fact_accident`.`accident_id` for each `fact_accident`.`accident_severity` where `dim_driver`.`driving_experience` = '1-2yr'. Join `fact_accident` with `dim_driver` on `fact_accident`.`driver_id` = `dim_driver`.`driver_id`. Filter groups having COUNT(`fact_accident`.`accident_id`) > 1. Order results by `fact_accident`.`accident_severity`."
+  },
+  {
+    "question": "১-২ বছরের ড্রাইভিং অভিজ্ঞতা সম্পন্ন ড্রাইভারদের জড়িত কেসগুলির জন্য দুর্ঘটনা আইডি তালিকাভুক্ত করুন, যেখানে প্রতিটি দুর্ঘটনার জন্য মোট হতাহতের সংখ্যা ৩ এর চেয়ে বেশি, সর্বোচ্চ হতাহতের সংখ্যা অনুযায়ী অবরোহী ক্রমে সাজানো।",
+    "sql": "SELECT T2.ACCIDENT_ID FROM DIM_DRIVER AS T1 INNER JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID LEFT JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.DRIVING_EXPERIENCE = '1-2yr' GROUP BY T2.ACCIDENT_ID HAVING SUM(T2.NUMBER_OF_CASUALTIES) > 3 ORDER BY MAX(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "1c2bc7c6",
+    "original_question_id": "ede492bf",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter accidents where `dim_driver`.`driving_experience` = '1-2yr' and `fact_accident`.`number_of_casualties` > 3. Join `fact_accident` with `dim_driver` on `fact_accident`.`driver_id` = `dim_driver`.`driver_id`. Select `fact_accident`.`accident_id`. Sort results by `fact_accident`.`number_of_casualties` in descending order."
+  },
+  {
+    "question": "প্রতিটি চালকের বয়স ব্যান্ডের জন্য, বয়স ব্যান্ড, গড় হতাহতের সংখ্যা এবং দুর্ঘটনা আইডির মোট গণনা তালিকাভুক্ত করুন।",
+    "sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), COUNT(T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.AGE_BAND_OF_DRIVER",
+    "pair_id": "3cfe7990",
+    "original_question_id": "22b75f02",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Group by (`dim_driver`.`age_band_of_driver`). For each group, compute AVG(`fact_accident`.`number_of_casualties`) as average casualties and COUNT(DISTINCT `fact_accident`.`accident_id`) as total accident count. Join `dim_driver` and `fact_accident` on (`dim_driver`.`driver_id` = `fact_accident`.`driver_id`)."
+  },
+  {
+    "question": "প্রতিটি চালকের বয়স ব্যান্ডের জন্য, বয়স ব্যান্ডটি নিজেই, গড় হতাহতের সংখ্যা এবং দুর্ঘটনা আইডির মোট গণনা তালিকাভুক্ত করুন।",
+    "sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), COUNT(T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.AGE_BAND_OF_DRIVER",
+    "pair_id": "7768a6de",
+    "original_question_id": "22b75f02",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_driver`.`age_band_of_driver`. Select `dim_driver`.`age_band_of_driver`, average of `fact_accident`.`number_of_casualties`, and count of `fact_accident`.`accident_id`. Join `fact_accident` with `dim_driver` on `fact_accident`.`driver_id` = `dim_driver`.`driver_id`."
+  },
+  {
+    "question": "চালকের প্রতিটি বয়স ব্যান্ডের জন্য, বয়স ব্যান্ড, গড় হতাহতের সংখ্যা এবং দুর্ঘটনা আইডির মোট গণনা তালিকাভুক্ত করুন, যেখানে গড় হতাহতের সংখ্যা একের চেয়ে বেশি এমন গ্রুপগুলির জন্য ফিল্টার করুন এবং দুর্ঘটনা গণনার ভিত্তিতে ফলাফলগুলি অবরোহী ক্রমে সাজান।",
+    "sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), COUNT(T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.AGE_BAND_OF_DRIVER HAVING AVG(T2.NUMBER_OF_CASUALTIES) > 1 ORDER BY COUNT(T2.ACCIDENT_ID) DESC",
+    "pair_id": "9b1772a3",
+    "original_question_id": "22b75f02",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_driver.age_band_of_driver`, compute AVG(`fact_accident.number_of_casualties`) and COUNT(`fact_accident.accident_id`), filter groups where average casualties > 1, sort results descending by accident count."
+  },
+  {
+    "question": "চালকের বয়স ব্যান্ড অনুযায়ী গ্রুপ করে, বয়স ব্যান্ড, গড় হতাহতের সংখ্যা এবং একাধিক দুর্ঘটনায় জড়িত চালকদের জন্য অনন্য দুর্ঘটনা আইডির মোট সংখ্যা কত, গড় হতাহতের সংখ্যা অনুযায়ী অবরোহী ক্রমে সাজানো?",
+    "sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), COUNT(DISTINCT T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.AGE_BAND_OF_DRIVER HAVING COUNT(T2.ACCIDENT_ID) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "b09b770f",
+    "original_question_id": "22b75f02",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_driver.age_band_of_driver`. For each age band, compute: 1) the age band itself, 2) AVG(`fact_accident.number_of_casualties`) as average casualties, and 3) COUNT(DISTINCT `fact_accident.accident_id`) as total unique accident IDs, but only for drivers who appear in more than one accident (i.e., `fact_accident.driver_id` with COUNT(`fact_accident.accident_id`) > 1). Sort results by average casualties in descending order."
+  },
+  {
+    "question": "চালকদের শীর্ষ ৫টি বয়স গ্রুপ এবং আহত ব্যক্তিদের গুরুত্বতা তালিকাভুক্ত করুন যাদের সর্বোচ্চ গড় আহত সংখ্যা রয়েছে, প্রতিটি গ্রুপের জন্য বয়স গ্রুপ, গড় আহত সংখ্যা এবং আহত ব্যক্তিদের গুরুত্বতা দেখিয়ে।",
+    "sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), T3.CASUALTY_SEVERITY FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.AGE_BAND_OF_DRIVER, T3.CASUALTY_SEVERITY ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC LIMIT 5",
+    "pair_id": "046b8b21",
+    "original_question_id": "f82f9d80",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Find the top 5 combinations of driver age group and casualty severity with the highest average number of casualties per accident. Group by (`dim_driver`.`age_band_of_driver`) and (`bridge_accident_casualty`.`casualty_severity`), compute the average of (`fact_accident`.`number_of_casualties`). Order by average descending, limit 5. Output columns: (`dim_driver`.`age_band_of_driver`), (`bridge_accident_casualty`.`casualty_severity`), and the average casualties. Join `dim_driver` to `fact_accident` on `driver_id`, and `fact_accident` to `bridge_accident_casualty` on `accident_id`."
+  },
+  {
+    "question": "চালকের বয়স ব্যান্ড এবং প্রতিটি বয়স ব্যান্ডের জন্য গড় হতাহতের সংখ্যা তালিকাভুক্ত করুন, গড় হতাহতের সংখ্যা অনুযায়ী অবরোহী ক্রমে সাজানো, শুধুমাত্র শীর্ষ ৫টি ফলাফল দেখাচ্ছে।",
+    "sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.AGE_BAND_OF_DRIVER ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC LIMIT 5",
+    "pair_id": "cf10373b",
+    "original_question_id": "f82f9d80",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_driver`.`age_band_of_driver`, compute average of `fact_accident`.`number_of_casualties` for each group, order by average casualties descending, limit to 5 rows. Join `dim_driver` to `fact_accident` on `dim_driver`.`driver_id` = `fact_accident`.`driver_id`."
+  },
+  {
+    "question": "চালকের বয়স ব্যান্ড, গড় হতাহতের সংখ্যা এবং হতাহতের গুরুত্ব প্রদর্শন করুন, চালকের বয়স ব্যান্ড এবং হতাহতের গুরুত্ব অনুযায়ী গ্রুপ করা হয়েছে, সেই গ্রুপগুলির জন্য যেখানে গড় হতাহতের সংখ্যা একের চেয়ে বেশি, এবং গড় হতাহতের অবরোহী ক্রমে শীর্ষ ৫টি ফলাফল তালিকাভুক্ত করুন।",
+    "sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), T3.CASUALTY_SEVERITY FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.AGE_BAND_OF_DRIVER, T3.CASUALTY_SEVERITY HAVING AVG(T2.NUMBER_OF_CASUALTIES) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC LIMIT 5",
+    "pair_id": "7f0c5971",
+    "original_question_id": "f82f9d80",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_accident` with `dim_driver` on `fact_accident`.`driver_id` = `dim_driver`.`driver_id` and with `bridge_accident_casualty` on `fact_accident`.`accident_id` = `bridge_accident_casualty`.`accident_id`. Group by `dim_driver`.`age_band_of_driver` and `bridge_accident_casualty`.`casualty_severity`. Compute the average of `fact_accident`.`number_of_casualties` for each group. Filter groups where the average > 1. Order by average casualties descending. Limit to top 5 rows. Output columns: `dim_driver`.`age_band_of_driver`, `bridge_accident_casualty`.`casualty_severity`, and the average casualties."
+  },
+  {
+    "question": "চালকের বয়স ব্যান্ড, গড় আহত সংখ্যা এবং একাধিক দুর্ঘটনা সহ শীর্ষ ৫ চালক বয়স ব্যান্ডের জন্য আহতের মোট গুরুত্ব তালিকাভুক্ত করুন, গড় আহত সংখ্যা অনুযায়ী অবরোহী ক্রমে সাজানো।",
+    "sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), SUM(T3.CASUALTY_SEVERITY) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.AGE_BAND_OF_DRIVER HAVING COUNT(T2.ACCIDENT_ID) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC LIMIT 5",
+    "pair_id": "8567458b",
+    "original_question_id": "f82f9d80",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_driver`.`age_band_of_driver`. For each group, compute: total casualty severity as SUM(`bridge_accident_casualty`.`casualty_severity`), average casualty count as AVG(`fact_accident`.`number_of_casualties`), and multiple accidents as COUNT(DISTINCT `fact_accident`.`accident_id`). Sort results by average casualty count descending and limit to top 5 rows. Join `fact_accident` with `dim_driver` on `fact_accident`.`driver_id` = `dim_driver`.`driver_id`, and with `bridge_accident_casualty` on `fact_accident`.`accident_id` = `bridge_accident_casualty`.`accident_id`."
+  },
+  {
+    "question": "ক্ষতিগ্রস্ত ব্যক্তির মাত্রা থেকে সমস্ত কলাম দেখান যেখানে ক্ষতিগ্রস্ত ব্যক্তির শ্রেণী 'পথচারী' এবং ক্ষতিগ্রস্ত ব্যক্তির সুস্থতা 'স্বাভাবিক'।",
+    "sql": "SELECT * FROM DIM_CASUALTY WHERE CASUALTY_CLASS = 'Pedestrian' AND FITNESS_OF_CASUALTY = 'Normal';",
+    "pair_id": "cf18af22",
+    "original_question_id": "979cc2b1",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select all columns from `bridge_accident_casualty` by joining `dim_casualty` on `bridge_accident_casualty`.`casualty_id` = `dim_casualty`.`casualty_id` where `dim_casualty`.`casualty_class` = 'Pedestrian' and `dim_casualty`.`fitness_of_casualty` = 'Normal'."
+  },
+  {
+    "question": "পথচারী হিসাবে শ্রেণীবদ্ধ সমস্ত ব্যক্তিদের জন্য যাদের ফিটনেস স্বাভাবিক হিসাবে রেকর্ড করা হয়েছে, তাদের ক্ষতিগ্রস্ত আইডি এবং ক্ষতিগ্রস্তের লিঙ্গ তালিকাভুক্ত করুন, তাদের লিঙ্গ অনুযায়ী বর্ণানুক্রমে সাজানো।",
+    "sql": "SELECT T1.CASUALTY_ID, T1.SEX_OF_CASUALTY FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' AND T1.FITNESS_OF_CASUALTY = 'Normal' ORDER BY T1.SEX_OF_CASUALTY ASC",
+    "pair_id": "7048add7",
+    "original_question_id": "979cc2b1",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_casualty` where (`dim_casualty`.`casualty_class` = 'Pedestrian') and (`dim_casualty`.`fitness_of_casualty` = 'Normal'). Select (`dim_casualty`.`casualty_id`, `dim_casualty`.`sex_of_casualty`). Order by (`dim_casualty`.`sex_of_casualty`) ascending."
+  },
+  {
+    "question": "পথচারী হিসাবে শ্রেণীবদ্ধ ক্ষতিগ্রস্তদের জন্য ক্ষতিগ্রস্ত আইডি তালিকাভুক্ত করুন যেখানে ক্ষতিগ্রস্তের ফিটনেস স্বাভাবিক, তাদের ক্ষতিগ্রস্ত আইডি দ্বারা গোষ্ঠীভুক্ত।",
+    "sql": "SELECT T1.CASUALTY_ID FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' GROUP BY T1.CASUALTY_ID HAVING T1.FITNESS_OF_CASUALTY = 'Normal';",
+    "pair_id": "c24c13f9",
+    "original_question_id": "979cc2b1",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_casualty` where `dim_casualty`.`casualty_class` = 'Pedestrian' and `dim_casualty`.`fitness_of_casualty` = 'Normal', then select `dim_casualty`.`casualty_id` and group by `dim_casualty`.`casualty_id`."
+  },
+  {
+    "question": "ক্ষতিগ্রস্ত আইডি, ক্ষতিগ্রস্ত শ্রেণী, ক্ষতিগ্রস্তের লিঙ্গ এবং দুর্ঘটনার গুরুত্ব তালিকাভুক্ত করুন যারা 'পথচারী' হিসাবে শ্রেণীবদ্ধ এবং 'সাধারণ' ফিটনেস স্তর রয়েছে, প্রতিটি ক্ষতিগ্রস্ত কমপক্ষে একটি দুর্ঘটনার সাথে যুক্ত তা নিশ্চিত করে, এবং ফলাফলগুলি ক্ষতিগ্রস্ত শ্রেণী অনুসারে অর্ডার করুন।",
+    "sql": "SELECT T1.CASUALTY_ID, T1.CASUALTY_CLASS, T1.SEX_OF_CASUALTY, T3.ACCIDENT_SEVERITY FROM DIM_CASUALTY AS T1 INNER JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID INNER JOIN FACT_ACCIDENT AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' AND T1.FITNESS_OF_CASUALTY = 'Normal' GROUP BY T1.CASUALTY_ID, T1.CASUALTY_CLASS, T1.SEX_OF_CASUALTY, T3.ACCIDENT_SEVERITY HAVING COUNT(T2.ACCIDENT_ID) >= 1 ORDER BY T1.CASUALTY_CLASS ASC",
+    "pair_id": "3de8a963",
+    "original_question_id": "979cc2b1",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_casualty.casualty_id`, `dim_casualty.casualty_class`, `dim_casualty.sex_of_casualty`, and `fact_accident.accident_severity` for casualties where `dim_casualty.casualty_class` = 'Pedestrian' and `dim_casualty.fitness_of_casualty` = 'Normal'. Ensure each casualty appears in `bridge_accident_casualty` (join via `casualty_id`) to link to at least one accident in `fact_accident`. Order results by `dim_casualty.casualty_class`."
+  },
+  {
+    "question": "পথচারী হিসাবে শ্রেণীবদ্ধ আহতদের জন্য, প্রতিটি আহতের লিঙ্গ এবং সংশ্লিষ্ট গড় আহত তীব্রতা তালিকাভুক্ত করুন, আহতের লিঙ্গ অনুযায়ী গ্রুপ করা হয়েছে।",
+    "sql": "SELECT T1.SEX_OF_CASUALTY, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' GROUP BY T1.SEX_OF_CASUALTY",
+    "pair_id": "8d7cf5db",
+    "original_question_id": "f31677d4",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_casualty`.`casualty_class` = 'Pedestrian'. Join `dim_casualty` with `bridge_accident_casualty` on `casualty_id`. Select `dim_casualty`.`sex_of_casualty` and AVG(`bridge_accident_casualty`.`casualty_severity`) as average severity. Group by `dim_casualty`.`sex_of_casualty`."
+  },
+  {
+    "question": "পথচারী হিসাবে শ্রেণীবদ্ধ আহতদের জন্য, আহতের প্রতিটি লিঙ্গের সাথে গড় আহত গুরুত্ব তালিকাভুক্ত করুন, আহতের লিঙ্গ অনুযায়ী গোষ্ঠীবদ্ধ।",
+    "sql": "SELECT T1.SEX_OF_CASUALTY, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' GROUP BY T1.SEX_OF_CASUALTY",
+    "pair_id": "ae17899a",
+    "original_question_id": "f31677d4",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_casualty.casualty_class` = 'Pedestrian'. Join `dim_casualty` with `bridge_accident_casualty` on `dim_casualty.casualty_id` = `bridge_accident_casualty.casualty_id`. Compute average of `bridge_accident_casualty.casualty_severity` grouped by `dim_casualty.sex_of_casualty`."
+  },
+  {
+    "question": "পথচারী হিসাবে শ্রেণীবদ্ধ আহতদের জন্য, প্রতিটি আহতের লিঙ্গ এবং তাদের সংশ্লিষ্ট গড় আহত তীব্রতা তালিকাভুক্ত করুন, যেখানে গড় তীব্রতা ১ এর চেয়ে বেশি এমন গোষ্ঠীগুলির জন্য ফিল্টার করুন এবং ফলাফলগুলি আহতের লিঙ্গ অনুসারে অর্ডার করুন।",
+    "sql": "SELECT T1.SEX_OF_CASUALTY, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' GROUP BY T1.SEX_OF_CASUALTY HAVING AVG(T2.CASUALTY_SEVERITY) > 1 ORDER BY T1.SEX_OF_CASUALTY",
+    "pair_id": "7265cf38",
+    "original_question_id": "f31677d4",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_casualty`.`casualty_class` = 'Pedestrian'. Group by `dim_casualty`.`sex_of_casualty` (values: 'Female', 'Male'). Compute average of `bridge_accident_casualty`.`casualty_severity` (numeric values: '1','2','3') per group. Keep groups where average severity > 1. Order results by `dim_casualty`.`sex_of_casualty`."
+  },
+  {
+    "question": "দুর্ঘটনায় আহতদের লিঙ্গ এবং গড় আহত গুরুত্বতা প্রদর্শন করুন যারা চালক, রাইডার বা পথচারী এবং ১৮-৩০ বা ৩১-৫০ বয়স গ্রুপের মধ্যে পড়েন, তাদের লিঙ্গ অনুযায়ী গ্রুপ করা হয়েছে, যেখানে গড় গুরুত্বতা ১ এর চেয়ে বেশি, এবং ফলাফলগুলি গড় আহত গুরুত্বতা অনুযায়ী অবরোহী ক্রমে সাজান।",
+    "sql": "SELECT T1.SEX_OF_CASUALTY, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 INNER JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID INNER JOIN FACT_ACCIDENT AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.CASUALTY_CLASS IN ('Driver or rider', 'Pedestrian') AND T1.AGE_BAND_OF_CASUALTY IN ('31-50', '18-30') GROUP BY T1.SEX_OF_CASUALTY HAVING AVG(T2.CASUALTY_SEVERITY) > 1 ORDER BY AVG(T2.CASUALTY_SEVERITY) DESC",
+    "pair_id": "e504e82d",
+    "original_question_id": "f31677d4",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_casualty`.`casualty_class` IN ('Driver or rider', 'Pedestrian') AND `dim_casualty`.`age_band_of_casualty` IN ('18-30', '31-50'). Join `dim_casualty` with `bridge_accident_casualty` on `casualty_id`. Group by `dim_casualty`.`sex_of_casualty`. Select `dim_casualty`.`sex_of_casualty` and AVG(`bridge_accident_casualty`.`casualty_severity`) as average_severity. Having AVG(`bridge_accident_casualty`.`casualty_severity`) > 1. Order by average_severity DESC."
+  },
+  {
+    "question": "প্রতিটি শ্রেণীর জন্য ক্ষতিগ্রস্ত শ্রেণী এবং গড় ক্ষতির গুরুত্ব তালিকাভুক্ত করুন, সর্বোচ্চ থেকে সর্বনিম্ন গড় গুরুত্ব অনুযায়ী সাজিয়ে, এবং শুধুমাত্র শীর্ষ ১০ ফলাফল দেখান।",
+    "sql": "SELECT T1.CASUALTY_CLASS, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID GROUP BY T1.CASUALTY_CLASS ORDER BY AVG(T2.CASUALTY_SEVERITY) DESC LIMIT 10",
+    "pair_id": "306138c8",
+    "original_question_id": "4c2d3b9d",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_casualty`.`casualty_class`, compute average of `bridge_accident_casualty`.`casualty_severity` after joining `dim_casualty` and `bridge_accident_casualty` on `casualty_id`. Sort results descending by average severity and limit to top 10."
+  },
+  {
+    "question": "প্রতিটি ক্ষতিগ্রস্ত শ্রেণীর জন্য ক্ষতিগ্রস্ত শ্রেণী এবং গড় ক্ষতিগ্রস্ত গুরুত্ব প্রদর্শন করুন, গড় গুরুত্ব অনুযায়ী সর্বোচ্চ থেকে সর্বনিম্ন ক্রমে সাজানো, এবং শুধুমাত্র শীর্ষ ১০ ফলাফল তালিকাভুক্ত করুন।",
+    "sql": "SELECT T1.CASUALTY_CLASS, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID GROUP BY T1.CASUALTY_CLASS ORDER BY AVG(T2.CASUALTY_SEVERITY) DESC LIMIT 10",
+    "pair_id": "a3527c36",
+    "original_question_id": "4c2d3b9d",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_casualty`.`casualty_class`. For each group, compute AVG(`bridge_accident_casualty`.`casualty_severity`). Join `bridge_accident_casualty` with `dim_casualty` on `bridge_accident_casualty`.`casualty_id` = `dim_casualty`.`casualty_id`. Order by the average severity DESC, limit to 10 rows."
+  },
+  {
+    "question": "ক্ষতিগ্রস্ত শ্রেণীগুলি তালিকাভুক্ত করুন যেখানে গড় ক্ষতির গুরুত্ব ১ এর চেয়ে বেশি, গড় গুরুত্ব অনুযায়ী সর্বোচ্চ থেকে সর্বনিম্ন ক্রমে সাজিয়ে, এবং শুধুমাত্র শীর্ষ ১০ ফলাফল দেখান।",
+    "sql": "SELECT T1.CASUALTY_CLASS FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID GROUP BY T1.CASUALTY_CLASS HAVING AVG(T2.CASUALTY_SEVERITY) > 1 ORDER BY AVG(T2.CASUALTY_SEVERITY) DESC LIMIT 10",
+    "pair_id": "e152aadf",
+    "original_question_id": "4c2d3b9d",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_casualty`.`casualty_class`, compute AVG(`bridge_accident_casualty`.`casualty_severity`) as average_severity, filter where average_severity > 1, order by average_severity DESC, limit to top 10."
+  },
+  {
+    "question": "প্রতিটি ক্ষতিগ্রস্ত শ্রেণীর জন্য ক্ষতিগ্রস্ত শ্রেণী এবং গড় ক্ষতিগ্রস্ত গুরুত্ব তালিকাভুক্ত করুন, গড় ক্ষতিগ্রস্ত গুরুত্ব অনুযায়ী অবরোহী ক্রমে সাজানো, শুধুমাত্র শীর্ষ ১০ ফলাফল দেখাচ্ছে।",
+    "sql": "SELECT T1.CASUALTY_CLASS, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID GROUP BY T1.CASUALTY_CLASS ORDER BY AVG(T2.CASUALTY_SEVERITY) DESC LIMIT 10",
+    "pair_id": "d6f75ea7",
+    "original_question_id": "4c2d3b9d",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_casualty`.`casualty_class`, compute AVG(`bridge_accident_casualty`.`casualty_severity`) as average casualty severity. Join `dim_casualty` with `bridge_accident_casualty` on `dim_casualty`.`casualty_id` = `bridge_accident_casualty`.`casualty_id`. Order by average casualty severity DESC, limit to top 10 results."
+  },
+  {
+    "question": "আহতের লিঙ্গ, বয়স গ্রুপ এবং কর্মসংস্থানের অবস্থা, আহতের গুরুত্ব সহ তালিকাভুক্ত করুন, গুরুত্বের স্তর অনুযায়ী সর্বোচ্চ থেকে সর্বনিম্ন ক্রমে সাজানো।",
+    "sql": "SELECT T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY, T2.CASUALTY_SEVERITY FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID ORDER BY T2.CASUALTY_SEVERITY DESC",
+    "pair_id": "280e1324",
+    "original_question_id": "b6d37303",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_casualty`.`sex_of_casualty`, `dim_casualty`.`age_band_of_casualty`, `dim_casualty`.`work_of_casualty`, `bridge_accident_casualty`.`casualty_severity` from `dim_casualty` join `bridge_accident_casualty` on `dim_casualty`.`casualty_id` = `bridge_accident_casualty`.`casualty_id` order by `bridge_accident_casualty`.`casualty_severity` DESC."
+  },
+  {
+    "question": "প্রতিটি হতাহতের লিঙ্গ, বয়স গ্রুপ এবং কর্মসংস্থান অবস্থা তাদের হতাহতের গুরুত্ব সহ তালিকাভুক্ত করুন, হতাহতের গুরুত্ব অনুযায়ী অবরোহী ক্রমে সাজানো।",
+    "sql": "SELECT T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY, T2.CASUALTY_SEVERITY FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID ORDER BY T2.CASUALTY_SEVERITY DESC",
+    "pair_id": "428302b5",
+    "original_question_id": "b6d37303",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_casualty`.`sex_of_casualty`, `dim_casualty`.`age_band_of_casualty`, `dim_casualty`.`work_of_casualty`, and `bridge_accident_casualty`.`casualty_severity` for all casualties by joining `dim_casualty` with `bridge_accident_casualty` on `casualty_id`. Sort results by `bridge_accident_casualty`.`casualty_severity` in descending order."
+  },
+  {
+    "question": "ক্ষতিগ্রস্তের লিঙ্গ, ক্ষতিগ্রস্তের বয়স ব্যান্ড এবং ক্ষতিগ্রস্তের কর্ম অবস্থা তালিকাভুক্ত করুন, এই প্রতিটি গ্রুপের জন্য গড় ক্ষতিগ্রস্ততার তীব্রতা সহ, যেখানে গড় ক্ষতিগ্রস্ততার তীব্রতা ১ এর চেয়ে বেশি।",
+    "sql": "SELECT T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID GROUP BY T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY HAVING AVG(T2.CASUALTY_SEVERITY) > 1",
+    "pair_id": "6526c5cd",
+    "original_question_id": "b6d37303",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List (`dim_casualty`.`sex_of_casualty`), (`dim_casualty`.`age_band_of_casualty`), (`dim_casualty`.`work_of_casualty`), and the average of (`bridge_accident_casualty`.`casualty_severity`) for each group of these three columns. Filter to only groups where the average casualty severity > 1. Join `bridge_accident_casualty` to `dim_casualty` on `casualty_id`."
+  },
+  {
+    "question": "দুর্ঘটনার শিকারের লিঙ্গ, দুর্ঘটনার শিকারের বয়স ব্যান্ড, দুর্ঘটনার শিকারের কর্ম অবস্থা এবং দুর্ঘটনার শিকারের গুরুত্ব তালিকাভুক্ত করুন, প্রতিটি গ্রুপের জন্য দুর্ঘটনা আইডির মোট সংখ্যা সহ, যেখানে কমপক্ষে একটি দুর্ঘটনা রয়েছে, দুর্ঘটনার শিকারের গুরুত্ব অনুযায়ী অবরোহী ক্রমে সাজানো।",
+    "sql": "SELECT T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY, T2.CASUALTY_SEVERITY, COUNT(T3.ACCIDENT_ID) FROM DIM_CASUALTY AS T1 INNER JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID INNER JOIN FACT_ACCIDENT AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY, T2.CASUALTY_SEVERITY HAVING COUNT(T3.ACCIDENT_ID) >= 1 ORDER BY T2.CASUALTY_SEVERITY DESC",
+    "pair_id": "fd8870b7",
+    "original_question_id": "b6d37303",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_casualty`.`sex_of_casualty`, `dim_casualty`.`age_band_of_casualty`, `dim_casualty`.`work_of_casualty`, `bridge_accident_casualty`.`casualty_severity`, count(distinct `fact_accident`.`accident_id`) as total_accidents from `dim_casualty` join `bridge_accident_casualty` on `dim_casualty`.`casualty_id` = `bridge_accident_casualty`.`casualty_id` join `fact_accident` on `bridge_accident_casualty`.`accident_id` = `fact_accident`.`accident_id` group by `dim_casualty`.`sex_of_casualty`, `dim_casualty`.`age_band_of_casualty`, `dim_casualty`.`work_of_casualty`, `bridge_accident_casualty`.`casualty_severity` order by `bridge_accident_casualty`.`casualty_severity` desc"
+  },
+  {
+    "question": "পথচারী হিসাবে শ্রেণীবদ্ধ ক্ষতিগ্রস্তদের জন্য ক্ষতিগ্রস্ত আইডি তালিকাভুক্ত করুন যেখানে ক্ষতিগ্রস্ত গুরুত্ব স্তর ২।",
+    "sql": "SELECT T1.CASUALTY_ID FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' AND T2.CASUALTY_SEVERITY = 2;",
+    "pair_id": "e6ce2687",
+    "original_question_id": "850a178e",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_casualty`.`casualty_id` from `dim_casualty` inner join `bridge_accident_casualty` on `dim_casualty`.`casualty_id` = `bridge_accident_casualty`.`casualty_id` where `dim_casualty`.`casualty_class` = 'Pedestrian' and `bridge_accident_casualty`.`casualty_severity` = '2'."
+  },
+  {
+    "question": "সমস্ত পথচারী হিসাবে শ্রেণীবদ্ধ ক্ষতিগ্রস্তদের জন্য ক্ষতিগ্রস্ত আইডি তালিকাভুক্ত করুন যেখানে ক্ষতিগ্রস্ত গুরুত্ব স্তর ২।",
+    "sql": "SELECT T1.CASUALTY_ID FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' AND T2.CASUALTY_SEVERITY = 2",
+    "pair_id": "946fede9",
+    "original_question_id": "850a178e",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_casualty`.`casualty_id` for casualties where `dim_casualty`.`casualty_class` = 'Pedestrian' and `bridge_accident_casualty`.`casualty_severity` = '2'. Join `dim_casualty` and `bridge_accident_casualty` on `dim_casualty`.`casualty_id` = `bridge_accident_casualty`.`casualty_id`."
+  },
+  {
+    "question": "ক্ষতিগ্রস্ত শ্রেণী এবং সেতু দুর্ঘটনা ক্ষতিগ্রস্ত আইডির মোট সংখ্যা তালিকাভুক্ত করুন যেখানে ক্ষতিগ্রস্ত গুরুত্বতা ২, বিশেষভাবে 'পথচারী' ক্ষতিগ্রস্ত শ্রেণীর জন্য ফিল্টার করে এবং শুধুমাত্র প্রদর্শন করে, ক্ষতিগ্রস্ত শ্রেণী দ্বারা অর্ডার করা।",
+    "sql": "SELECT T1.CASUALTY_CLASS, COUNT(T2.BRIDGE_ACCIDENT_CASUALTY_ID) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T2.CASUALTY_SEVERITY = 2 GROUP BY T1.CASUALTY_CLASS HAVING T1.CASUALTY_CLASS = 'Pedestrian' ORDER BY T1.CASUALTY_CLASS",
+    "pair_id": "94ebfb34",
+    "original_question_id": "850a178e",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select dim_casualty.casualty_class, count(bridge_accident_casualty.bridge_accident_casualty_id) from bridge_accident_casualty join dim_casualty on bridge_accident_casualty.casualty_id = dim_casualty.casualty_id where bridge_accident_casualty.casualty_severity = 2 and dim_casualty.casualty_class = 'Pedestrian' group by dim_casualty.casualty_class order by dim_casualty.casualty_class."
+  },
+  {
+    "question": "সমস্ত রেকর্ড প্রদর্শন করুন যেখানে ক্ষতিগ্রস্ত শ্রেণী 'পথচারী' এবং ক্ষতিগ্রস্ত গুরুত্ব স্তর ২, ক্ষতিগ্রস্ত শ্রেণী দ্বারা গ্রুপ করা এবং সাজানো।",
+    "sql": "SELECT T1.CASUALTY_CLASS FROM DIM_CASUALTY AS T1 INNER JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID INNER JOIN FACT_ACCIDENT AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' AND T2.CASUALTY_SEVERITY = 2 GROUP BY T1.CASUALTY_CLASS ORDER BY T1.CASUALTY_CLASS ASC",
+    "pair_id": "4a7c38dd",
+    "original_question_id": "850a178e",
+    "schema_used": [
+      "DIM_CASUALTY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select all columns from the join of `bridge_accident_casualty` and `dim_casualty` on `bridge_accident_casualty`.`casualty_id` = `dim_casualty`.`casualty_id` where `dim_casualty`.`casualty_class` = 'Pedestrian' and `bridge_accident_casualty`.`casualty_severity` = '2'. Group by `dim_casualty`.`casualty_class` and order by `dim_casualty`.`casualty_class`."
+  },
+  {
+    "question": "সোমবারে ঘটা দুর্ঘটনাগুলির জন্য, প্রতিটি এলাকা তালিকাভুক্ত করুন যেখানে একটি দুর্ঘটনা ঘটেছে এবং গড় হতাহত সংখ্যা এবং দুর্ঘটনা আইডির মোট সংখ্যা সহ, দুর্ঘটনার এলাকা অনুযায়ী গ্রুপ করা।",
+    "sql": "SELECT T2.AREA_ACCIDENT_OCCURRED, AVG(T1.NUMBER_OF_CASUALTIES), COUNT(T1.ACCIDENT_ID) FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Monday' GROUP BY T2.AREA_ACCIDENT_OCCURRED",
+    "pair_id": "94e894a9",
+    "original_question_id": "4283002e",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_time.day_of_week` = 'Monday'. Join `fact_accident` with `dim_time` on `fact_accident.time_id` = `dim_time.time_id` and with `dim_geography` on `fact_accident.geography_id` = `dim_geography.geography_id`. Group by `dim_geography.area_accident_occurred`. Compute AVG(`fact_accident.number_of_casualties`) and COUNT(`fact_accident.accident_id`)."
+  },
+  {
+    "question": "শুক্রবার ঘটে যাওয়া দুর্ঘটনাগুলির জন্য, প্রতিটি এলাকা তালিকাভুক্ত করুন যেখানে একটি দুর্ঘটনা ঘটেছে সেই এলাকার গড় হতাহতের সংখ্যা এবং প্রতিটি এলাকার জন্য দুর্ঘটনা আইডির মোট সংখ্যা সহ।",
+    "sql": "SELECT T2.AREA_ACCIDENT_OCCURRED, AVG(T1.NUMBER_OF_CASUALTIES), COUNT(T1.ACCIDENT_ID) FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Friday' GROUP BY T2.AREA_ACCIDENT_OCCURRED",
+    "pair_id": "9e2c6bbe",
+    "original_question_id": "4283002e",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter accidents where `dim_time`.`day_of_week` = 'Friday'. Join `fact_accident` with `dim_time` on `fact_accident`.`time_id` = `dim_time`.`time_id` and with `dim_geography` on `fact_accident`.`geography_id` = `dim_geography`.`geography_id`. Group by `dim_geography`.`area_accident_occurred`. Select `dim_geography`.`area_accident_occurred`, AVG(`fact_accident`.`number_of_casualties`) as average_casualties, and COUNT(`fact_accident`.`accident_id`) as total_accidents."
+  },
+  {
+    "question": "সোমবার ঘটে যাওয়া দুর্ঘটনাগুলির জন্য, প্রতিটি এলাকা তালিকাভুক্ত করুন যেখানে একটি দুর্ঘটনা ঘটেছে, সেই এলাকায় প্রতিটি দুর্ঘটনায় গড় হতাহতের সংখ্যা এবং দুর্ঘটনা আইডির মোট গণনা, শুধুমাত্র কমপক্ষে একটি দুর্ঘটনা সহ এলাকাগুলি দেখানো নিশ্চিত করুন এবং গড় হতাহতের সংখ্যা অনুযায়ী সর্বোচ্চ থেকে সর্বনিম্ন ক্রমে ফলাফলগুলি অর্ডার করুন।",
+    "sql": "SELECT T2.AREA_ACCIDENT_OCCURRED, AVG(T1.NUMBER_OF_CASUALTIES), COUNT(T1.ACCIDENT_ID) FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Monday' GROUP BY T2.AREA_ACCIDENT_OCCURRED HAVING COUNT(T1.ACCIDENT_ID) > 0 ORDER BY AVG(T1.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "5be88ed8",
+    "original_question_id": "4283002e",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter accidents where `dim_time`.`day_of_week` = 'Monday'. Group by `dim_geography`.`area_accident_occurred`. For each area, compute AVG(`fact_accident`.`number_of_casualties`) as average casualties per accident and COUNT(`fact_accident`.`accident_id`) as total accident count. Include only areas with at least one accident (COUNT(`fact_accident`.`accident_id`) >= 1). Order results by AVG(`fact_accident`.`number_of_casualties`) DESC."
+  },
+  {
+    "question": "সোমবারে ঘটা দুর্ঘটনাগুলির জন্য, প্রতিটি এলাকা তালিকাভুক্ত করুন যেখানে দুর্ঘটনা ঘটেছে এবং গড় হতাহতের সংখ্যা এবং দুর্ঘটনা আইডির মোট সংখ্যা সহ, এলাকা অনুযায়ী গ্রুপ করা এবং গড় হতাহত অনুযায়ী অবরোহী ক্রমে সাজানো।",
+    "sql": "SELECT T2.AREA_ACCIDENT_OCCURRED, AVG(T1.NUMBER_OF_CASUALTIES), COUNT(T1.ACCIDENT_ID) FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Monday' GROUP BY T2.AREA_ACCIDENT_OCCURRED HAVING COUNT(T1.ACCIDENT_ID) > 0 ORDER BY AVG(T1.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "ff0e8585",
+    "original_question_id": "4283002e",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter accidents where `dim_time`.`day_of_week` = 'Monday'. Group by `dim_geography`.`area_accident_occurred`. Compute AVG(`fact_accident`.`number_of_casualties`) as average_casualties and COUNT(`fact_accident`.`accident_id`) as total_accidents. Sort results by average_casualties DESC."
+  },
+  {
+    "question": "এমন অনন্য এলাকাগুলির তালিকা তৈরি করুন যেখানে দুর্ঘটনা ঘটেছে এমন ঘটনাগুলির জন্য যা হয় পাঁচজনের বেশি হতাহত জড়িত ছিল অথবা রবিবারে সংঘটিত হয়েছিল।",
+    "sql": "SELECT DISTINCT T2.AREA_ACCIDENT_OCCURRED FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T1.NUMBER_OF_CASUALTIES > 5 OR T3.DAY_OF_WEEK IN ('Sunday')",
+    "pair_id": "38852ca5",
+    "original_question_id": "abfddb45",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `dim_geography`.`area_accident_occurred` from `fact_accident` join `dim_geography` on `fact_accident`.`geography_id` = `dim_geography`.`geography_id` join `dim_time` on `fact_accident`.`time_id` = `dim_time`.`time_id` where `fact_accident`.`number_of_casualties` > 5 or `dim_time`.`day_of_week` = 'Sunday'."
+  },
+  {
+    "question": "যে সমস্ত রেকর্ডে হতাহতের সংখ্যা পাঁচের চেয়ে বেশি অথবা সপ্তাহের দিন রবিবার তার জন্য দুর্ঘটনা ঘটেছে এমন এলাকা তালিকাভুক্ত করুন।",
+    "sql": "SELECT T1.AREA_ACCIDENT_OCCURRED FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T2.NUMBER_OF_CASUALTIES > 5 OR T3.DAY_OF_WEEK IN ('Sunday');",
+    "pair_id": "fa6e1133",
+    "original_question_id": "abfddb45",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List distinct `dim_geography`.`area_accident_occurred` for accidents where `fact_accident`.`number_of_casualties` > 5 OR `dim_time`.`day_of_week` = 'Sunday'. Join `fact_accident` with `dim_time` on `fact_accident`.`time_id` = `dim_time`.`time_id` and with `dim_geography` on `fact_accident`.`geography_id` = `dim_geography`.`geography_id`."
+  },
+  {
+    "question": "দুর্ঘটনা ঘটেছে এমন এলাকাগুলি তালিকাভুক্ত করুন, বর্ণানুক্রমিক ক্রমে সাজানো, সেই এলাকাগুলির জন্য যেখানে একটি একক দুর্ঘটনায় সর্বাধিক হতাহতের সংখ্যা ৫ অতিক্রম করে বা সপ্তাহের দিনগুলির রেকর্ড করা সংখ্যা ১ এর চেয়ে বেশি।",
+    "sql": "SELECT T1.AREA_ACCIDENT_OCCURRED FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID GROUP BY T1.AREA_ACCIDENT_OCCURRED HAVING MAX(T2.NUMBER_OF_CASUALTIES) > 5 OR COUNT(T3.DAY_OF_WEEK) > 1 ORDER BY T1.AREA_ACCIDENT_OCCURRED",
+    "pair_id": "8d4fc698",
+    "original_question_id": "abfddb45",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_geography.area_accident_occurred` alphabetically for areas where either the maximum `fact_accident.number_of_casualties` per accident in that area > 5, or the count of distinct `dim_time.day_of_week` for accidents in that area > 1. Join `fact_accident` with `dim_geography` on `geography_id` and with `dim_time` on `time_id`."
+  },
+  {
+    "question": "যে সকল স্থানে কমপক্ষে পাঁচজনের বেশি হতাহত ব্যক্তি সহ একটি দুর্ঘটনা ঘটেছে অথবা রবিবার বা সোমবার কমপক্ষে একটি দুর্ঘটনা ঘটেছে সেই সকল স্থানের জন্য দুর্ঘটনা ঘটেছে এমন এলাকাগুলি তালিকাভুক্ত করুন এবং ফলাফলগুলি এলাকার নাম অনুযায়ী বর্ণানুক্রমে সাজান।",
+    "sql": "SELECT T2.AREA_ACCIDENT_OCCURRED FROM FACT_ACCIDENT AS T1 INNER JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID GROUP BY T2.AREA_ACCIDENT_OCCURRED HAVING SUM(CASE WHEN T1.NUMBER_OF_CASUALTIES > 5 THEN 1 ELSE 0 END) > 0 OR SUM(CASE WHEN T3.DAY_OF_WEEK IN ('Sunday', 'Monday') THEN 1 ELSE 0 END) > 0 ORDER BY T2.AREA_ACCIDENT_OCCURRED ASC",
+    "pair_id": "6036219b",
+    "original_question_id": "abfddb45",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `dim_geography`.`area_accident_occurred` from `fact_accident` join `dim_geography` on `fact_accident`.`geography_id` = `dim_geography`.`geography_id` join `dim_time` on `fact_accident`.`time_id` = `dim_time`.`time_id` where `fact_accident`.`number_of_casualties` > 5 or `dim_time`.`day_of_week` in ('Sunday', 'Monday') order by `dim_geography`.`area_accident_occurred` asc."
+  },
+  {
+    "question": "রবিবার ঘটে যাওয়া এবং একাধিক যানবাহন জড়িত সমস্ত ঘটনার জন্য দুর্ঘটনা ঘটেছে এমন এলাকাগুলি তালিকাভুক্ত করুন, দুর্ঘটনা এলাকা অনুযায়ী গ্রুপ করা এবং সাজানো।",
+    "sql": "SELECT T2.AREA_ACCIDENT_OCCURRED FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Sunday' AND T1.NUMBER_OF_VEHICLES_INVOLVED > 1 AND T3.DAY_OF_WEEK = 'Sunday' GROUP BY T2.AREA_ACCIDENT_OCCURRED ORDER BY T2.AREA_ACCIDENT_OCCURRED",
+    "pair_id": "d26b618e",
+    "original_question_id": "652c6517",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List the distinct `dim_geography`.`area_accident_occurred` for accidents that occurred on Sunday (`dim_time`.`day_of_week` = 'Sunday') and involved more than one vehicle (`fact_accident`.`number_of_vehicles_involved` > 1). Group and order the results by `dim_geography`.`area_accident_occurred`."
+  },
+  {
+    "question": "রবিবারে একাধিক যানবাহন জড়িত ঘটনায় যেসব এলাকায় দুর্ঘটনা ঘটেছে তার তালিকা করুন, বিশেষত সেসব এলাকা যেখানে সোমবারে কোনো দুর্ঘটনা ঘটেনি।",
+    "sql": "SELECT T2.AREA_ACCIDENT_OCCURRED FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Sunday' AND T1.NUMBER_OF_VEHICLES_INVOLVED > 1 GROUP BY T2.AREA_ACCIDENT_OCCURRED HAVING COUNT(CASE WHEN T3.DAY_OF_WEEK = 'Monday' THEN 1 END) = 0",
+    "pair_id": "9f67d6f2",
+    "original_question_id": "652c6517",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": ""
+  },
+  {
+    "question": "প্রতিটি এলাকায় যেখানে দুর্ঘটনা ঘটেছে, এলাকার নাম এবং গড় হতাহতের সংখ্যা তালিকাভুক্ত করুন, সর্বোচ্চ থেকে সর্বনিম্ন গড় হতাহতের সংখ্যা অনুযায়ী সাজানো।",
+    "sql": "SELECT T1.AREA_ACCIDENT_OCCURRED, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.AREA_ACCIDENT_OCCURRED ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "b844e893",
+    "original_question_id": "fd5041c4",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "List each distinct `dim_geography.area_accident_occurred` and compute the average of `fact_accident.number_of_casualties` per area. Join `fact_accident` and `dim_geography` on `geography_id`. Group by `dim_geography.area_accident_occurred`. Order by the average casualties descending."
+  },
+  {
+    "question": "প্রতিটি এলাকার জন্য যেখানে একটি দুর্ঘটনা ঘটেছে, এলাকার নাম এবং গড় হতাহতের সংখ্যা তালিকাভুক্ত করুন, গড় হতাহতের সংখ্যা অনুযায়ী অবরোহী ক্রমে সাজানো।",
+    "sql": "SELECT T1.AREA_ACCIDENT_OCCURRED, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.AREA_ACCIDENT_OCCURRED ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "df672efe",
+    "original_question_id": "fd5041c4",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_geography`.`area_accident_occurred` to get each area where accidents occurred. Compute the average of `fact_accident`.`number_of_casualties` per area. Sort results by the average casualties in descending order. Join `fact_accident` and `dim_geography` on `geography_id`."
+  },
+  {
+    "question": "দুর্ঘটনা ঘটেছে এমন এলাকাগুলি তালিকাভুক্ত করুন যেখানে গড় হতাহতের সংখ্যা ১ এর চেয়ে বেশি, এবং এই গড় অনুযায়ী ফলাফলগুলি অবরোহী ক্রমে সাজান।",
+    "sql": "SELECT T1.AREA_ACCIDENT_OCCURRED FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.AREA_ACCIDENT_OCCURRED HAVING AVG(T2.NUMBER_OF_CASUALTIES) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "49d23186",
+    "original_question_id": "fd5041c4",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_geography`.`area_accident_occurred`. Compute AVG(`fact_accident`.`number_of_casualties`) as average_casualties. Filter where average_casualties > 1. Order by average_casualties DESC."
+  },
+  {
+    "question": "প্রতিটি এলাকার জন্য যেখানে একটি দুর্ঘটনা ঘটেছে, যদি একাধিক দুর্ঘটনা রেকর্ড করা হয়েছে, এলাকার নাম এবং গড় হতাহতের সংখ্যা তালিকাভুক্ত করুন, সর্বোচ্চ গড় থেকে সর্বনিম্ন পর্যন্ত সাজানো।",
+    "sql": "SELECT T1.AREA_ACCIDENT_OCCURRED, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.AREA_ACCIDENT_OCCURRED HAVING COUNT(T2.ACCIDENT_ID) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "9f31bb55",
+    "original_question_id": "fd5041c4",
+    "schema_used": [
+      "DIM_GEOGRAPHY",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_accident` and `dim_geography` on `geography_id`. Group by `dim_geography.area_accident_occurred`. Filter groups where COUNT(`fact_accident.accident_id`) > 1. Compute AVG(`fact_accident.number_of_casualties`) per area. Sort results descending by the average casualties."
+  },
+  {
+    "question": "দুইয়ের বেশি আহতের সংখ্যা সহ দুর্ঘটনাগুলির জন্য আলোর অবস্থা তালিকাভুক্ত করুন, বিশেষত সেই আলোর অবস্থাগুলির জন্য যা রেকর্ডে একাধিকবার প্রদর্শিত হয়।",
+    "sql": "SELECT T2.LIGHT_CONDITIONS FROM FACT_ACCIDENT AS T1 JOIN DIM_ENVIRONMENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID WHERE T1.NUMBER_OF_CASUALTIES > 2 GROUP BY T2.LIGHT_CONDITIONS HAVING COUNT(T2.LIGHT_CONDITIONS) > 1",
+    "pair_id": "2736c3fd",
+    "original_question_id": "8c7df621",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `fact_accident` where `fact_accident`.`number_of_casualties` > 2. Join with `dim_environment` on `fact_accident`.`environment_id` = `dim_environment`.`environment_id`. Group by `dim_environment`.`light_conditions` and count occurrences. Select `dim_environment`.`light_conditions` where count > 1."
+  },
+  {
+    "question": "দুর্ঘটনাগুলির জন্য স্বতন্ত্র আলোর অবস্থা তালিকাভুক্ত করুন যেখানে হতাহতের সংখ্যা দুইয়ের বেশি এবং সপ্তাহের দিন রবিবার নয়, আলোর অবস্থা অনুযায়ী বর্ণানুক্রমে সাজানো।",
+    "sql": "SELECT DISTINCT T2.LIGHT_CONDITIONS FROM FACT_ACCIDENT AS T1 JOIN DIM_ENVIRONMENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T1.NUMBER_OF_CASUALTIES > 2 AND T3.DAY_OF_WEEK != 'Sunday' ORDER BY T2.LIGHT_CONDITIONS ASC",
+    "pair_id": "71d5f8f4",
+    "original_question_id": "8c7df621",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve distinct `dim_environment.light_conditions` from `fact_accident` joined with `dim_time` on `fact_accident.time_id` = `dim_time.time_id` and joined with `dim_environment` on `fact_accident.environment_id` = `dim_environment.environment_id`. Filter where `fact_accident.number_of_casualties` > 2 and `dim_time.day_of_week` != 'Sunday'. Sort results alphabetically by `dim_environment.light_conditions`."
+  },
+  {
+    "question": "আলোর অবস্থা, আবহাওয়ার অবস্থা এবং মোট হতাহতের সংখ্যা দেখান, আলো এবং আবহাওয়া উভয় অবস্থা অনুযায়ী গ্রুপ করা হয়েছে, এবং হতাহতের সর্বোচ্চ যোগফল থেকে সর্বনিম্ন পর্যন্ত ক্রমানুসারে সাজানো হয়েছে।",
+    "sql": "SELECT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS, SUM(T2.NUMBER_OF_CASUALTIES) FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS ORDER BY SUM(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "cddd642a",
+    "original_question_id": "0d8fdda5",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_environment`.`light_conditions`, `dim_environment`.`weather_conditions`, SUM(`fact_accident`.`number_of_casualties`) as total_casualties from `fact_accident` join `dim_environment` on `fact_accident`.`environment_id` = `dim_environment`.`environment_id` group by `dim_environment`.`light_conditions`, `dim_environment`.`weather_conditions` order by total_casualties desc."
+  },
+  {
+    "question": "আলোর অবস্থা এবং আবহাওয়ার অবস্থা তালিকাভুক্ত করুন প্রতিটি সমন্বয়ের জন্য মোট হতাহতের সংখ্যা সহ, আলো এবং আবহাওয়ার অবস্থা অনুযায়ী গোষ্ঠীভুক্ত করুন এবং মোট হতাহত অনুযায়ী অবরোহী ক্রমে সাজান।",
+    "sql": "SELECT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS, SUM(T2.NUMBER_OF_CASUALTIES) FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS ORDER BY SUM(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "0bb2c4d3",
+    "original_question_id": "0d8fdda5",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Sum `fact_accident.number_of_casualties` for each combination of `dim_environment.light_conditions` and `dim_environment.weather_conditions`. Join `fact_accident` with `dim_environment` on `environment_id`. Group by both conditions and order by total casualties descending."
+  },
+  {
+    "question": "সমস্ত পরিবেশগত সেটিংসের জন্য আলোর অবস্থা এবং আবহাওয়ার অবস্থা তালিকাভুক্ত করুন যেখানে মোট হতাহতের সংখ্যা ২ এর বেশি, এবং মোট হতাহতের যোগফলের উপর ভিত্তি করে এই ফলাফলগুলি অবরোহী ক্রমে প্রদর্শন করুন।",
+    "sql": "SELECT T2.LIGHT_CONDITIONS, T2.WEATHER_CONDITIONS FROM FACT_ACCIDENT AS T1 JOIN DIM_ENVIRONMENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T2.LIGHT_CONDITIONS, T2.WEATHER_CONDITIONS HAVING SUM(T1.NUMBER_OF_CASUALTIES) > 2 ORDER BY SUM(T1.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "bbc25a79",
+    "original_question_id": "0d8fdda5",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct `dim_environment`.`light_conditions` and `dim_environment`.`weather_conditions` from `dim_environment` joined with `fact_accident` on `dim_environment`.`environment_id` = `fact_accident`.`environment_id` where `fact_accident`.`number_of_casualties` > 2. Group by `dim_environment`.`light_conditions` and `dim_environment`.`weather_conditions`. Sum `fact_accident`.`number_of_casualties` for each group and order by this sum in descending order."
+  },
+  {
+    "question": "আলোর অবস্থা এবং আবহাওয়ার অবস্থা তালিকাভুক্ত করুন প্রতিটি সমন্বয়ের জন্য মোট হতাহতের সংখ্যা সহ, যেখানে মোট হতাহত ২ এর বেশি, এবং ফলাফলগুলি সর্বোচ্চ সংখ্যক হতাহত থেকে সর্বনিম্ন পর্যন্ত অর্ডার করুন।",
+    "sql": "SELECT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS, SUM(T2.NUMBER_OF_CASUALTIES) FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS HAVING SUM(T2.NUMBER_OF_CASUALTIES) > 2 ORDER BY SUM(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "a914e6b9",
+    "original_question_id": "0d8fdda5",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Group by `dim_environment.light_conditions` and `dim_environment.weather_conditions`, sum `fact_accident.number_of_casualties` for each group, filter where sum > 2, order by sum descending."
+  },
+  {
+    "question": "সমস্ত দুর্ঘটনার জন্য রেকর্ড করা স্বতন্ত্র আলোর অবস্থা এবং আবহাওয়ার অবস্থা তালিকাভুক্ত করুন এবং আলোর অবস্থা অনুযায়ী ফলাফলগুলি সাজান।",
+    "sql": "SELECT DISTINCT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID ORDER BY T1.LIGHT_CONDITIONS",
+    "pair_id": "7e40fd48",
+    "original_question_id": "4ad9e406",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "List distinct pairs of (`dim_environment`.`light_conditions`, `dim_environment`.`weather_conditions`) from all accidents by joining `fact_accident` with `dim_environment` on `fact_accident`.`environment_id` = `dim_environment`.`environment_id`. Sort the results by `dim_environment`.`light_conditions`."
+  },
+  {
+    "question": "দুর্ঘটনার জন্য রেকর্ড করা স্বতন্ত্র আলোর অবস্থা এবং আবহাওয়ার অবস্থা তালিকাভুক্ত করুন, আলোর অবস্থা অনুযায়ী বর্ণানুক্রমিক ক্রমে সাজানো।",
+    "sql": "SELECT DISTINCT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID ORDER BY T1.LIGHT_CONDITIONS ASC",
+    "pair_id": "5e66cfee",
+    "original_question_id": "4ad9e406",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": ""
+  },
+  {
+    "question": "প্রতিটি অনন্য সমন্বয়ের জন্য আলোর অবস্থা এবং আবহাওয়ার অবস্থা তালিকাভুক্ত করুন যা কমপক্ষে একটি দুর্ঘটনার সাথে যুক্ত।",
+    "sql": "SELECT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS HAVING COUNT(T2.ACCIDENT_ID) >= 1",
+    "pair_id": "38a1b6a9",
+    "original_question_id": "4ad9e406",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List distinct combinations of (`dim_environment`.`light_conditions`, `dim_environment`.`weather_conditions`) that appear in at least one accident record. Join `fact_accident` to `dim_environment` on `fact_accident`.`environment_id` = `dim_environment`.`environment_id` to ensure the combination is associated with an accident. Use SELECT DISTINCT or GROUP BY on both columns."
+  },
+  {
+    "question": "সমস্ত পরিবেশের জন্য স্বতন্ত্র আলোর অবস্থা এবং আবহাওয়ার অবস্থা তালিকাভুক্ত করুন যেখানে কমপক্ষে একটি দুর্ঘটনা রেকর্ড করা হয়েছে, এবং আলোর অবস্থা অনুযায়ী ফলাফলগুলি বর্ণানুক্রমে সাজান।",
+    "sql": "SELECT DISTINCT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS HAVING COUNT(T2.ACCIDENT_ID) >= 1 ORDER BY T1.LIGHT_CONDITIONS ASC",
+    "pair_id": "c589abbd",
+    "original_question_id": "4ad9e406",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Join `fact_accident` with `dim_environment` on `fact_accident`.`environment_id` = `dim_environment`.`environment_id`. Select distinct `dim_environment`.`light_conditions` and `dim_environment`.`weather_conditions`. Order by `dim_environment`.`light_conditions` alphabetically."
+  },
+  {
+    "question": "দুর্ঘটনার আইডি তালিকা করুন যেখানে হতাহতের সংখ্যা ২ এর চেয়ে বেশি এবং আলোর অবস্থা 'অন্ধকার - কোনো আলো নেই', হতাহতের সংখ্যা অনুযায়ী অবরোহী ক্রমে সাজানো।",
+    "sql": "SELECT T1.ACCIDENT_ID FROM FACT_ACCIDENT AS T1 JOIN DIM_ENVIRONMENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID WHERE T1.NUMBER_OF_CASUALTIES > 2 AND T2.LIGHT_CONDITIONS = 'Darkness - no lighting' ORDER BY T1.NUMBER_OF_CASUALTIES DESC",
+    "pair_id": "5b96834d",
+    "original_question_id": "83ddaf55",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "DIM_ACCIDENT_EVENT",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Retrieve (`fact_accident`.`accident_id`) from `fact_accident` joined with `dim_environment` on (`fact_accident`.`environment_id`) = (`dim_environment`.`environment_id`) where (`fact_accident`.`number_of_casualties`) > 2 and (`dim_environment`.`light_conditions`) = 'Darkness - no lighting', sorted descending by (`fact_accident`.`number_of_casualties`)."
+  },
+  {
+    "question": "যে পরিবেশগুলিতে আলোর অবস্থা 'অন্ধকার - কোনো আলো নেই' তার জন্য প্রতিটি পরিবেশ আইডি এবং দুর্ঘটনা আইডির মোট সংখ্যা তালিকাভুক্ত করুন, শর্ত সাপেক্ষে যে সেই পরিবেশ আইডির জন্য হতাহতের সংখ্যার যোগফল ৫ এর চেয়ে বেশি।",
+    "sql": "SELECT T1.ENVIRONMENT_ID, COUNT(T2.ACCIDENT_ID) FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID WHERE T1.LIGHT_CONDITIONS = 'Darkness - no lighting' GROUP BY T1.ENVIRONMENT_ID HAVING SUM(T2.NUMBER_OF_CASUALTIES) > 5",
+    "pair_id": "1640e576",
+    "original_question_id": "83ddaf55",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "DIM_ACCIDENT_EVENT",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List each `dim_environment.environment_id` and the count of distinct `fact_accident.accident_id` for records where `dim_environment.light_conditions` = 'Darkness - no lighting', grouped by `dim_environment.environment_id`, having SUM(`fact_accident.number_of_casualties`) > 5."
+  },
+  {
+    "question": "দুর্ঘটনা আইডি এবং প্রতিটি দুর্ঘটনার জন্য মোট হতাহতের সংখ্যা তালিকাভুক্ত করুন যেখানে আলোর অবস্থা ছিল 'অন্ধকার - কোনো আলো নেই' এবং সংঘর্ষের ধরন ছিল 'যানবাহন সহ যানবাহন সংঘর্ষ', বিশেষত সেই দুর্ঘটনাগুলির জন্য যেখানে মোট হতাহতের সংখ্যা ৫ এর বেশি, সর্বোচ্চ সংখ্যক হতাহত থেকে সর্বনিম্ন পর্যন্ত ক্রমানুসারে সাজানো।",
+    "sql": "SELECT T1.ACCIDENT_ID, SUM(T1.NUMBER_OF_CASUALTIES) FROM FACT_ACCIDENT AS T1 INNER JOIN DIM_ENVIRONMENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID INNER JOIN DIM_ACCIDENT_EVENT AS T3 ON T1.ACCIDENT_EVENT_ID = T3.ACCIDENT_EVENT_ID WHERE T2.LIGHT_CONDITIONS = 'Darkness - no lighting' AND T3.TYPE_OF_COLLISION = 'Vehicle with vehicle collision' GROUP BY T1.ACCIDENT_ID HAVING SUM(T1.NUMBER_OF_CASUALTIES) > 5 ORDER BY SUM(T1.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "547dfb70",
+    "original_question_id": "83ddaf55",
+    "schema_used": [
+      "DIM_ENVIRONMENT",
+      "DIM_ACCIDENT_EVENT",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `fact_accident`.`accident_id` and `fact_accident`.`number_of_casualties` from `fact_accident` join `dim_environment` on `fact_accident`.`environment_id` = `dim_environment`.`environment_id` join `dim_accident_event` on `fact_accident`.`accident_event_id` = `dim_accident_event`.`accident_event_id` where `dim_environment`.`light_conditions` = 'Darkness - no lighting' and `dim_accident_event`.`type_of_collision` = 'Vehicle with vehicle collision' and `fact_accident`.`number_of_casualties` > 5 order by `fact_accident`.`number_of_casualties` desc."
+  },
+  {
+    "question": "প্রতিটি দুর্ঘটনার গুরুত্ব এবং সেই গুরুত্বের ঘটনার সংখ্যা তালিকাভুক্ত করুন, বিশেষভাবে ১-২ বছরের ড্রাইভিং অভিজ্ঞতা সম্পন্ন চালকদের জন্য, যেখানে গ্রুপের গড় দুর্ঘটনা আইডি ১ এর চেয়ে বেশি, দুর্ঘটনার গুরুত্ব অনুযায়ী সাজানো।",
+    "sql": "SELECT T1.ACCIDENT_SEVERITY, COUNT(T1.ACCIDENT_SEVERITY) FROM FACT_ACCIDENT AS T1 JOIN DIM_DRIVER AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID WHERE T2.DRIVING_EXPERIENCE = '1-2yr' GROUP BY T1.ACCIDENT_SEVERITY HAVING AVG(T1.ACCIDENT_ID) > 1 ORDER BY T1.ACCIDENT_SEVERITY",
+    "pair_id": "b73a538f",
+    "original_question_id": "a6af3ff2",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_driver.driving_experience` = '1-2yr'. Join `dim_driver` to `fact_accident` on `driver_id`. Group by `fact_accident.accident_severity`. Select `fact_accident.accident_severity` and COUNT(*) as incident_count. Compute AVG(`fact_accident.accident_id`) per group and keep only groups where AVG(`fact_accident.accident_id`) > 1. Order by `fact_accident.accident_severity`."
+  },
+  {
+    "question": "ড্রাইভার ডাইমেনশন থেকে সমস্ত কলাম এবং বিবরণ দেখান যেসব ড্রাইভারদের ১-২ বছরের ড্রাইভিং অভিজ্ঞতা রয়েছে অথবা যাদের শিক্ষাগত স্তর মাধ্যমিক বিদ্যালয়।",
+    "sql": "SELECT * FROM DIM_DRIVER WHERE DRIVING_EXPERIENCE = '1-2yr' OR EDUCATIONAL_LEVEL = 'Junior high school';",
+    "pair_id": "d3c43b0a",
+    "original_question_id": "39b87aeb",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Select all columns from `dim_driver` where `dim_driver`.`driving_experience` = '1-2yr' OR `dim_driver`.`educational_level` = 'High school'."
+  },
+  {
+    "question": "চালকের আইডি এবং চালকের বয়স ব্যান্ড তালিকাভুক্ত করুন সমস্ত রেকর্ডের জন্য যেখানে ড্রাইভিং অভিজ্ঞতা '1-2yr' বা শিক্ষাগত স্তর 'জুনিয়র হাই স্কুল', চালক আইডি দ্বারা অর্ডার করা।",
+    "sql": "SELECT DRIVER_ID, AGE_BAND_OF_DRIVER FROM DIM_DRIVER WHERE DRIVING_EXPERIENCE = '1-2yr' OR EDUCATIONAL_LEVEL = 'Junior high school' ORDER BY DRIVER_ID",
+    "pair_id": "4958cea5",
+    "original_question_id": "39b87aeb",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_driver`.`driver_id` and `dim_driver`.`age_band_of_driver` from `dim_driver` where `dim_driver`.`driving_experience` = '1-2yr' or `dim_driver`.`educational_level` = 'Junior high school' order by `dim_driver`.`driver_id`."
+  },
+  {
+    "question": "চালকদের জন্য চালনা অভিজ্ঞতার স্তর এবং দুর্ঘটনা আইডির মোট সংখ্যা তালিকাভুক্ত করুন যারা হয় '১-২ বছর' চালনা অভিজ্ঞতা রাখেন বা 'জুনিয়র হাই স্কুল' শিক্ষাগত স্তর রাখেন, চালনা অভিজ্ঞতা অনুযায়ী ফলাফল গ্রুপ করুন এবং শুধুমাত্র সেই গ্রুপগুলি অন্তর্ভুক্ত করুন যেখানে ১টির বেশি দুর্ঘটনা রয়েছে।",
+    "sql": "SELECT T1.DRIVING_EXPERIENCE, COUNT(T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID WHERE T1.DRIVING_EXPERIENCE = '1-2yr' OR T1.EDUCATIONAL_LEVEL = 'Junior high school' GROUP BY T1.DRIVING_EXPERIENCE HAVING COUNT(T2.ACCIDENT_ID) > 1",
+    "pair_id": "e1d7950c",
+    "original_question_id": "39b87aeb",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "List `dim_driver.driving_experience` and count of `fact_accident.accident_id` for drivers where `dim_driver.driving_experience` = '1-2yr' OR `dim_driver.educational_level` = 'Junior high school'. Group by `dim_driver.driving_experience` and keep groups with count > 1."
+  },
+  {
+    "question": "চালকের আইডি, চালকের বয়স ব্যান্ড এবং চালকের লিঙ্গ তালিকাভুক্ত করুন, প্রতিটি চালকের জন্য মোট দুর্ঘটনার সংখ্যা সহ, বিশেষভাবে যাদের ১-২ বছরের ড্রাইভিং অভিজ্ঞতা রয়েছে বা যাদের শিক্ষাগত স্তর 'জুনিয়র হাই স্কুল', শূন্য দুর্ঘটনা সহ তাদের অন্তর্ভুক্ত করে, এবং ফলাফলগুলি দুর্ঘটনার সংখ্যা অনুযায়ী অবরোহী ক্রমে সাজান।",
+    "sql": "SELECT T1.DRIVER_ID, T1.AGE_BAND_OF_DRIVER, T1.SEX_OF_DRIVER, COUNT(T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 LEFT JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID LEFT JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.DRIVING_EXPERIENCE = '1-2yr' OR T1.EDUCATIONAL_LEVEL = 'Junior high school' GROUP BY T1.DRIVER_ID, T1.AGE_BAND_OF_DRIVER, T1.SEX_OF_DRIVER HAVING COUNT(T2.ACCIDENT_ID) >= 0 ORDER BY COUNT(T2.ACCIDENT_ID) DESC",
+    "pair_id": "cab01d87",
+    "original_question_id": "39b87aeb",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_driver`.`driver_id`, `dim_driver`.`age_band_of_driver`, `dim_driver`.`sex_of_driver`, COUNT(`fact_accident`.`accident_id`) AS total_accidents. From `dim_driver` LEFT JOIN `fact_accident` ON `dim_driver`.`driver_id` = `fact_accident`.`driver_id`. Filter where `dim_driver`.`driving_experience` = '1-2yr' OR `dim_driver`.`educational_level` = 'Junior high school'. Group by `dim_driver`.`driver_id`, `dim_driver`.`age_band_of_driver`, `dim_driver`.`sex_of_driver`. Order by total_accidents DESC."
+  },
+  {
+    "question": "প্রতিটি শিক্ষাগত স্তর এবং ড্রাইভিং অভিজ্ঞতার সমন্বয়ের জন্য শিক্ষাগত স্তর, ড্রাইভিং অভিজ্ঞতা এবং গড় হতাহতের সংখ্যা তালিকাভুক্ত করুন, গড় হতাহতের সংখ্যা অনুযায়ী সাজানো।",
+    "sql": "SELECT T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE ORDER BY AVG(T2.NUMBER_OF_CASUALTIES)",
+    "pair_id": "2376f2ec",
+    "original_question_id": "a069466e",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_0",
+    "difficulty": "easy",
+    "similarity_score": 0.0,
+    "evidence": "Group by (`dim_driver`.`educational_level`, `dim_driver`.`driving_experience`), compute average of `fact_accident`.`number_of_casualties` for each group, and order by the average casualties."
+  },
+  {
+    "question": "চালকদের শিক্ষাগত স্তর এবং ড্রাইভিং অভিজ্ঞতা তালিকাভুক্ত করুন, প্রতিটি দুর্ঘটনায় গড় হতাহতের সংখ্যা সহ, তাদের শিক্ষাগত স্তর এবং ড্রাইভিং অভিজ্ঞতা অনুযায়ী গোষ্ঠীভুক্ত করুন, এবং গড় হতাহতের সংখ্যা অনুযায়ী অবরোহী ক্রমে সাজান।",
+    "sql": "SELECT T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+    "pair_id": "0c81d217",
+    "original_question_id": "a069466e",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_1",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_driver`.`educational_level`, `dim_driver`.`driving_experience`, AVG(`fact_accident`.`number_of_casualties`) as avg_casualties from `dim_driver` join `fact_accident` on `dim_driver`.`driver_id` = `fact_accident`.`driver_id` group by `dim_driver`.`educational_level`, `dim_driver`.`driving_experience` order by avg_casualties desc."
+  },
+  {
+    "question": "চালকদের শিক্ষাগত স্তর এবং ড্রাইভিং অভিজ্ঞতা তালিকাভুক্ত করুন, এই দুটি বৈশিষ্ট্য অনুযায়ী গ্রুপ করুন, যেখানে দুর্ঘটনায় গড় হতাহতের সংখ্যা একের চেয়ে বেশি, এবং সেই গড় মূল্য অনুযায়ী ফলাফল সাজান।",
+    "sql": "SELECT T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE HAVING AVG(T2.NUMBER_OF_CASUALTIES) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES);",
+    "pair_id": "b4058904",
+    "original_question_id": "a069466e",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select `dim_driver`.`educational_level` and `dim_driver`.`driving_experience`, compute AVG(`fact_accident`.`number_of_casualties`) as avg_casualties. From `fact_accident` join `dim_driver` on `fact_accident`.`driver_id` = `dim_driver`.`driver_id`. Group by `dim_driver`.`educational_level`, `dim_driver`.`driving_experience`. Having AVG(`fact_accident`.`number_of_casualties`) > 1. Order by avg_casualties."
+  },
+  {
+    "question": "৩১-৫০ বা ১৮-৩০ বয়সের পুরুষ চালকদের জন্য তাদের শিক্ষাগত স্তর এবং ড্রাইভিং অভিজ্ঞতা সহ প্রতিটি দুর্ঘটনায় গড় হতাহতের সংখ্যা তালিকাভুক্ত করুন, বিশেষত সেই গোষ্ঠীগুলির জন্য যাদের একাধিক দুর্ঘটনা রয়েছে, এবং গড় হতাহত সংখ্যা অনুযায়ী ফলাফলগুলি অবরোহী ক্রমে সাজান।",
+    "sql": "SELECT T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.AGE_BAND_OF_DRIVER IN ('31-50', '18-30') AND T1.SEX_OF_DRIVER = 'Male' GROUP BY T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE HAVING COUNT(T2.ACCIDENT_ID) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC;",
+    "pair_id": "0b93f640",
+    "original_question_id": "a069466e",
+    "schema_used": [
+      "DIM_DRIVER",
+      "FACT_ACCIDENT",
+      "BRIDGE_ACCIDENT_CASUALTY"
+    ],
+    "skeleton_id": "skel_3",
+    "difficulty": "hard",
+    "similarity_score": 0.0,
+    "evidence": "Filter `dim_driver`.`sex_of_driver` = 'Male' and `dim_driver`.`age_band_of_driver` IN ('31-50', '18-30'). Group by `dim_driver`.`educational_level` and `dim_driver`.`driving_experience`. Compute AVG(`fact_accident`.`number_of_casualties`) per group. Keep only groups with COUNT(`fact_accident`.`accident_id`) > 1. Order by average casualties DESC."
+  },
+  {
+    "question": "কমপক্ষে একটি দুর্ঘটনায় জড়িত চালকদের শিক্ষাগত স্তর তালিকাভুক্ত করুন যা রবিবার ঘটেছিল, এবং এই শিক্ষাগত স্তরগুলি ঊর্ধ্বমুখী বর্ণানুক্রমিক ক্রমে প্রদর্শন করুন।",
+    "sql": "SELECT T1.EDUCATIONAL_LEVEL FROM DIM_DRIVER T1 JOIN FACT_ACCIDENT T0 ON T1.DRIVER_ID = T0.DRIVER_ID JOIN DIM_TIME T2 ON T0.TIME_ID = T2.TIME_ID WHERE T2.DAY_OF_WEEK = 'Sunday' GROUP BY T1.EDUCATIONAL_LEVEL HAVING COUNT(T0.ACCIDENT_ID) > 0 ORDER BY T1.EDUCATIONAL_LEVEL ASC",
+    "pair_id": "0469fe97",
+    "original_question_id": "129555ef",
+    "schema_used": [
+      "DIM_TIME",
+      "DIM_DRIVER",
+      "FACT_ACCIDENT"
+    ],
+    "skeleton_id": "skel_2",
+    "difficulty": "medium",
+    "similarity_score": 0.0,
+    "evidence": "Select distinct educational levels from drivers involved in accidents that occurred on Sunday. Use `fact_accident` to link `dim_time` (for day of week) and `dim_driver` (for educational level). Filter where `dim_time`.`day_of_week` = 'Sunday'. Select DISTINCT `dim_driver`.`educational_level`. Order by `dim_driver`.`educational_level` ASC."
+  }
+]
