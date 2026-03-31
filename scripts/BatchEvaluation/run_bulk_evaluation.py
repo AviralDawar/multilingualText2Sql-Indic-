@@ -160,7 +160,7 @@ def parse_results(db_name: str, model_slug: str) -> Dict[str, str]:
         lang = "English"
         for l in ["hindi", "bengali", "tamil", "telugu", "marathi", "hinglish"]:
             if l in f.name.lower():
-                lang = l.capitalize()
+                lang = "Hindi Romanized" if l == "hinglish" else l.capitalize()
                 break
         
         em_count = 0
@@ -227,7 +227,7 @@ def main():
             f.write("| --- | --- | --- | --- |\n")
             
             for db in sorted(all_stats.keys()):
-                langs = ["English", "Hinglish", "Hindi", "Bengali", "Tamil", "Telugu", "Marathi"]
+                langs = ["English", "Hindi Romanized", "Hindi", "Bengali", "Tamil", "Telugu", "Marathi"]
                 for lang in langs:
                     res = all_stats[db].get(lang, "N/A")
                     

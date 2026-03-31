@@ -1,12 +1,12 @@
 # Text2SQL Evaluation Results: qwen/qwen3-8b
-*(Sampled 100 questions per DB - Updated after INDIA_PRIMARY_POPULATION_CENSUS_1991)*
+*(Sampled 100 questions per DB - Updated after INDIA_Economic_Census_Firms)*
 
 | Database | Language | Knowledge File | Results (EM, EX) |
 | --- | --- | --- | --- |
-| INDIA_PRIMARY_POPULATION_CENSUS_1991 | English | INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence.json | 12/63 (EM), 45/63 (EX) |
-| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Hinglish | INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence_hinglish.json | 11/63 (EM), 39/63 (EX) |
-| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Hindi | INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence_hindi.json | 10/63 (EM), 35/63 (EX) |
-| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Bengali | INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence_bengali.json | 8/62 (EM), 38/62 (EX) |
-| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Tamil | INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence_tamil.json | 9/57 (EM), 30/57 (EX) |
-| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Telugu | INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence_telugu.json | 10/57 (EM), 25/57 (EX) |
-| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Marathi | INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence_marathi.json | 11/61 (EM), 39/61 (EX) |
+| INDIA_Economic_Census_Firms | English | INDIA_Economic_Census_Firms_evidence.json | 2/59 (EM), 16/59 (EX) |
+| INDIA_Economic_Census_Firms | Hinglish | INDIA_Economic_Census_Firms_evidence_hinglish.json | 3/59 (EM), 15/59 (EX) |
+| INDIA_Economic_Census_Firms | Hindi | INDIA_Economic_Census_Firms_evidence_hindi.json | 0/59 (EM), 3/59 (EX) |
+| INDIA_Economic_Census_Firms | Bengali | INDIA_Economic_Census_Firms_evidence_bengali.json | 3/58 (EM), 23/58 (EX) |
+| INDIA_Economic_Census_Firms | Tamil | INDIA_Economic_Census_Firms_evidence_tamil.json | 4/59 (EM), 31/59 (EX) |
+| INDIA_Economic_Census_Firms | Telugu | INDIA_Economic_Census_Firms_evidence_telugu.json | 4/55 (EM), 19/55 (EX) |
+| INDIA_Economic_Census_Firms | Marathi | INDIA_Economic_Census_Firms_evidence_marathi.json | 2/58 (EM), 15/58 (EX) |
