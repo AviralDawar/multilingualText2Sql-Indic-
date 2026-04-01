@@ -1,815 +1,387 @@
-# IndicDB - Indian Databases for Text-to-SQL Benchmarking
+# IndicDB
 
-A collection of normalized Indian datasets designed for testing complex SQL reasoning (JOINs, Aggregations, Subqueries) in Text-to-SQL benchmarks.
+IndicDB is a research repository for **benchmarking multilingual Text-to-SQL on Indian public datasets**. It packages a collection of normalized Indian databases, multilingual question sets, schema-aware evidence generation, and evaluation pipelines used for the project described in [IndicDB - Benchmarking Multilingual Text-to-SQL Capabilities in Indian Languages](./IndicDB%20-%20Benchmarking%20Multilingual%20Text-to-SQL%20Capabilities%20in%20Indian%20Languages.pdf).
 
-**Supports both Snowflake and PostgreSQL backends.**
+The core idea is simple: ask Text-to-SQL systems to answer questions in Indian languages while the underlying schemas, column names, and database values remain mostly English and highly relational. That creates pressure on translation, schema linking, value grounding, join reasoning, and execution correctness at the same time.
 
----
+## What This Repository Contains
 
-## Table of Contents
+- A benchmark suite built from **20 Indian-domain relational databases**.
+- **237 tables** and **1,465 columns** across the current released schemas.
+- **7 evaluation languages/forms** in current outputs: English, Hindi, Bengali, Tamil, Telugu, Marathi, and Hinglish.
+- Scripts for database construction, synthetic task generation, multilingual translation, evidence generation, one-shot/few-shot evaluation, metric recomputation, and translation-quality auditing.
+- Stored outputs for model runs, task files, sampled subsets, evaluation JSONLs, COMET analysis, and metric summaries.
 
-1. [Overview](#overview)
-2. [Project Structure](#project-structure)
-3. [Prerequisites](#prerequisites)
-4. [Quick Start with Docker (PostgreSQL)](#quick-start-with-docker-postgresql)
-5. [Pipeline: Creating a New Database](#pipeline-creating-a-new-database)
-   - [Step 1: Download and Prepare Data](#step-1-download-and-prepare-data)
-   - [Step 2: Generate Schema Design (LLM)](#step-2-generate-schema-design-llm)
-   - [Step 3: Parse Schema to YAML Config](#step-3-parse-schema-to-yaml-config)
-   - [Step 4: Run Generic Data Splitter](#step-4-run-generic-data-splitter)
-   - [Step 5: Create Tables](#step-5-create-tables)
-   - [Step 6: Load Data](#step-6-load-data)
-6. [Generate SEED Knowledge File](#generate-seed-knowledge-file)
-7. [Troubleshooting](#troubleshooting)
-8. [Available Databases](#available-databases)
+## Why IndicDB Is Hard
 
----
+- Schemas are deliberately normalized and multi-table, averaging **11.85 tables per database** in the current release.
+- Questions are multilingual, but schemas and many database values are English-coded.
+- Datasets span real public domains such as census, education, health, agriculture, employment, household surveys, and transport.
+- The benchmark stresses both logical reasoning and practical execution: joins, filters, aggregations, nested SQL, and entity/value grounding.
 
-## Overview
+## Benchmark Scope
 
-This project provides a standardized pipeline for:
-- Converting single-table CSV datasets into normalized multi-table databases
-- Creating database schemas with proper foreign key relationships
-- Loading data for Text-to-SQL benchmark evaluation
-- **Supporting both Snowflake and PostgreSQL backends**
+Current repository statistics from the schema notes in [`paper_content/DB_stats.md`](paper_content/DB_stats.md):
 
----
+| Scope | Value |
+| --- | ---: |
+| Databases | 20 |
+| Tables | 237 |
+| Columns | 1,465 |
+| Avg. tables per DB | 11.85 |
+| Avg. columns per table | 6.18 |
 
-## Project Structure
+Domain spread in the current release:
 
-```
+| Domain | DBs |
+| --- | ---: |
+| Household & Social Surveys | 6 |
+| Census & Demography | 4 |
+| Education | 3 |
+| Health & Public Health | 3 |
+| Economy & Employment | 2 |
+| Agriculture | 1 |
+| Transport & Safety | 1 |
+
+## Repository Layout
+
+```text
 IndicDB/
-├── config/
-│   ├── snowflake_credential.json      # Snowflake connection config
-│   ├── postgres_credential.json       # PostgreSQL connection config
-│   ├── postgres_config.template.json  # PostgreSQL config template
-│   └── docker-compose.yml             # Docker setup for PostgreSQL
-├── databases/
-│   ├── INDIA_POPULATION_CENSUS/
-│   │   └── INDIA_POPULATION_CENSUS/
-│   │       ├── data/                  # CSV files for each table
-│   │       ├── *.json                 # Sample rows for each table
-│   │       ├── schema_info.md         # LLM-generated schema design
-│   │       ├── schema_config.yaml     # Machine-readable schema config
-│   │       ├── DDL.csv                # Snowflake table definitions
-│   │       ├── DDL_postgres.csv       # PostgreSQL table definitions
-│   │       └── README.md              # Schema documentation
-│   └── ...
-├── gold/
-│   └── sql/                           # Benchmark SQL queries
-├── scripts/
-│   ├── create_schema_llm_judge.py     # LLM-based schema designer (3-agent pattern)
-│   ├── parse_schema_to_yaml.py        # Parse schema_info.md → schema_config.yaml
-│   ├── generic_split.py               # Config-driven data splitter
-│   ├── db_utils.py                    # Shared database utilities
-│   ├── create_tables.py               # Create tables (Snowflake/PostgreSQL)
-│   ├── load_data.py                   # Load CSV data
-│   ├── run_query.py                   # Run ad-hoc queries
-│   ├── execute_queries.py             # Execute benchmark queries
-│   ├── validate_queries.py            # Validate SQL queries
-│   └── generate_ddl.py                # Auto-generate DDL from CSVs
-└── README.md                          # This file
+|-- databases/                  # Normalized database packages (DDL, CSVs, sample JSONs, schema docs)
+|-- output/                     # Task files, sampled subsets, eval JSONLs, metric summaries, COMET outputs
+|-- results/                    # Consolidated markdown result tables
+|-- evidence_files/             # Language-specific evidence files used during evaluation
+|-- knowledge_files/            # Database knowledge artifacts and SQL-oriented notes
+|-- paper_content/              # Paper support notes, stats, schema diagrams, DDL snippets
+|-- scripts/
+|   |-- BatchEvaluation/        # Batch runners, metric recomputation, COMET analysis
+|   |-- DataSplitScripts/       # Older dataset-specific splitters
+|   |-- LanguageConversionScripts/
+|   |-- OneShot_FewShot/        # Inference and evaluation entrypoints
+|   |-- QueryGeneration/        # Gold/task query generation and validation helpers
+|   |-- CHESS/                  # Included agentic SQL synthesis package and adapters
+|   |-- dsqg_syn/               # DSQG-Syn synthetic Text-to-SQL generation pipeline
+|   `-- *.py                    # Main schema, loading, knowledge, and orchestration scripts
+|-- config/                     # Credential templates and local connection configs
+|-- PROMPTS_README.md           # Prompt snippets used in synthesis workflows
+`-- IndicDB - Benchmarking Multilingual Text-to-SQL Capabilities in Indian Languages.pdf
 ```
 
----
+## Main Workflows
 
-## Prerequisites
+### 1. Build A New Database
 
-### 1. Python Environment
+IndicDB includes a CSV-to-relational pipeline that turns a raw wide file into a normalized PostgreSQL-ready benchmark package:
+
+```text
+raw CSV
+  -> LLM schema design
+  -> schema parser
+  -> table splitting
+  -> DDL generation
+  -> sample JSON generation
+  -> PostgreSQL schema creation
+  -> data loading
+```
+
+The schema-design logic follows the project notes in [`paper_content/DB_creationLogic.md`](paper_content/DB_creationLogic.md): an **Architect -> Auditor -> Refiner** pattern proposes a DIM/FACT-style relational design, checks normalization and joinability, and emits parser-friendly schema descriptions.
+
+### 2. Generate Text-to-SQL Tasks
+
+The repository supports both curated/gold workflows and synthetic generation:
+
+- `scripts/QueryGeneration/` contains SQL generation and validation helpers.
+- `scripts/dsqg_syn/` contains the DSQG-Syn synthetic data generation pipeline.
+- `PROMPTS_README.md` stores the prompt blocks used for synthesis and NLQ generation.
+
+### 3. Translate Tasks Into Indian Languages
+
+The multilingual pipeline translates English task files into Indian languages while trying to preserve SQL-critical schema tokens and values. Current translation tooling lives under `scripts/LanguageConversionScripts/`.
+
+### 4. Add Evidence / Knowledge
+
+IndicDB supports two kinds of supporting context:
+
+- **Database-level knowledge files** from `scripts/create_knowledge_file.py`.
+- **Question-level evidence** from `scripts/SEED.py`.
+
+These artifacts are used to help models ground domain terms and schema semantics during inference.
+
+### 5. Evaluate Models
+
+The main evaluation loop uses:
+
+- `scripts/OneShot_FewShot/run_oneshot.py`
+- `scripts/OneShot_FewShot/run_fewshot.py`
+- `scripts/BatchEvaluation/run_bulk_evaluation.py`
+- `scripts/sql_eval_utils.py` for normalized SQL exact-match recomputation
+
+The repository already includes one-shot evaluation outputs for several models, including:
+
+- `deepseek/deepseek-v3.2`
+- `meta-llama/llama-3.3-70b-instruct`
+- `minimax/minimax-m2.7`
+- `qwen/qwen3-8b`
+
+## Setup
+
+### Python Environment
 
 ```bash
-# Create and activate virtual environment
-python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip3 install -r requirements.txt
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
 ```
 
-### 2. Database Configuration
+### PostgreSQL Config
 
-#### Option A: PostgreSQL
+Most active data-loading and evaluation scripts in this repo target **PostgreSQL**.
 
-Create `config/postgres_credential.json`:
+Create `config/postgres_credential.json` from the template:
 
 ```json
 {
-    "host": "localhost",
-    "port": 5432,
-    "user": "postgres",
-    "password": "your-password",
-    "database": "indicdb"
+  "host": "localhost",
+  "port": 5432,
+  "user": "your_username",
+  "password": "your_password",
+  "database": "indicdb"
 }
 ```
 
----
+The tracked template is available at [`config/postgres_config.template.json`](config/postgres_config.template.json).
 
-## Pipeline: Creating a New Database
+There is also a Snowflake template at [`config/snowflake_config.template.json`](config/snowflake_config.template.json), but the current database creation and benchmark evaluation scripts are centered on PostgreSQL.
 
-The pipeline converts a raw CSV into a normalized multi-table database in 6 steps:
+## Quick Start
 
-```
-CSV → LLM Schema Design → YAML Config → Split Data → Create Tables → Load Data
-```
+### Build Or Refresh A Database Package
 
-### Step 1: Download and Prepare Data
-
-1. Download the CSV file from [NDAP](https://ndap.niti.gov.in/) or other data sources
-2. Rename it to `total_data.csv`
-3. Create the folder structure:
+Run the all-in-one orchestrator:
 
 ```bash
-mkdir -p databases/YOUR_DATABASE_NAME/YOUR_DATABASE_NAME/data
-mv your_downloaded_file.csv databases/YOUR_DATABASE_NAME/YOUR_DATABASE_NAME/data/total_data.csv
+python3 scripts/pipeline.py \
+  --database INDIA_UDISE_SCHOOL_PROFILES \
+  --input databases/INDIA_UDISE_SCHOOL_PROFILES/INDIA_UDISE_SCHOOL_PROFILES/data/total_data.csv \
+  --full \
+  --use-database indicdb
 ```
 
----
-
-### Step 2: Generate Schema Design (LLM)
-
-Use the LLM-based schema designer to create a normalized schema:
+Or run the steps individually:
 
 ```bash
-cd scripts
+python3 scripts/create_schema_llm_judge.py \
+  databases/INDIA_UDISE_SCHOOL_PROFILES/INDIA_UDISE_SCHOOL_PROFILES/data/total_data.csv \
+  --backend openrouter \
+  --model deepseek/deepseek-v3.2 \
+  --reasoning
 
-python create_schema_llm_judge.py \
-  ../databases/YOUR_DATABASE_NAME/YOUR_DATABASE_NAME/data/total_data.csv
+python3 scripts/parse_schema_to_yaml.py \
+  --schema databases/INDIA_UDISE_SCHOOL_PROFILES/INDIA_UDISE_SCHOOL_PROFILES/schema_info.md \
+  --csv databases/INDIA_UDISE_SCHOOL_PROFILES/INDIA_UDISE_SCHOOL_PROFILES/data/total_data.csv \
+  -v
 
+python3 scripts/generic_split.py \
+  --config databases/INDIA_UDISE_SCHOOL_PROFILES/INDIA_UDISE_SCHOOL_PROFILES/schema_config.yaml
 
-#for example: 
-#will be run from the root directory only
-python3 create_schema_llm_judge.py ../databases/INDIA_UDISE_SCHOOL_PROFILES/INDIA_UDISE_SCHOOL_PROFILES/data/total_data.csv --backend openrouter --model deepseek/deepseek-v3.2 --reasoning
+python3 scripts/generate_samples.py \
+  --database INDIA_UDISE_SCHOOL_PROFILES
 
-```
-
-
-
-**What it does:**
-- Uses a 3-agent pattern (Architect → Auditor → Refiner)
-- Architect drafts a star schema with 4-10 thematic tables
-- Auditor checks for normalization issues and "God Tables"
-- Refiner produces final schema with column mappings
-
-**Output:** `schema_info.md` in the database folder containing:
-- Dimension and Fact table definitions
-- Column mappings from CSV indices to table columns
-- Foreign key relationships
-
----
-
-### Step 3: Parse Schema to YAML Config
-
-Convert the LLM-generated markdown to a machine-readable YAML config:
-
-```bash
-python parse_schema_to_yaml.py \
-  ../databases/YOUR_DATABASE_NAME/YOUR_DATABASE_NAME/schema_info.md
-
-#for example (run from root dir)
-python3 scripts/parse_schema_to_yaml.py --schema databases/INDIA_VILLAGE_AMENITIES/INDIA_VILLAGE_AMENITIES/schema_info.md --csv databases/INDIA_VILLAGE_AMENITIES/INDIA_VILLAGE_AMENITIES/data/total_data.csv -v
-```
-
-**Output:** `schema_config.yaml` with structured table definitions:
-
-```yaml
-database_name: YOUR_DATABASE_NAME
-dimension_tables:
-  DIM_GEOGRAPHY:
-    key_column: GEOGRAPHY_ID
-    dedup_columns: [0, 1, 2]
-    columns:
-      - source_index: 0
-        target_name: COUNTRY
-      - source_index: 1
-        target_name: STATE
-fact_tables:
-  FACT_METRICS:
-    key_column: METRICS_ID
-    foreign_keys:
-      - column: GEOGRAPHY_ID
-        references: DIM_GEOGRAPHY
-    columns:
-      - source_index: 10
-        target_name: POPULATION
-```
-
----
-
-### Step 4: Run Generic Data Splitter
-
-Split the raw CSV into normalized tables using the YAML config:
-
-```bash
-python3 generic_split.py \
-  --config ../databases/YOUR_DATABASE_NAME/YOUR_DATABASE_NAME/schema_config.yaml \
-  --input ../databases/YOUR_DATABASE_NAME/YOUR_DATABASE_NAME/data/total_data.csv \
-  --output ../databases/YOUR_DATABASE_NAME/YOUR_DATABASE_NAME
-
-#run from scripts dir
-python3 generic_split.py \
-  --config ../databases/INDIA_UDISE_SCHOOL_PROFILES/INDIA_UDISE_SCHOOL_PROFILES/schema_config.yaml \
-  --input ../databases/INDIA_UDISE_SCHOOL_PROFILES/INDIA_UDISE_SCHOOL_PROFILES/data/total_data.csv \
-  --output ../databases/INDIA_UDISE_SCHOOL_PROFILES/INDIA_UDISE_SCHOOL_PROFILES
-
-
-
-```
-
-**Output Generated:**
-
-| File Type | Location | Purpose |
-|-----------|----------|---------|
-| `*.csv` | `data/` folder | Full table data for loading |
-| `*.json` | Schema folder | Sample rows for Text-to-SQL context |
-| `DDL.csv` | Schema folder | CREATE TABLE statements |
-
----
-
-### Step 5: Create Tables
-
-#### PostgreSQL
-
-```bash
-python3 create_tables.py \
-  --database YOUR_DATABASE_NAME \
+python3 scripts/create_tables.py \
+  --database INDIA_UDISE_SCHOOL_PROFILES \
+  --databases-dir databases \
   --use-database indicdb \
-  --use-schema your_schema \
+  --use-schema india_udise_school_profiles \
   --create-schema
 
-# for example (run from scripts dir) -> 
-python3 create_tables.py \
+python3 scripts/load_data.py \
   --database INDIA_UDISE_SCHOOL_PROFILES \
+  --databases-dir databases \
   --use-database indicdb \
-  --use-schema INDIA_UDISE_SCHOOL_PROFILES \
-  --create-schema
+  --use-schema india_udise_school_profiles
 ```
 
-
-**Flags:**
-- `--database` : Source database folder name
-- `--use-database` : Target database name
-- `--use-schema` : Target schema name
-- `--create-schema` : Create the schema if it doesn't exist
-- `--dry-run` : Preview DDL without executing
-
----
-
-### Step 6: Load Data
-
-#### PostgreSQL
+### Generate Database-Level Knowledge
 
 ```bash
-python3 load_data.py \
-  --database YOUR_DATABASE_NAME \
-  --use-database indicdb \
-  --use-schema your_schema \
-  --limit 20000
-
-# for example (run from scripts dir) -> 
-python3 load_data.py \
-  --database INDIA_UDISE_SCHOOL_PROFILES \
-  --use-database indicdb \
-  --use-schema INDIA_UDISE_SCHOOL_PROFILES \
-  --limit 20000
+python3 scripts/create_knowledge_file.py \
+  databases/INDIA_IHDS_2005_HOUSEHOLD_SURVEY/INDIA_IHDS_2005_HOUSEHOLD_SURVEY/schema_info.md \
+  --backend openrouter \
+  --model deepseek/deepseek-v3.2
 ```
 
-
-**Flags:**
-- `--limit` : Number of rows to load (optional, for testing)
-- `--truncate` : Truncate tables before loading
-- `--table` : Load only a specific table
-
----
-
-## Troubleshooting
-
-There might be some errors in which data is not getting loaded into the tables properly, in that case you will have to alter the datatypes of the created schema manually - Do remove the already added data in this case.
-
-### Error: String Too Long
-
-**Error Message:**
-```
-String 'Very Long Village Name...' is too long and would be truncated
-```
-
-**Solution:** Increase VARCHAR column size
+### Generate Question-Level Evidence With SEED
 
 ```bash
-# PostgreSQL
-python run_query.py --backend postgres \
-  --use-database indicdb --use-schema public \
-  --query "ALTER TABLE LOCATIONS ALTER COLUMN VILLAGE_TOWN TYPE VARCHAR(200)"
-```
-
----
-
-### Error: Foreign Key Constraint
-
-If loading fails due to foreign key order, load dimension tables first:
-
-```bash
-# Load in order: Dimensions first, then Fact tables
-python load_data.py --backend postgres --database YOUR_DB --table DIM_GEOGRAPHY
-python load_data.py --backend postgres --database YOUR_DB --table DIM_TIME
-python load_data.py --backend postgres --database YOUR_DB --table FACT_METRICS
-```
-
----
-
-### Error: Datatype mismatch when loading data
-
-**Error Message:**
-```
-Error inserting into DIM_TIME: invalid input syntax for type integer: "Calendar Year (Jan - Dec), 2013"
-```
-
-**Solution:** Datatype mismatch when loading data into the table, can be fixed in any of the two ways, (1) Update the DDL, to the correct datatype, or (2) Change the data to correct datatype. When updating the DDL, we need to create the schema again.
-
-```bash
-# PostgreSQL
-python run_query.py --backend postgres \
-  --use-database indicdb --use-schema public \
-  --query "DROP SCHEMA IF EXISTS YOUR_SCHEMA CASCADE"
-
----
-
-## Available Databases
-
-### 1. INDIA_POPULATION_CENSUS
-
-| Metric | Value |
-|--------|-------|
-| Tables | 7 |
-| Total Columns | 78 |
-| Foreign Keys | 6 |
-| Source | Census of India |
-
-**Tables:** LOCATIONS, CENSUS_POPULATION, CENSUS_CASTE, CENSUS_LITERACY, CENSUS_WORKERS_SUMMARY, CENSUS_MAIN_WORKERS_DETAIL, CENSUS_MARGINAL_WORKERS_DETAIL
-
----
-
-### 2. INDIA_EMPLOYMENT_DATA
-
-| Metric | Value |
-|--------|-------|
-| Tables | 7 |
-| Total Columns | 78 |
-| Foreign Keys | 6 |
-| Source | NDAP Economic Census |
-
-**Tables:** LOCATIONS, TIME_PERIOD, EMPLOYMENT_FACT, EMPLOYMENT_BY_INDUSTRY, EMPLOYMENT_BY_OWNERSHIP, EMPLOYMENT_BY_DEMOGRAPHICS, EMPLOYMENT_BY_FIRM_CHARACTERISTICS
-
----
-
-### 3. INDIA_VILLAGE_AMENITIES
-
-| Metric | Value |
-|--------|-------|
-| Tables | 16 |
-| Total Columns | 50 |
-| Source | Census Village Amenities |
-
-**Dimension Tables:** DIM_COUNTRY, DIM_STATE, DIM_DISTRICT, DIM_GEOGRAPHY
-
-**Fact Tables:** FACT_VILLAGE_DEMOGRAPHICS, FACT_TRANSPORTATION_ACCESSIBILITY, FACT_ROAD_HIERARCHY_ACCESSIBILITY, FACT_ROAD_SURFACE_ACCESSIBILITY, FACT_ALTERNATIVE_TRANSPORT_ACCESSIBILITY, FACT_FINANCIAL_SERVICES_ACCESSIBILITY, FACT_MARKET_ACCESSIBILITY, FACT_HEALTH_NUTRITION_ACCESSIBILITY, FACT_EDUCATION_INFORMATION_ACCESSIBILITY, FACT_RECREATION_CULTURE_ACCESSIBILITY, FACT_CIVIC_SERVICES_ACCESSIBILITY
-
----
-
-### 4. INDIA_SCHOOL_INFRASTRUCTURE
-
-| Metric | Value |
-|--------|-------|
-| Tables | 15 |
-| Total Columns | 55 |
-| Source | UDISE School Data |
-
-**Dimension Tables:** DIM_COUNTRY, DIM_STATE, DIM_DISTRICT, DIM_ADMINISTRATIVE_DIVISIONS, DIM_SCHOOL_IDENTITY, DIM_SCHOOL_LOCATION, DIM_SCHOOL_INFRASTRUCTURE, DIM_ACADEMIC_PROGRAMS, DIM_PEDAGOGY, DIM_EVALUATION_METHODOLOGY, DIM_RECOGNITION_YEARS
-
-**Fact Tables:** FACT_INSTRUCTIONAL_CALENDAR, FACT_SCHOOL_HOURS, FACT_TEACHER_WORKING_HOURS, FACT_ANGANWADI_OPERATIONS
-
----
-
-## Useful Commands
-
-### Interactive Query Mode
-
-```bash
-# PostgreSQL
-python scripts/run_query.py --backend postgres --use-database indicdb --interactive
-
-# Snowflake
-python scripts/run_query.py --backend snowflake --interactive
-```
-
-### Execute Benchmark Queries
-
-```bash
-# PostgreSQL
-python scripts/execute_queries.py --backend postgres --database indicdb --schema public
-
-# Snowflake
-python scripts/execute_queries.py --backend snowflake --database INDIA_POPULATION_CENSUS
-```
-
-### Validate Queries
-
-```bash
-# PostgreSQL
-python scripts/validate_queries.py --backend postgres --queries-dir ../gold/sql \
-  --database indicdb --schema public
-```
-
----
-
-
-
-
----
-
-## Appendix: Pipeline Walkthrough (Toy Example)
-
-This section demonstrates the complete pipeline using a simple 5-column CSV.
-
-### Input: `total_data.csv`
-
-```csv
-Country,State,City,Population,GDP_Billions
-India,Maharashtra,Mumbai,20000000,310
-India,Maharashtra,Pune,5000000,69
-India,Karnataka,Bangalore,12000000,110
-India,Karnataka,Mysore,1200000,15
-India,Tamil Nadu,Chennai,10000000,78
-```
-
----
-
-### Step 1: LLM Schema Design → `schema_info.md`
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                     create_schema_llm_judge.py                   │
-│                                                                  │
-│  Architect → Auditor → Refiner (3-agent LLM pattern)            │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-```
-
-**Output: `schema_info.md`**
-
-```markdown
-## DIMENSION TABLES
-
-### **DIM_COUNTRY**
-**Purpose:** Country-level geographic dimension
-**Columns (2):**
-- `COUNTRY_ID` (PK, INT)
-- `COUNTRY_NAME` (VARCHAR 100)
-
-### **DIM_STATE**
-**Purpose:** State-level geographic dimension
-**Columns (3):**
-- `STATE_ID` (PK, INT)
-- `STATE_NAME` (VARCHAR 100)
-- `COUNTRY_ID` (FK → DIM_COUNTRY)
-
-## FACT TABLES
-
-### **FACT_CITY_METRICS**
-**Purpose:** City-level population and economic metrics
-**Columns (4):**
-- `METRICS_ID` (PK, BIGINT)
-- `STATE_ID` (FK → DIM_STATE)
-- `CITY_NAME` (VARCHAR 100)
-- `POPULATION` (INT)
-- `GDP_BILLIONS` (DOUBLE PRECISION)
-
-## COLUMN MAPPING
-
-| Original Column | Source Index | Data Type | Mapped To Table | Mapped Column(s) |
-|---|---|---|---|---|
-| Country | 0 | VARCHAR | DIM_COUNTRY | COUNTRY_NAME |
-| State | 1 | VARCHAR | DIM_STATE | STATE_NAME |
-| City | 2 | VARCHAR | FACT_CITY_METRICS | CITY_NAME |
-| Population | 3 | INT | FACT_CITY_METRICS | POPULATION |
-| GDP_Billions | 4 | DOUBLE PRECISION | FACT_CITY_METRICS | GDP_BILLIONS |
-```
-
----
-
-### Step 2: Parse to YAML → `schema_config.yaml`
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                     parse_schema_to_yaml.py                      │
-│                                                                  │
-│  Extracts table definitions & column mappings from markdown     │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-```
-
-**Output: `schema_config.yaml`**
-
-```yaml
-database_name: INDIA_CITY_ECONOMICS
-source_file: total_data.csv
-
-dimension_tables:
-  DIM_COUNTRY:
-    key_column: COUNTRY_ID
-    dedup_columns: [0]
-    columns:
-      - source_index: 0
-        target_name: COUNTRY_NAME
-
-  DIM_STATE:
-    key_column: STATE_ID
-    dedup_columns: [1]
-    columns:
-      - source_index: 1
-        target_name: STATE_NAME
-    foreign_keys:
-      - column: COUNTRY_ID
-        references: DIM_COUNTRY
-
-fact_tables:
-  FACT_CITY_METRICS:
-    key_column: METRICS_ID
-    foreign_keys:
-      - column: STATE_ID
-        references: DIM_STATE
-    columns:
-      - source_index: 2
-        target_name: CITY_NAME
-      - source_index: 3
-        target_name: POPULATION
-      - source_index: 4
-        target_name: GDP_BILLIONS
-```
-
----
-
-### Step 3: Split Data → CSVs, JSONs, DDL
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                       generic_split.py                           │
-│                                                                  │
-│  Reads schema_config.yaml + total_data.csv                      │
-│  Outputs: Normalized CSVs, Sample JSONs, DDL.csv                │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-              ┌───────────────┼───────────────┐
-              ▼               ▼               ▼
-```
-
-**Output Files:**
-
-#### `data/DIM_COUNTRY.csv`
-```csv
-COUNTRY_ID,COUNTRY_NAME
-1,India
-```
-
-#### `data/DIM_STATE.csv`
-```csv
-STATE_ID,STATE_NAME,COUNTRY_ID
-1,Maharashtra,1
-2,Karnataka,1
-3,Tamil Nadu,1
-```
-
-#### `data/FACT_CITY_METRICS.csv`
-```csv
-METRICS_ID,STATE_ID,CITY_NAME,POPULATION,GDP_BILLIONS
-1,1,Mumbai,20000000,310
-2,1,Pune,5000000,69
-3,2,Bangalore,12000000,110
-4,2,Mysore,1200000,15
-5,3,Chennai,10000000,78
-```
-
-#### `DIM_COUNTRY.json` (sample for LLM context)
-```json
-[
-  {"COUNTRY_ID": 1, "COUNTRY_NAME": "India"}
-]
-```
-
-#### `DDL.csv`
-```csv
-table_name,ddl
-DIM_COUNTRY,"CREATE TABLE DIM_COUNTRY (COUNTRY_ID INT PRIMARY KEY, COUNTRY_NAME VARCHAR(100))"
-DIM_STATE,"CREATE TABLE DIM_STATE (STATE_ID INT PRIMARY KEY, STATE_NAME VARCHAR(100), COUNTRY_ID INT REFERENCES DIM_COUNTRY(COUNTRY_ID))"
-FACT_CITY_METRICS,"CREATE TABLE FACT_CITY_METRICS (METRICS_ID BIGINT PRIMARY KEY, STATE_ID INT REFERENCES DIM_STATE(STATE_ID), CITY_NAME VARCHAR(100), POPULATION INT, GDP_BILLIONS DOUBLE PRECISION)"
-```
-
----
-
-### Step 4: Create Tables & Load Data
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                       create_tables.py                           │
-│                                                                  │
-│  Reads DDL.csv → Executes CREATE TABLE statements               │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                        load_data.py                              │
-│                                                                  │
-│  Reads CSVs → INSERTs into PostgreSQL/Snowflake                 │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-```
-
-**Final Database Schema:**
-
-```
-┌──────────────────┐       ┌──────────────────┐       ┌─────────────────────────┐
-│   DIM_COUNTRY    │       │    DIM_STATE     │       │   FACT_CITY_METRICS     │
-├──────────────────┤       ├──────────────────┤       ├─────────────────────────┤
-│ COUNTRY_ID (PK)  │◄──────│ COUNTRY_ID (FK)  │       │ METRICS_ID (PK)         │
-│ COUNTRY_NAME     │       │ STATE_ID (PK)    │◄──────│ STATE_ID (FK)           │
-└──────────────────┘       │ STATE_NAME       │       │ CITY_NAME               │
-                           └──────────────────┘       │ POPULATION              │
-                                                      │ GDP_BILLIONS            │
-                                                      └─────────────────────────┘
-```
-
-**Sample Query (requires JOIN):**
-
-```sql
--- "What is the total GDP of cities in Maharashtra?"
-SELECT
-    s.STATE_NAME,
-    SUM(f.GDP_BILLIONS) as TOTAL_GDP
-FROM FACT_CITY_METRICS f
-JOIN DIM_STATE s ON f.STATE_ID = s.STATE_ID
-WHERE s.STATE_NAME = 'Maharashtra'
-GROUP BY s.STATE_NAME;
-
--- Result: Maharashtra | 379
-```
-
----
-
-### Complete Pipeline Flow
-
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                            COMPLETE PIPELINE                                 │
-└─────────────────────────────────────────────────────────────────────────────┘
-
-    total_data.csv (5 cols, 5 rows)
-           │
-           ▼
-    ┌──────────────────────────────┐
-    │  create_schema_llm_judge.py  │  ← LLM designs normalized schema
-    └──────────────────────────────┘
-           │
-           ▼
-    schema_info.md (markdown)
-           │
-           ▼
-    ┌──────────────────────────────┐
-    │   parse_schema_to_yaml.py    │  ← Parse to machine-readable format
-    └──────────────────────────────┘
-           │
-           ▼
-    schema_config.yaml
-           │
-           ▼
-    ┌──────────────────────────────┐
-    │      generic_split.py        │  ← Split into normalized tables
-    └──────────────────────────────┘
-           │
-           ├──► data/DIM_COUNTRY.csv      (1 row)
-           ├──► data/DIM_STATE.csv        (3 rows)
-           ├──► data/FACT_CITY_METRICS.csv (5 rows)
-           ├──► *.json                    (sample rows)
-           └──► DDL.csv                   (CREATE statements)
-           │
-           ▼
-    ┌──────────────────────────────┐
-    │      create_tables.py        │  ← Execute DDL
-    └──────────────────────────────┘
-           │
-           ▼
-    ┌──────────────────────────────┐
-    │       load_data.py           │  ← Load CSVs into DB
-    └──────────────────────────────┘
-           │
-           ▼
-    ┌──────────────────────────────┐
-    │     PostgreSQL / Snowflake   │  ← Ready for Text-to-SQL queries!
-    │                              │
-    │  DIM_COUNTRY ◄── DIM_STATE ◄── FACT_CITY_METRICS
-    └──────────────────────────────┘
-```
-
----
-
-
-## Connecting to the Server DB and running SQL
-
-ubuntu@instance-20260203-1921:~$ psql -h 140.245.244.234 -U postgres -d indicdb
-Password for user postgres: 
-psql (14.20 (Ubuntu 14.20-0ubuntu0.22.04.1))
-SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384, bits: 256, compression: off)
-Type "help" for help.
-
-indicdb=# \dn
-           List of schemas
-           Name            |  Owner   
----------------------------+----------
- india_capital_expenditure | postgres
- india_census_2001         | postgres
- india_employment          | postgres
- public                    | postgres
-(4 rows)
-
-indicdb=# \dt india_employment.*
-                            List of relations
-      Schema      |                Name                | Type  |  Owner   
-------------------+------------------------------------+-------+----------
- india_employment | employment_by_demographics         | table | postgres
- india_employment | employment_by_firm_characteristics | table | postgres
- india_employment | employment_by_industry             | table | postgres
- india_employment | employment_by_ownership            | table | postgres
- india_employment | employment_fact                    | table | postgres
- india_employment | locations                          | table | postgres
- india_employment | time_period                        | table | postgres
-(7 rows)
-
-indicdb=# select count(*) from india_employment.time_period;
- count 
--------
-     1
-(1 row)
-
-## Creating a Knowledge File
-
-Generate a `Knowledge_file.md` from an existing `schema_info.md` and `external_knowledge.md` using the 3-step LLM pipeline (generate -> audit -> refine). 
-
-### Run Command
-
-Run from the `scripts/` directory:
-
-```bash
-python3 create_knowledge_file.py ../databases/INDIA_PRIMARY_POPULATION_CENSUS_1991/INDIA_PRIMARY_POPULATION_CENSUS_1991/schema_info.md --reasoning
-```
-
-### What this does
-
-1. Reads:
-   - `schema_info.md` (required)
-   - `external_knowledge.md` (optional, if present in same folder)
-2. Calls OpenRouter with the configured model.
-3. Writes output to:
-   - `../databases/INDIA_PRIMARY_POPULATION_CENSUS_1991/INDIA_PRIMARY_POPULATION_CENSUS_1991/Knowledge_file.md`
-
-### Optional arguments
-
-- `--model <model_name>` to override default model.
-- `--openrouter-key <key>` to pass API key directly instead of env var.
-- `--backend openrouter` (default).
-
----
-
-## Generate SEED Knowledge File
-
-Use `scripts/SEED.py` to generate evidence (knowledge) for Text-to-SQL prompts using:
-- PostgreSQL schema + live sampled values
-- Optional few-shot examples from a train evidence file
-
-
-### Example command
-
-```bash
-# Run from root dir
 python3 scripts/SEED.py \
-  --dataset knowledge_files/INDIA_PRIMARY_POPULATION_CENSUS_1991/sample_seed_primary_population_1991.json \
-  --output knowledge_files/INDIA_PRIMARY_POPULATION_CENSUS_1991/sample_seed_primary_population_1991_output.json \
-  --config config/postgres_credential.json \
+  --dataset output/INDIA_NWMP_Water_Quality_Data/task_files/INDIA_NWMP_Water_Quality_Data_text2sql_20260311_153252.jsonl \
+  --output output/knowledge_files_db/INDIA_NWMP_Water_Quality_Data_evidence.json \
   --use-database indicdb \
-  --use-schema india_primary_population_census_1991 \
-  --train-data knowledge_files/train_fewshot_bird_dev_gold_evi.json \
-  --use-embeddings \
+  --use-schema india_nwmp_water_quality_data \
+  --openrouter-key "$OPENROUTER_API_KEY"
 ```
-### Useful flags
-- `--top-k`: number of primary few-shot DB samples
-- `--top-n-same-db`: number of few-shot samples from each selected DB
-- `--max-samples-per-column`: number of sampled DB values per schema-value pair
 
-- To not use the sentence transformer, get rid of the use-embeddings flag
+### Translate Task Files
 
----
+```bash
+python3 scripts/LanguageConversionScripts/translate_to_hindi.py \
+  --input_file output/INDIA_NWMP_Water_Quality_Data/task_files/INDIA_NWMP_Water_Quality_Data_text2sql_20260311_153252.jsonl \
+  --target_languages "Hindi,Bengali,Tamil,Telugu,Marathi,Hinglish" \
+  --provider openrouter \
+  --model deepseek/deepseek-v3.2
+```
 
+### Run One-Shot Evaluation
 
-## License
+```bash
+python3 scripts/OneShot_FewShot/run_oneshot.py \
+  --database INDIA_NWMP_Water_Quality_Data \
+  --database-dir databases \
+  --input output/INDIA_NWMP_Water_Quality_Data/task_files \
+  --output output/INDIA_NWMP_Water_Quality_Data/eval_files_oneshot_qwen_qwen3_8b \
+  --provider openrouter \
+  --model qwen/qwen3-8b \
+  --pg-db indicdb \
+  --knowledge output/knowledge_files_db/INDIA_NWMP_Water_Quality_Data_evidence.json
+```
 
-This project is for research and educational purposes.
+### Run Few-Shot Evaluation
+
+```bash
+python3 scripts/OneShot_FewShot/run_fewshot.py \
+  --database INDIA_NWMP_Water_Quality_Data \
+  --database-dir databases \
+  --input output/INDIA_NWMP_Water_Quality_Data/task_files/INDIA_NWMP_Water_Quality_Data_text2sql_20260311_153252.jsonl \
+  --examples output/INDIA_PRIMARY_POPULATION_CENSUS_1991/task_files/INDIA_PRIMARY_POPULATION_CENSUS_1991_text2sql_20260316_104923.jsonl \
+  --provider openrouter \
+  --model deepseek/deepseek-v3.2 \
+  --pg-db indicdb \
+  --k 5
+```
+
+### Run Batch One-Shot Evaluation Across Databases
+
+```bash
+python3 scripts/BatchEvaluation/run_bulk_evaluation.py \
+  --provider openrouter \
+  --model minimax/minimax-m2.7 \
+  --workers 20 \
+  --use-lang-knowledge
+```
+
+### Recompute EM / EX Summaries
+
+```bash
+python3 scripts/BatchEvaluation/recompute_oneshot_metrics.py
+```
+
+The latest repo summary is currently written to:
+
+- [`output/metric_summaries/oneshot_em_ex_by_db_language_model.csv`](output/metric_summaries/oneshot_em_ex_by_db_language_model.csv)
+- [`output/metric_summaries/oneshot_em_ex_macro_avg_by_language_model.csv`](output/metric_summaries/oneshot_em_ex_macro_avg_by_language_model.csv)
+- [`output/metric_summaries/oneshot_em_ex_macro_avg_by_language_model.md`](output/metric_summaries/oneshot_em_ex_macro_avg_by_language_model.md)
+
+### Audit Translation Quality With COMET
+
+```bash
+python3 scripts/BatchEvaluation/calculate_comet_scores.py --batch-size 8 --gpus 0
+python3 scripts/BatchEvaluation/analyze_comet_percentiles.py
+```
+
+This writes task-level COMET scores and bottom-quintile audit files under `output/comet_scores/`.
+
+## Script Map
+
+### Database Construction
+
+| Script | Purpose |
+| --- | --- |
+| `scripts/pipeline.py` | Single entry point for design -> parse -> split -> create -> load |
+| `scripts/create_schema_llm_judge.py` | LLM-based schema design using Architect/Auditor/Refiner stages |
+| `scripts/parse_schema_to_yaml.py` | Converts `schema_info.md` to machine-readable `schema_config.yaml` |
+| `scripts/generic_split.py` | Splits a raw CSV into normalized table CSVs using the YAML config |
+| `scripts/generate_ddl.py` | Produces DDL artifacts from normalized tables |
+| `scripts/generate_samples.py` | Generates Spider-style sample JSON files for each table |
+| `scripts/create_tables.py` | Creates PostgreSQL tables from `DDL.csv` |
+| `scripts/load_data.py` | Loads normalized CSV data into PostgreSQL |
+| `scripts/sync_postgres_schema_from_yaml.py` | Sync helper for PostgreSQL schema updates |
+
+### Task / Benchmark Generation
+
+| Script | Purpose |
+| --- | --- |
+| `scripts/QueryGeneration/generate_queries.py` | Creates SQL query sets inspired by benchmark complexity levels |
+| `scripts/QueryGeneration/validate_queries.py` | Executes generated SQL against PostgreSQL to validate correctness |
+| `scripts/QueryGeneration/execute_queries.py` | Runs query batches and stores outputs |
+| `scripts/dsqg_syn/run_synthesis.py` | Main DSQG-Syn synthetic Text-to-SQL generation entrypoint |
+| `scripts/dsqg_syn/run_synthesis_batch.py` | Batch orchestration for synthetic generation |
+| `scripts/dsqg_syn/sql_synthesizer.py` | SQL synthesis logic for DSQG-Syn |
+| `scripts/dsqg_syn/question_generator.py` | Converts SQL into natural language questions |
+
+### Multilingual Conversion And Evidence
+
+| Script | Purpose |
+| --- | --- |
+| `scripts/LanguageConversionScripts/translate_to_hindi.py` | Multilingual task translation, including Hinglish |
+| `scripts/SEED.py` | Question-level evidence generation with schema/value retrieval |
+| `scripts/create_knowledge_file.py` | Database-level schema-faithful knowledge-file generation |
+
+### Evaluation And Analysis
+
+| Script | Purpose |
+| --- | --- |
+| `scripts/OneShot_FewShot/run_oneshot.py` | Parallel one-shot evaluation with EM and EX scoring |
+| `scripts/OneShot_FewShot/run_fewshot.py` | Retrieval-based few-shot evaluation |
+| `scripts/BatchEvaluation/run_bulk_evaluation.py` | Runs one-shot experiments over multiple databases/languages |
+| `scripts/BatchEvaluation/recompute_oneshot_metrics.py` | Recomputes normalized EM and writes metric summaries |
+| `scripts/sql_eval_utils.py` | SQL canonicalization and exact-match logic |
+| `scripts/BatchEvaluation/calculate_comet_scores.py` | Reference-free COMET evaluation for translations |
+| `scripts/BatchEvaluation/analyze_comet_percentiles.py` | Bottom-quintile translation audit workflow |
+| `scripts/BatchEvaluation/plot_comet_distribution.py` | Visualization of language-specific COMET distributions |
+| `scripts/BatchEvaluation/plot_comet_threshold_justification.py` | Plots thresholding analyses used in translation auditing |
+
+### CHESS Integration
+
+The repository also includes a `scripts/CHESS/` package for agentic SQL synthesis experiments and interoperability with IndicDB schemas.
+
+Relevant files:
+
+- `scripts/CHESS/src/` for the CHESS agent stack.
+- `scripts/CHESS/run/` for runnable configs and shell entrypoints.
+- `scripts/CHESS/tools/export_pg_schema_to_chess.py` for exporting PostgreSQL schemas into CHESS-friendly artifacts.
+- `scripts/CHESS/tools/validate_chess_package.py` for package validation.
+
+## Outputs And Stored Artifacts
+
+The repo is already populated with experiment artifacts. Common locations:
+
+- `databases/<DB>/<DB>/` for schema packages and normalized tables.
+- `output/<DB>/task_files/` for multilingual task JSONLs.
+- `output/<DB>/sampled_tasks/` for sampled evaluation subsets.
+- `output/<DB>/eval_files_oneshot*/` for per-model evaluated predictions.
+- `output/metric_summaries/` for aggregated EM/EX summaries.
+- `output/comet_scores/` for translation quality analysis.
+- `results/` and `results_*.md` for markdown summaries of model runs.
+
+## Notes For Public Use
+
+- Keep credential files local. The repo tracks templates, not real credentials.
+- `config/postgres_credential.json`, `config/snowflake_credential.json`, and local `.env` files should stay untracked.
+- Many scripts expect PostgreSQL schema names to match lowercased dataset IDs.
+
+## Related Files
+
+- Paper PDF: [IndicDB - Benchmarking Multilingual Text-to-SQL Capabilities in Indian Languages](./IndicDB%20-%20Benchmarking%20Multilingual%20Text-to-SQL%20Capabilities%20in%20Indian%20Languages.pdf)
+- Prompt appendix: [`PROMPTS_README.md`](PROMPTS_README.md)
+- Methodology notes: [`paper_content/DB_creationLogic.md`](paper_content/DB_creationLogic.md)
+- Dataset stats: [`paper_content/DB_stats.md`](paper_content/DB_stats.md)
+
+## Citation
+
+If you use this repository, please cite the IndicDB paper linked above and describe the exact benchmark slice you used, including:
+
+- databases included
+- languages included
+- evidence setting used
+- evaluation metric definition used
+- model checkpoints and prompting setup
