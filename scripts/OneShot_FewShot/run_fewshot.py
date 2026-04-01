@@ -27,6 +27,7 @@ from tqdm import tqdm
 # Add parent dir to path to import db_utils
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from db_utils import load_config, get_connection, get_default_config_path, execute_use_schema
+from sql_eval_utils import calculate_em
 
 try:
     import torch
@@ -293,65 +294,6 @@ def extract_sql(llm_output: str) -> str:
     sql = re.sub(r'\s*```$', '', sql)
     sql = re.sub(r'^SQL:\s*', '', sql, flags=re.IGNORECASE)
     return sql.strip()
-
-def _extract_sql_components(sql: str) -> Optional[Dict[str, Any]]:
-    from sqlglot import parse_one, exp
-    try:
-        sql_clean = sql.replace('"', '').replace(';', '')
-        ast = parse_one(sql_clean, read="postgres")
-    except Exception:
-        return None
-    for node in ast.find_all(exp.Identifier):
-        node.set("this", str(node.name).lower())
-        node.set("quoted", False)
-    for node in ast.find_all(exp.Column):
-        node.set("table", None)
-        node.set("db", None)
-    for node in ast.find_all(exp.Table):
-        node.set("db", None)
-        node.set("catalog", None)
-        if isinstance(node.parent, exp.Alias):
-            node.parent.replace(node)
-    for node in ast.find_all(exp.Literal):
-        if node.is_string:
-            node.set("this", str(node.this).lower())
-    components = {"select": set(), "from": set(), "where": set(), "group": set(), "order": []}
-    if isinstance(ast, exp.Select):
-        for e in ast.expressions:
-            if isinstance(e, exp.Alias): components["select"].add(e.this.sql().lower())
-            else: components["select"].add(e.sql().lower())
-        for table in ast.find_all(exp.Table):
-            components["from"].add(table.this.sql().lower())
-        where = ast.args.get("where")
-        if where:
-            def flatten_ands(node):
-                if isinstance(node, exp.And): return flatten_ands(node.left) | flatten_ands(node.right)
-                return {node.sql().lower()}
-            components["where"] = flatten_ands(where.this)
-        group = ast.args.get("group")
-        if group:
-            for e in group.expressions: components["group"].add(e.sql().lower())
-        order = ast.args.get("order")
-        if order:
-            for e in order.expressions: components["order"].append(e.sql().lower())
-    return components
-
-def calculate_em(gold_sql: str, pred_sql: str) -> int:
-    if not pred_sql or not gold_sql: return 0
-    gold_comps = _extract_sql_components(gold_sql)
-    pred_comps = _extract_sql_components(pred_sql)
-    if not gold_comps or not pred_comps:
-        g_norm = ' '.join(gold_sql.lower().split()).replace('"', '').replace(';', '')
-        p_norm = ' '.join(pred_sql.lower().split()).replace('"', '').replace(';', '')
-        return 1 if g_norm == p_norm else 0
-    checks = [
-        gold_comps["select"] == pred_comps["select"],
-        gold_comps["from"] == pred_comps["from"],
-        gold_comps["where"] == pred_comps["where"],
-        gold_comps["group"] == pred_comps["group"],
-        gold_comps["order"] == pred_comps["order"]
-    ]
-    return 1 if all(checks) else 0
 
 def fetch_results(cursor, sql: str, timeout_ms: int = 5000) -> Tuple[List[Any], Optional[str]]:
     try:
