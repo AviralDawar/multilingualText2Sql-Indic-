@@ -35,3 +35,7 @@ databases/*/*
 
 # Logs
 *.log
+
+#local folders
+experiments
+images
