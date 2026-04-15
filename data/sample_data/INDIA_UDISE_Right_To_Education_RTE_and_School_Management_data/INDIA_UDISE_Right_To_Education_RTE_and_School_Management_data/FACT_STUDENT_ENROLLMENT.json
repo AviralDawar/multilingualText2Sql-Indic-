@@ -1,0 +1,32 @@
+[
+  {
+    "ENROLLMENT_ID": 1,
+    "SCHOOL_ID": 1,
+    "YEAR_ID": 1,
+    "STUDENT_COUNT": "0"
+  },
+  {
+    "ENROLLMENT_ID": 2,
+    "SCHOOL_ID": 2,
+    "YEAR_ID": 1,
+    "STUDENT_COUNT": "0"
+  },
+  {
+    "ENROLLMENT_ID": 3,
+    "SCHOOL_ID": 3,
+    "YEAR_ID": 1,
+    "STUDENT_COUNT": "0"
+  },
+  {
+    "ENROLLMENT_ID": 4,
+    "SCHOOL_ID": 4,
+    "YEAR_ID": 1,
+    "STUDENT_COUNT": "0"
+  },
+  {
+    "ENROLLMENT_ID": 5,
+    "SCHOOL_ID": 5,
+    "YEAR_ID": 1,
+    "STUDENT_COUNT": "0"
+  }
+]

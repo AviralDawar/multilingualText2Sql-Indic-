@@ -1,0 +1,22 @@
+{
+    "table_name": "INDIA_Village_Amenities_Directory_2001.DIM_COUNTRY",
+    "table_fullname": "INDIA_Village_Amenities_Directory_2001.INDIA_Village_Amenities_Directory_2001.DIM_COUNTRY",
+    "column_names": [
+        "COUNTRY_ID",
+        "COUNTRY_NAME"
+    ],
+    "column_types": [
+        "NUMBER",
+        "TEXT"
+    ],
+    "description": [
+        null,
+        null
+    ],
+    "sample_rows": [
+        {
+            "COUNTRY_ID": 1,
+            "COUNTRY_NAME": "India"
+        }
+    ]
+}

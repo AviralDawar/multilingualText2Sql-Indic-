@@ -1,0 +1,32 @@
+[
+  {
+    "UNIQUE_HOUSEHOLD_ID": 1,
+    "GEOGRAPHY_ID": 1,
+    "HOUSEHOLD_ID_3_DIGIT": "10",
+    "SPLIT_HOUSEHOLD_ID": "1"
+  },
+  {
+    "UNIQUE_HOUSEHOLD_ID": 2,
+    "GEOGRAPHY_ID": 1,
+    "HOUSEHOLD_ID_3_DIGIT": "20",
+    "SPLIT_HOUSEHOLD_ID": "1"
+  },
+  {
+    "UNIQUE_HOUSEHOLD_ID": 3,
+    "GEOGRAPHY_ID": 1,
+    "HOUSEHOLD_ID_3_DIGIT": "30",
+    "SPLIT_HOUSEHOLD_ID": "1"
+  },
+  {
+    "UNIQUE_HOUSEHOLD_ID": 4,
+    "GEOGRAPHY_ID": 1,
+    "HOUSEHOLD_ID_3_DIGIT": "40",
+    "SPLIT_HOUSEHOLD_ID": "1"
+  },
+  {
+    "UNIQUE_HOUSEHOLD_ID": 5,
+    "GEOGRAPHY_ID": 1,
+    "HOUSEHOLD_ID_3_DIGIT": "50",
+    "SPLIT_HOUSEHOLD_ID": "1"
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "OCCUPATION_ID": 1,
+    "OCCUPATION_CODE": "Construction",
+    "OCCUPATION_DESCRIPTION": "LABOUR"
+  },
+  {
+    "OCCUPATION_ID": 2,
+    "OCCUPATION_CODE": "Housewife AA",
+    "OCCUPATION_DESCRIPTION": "unknown"
+  },
+  {
+    "OCCUPATION_ID": 3,
+    "OCCUPATION_CODE": "Student/ too young BB",
+    "OCCUPATION_DESCRIPTION": "STUDENT"
+  },
+  {
+    "OCCUPATION_ID": 4,
+    "OCCUPATION_CODE": "Shopkeepers",
+    "OCCUPATION_DESCRIPTION": "SHOPKEEPER"
+  },
+  {
+    "OCCUPATION_ID": 5,
+    "OCCUPATION_CODE": "Construction",
+    "OCCUPATION_DESCRIPTION": "CULTIVATOR (CONSTRUCTION)"
+  }
+]

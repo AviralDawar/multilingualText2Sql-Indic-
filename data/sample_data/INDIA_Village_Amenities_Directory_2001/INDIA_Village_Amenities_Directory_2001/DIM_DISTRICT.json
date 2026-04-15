@@ -1,0 +1,46 @@
+{
+    "table_name": "INDIA_Village_Amenities_Directory_2001.DIM_DISTRICT",
+    "table_fullname": "INDIA_Village_Amenities_Directory_2001.INDIA_Village_Amenities_Directory_2001.DIM_DISTRICT",
+    "column_names": [
+        "DISTRICT_ID",
+        "STATE_ID",
+        "DISTRICT_NAME"
+    ],
+    "column_types": [
+        "NUMBER",
+        "NUMBER",
+        "TEXT"
+    ],
+    "description": [
+        null,
+        null,
+        null
+    ],
+    "sample_rows": [
+        {
+            "DISTRICT_ID": 1,
+            "STATE_ID": 1,
+            "DISTRICT_NAME": "South Andamans"
+        },
+        {
+            "DISTRICT_ID": 2,
+            "STATE_ID": 1,
+            "DISTRICT_NAME": "North And Middle Andaman"
+        },
+        {
+            "DISTRICT_ID": 3,
+            "STATE_ID": 1,
+            "DISTRICT_NAME": "Nicobars"
+        },
+        {
+            "DISTRICT_ID": 4,
+            "STATE_ID": 2,
+            "DISTRICT_NAME": "Kurnool"
+        },
+        {
+            "DISTRICT_ID": 5,
+            "STATE_ID": 2,
+            "DISTRICT_NAME": "West Godavari"
+        }
+    ]
+}

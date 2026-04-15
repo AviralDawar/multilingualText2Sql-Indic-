@@ -1,0 +1,42 @@
+[
+  {
+    "GEOGRAPHY_ID": 1,
+    "COUNTRY": "India",
+    "STATE": "Andaman And Nicobar Islands",
+    "DISTRICT": "Nicobars",
+    "SUB_DISTRICT": "Car Nicobar",
+    "TYPE_OF_AREA": "Rural"
+  },
+  {
+    "GEOGRAPHY_ID": 2,
+    "COUNTRY": "India",
+    "STATE": "Andaman And Nicobar Islands",
+    "DISTRICT": "Nicobars",
+    "SUB_DISTRICT": "Nancowry",
+    "TYPE_OF_AREA": "Rural"
+  },
+  {
+    "GEOGRAPHY_ID": 3,
+    "COUNTRY": "India",
+    "STATE": "Andaman And Nicobar Islands",
+    "DISTRICT": "Nicobars",
+    "SUB_DISTRICT": "Great Nicobar",
+    "TYPE_OF_AREA": "Urban"
+  },
+  {
+    "GEOGRAPHY_ID": 4,
+    "COUNTRY": "India",
+    "STATE": "Andaman And Nicobar Islands",
+    "DISTRICT": "Nicobars",
+    "SUB_DISTRICT": "Car Nicobar",
+    "TYPE_OF_AREA": "Urban"
+  },
+  {
+    "GEOGRAPHY_ID": 5,
+    "COUNTRY": "India",
+    "STATE": "Andaman And Nicobar Islands",
+    "DISTRICT": "North And Middle Andaman",
+    "SUB_DISTRICT": "Diglipur",
+    "TYPE_OF_AREA": "Urban"
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "GEOGRAPHY_ID": 1,
+    "STATE": "Rajasthan",
+    "DISTRICT": "Pali",
+    "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE": "4",
+    "CENSUS_2001_URBAN_RURAL_FLAG": "Rural"
+  },
+  {
+    "GEOGRAPHY_ID": 2,
+    "STATE": "Himachal Pradesh",
+    "DISTRICT": "Bilaspur",
+    "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE": "2",
+    "CENSUS_2001_URBAN_RURAL_FLAG": "Rural"
+  },
+  {
+    "GEOGRAPHY_ID": 3,
+    "STATE": "Kerala",
+    "DISTRICT": "Thrissur",
+    "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE": "3",
+    "CENSUS_2001_URBAN_RURAL_FLAG": "Rural"
+  },
+  {
+    "GEOGRAPHY_ID": 4,
+    "STATE": "Uttar Pradesh",
+    "DISTRICT": "Sant Ravidas Nagar",
+    "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE": "4",
+    "CENSUS_2001_URBAN_RURAL_FLAG": "Rural"
+  },
+  {
+    "GEOGRAPHY_ID": 5,
+    "STATE": "Karnataka",
+    "DISTRICT": "Dharwad",
+    "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE": "4",
+    "CENSUS_2001_URBAN_RURAL_FLAG": "Urban"
+  }
+]

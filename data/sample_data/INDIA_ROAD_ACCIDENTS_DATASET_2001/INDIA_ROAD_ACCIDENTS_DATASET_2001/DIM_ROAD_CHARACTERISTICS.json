@@ -1,0 +1,42 @@
+[
+  {
+    "ROAD_CHAR_ID": 1,
+    "LANES_OR_MEDIANS": "Two-way (divided with broken lines road marking)",
+    "ROAD_ALIGNMENT": "Tangent road with flat terrain",
+    "TYPES_OF_JUNCTION": "No junction",
+    "ROAD_SURFACE_TYPE": "Asphalt roads",
+    "ROAD_SURFACE_CONDITIONS": "Dry"
+  },
+  {
+    "ROAD_CHAR_ID": 2,
+    "LANES_OR_MEDIANS": "Undivided Two way",
+    "ROAD_ALIGNMENT": "Tangent road with flat terrain",
+    "TYPES_OF_JUNCTION": "No junction",
+    "ROAD_SURFACE_TYPE": "Asphalt roads",
+    "ROAD_SURFACE_CONDITIONS": "Dry"
+  },
+  {
+    "ROAD_CHAR_ID": 3,
+    "LANES_OR_MEDIANS": "other",
+    "ROAD_ALIGNMENT": "Tangent road with flat terrain",
+    "TYPES_OF_JUNCTION": "No junction",
+    "ROAD_SURFACE_TYPE": "Asphalt roads",
+    "ROAD_SURFACE_CONDITIONS": "Dry"
+  },
+  {
+    "ROAD_CHAR_ID": 4,
+    "LANES_OR_MEDIANS": "other",
+    "ROAD_ALIGNMENT": "Tangent road with mild grade and flat terrain",
+    "TYPES_OF_JUNCTION": "Y Shape",
+    "ROAD_SURFACE_TYPE": "Earth roads",
+    "ROAD_SURFACE_CONDITIONS": "Dry"
+  },
+  {
+    "ROAD_CHAR_ID": 5,
+    "LANES_OR_MEDIANS": "other",
+    "ROAD_ALIGNMENT": "Tangent road with flat terrain",
+    "TYPES_OF_JUNCTION": "Y Shape",
+    "ROAD_SURFACE_TYPE": "Asphalt roads",
+    "ROAD_SURFACE_CONDITIONS": "Dry"
+  }
+]

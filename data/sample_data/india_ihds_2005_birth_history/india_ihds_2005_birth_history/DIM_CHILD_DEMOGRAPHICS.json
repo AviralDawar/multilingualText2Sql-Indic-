@@ -1,0 +1,47 @@
+[
+  {
+    "CHILD_ID": 1,
+    "CHILD_SEX": "Boy",
+    "CHILD_DATE_OF_BIRTH_IMPUTED_CMC": "1982-07 (CMC 991)",
+    "CHILD_DATE_OF_BIRTH_FLAG": "Age - year, month imputed",
+    "CHILD_AGE_AT_DEATH_IMPUTED": "UNKNOWN",
+    "CHILD_AGE_AT_DEATH_FLAG": "UNKNOWN",
+    "CHILD_LIVING_STATUS": "Living with respondent"
+  },
+  {
+    "CHILD_ID": 2,
+    "CHILD_SEX": "Girl",
+    "CHILD_DATE_OF_BIRTH_IMPUTED_CMC": "1984-10 (CMC 1018)",
+    "CHILD_DATE_OF_BIRTH_FLAG": "Age - year, month imputed",
+    "CHILD_AGE_AT_DEATH_IMPUTED": "UNKNOWN",
+    "CHILD_AGE_AT_DEATH_FLAG": "UNKNOWN",
+    "CHILD_LIVING_STATUS": "Living with respondent"
+  },
+  {
+    "CHILD_ID": 3,
+    "CHILD_SEX": "Boy",
+    "CHILD_DATE_OF_BIRTH_IMPUTED_CMC": "1986-05 (CMC 1037)",
+    "CHILD_DATE_OF_BIRTH_FLAG": "Age - year, month imputed",
+    "CHILD_AGE_AT_DEATH_IMPUTED": "UNKNOWN",
+    "CHILD_AGE_AT_DEATH_FLAG": "UNKNOWN",
+    "CHILD_LIVING_STATUS": "Living with respondent"
+  },
+  {
+    "CHILD_ID": 4,
+    "CHILD_SEX": "Boy",
+    "CHILD_DATE_OF_BIRTH_IMPUTED_CMC": "1990-05 (CMC 1085)",
+    "CHILD_DATE_OF_BIRTH_FLAG": "Age - year, month imputed",
+    "CHILD_AGE_AT_DEATH_IMPUTED": "UNKNOWN",
+    "CHILD_AGE_AT_DEATH_FLAG": "UNKNOWN",
+    "CHILD_LIVING_STATUS": "Living with respondent"
+  },
+  {
+    "CHILD_ID": 5,
+    "CHILD_SEX": "Girl",
+    "CHILD_DATE_OF_BIRTH_IMPUTED_CMC": "1992-03 (CMC 1107)",
+    "CHILD_DATE_OF_BIRTH_FLAG": "Age - year, month imputed",
+    "CHILD_AGE_AT_DEATH_IMPUTED": "UNKNOWN",
+    "CHILD_AGE_AT_DEATH_FLAG": "UNKNOWN",
+    "CHILD_LIVING_STATUS": "Living with respondent"
+  }
+]

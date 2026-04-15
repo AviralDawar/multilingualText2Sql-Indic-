@@ -1,0 +1,52 @@
+[
+  {
+    "MOTHER_MARRIAGE_ID": 1,
+    "MOTHER_ID": 1,
+    "MH1BC": "958",
+    "MH1BF": "1",
+    "MH1AC": "20",
+    "MH18BC": "UNKNOWN",
+    "MH18BF": "UNKNOWN",
+    "MH18AC": "UNKNOWN"
+  },
+  {
+    "MOTHER_MARRIAGE_ID": 2,
+    "MOTHER_ID": 2,
+    "MH1BC": "931",
+    "MH1BF": "1",
+    "MH1AC": "19",
+    "MH18BC": "UNKNOWN",
+    "MH18BF": "UNKNOWN",
+    "MH18AC": "UNKNOWN"
+  },
+  {
+    "MOTHER_MARRIAGE_ID": 3,
+    "MOTHER_ID": 3,
+    "MH1BC": "922",
+    "MH1BF": "4",
+    "MH1AC": "17",
+    "MH18BC": "UNKNOWN",
+    "MH18BF": "UNKNOWN",
+    "MH18AC": "UNKNOWN"
+  },
+  {
+    "MOTHER_MARRIAGE_ID": 4,
+    "MOTHER_ID": 4,
+    "MH1BC": "887",
+    "MH1BF": "3",
+    "MH1AC": "15",
+    "MH18BC": "UNKNOWN",
+    "MH18BF": "UNKNOWN",
+    "MH18AC": "UNKNOWN"
+  },
+  {
+    "MOTHER_MARRIAGE_ID": 5,
+    "MOTHER_ID": 5,
+    "MH1BC": "916",
+    "MH1BF": "3",
+    "MH1AC": "18",
+    "MH18BC": "UNKNOWN",
+    "MH18BF": "UNKNOWN",
+    "MH18AC": "UNKNOWN"
+  }
+]

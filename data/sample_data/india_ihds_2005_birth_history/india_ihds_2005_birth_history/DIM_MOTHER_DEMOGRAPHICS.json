@@ -1,0 +1,32 @@
+[
+  {
+    "MOTHER_ID": 1,
+    "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC": "1959-01 (CMC 709)",
+    "MOTHER_DATE_OF_BIRTH_FLAG": "Month and year",
+    "MOTHER_AGE_IMPUTED": "45"
+  },
+  {
+    "MOTHER_ID": 2,
+    "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC": "1958-07 (CMC 703)",
+    "MOTHER_DATE_OF_BIRTH_FLAG": "Month and year",
+    "MOTHER_AGE_IMPUTED": "46"
+  },
+  {
+    "MOTHER_ID": 3,
+    "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC": "1959-09 (CMC 717)",
+    "MOTHER_DATE_OF_BIRTH_FLAG": "Month and year",
+    "MOTHER_AGE_IMPUTED": "45"
+  },
+  {
+    "MOTHER_ID": 4,
+    "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC": "1958-11 (CMC 707)",
+    "MOTHER_DATE_OF_BIRTH_FLAG": "Month and year",
+    "MOTHER_AGE_IMPUTED": "46"
+  },
+  {
+    "MOTHER_ID": 5,
+    "MOTHER_DATE_OF_BIRTH_IMPUTED_CMC": "1958-01 (CMC 697)",
+    "MOTHER_DATE_OF_BIRTH_FLAG": "Month and year",
+    "MOTHER_AGE_IMPUTED": "46"
+  }
+]

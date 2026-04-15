@@ -1,0 +1,42 @@
+[
+  {
+    "BIRTH_EVENT_ID": 1,
+    "CHILD_ID": 1,
+    "MOTHER_ID": 1,
+    "HOUSEHOLD_ID": 1,
+    "SURVEY_ID": 1,
+    "BH2": "1"
+  },
+  {
+    "BIRTH_EVENT_ID": 2,
+    "CHILD_ID": 2,
+    "MOTHER_ID": 1,
+    "HOUSEHOLD_ID": 1,
+    "SURVEY_ID": 1,
+    "BH2": "2"
+  },
+  {
+    "BIRTH_EVENT_ID": 3,
+    "CHILD_ID": 3,
+    "MOTHER_ID": 1,
+    "HOUSEHOLD_ID": 1,
+    "SURVEY_ID": 1,
+    "BH2": "3"
+  },
+  {
+    "BIRTH_EVENT_ID": 4,
+    "CHILD_ID": 4,
+    "MOTHER_ID": 2,
+    "HOUSEHOLD_ID": 2,
+    "SURVEY_ID": 1,
+    "BH2": "5"
+  },
+  {
+    "BIRTH_EVENT_ID": 5,
+    "CHILD_ID": 5,
+    "MOTHER_ID": 2,
+    "HOUSEHOLD_ID": 2,
+    "SURVEY_ID": 1,
+    "BH2": "6"
+  }
+]

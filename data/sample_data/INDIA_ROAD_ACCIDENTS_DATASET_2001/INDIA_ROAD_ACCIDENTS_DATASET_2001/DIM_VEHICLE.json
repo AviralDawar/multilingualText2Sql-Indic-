@@ -1,0 +1,42 @@
+[
+  {
+    "VEHICLE_ID": 1,
+    "TYPE_OF_VEHICLE": "Automobile",
+    "OWNER_OF_VEHICLE": "Owner",
+    "SERVICE_YEAR_OF_VEHICLE": "Above 10yr",
+    "DEFECT_OF_VEHICLE": "No defect",
+    "VEHICLE_MOVEMENT": "Going straight"
+  },
+  {
+    "VEHICLE_ID": 2,
+    "TYPE_OF_VEHICLE": "Public (> 45 seats)",
+    "OWNER_OF_VEHICLE": "Owner",
+    "SERVICE_YEAR_OF_VEHICLE": "5-10yrs",
+    "DEFECT_OF_VEHICLE": "No defect",
+    "VEHICLE_MOVEMENT": "Going straight"
+  },
+  {
+    "VEHICLE_ID": 3,
+    "TYPE_OF_VEHICLE": "Lorry (41?100Q)",
+    "OWNER_OF_VEHICLE": "Owner",
+    "SERVICE_YEAR_OF_VEHICLE": "2-5yrs",
+    "DEFECT_OF_VEHICLE": "No defect",
+    "VEHICLE_MOVEMENT": "Going straight"
+  },
+  {
+    "VEHICLE_ID": 4,
+    "TYPE_OF_VEHICLE": "Public (> 45 seats)",
+    "OWNER_OF_VEHICLE": "Governmental",
+    "SERVICE_YEAR_OF_VEHICLE": "2-5yrs",
+    "DEFECT_OF_VEHICLE": "No defect",
+    "VEHICLE_MOVEMENT": "Going straight"
+  },
+  {
+    "VEHICLE_ID": 5,
+    "TYPE_OF_VEHICLE": "Stationwagen",
+    "OWNER_OF_VEHICLE": "Owner",
+    "SERVICE_YEAR_OF_VEHICLE": "5-10yrs",
+    "DEFECT_OF_VEHICLE": "No defect",
+    "VEHICLE_MOVEMENT": "Going straight"
+  }
+]

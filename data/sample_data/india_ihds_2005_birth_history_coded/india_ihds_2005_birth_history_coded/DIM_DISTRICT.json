@@ -1,0 +1,27 @@
+[
+  {
+    "DISTRICT_ID": 1,
+    "STATE_ID": 1,
+    "DISTID": "9"
+  },
+  {
+    "DISTRICT_ID": 2,
+    "STATE_ID": 2,
+    "DISTID": "8"
+  },
+  {
+    "DISTRICT_ID": 3,
+    "STATE_ID": 2,
+    "DISTID": "12"
+  },
+  {
+    "DISTRICT_ID": 4,
+    "STATE_ID": 3,
+    "DISTID": "49"
+  },
+  {
+    "DISTRICT_ID": 5,
+    "STATE_ID": 4,
+    "DISTID": "32"
+  }
+]

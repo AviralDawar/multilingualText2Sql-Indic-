@@ -1,0 +1,52 @@
+[
+  {
+    "MOTHER_GAUNA_ID": 1,
+    "MOTHER_ID": 1,
+    "MH2BC": "958",
+    "MH2BF": "1",
+    "MH2AC": "20",
+    "MH19BC": "UNKNOWN",
+    "MH19BF": "UNKNOWN",
+    "MH19AC": "UNKNOWN"
+  },
+  {
+    "MOTHER_GAUNA_ID": 2,
+    "MOTHER_ID": 2,
+    "MH2BC": "931",
+    "MH2BF": "1",
+    "MH2AC": "19",
+    "MH19BC": "UNKNOWN",
+    "MH19BF": "UNKNOWN",
+    "MH19AC": "UNKNOWN"
+  },
+  {
+    "MOTHER_GAUNA_ID": 3,
+    "MOTHER_ID": 3,
+    "MH2BC": "932",
+    "MH2BF": "4",
+    "MH2AC": "17",
+    "MH19BC": "UNKNOWN",
+    "MH19BF": "UNKNOWN",
+    "MH19AC": "UNKNOWN"
+  },
+  {
+    "MOTHER_GAUNA_ID": 4,
+    "MOTHER_ID": 4,
+    "MH2BC": "887",
+    "MH2BF": "3",
+    "MH2AC": "15",
+    "MH19BC": "UNKNOWN",
+    "MH19BF": "UNKNOWN",
+    "MH19AC": "UNKNOWN"
+  },
+  {
+    "MOTHER_GAUNA_ID": 5,
+    "MOTHER_ID": 5,
+    "MH2BC": "919",
+    "MH2BF": "3",
+    "MH2AC": "18",
+    "MH19BC": "UNKNOWN",
+    "MH19BF": "UNKNOWN",
+    "MH19AC": "UNKNOWN"
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "MIGRATION_GEOGRAPHY_ID": 1,
+    "MIGRANT_ID": 1,
+    "CURRENT_LOCATION_ID": 1,
+    "MIGRANT_RESIDENCE_ID": 1,
+    "STATE_OF_RESIDENCE_CODE": "Another state"
+  },
+  {
+    "MIGRATION_GEOGRAPHY_ID": 2,
+    "MIGRANT_ID": 2,
+    "CURRENT_LOCATION_ID": 1,
+    "MIGRANT_RESIDENCE_ID": 1,
+    "STATE_OF_RESIDENCE_CODE": "Same state"
+  },
+  {
+    "MIGRATION_GEOGRAPHY_ID": 3,
+    "MIGRANT_ID": 3,
+    "CURRENT_LOCATION_ID": 1,
+    "MIGRANT_RESIDENCE_ID": 1,
+    "STATE_OF_RESIDENCE_CODE": "Same state"
+  },
+  {
+    "MIGRATION_GEOGRAPHY_ID": 4,
+    "MIGRANT_ID": 4,
+    "CURRENT_LOCATION_ID": 1,
+    "MIGRANT_RESIDENCE_ID": 1,
+    "STATE_OF_RESIDENCE_CODE": "Same state"
+  },
+  {
+    "MIGRATION_GEOGRAPHY_ID": 5,
+    "MIGRANT_ID": 5,
+    "CURRENT_LOCATION_ID": 1,
+    "MIGRANT_RESIDENCE_ID": 1,
+    "STATE_OF_RESIDENCE_CODE": "Same state"
+  }
+]

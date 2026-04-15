@@ -1,0 +1,18 @@
+[
+  {
+    "LOCATION_ID": 1,
+    "LOCATION_NAME": "Town"
+  },
+  {
+    "LOCATION_ID": 2,
+    "LOCATION_NAME": "Metro city"
+  },
+  {
+    "LOCATION_ID": 3,
+    "LOCATION_NAME": "Another vill"
+  },
+  {
+    "LOCATION_ID": 4,
+    "LOCATION_NAME": "Abroad"
+  }
+]

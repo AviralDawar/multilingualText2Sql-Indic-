@@ -1,0 +1,32 @@
+[
+  {
+    "TRAINING_ID": 1,
+    "SCHOOL_ID": 1,
+    "YEAR_ID": 1,
+    "STUDENTS_ATTENDING_SPECIAL_TRAINING": "2 - No"
+  },
+  {
+    "TRAINING_ID": 2,
+    "SCHOOL_ID": 2,
+    "YEAR_ID": 1,
+    "STUDENTS_ATTENDING_SPECIAL_TRAINING": "2 - No"
+  },
+  {
+    "TRAINING_ID": 3,
+    "SCHOOL_ID": 3,
+    "YEAR_ID": 1,
+    "STUDENTS_ATTENDING_SPECIAL_TRAINING": "2 - No"
+  },
+  {
+    "TRAINING_ID": 4,
+    "SCHOOL_ID": 4,
+    "YEAR_ID": 1,
+    "STUDENTS_ATTENDING_SPECIAL_TRAINING": "2 - No"
+  },
+  {
+    "TRAINING_ID": 5,
+    "SCHOOL_ID": 5,
+    "YEAR_ID": 1,
+    "STUDENTS_ATTENDING_SPECIAL_TRAINING": "2 - No"
+  }
+]

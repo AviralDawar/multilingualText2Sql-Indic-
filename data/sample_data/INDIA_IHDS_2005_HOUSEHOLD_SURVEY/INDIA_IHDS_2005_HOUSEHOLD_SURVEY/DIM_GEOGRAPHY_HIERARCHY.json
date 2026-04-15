@@ -1,0 +1,37 @@
+[
+  {
+    "GEOGRAPHY_ID": 1,
+    "STATE": "Maharashtra",
+    "DISTRICT_CODE": "5",
+    "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE": "3",
+    "CENSUS_2001_URBAN_RURAL": "Rural"
+  },
+  {
+    "GEOGRAPHY_ID": 2,
+    "STATE": "Haryana",
+    "DISTRICT_CODE": "12",
+    "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE": "2",
+    "CENSUS_2001_URBAN_RURAL": "Rural"
+  },
+  {
+    "GEOGRAPHY_ID": 3,
+    "STATE": "Kerala",
+    "DISTRICT_CODE": "5",
+    "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE": "5",
+    "CENSUS_2001_URBAN_RURAL": "Rural"
+  },
+  {
+    "GEOGRAPHY_ID": 4,
+    "STATE": "Uttar Pradesh",
+    "DISTRICT_CODE": "15",
+    "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE": "3",
+    "CENSUS_2001_URBAN_RURAL": "Urban"
+  },
+  {
+    "GEOGRAPHY_ID": 5,
+    "STATE": "Tamil Nadu",
+    "DISTRICT_CODE": "24",
+    "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE": "2",
+    "CENSUS_2001_URBAN_RURAL": "Urban"
+  }
+]

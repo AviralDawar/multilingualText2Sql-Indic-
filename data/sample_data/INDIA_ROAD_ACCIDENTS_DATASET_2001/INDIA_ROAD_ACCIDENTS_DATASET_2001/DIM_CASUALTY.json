@@ -1,0 +1,42 @@
+[
+  {
+    "CASUALTY_ID": 1,
+    "CASUALTY_CLASS": "Pedestrian",
+    "SEX_OF_CASUALTY": "Male",
+    "AGE_BAND_OF_CASUALTY": "18-30",
+    "WORK_OF_CASUALTY": "Driver",
+    "FITNESS_OF_CASUALTY": "Normal"
+  },
+  {
+    "CASUALTY_ID": 2,
+    "CASUALTY_CLASS": "Driver or rider",
+    "SEX_OF_CASUALTY": "Male",
+    "AGE_BAND_OF_CASUALTY": "18-30",
+    "WORK_OF_CASUALTY": "Driver",
+    "FITNESS_OF_CASUALTY": "Normal"
+  },
+  {
+    "CASUALTY_ID": 3,
+    "CASUALTY_CLASS": "Driver or rider",
+    "SEX_OF_CASUALTY": "Male",
+    "AGE_BAND_OF_CASUALTY": "31-50",
+    "WORK_OF_CASUALTY": "Driver",
+    "FITNESS_OF_CASUALTY": "Normal"
+  },
+  {
+    "CASUALTY_ID": 4,
+    "CASUALTY_CLASS": "Pedestrian",
+    "SEX_OF_CASUALTY": "Female",
+    "AGE_BAND_OF_CASUALTY": "18-30",
+    "WORK_OF_CASUALTY": "Driver",
+    "FITNESS_OF_CASUALTY": "Normal"
+  },
+  {
+    "CASUALTY_ID": 5,
+    "CASUALTY_CLASS": "Driver or rider",
+    "SEX_OF_CASUALTY": "Female",
+    "AGE_BAND_OF_CASUALTY": "31-50",
+    "WORK_OF_CASUALTY": "Driver",
+    "FITNESS_OF_CASUALTY": "Normal"
+  }
+]

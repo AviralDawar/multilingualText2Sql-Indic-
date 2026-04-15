@@ -1,0 +1,27 @@
+[
+  {
+    "PERSON_STATUS_ID": 1,
+    "TRACKING_STATUS": "3",
+    "RELATIONSHIP_TO_HEAD": "Son/daughter"
+  },
+  {
+    "PERSON_STATUS_ID": 2,
+    "TRACKING_STATUS": "1",
+    "RELATIONSHIP_TO_HEAD": "Head"
+  },
+  {
+    "PERSON_STATUS_ID": 3,
+    "TRACKING_STATUS": "16",
+    "RELATIONSHIP_TO_HEAD": "Grandchild"
+  },
+  {
+    "PERSON_STATUS_ID": 4,
+    "TRACKING_STATUS": "4",
+    "RELATIONSHIP_TO_HEAD": "Son/daughter"
+  },
+  {
+    "PERSON_STATUS_ID": 5,
+    "TRACKING_STATUS": "5",
+    "RELATIONSHIP_TO_HEAD": "Son/daughter"
+  }
+]

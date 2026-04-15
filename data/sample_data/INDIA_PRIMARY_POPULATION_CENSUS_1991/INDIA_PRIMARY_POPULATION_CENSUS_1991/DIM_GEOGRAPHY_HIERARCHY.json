@@ -1,0 +1,52 @@
+[
+  {
+    "HIERARCHY_ID": 1,
+    "PARENT_ID": null,
+    "LOCATION_NAME": "Uttara (Rv)",
+    "LOCATION_TYPE": "Rural",
+    "COUNTRY": "India",
+    "STATE": "Andaman And Nicobar Islands",
+    "DISTRICT": "North And Middle Andaman",
+    "SUB_DISTRICT": "Rangat"
+  },
+  {
+    "HIERARCHY_ID": 2,
+    "PARENT_ID": null,
+    "LOCATION_NAME": "Sitanagar (Rv)",
+    "LOCATION_TYPE": "Rural",
+    "COUNTRY": "India",
+    "STATE": "Andaman And Nicobar Islands",
+    "DISTRICT": "North And Middle Andaman",
+    "SUB_DISTRICT": "Diglipur"
+  },
+  {
+    "HIERARCHY_ID": 3,
+    "PARENT_ID": null,
+    "LOCATION_NAME": "Paschimsagar (Efa)",
+    "LOCATION_TYPE": "Rural",
+    "COUNTRY": "India",
+    "STATE": "Andaman And Nicobar Islands",
+    "DISTRICT": "North And Middle Andaman",
+    "SUB_DISTRICT": "Diglipur"
+  },
+  {
+    "HIERARCHY_ID": 4,
+    "PARENT_ID": null,
+    "LOCATION_NAME": "Bejoy Nagar (Rv)",
+    "LOCATION_TYPE": "Rural",
+    "COUNTRY": "India",
+    "STATE": "Andaman And Nicobar Islands",
+    "DISTRICT": "South Andamans",
+    "SUB_DISTRICT": "Port Blair"
+  },
+  {
+    "HIERARCHY_ID": 5,
+    "PARENT_ID": null,
+    "LOCATION_NAME": "Vidyasagarpalli (Rv)",
+    "LOCATION_TYPE": "Rural",
+    "COUNTRY": "India",
+    "STATE": "Andaman And Nicobar Islands",
+    "DISTRICT": "North And Middle Andaman",
+    "SUB_DISTRICT": "Diglipur"
+  }
+]

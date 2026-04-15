@@ -1,0 +1,52 @@
+[
+  {
+    "GEOGRAPHY_ID": 1,
+    "STATE": "Jammu & Kashmir",
+    "DISTRICT": "Baramula",
+    "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE": "1",
+    "UNIQUE_PSU_ID_CLUSTER": "10201",
+    "HOUSEHOLD_ID_3_DIGIT": "10",
+    "SPLIT_HOUSEHOLD_ID": "1",
+    "UNIQUE_HOUSEHOLD_ID": "0102010101"
+  },
+  {
+    "GEOGRAPHY_ID": 2,
+    "STATE": "Jammu & Kashmir",
+    "DISTRICT": "Baramula",
+    "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE": "1",
+    "UNIQUE_PSU_ID_CLUSTER": "10201",
+    "HOUSEHOLD_ID_3_DIGIT": "20",
+    "SPLIT_HOUSEHOLD_ID": "1",
+    "UNIQUE_HOUSEHOLD_ID": "0102010201"
+  },
+  {
+    "GEOGRAPHY_ID": 3,
+    "STATE": "Jammu & Kashmir",
+    "DISTRICT": "Baramula",
+    "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE": "1",
+    "UNIQUE_PSU_ID_CLUSTER": "10201",
+    "HOUSEHOLD_ID_3_DIGIT": "30",
+    "SPLIT_HOUSEHOLD_ID": "1",
+    "UNIQUE_HOUSEHOLD_ID": "0102010301"
+  },
+  {
+    "GEOGRAPHY_ID": 4,
+    "STATE": "Jammu & Kashmir",
+    "DISTRICT": "Baramula",
+    "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE": "1",
+    "UNIQUE_PSU_ID_CLUSTER": "10201",
+    "HOUSEHOLD_ID_3_DIGIT": "40",
+    "SPLIT_HOUSEHOLD_ID": "1",
+    "UNIQUE_HOUSEHOLD_ID": "0102010401"
+  },
+  {
+    "GEOGRAPHY_ID": 5,
+    "STATE": "Jammu & Kashmir",
+    "DISTRICT": "Baramula",
+    "PSU_VILLAGE_OR_NEIGHBORHOOD_CODE": "1",
+    "UNIQUE_PSU_ID_CLUSTER": "10201",
+    "HOUSEHOLD_ID_3_DIGIT": "50",
+    "SPLIT_HOUSEHOLD_ID": "1",
+    "UNIQUE_HOUSEHOLD_ID": "0102010501"
+  }
+]
