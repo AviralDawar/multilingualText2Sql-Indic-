@@ -1,0 +1,74 @@
+# Text2SQL Evaluation Results: DIN-SQL - qwen/qwen3-8b
+
+| Database | Language | Results (EX) |
+| --- | --- | --- |
+| INDIA_NWMP_Water_Quality_Data | English |  44.00% (EX) |
+| INDIA_NWMP_Water_Quality_Data | Hinglish | N/A |
+| INDIA_NWMP_Water_Quality_Data | Hindi |  41.00% (EX) |
+| INDIA_NWMP_Water_Quality_Data | Bengali |  37.00% (EX) |
+| INDIA_NWMP_Water_Quality_Data | Tamil |  42.00% (EX) |
+| INDIA_NWMP_Water_Quality_Data | Telugu |  44.00% (EX) |
+| INDIA_NWMP_Water_Quality_Data | Marathi |  37.00% (EX) |
+| INDIA_UDISE_Right_To_Education_RTE_and_School_Management_data | English |  56.00% (EX) |
+| INDIA_UDISE_Right_To_Education_RTE_and_School_Management_data | Hinglish | N/A |
+| INDIA_UDISE_Right_To_Education_RTE_and_School_Management_data | Hindi | N/A |
+| INDIA_UDISE_Right_To_Education_RTE_and_School_Management_data | Bengali |  57.00% (EX) |
+| INDIA_UDISE_Right_To_Education_RTE_and_School_Management_data | Tamil |  52.00% (EX) |
+| INDIA_UDISE_Right_To_Education_RTE_and_School_Management_data | Telugu |  53.00% (EX) |
+| INDIA_UDISE_Right_To_Education_RTE_and_School_Management_data | Marathi |  57.00% (EX) |
+| INDIA_ROAD_ACCIDENTS_DATASET_2001 | English |  69.56% (EX) |
+| INDIA_ROAD_ACCIDENTS_DATASET_2001 | Hinglish |  60.29% (EX) |
+| INDIA_ROAD_ACCIDENTS_DATASET_2001 | Hindi |  66.66% (EX) |
+| INDIA_ROAD_ACCIDENTS_DATASET_2001 | Bengali |  63.77% (EX) |
+| INDIA_ROAD_ACCIDENTS_DATASET_2001 | Tamil |  65.21% (EX) |
+| INDIA_ROAD_ACCIDENTS_DATASET_2001 | Telugu |  60.86% (EX) |
+| INDIA_ROAD_ACCIDENTS_DATASET_2001 | Marathi |  59.42% (EX) |
+| INDIA_Village_Amenities_Directory_2001 | English |  60.20% (EX) |
+| INDIA_Village_Amenities_Directory_2001 | Hinglish |  54.54% (EX) |
+| INDIA_Village_Amenities_Directory_2001 | Hindi |  55.55% (EX) |
+| INDIA_Village_Amenities_Directory_2001 | Bengali |  51.02% (EX) |
+| INDIA_Village_Amenities_Directory_2001 | Tamil |  48.45% (EX) |
+| INDIA_Village_Amenities_Directory_2001 | Telugu |  55.55% (EX) |
+| INDIA_Village_Amenities_Directory_2001 | Marathi |  49.00% (EX) |
+| INDIA_PRIMARY_POPULATION_CENSUS_1991 | English |  68.25% (EX) |
+| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Hinglish |  57.14% (EX) |
+| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Hindi |  66.66% (EX) |
+| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Bengali |  58.73% (EX) |
+| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Tamil |  57.14% (EX) |
+| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Telugu |  55.55% (EX) |
+| INDIA_PRIMARY_POPULATION_CENSUS_1991 | Marathi |  58.73% (EX) |
+| INDIA_HMIS_Sub_District_Report_Facility_wise | English |  42.00% (EX) |
+| INDIA_HMIS_Sub_District_Report_Facility_wise | Hinglish |  40.00% (EX) |
+| INDIA_HMIS_Sub_District_Report_Facility_wise | Hindi |  42.00% (EX) |
+| INDIA_HMIS_Sub_District_Report_Facility_wise | Bengali |  44.00% (EX) |
+| INDIA_HMIS_Sub_District_Report_Facility_wise | Tamil |  34.69% (EX) |
+| INDIA_HMIS_Sub_District_Report_Facility_wise | Telugu |  36.00% (EX) |
+| INDIA_HMIS_Sub_District_Report_Facility_wise | Marathi |  37.50% (EX) |
+| INDIA_Economic_Census_Firms | English |  64.64% (EX) |
+| INDIA_Economic_Census_Firms | Hinglish |  55.10% (EX) |
+| INDIA_Economic_Census_Firms | Hindi |  57.14% (EX) |
+| INDIA_Economic_Census_Firms | Bengali |  53.00% (EX) |
+| INDIA_Economic_Census_Firms | Tamil |  54.54% (EX) |
+| INDIA_Economic_Census_Firms | Telugu |  52.00% (EX) |
+| INDIA_Economic_Census_Firms | Marathi |  53.00% (EX) |
+| INDIA_IHDS_2011_TRACKING_SURVEY | English |  59.00% (EX) |
+| INDIA_IHDS_2011_TRACKING_SURVEY | Hinglish |  65.00% (EX) |
+| INDIA_IHDS_2011_TRACKING_SURVEY | Hindi |  59.00% (EX) |
+| INDIA_IHDS_2011_TRACKING_SURVEY | Bengali |  60.60% (EX) |
+| INDIA_IHDS_2011_TRACKING_SURVEY | Tamil |  60.00% (EX) |
+| INDIA_IHDS_2011_TRACKING_SURVEY | Telugu |  55.00% (EX) |
+| INDIA_IHDS_2011_TRACKING_SURVEY | Marathi |  60.60% (EX) |
+| INDIA_ICRISAT_District_Level_Agricultural_Data | English |  44.00% (EX) |
+| INDIA_ICRISAT_District_Level_Agricultural_Data | Hinglish |  37.00% (EX) |
+| INDIA_ICRISAT_District_Level_Agricultural_Data | Hindi |  43.80% (EX) |
+| INDIA_ICRISAT_District_Level_Agricultural_Data | Bengali |  42.80% (EX) |
+| INDIA_ICRISAT_District_Level_Agricultural_Data | Tamil |  41.41% (EX) |
+| INDIA_ICRISAT_District_Level_Agricultural_Data | Telugu |  46.00% (EX) |
+| INDIA_ICRISAT_District_Level_Agricultural_Data | Marathi |  42.00% (EX) |
+| INDIA_HMIS_Sub_District_Report_Rural_Urban | English |  42.85% (EX) |
+| INDIA_HMIS_Sub_District_Report_Rural_Urban | Hinglish |  39.39% (EX) |
+| INDIA_HMIS_Sub_District_Report_Rural_Urban | Hindi |  42.00% (EX) |
+| INDIA_HMIS_Sub_District_Report_Rural_Urban | Bengali |  43.43% (EX) |
+| INDIA_HMIS_Sub_District_Report_Rural_Urban | Tamil |  38.38% (EX) |
+| INDIA_HMIS_Sub_District_Report_Rural_Urban | Telugu |  41.83% (EX) |
+| INDIA_HMIS_Sub_District_Report_Rural_Urban | Marathi |  39.36% (EX) |
