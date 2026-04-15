@@ -554,13 +554,6 @@ def call_openrouter_with_retry(
                 max_tokens=max_tokens,
                 stop=current_stop,
             )
-        except OpenRouterReasoningOnlyResponseError as exc:
-            last_error = exc
-            if current_stop and not retried_without_stop:
-                retried_without_stop = True
-                current_stop = None
-                continue
-            raise
         except Exception as exc:
             last_error = exc
             if attempt >= max_retries or not is_retryable_error(exc):
