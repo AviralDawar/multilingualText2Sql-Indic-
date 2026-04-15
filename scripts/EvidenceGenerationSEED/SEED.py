@@ -4,8 +4,10 @@ import argparse
 import json
 import os
 import re
+import threading
 import time
 import warnings
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from difflib import SequenceMatcher, get_close_matches
 from pathlib import Path
@@ -29,6 +31,9 @@ except ImportError:
     SentenceTransformer = None
 
 
+MAX_QUESTIONS = 100
+
+
 def make_prompt(question: str, concat_schema: str) -> tuple[str, str, str, str]:
     evidence_generation_system_prompt = """### You are a data science expert and should assist your colleague in creating SQL. \
 Your colleague is an expert in SQL, but he does not have domain knowledge. \
@@ -37,15 +42,16 @@ Perform the steps below to create an evidence and describe in detail the reasoni
 
 Step-by-Step Instructions:
 1. **Refer to Sample SQL results**: Your another colleague generated sample SQL for words considered keyword in question and executed it in database. Refer to the value and format. Note that your colleague may have chosen the wrong schema.
-2. **Analyze the Question and Schema**: Identify key elements in the question that need mapping (columns, tables, values). Clarify ambiguities by referencing the database schema.
-3. **Analyze the Few-shot samples**: Read the samples and understand the relationship between question and evidence and database schema and descriptions.
-4. **Generate Evidence**: Based on what you analyzed earlier, generate evidence so that it is as short as possible and contains as much information as possible.
-5. **Consideration of cautions**: Make sure that the generated evidence does not violate the cautions below.
+2. **The question may not be in english, But the final evidence should be in english.**
+3. **Analyze the Question and Schema**: Identify key elements in the question that need mapping (columns, tables, values). Clarify ambiguities by referencing the database schema.
+4. **Analyze the Few-shot samples**: Read the samples and understand the relationship between question and evidence and database schema and descriptions.
+5. **Generate Evidence**: Based on what you analyzed earlier, generate evidence so that it is as short as possible and contains as much information as possible.
+6. **Consideration of cautions**: Make sure that the generated evidence does not violate the cautions below.
     Cautions 1. Schema-Specific Language: Use precise terminology from the database schema to avoid ambiguity.
     Cautions 2. Schema Formatting: When mentioning a column, mention the table containing that column together. Use the form (`table`.`column`) to refer to columns.
     Cautions 3. Case Sensitivity: Reflect the exact case of database values in your evidence to prevent mismatches. Refer to db value for accurate case utilization.
-6. **Output Reasoning**: Describe the reasoning of each step in detail and print it out.
-7. **Output Evidence**: Provide the output in the following unannotated JSON format:
+7. **Output Reasoning**: Describe the reasoning of each step in detail and print it out.
+8. **Output Evidence**: Provide the output in the following unannotated JSON format:
     {
       "evidence": "Provide clear, concise and accurate evidence"
     }
@@ -70,7 +76,8 @@ To assist in this task, you will extract the schema and values from the given qu
 The goal is to verify the database structure and content by extracting a diverse set of plausible schema-value combinations. \
 Since this process is exploratory, adopt a lenient and comprehensive approach that accounts for potential ambiguities or multiple interpretations. \
 For example, include all plausible schemas and values, even if they are uncertain or overlapping. \
-This will maximize the potential for finding relevant information during the text-to-SQL task.
+This will maximize the potential for finding relevant information during the text-to-SQL task. \
+The question may not be in english, But the final evidence should be in english.
 
 Please follow these steps to extract the keywords and provide a detailed explanation for each step:
 ### Steps for Extraction:
@@ -265,10 +272,21 @@ class SimilarQuestionFinder:
 
 
 class OpenRouterClient:
-    def __init__(self, model: str, api_key: str, base_url: str = "https://openrouter.ai/api/v1/chat/completions"):
+    def __init__(
+        self,
+        model: str,
+        api_key: str,
+        base_url: str = "https://openrouter.ai/api/v1/chat/completions",
+        rate_limiter: "RateLimiter | None" = None,
+        max_retries: int = 3,
+        retry_backoff_seconds: float = 2.0,
+    ):
         self.model = model
         self.api_key = api_key
         self.base_url = base_url
+        self.rate_limiter = rate_limiter
+        self.max_retries = max_retries
+        self.retry_backoff_seconds = retry_backoff_seconds
 
     def chat(self, messages: list[dict[str, str]], temperature: float = 0.0, max_tokens: int = 3000) -> str:
         headers = {
@@ -282,17 +300,41 @@ class OpenRouterClient:
             "max_tokens": max_tokens,
         }
 
-        retries = 3
-        for attempt in range(1, retries + 1):
+        for attempt in range(1, self.max_retries + 1):
+            if self.rate_limiter is not None:
+                self.rate_limiter.acquire()
             response = requests.post(self.base_url, headers=headers, data=json.dumps(payload), timeout=120)
             if response.status_code == 200:
                 content = response.json()["choices"][0]["message"]["content"]
                 return content or ""
-            if attempt < retries:
-                time.sleep(2 * attempt)
+            if attempt < self.max_retries and self._is_retryable_status(response.status_code):
+                time.sleep(self.retry_backoff_seconds * attempt)
                 continue
             raise RuntimeError(f"OpenRouter API error {response.status_code}: {response.text}")
         return ""
+
+    @staticmethod
+    def _is_retryable_status(status_code: int) -> bool:
+        return status_code in {408, 409, 429, 500, 502, 503, 504}
+
+
+class RateLimiter:
+    def __init__(self, requests_per_minute: float):
+        if requests_per_minute <= 0:
+            raise ValueError("requests_per_minute must be positive")
+        self.interval = 60.0 / requests_per_minute
+        self._lock = threading.Lock()
+        self._next_allowed_time = 0.0
+
+    def acquire(self) -> None:
+        while True:
+            with self._lock:
+                now = time.monotonic()
+                if now >= self._next_allowed_time:
+                    self._next_allowed_time = now + self.interval
+                    return
+                wait_time = self._next_allowed_time - now
+            time.sleep(wait_time)
 
 
 @dataclass
@@ -308,6 +350,10 @@ class SeedConfig:
     llm_model: str
     use_embeddings: bool
     embedding_model: str
+    max_workers: int
+    max_requests_per_minute: float
+    max_retries: int
+    retry_backoff_seconds: float
 
 
 def read_dataset(path: Path) -> list[dict[str, Any]]:
@@ -324,6 +370,10 @@ def read_dataset(path: Path) -> list[dict[str, Any]]:
         if not isinstance(data, list):
             raise ValueError(f"Expected list in {path}")
         return data
+
+
+def truncate_dataset(rows: list[dict[str, Any]], max_questions: int = MAX_QUESTIONS) -> list[dict[str, Any]]:
+    return rows[:max_questions]
 
 
 def resolve_target_schema(config: SeedConfig, db_id: str) -> str:
@@ -663,12 +713,15 @@ def generate_evidence_for_item(
     api_key: str,
     train_data: list[dict[str, Any]],
     finder: SimilarQuestionFinder | None = None,
+    rate_limiter: RateLimiter | None = None,
 ) -> str:
-    db_id = str(item.get("db_id", "")).strip()
+    db_id = config.use_schema
+    # db_id = str(item.get("db_id", "")).strip()
     instance_id = str(item.get("instance_id", "")).strip() or "N/A"
     question = safe_string(item.get("question") or item.get("instruction"))
     if not db_id or not question:
         return ""
+
     schema_name = resolve_target_schema(config, db_id)
     conn = open_pg_connection(config)
     try:
@@ -680,7 +733,13 @@ def generate_evidence_for_item(
         conn.close()
 
     if config.schema_summary:
-        summary_client = OpenRouterClient(model=config.llm_model, api_key=api_key)
+        summary_client = OpenRouterClient(
+            model=config.llm_model,
+            api_key=api_key,
+            rate_limiter=rate_limiter,
+            max_retries=config.max_retries,
+            retry_backoff_seconds=config.retry_backoff_seconds,
+        )
         summary_system, summary_user = make_schema_summary_prompt(question, concat_schema)
         summary_resp = summary_client.chat(
             [{"role": "system", "content": summary_system}, {"role": "user", "content": summary_user}],
@@ -698,7 +757,13 @@ def generate_evidence_for_item(
         keyword_user,
     ) = make_prompt(question, concat_schema)
 
-    keyword_client = OpenRouterClient(model=config.llm_model, api_key=api_key)
+    keyword_client = OpenRouterClient(
+        model=config.llm_model,
+        api_key=api_key,
+        rate_limiter=rate_limiter,
+        max_retries=config.max_retries,
+        retry_backoff_seconds=config.retry_backoff_seconds,
+    )
     keyword_resp = keyword_client.chat(
         [{"role": "system", "content": keyword_sys}, {"role": "user", "content": keyword_user}],
         temperature=0.0,
@@ -722,7 +787,7 @@ def generate_evidence_for_item(
         )
     finally:
         conn.close()
-
+    
     prompt_messages = [{"role": "system", "content": evidence_sys}]
 
     fewshots = build_fewshot_examples(
@@ -756,11 +821,16 @@ def generate_evidence_for_item(
     prompt_messages.append({"role": "user", "content": render_sample_sql_prompt(sample_results)})
     prompt_messages.append({"role": "user", "content": evidence_user})
     
-    print(json.dumps(prompt_messages, indent=2, ensure_ascii=False))
-
-    evidence_client = OpenRouterClient(model=config.llm_model, api_key=api_key)
+    evidence_client = OpenRouterClient(
+        model=config.llm_model,
+        api_key=api_key,
+        rate_limiter=rate_limiter,
+        max_retries=config.max_retries,
+        retry_backoff_seconds=config.retry_backoff_seconds,
+    )
     evidence_resp = evidence_client.chat(prompt_messages, temperature=0.0, max_tokens=3000)
     evidence = extract_json_field(evidence_resp, "evidence")
+
     if isinstance(evidence, dict):
         final_evidence = ", ".join([f"{k}: {v}" for k, v in evidence.items()])
         return final_evidence
@@ -779,14 +849,48 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output", required=True, help="Path to write output JSON")
     parser.add_argument("--train-data", help="Optional train data with existing evidence for few-shot retrieval")
     parser.add_argument("--openrouter-key", default=os.environ.get("OPENROUTER_API_KEY", ""))
-    parser.add_argument("--model", default="deepseek/deepseek-r1")
+    parser.add_argument("--model", default="deepseek/deepseek-v3.2")
     parser.add_argument("--schema-summary", action="store_true", help="Enable schema summarization stage")
     parser.add_argument("--use-embeddings", action="store_true", help="Use sentence embeddings for few-shot retrieval")
     parser.add_argument("--embedding-model", default="sentence-transformers/all-mpnet-base-v2", help="Embedding model name")
     parser.add_argument("--top-k", type=int, default=3, help="Number of few-shot primary DB samples")
     parser.add_argument("--top-n-same-db", type=int, default=5, help="Questions per selected few-shot DB")
     parser.add_argument("--max-samples-per-column", type=int, default=10, help="Sample values for each schema-value pair")
+    parser.add_argument("--max-workers", type=int, default=4, help="Number of questions to process in parallel")
+    parser.add_argument("--max-requests-per-minute", type=float, default=60.0, help="Global OpenRouter request cap across all workers")
+    parser.add_argument("--max-retries", type=int, default=3, help="Retries for retryable OpenRouter failures")
+    parser.add_argument("--retry-backoff-seconds", type=float, default=2.0, help="Base backoff for retryable OpenRouter failures")
     return parser.parse_args()
+
+
+def process_dataset_item(
+    idx: int,
+    total: int,
+    item: dict[str, Any],
+    config: SeedConfig,
+    api_key: str,
+    train_data: list[dict[str, Any]],
+    finder: SimilarQuestionFinder | None,
+    rate_limiter: RateLimiter,
+) -> tuple[int, dict[str, Any]]:
+    row = dict(item)
+    try:
+        row["evidence"] = generate_evidence_for_item(
+            item=row,
+            config=config,
+            api_key=api_key,
+            train_data=train_data,
+            finder=finder,
+            rate_limiter=rate_limiter,
+        )
+    except Exception as exc:
+        row["evidence"] = ""
+        row["evidence_error"] = str(exc)
+        print(str(exc))
+
+    print(f"[{idx}/{total}] db_id={row.get('db_id')} evidence_len={len(row.get('evidence', ''))}\nevidence : {row["evidence"]}\n")
+    
+    return idx, row
 
 
 def main() -> None:
@@ -794,7 +898,7 @@ def main() -> None:
     if not args.openrouter_key:
         raise ValueError("Missing OpenRouter key. Pass --openrouter-key or set OPENROUTER_API_KEY.")
 
-    dataset = read_dataset(Path(args.dataset))
+    dataset = truncate_dataset(read_dataset(Path(args.dataset)))
     #train_data, to build few shot examples
     train_data = read_dataset(Path(args.train_data)) if args.train_data else []
 
@@ -814,6 +918,10 @@ def main() -> None:
         llm_model=args.model,
         use_embeddings=args.use_embeddings,
         embedding_model=args.embedding_model,
+        max_workers=args.max_workers,
+        max_requests_per_minute=args.max_requests_per_minute,
+        max_retries=args.max_retries,
+        retry_backoff_seconds=args.retry_backoff_seconds,
     )
 
     finder: SimilarQuestionFinder | None = None
@@ -827,23 +935,26 @@ def main() -> None:
                 f"Embedding retrieval unavailable ({exc}). Falling back to lexical similarity."
             )
 
-    output_rows: list[dict[str, Any]] = []
-    for idx, item in enumerate(dataset, start=1):
-        row = dict(item)
-        try:
-            row["evidence"] = generate_evidence_for_item(
-                item=row,
-                config=config,
-                api_key=args.openrouter_key,
-                train_data=train_data,
-                finder=finder,
-            )
-        except Exception as exc:
-            row["evidence"] = ""
-            row["evidence_error"] = str(exc)
-
-        output_rows.append(row)
-        print(f"[{idx}/{len(dataset)}] db_id={row.get('db_id')} evidence_len={len(row.get('evidence', ''))}")
+    rate_limiter = RateLimiter(config.max_requests_per_minute)
+    output_rows: list[dict[str, Any]] = [None] * len(dataset)  # type: ignore[list-item]
+    with ThreadPoolExecutor(max_workers=max(1, config.max_workers)) as executor:
+        futures = {
+            executor.submit(
+                process_dataset_item,
+                idx,
+                len(dataset),
+                item,
+                config,
+                args.openrouter_key,
+                train_data,
+                finder,
+                rate_limiter,
+            ): idx
+            for idx, item in enumerate(dataset, start=1)
+        }
+        for future in as_completed(futures):
+            idx, row = future.result()
+            output_rows[idx - 1] = row
 
     with config.output_path.open("w", encoding="utf-8") as f:
         json.dump(output_rows, f, ensure_ascii=False, indent=2)
