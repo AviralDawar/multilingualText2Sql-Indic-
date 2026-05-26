@@ -16,6 +16,7 @@ Usage:
 import csv
 import argparse
 from pathlib import Path
+from decimal import Decimal, InvalidOperation
 
 from db_utils import load_config, get_connection, get_default_config_path, execute_use_schema, execute_truncate_table
 
@@ -34,8 +35,45 @@ def load_csv_file(csv_path: Path) -> tuple[list[str], list[list]]:
     return headers, rows
 
 
+def get_integer_columns(cursor, table_name: str) -> set[str]:
+    """Return integer-like columns for the current schema/table."""
+    cursor.execute(
+        """
+        SELECT column_name
+        FROM information_schema.columns
+        WHERE table_schema = current_schema()
+          AND table_name = %s
+          AND data_type IN ('smallint', 'integer', 'bigint')
+        """,
+        (table_name.lower(),)
+    )
+    return {row[0].lower() for row in cursor.fetchall()}
+
+
+def normalize_row_values(headers: list[str], row: list[str], integer_columns: set[str]) -> tuple:
+    """Convert empty strings to NULL and integral decimals to ints for integer columns."""
+    values = []
+    for header, value in zip(headers, row):
+        if value == '':
+            values.append(None)
+            continue
+
+        if header.lower() in integer_columns:
+            try:
+                decimal_value = Decimal(value)
+                if decimal_value == decimal_value.to_integral_value():
+                    values.append(int(decimal_value))
+                    continue
+            except (InvalidOperation, ValueError):
+                pass
+
+        values.append(value)
+    return tuple(values)
+
+
 def insert_data_from_csv(cursor, table_name: str, headers: list[str], rows: list[list],
-                         batch_size: int = 1000, limit: int = None):
+                         batch_size: int = 1000, limit: int = None,
+                         integer_columns: set[str] = None):
     """
     Insert CSV data into a database table.
 
@@ -58,6 +96,7 @@ def insert_data_from_csv(cursor, table_name: str, headers: list[str], rows: list
 
     # Use lowercase column names (PostgreSQL lowercases unquoted identifiers in DDL)
     columns_str = ", ".join(h.lower() for h in headers)
+    integer_columns = integer_columns or set()
 
     total_rows = len(rows)
     inserted = 0
@@ -73,8 +112,7 @@ def insert_data_from_csv(cursor, table_name: str, headers: list[str], rows: list
 
         for i in range(0, total_rows, batch_size):
             batch = rows[i:i + batch_size]
-            # Convert empty strings to None
-            values = [tuple(val if val != '' else None for val in row) for row in batch]
+            values = [normalize_row_values(headers, row, integer_columns) for row in batch]
 
             try:
                 execute_values(cursor, insert_sql, values, page_size=batch_size)
@@ -93,8 +131,7 @@ def insert_data_from_csv(cursor, table_name: str, headers: list[str], rows: list
 
     for i in range(0, total_rows, batch_size):
         batch = rows[i:i + batch_size]
-        # Convert empty strings to None
-        values = [tuple(val if val != '' else None for val in row) for row in batch]
+        values = [normalize_row_values(headers, row, integer_columns) for row in batch]
 
         try:
             cursor.executemany(insert_sql, values)
@@ -187,7 +224,11 @@ def process_database_folder(db_folder: Path, config: dict,
                     print(f"  Warning: Could not truncate {table_name}: {e}")
 
             # Insert data
-            insert_data_from_csv(cursor, table_name, headers, rows, limit=limit)
+            integer_columns = get_integer_columns(cursor, table_name)
+            insert_data_from_csv(
+                cursor, table_name, headers, rows,
+                limit=limit, integer_columns=integer_columns
+            )
 
         conn.commit()
         print(f"\nData loading complete for {target_database}.{target_schema}")
