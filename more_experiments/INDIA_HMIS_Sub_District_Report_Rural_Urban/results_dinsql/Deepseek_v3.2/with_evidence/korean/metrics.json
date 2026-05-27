@@ -1,0 +1,909 @@
+{
+  "summary": {
+    "total": 100,
+    "execution_correct": 53,
+    "execution_accuracy": 0.53
+  },
+  "results": [
+    {
+      "instance_id": "bf924deb",
+      "question": "Bihar 주에 위치한 모든 지구를 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Bihar';",
+      "predicted_sql": "SELECT dim_district.district_name FROM dim_district\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nWHERE dim_state.state_name = 'Bihar'",
+      "error_info": null
+    },
+    {
+      "instance_id": "9b78ebf8",
+      "question": "Assam 주의 모든 district를 알파벳 순으로 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Assam' ORDER BY T1.DISTRICT_NAME ASC",
+      "predicted_sql": "SELECT T1.district_name\nFROM dim_district AS T1\nJOIN dim_state AS T2 ON T1.state_id = T2.state_id\nWHERE T2.state_name = 'Assam'\nORDER BY T1.district_name ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "5e6d1189",
+      "question": "Bihar 주에 위치한 모든 district의 목록을 알파벳순으로 제공하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T3.DISTRICT_NAME FROM DIM_COUNTRY AS T1 INNER JOIN DIM_STATE AS T2 ON T1.COUNTRY_ID = T2.COUNTRY_ID INNER JOIN DIM_DISTRICT AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T2.STATE_NAME = 'Bihar' GROUP BY T3.DISTRICT_NAME ORDER BY T3.DISTRICT_NAME ASC",
+      "predicted_sql": "SELECT T1.district_name\nFROM dim_district AS T1\nJOIN dim_state AS T2 ON T1.state_id = T2.state_id\nWHERE T2.state_name = 'Bihar'\nORDER BY T1.district_name ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "82925e27",
+      "question": "각 주별 district 수를 집계하고, 주 이름의 알파벳순으로 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.STATE_NAME, COUNT(T2.DISTRICT_ID) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID GROUP BY T1.STATE_NAME ORDER BY T1.STATE_NAME;",
+      "predicted_sql": "SELECT T1.state_name, COUNT(DISTINCT T2.district_id) AS district_count\nFROM dim_state AS T1\nJOIN dim_district AS T2 ON T1.state_id = T2.state_id\nGROUP BY T1.state_id, T1.state_name\nORDER BY T1.state_name ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "d712a643",
+      "question": "Assam에 있는 구역들 중 \"Rural\" 하위 구역이 1개보다 많은 구역의 이름을 알파벳순으로 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME = 'Assam' AND T3.TYPE_OF_AREA = 'Rural' GROUP BY T2.DISTRICT_NAME HAVING COUNT(T3.SUB_DISTRICT_ID) > 1 ORDER BY T2.DISTRICT_NAME ASC",
+      "predicted_sql": "SELECT T2.district_name\nFROM dim_state AS T1\nJOIN dim_district AS T2 ON T1.state_id = T2.state_id\nJOIN dim_sub_district AS T3 ON T2.district_id = T3.district_id\nWHERE T1.state_name = 'Assam'\n  AND T3.type_of_area = 'Rural'\nGROUP BY T2.district_id\nHAVING COUNT(T3.sub_district_id) > 1\nORDER BY T2.district_name",
+      "error_info": null
+    },
+    {
+      "instance_id": "3b58000c",
+      "question": "모든 구역의 목록을 주 이름순으로, 그다음 구역 이름순으로 알파벳순 정렬하여 제공하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID ORDER BY T2.STATE_NAME, T1.DISTRICT_NAME",
+      "predicted_sql": "SELECT dim_state.state_name, dim_district.district_name\nFROM dim_district\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nORDER BY dim_state.state_name ASC, dim_district.district_name ASC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "bdde29f6",
+      "question": "Assam에서 1개보다 많은 하위 구역을 포함하는 상위 5개 구역의 이름을 역알파벳순으로 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.DISTRICT_NAME FROM DIM_STATE AS T1 INNER JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID INNER JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME = 'Assam' GROUP BY T2.DISTRICT_NAME HAVING COUNT(T3.SUB_DISTRICT_ID) > 1 ORDER BY T2.DISTRICT_NAME DESC LIMIT 5",
+      "predicted_sql": "SELECT dim_district.district_name\nFROM dim_district\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nJOIN dim_sub_district ON dim_district.district_id = dim_sub_district.district_id\nWHERE dim_state.state_name = 'Assam'\n  AND dim_sub_district.type_of_area = 'Rural'\nGROUP BY dim_district.district_id\nHAVING COUNT(dim_sub_district.sub_district_id) > 1\nORDER BY dim_district.district_name DESC\nLIMIT 5",
+      "error_info": null
+    },
+    {
+      "instance_id": "28d9c826",
+      "question": "India의 모든 district와 그들이 속한 state 이름을 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.DISTRICT_NAME, T2.STATE_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_COUNTRY AS T3 ON T2.COUNTRY_ID = T3.COUNTRY_ID WHERE T3.COUNTRY_NAME = 'India';",
+      "predicted_sql": "SELECT T1.district_name, T2.state_name\nFROM dim_district AS T1\nJOIN dim_state AS T2 ON T1.state_id = T2.state_id\nJOIN dim_country AS T3 ON T2.country_id = T3.country_id\nWHERE T3.country_name = 'India'\nORDER BY T1.district_name",
+      "error_info": null
+    },
+    {
+      "instance_id": "076310d4",
+      "question": "India의 모든 district를 해당 state별로 정리하여 알파벳순 목록으로 제공하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T3.DISTRICT_NAME, T2.STATE_NAME FROM DIM_COUNTRY AS T1 INNER JOIN DIM_STATE AS T2 ON T1.COUNTRY_ID = T2.COUNTRY_ID INNER JOIN DIM_DISTRICT AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T1.COUNTRY_NAME = 'India' GROUP BY T2.STATE_NAME, T3.DISTRICT_NAME ORDER BY T2.STATE_NAME ASC, T3.DISTRICT_NAME ASC",
+      "predicted_sql": "SELECT dim_district.district_name\nFROM dim_district\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nJOIN dim_sub_district ON dim_district.district_id = dim_sub_district.district_id\nWHERE dim_state.state_name = 'Assam'\n  AND dim_sub_district.type_of_area = 'Rural'\nGROUP BY dim_district.district_id, dim_district.district_name\nHAVING COUNT(dim_sub_district.sub_district_id) > 1\nORDER BY dim_district.district_name ASC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "d2704225",
+      "question": "Assam에 위치하지만 Bihar의 어떤 district와도 이름이 같지 않은 district들의 이름을 식별하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Assam' EXCEPT SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Bihar'",
+      "predicted_sql": "SELECT dim_state.state_name, dim_district.district_name\nFROM dim_district\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nWHERE dim_state.state_name = 'Assam'\n  AND dim_district.district_name NOT IN (\n    SELECT dim_district.district_name\n    FROM dim_district\n    JOIN dim_state ON dim_district.state_id = dim_state.state_id\n    WHERE dim_state.state_name = 'Bihar'\n  )\nORDER BY dim_state.state_name ASC, dim_district.district_name ASC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "ecdb5b0f",
+      "question": "Bihar의 어떤 구와도 이름을 공유하지 않는 Assam의 구를 식별하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Assam' AND T1.DISTRICT_NAME NOT IN (SELECT T3.DISTRICT_NAME FROM DIM_DISTRICT AS T3 JOIN DIM_STATE AS T4 ON T3.STATE_ID = T4.STATE_ID WHERE T4.STATE_NAME = 'Bihar')",
+      "predicted_sql": "SELECT A.district_name\nFROM dim_district AS A\nJOIN dim_state AS S1 ON A.state_id = S1.state_id\nWHERE S1.state_name = 'Assam'\n  AND A.district_name NOT IN (\n    SELECT B.district_name\n    FROM dim_district AS B\n    JOIN dim_state AS S2 ON B.state_id = S2.state_id\n    WHERE S2.state_name = 'Bihar'\n  )\nORDER BY A.district_name",
+      "error_info": null
+    },
+    {
+      "instance_id": "0e84d553",
+      "question": "기록된 지구 정보가 있는 주 목록에서 Assam 주의 이름을 확인하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT DISTINCT T1.STATE_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_NAME = 'Assam';",
+      "predicted_sql": "SELECT DISTINCT dim_state.state_name\nFROM dim_state\nJOIN dim_country ON dim_state.country_id = dim_country.country_id\nJOIN dim_district ON dim_state.state_id = dim_district.state_id\nWHERE dim_country.country_name = 'India'\nORDER BY dim_state.state_name ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "3f9bf1a0",
+      "question": "Assam 및 Andaman And Nicobar Islands 주에 위치한 모든 구를 나열하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.STATE_NAME, T2.DISTRICT_NAME FROM DIM_STATE T1 JOIN DIM_DISTRICT T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_NAME = 'Andaman And Nicobar Islands' OR T1.STATE_NAME = 'Assam';",
+      "predicted_sql": "SELECT T1.district_name\nFROM dim_district AS T1\nJOIN dim_state AS T2 ON T1.state_id = T2.state_id\nWHERE T2.state_name IN ('Assam', 'Andaman And Nicobar Islands')\nORDER BY T1.district_name ASC\nLIMIT 5",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "b511c926",
+      "question": "Andaman And Nicobar Islands 또는 Nicobars 구에 해당하는 모든 주의 이름과 그에 대응하는 구를 주별로 알파벳순으로 정렬하여 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.STATE_NAME, T2.DISTRICT_NAME FROM DIM_STATE AS T1 INNER JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_NAME = 'Andaman And Nicobar Islands' OR T2.DISTRICT_NAME = 'Nicobars' GROUP BY T1.STATE_NAME, T2.DISTRICT_NAME ORDER BY T1.STATE_NAME ASC",
+      "predicted_sql": "SELECT dim_state.state_name, dim_district.district_name\nFROM dim_state\nJOIN dim_district ON dim_district.state_id = dim_state.state_id\nWHERE dim_state.state_name LIKE '%Andaman And Nicobar Islands%'\n   OR dim_state.state_name LIKE '%Nicobars%'\nORDER BY dim_state.state_name ASC, dim_district.district_name ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "bc38904c",
+      "question": "이름과 ID를 포함하여 모든 Rural 하위 지구의 목록을 알파벳순으로 제공하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T1.SUB_DISTRICT_ID FROM DIM_SUB_DISTRICT AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Rural' ORDER BY T1.SUB_DISTRICT_NAME",
+      "predicted_sql": "SELECT sub_district_name, sub_district_id\nFROM dim_sub_district\nWHERE type_of_area = 'Rural'\nORDER BY sub_district_name",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "01d39f0e",
+      "question": "각 주에 대해 지역 유형별 하위 구역 수의 내역을 제공하고, 주 이름의 알파벳순으로 정렬한 다음 가장 높은 개수순으로 정렬하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.STATE_NAME, T3.TYPE_OF_AREA, COUNT(T3.SUB_DISTRICT_ID) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID GROUP BY T1.STATE_NAME, T3.TYPE_OF_AREA HAVING COUNT(T3.SUB_DISTRICT_ID) > 0 ORDER BY T1.STATE_NAME ASC, COUNT(T3.SUB_DISTRICT_ID) DESC",
+      "predicted_sql": "SELECT dim_state.state_name, dim_sub_district.type_of_area, COUNT(dim_sub_district.sub_district_id)\nFROM dim_sub_district\nJOIN dim_district ON dim_sub_district.district_id = dim_district.district_id\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nJOIN dim_country ON dim_state.country_id = dim_country.country_id\nWHERE dim_country.country_name = 'India'\nGROUP BY dim_state.state_name, dim_sub_district.type_of_area\nORDER BY dim_state.state_name ASC, COUNT(dim_sub_district.sub_district_id) DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "21a46a66",
+      "question": "Andaman And Nicobar Islands에 위치한 모든 Rural 하위 지구의 이름을 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T3.STATE_NAME = 'Andaman And Nicobar Islands'",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name\nFROM dim_sub_district\nJOIN dim_district ON dim_sub_district.district_id = dim_district.district_id\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nWHERE dim_state.state_name = 'Andaman And Nicobar Islands'\n  AND dim_sub_district.type_of_area = 'Rural'",
+      "error_info": null
+    },
+    {
+      "instance_id": "d438fef8",
+      "question": "Andaman And Nicobar Islands에 위치한 모든 Rural 하위 구역의 이름을 알파벳순으로 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T3.STATE_NAME = 'Andaman And Nicobar Islands' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY T1.SUB_DISTRICT_NAME",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name\nFROM dim_sub_district\nJOIN dim_district ON dim_sub_district.district_id = dim_district.district_id\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nJOIN dim_country ON dim_state.country_id = dim_country.country_id\nWHERE dim_country.country_name = 'India'\n  AND dim_state.state_name = 'Andaman And Nicobar Islands'\n  AND dim_sub_district.type_of_area = 'Rural'\nORDER BY dim_sub_district.sub_district_name ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "ddfc66fd",
+      "question": "Assam 주 내에 위치한 하위 지구들과 그에 해당하는 지역 유형을 이름순으로 알파벳순 정렬하여 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T3.SUB_DISTRICT_NAME, T3.TYPE_OF_AREA FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME = 'Assam' GROUP BY T3.TYPE_OF_AREA, T3.SUB_DISTRICT_NAME ORDER BY T3.SUB_DISTRICT_NAME ASC",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name, dim_sub_district.type_of_area\nFROM dim_sub_district\nJOIN dim_district ON dim_sub_district.district_id = dim_district.district_id\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nWHERE dim_state.state_name = 'Assam'\nORDER BY dim_sub_district.sub_district_name ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "c829cc67",
+      "question": "Andaman And Nicobar Islands 내에 위치한 모든 하위 지구의 이름과 지역 유형을 지역 유형과 이름 순으로 알파벳순 정렬하여 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T3.SUB_DISTRICT_NAME, T3.TYPE_OF_AREA FROM DIM_STATE AS T1 INNER JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID INNER JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME = 'Andaman And Nicobar Islands' GROUP BY T3.TYPE_OF_AREA, T3.SUB_DISTRICT_NAME HAVING COUNT(T3.SUB_DISTRICT_ID) >= 1 ORDER BY T3.TYPE_OF_AREA ASC, T3.SUB_DISTRICT_NAME ASC",
+      "predicted_sql": "SELECT T1.sub_district_name, T1.type_of_area\nFROM dim_sub_district AS T1\nJOIN dim_district AS T2 ON T1.district_id = T2.district_id\nJOIN dim_state AS T3 ON T2.state_id = T3.state_id\nWHERE T3.state_name = 'Andaman And Nicobar Islands'\nORDER BY T1.type_of_area ASC, T1.sub_district_name ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "201c5068",
+      "question": "어느 5개 주가 Rural 하위 구역 수가 가장 많습니까?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.STATE_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T3.TYPE_OF_AREA = 'Rural' GROUP BY T1.STATE_NAME ORDER BY COUNT(T3.SUB_DISTRICT_ID) DESC LIMIT 5",
+      "predicted_sql": "SELECT dim_state.state_name, COUNT(dim_sub_district.sub_district_id) AS rural_sub_district_count\nFROM dim_sub_district\nJOIN dim_district ON dim_sub_district.district_id = dim_district.district_id\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nWHERE dim_sub_district.type_of_area = 'Rural'\nGROUP BY dim_state.state_name\nORDER BY rural_sub_district_count DESC\nLIMIT 5",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "92f00f21",
+      "question": "모든 Rural 하위 구역의 이름과 해당 district 및 state를 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T2.DISTRICT_NAME, T3.STATE_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T1.TYPE_OF_AREA = 'Rural';",
+      "predicted_sql": "SELECT T1.sub_district_name, T2.district_name, T3.state_name\nFROM dim_sub_district AS T1\nJOIN dim_district AS T2 ON T1.district_id = T2.district_id\nJOIN dim_state AS T3 ON T2.state_id = T3.state_id\nWHERE T1.type_of_area = 'Rural'",
+      "error_info": null
+    },
+    {
+      "instance_id": "e9da9511",
+      "question": "오직 Urban 지역으로만 분류되고 Rural 구성 요소가 전혀 없는 하위 지구를 식별하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Urban' EXCEPT SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Rural';",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name\nFROM dim_sub_district\nWHERE dim_sub_district.type_of_area = 'Urban'\nAND NOT EXISTS (\n  SELECT 1\n  FROM dim_sub_district AS t2\n  WHERE t2.district_id = dim_sub_district.district_id\n  AND t2.type_of_area = 'Rural'\n)",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "298abc66",
+      "question": "Urban으로 분류되고 Rural로는 분류되지 않은 모든 하위 구역의 이름을 알파벳순으로 나열하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 WHERE T1.TYPE_OF_AREA = 'Urban' AND T1.SUB_DISTRICT_NAME NOT IN (SELECT T2.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T2 WHERE T2.TYPE_OF_AREA = 'Rural') GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(T1.SUB_DISTRICT_ID) >= 1 ORDER BY T1.SUB_DISTRICT_NAME ASC",
+      "predicted_sql": "SELECT sub_district_name\nFROM dim_sub_district\nWHERE type_of_area = 'Urban'\nORDER BY sub_district_name ASC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "bf5a3dba",
+      "question": "'Andaman And Nicobar Islands'라는 이름과 모든 Rural 하위 지구의 이름을 포함하는 목록을 제공하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT STATE_NAME FROM DIM_STATE WHERE STATE_NAME = 'Andaman And Nicobar Islands' UNION SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Rural'",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name\nFROM dim_sub_district\nJOIN dim_district ON dim_sub_district.district_id = dim_district.district_id\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nWHERE dim_sub_district.type_of_area = 'Rural'\n  AND dim_state.state_name = 'Andaman And Nicobar Islands'\nORDER BY dim_sub_district.sub_district_name",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "7b1134c5",
+      "question": "September, 2020 월의 allopathic 외래 환자 수치를 보여주세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T2 ON T1.MONTH_ID = T2.MONTH_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T2.MONTH_NAME = 'September, 2020' AND T3.YEAR_VALUE = '2020'",
+      "predicted_sql": "SELECT SUM(T1.outpatient_attendance_allopathic)\nFROM fact_outpatient_services AS T1\nJOIN dim_sub_district AS T2 ON T1.sub_district_id = T2.sub_district_id\nJOIN dim_district AS T3 ON T2.district_id = T3.district_id\nJOIN dim_state AS T4 ON T3.state_id = T4.state_id\nJOIN dim_month AS T5 ON T1.month_id = T5.month_id\nJOIN dim_year AS T6 ON T5.year_id = T6.year_id\nWHERE T5.month_name = 'September'\n  AND T6.year_value = 2020\n  AND (T4.state_name = 'Assam' OR T3.district_name = 'Nicobars')",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "0387be49",
+      "question": "기록된 방문이 있는 경우만 대상으로, December, 2022의 외래 환자 ID와 해당 allopathic attendance 횟수를 attendance가 높은 순서부터 낮은 순서로 나열하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.OUTPATIENT_ID, T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T2 ON T1.MONTH_ID = T2.MONTH_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T2.MONTH_NAME = 'December, 2022' AND T3.YEAR_VALUE = '2022' GROUP BY T1.OUTPATIENT_ID, T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC HAVING SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 0 ORDER BY T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC DESC",
+      "predicted_sql": "SELECT fact_outpatient_services.outpatient_id,\n       fact_outpatient_services.outpatient_attendance_allopathic,\n       dim_state.state_name,\n       dim_district.district_name\nFROM fact_outpatient_services\nJOIN dim_month ON fact_outpatient_services.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nJOIN dim_sub_district ON fact_outpatient_services.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_district ON dim_sub_district.district_id = dim_district.district_id\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nWHERE dim_month.month_name = 'December'\n  AND dim_year.year_value = 2022\n  AND fact_outpatient_services.outpatient_attendance_allopathic > 0\n  AND (dim_state.state_name = 'Andaman And Nicobar Islands'\n       OR dim_district.district_name = 'Nicobars')\nORDER BY fact_outpatient_services.outpatient_attendance_allopathic DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "a70d05df",
+      "question": "연도별 총 allopathic 외래 환자 수를 연대순으로 제공하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T3.YEAR_VALUE, SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T2 ON T1.MONTH_ID = T2.MONTH_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID GROUP BY T3.YEAR_VALUE ORDER BY T3.YEAR_VALUE ASC",
+      "predicted_sql": "SELECT dim_year.year_value, SUM(fact_outpatient_services.outpatient_attendance_allopathic)\nFROM fact_outpatient_services\nJOIN dim_month ON fact_outpatient_services.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nGROUP BY dim_year.year_value\nORDER BY dim_year.year_value ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "cf0db537",
+      "question": "2022년의 각 월을 총 allopathic 외래 환자 수 기준으로 높은 순서부터 낮은 순서까지 순위를 매겨 주세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.MONTH_NAME, SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T2 ON T1.MONTH_ID = T2.MONTH_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR_VALUE = '2022' GROUP BY T2.MONTH_NAME ORDER BY SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+      "predicted_sql": "SELECT\n    dm.month_name,\n    SUM(fos.outpatient_attendance_allopathic) AS total_outpatient_attendance\nFROM",
+      "error_info": "syntax error at end of input\nLINE 4: FROM\n            ^\n"
+    },
+    {
+      "instance_id": "170b0d9f",
+      "question": "2022년의 월들을 allopathic 외래 방문 총횟수를 기준으로 높은 순서부터 낮은 순서까지 순위를 매겨 주세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.MONTH_NAME, SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T2 ON T1.MONTH_ID = T2.MONTH_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR_VALUE = '2022' GROUP BY T2.MONTH_NAME ORDER BY SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+      "predicted_sql": "SELECT\n    dim_month.month_name,\n    SUM(fact_outpatient_services.outpatient_attendance_allopathic) AS total_allopathic_visits\nFROM",
+      "error_info": "syntax error at end of input\nLINE 4: FROM\n            ^\n"
+    },
+    {
+      "instance_id": "42ea1f77",
+      "question": "2022년의 전체 allopathic 외래 환자 수를 월별로 세분화하여, 가장 많은 수부터 가장 적은 수 순으로 순위를 매겨 제공하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.MONTH_NAME, SUM(T3.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_YEAR AS T1 JOIN DIM_MONTH AS T2 ON T1.YEAR_ID = T2.YEAR_ID JOIN FACT_OUTPATIENT_SERVICES AS T3 ON T2.MONTH_ID = T3.MONTH_ID WHERE T1.YEAR_VALUE = '2022' GROUP BY T2.MONTH_NAME ORDER BY SUM(T3.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+      "predicted_sql": "SELECT sum(fact_outpatient_services.outpatient_attendance_allopathic), dim_month.month_name\nFROM fact_outpatient_services\nJOIN dim_month ON fact_outpatient_services.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2022\nGROUP BY dim_month.month_id, dim_month.month_name\nORDER BY sum(fact_outpatient_services.outpatient_attendance_allopathic) DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "095bb0c4",
+      "question": "2022년에 allopathic 외래 방문이 기록되었지만 2021년에는 그러한 방문이 보고되지 않은 하위 지구를 식별하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2022' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 0 EXCEPT SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 0",
+      "predicted_sql": "SELECT\n    ds.state_name,\n    ds.type_of_area,\n    COUNT(DISTINCT ds.sub_district_id) AS sub_district_count\nFROM dim_sub_district ds\nJOIN dim_district dd ON ds.district_id = dd.district_id\nJOIN dim_state dst ON dd.state_id = dst.state_id\nJOIN fact_outpatient_services fos ON ds.sub_district_id = fos.sub_district_id\nJOIN dim_month dm ON fos.month_id = dm.month_id\nJOIN dim_year dy ON dm.year_id = dy.year_id\nWHERE dy.year_value = 2022\n  AND fos.outpatient_attendance_allopathic > 0\n  AND ds.sub_district_id NOT IN (\n    SELECT ds2.sub_district_id\n    FROM dim_sub_district ds2\n    JOIN fact_outpatient_services fos2 ON ds2.sub_district_id = fos2.sub_district_id\n    JOIN dim_month dm2 ON fos2.month_id = dm2.month_id\n    JOIN dim_year dy2 ON dm2.year_id = dy2.year_id\n    WHERE dy2.year_value = 2021\n      AND fos2.outpatient_attendance_allopathic > 0\n  )\nGROUP BY ds.state_name, ds.type_of_area\nORDER BY ds.state_name ASC",
+      "error_info": "column ds.state_name does not exist\nLINE 2:     ds.state_name,\n            ^\nHINT:  Perhaps you meant to reference the column \"dst.state_name\".\n"
+    },
+    {
+      "instance_id": "6629c430",
+      "question": "2022년에 allopathic outpatient attendance가 기록되었지만 2021년에는 그러한 attendance가 없었던 하위 지구를 식별하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2022' AND T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC > 0.0 GROUP BY T1.SUB_DISTRICT_NAME EXCEPT SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' AND T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC > 0.0 GROUP BY T1.SUB_DISTRICT_NAME",
+      "predicted_sql": "SELECT DISTINCT T4.sub_district_name\nFROM dim_sub_district AS T4\nJOIN fact_outpatient_services AS T1 ON T4.sub_district_id = T1.sub_district_id\nJOIN dim_month AS T2 ON T1.month_id = T2.month_id\nJOIN dim_year AS T3 ON T2.year_id = T3.year_id\nWHERE T3.year_value = 2022\n    AND T1.outpatient_attendance_allopathic IS NOT NULL\n    AND T4.sub_district_id NOT IN (\n        SELECT T5.sub_district_id\n        FROM fact_outpatient_services AS T5\n        JOIN dim_month AS T6 ON T5.month_id = T6.month_id\n        JOIN dim_year AS T7 ON T6.year_id = T7.year_id\n        WHERE T7.year_value = 2021\n            AND T5.outpatient_attendance_allopathic IS NOT NULL\n    )\nORDER BY T4.sub_district_name",
+      "error_info": null
+    },
+    {
+      "instance_id": "069ec4a6",
+      "question": "어떤 하위 지구들이 2021년과 2022년 모두에 외래 서비스를 기록했습니까?",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE IN ('2021', '2022') GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(DISTINCT T4.YEAR_VALUE) = 2",
+      "predicted_sql": "SELECT DISTINCT dim_sub_district.sub_district_name\nFROM dim_sub_district\nJOIN dim_district ON dim_sub_district.district_id = dim_district.district_id\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nJOIN fact_outpatient_services ON dim_sub_district.sub_district_id = fact_outpatient_services.sub_district_id\nJOIN dim_month ON fact_outpatient_services.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_sub_district.type_of_area = 'Rural'\n  AND dim_state.state_name = 'Andaman And Nicobar Islands'\n  AND dim_year.year_value IN (2021, 2022)\nGROUP BY dim_sub_district.sub_district_name\nHAVING COUNT(DISTINCT dim_year.year_value) = 2\nORDER BY dim_sub_district.sub_district_name",
+      "error_info": null
+    },
+    {
+      "instance_id": "99eb0b3c",
+      "question": "연도 2022에 속하거나 5,000의 allopathic 외래 방문 수를 초과하여 기록한 월을 알파벳순으로 식별하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT DISTINCT T2.MONTH_NAME FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T2 ON T1.MONTH_ID = T2.MONTH_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC > 5000.0000000000000000 OR T3.YEAR_VALUE = '2022' ORDER BY T2.MONTH_NAME",
+      "predicted_sql": "SELECT DISTINCT T4.sub_district_name\nFROM fact_outpatient_services AS T1\nJOIN dim_sub_district AS T4 ON T1.sub_district_id = T4.sub_district_id\nJOIN dim_district AS T5 ON T4.district_id = T5.district_id\nJOIN dim_state AS T6 ON T5.state_id = T6.state_id\nJOIN dim_month AS T2 ON T1.month_id = T2.month_id\nJOIN dim_year AS T3 ON T2.year_id = T3.year_id\nWHERE T4.type_of_area = 'Rural'\n  AND T6.state_name = 'Andaman And Nicobar Islands'\n  AND (T3.year_value = 2022 OR T1.outpatient_attendance_allopathic > 5000)\nORDER BY T4.sub_district_name ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "26170385",
+      "question": "기록된 모든 연도에 걸친 allopathic 외래 방문의 연간 총계를 제공하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T3.YEAR_VALUE, SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T2 ON T1.MONTH_ID = T2.MONTH_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID GROUP BY T3.YEAR_VALUE",
+      "predicted_sql": "SELECT\n    SUM(fos.outpatient_attendance_allopathic) AS total_allopathic_visits,\n    dy.year_value\nFROM fact_outpatient_services fos\nJOIN dim_month dm ON fos.month_id = dm.month_id\nJOIN dim_year dy ON dm.year_id = dy.year_id\nGROUP BY dy.year_value\nORDER BY dy.year_value",
+      "error_info": null
+    },
+    {
+      "instance_id": "14fe55de",
+      "question": "연도순으로 정렬하여 Rural 및 Urban 지역 전체의 allopathic 외래 총 방문자 수를 연도별로 보여주세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.YEAR_VALUE, SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T3 ON T1.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T2 ON T3.YEAR_ID = T2.YEAR_ID JOIN DIM_SUB_DISTRICT AS T4 ON T1.SUB_DISTRICT_ID = T4.SUB_DISTRICT_ID WHERE T4.TYPE_OF_AREA IN ('Rural', 'Urban') GROUP BY T2.YEAR_VALUE ORDER BY T2.YEAR_VALUE ASC",
+      "predicted_sql": "SELECT SUM(fact_outpatient_services.outpatient_attendance_allopathic) AS total_allopathic_visits,\n       dim_year.year_value\nFROM fact_outpatient_services\nJOIN dim_sub_district ON fact_outpatient_services.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_district ON dim_sub_district.district_id = dim_district.district_id\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nJOIN dim_month ON fact_outpatient_services.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_state.state_name = 'Assam'\n  AND dim_sub_district.type_of_area IN ('Rural', 'Urban')\nGROUP BY dim_year.year_value\nORDER BY dim_year.year_value",
+      "error_info": null
+    },
+    {
+      "instance_id": "f3579a90",
+      "question": "2021년 동안 총 allopathic 외래 환자 수가 5000명을 초과한 \"Rural\" 하위 구역은 어디입니까?",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 5000",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name\nFROM dim_sub_district\nJOIN fact_outpatient_services ON dim_sub_district.sub_district_id = fact_outpatient_services.sub_district_id\nJOIN dim_month ON fact_outpatient_services.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_sub_district.type_of_area = 'Rural'\n  AND dim_year.year_value = 2021\nGROUP BY dim_sub_district.sub_district_id\nHAVING SUM(fact_outpatient_services.outpatient_attendance_allopathic) > 5000\nORDER BY dim_sub_district.sub_district_name ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "49345135",
+      "question": "2021년 전체에 걸쳐 기록된 allopathic 외래 방문 총횟수에 따라 하위 지구와 해당 지역 유형의 순위를 가장 높은 방문 수부터 매겨라.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+      "predicted_sql": "SELECT\n    dim_sub_district.sub_district_name,\n    dim_sub_district.type_of_area,\n    SUM(fact_outpatient_services.outpatient_attendance_allopathic) AS total_visits\nFROM fact_outpatient_services\nJOIN dim_sub_district ON fact_outpatient_services.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_district ON dim_sub_district.district_id = dim_district.district_id\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nJOIN dim_month ON fact_outpatient_services.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\n    AND dim_state.state_name = 'Andaman And Nicobar Islands'\nGROUP BY\n    dim_sub_district.sub_district_name,\n    dim_sub_district.type_of_area\nORDER BY\n    total_visits DESC,\n    dim_sub_district.type_of_area,\n    dim_sub_district.sub_district_name",
+      "error_info": null
+    },
+    {
+      "instance_id": "0a861189",
+      "question": "2021년 전체에 걸쳐 기록된 allopathic 외래 방문 총횟수를 기준으로, 가장 많은 방문 수부터 시작하여 하위 지구와 그 지역 유형의 순위를 매겨라.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+      "predicted_sql": "SELECT\n    dim_district.district_name,\n    dim_sub_district.type_of_area,\n    SUM(fact_outpatient_services.outpatient_attendance_allopathic) AS total_visits\nFROM fact_outpatient_services\nJOIN dim_sub_district ON fact_outpatient_services.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_district ON dim_sub_district.district_id = dim_district.district_id\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nJOIN dim_month ON fact_outpatient_services.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\n    AND dim_sub_district.type_of_area = 'Rural'\nGROUP BY dim_district.district_name, dim_sub_district.type_of_area\nORDER BY total_visits DESC\nLIMIT 5",
+      "error_info": null
+    },
+    {
+      "instance_id": "74ebd19a",
+      "question": "2021년에 총 allopathic 외래 방문 수가 가장 높았던 Rural 하위 구역 5곳은 어디입니까?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC LIMIT 5",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name, dim_district.district_name, dim_state.state_name, SUM(fact_outpatient_services.outpatient_attendance_allopathic) AS total_visits\nFROM fact_outpatient_services\nJOIN dim_sub_district ON fact_outpatient_services.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_district ON dim_sub_district.district_id = dim_district.district_id\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nJOIN dim_month ON fact_outpatient_services.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_sub_district.type_of_area = 'Rural' AND dim_year.year_value = 2021\nGROUP BY dim_sub_district.sub_district_name, dim_district.district_name, dim_state.state_name\nORDER BY total_visits DESC\nLIMIT 5",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "aab4d36f",
+      "question": "2021년에 총 allopathic outpatient attendance가 가장 높은 상위 5개 Rural 하위 지구를 식별하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC LIMIT 5",
+      "predicted_sql": "SELECT\n    ds.sub_district_name,\n    dd.district_name,\n    dss.state_name,\n    SUM(fos.outpatient_attendance_allopathic) AS total_allopathic_attendance\nFROM fact_outpatient_services fos\nJOIN dim_sub_district ds ON fos.sub_district_id = ds.sub_district_id\nJOIN dim_district dd ON ds.district_id = dd.district_id\nJOIN dim_state dss ON dd.state_id = dss.state_id\nJOIN dim_month dm ON fos.month_id = dm.month_id\nJOIN dim_year dy ON dm.year_id = dy.year_id\nWHERE dy.year_value = 2021\n  AND ds.type_of_area = 'Rural'\nGROUP BY ds.sub_district_id, ds.sub_district_name, dd.district_name, dss.state_name\nORDER BY total_allopathic_attendance DESC\nLIMIT 5",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "9475afba",
+      "question": "2021년 동안 총 allopathic 외래 방문 수가 가장 높았던 Rural 하위 구역 5곳은 어디입니까?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC LIMIT 5",
+      "predicted_sql": "SELECT T1.sub_district_name, T5.district_name, T6.state_name, SUM(T2.outpatient_attendance_allopathic) AS total_outpatient_visits\nFROM dim_sub_district AS T1\nJOIN fact_outpatient_services AS T2 ON T1.sub_district_id = T2.sub_district_id\nJOIN dim_month AS T3 ON T2.month_id = T3.month_id\nJOIN dim_year AS T4 ON T3.year_id = T4.year_id\nJOIN dim_district AS T5 ON T1.district_id = T5.district_id\nJOIN dim_state AS T6 ON T5.state_id = T6.state_id\nWHERE T1.type_of_area = 'Rural' AND T4.year_value = 2021\nGROUP BY T1.sub_district_name, T5.district_name, T6.state_name\nORDER BY total_outpatient_visits DESC\nLIMIT 5",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "30643449",
+      "question": "2021년 한 해 동안 기록된 allopathic 외래 환자 방문 총량을 기준으로 하위 구역과 해당 지역 유형의 순위를 가장 높은 것부터 매겨 주세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+      "predicted_sql": "SELECT\n    SUM(fact_outpatient_services.outpatient_attendance_allopathic) AS total_allopathic_visits,\n    dim_sub_district.sub_district_name,\n    dim_sub_district.type_of_area\nFROM fact_outpatient_services\nJOIN dim_sub_district ON fact_outpatient_services.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_outpatient_services.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021 AND dim_sub_district.type_of_area = 'Urban'\nGROUP BY dim_sub_district.sub_district_name\nORDER BY total_allopathic_visits DESC",
+      "error_info": "column \"dim_sub_district.type_of_area\" must appear in the GROUP BY clause or be used in an aggregate function\nLINE 4:     dim_sub_district.type_of_area\n            ^\n"
+    },
+    {
+      "instance_id": "9a414d70",
+      "question": "2022년에 allopathic 외래 방문이 기록된 Rural 하위 지구 중에서, 같은 해에 보고된 방문이 있는 Urban 지역도 함께 가진 하위 지구는 제외하고 식별하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2022' AND T1.TYPE_OF_AREA = 'Rural' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 0 EXCEPT SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2022' AND T1.TYPE_OF_AREA = 'Urban' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 0",
+      "predicted_sql": "SELECT DISTINCT s1.sub_district_id, s1.sub_district_name\nFROM dim_sub_district s1\nJOIN fact_outpatient_services f1 ON s1.sub_district_id = f1.sub_district_id\nJOIN dim_month m1 ON f1.month_id = m1.month_id\nJOIN dim_year y1 ON m1.year_id = y1.year_id\nWHERE s1.type_of_area = 'Rural'\n  AND y1.year_value = 2022\n  AND f1.outpatient_attendance_allopathic > 0\n  AND NOT EXISTS (\n    SELECT 1\n    FROM dim_sub_district s2\n    JOIN fact_outpatient_services f2 ON s2.sub_district_id = f2.sub_district_id\n    JOIN dim_month m2 ON f2.month_id = m2.month_id\n    JOIN dim_year y2 ON m2.year_id = y2.year_id\n    WHERE s2.district_id = s1.district_id\n      AND s2.type_of_area = 'Urban'\n      AND y2.year_value = 2022\n      AND f2.outpatient_attendance_allopathic > 0\n  )\nORDER BY s1.sub_district_name",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "a155bbe3",
+      "question": "2021년에 Rural 및 Urban 지역 모두에서 외래 서비스를 보고한 하위 지구를 식별하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' AND T1.TYPE_OF_AREA IN ('Rural', 'Urban') GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(DISTINCT T1.TYPE_OF_AREA) = 2",
+      "predicted_sql": "SELECT DISTINCT T2.sub_district_name\nFROM fact_outpatient_services AS T1\nJOIN dim_sub_district AS T2 ON T1.sub_district_id = T2.sub_district_id\nJOIN dim_month AS T3 ON T1.month_id = T3.month_id\nJOIN dim_year AS T4 ON T3.year_id = T4.year_id\nWHERE T4.year_value = 2021\n  AND T2.type_of_area = 'Urban'\n  AND EXISTS (\n    SELECT 1\n    FROM fact_outpatient_services AS T5\n    JOIN dim_sub_district AS T6 ON T5.sub_district_id = T6.sub_district_id\n    JOIN dim_month AS T7 ON T5.month_id = T7.month_id\n    JOIN dim_year AS T8 ON T7.year_id = T8.year_id\n    WHERE T8.year_value = 2021\n      AND T6.type_of_area = 'Rural'\n      AND T6.sub_district_id = T2.sub_district_id\n  )\nORDER BY T2.sub_district_name",
+      "error_info": null
+    },
+    {
+      "instance_id": "1ad8e26d",
+      "question": "2021년의 모든 Rural 하위 지구에 대해 Vitamin A (Dose 1) 및 Rotavirus (Dose 1) 예방접종 수치를 보여주세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T2.VITAMIN_A_DOSE_1, T2.ROTAVIRUS_1 FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021';",
+      "predicted_sql": "SELECT ds.sub_district_name,\n       SUM(fcis.vitamin_a_dose_1) as total_vitamin_a_dose_1,\n       SUM(fcis.rotavirus_1) as total_rotavirus_1\nFROM fact_child_immunization_specialized fcis\nJOIN dim_sub_district ds\n    ON fcis.sub_district_id = ds.sub_district_id\nJOIN dim_month dm\n    ON fcis.month_id = dm.month_id\nJOIN dim_year dy\n    ON dm.year_id = dy.year_id\nWHERE dy.year_value = 2021\n  AND ds.type_of_area = 'Rural'\n  AND ds.sub_district_name IN (\n      SELECT sub_district_name\n      FROM dim_sub_district\n      GROUP BY sub_district_name\n      HAVING COUNT(DISTINCT type_of_area) = 2\n         AND SUM(CASE WHEN type_of_area = 'Urban' THEN 1 ELSE 0 END) > 0\n         AND SUM(CASE WHEN type_of_area = 'Rural' THEN 1 ELSE 0 END) > 0\n  )\nGROUP BY ds.sub_district_name\nORDER BY ds.sub_district_name",
+      "error_info": null
+    },
+    {
+      "instance_id": "25898ee1",
+      "question": "2021년의 총 Vitamin A first dose 건수를 기준으로 Rural 하위 구역들의 순위를 매기고, 각 구역의 first Rotavirus vaccinations 평균 건수도 함께 보여주세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.VITAMIN_A_DOSE_1), AVG(T2.ROTAVIRUS_1) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.VITAMIN_A_DOSE_1) DESC",
+      "predicted_sql": "SELECT ds.sub_district_name,\n       SUM(DISTINCT fcis.vitamin_a_dose_1) as total_vitamin_a_dose_1,\n       AVG(DISTINCT fcis.rotavirus_1) as avg_rotavirus_1\nFROM dim_sub_district ds\nJOIN fact_child_immunization_specialized fcis\n  ON ds.sub_district_id = fcis.sub_district_id\nJOIN dim_month dm\n  ON fcis.month_id = dm.month_id\nJOIN dim_year dy\n  ON dm.year_id = dy.year_id\nWHERE ds.type_of_area = 'Rural'\n  AND dy.year_value = 2021\n  AND EXISTS (\n    SELECT 1\n    FROM dim_sub_district ds_urban\n    WHERE ds_urban.sub_district_name = ds.sub_district_name\n      AND ds_urban.type_of_area = 'Urban'\n  )\n  AND EXISTS (\n    SELECT 1\n    FROM fact_outpatient_services fos\n    WHERE fos.sub_district_id = ds.sub_district_id\n  )\n  AND EXISTS (\n    SELECT 1\n    FROM fact_child_immunization_routine fcir\n    WHERE fcir.sub_district_id = ds.sub_district_id\n  )\nGROUP BY ds.sub_district_name\nORDER BY ds.sub_district_name ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "c14dc01c",
+      "question": "2021년의 지역 유형별 총 Rotavirus 1 및 Vitamin A Dose 1 건수의 내역을 제공하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.TYPE_OF_AREA, SUM(T2.ROTAVIRUS_1), SUM(T2.VITAMIN_A_DOSE_1) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.TYPE_OF_AREA",
+      "predicted_sql": "SELECT ds.type_of_area,\n       COALESCE(SUM(fcis.rotavirus_1), 0) as total_rotavirus_1,\n       COALESCE(SUM(fcis.vitamin_a_dose_1), 0) as total_vitamin_a_dose_1\nFROM fact_child_immunization_specialized fcis\nJOIN dim_sub_district ds ON fcis.sub_district_id = ds.sub_district_id\nJOIN dim_month dm ON fcis.month_id = dm.month_id\nJOIN dim_year dy ON dm.year_id = dy.year_id\nWHERE dy.year_value = 2021\nGROUP BY ds.type_of_area\nORDER BY ds.type_of_area",
+      "error_info": null
+    },
+    {
+      "instance_id": "f7d961ca",
+      "question": "2021년 한 해 동안 투여된 first-dose Vitamin A supplements의 총 수를 기준으로 하위 구역들을 가장 높은 것부터 순위를 매겨 주세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.VITAMIN_A_DOSE_1) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.VITAMIN_A_DOSE_1) DESC",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name,\n       SUM(fact_child_immunization_specialized.vitamin_a_dose_1) as total_vitamin_a_dose_1\nFROM fact_child_immunization_specialized\nJOIN dim_sub_district ON fact_child_immunization_specialized.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_district ON dim_sub_district.district_id = dim_district.district_id\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nJOIN dim_month ON fact_child_immunization_specialized.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\n  AND dim_state.state_name = 'Andaman And Nicobar Islands'\n  AND dim_sub_district.type_of_area = 'Rural'\nGROUP BY dim_sub_district.sub_district_name\nORDER BY SUM(fact_child_immunization_specialized.vitamin_a_dose_1) DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "ede0a331",
+      "question": "2021년 동안 투여된 비타민 A 1차 보충제의 총 수를 기준으로 하위 구역들을 가장 높은 것부터 순위를 매겨라.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.VITAMIN_A_DOSE_1) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.VITAMIN_A_DOSE_1) DESC",
+      "predicted_sql": "WITH rural_subdistricts AS (\n    SELECT\n        dim_sub_district.sub_district_name AS name,\n        fact_child_immunization_specialized.sub_district_id\n    FROM dim_sub_district\n    JOIN dim_district ON dim_sub_district.district_id = dim_district.district_id\n    JOIN dim_state ON dim_district.state_id = dim_state.state_id\n    WHERE dim_sub_district.type_of_area = 'Rural'\n        AND dim_state.country_id = 1\n),\nstate_names AS (\n    SELECT\n        dim_state.state_name AS name,\n        NULL AS sub_district_id\n    FROM dim_state\n    WHERE dim_state.country_id = 1\n),\ncombined_names AS (\n    SELECT name, sub_district_id FROM rural_subdistricts\n    UNION ALL\n    SELECT name, sub_district_id FROM state_names\n),\nvitamin_data AS (\n    SELECT\n        dim_sub_district.sub_district_id,\n        SUM(fact_child_immunization_specialized.vitamin_a_dose_1) AS total_vitamin_a_dose_1\n    FROM fact_child_immunization_specialized\n    JOIN dim_month ON fact_child_immunization_specialized.month_id = dim_month.month_id\n    JOIN dim_year ON dim_month.year_id = dim_year.year_id\n    JOIN dim_sub_district ON fact_child_immunization_specialized.sub_district_id = dim_sub_district.sub_district_id\n    JOIN dim_district ON dim_sub_district.district_id = dim_district.district_id\n    JOIN dim_state ON dim_district.state_id = dim_state.state_id\n    WHERE dim_year.year_value = 2021\n        AND dim_sub_district.type_of_area = 'Rural'\n        AND dim_state.country_id = 1\n    GROUP BY dim_sub_district.sub_district_id\n)\nSELECT\n    combined_names.name,\n    COALESCE(vitamin_data.total_vitamin_a_dose_1, 0) AS total_vitamin_a_dose_1\nFROM combined_names\nLEFT JOIN vitamin_data ON combined_names.sub_district_id = vitamin_data.sub_district_id\nORDER BY total_vitamin_a_dose_1 DESC",
+      "error_info": "missing FROM-clause entry for table \"fact_child_immunization_specialized\"\nLINE 4:         fact_child_immunization_specialized.sub_district_id\n                ^\n"
+    },
+    {
+      "instance_id": "4854d484",
+      "question": "2021년에 Rotavirus dose 3 예방접종 총수가 가장 높게 기록된 \"Rural\" 하위 구역 5곳은 어디입니까?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.ROTAVIRUS_3) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.ROTAVIRUS_3) DESC LIMIT 5",
+      "predicted_sql": "SELECT T2.sub_district_name\nFROM fact_child_immunization_specialized AS T1\nJOIN dim_sub_district AS T2 ON T1.sub_district_id = T2.sub_district_id\nJOIN dim_month AS T3 ON T1.month_id = T3.month_id\nJOIN dim_year AS T4 ON T3.year_id = T4.year_id\nWHERE T4.year_value = 2021 AND T2.type_of_area = 'Rural'\nGROUP BY T2.sub_district_id, T2.sub_district_name\nORDER BY SUM(T1.rotavirus_3) DESC\nLIMIT 5",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "a0539a3a",
+      "question": "2021년에 Rotavirus 3 예방접종 총수가 가장 많았던 \"Rural\" 하위 구역 5곳은 어디입니까?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.ROTAVIRUS_3) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.ROTAVIRUS_3) DESC LIMIT 5",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_id, dim_sub_district.sub_district_name, SUM(fact_child_immunization_specialized.rotavirus_3) AS total_rotavirus_3\nFROM fact_child_immunization_specialized\nJOIN dim_sub_district ON fact_child_immunization_specialized.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_child_immunization_specialized.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021 AND dim_sub_district.type_of_area = 'Rural'\nGROUP BY dim_sub_district.sub_district_id, dim_sub_district.sub_district_name\nORDER BY SUM(fact_child_immunization_specialized.rotavirus_3) DESC\nLIMIT 5",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "808a7a77",
+      "question": "2021년 동안 로타바이러스 백신의 1차 접종은 최소 1건 보고했지만 3차 접종은 0건 보고한 하위 지구는 어디입니까?",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.ROTAVIRUS_1) > 0 AND SUM(T2.ROTAVIRUS_3) = 0",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name\nFROM fact_child_immunization_specialized\nJOIN dim_sub_district ON fact_child_immunization_specialized.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_child_immunization_specialized.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\nGROUP BY dim_sub_district.sub_district_id, dim_sub_district.sub_district_name\nHAVING SUM(fact_child_immunization_specialized.rotavirus_1) >= 1\n   AND SUM(fact_child_immunization_specialized.rotavirus_3) = 0",
+      "error_info": null
+    },
+    {
+      "instance_id": "d8f0dfd8",
+      "question": "2022년 동안 비타민 A(1차 접종)와 로타바이러스(1차 접종) 모두에서 500회분을 초과하여 기록한 하위 지구는 어디입니까?",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2022' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.VITAMIN_A_DOSE_1) > 500 AND SUM(T2.ROTAVIRUS_1) > 500",
+      "predicted_sql": "SELECT DISTINCT spec.sub_district_id\nFROM fact_child_immunization_specialized AS spec\nJOIN dim_month AS m ON spec.month_id = m.month_id\nJOIN dim_year AS y ON m.year_id = y.year_id\nWHERE y.year_value = 2022\nGROUP BY spec.sub_district_id\nHAVING SUM(spec.vitamin_a_dose_1) > 500\n   AND SUM(spec.rotavirus_1) > 500\nORDER BY spec.sub_district_id",
+      "error_info": null
+    },
+    {
+      "instance_id": "8bf6dcf9",
+      "question": "2021년에 Rural 지역에서 Rotavirus 1 예방접종을 15회 초과로 보고했거나 Urban 지역에서 Vitamin A 첫 번째 용량 투여를 1회 초과로 보고한 하위 지구들을 알파벳순으로 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' AND ( (T1.TYPE_OF_AREA = 'Rural' AND T2.ROTAVIRUS_1 > 15.0000000000000000) OR (T1.TYPE_OF_AREA = 'Urban' AND T2.VITAMIN_A_DOSE_1 > 1.00000000000000000000) ) GROUP BY T1.SUB_DISTRICT_NAME ORDER BY T1.SUB_DISTRICT_NAME ASC",
+      "predicted_sql": "SELECT DISTINCT dim_sub_district.sub_district_name\nFROM fact_child_immunization_specialized\nJOIN dim_sub_district ON fact_child_immunization_specialized.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_child_immunization_specialized.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\n  AND (\n    (dim_sub_district.type_of_area = 'Rural' AND fact_child_immunization_specialized.rotavirus_1 > 15)\n    OR\n    (dim_sub_district.type_of_area = 'Urban' AND fact_child_immunization_specialized.vitamin_a_dose_1 > 1)\n  )\nORDER BY dim_sub_district.sub_district_name ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "60b35c55",
+      "question": "2021년 동안 \"Rural\" 지역에서 TT10 또는 TD10 백신을 접종받은 10세 초과 아동의 예방접종 ID와 수를, 백신을 접종받은 아동 수에 따라 정렬하여 제공하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.IMMUNIZATION_ADOLESCENT_ID, T1.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 FROM FACT_CHILD_IMMUNIZATION_ADOLESCENT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T1.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T2.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' AND T1.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 > 0 ORDER BY T1.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10",
+      "predicted_sql": "SELECT T1.immunization_adolescent_id,\n       SUM(T1.children_more_than_10_years_tt10_td10) AS total_children_vaccinated\nFROM fact_child_immunization_adolescent AS T1\nJOIN dim_sub_district AS T2 ON T1.sub_district_id = T2.sub_district_id\nJOIN dim_month AS T3 ON T1.month_id = T3.month_id\nJOIN dim_year AS T4 ON T3.year_id = T4.year_id\nWHERE T4.year_value = 2021\n  AND T2.type_of_area = 'Rural'\nGROUP BY T1.immunization_adolescent_id\nORDER BY total_children_vaccinated DESC",
+      "error_info": "operator does not exist: character varying > integer\nLINE 1: ...021' AND T1.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 > 0 ORDER ...\n                                                             ^\nHINT:  No operator matches the given name and argument types. You might need to add explicit type casts.\n"
+    },
+    {
+      "instance_id": "2bb22b3e",
+      "question": "2021년의 경우, 예방접종을 받은 10세 초과 아동과 16세 초과 아동의 총 수를 하위 구역과 지역 유형별로 나누어 제공하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA, SUM(T2.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 + T2.CHILDREN_MORE_THAN_16_YEARS_TT16_TD16) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_ADOLESCENT AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA",
+      "predicted_sql": "SELECT\n    ds.sub_district_name,\n    ds.type_of_area,\n    SUM(fcia.children_more_than_10_years_tt10_td10) AS total_over_10_years,\n    SUM(fcia.children_more_than_16_years_tt16_td16) AS total_over_16_years\nFROM fact_child_immunization_adolescent fcia\nJOIN dim_sub_district ds ON fcia.sub_district_id = ds.sub_district_id\nJOIN dim_month dm ON fcia.month_id = dm.month_id\nJOIN dim_year dy ON dm.year_id = dy.year_id\nWHERE dy.year_value = 2021\nGROUP BY ds.sub_district_id\nORDER BY ds.sub_district_name",
+      "error_info": "operator does not exist: character varying + character varying\nLINE 1: ...REA, SUM(T2.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 + T2.CHILD...\n                                                             ^\nHINT:  No operator matches the given name and argument types. You might need to add explicit type casts.\n"
+    },
+    {
+      "instance_id": "5eeed748",
+      "question": "2021년에 예방접종을 받은 10세 초과 아동과 16세 초과 아동의 총수를 하위 구역과 지역 유형별로 분류하여 제공하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA, SUM(T2.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 + T2.CHILDREN_MORE_THAN_16_YEARS_TT16_TD16) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_ADOLESCENT AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name, dim_sub_district.type_of_area,\n       SUM(fact_child_immunization_adolescent.children_more_than_10_years_tt10_td10) AS total_children_over_10,\n       SUM(fact_child_immunization_adolescent.children_more_than_16_years_tt16_td16) AS total_children_over_16\nFROM fact_child_immunization_adolescent\nJOIN dim_sub_district ON fact_child_immunization_adolescent.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_child_immunization_adolescent.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\nGROUP BY dim_sub_district.sub_district_name, dim_sub_district.type_of_area\nHAVING (SUM(fact_child_immunization_adolescent.children_more_than_10_years_tt10_td10) +\n        SUM(fact_child_immunization_adolescent.children_more_than_16_years_tt16_td16)) > 5000\nORDER BY dim_sub_district.sub_district_name",
+      "error_info": "operator does not exist: character varying + character varying\nLINE 1: ...REA, SUM(T2.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 + T2.CHILD...\n                                                             ^\nHINT:  No operator matches the given name and argument types. You might need to add explicit type casts.\n"
+    },
+    {
+      "instance_id": "e24c7b37",
+      "question": "기록이 없는 하위 지구를 제외하고, 2021년에 청소년 예방접종을 받은 10세 초과 아동과 16세 초과 아동의 총수에 따라 하위 지구의 순위를 매기세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 + T2.CHILDREN_MORE_THAN_16_YEARS_TT16_TD16) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_ADOLESCENT AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 + T2.CHILDREN_MORE_THAN_16_YEARS_TT16_TD16) > 0 ORDER BY SUM(T2.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 + T2.CHILDREN_MORE_THAN_16_YEARS_TT16_TD16) DESC",
+      "predicted_sql": "SELECT T2.sub_district_name,\n       COALESCE(SUM(T1.children_more_than_10_years_tt10_td10), 0) +\n       COALESCE(SUM(T1.children_more_than_16_years_tt16_td16), 0) AS total_adolescent_vaccinated\nFROM fact_child_immunization_adolescent AS T1\nJOIN dim_sub_district AS T2 ON T1.sub_district_id = T2.sub_district_id\nJOIN dim_month AS T3 ON T1.month_id = T3.month_id\nJOIN dim_year AS T4 ON T3.year_id = T4.year_id\nWHERE T4.year_value = 2021\n  AND T1.children_more_than_10_years_tt10_td10 IS NOT NULL\n  AND T1.children_more_than_16_years_tt16_td16 IS NOT NULL\nGROUP BY T2.sub_district_name, T2.sub_district_id\nORDER BY total_adolescent_vaccinated DESC",
+      "error_info": "operator does not exist: character varying + character varying\nLINE 1: ...AME, SUM(T2.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 + T2.CHILD...\n                                                             ^\nHINT:  No operator matches the given name and argument types. You might need to add explicit type casts.\n"
+    },
+    {
+      "instance_id": "52abe7b3",
+      "question": "2021년에 10세 초과 아동이 예방접종을 받은 수가 가장 많은 Rural 하위 구역 5곳은 어디입니까?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_ADOLESCENT AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10) DESC LIMIT 5",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name, SUM(fact_child_immunization_adolescent.children_more_than_10_years_tt10_td10) AS total_immunizations\nFROM fact_child_immunization_adolescent\nJOIN dim_sub_district ON fact_child_immunization_adolescent.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_child_immunization_adolescent.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021 AND dim_sub_district.type_of_area = 'Rural'\nGROUP BY dim_sub_district.sub_district_name\nORDER BY total_immunizations DESC\nLIMIT 5",
+      "error_info": "function sum(character varying) does not exist\nLINE 1: SELECT T1.SUB_DISTRICT_NAME, SUM(T2.CHILDREN_MORE_THAN_10_YE...\n                                     ^\nHINT:  No function matches the given name and argument types. You might need to add explicit type casts.\n"
+    },
+    {
+      "instance_id": "3315046b",
+      "question": "September, 2020 동안 10세 초과 아동 중 34명보다 더 많이 TT 또는 TD 백신의 첫 번째 접종을 받은 하위 구역들과 그 지역 유형을 식별하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_ADOLESCENT AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T2.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 > 34.0000000000000000 AND T3.MONTH_NAME = 'September, 2020' AND T4.YEAR_VALUE = '2020'",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name, dim_sub_district.type_of_area, SUM(fact_child_immunization_adolescent.children_more_than_10_years_tt10_td10) as total_tt_td_vaccinations\nFROM fact_child_immunization_adolescent\nJOIN dim_sub_district ON fact_child_immunization_adolescent.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_child_immunization_adolescent.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_month.month_name = 'September'\n  AND dim_year.year_value = 2020\nGROUP BY dim_sub_district.sub_district_name, dim_sub_district.type_of_area\nHAVING SUM(fact_child_immunization_adolescent.children_more_than_10_years_tt10_td10) > 34\nORDER BY total_tt_td_vaccinations DESC",
+      "error_info": "operator does not exist: character varying > numeric\nLINE 1: ...ID WHERE T2.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 > 34.00000...\n                                                             ^\nHINT:  No operator matches the given name and argument types. You might need to add explicit type casts.\n"
+    },
+    {
+      "instance_id": "cc5153b4",
+      "question": "2021년에 농촌과 도시 지역 모두에서 5세 초과 아동이 2차 DPT 추가접종을 최소 1명 이상 받은 것으로 보고된 하위 지구를 식별하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_ADOLESCENT AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T2.CHILDREN_MORE_THAN_5_YEARS_DPT_5_2ND_BOOSTER > 0.00000000000000000000 AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(DISTINCT T1.TYPE_OF_AREA) = 2",
+      "predicted_sql": "SELECT T1.sub_district_name\nFROM dim_sub_district AS T1\nJOIN fact_child_immunization_adolescent AS T2 ON T1.sub_district_id = T2.sub_district_id\nJOIN dim_month AS T3 ON T2.month_id = T3.month_id\nJOIN dim_year AS T4 ON T3.year_id = T4.year_id\nWHERE T4.year_value = 2021\n  AND T2.children_more_than_5_years_dpt_5_2nd_booster >= 1\n  AND T1.type_of_area IN ('rural', 'urban')\nGROUP BY T1.sub_district_name\nHAVING COUNT(DISTINCT T1.type_of_area) = 2",
+      "error_info": "operator does not exist: character varying > numeric\nLINE 1: ...E T2.CHILDREN_MORE_THAN_5_YEARS_DPT_5_2ND_BOOSTER > 0.000000...\n                                                             ^\nHINT:  No operator matches the given name and argument types. You might need to add explicit type casts.\n"
+    },
+    {
+      "instance_id": "e7cbc219",
+      "question": "2021년에 Rural 및 Urban 지역 모두에서 두 번째 DPT 추가접종(DPT 5)을 받은 아동이 최소 1명 이상 기록된 하위 지구를 식별하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_ADOLESCENT AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' AND T2.CHILDREN_MORE_THAN_5_YEARS_DPT_5_2ND_BOOSTER > 0 AND T1.TYPE_OF_AREA IN ('Rural', 'Urban') GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(DISTINCT T1.TYPE_OF_AREA) = 2",
+      "predicted_sql": "SELECT DISTINCT ds.sub_district_name\nFROM dim_sub_district ds\nWHERE ds.sub_district_id IN (\n    SELECT DISTINCT fcia.sub_district_id\n    FROM fact_child_immunization_adolescent fcia\n    JOIN dim_month dm ON fcia.month_id = dm.month_id\n    JOIN dim_year dy ON dm.year_id = dy.year_id\n    WHERE dy.year_value = 2021\n      AND fcia.children_more_than_5_years_dpt_5_2nd_booster >= 1\n      AND ds.type_of_area = 'Rural'\n)\nAND ds.sub_district_id IN (\n    SELECT DISTINCT fcia.sub_district_id\n    FROM fact_child_immunization_adolescent fcia\n    JOIN dim_month dm ON fcia.month_id = dm.month_id\n    JOIN dim_year dy ON dm.year_id = dy.year_id\n    WHERE dy.year_value = 2021\n      AND fcia.children_more_than_5_years_dpt_5_2nd_booster >= 1\n      AND ds.type_of_area = 'Urban'\n)",
+      "error_info": "operator does not exist: character varying > integer\nLINE 1: ...D T2.CHILDREN_MORE_THAN_5_YEARS_DPT_5_2ND_BOOSTER > 0 AND T1...\n                                                             ^\nHINT:  No operator matches the given name and argument types. You might need to add explicit type casts.\n"
+    },
+    {
+      "instance_id": "21c83e12",
+      "question": "도시와 농촌 지역 전체에서 2021년에 적어도 한 명의 아동이 두 번째 DPT 추가접종(5세 이후)을 받은 것으로 기록된 하위 지구들을 알파벳순으로 나열하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_ADOLESCENT AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' AND T2.CHILDREN_MORE_THAN_5_YEARS_DPT_5_2ND_BOOSTER > 0 GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(DISTINCT T1.TYPE_OF_AREA) = 2 ORDER BY T1.SUB_DISTRICT_NAME ASC",
+      "predicted_sql": "SELECT DISTINCT T1.sub_district_name\nFROM dim_sub_district AS T1\nJOIN fact_child_immunization_adolescent AS T2 ON T1.sub_district_id = T2.sub_district_id\nJOIN dim_month AS T3 ON T2.month_id = T3.month_id\nJOIN dim_year AS T4 ON T3.year_id = T4.year_id\nWHERE T4.year_value = 2021\n  AND T2.children_more_than_5_years_dpt_5_2nd_booster >= 1\n  AND T1.type_of_area IN ('Urban', 'Rural')\nORDER BY T1.sub_district_name ASC",
+      "error_info": "operator does not exist: character varying > integer\nLINE 1: ...D T2.CHILDREN_MORE_THAN_5_YEARS_DPT_5_2ND_BOOSTER > 0 GROUP ...\n                                                             ^\nHINT:  No operator matches the given name and argument types. You might need to add explicit type casts.\n"
+    },
+    {
+      "instance_id": "3a8774a9",
+      "question": "2021년에 10세 초과 아동 중 TT10/TD10 예방접종을 받은 인원이 34명을 초과하여 보고되었거나, 또는 16세 초과 아동 중 TT16/TD16 접종을 받은 인원이 1.0명을 초과하는 Urban 지역인 하위 구역들을 식별하시오.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_ADOLESCENT AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE (T4.YEAR_VALUE = '2021' AND T2.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 > 34.0) OR (T1.TYPE_OF_AREA = 'Urban' AND T4.YEAR_VALUE = '2021' AND T2.CHILDREN_MORE_THAN_16_YEARS_TT16_TD16 > 1.0) GROUP BY T1.SUB_DISTRICT_NAME",
+      "predicted_sql": "SELECT\n    T2.sub_district_name,\n    T2.type_of_area,\n    SUM(T1.children_more_than_10_years_tt10_td10) AS total_tt10_td10,\n    SUM(T1.children_more_than_16_years_tt16_td16) AS total_tt16_td16\nFROM fact_child_immunization_adolescent AS T1\nJOIN dim_sub_district AS T2 ON T1.sub_district_id = T2.sub_district_id\nJOIN dim_month AS T3 ON T1.month_id = T3.month_id\nJOIN dim_year AS T4 ON T3.year_id = T4.year_id\nWHERE T4.year_value = 2021\n    AND T2.type_of_area = 'Urban'\nGROUP BY T2.sub_district_name, T2.type_of_area\nHAVING SUM(T1.children_more_than_10_years_tt10_td10) > 34\n    OR SUM(T1.children_more_than_16_years_tt16_td16) > 1.0\nORDER BY total_tt10_td10 DESC, total_tt16_td16 DESC",
+      "error_info": "operator does not exist: character varying > numeric\nLINE 1: ...021' AND T2.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 > 34.0) OR...\n                                                             ^\nHINT:  No operator matches the given name and argument types. You might need to add explicit type casts.\n"
+    },
+    {
+      "instance_id": "ebc5f112",
+      "question": "모든 Rural 하위 구역의 이름과 district ID를 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT SUB_DISTRICT_NAME, DISTRICT_ID FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Rural';",
+      "predicted_sql": "SELECT sub_district_name, district_id\nFROM dim_sub_district\nWHERE type_of_area = 'Rural'\nORDER BY sub_district_name",
+      "error_info": null
+    },
+    {
+      "instance_id": "158cea0b",
+      "question": "모든 Rural 하위 구역의 ID와 이름을 parent district ID와 함께 제공하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.SUB_DISTRICT_ID, T2.SUB_DISTRICT_NAME, T2.DISTRICT_ID FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T2.TYPE_OF_AREA = 'Rural';",
+      "predicted_sql": "SELECT\n    dsd.sub_district_id,\n    dsd.sub_district_name,\n    dsd.district_id,\n    dm.month_value,\n    SUM(fos.outpatient_attendance_allopathic) AS total_outpatient_attendance\nFROM dim_sub_district dsd\nJOIN fact_outpatient_services fos ON dsd.sub_district_id = fos.sub_district_id\nJOIN dim_month dm ON fos.month_id = dm.month_id\nJOIN dim_year dy ON dm.year_id = dy.year_id\nWHERE dsd.type_of_area = 'Rural'\n    AND dy.year_value = 2021\nGROUP BY dsd.sub_district_id, dsd.sub_district_name, dsd.district_id, dm.month_value\nORDER BY dsd.sub_district_id, dm.month_value",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "208ad031",
+      "question": "2021 동안 산전 관리를 위해 등록된 임산부 총수와 4회 이상 검진을 받은 여성의 평균 비율을 지역 유형별로 분류하여 제공하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.TYPE_OF_AREA, SUM(T2.PREGNANT_WOMEN_REGISTERED_FOR_ANC), AVG(T2.PW_RECEIVED_4_OR_MORE_ANC_CHECKUPS) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_ANC_REGISTRATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.TYPE_OF_AREA",
+      "predicted_sql": "SELECT dim_sub_district.type_of_area,\n       SUM(fact_maternal_anc_registration.pregnant_women_registered_for_anc) as total_registered,\n       CASE\n           WHEN SUM(fact_maternal_anc_registration.pregnant_women_registered_for_anc) > 0\n           THEN SUM(fact_maternal_anc_registration.pw_received_4_or_more_anc_checkups) * 100.0 /\n                SUM(fact_maternal_anc_registration.pregnant_women_registered_for_anc)\n           ELSE 0\n       END as percentage_4_or_more\nFROM fact_maternal_anc_registration\nJOIN dim_sub_district ON fact_maternal_anc_registration.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_maternal_anc_registration.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\nGROUP BY dim_sub_district.type_of_area\nORDER BY dim_sub_district.type_of_area",
+      "error_info": null
+    },
+    {
+      "instance_id": "e0b518aa",
+      "question": "2021년 동안 산전 관리를 위해 등록한 임산부가 적어도 1명 있었던 Rural 하위 구역은 어디입니까?",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_ANC_REGISTRATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.PREGNANT_WOMEN_REGISTERED_FOR_ANC) > 0",
+      "predicted_sql": "SELECT DISTINCT T1.sub_district_name\nFROM dim_sub_district AS T1\nJOIN fact_maternal_anc_registration AS T2 ON T1.sub_district_id = T2.sub_district_id\nJOIN dim_month AS T3 ON T2.month_id = T3.month_id\nJOIN dim_year AS T4 ON T3.year_id = T4.year_id\nWHERE T1.type_of_area = 'Rural'\n  AND T4.year_value = 2021\n  AND T2.pregnant_women_registered_for_anc > 0",
+      "error_info": null
+    },
+    {
+      "instance_id": "0a3e867a",
+      "question": "2021년에 산전 관리에 등록된 임산부 수가 10명을 초과한 \"Rural\" 하위 구역을 등록 수가 높은 순서부터 낮은 순서로 나열하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_ANC_REGISTRATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.PREGNANT_WOMEN_REGISTERED_FOR_ANC) > 10 ORDER BY SUM(T2.PREGNANT_WOMEN_REGISTERED_FOR_ANC) DESC",
+      "predicted_sql": "SELECT\n    dim_sub_district.sub_district_name,\n    SUM(fact_maternal_anc_registration.pregnant_women_registered_for_anc) AS total_pregnant_women_registered\nFROM fact_maternal_anc_registration\nJOIN dim_sub_district ON fact_maternal_anc_registration.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_maternal_anc_registration.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\n    AND dim_sub_district.type_of_area = 'Rural'\nGROUP BY dim_sub_district.sub_district_name\nHAVING SUM(fact_maternal_anc_registration.pregnant_women_registered_for_anc) > 10\nORDER BY total_pregnant_women_registered DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "548d5bcd",
+      "question": "2021년 동안 4회 이상의 산전 관리 검진을 받은 임산부의 총수에 따라 \"Urban\" 하위 구역들의 순위를 가장 높은 것부터 매겨 주세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.PW_RECEIVED_4_OR_MORE_ANC_CHECKUPS) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_ANC_REGISTRATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Urban' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.PW_RECEIVED_4_OR_MORE_ANC_CHECKUPS) DESC",
+      "predicted_sql": "SELECT\n    ds.sub_district_name,\n    SUM(fma.pw_received_4_or_more_anc_checkups) AS total_pw_4_or_more_anc\nFROM",
+      "error_info": "syntax error at end of input\nLINE 4: FROM\n            ^\n"
+    },
+    {
+      "instance_id": "4015b829",
+      "question": "2021년 동안 4회 이상의 산전 검진을 받은 임산부의 총수에 따라 \"Urban\" 하위 지구들의 순위를 가장 높은 수부터 매기세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T3.PW_RECEIVED_4_OR_MORE_ANC_CHECKUPS) FROM DIM_SUB_DISTRICT AS T1 JOIN DIM_MONTH AS T2 ON T1.SUB_DISTRICT_ID = T1.SUB_DISTRICT_ID JOIN FACT_MATERNAL_ANC_REGISTRATION AS T3 ON T1.SUB_DISTRICT_ID = T3.SUB_DISTRICT_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Urban' AND T4.YEAR_VALUE = '2021' AND T3.MONTH_ID = T2.MONTH_ID GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T3.PW_RECEIVED_4_OR_MORE_ANC_CHECKUPS) DESC",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name,\n       SUM(fact_maternal_anc_registration.pw_received_4_or_more_anc_checkups) as total_pw_4_or_more_anc\nFROM dim_sub_district\nJOIN fact_maternal_anc_registration ON dim_sub_district.sub_district_id = fact_maternal_anc_registration.sub_district_id\nJOIN dim_month ON fact_maternal_anc_registration.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_sub_district.type_of_area = 'Urban'\n  AND dim_year.year_value = 2021\n  AND EXISTS (\n    SELECT 1\n    FROM fact_outpatient_services fos1\n    JOIN dim_month dm1 ON fos1.month_id = dm1.month_id\n    JOIN dim_year dy1 ON dm1.year_id = dy1.year_id\n    WHERE fos1.sub_district_id = dim_sub_district.sub_district_id\n      AND dy1.year_value = 2021\n  )\n  AND EXISTS (\n    SELECT 1\n    FROM fact_outpatient_services fos2\n    JOIN dim_month dm2 ON fos2.month_id = dm2.month_id\n    JOIN dim_year dy2 ON dm2.year_id = dy2.year_id\n    WHERE fos2.sub_district_id = dim_sub_district.sub_district_id\n      AND dy2.year_value = 2022\n  )\nGROUP BY dim_sub_district.sub_district_name\nORDER BY total_pw_4_or_more_anc DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "8a6f7140",
+      "question": "2021년에 임신 첫 삼분기 동안 산전 관리를 위해 등록한 여성이 500명보다 많은 하위 구역들과 그 지역 유형을 식별하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_ANC_REGISTRATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA HAVING SUM(T2.ANC_REGISTERED_WITHIN_1ST_TRIMESTER) > 500",
+      "predicted_sql": "SELECT\n    ds.sub_district_name,\n    ds.type_of_area\nFROM",
+      "error_info": "syntax error at end of input\nLINE 4: FROM\n            ^\n"
+    },
+    {
+      "instance_id": "c440c2e9",
+      "question": "2021년 동안 임신 첫 삼분기에 산전 관리 등록이 5건을 초과하여 기록된 하위 지구와 그 지역 유형을 식별하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_ANC_REGISTRATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA HAVING SUM(T2.ANC_REGISTERED_WITHIN_1ST_TRIMESTER) > 5",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name, dim_sub_district.type_of_area\nFROM fact_maternal_anc_registration\nJOIN dim_month ON fact_maternal_anc_registration.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nJOIN dim_sub_district ON fact_maternal_anc_registration.sub_district_id = dim_sub_district.sub_district_id\nWHERE dim_year.year_value = 2021\nGROUP BY dim_sub_district.sub_district_id, dim_sub_district.sub_district_name, dim_sub_district.type_of_area\nHAVING SUM(fact_maternal_anc_registration.anc_registered_within_1st_trimester) > 5",
+      "error_info": null
+    },
+    {
+      "instance_id": "46d7c26f",
+      "question": "2021년 동안 첫 번째 삼분기 내에 산전 관리 등록이 5건을 초과하여 기록된 하위 구역들과 그들의 지역 유형을 식별하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_ANC_REGISTRATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA HAVING SUM(T2.ANC_REGISTERED_WITHIN_1ST_TRIMESTER) > 5",
+      "predicted_sql": "SELECT DISTINCT dim_sub_district.sub_district_name, dim_sub_district.type_of_area\nFROM fact_maternal_anc_registration\nJOIN dim_sub_district ON fact_maternal_anc_registration.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_maternal_anc_registration.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\n  AND dim_month.month_value BETWEEN 1 AND 3\n  AND fact_maternal_anc_registration.pregnant_women_registered_for_anc > 5\nORDER BY dim_sub_district.sub_district_name",
+      "error_info": "operator does not exist: character varying >= integer\nLINE 7:   AND dim_month.month_value BETWEEN 1 AND 3\n                                    ^\nHINT:  No operator matches the given name and argument types. You might need to add explicit type casts.\n"
+    },
+    {
+      "instance_id": "7b7a0b0d",
+      "question": "2022년에 산모 ANC 등록이 있었지만 2021년에는 아무 기록도 없었던 Rural 하위 구역을 식별하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_ANC_REGISTRATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2022' EXCEPT SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_ANC_REGISTRATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021';",
+      "predicted_sql": "SELECT DISTINCT dim_sub_district.sub_district_name\nFROM dim_sub_district\nWHERE dim_sub_district.type_of_area = 'Rural'\n  AND dim_sub_district.sub_district_id IN (\n    SELECT DISTINCT fact_maternal_anc_registration.sub_district_id\n    FROM fact_maternal_anc_registration\n    JOIN dim_month ON fact_maternal_anc_registration.month_id = dim_month.month_id\n    JOIN dim_year ON dim_month.year_id = dim_year.year_id\n    WHERE dim_year.year_value = 2022\n      AND fact_maternal_anc_registration.pregnant_women_registered_for_anc > 0\n  )\n  AND dim_sub_district.sub_district_id NOT IN (\n    SELECT DISTINCT fact_maternal_anc_registration.sub_district_id\n    FROM fact_maternal_anc_registration\n    JOIN dim_month ON fact_maternal_anc_registration.month_id = dim_month.month_id\n    JOIN dim_year ON dim_month.year_id = dim_year.year_id\n    WHERE dim_year.year_value = 2021\n      AND fact_maternal_anc_registration.pregnant_women_registered_for_anc > 0\n  )\nORDER BY dim_sub_district.sub_district_name",
+      "error_info": null
+    },
+    {
+      "instance_id": "f43899e2",
+      "question": "5000명보다 많은 임산부가 산전 관리를 위해 등록한 Rural 하위 구역의 이름을 알파벳 순으로 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_ANC_REGISTRATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Rural' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.PREGNANT_WOMEN_REGISTERED_FOR_ANC) > 5000 ORDER BY T1.SUB_DISTRICT_NAME",
+      "predicted_sql": "SELECT T1.sub_district_name\nFROM dim_sub_district AS T1\nJOIN fact_maternal_anc_registration AS T2 ON T1.sub_district_id = T2.sub_district_id\nWHERE T1.type_of_area = 'Rural'\nGROUP BY T1.sub_district_id, T1.sub_district_name\nHAVING SUM(T2.pregnant_women_registered_for_anc) > 5000\nORDER BY T1.sub_district_name",
+      "error_info": null
+    },
+    {
+      "instance_id": "075bb6c8",
+      "question": "모든 Rural 하위 지구와 단일 월에 5000건을 초과하는 산전 관리 등록을 기록한 모든 하위 지구를 식별하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 WHERE T1.TYPE_OF_AREA = 'Rural' UNION SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_ANC_REGISTRATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID GROUP BY T1.SUB_DISTRICT_NAME, T3.MONTH_NAME HAVING SUM(T2.PREGNANT_WOMEN_REGISTERED_FOR_ANC) > 5000",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_id, dim_sub_district.sub_district_name\nFROM dim_sub_district\nWHERE dim_sub_district.type_of_area = 'Rural'\nAND EXISTS (\n    SELECT 1\n    FROM fact_maternal_anc_registration\n    WHERE fact_maternal_anc_registration.sub_district_id = dim_sub_district.sub_district_id\n    AND fact_maternal_anc_registration.pregnant_women_registered_for_anc > 5000\n)\nORDER BY dim_sub_district.sub_district_id",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "b270eebc",
+      "question": "2021년의 경우, 헤모글로빈 수치가 11 미만인 임산부의 총 수와 실시된 헤모글로빈 검사 수의 평균을 지역 유형별로 보여 주세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.TYPE_OF_AREA, SUM(T1.PW_HB_LESS_THAN_11), AVG(T1.HAEMOGLOBIN_TESTS_CONDUCTED) FROM FACT_MATERNAL_HEALTH_TESTING AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T1.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T2.TYPE_OF_AREA",
+      "predicted_sql": "SELECT\n    dim_sub_district.type_of_area,\n    SUM(fact_maternal_health_testing.pw_hb_less_than_11) AS total_pw_hb_less_than_11,\n    AVG(fact_maternal_health_testing.haemoglobin_tests_conducted) AS avg_hb_tests_conducted\nFROM fact_maternal_health_testing\nJOIN dim_sub_district ON fact_maternal_health_testing.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_maternal_health_testing.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\nGROUP BY dim_sub_district.type_of_area",
+      "error_info": null
+    },
+    {
+      "instance_id": "92acc01c",
+      "question": "2021년의 경우, 헤모글로빈 수치가 11 미만인 임산부의 총 수와 실시된 헤모글로빈 검사 수의 평균을 지역 유형별로 분류하여 제공하되, 특히 저헤모글로빈 사례 수가 38 미만인 지역만 대상으로 하고, 총 사례 수를 기준으로 내림차순 정렬하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.TYPE_OF_AREA, SUM(T2.PW_HB_LESS_THAN_11), AVG(T2.HAEMOGLOBIN_TESTS_CONDUCTED) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_HEALTH_TESTING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T2.PW_HB_LESS_THAN_11 < 38.0000000000000000 AND T4.YEAR_VALUE = '2021' GROUP BY T1.TYPE_OF_AREA ORDER BY SUM(T2.PW_HB_LESS_THAN_11) DESC",
+      "predicted_sql": "SELECT\n    ds.type_of_area,\n    SUM(fm.pw_hb_less_than_11) AS total_pw_hb_less_than_11,\n    AVG(fm.haemoglobin_tests_conducted) AS avg_haemoglobin_tests\nFROM fact_maternal_health_testing fm\nJOIN dim_sub_district ds ON fm.sub_district_id = ds.sub_district_id\nJOIN dim_month dm ON fm.month_id = dm.month_id\nJOIN dim_year dy ON dm.year_id = dy.year_id\nWHERE dy.year_value = 2021\nGROUP BY ds.type_of_area\nHAVING SUM(fm.pw_hb_less_than_11) < 38\nORDER BY total_pw_hb_less_than_11 DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "cbb8f4ec",
+      "question": "2021년에 헤모글로빈 수치가 11 미만인 임산부 사례를 500건 초과하여 보고한 Rural 하위 구역은 어디입니까?",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_HEALTH_TESTING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.PW_HB_LESS_THAN_11) > 500",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name\nFROM fact_maternal_health_testing\nJOIN dim_sub_district ON fact_maternal_health_testing.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_maternal_health_testing.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\n  AND dim_sub_district.type_of_area = 'Rural'\nGROUP BY dim_sub_district.sub_district_id, dim_sub_district.sub_district_name\nHAVING SUM(fact_maternal_health_testing.pw_hb_less_than_11) > 500",
+      "error_info": null
+    },
+    {
+      "instance_id": "8574cf17",
+      "question": "2021년에 헤모글로빈 수치가 11 미만인 임산부가 500명을 초과하여 보고된 Rural 하위 지구는 어디입니까?",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_HEALTH_TESTING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.PW_HB_LESS_THAN_11) > 500",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name\nFROM dim_sub_district\nJOIN fact_maternal_health_testing ON dim_sub_district.sub_district_id = fact_maternal_health_testing.sub_district_id\nJOIN dim_month ON fact_maternal_health_testing.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_sub_district.type_of_area = 'Rural'\n  AND dim_year.year_value = 2021\nGROUP BY dim_sub_district.sub_district_name\nHAVING SUM(fact_maternal_health_testing.pw_hb_less_than_11) > 500",
+      "error_info": null
+    },
+    {
+      "instance_id": "77b3cae2",
+      "question": "첫 해에 대해 헤모글로빈 수치가 11 미만인 임산부의 총 수를 보여주면서, 하위 구역과 해당 지역 유형의 내역을 제공하고, 수가 38 미만인 기록만 대상으로 하며, 결과를 높은 순서부터 낮은 순서로 순위를 매겨 주세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA, SUM(T2.PW_HB_LESS_THAN_11) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_HEALTH_TESTING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID WHERE T3.YEAR_ID = 1 AND T2.PW_HB_LESS_THAN_11 < 38.0000000000000000 GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA ORDER BY SUM(T2.PW_HB_LESS_THAN_11) DESC",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name, dim_sub_district.type_of_area,\n       SUM(fact_maternal_health_testing.pw_hb_less_than_11) AS total_pw_hb_less_than_11\nFROM fact_maternal_health_testing\nJOIN dim_sub_district ON fact_maternal_health_testing.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_maternal_health_testing.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\n  AND dim_sub_district.type_of_area = 'Rural'\nGROUP BY dim_sub_district.sub_district_id, dim_sub_district.sub_district_name, dim_sub_district.type_of_area\nHAVING SUM(fact_maternal_health_testing.pw_hb_less_than_11) < 38\nORDER BY total_pw_hb_less_than_11 DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "8447923f",
+      "question": "2021년에 헤모글로빈 수치가 11 미만으로 기록된 임산부 수가 가장 많은 상위 5개 Rural 하위 지구를 식별하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.PW_HB_LESS_THAN_11) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_HEALTH_TESTING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.PW_HB_LESS_THAN_11) DESC LIMIT 5",
+      "predicted_sql": "SELECT\n    ds.sub_district_name,\n    SUM(fm.pw_hb_less_than_11) AS total_pw_hb_less_than_11\nFROM",
+      "error_info": "syntax error at end of input\nLINE 4: FROM\n            ^\n"
+    },
+    {
+      "instance_id": "faf5ea81",
+      "question": "기록된 사례가 없는 지역을 제외하고, September, 2020에 헤모글로빈 수치가 11 미만인 임산부가 38명보다 적었던 하위 구역들과 그 지역 유형을 식별하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_HEALTH_TESTING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T2.PW_HB_LESS_THAN_11 < 38.0000000000000000 AND T3.MONTH_VALUE = 'September, 2020' AND T4.YEAR_VALUE = '2020' GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA HAVING SUM(T2.PW_HB_LESS_THAN_11) > 0.00000000000000000000",
+      "predicted_sql": "SELECT DISTINCT\n    T1.sub_district_name,\n    T1.type_of_area\nFROM dim_sub_district AS T1\nJOIN fact_maternal_health_testing AS T2 ON T1.sub_district_id = T2.sub_district_id\nJOIN dim_month AS T3 ON T2.month_id = T3.month_id\nWHERE T3.month_name = 'September'\n  AND T3.year_id = 2020\n  AND T2.pw_hb_less_than_11 < 38\n  AND T2.pw_hb_less_than_11 > 0",
+      "error_info": null
+    },
+    {
+      "instance_id": "11987d35",
+      "question": "September, 2020 동안 헤모글로빈 수치가 11 미만인 임산부가 5명을 초과하여 기록된 하위 지구와 그 지역 유형을 식별하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_HEALTH_TESTING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T3.MONTH_VALUE = 'September, 2020' AND T4.YEAR_VALUE = '2020' GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA HAVING SUM(T2.PW_HB_LESS_THAN_11) > 5",
+      "predicted_sql": "SELECT\n    dim_sub_district.sub_district_name,\n    dim_sub_district.type_of_area,\n    SUM(fact_maternal_health_testing.pw_hb_less_than_11) as total_pw_hb_less_than_11\nFROM fact_maternal_health_testing\nJOIN dim_sub_district ON fact_maternal_health_testing.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_maternal_health_testing.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_month.month_name = 'September'\n  AND dim_year.year_value = 2020\nGROUP BY\n    dim_sub_district.sub_district_name,\n    dim_sub_district.type_of_area\nHAVING SUM(fact_maternal_health_testing.pw_hb_less_than_11) > 5\nORDER BY total_pw_hb_less_than_11 DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "4bb11c24",
+      "question": "2021년에 Rural 지역에서는 헤모글로빈 수치가 11 미만인 임산부 사례가 보고되었지만 Urban 지역에서는 그러한 사례가 없었던 하위 지구는 어디입니까?",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_HEALTH_TESTING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(CASE WHEN T1.TYPE_OF_AREA = 'Rural' AND T2.PW_HB_LESS_THAN_11 > 0 THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN T1.TYPE_OF_AREA = 'Urban' AND T2.PW_HB_LESS_THAN_11 > 0 THEN 1 ELSE 0 END) = 0 ORDER BY T1.SUB_DISTRICT_NAME",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name\nFROM dim_sub_district\nWHERE dim_sub_district.type_of_area = 'Rural'\n  AND EXISTS (\n    SELECT 1\n    FROM fact_maternal_health_testing\n    JOIN dim_month ON fact_maternal_health_testing.month_id = dim_month.month_id\n    JOIN dim_year ON dim_month.year_id = dim_year.year_id\n    WHERE fact_maternal_health_testing.sub_district_id = dim_sub_district.sub_district_id\n      AND dim_year.year_value = 2021\n      AND fact_maternal_health_testing.pw_hb_less_than_11 > 0\n  )\n  AND EXISTS (\n    SELECT 1\n    FROM dim_sub_district AS urban_sub\n    WHERE urban_sub.sub_district_name = dim_sub_district.sub_district_name\n      AND urban_sub.type_of_area = 'Urban'\n      AND NOT EXISTS (\n        SELECT 1\n        FROM fact_maternal_health_testing AS f2\n        JOIN dim_month AS m2 ON f2.month_id = m2.month_id\n        JOIN dim_year AS y2 ON m2.year_id = y2.year_id\n        WHERE f2.sub_district_id = urban_sub.sub_district_id\n          AND y2.year_value = 2021\n          AND f2.pw_hb_less_than_11 > 0\n      )\n  )",
+      "error_info": null
+    },
+    {
+      "instance_id": "dd941ee2",
+      "question": "Rural 지역으로 분류되었거나 헤모글로빈 수치가 11 미만인 임산부가 38.0명을 초과하여 보고된 하위 지구를 식별하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_HEALTH_TESTING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T2.PW_HB_LESS_THAN_11 > 38.0 OR T1.TYPE_OF_AREA = 'Rural'",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name,\n       SUM(fact_outpatient_services.outpatient_attendance_allopathic) as total_attendance\nFROM dim_sub_district\nJOIN fact_outpatient_services ON dim_sub_district.sub_district_id = fact_outpatient_services.sub_district_id\nJOIN dim_month ON fact_outpatient_services.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_sub_district.type_of_area = 'Rural'\n  AND dim_year.year_value = 2021\nGROUP BY dim_sub_district.sub_district_name\nORDER BY total_attendance DESC\nLIMIT 5",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "e425f148",
+      "question": "모든 Rural 하위 지구를 식별하고, 특히 헤모글로빈 수치가 11 미만인 임산부가 500명 초과로 기록된 곳을 강조하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_HEALTH_TESTING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Rural' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.PW_HB_LESS_THAN_11) > 500 UNION SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Rural'",
+      "predicted_sql": "SELECT\n    ds.sub_district_name,\n    SUM(fmht.pw_hb_less_than_11) as total_pw_hb_less_than_11\nFROM",
+      "error_info": "syntax error at end of input\nLINE 4: FROM\n            ^\n"
+    },
+    {
+      "instance_id": "ac40dd45",
+      "question": "관련된 district ID와 함께 Rural 하위 구역의 알파벳순 목록을 제공하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.SUB_DISTRICT_NAME, T2.DISTRICT_ID, T1.DISTRICT_ID FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T2.TYPE_OF_AREA = 'Rural' ORDER BY T2.SUB_DISTRICT_NAME",
+      "predicted_sql": "SELECT ds.sub_district_name, ds.district_id, SUM(fos.outpatient_attendance_allopathic) AS total_outpatient_attendance\nFROM dim_sub_district ds\nJOIN fact_outpatient_services fos ON ds.sub_district_id = fos.sub_district_id\nJOIN dim_month dm ON fos.month_id = dm.month_id\nJOIN dim_year dy ON dm.year_id = dy.year_id\nWHERE ds.type_of_area = 'Rural' AND dy.year_value = 2021\nGROUP BY ds.sub_district_name, ds.district_id\nORDER BY total_outpatient_attendance DESC\nLIMIT 5",
+      "error_info": null
+    },
+    {
+      "instance_id": "a8da6782",
+      "question": "2021년에 배포된 총 경구 피임약 주기 수와 콘돔 수를 지역 유형별로 분류하여 내역을 제공하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.TYPE_OF_AREA, SUM(T2.COMBINED_ORAL_PILL_CYCLES_DISTRIBUTED), SUM(T2.CONDOM_PIECES_DISTRIBUTED) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_FAMILY_PLANNING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.TYPE_OF_AREA ORDER BY T1.TYPE_OF_AREA",
+      "predicted_sql": "SELECT\n    dim_sub_district.sub_district_name,\n    dim_sub_district.type_of_area,\n    SUM(fact_family_planning.combined_oral_pill_cycles_distributed) AS total_oral_pill_cycles,\n    SUM(fact_family_planning.condom_pieces_distributed) AS total_condoms\nFROM fact_family_planning\nJOIN dim_sub_district ON fact_family_planning.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_family_planning.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\nGROUP BY dim_sub_district.sub_district_name, dim_sub_district.type_of_area\nORDER BY dim_sub_district.sub_district_name",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "0ae728bb",
+      "question": "활성 배포가 있는 지역에 대해, 2021년에 배포된 경구 피임약 주기 수와 콘돔 수를 지역 유형별로 세분화하여 경구 피임약 배포량 순으로 순위를 매겨 제공하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.TYPE_OF_AREA, SUM(T2.COMBINED_ORAL_PILL_CYCLES_DISTRIBUTED), SUM(T2.CONDOM_PIECES_DISTRIBUTED) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_FAMILY_PLANNING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.TYPE_OF_AREA HAVING SUM(T2.COMBINED_ORAL_PILL_CYCLES_DISTRIBUTED) > 0 ORDER BY SUM(T2.COMBINED_ORAL_PILL_CYCLES_DISTRIBUTED) DESC",
+      "predicted_sql": "SELECT\n    dim_sub_district.sub_district_name,\n    dim_sub_district.type_of_area,\n    SUM(fact_family_planning.combined_oral_pill_cycles_distributed) AS total_oral_pills,\n    SUM(fact_family_planning.condom_pieces_distributed) AS total_condoms\nFROM fact_family_planning\nJOIN dim_sub_district ON fact_family_planning.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_family_planning.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\nGROUP BY\n    dim_sub_district.sub_district_name,\n    dim_sub_district.type_of_area\nORDER BY\n    SUM(fact_family_planning.combined_oral_pill_cycles_distributed) DESC,\n    dim_sub_district.type_of_area",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "cc96cd23",
+      "question": "5000개가 넘는 콘돔을 배포한 Rural 하위 구역들을 배포량이 높은 순서부터 낮은 순서로 나열하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_FAMILY_PLANNING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Rural' GROUP BY T1.SUB_DISTRICT_ID, T1.SUB_DISTRICT_NAME HAVING SUM(T2.CONDOM_PIECES_DISTRIBUTED) > 5000 ORDER BY SUM(T2.CONDOM_PIECES_DISTRIBUTED) DESC",
+      "predicted_sql": "SELECT\n    ds.sub_district_name,\n    SUM(ff.condom_pieces_distributed) AS total_condoms_distributed\nFROM",
+      "error_info": "syntax error at end of input\nLINE 4: FROM\n            ^\n"
+    },
+    {
+      "instance_id": "52be298a",
+      "question": "2021년 한 해 동안 결합 경구 피임약 사이클을 가장 많이 배포한 상위 5개의 Rural 하위 지구를 식별하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.COMBINED_ORAL_PILL_CYCLES_DISTRIBUTED) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_FAMILY_PLANNING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.COMBINED_ORAL_PILL_CYCLES_DISTRIBUTED) DESC LIMIT 5",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name,\n       SUM(fact_family_planning.combined_oral_pill_cycles_distributed) AS total_pills\nFROM fact_family_planning\nJOIN dim_sub_district ON fact_family_planning.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_family_planning.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_sub_district.type_of_area = 'Rural'\n  AND dim_year.year_value = 2021\n  AND dim_sub_district.sub_district_id NOT IN (\n    SELECT DISTINCT ds1.sub_district_id\n    FROM dim_sub_district ds1\n    JOIN dim_district ON ds1.district_id = dim_district.district_id\n    WHERE ds1.type_of_area = 'Rural'\n      AND EXISTS (\n        SELECT 1\n        FROM dim_sub_district ds2\n        JOIN fact_outpatient_services fos ON ds2.sub_district_id = fos.sub_district_id\n        JOIN dim_month dm ON fos.month_id = dm.month_id\n        JOIN dim_year dy ON dm.year_id = dy.year_id\n        WHERE ds2.district_id = dim_district.district_id\n          AND ds2.type_of_area = 'Urban'\n          AND dy.year_value = 2022\n      )\n  )\nGROUP BY dim_sub_district.sub_district_name\nORDER BY total_pills DESC\nLIMIT 5",
+      "error_info": null
+    },
+    {
+      "instance_id": "038d92ee",
+      "question": "2021년 한 해 동안 combined oral pill cycles의 총 배포 수가 가장 많았던 상위 5개의 Rural 하위 지구를 식별하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.COMBINED_ORAL_PILL_CYCLES_DISTRIBUTED) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_FAMILY_PLANNING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.COMBINED_ORAL_PILL_CYCLES_DISTRIBUTED) DESC LIMIT 5",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name\nFROM fact_family_planning\nJOIN dim_sub_district ON fact_family_planning.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_family_planning.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_sub_district.type_of_area = 'Rural'\n  AND dim_year.year_value = 2021\n  AND dim_sub_district.sub_district_id IN (\n    SELECT rural.sub_district_id\n    FROM fact_outpatient_services rural\n    JOIN dim_sub_district rural_sd ON rural.sub_district_id = rural_sd.sub_district_id\n    JOIN dim_month rural_m ON rural.month_id = rural_m.month_id\n    JOIN dim_year rural_y ON rural_m.year_id = rural_y.year_id\n    WHERE rural_sd.type_of_area = 'Rural'\n      AND rural_y.year_value = 2022\n      AND rural.outpatient_attendance_allopathic > 0\n  )\n  AND dim_sub_district.sub_district_id NOT IN (\n    SELECT urban.sub_district_id\n    FROM fact_outpatient_services urban\n    JOIN dim_sub_district urban_sd ON urban.sub_district_id = urban_sd.sub_district_id\n    JOIN dim_month urban_m ON urban.month_id = urban_m.month_id\n    JOIN dim_year urban_y ON urban_m.year_id = urban_y.year_id\n    WHERE urban_sd.type_of_area = 'Urban'\n      AND urban_y.year_value = 2022\n      AND urban.outpatient_attendance_allopathic > 0\n  )\nGROUP BY dim_sub_district.sub_district_name\nORDER BY SUM(fact_family_planning.combined_oral_pill_cycles_distributed) DESC\nLIMIT 5",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "6f0e6ed7",
+      "question": "2021년에 콘돔을 배포한 하위 구역과 해당 지역 유형의 순위 목록을 제공하고, 각 항목에 대해 제공된 총 수량을 보여주세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA, SUM(T2.CONDOM_PIECES_DISTRIBUTED) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_FAMILY_PLANNING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA HAVING SUM(T2.CONDOM_PIECES_DISTRIBUTED) > 0 ORDER BY SUM(T2.CONDOM_PIECES_DISTRIBUTED) DESC",
+      "predicted_sql": "SELECT T2.sub_district_name, T2.type_of_area, SUM(T1.condom_pieces_distributed) AS total_condoms_distributed\nFROM fact_family_planning AS T1\nJOIN dim_sub_district AS T2 ON T1.sub_district_id = T2.sub_district_id\nJOIN dim_month AS T3 ON T1.month_id = T3.month_id\nJOIN dim_year AS T4 ON T3.year_id = T4.year_id\nWHERE T4.year_value = 2021\nAND T2.type_of_area IN ('Urban', 'Rural')\nAND T1.condom_pieces_distributed > 0\nGROUP BY T2.sub_district_name, T2.type_of_area\nORDER BY total_condoms_distributed DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "792156ef",
+      "question": "2022년에 combined oral pill cycles를 배포했지만 콘돔은 전혀 배포하지 않은 하위 지구는 어디입니까?",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_FAMILY_PLANNING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2022' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.COMBINED_ORAL_PILL_CYCLES_DISTRIBUTED) > 0 AND SUM(T2.CONDOM_PIECES_DISTRIBUTED) = 0",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name\nFROM fact_family_planning\nJOIN dim_sub_district ON fact_family_planning.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_family_planning.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2022\nGROUP BY dim_sub_district.sub_district_name\nHAVING SUM(fact_family_planning.combined_oral_pill_cycles_distributed) > 0\n   AND SUM(fact_family_planning.condom_pieces_distributed) = 0\nORDER BY dim_sub_district.sub_district_name",
+      "error_info": null
+    },
+    {
+      "instance_id": "554e01a1",
+      "question": "2022년 동안 경구 복합 피임약 주기는 배포했지만 콘돔은 전혀 배포하지 않은 하위 지구는 어디입니까?",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_FAMILY_PLANNING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2022' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.COMBINED_ORAL_PILL_CYCLES_DISTRIBUTED) > 0.0000000000000000 AND SUM(T2.CONDOM_PIECES_DISTRIBUTED) = 0.0000000000000000",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name\nFROM dim_sub_district\nJOIN fact_family_planning ON dim_sub_district.sub_district_id = fact_family_planning.sub_district_id\nJOIN dim_month ON fact_family_planning.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2022\nGROUP BY dim_sub_district.sub_district_id, dim_sub_district.sub_district_name\nHAVING SUM(fact_family_planning.combined_oral_pill_cycles_distributed) > 0\n   AND SUM(fact_family_planning.condom_pieces_distributed) = 0\nORDER BY dim_sub_district.sub_district_name",
+      "error_info": null
+    },
+    {
+      "instance_id": "3b902ac4",
+      "question": "알파벳 순서로, 5000개가 넘는 경구 피임약 주기 또는 10000개가 넘는 콘돔을 배포한 하위 지구를 나열하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_FAMILY_PLANNING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T2.COMBINED_ORAL_PILL_CYCLES_DISTRIBUTED > 5000 OR T2.CONDOM_PIECES_DISTRIBUTED > 10000 GROUP BY T1.SUB_DISTRICT_NAME ORDER BY T1.SUB_DISTRICT_NAME ASC",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name\nFROM dim_sub_district\nJOIN fact_family_planning ON dim_sub_district.sub_district_id = fact_family_planning.sub_district_id\nGROUP BY dim_sub_district.sub_district_id\nHAVING SUM(fact_family_planning.combined_oral_pill_cycles_distributed) > 5000\n    OR SUM(fact_family_planning.condom_pieces_distributed) > 10000\nORDER BY dim_sub_district.sub_district_name",
+      "error_info": "Result mismatch"
+    }
+  ]
+}

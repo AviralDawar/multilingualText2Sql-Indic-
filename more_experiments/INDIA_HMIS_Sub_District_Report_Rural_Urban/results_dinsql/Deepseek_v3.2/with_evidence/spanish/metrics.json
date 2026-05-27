@@ -1,0 +1,909 @@
+{
+  "summary": {
+    "total": 100,
+    "execution_correct": 62,
+    "execution_accuracy": 0.62
+  },
+  "results": [
+    {
+      "instance_id": "bf924deb",
+      "question": "Enumera todos los distritos ubicados en el estado de Bihar.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Bihar';",
+      "predicted_sql": "SELECT dim_district.district_name\nFROM dim_district\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nWHERE dim_state.state_name = 'Bihar'",
+      "error_info": null
+    },
+    {
+      "instance_id": "9b78ebf8",
+      "question": "Enumera todos los distritos del estado de Assam en orden alfabético.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Assam' ORDER BY T1.DISTRICT_NAME ASC",
+      "predicted_sql": "SELECT T1.district_name\nFROM dim_district AS T1\nJOIN dim_state AS T2 ON T1.state_id = T2.state_id\nWHERE T2.state_name = 'Assam'\nORDER BY T1.district_name ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "5e6d1189",
+      "question": "Proporcione una lista en orden alfabético de todos los distritos ubicados dentro del estado de Bihar.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T3.DISTRICT_NAME FROM DIM_COUNTRY AS T1 INNER JOIN DIM_STATE AS T2 ON T1.COUNTRY_ID = T2.COUNTRY_ID INNER JOIN DIM_DISTRICT AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T2.STATE_NAME = 'Bihar' GROUP BY T3.DISTRICT_NAME ORDER BY T3.DISTRICT_NAME ASC",
+      "predicted_sql": "SELECT T1.district_name\nFROM dim_district AS T1\nJOIN dim_state AS T2 ON T1.state_id = T2.state_id\nWHERE T2.state_name = 'Bihar'\nORDER BY T1.district_name ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "82925e27",
+      "question": "Proporcione un recuento de distritos para cada estado, listado en orden alfabético por nombre del estado.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.STATE_NAME, COUNT(T2.DISTRICT_ID) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID GROUP BY T1.STATE_NAME ORDER BY T1.STATE_NAME;",
+      "predicted_sql": "SELECT COUNT(DISTINCT T2.district_id), T1.state_name\nFROM dim_state AS T1\nJOIN dim_district AS T2 ON T1.state_id = T2.state_id\nGROUP BY T1.state_id, T1.state_name\nORDER BY T1.state_name ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "d712a643",
+      "question": "Enumera los nombres de los distritos en Assam que contienen más de 1 subdistrito Rural, ordenados alfabéticamente.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.DISTRICT_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME = 'Assam' AND T3.TYPE_OF_AREA = 'Rural' GROUP BY T2.DISTRICT_NAME HAVING COUNT(T3.SUB_DISTRICT_ID) > 1 ORDER BY T2.DISTRICT_NAME ASC",
+      "predicted_sql": "select dim_district.district_name\nfrom dim_district\njoin dim_state on dim_district.state_id = dim_state.state_id\njoin dim_sub_district on dim_sub_district.district_id = dim_district.district_id\nwhere dim_state.state_name = 'Assam'\n  and dim_sub_district.type_of_area = 'Rural'\ngroup by dim_district.district_id, dim_district.district_name\nhaving count(dim_sub_district.sub_district_id) > 1\norder by dim_district.district_name",
+      "error_info": null
+    },
+    {
+      "instance_id": "3b58000c",
+      "question": "Proporcione una lista de todos los distritos, organizados alfabéticamente por estado y luego por nombre del distrito.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID ORDER BY T2.STATE_NAME, T1.DISTRICT_NAME",
+      "predicted_sql": "SELECT\n    RANK() OVER (ORDER BY COUNT(dim_district.district_id) DESC) AS rank,\n    dim_state.state_name,\n    COUNT(dim_district.district_id) AS district_count\nFROM dim_state\nJOIN dim_district ON dim_state.state_id = dim_district.state_id\nGROUP BY dim_state.state_name\nHAVING COUNT(dim_district.district_id) >= 1\nORDER BY district_count DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "bdde29f6",
+      "question": "Enumera los nombres de los 5 principales distritos en Assam que contienen más de 1 subdistrito, ordenados en orden alfabético inverso.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.DISTRICT_NAME FROM DIM_STATE AS T1 INNER JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID INNER JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME = 'Assam' GROUP BY T2.DISTRICT_NAME HAVING COUNT(T3.SUB_DISTRICT_ID) > 1 ORDER BY T2.DISTRICT_NAME DESC LIMIT 5",
+      "predicted_sql": "SELECT T1.district_name\nFROM dim_district AS T1\nJOIN dim_state AS T2 ON T1.state_id = T2.state_id\nJOIN dim_sub_district AS T3 ON T1.district_id = T3.district_id\nWHERE T2.state_name = 'Assam' AND T3.type_of_area = 'Rural'\nGROUP BY T1.district_id\nHAVING COUNT(T3.sub_district_id) > 1\nORDER BY T1.district_name DESC\nLIMIT 5",
+      "error_info": null
+    },
+    {
+      "instance_id": "28d9c826",
+      "question": "Enumera todos los distritos en India junto con los nombres de los estados a los que pertenecen.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.DISTRICT_NAME, T2.STATE_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_COUNTRY AS T3 ON T2.COUNTRY_ID = T3.COUNTRY_ID WHERE T3.COUNTRY_NAME = 'India';",
+      "predicted_sql": "SELECT dim_district.district_name, dim_state.state_name\nFROM dim_district\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nJOIN dim_country ON dim_state.country_id = dim_country.country_id\nWHERE dim_state.state_name = 'Assam'\n  AND dim_country.country_name = 'India'\n  AND EXISTS (\n    SELECT 1\n    FROM dim_sub_district\n    WHERE dim_sub_district.district_id = dim_district.district_id\n      AND dim_sub_district.type_of_area = 'Rural'\n  )\nORDER BY dim_district.district_name ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "076310d4",
+      "question": "Proporcione una lista en orden alfabético de todos los distritos de India, organizados por sus respectivos estados.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T3.DISTRICT_NAME, T2.STATE_NAME FROM DIM_COUNTRY AS T1 INNER JOIN DIM_STATE AS T2 ON T1.COUNTRY_ID = T2.COUNTRY_ID INNER JOIN DIM_DISTRICT AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T1.COUNTRY_NAME = 'India' GROUP BY T2.STATE_NAME, T3.DISTRICT_NAME ORDER BY T2.STATE_NAME ASC, T3.DISTRICT_NAME ASC",
+      "predicted_sql": "SELECT T2.district_name\nFROM dim_state AS T1\nJOIN dim_district AS T2 ON T1.state_id = T2.state_id\nJOIN dim_sub_district AS T3 ON T2.district_id = T3.district_id\nWHERE T1.state_name = 'Assam'\n  AND T3.type_of_area = 'Rural'\nGROUP BY T2.district_id, T2.district_name\nHAVING COUNT(T3.sub_district_id) > 1\nORDER BY T2.district_name",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "d2704225",
+      "question": "Identifica los nombres de los distritos que están ubicados en Assam pero no comparten nombre con ningún distrito de Bihar.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Assam' EXCEPT SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Bihar'",
+      "predicted_sql": "SELECT T1.district_name\nFROM dim_district AS T1\nJOIN dim_state AS T2 ON T1.state_id = T2.state_id\nWHERE T2.state_name = 'Assam'\nAND T1.district_name NOT IN (\n    SELECT district_name\n    FROM dim_district AS d\n    JOIN dim_state AS s ON d.state_id = s.state_id\n    WHERE s.state_name = 'Bihar'\n)\nORDER BY T1.district_name",
+      "error_info": null
+    },
+    {
+      "instance_id": "ecdb5b0f",
+      "question": "Identifica los distritos en Assam que no comparten nombre con ningún distrito en Bihar.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.DISTRICT_NAME FROM DIM_DISTRICT AS T1 JOIN DIM_STATE AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T2.STATE_NAME = 'Assam' AND T1.DISTRICT_NAME NOT IN (SELECT T3.DISTRICT_NAME FROM DIM_DISTRICT AS T3 JOIN DIM_STATE AS T4 ON T3.STATE_ID = T4.STATE_ID WHERE T4.STATE_NAME = 'Bihar')",
+      "predicted_sql": "SELECT d1.district_name\nFROM dim_district d1\nJOIN dim_state s1 ON d1.state_id = s1.state_id\nWHERE s1.state_name = 'Assam'\n  AND d1.district_name NOT IN (\n    SELECT d2.district_name\n    FROM dim_district d2\n    JOIN dim_state s2 ON d2.state_id = s2.state_id\n    WHERE s2.state_name = 'Bihar'\n  )\nORDER BY d1.district_name",
+      "error_info": null
+    },
+    {
+      "instance_id": "0e84d553",
+      "question": "Confirma el nombre del estado Assam de la lista de estados que han registrado información de distritos.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT DISTINCT T1.STATE_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_NAME = 'Assam';",
+      "predicted_sql": "SELECT dim_state.state_name, dim_district.district_name\nFROM dim_state\nJOIN dim_country ON dim_state.country_id = dim_country.country_id\nJOIN dim_district ON dim_district.state_id = dim_state.state_id\nWHERE dim_country.country_name = 'India'\n  AND dim_state.state_name = 'Assam'\nORDER BY dim_state.state_name ASC, dim_district.district_name ASC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "3f9bf1a0",
+      "question": "Enumera todos los distritos ubicados dentro de los estados de Assam y Andaman And Nicobar Islands.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.STATE_NAME, T2.DISTRICT_NAME FROM DIM_STATE T1 JOIN DIM_DISTRICT T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_NAME = 'Andaman And Nicobar Islands' OR T1.STATE_NAME = 'Assam';",
+      "predicted_sql": "SELECT T1.district_name\nFROM dim_district AS T1\nJOIN dim_state AS T2 ON T1.state_id = T2.state_id\nWHERE T2.state_name = 'Assam' OR T2.state_name = 'Andaman And Nicobar Islands'\nORDER BY T1.district_name ASC\nLIMIT 5",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "b511c926",
+      "question": "Enumera los nombres de todos los estados y sus distritos correspondientes para Andaman And Nicobar Islands o el distrito Nicobars, ordenados alfabéticamente por estado.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.STATE_NAME, T2.DISTRICT_NAME FROM DIM_STATE AS T1 INNER JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID WHERE T1.STATE_NAME = 'Andaman And Nicobar Islands' OR T2.DISTRICT_NAME = 'Nicobars' GROUP BY T1.STATE_NAME, T2.DISTRICT_NAME ORDER BY T1.STATE_NAME ASC",
+      "predicted_sql": "SELECT dim_state.state_name, dim_district.district_name\nFROM dim_state\nJOIN dim_district ON dim_district.state_id = dim_state.state_id\nWHERE dim_state.state_name = 'Andaman And Nicobar Islands'\n   OR (dim_state.state_name = 'Andaman And Nicobar Islands' AND dim_district.district_name = 'Nicobars')\nORDER BY dim_state.state_name ASC, dim_district.district_name ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "bc38904c",
+      "question": "Proporcione una lista alfabética de todos los subdistritos Rural, incluyendo sus nombres e ID.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T1.SUB_DISTRICT_ID FROM DIM_SUB_DISTRICT AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Rural' ORDER BY T1.SUB_DISTRICT_NAME",
+      "predicted_sql": "SELECT d.district_name\nFROM dim_district d\nJOIN dim_state s ON d.state_id = s.state_id\nJOIN dim_sub_district sd ON d.district_id = sd.district_id\nWHERE s.state_name = 'Assam'\nGROUP BY d.district_id, d.district_name\nHAVING COUNT(sd.sub_district_id) > 1\nORDER BY d.district_name DESC\nLIMIT 5",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "01d39f0e",
+      "question": "Proporcione un desglose del número de subdistritos por tipo de área para cada estado, ordenado alfabéticamente por el nombre del estado y luego por el recuento más alto.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.STATE_NAME, T3.TYPE_OF_AREA, COUNT(T3.SUB_DISTRICT_ID) FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID GROUP BY T1.STATE_NAME, T3.TYPE_OF_AREA HAVING COUNT(T3.SUB_DISTRICT_ID) > 0 ORDER BY T1.STATE_NAME ASC, COUNT(T3.SUB_DISTRICT_ID) DESC",
+      "predicted_sql": "SELECT dim_district.district_name, dim_state.state_name\nFROM dim_district\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nJOIN dim_country ON dim_state.country_id = dim_country.country_id\nWHERE dim_country.country_name = 'India'",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "21a46a66",
+      "question": "Enumera los nombres de todos los subdistritos Rural ubicados en Andaman And Nicobar Islands.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T3.STATE_NAME = 'Andaman And Nicobar Islands'",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name\nFROM dim_sub_district\nJOIN dim_district ON dim_sub_district.district_id = dim_district.district_id\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nWHERE dim_sub_district.type_of_area = 'Rural'\nAND dim_state.state_name = 'Andaman And Nicobar Islands'\nORDER BY dim_sub_district.sub_district_name ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "d438fef8",
+      "question": "Enumera los nombres de todos los subdistritos Rural ubicados en Andaman And Nicobar Islands, ordenados alfabéticamente.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T3.STATE_NAME = 'Andaman And Nicobar Islands' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY T1.SUB_DISTRICT_NAME",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name\nFROM dim_sub_district\nJOIN dim_district ON dim_sub_district.district_id = dim_district.district_id\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nJOIN dim_country ON dim_state.country_id = dim_country.country_id\nWHERE dim_sub_district.type_of_area = 'Rural'\n  AND dim_state.state_name = 'Andaman And Nicobar Islands'\n  AND dim_country.country_name = 'India'\nORDER BY dim_sub_district.sub_district_name ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "ddfc66fd",
+      "question": "Enumera los subdistritos y sus tipos de área correspondientes ubicados dentro del estado de Assam, ordenados alfabéticamente por nombre.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T3.SUB_DISTRICT_NAME, T3.TYPE_OF_AREA FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME = 'Assam' GROUP BY T3.TYPE_OF_AREA, T3.SUB_DISTRICT_NAME ORDER BY T3.SUB_DISTRICT_NAME ASC",
+      "predicted_sql": "SELECT T1.sub_district_name, T1.type_of_area\nFROM dim_sub_district AS T1\nJOIN dim_district AS T2 ON T1.district_id = T2.district_id\nJOIN dim_state AS T3 ON T2.state_id = T3.state_id\nWHERE T3.state_name = 'Assam'\nORDER BY T1.sub_district_name",
+      "error_info": null
+    },
+    {
+      "instance_id": "c829cc67",
+      "question": "Enumera los nombres y los tipos de área de todos los subdistritos ubicados dentro de Andaman And Nicobar Islands, ordenados alfabéticamente por tipo de área y nombre.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T3.SUB_DISTRICT_NAME, T3.TYPE_OF_AREA FROM DIM_STATE AS T1 INNER JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID INNER JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T1.STATE_NAME = 'Andaman And Nicobar Islands' GROUP BY T3.TYPE_OF_AREA, T3.SUB_DISTRICT_NAME HAVING COUNT(T3.SUB_DISTRICT_ID) >= 1 ORDER BY T3.TYPE_OF_AREA ASC, T3.SUB_DISTRICT_NAME ASC",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name, dim_sub_district.type_of_area\nFROM dim_sub_district\nJOIN dim_district ON dim_sub_district.district_id = dim_district.district_id\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nWHERE dim_state.state_name = 'Andaman And Nicobar Islands'\nORDER BY dim_sub_district.type_of_area ASC, dim_sub_district.sub_district_name ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "201c5068",
+      "question": "¿Qué 5 estados tienen el mayor número de subdistritos Rural?",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.STATE_NAME FROM DIM_STATE AS T1 JOIN DIM_DISTRICT AS T2 ON T1.STATE_ID = T2.STATE_ID JOIN DIM_SUB_DISTRICT AS T3 ON T2.DISTRICT_ID = T3.DISTRICT_ID WHERE T3.TYPE_OF_AREA = 'Rural' GROUP BY T1.STATE_NAME ORDER BY COUNT(T3.SUB_DISTRICT_ID) DESC LIMIT 5",
+      "predicted_sql": "SELECT d1.district_name\nFROM dim_district d1\nJOIN dim_state s1 ON d1.state_id = s1.state_id\nWHERE s1.state_name = 'Assam'\n  AND d1.district_name NOT IN (\n    SELECT d2.district_name\n    FROM dim_district d2\n    JOIN dim_state s2 ON d2.state_id = s2.state_id\n    WHERE s2.state_name = 'Bihar'\n  )\nORDER BY d1.district_name",
+      "error_info": null
+    },
+    {
+      "instance_id": "92f00f21",
+      "question": "Enumera los nombres de todos los subdistritos Rural junto con su distrito y estado correspondientes.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T2.DISTRICT_NAME, T3.STATE_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN DIM_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID JOIN DIM_STATE AS T3 ON T2.STATE_ID = T3.STATE_ID WHERE T1.TYPE_OF_AREA = 'Rural';",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name, dim_district.district_name, dim_state.state_name\nFROM dim_sub_district\nJOIN dim_district ON dim_sub_district.district_id = dim_district.district_id\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nWHERE dim_sub_district.type_of_area = 'Rural'",
+      "error_info": null
+    },
+    {
+      "instance_id": "e9da9511",
+      "question": "Identifica los subdistritos que están clasificados exclusivamente como áreas Urban y no tienen componentes Rural.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Urban' EXCEPT SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Rural';",
+      "predicted_sql": "SELECT DISTINCT sub_district_name\nFROM dim_sub_district\nWHERE type_of_area = 'Urban'\nAND sub_district_id NOT IN (\n    SELECT sub_district_id\n    FROM dim_sub_district\n    WHERE type_of_area = 'Rural'\n)\nORDER BY sub_district_name ASC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "298abc66",
+      "question": "Enumera los nombres de todos los subdistritos que están clasificados como áreas Urban y no están clasificados como Rural, ordenados alfabéticamente.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 WHERE T1.TYPE_OF_AREA = 'Urban' AND T1.SUB_DISTRICT_NAME NOT IN (SELECT T2.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T2 WHERE T2.TYPE_OF_AREA = 'Rural') GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(T1.SUB_DISTRICT_ID) >= 1 ORDER BY T1.SUB_DISTRICT_NAME ASC",
+      "predicted_sql": "SELECT DISTINCT sub_district_name\nFROM dim_sub_district\nWHERE type_of_area = 'Urban'\nORDER BY sub_district_name ASC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "bf5a3dba",
+      "question": "Proporcione una lista que contenga el nombre 'Andaman And Nicobar Islands' junto con los nombres de todos los subdistritos Rural.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT STATE_NAME FROM DIM_STATE WHERE STATE_NAME = 'Andaman And Nicobar Islands' UNION SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Rural'",
+      "predicted_sql": "SELECT T2.district_name, T3.sub_district_name\nFROM dim_state AS T1\nJOIN dim_district AS T2 ON T1.state_id = T2.state_id\nJOIN dim_sub_district AS T3 ON T2.district_id = T3.district_id\nWHERE T1.state_name IN ('Assam', 'Andaman And Nicobar Islands')\nAND T3.type_of_area = 'Rural'",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "7b1134c5",
+      "question": "Muestra las cifras de asistencia ambulatoria alopática para el mes de September, 2020.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T2 ON T1.MONTH_ID = T2.MONTH_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T2.MONTH_NAME = 'September, 2020' AND T3.YEAR_VALUE = '2020'",
+      "predicted_sql": "SELECT DISTINCT dim_state.state_name, dim_district.district_name, fact_outpatient_services.outpatient_attendance_allopathic\nFROM fact_outpatient_services\nJOIN dim_sub_district ON fact_outpatient_services.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_district ON dim_sub_district.district_id = dim_district.district_id\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nJOIN dim_month ON fact_outpatient_services.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE (dim_state.state_name = 'Assam' OR dim_district.district_name = 'Nicobars')\n  AND dim_month.month_name = 'September'\n  AND dim_year.year_value = 2020\nORDER BY dim_state.state_name",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "0387be49",
+      "question": "Enumera los ID de los pacientes ambulatorios y sus correspondientes conteos de asistencia alopática para December, 2022, centrándote solo en aquellos con visitas registradas, ordenados de la asistencia más alta a la más baja.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.OUTPATIENT_ID, T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T2 ON T1.MONTH_ID = T2.MONTH_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T2.MONTH_NAME = 'December, 2022' AND T3.YEAR_VALUE = '2022' GROUP BY T1.OUTPATIENT_ID, T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC HAVING SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 0 ORDER BY T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC DESC",
+      "predicted_sql": "SELECT fact_outpatient_services.outpatient_id,\n       fact_outpatient_services.outpatient_attendance_allopathic,\n       dim_state.state_name,\n       dim_district.district_name\nFROM fact_outpatient_services\nJOIN dim_sub_district ON fact_outpatient_services.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_district ON dim_sub_district.district_id = dim_district.district_id\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nJOIN dim_month ON fact_outpatient_services.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_month.month_name = 'December'\n  AND dim_year.year_value = 2022\n  AND fact_outpatient_services.outpatient_attendance_allopathic > 0\n  AND (dim_state.state_name = 'Andaman And Nicobar Islands'\n       OR dim_district.district_name = 'Nicobars')\nORDER BY fact_outpatient_services.outpatient_attendance_allopathic DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "a70d05df",
+      "question": "Proporcione un desglose anual de la asistencia ambulatoria alopática total, ordenado cronológicamente.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T3.YEAR_VALUE, SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T2 ON T1.MONTH_ID = T2.MONTH_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID GROUP BY T3.YEAR_VALUE ORDER BY T3.YEAR_VALUE ASC",
+      "predicted_sql": "SELECT dim_year.year_value, SUM(fact_outpatient_services.outpatient_attendance_allopathic)\nFROM fact_outpatient_services\nJOIN dim_month ON fact_outpatient_services.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nGROUP BY dim_year.year_value\nORDER BY dim_year.year_value ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "cf0db537",
+      "question": "Clasifica los meses de 2022 según su asistencia ambulatoria alopática total, de mayor a menor.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.MONTH_NAME, SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T2 ON T1.MONTH_ID = T2.MONTH_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR_VALUE = '2022' GROUP BY T2.MONTH_NAME ORDER BY SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+      "predicted_sql": "SELECT dim_month.month_name, SUM(fact_outpatient_services.outpatient_attendance_allopathic) AS total_attendance\nFROM fact_outpatient_services\nJOIN dim_month ON fact_outpatient_services.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nJOIN dim_sub_district ON fact_outpatient_services.sub_district_id = dim_sub_district.sub_district_id\nWHERE dim_year.year_value = 2022 AND dim_sub_district.type_of_area = 'Rural'\nGROUP BY dim_month.month_name\nORDER BY total_attendance DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "170b0d9f",
+      "question": "Clasifica los meses de 2022 de mayor a menor según el número total de visitas ambulatorias alopáticas.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.MONTH_NAME, SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T2 ON T1.MONTH_ID = T2.MONTH_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T3.YEAR_VALUE = '2022' GROUP BY T2.MONTH_NAME ORDER BY SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+      "predicted_sql": "SELECT dim_month.month_name, SUM(fact_outpatient_services.outpatient_attendance_allopathic) AS total_visits\nFROM fact_outpatient_services\nJOIN dim_month ON fact_outpatient_services.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2022\nGROUP BY dim_month.month_name\nORDER BY total_visits DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "42ea1f77",
+      "question": "Proporcione un desglose mensual de la asistencia ambulatoria alopática total para el año 2022, ordenado de mayor a menor volumen.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.MONTH_NAME, SUM(T3.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_YEAR AS T1 JOIN DIM_MONTH AS T2 ON T1.YEAR_ID = T2.YEAR_ID JOIN FACT_OUTPATIENT_SERVICES AS T3 ON T2.MONTH_ID = T3.MONTH_ID WHERE T1.YEAR_VALUE = '2022' GROUP BY T2.MONTH_NAME ORDER BY SUM(T3.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+      "predicted_sql": "SELECT dim_month.month_name, SUM(fact_outpatient_services.outpatient_attendance_allopathic) AS total_attendance\nFROM fact_outpatient_services\nJOIN dim_month ON fact_outpatient_services.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2022\nGROUP BY dim_month.month_name\nORDER BY total_attendance DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "095bb0c4",
+      "question": "Identifica los subdistritos que registraron asistencia ambulatoria alopática en 2022 pero no tuvieron tal asistencia reportada en 2021.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2022' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 0 EXCEPT SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 0",
+      "predicted_sql": "SELECT\n    dim_state.state_name,\n    dim_sub_district.type_of_area,\n    COUNT(DISTINCT dim_sub_district.sub_district_id) as sub_district_count\nFROM dim_sub_district\nJOIN dim_district ON dim_sub_district.district_id = dim_district.district_id\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nWHERE dim_sub_district.sub_district_id IN (\n    -- sub-districts with outpatient attendance in 2022\n    SELECT fact_outpatient_services.sub_district_id\n    FROM fact_outpatient_services\n    JOIN dim_month ON fact_outpatient_services.month_id = dim_month.month_id\n    JOIN dim_year ON dim_month.year_id = dim_year.year_id\n    WHERE dim_year.year_value = 2022\n    AND fact_outpatient_services.outpatient_attendance_allopathic > 0\n)\nAND dim_sub_district.sub_district_id NOT IN (\n    -- sub-districts with outpatient attendance in 2021\n    SELECT fact_outpatient_services.sub_district_id\n    FROM fact_outpatient_services\n    JOIN dim_month ON fact_outpatient_services.month_id = dim_month.month_id\n    JOIN dim_year ON dim_month.year_id = dim_year.year_id\n    WHERE dim_year.year_value = 2021\n    AND fact_outpatient_services.outpatient_attendance_allopathic > 0\n)\nGROUP BY dim_state.state_name, dim_sub_district.type_of_area\nORDER BY dim_state.state_name ASC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "6629c430",
+      "question": "Identifica los subdistritos que registraron asistencia ambulatoria alopática en 2022 pero no tuvieron dicha asistencia en 2021.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2022' AND T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC > 0.0 GROUP BY T1.SUB_DISTRICT_NAME EXCEPT SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' AND T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC > 0.0 GROUP BY T1.SUB_DISTRICT_NAME",
+      "predicted_sql": "SELECT\n    ds.state_name,\n    dss.type_of_area,\n    COUNT(DISTINCT dss.sub_district_id) AS sub_district_count\nFROM dim_sub_district dss\nJOIN dim_district dd ON dss.district_id = dd.district_id\nJOIN dim_state ds ON dd.state_id = ds.state_id\nWHERE dss.sub_district_id IN (\n    -- Subdistricts with outpatient attendance in 2022\n    SELECT DISTINCT fos.sub_district_id\n    FROM fact_outpatient_services fos\n    JOIN dim_month dm ON fos.month_id = dm.month_id\n    JOIN dim_year dy ON dm.year_id = dy.year_id\n    WHERE dy.year_value = 2022\n    AND fos.outpatient_attendance_allopathic > 0\n)\nAND dss.sub_district_id NOT IN (\n    -- Subdistricts with outpatient attendance in 2021\n    SELECT DISTINCT fos.sub_district_id\n    FROM fact_outpatient_services fos\n    JOIN dim_month dm ON fos.month_id = dm.month_id\n    JOIN dim_year dy ON dm.year_id = dy.year_id\n    WHERE dy.year_value = 2021\n    AND fos.outpatient_attendance_allopathic > 0\n)\nGROUP BY ds.state_name, dss.type_of_area\nORDER BY ds.state_name ASC, sub_district_count DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "069ec4a6",
+      "question": "¿Qué subdistritos registraron servicios ambulatorios tanto en 2021 como en 2022?",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE IN ('2021', '2022') GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(DISTINCT T4.YEAR_VALUE) = 2",
+      "predicted_sql": "SELECT DISTINCT ds.sub_district_name\nFROM fact_outpatient_services fos\nJOIN dim_sub_district ds ON fos.sub_district_id = ds.sub_district_id\nJOIN dim_month dm ON fos.month_id = dm.month_id\nJOIN dim_year dy ON dm.year_id = dy.year_id\nWHERE dy.year_value IN (2021, 2022)\n  AND fos.outpatient_attendance_allopathic > 0\nGROUP BY ds.sub_district_id, ds.sub_district_name\nHAVING COUNT(DISTINCT dy.year_value) = 2\nORDER BY ds.sub_district_name",
+      "error_info": null
+    },
+    {
+      "instance_id": "99eb0b3c",
+      "question": "Identifica los meses que pertenecen al año 2022 o registraron más de 5,000 visitas ambulatorias alopáticas, ordenados alfabéticamente.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT DISTINCT T2.MONTH_NAME FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T2 ON T1.MONTH_ID = T2.MONTH_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID WHERE T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC > 5000.0000000000000000 OR T3.YEAR_VALUE = '2022' ORDER BY T2.MONTH_NAME",
+      "predicted_sql": "SELECT DISTINCT T1.month_name\nFROM dim_month AS T1\nJOIN dim_year AS T2 ON T1.year_id = T2.year_id\nJOIN fact_outpatient_services AS T3 ON T1.month_id = T3.month_id\nJOIN dim_sub_district AS T4 ON T3.sub_district_id = T4.sub_district_id\nJOIN dim_district AS T5 ON T4.district_id = T5.district_id\nJOIN dim_state AS T6 ON T5.state_id = T6.state_id\nWHERE (T2.year_value = 2022 OR T3.outpatient_attendance_allopathic > 5000)\n  AND T4.type_of_area = 'Rural'\n  AND T6.state_name = 'Andaman And Nicobar Islands'\nORDER BY T1.month_name ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "26170385",
+      "question": "Proporcione el total anual de asistencia ambulatoria alopática para todos los años registrados.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T3.YEAR_VALUE, SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T2 ON T1.MONTH_ID = T2.MONTH_ID JOIN DIM_YEAR AS T3 ON T2.YEAR_ID = T3.YEAR_ID GROUP BY T3.YEAR_VALUE",
+      "predicted_sql": "select sum(fact_outpatient_services.outpatient_attendance_allopathic), dim_year.year_value\nfrom fact_outpatient_services\njoin dim_month on fact_outpatient_services.month_id = dim_month.month_id\njoin dim_year on dim_month.year_id = dim_year.year_id\ngroup by dim_year.year_value",
+      "error_info": null
+    },
+    {
+      "instance_id": "14fe55de",
+      "question": "Proporcione un desglose anual de la asistencia ambulatoria alopática total en las áreas Rural y Urban, ordenado cronológicamente.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.YEAR_VALUE, SUM(T1.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM FACT_OUTPATIENT_SERVICES AS T1 JOIN DIM_MONTH AS T3 ON T1.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T2 ON T3.YEAR_ID = T2.YEAR_ID JOIN DIM_SUB_DISTRICT AS T4 ON T1.SUB_DISTRICT_ID = T4.SUB_DISTRICT_ID WHERE T4.TYPE_OF_AREA IN ('Rural', 'Urban') GROUP BY T2.YEAR_VALUE ORDER BY T2.YEAR_VALUE ASC",
+      "predicted_sql": "SELECT dim_year.year_value, dim_sub_district.sub_district_name, dim_sub_district.type_of_area, SUM(fact_outpatient_services.outpatient_attendance_allopathic) AS total_outpatient_attendance\nFROM fact_outpatient_services\nJOIN dim_sub_district ON fact_outpatient_services.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_district ON dim_sub_district.district_id = dim_district.district_id\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nJOIN dim_month ON fact_outpatient_services.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_state.state_name = 'Assam'\n  AND dim_sub_district.type_of_area IN ('Rural', 'Urban')\nGROUP BY dim_year.year_value, dim_sub_district.sub_district_name, dim_sub_district.type_of_area\nORDER BY dim_year.year_value, dim_sub_district.sub_district_name",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "f3579a90",
+      "question": "¿Qué subdistritos Rural registraron una asistencia ambulatoria alopática total de más de 5000 durante el año 2021?",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 5000",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name\nFROM dim_sub_district\nJOIN fact_outpatient_services ON dim_sub_district.sub_district_id = fact_outpatient_services.sub_district_id\nJOIN dim_month ON fact_outpatient_services.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_sub_district.type_of_area = 'Rural' AND dim_year.year_value = 2021\nGROUP BY dim_sub_district.sub_district_id, dim_sub_district.sub_district_name\nHAVING SUM(fact_outpatient_services.outpatient_attendance_allopathic) > 5000",
+      "error_info": null
+    },
+    {
+      "instance_id": "49345135",
+      "question": "Clasifica los subdistritos y sus tipos de área por el número total de visitas ambulatorias alopáticas registradas durante todo 2021, comenzando con la asistencia más alta.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name, dim_sub_district.type_of_area, SUM(fact_outpatient_services.outpatient_attendance_allopathic) AS total_outpatient_attendance\nFROM fact_outpatient_services\nJOIN dim_sub_district ON fact_outpatient_services.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_district ON dim_sub_district.district_id = dim_district.district_id\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nJOIN dim_month ON fact_outpatient_services.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_state.state_name = 'Andaman And Nicobar Islands' AND dim_year.year_value = 2021\nGROUP BY dim_sub_district.sub_district_name, dim_sub_district.type_of_area\nORDER BY total_outpatient_attendance DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "0a861189",
+      "question": "Clasifica los subdistritos y sus tipos de área por el número total de visitas ambulatorias alopáticas registradas durante todo 2021, comenzando con la asistencia más alta.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+      "predicted_sql": "SELECT T1.sub_district_name,\n       T1.type_of_area,\n       SUM(T2.outpatient_attendance_allopathic) AS total_outpatient_visits\nFROM dim_sub_district AS T1\nJOIN fact_outpatient_services AS T2 ON T1.sub_district_id = T2.sub_district_id\nJOIN dim_month AS T3 ON T2.month_id = T3.month_id\nJOIN dim_year AS T4 ON T3.year_id = T4.year_id\nJOIN dim_district AS T5 ON T1.district_id = T5.district_id\nJOIN dim_state AS T6 ON T5.state_id = T6.state_id\nWHERE T4.year_value = 2021 AND T1.type_of_area = 'Rural'\nGROUP BY T1.sub_district_name, T1.type_of_area\nORDER BY total_outpatient_visits DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "74ebd19a",
+      "question": "¿Qué 5 subdistritos Rural tuvieron la mayor asistencia ambulatoria alopática total en 2021?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC LIMIT 5",
+      "predicted_sql": "SELECT\n    dim_sub_district.sub_district_name,\n    dim_district.district_name,\n    dim_state.state_name,\n    SUM(fact_outpatient_services.outpatient_attendance_allopathic) AS total_attendance\nFROM dim_sub_district\nJOIN fact_outpatient_services ON dim_sub_district.sub_district_id = fact_outpatient_services.sub_district_id\nJOIN dim_month ON fact_outpatient_services.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nJOIN dim_district ON dim_sub_district.district_id = dim_district.district_id\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nWHERE dim_sub_district.type_of_area = 'Rural'\n    AND dim_year.year_value = 2021\nGROUP BY\n    dim_sub_district.sub_district_name,\n    dim_district.district_name,\n    dim_state.state_name\nORDER BY total_attendance DESC\nLIMIT 5",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "aab4d36f",
+      "question": "Identifica los 5 principales subdistritos Rural con la mayor asistencia ambulatoria alopática total para el año 2021.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC LIMIT 5",
+      "predicted_sql": "SELECT\n    dim_sub_district.sub_district_name,\n    dim_district.district_name,\n    dim_state.state_name,\n    SUM(fact_outpatient_services.outpatient_attendance_allopathic) AS total_asistencia\nFROM",
+      "error_info": "syntax error at end of input\nLINE 6: FROM\n            ^\n"
+    },
+    {
+      "instance_id": "9475afba",
+      "question": "¿Qué cinco subdistritos Rural registraron la mayor asistencia ambulatoria alopática total durante el año 2021?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC LIMIT 5",
+      "predicted_sql": "SELECT\n    dim_sub_district.sub_district_name,\n    dim_district.district_name,\n    dim_state.state_name,\n    SUM(fact_outpatient_services.outpatient_attendance_allopathic) AS total_attendance\nFROM dim_sub_district\nJOIN dim_district ON dim_sub_district.district_id = dim_district.district_id\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nJOIN fact_outpatient_services ON dim_sub_district.sub_district_id = fact_outpatient_services.sub_district_id\nJOIN dim_month ON fact_outpatient_services.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_sub_district.type_of_area = 'Rural'\n    AND dim_year.year_value = 2021\nGROUP BY\n    dim_sub_district.sub_district_name,\n    dim_district.district_name,\n    dim_state.state_name\nORDER BY total_attendance DESC\nLIMIT 5",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "30643449",
+      "question": "Clasifica los subdistritos y sus tipos de área por el volumen total de asistencia ambulatoria alopática registrado durante todo el año 2021, comenzando por el más alto.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+      "predicted_sql": "SELECT T1.sub_district_name,\n       T1.type_of_area,\n       SUM(T2.outpatient_attendance_allopathic) AS total_attendance\nFROM dim_sub_district AS T1\nJOIN fact_outpatient_services AS T2 ON T1.sub_district_id = T2.sub_district_id\nJOIN dim_month AS T3 ON T2.month_id = T3.month_id\nJOIN dim_year AS T4 ON T3.year_id = T4.year_id\nWHERE T4.year_value = 2021\n  AND T1.type_of_area = 'Urban'\nGROUP BY T1.sub_district_name\nORDER BY total_attendance DESC",
+      "error_info": "column \"t1.type_of_area\" must appear in the GROUP BY clause or be used in an aggregate function\nLINE 2:        T1.type_of_area,\n               ^\n"
+    },
+    {
+      "instance_id": "9a414d70",
+      "question": "Identifica los subdistritos Rural que registraron asistencia ambulatoria alopática en 2022, excluyendo cualquier subdistrito que también tenga áreas Urban con asistencia reportada para ese mismo año.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2022' AND T1.TYPE_OF_AREA = 'Rural' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 0 EXCEPT SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2022' AND T1.TYPE_OF_AREA = 'Urban' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 0",
+      "predicted_sql": "SELECT DISTINCT dim_sub_district.sub_district_name\nFROM dim_sub_district\nJOIN fact_outpatient_services ON dim_sub_district.sub_district_id = fact_outpatient_services.sub_district_id\nJOIN dim_month ON fact_outpatient_services.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_sub_district.type_of_area = 'Rural'\n  AND dim_year.year_value = 2022\n  AND dim_sub_district.sub_district_id NOT IN (\n    SELECT DISTINCT dim_sub_district.sub_district_id\n    FROM dim_sub_district\n    WHERE dim_sub_district.type_of_area = 'Urban'\n      AND EXISTS (\n        SELECT 1\n        FROM fact_outpatient_services\n        JOIN dim_month ON fact_outpatient_services.month_id = dim_month.month_id\n        JOIN dim_year ON dim_month.year_id = dim_year.year_id\n        WHERE fact_outpatient_services.sub_district_id = dim_sub_district.sub_district_id\n          AND dim_year.year_value = 2022\n      )\n  )\nORDER BY dim_sub_district.sub_district_name",
+      "error_info": null
+    },
+    {
+      "instance_id": "a155bbe3",
+      "question": "Identifica los subdistritos que reportaron servicios ambulatorios tanto en áreas Rural como Urban durante el año 2021.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' AND T1.TYPE_OF_AREA IN ('Rural', 'Urban') GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(DISTINCT T1.TYPE_OF_AREA) = 2",
+      "predicted_sql": "SELECT DISTINCT ds.sub_district_name\nFROM dim_sub_district ds\nJOIN fact_outpatient_services fos ON ds.sub_district_id = fos.sub_district_id\nJOIN dim_month dm ON fos.month_id = dm.month_id\nJOIN dim_year dy ON dm.year_id = dy.year_id\nWHERE dy.year_value = 2021\n  AND ds.type_of_area IN ('Rural', 'Urban')\nGROUP BY ds.sub_district_name\nHAVING COUNT(DISTINCT ds.type_of_area) = 2\nORDER BY ds.sub_district_name",
+      "error_info": null
+    },
+    {
+      "instance_id": "1ad8e26d",
+      "question": "Para el año 2021, muestra las cifras de inmunización de Vitamina A (Dosis 1) y Rotavirus (Dosis 1) para todos los subdistritos Rural.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T2.VITAMIN_A_DOSE_1, T2.ROTAVIRUS_1 FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021';",
+      "predicted_sql": "SELECT\n    dim_sub_district.sub_district_name,\n    SUM(fact_child_immunization_specialized.vitamin_a_dose_1) as total_vitamin_a_dose_1,\n    SUM(fact_child_immunization_specialized.rotavirus_1) as total_rotavirus_1\nFROM fact_child_immunization_specialized\nJOIN dim_sub_district ON fact_child_immunization_specialized.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_child_immunization_specialized.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_sub_district.type_of_area = 'Rural'\n    AND dim_year.year_value = 2021\n    AND dim_sub_district.sub_district_name IN (\n        SELECT sub_district_name\n        FROM dim_sub_district\n        GROUP BY sub_district_name\n        HAVING COUNT(DISTINCT type_of_area) = 2\n           AND SUM(CASE WHEN type_of_area = 'Urban' THEN 1 ELSE 0 END) > 0\n           AND SUM(CASE WHEN type_of_area = 'Rural' THEN 1 ELSE 0 END) > 0\n    )\nGROUP BY dim_sub_district.sub_district_name\nORDER BY dim_sub_district.sub_district_name",
+      "error_info": null
+    },
+    {
+      "instance_id": "25898ee1",
+      "question": "Clasifica los subdistritos Rural por sus recuentos totales de la primera dosis de vitamina A para 2021, mostrando también el número promedio de primeras vacunaciones contra Rotavirus para cada uno.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.VITAMIN_A_DOSE_1), AVG(T2.ROTAVIRUS_1) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.VITAMIN_A_DOSE_1) DESC",
+      "predicted_sql": "SELECT ds.sub_district_name,\n       SUM(fcis.vitamin_a_dose_1) AS total_vitamin_a_dose_1,\n       AVG(fcis.rotavirus_1) AS avg_rotavirus_1\nFROM dim_sub_district ds\nJOIN fact_child_immunization_specialized fcis\n  ON ds.sub_district_id = fcis.sub_district_id\nJOIN dim_month dm\n  ON fcis.month_id = dm.month_id\nJOIN dim_year dy\n  ON dm.year_id = dy.year_id\nWHERE ds.type_of_area = 'Rural'\n  AND dy.year_value = 2021\n  AND EXISTS (\n    SELECT 1\n    FROM dim_sub_district ds_urban\n    WHERE ds_urban.sub_district_name = ds.sub_district_name\n      AND ds_urban.type_of_area = 'Urban'\n  )\n  AND EXISTS (\n    SELECT 1\n    FROM fact_outpatient_services fos\n    WHERE fos.sub_district_id = ds.sub_district_id\n  )\n  AND EXISTS (\n    SELECT 1\n    FROM fact_child_immunization_routine fcir\n    WHERE fcir.sub_district_id = ds.sub_district_id\n  )\nGROUP BY ds.sub_district_id, ds.sub_district_name\nORDER BY ds.sub_district_name ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "c14dc01c",
+      "question": "Proporcione un desglose de los recuentos totales de Rotavirus 1 y Vitamin A Dose 1 por tipo de área para el año 2021.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.TYPE_OF_AREA, SUM(T2.ROTAVIRUS_1), SUM(T2.VITAMIN_A_DOSE_1) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.TYPE_OF_AREA",
+      "predicted_sql": "SELECT dim_sub_district.type_of_area,\n       SUM(fact_child_immunization_specialized.rotavirus_1) AS total_rotavirus_1,\n       SUM(fact_child_immunization_specialized.vitamin_a_dose_1) AS total_vitamin_a_dose_1\nFROM fact_child_immunization_specialized\nJOIN dim_sub_district ON fact_child_immunization_specialized.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_child_immunization_specialized.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\nGROUP BY dim_sub_district.type_of_area",
+      "error_info": null
+    },
+    {
+      "instance_id": "f7d961ca",
+      "question": "Clasifica los subdistritos por el número total de suplementos de vitamina A de primera dosis administrados durante todo el año 2021, comenzando por el más alto.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.VITAMIN_A_DOSE_1) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.VITAMIN_A_DOSE_1) DESC",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name, SUM(fact_child_immunization_specialized.vitamin_a_dose_1) AS total_vitamin_a_dose_1\nFROM fact_child_immunization_specialized\nJOIN dim_sub_district ON fact_child_immunization_specialized.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_district ON dim_sub_district.district_id = dim_district.district_id\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nJOIN dim_month ON fact_child_immunization_specialized.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\n  AND dim_state.state_name = 'Andaman And Nicobar Islands'\n  AND dim_sub_district.type_of_area = 'Rural'\nGROUP BY dim_sub_district.sub_district_name, dim_sub_district.sub_district_id\nORDER BY SUM(fact_child_immunization_specialized.vitamin_a_dose_1) DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "ede0a331",
+      "question": "Clasifica los subdistritos por el número total de suplementos de vitamina A de primera dosis administrados durante el año 2021, comenzando con el más alto.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.VITAMIN_A_DOSE_1) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.VITAMIN_A_DOSE_1) DESC",
+      "predicted_sql": "SELECT\n    dim_sub_district.sub_district_name,\n    SUM(fact_child_immunization_specialized.vitamin_a_dose_1) AS total_vitamin_a_dose_1\nFROM fact_child_immunization_specialized\nJOIN dim_sub_district ON fact_child_immunization_specialized.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_district ON dim_sub_district.district_id = dim_district.district_id\nJOIN dim_state ON dim_district.state_id = dim_state.state_id\nJOIN dim_month ON fact_child_immunization_specialized.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\n    AND dim_state.country_id = 1\n    AND dim_sub_district.type_of_area = 'Rural'\nGROUP BY dim_sub_district.sub_district_name\nORDER BY total_vitamin_a_dose_1 DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "4854d484",
+      "question": "¿Qué 5 subdistritos Rural registraron el mayor número total de inmunizaciones de dosis 3 de rotavirus en 2021?",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.ROTAVIRUS_3) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.ROTAVIRUS_3) DESC LIMIT 5",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name, SUM(fact_child_immunization_specialized.rotavirus_3) AS total_rotavirus_3\nFROM fact_child_immunization_specialized\nJOIN dim_sub_district ON fact_child_immunization_specialized.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_child_immunization_specialized.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_sub_district.type_of_area = 'Rural' AND dim_year.year_value = 2021\nGROUP BY dim_sub_district.sub_district_id, dim_sub_district.sub_district_name\nORDER BY total_rotavirus_3 DESC\nLIMIT 5",
+      "error_info": null
+    },
+    {
+      "instance_id": "a0539a3a",
+      "question": "¿Qué 5 subdistritos Rural registraron el mayor número total de inmunizaciones de Rotavirus 3 en 2021?",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.ROTAVIRUS_3) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.ROTAVIRUS_3) DESC LIMIT 5",
+      "predicted_sql": "SELECT\n    dim_sub_district.sub_district_name,\n    SUM(fact_child_immunization_specialized.rotavirus_3) AS total_rotavirus_3\nFROM fact_child_immunization_specialized\nJOIN dim_sub_district ON fact_child_immunization_specialized.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_child_immunization_specialized.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_sub_district.type_of_area = 'Rural'\n    AND dim_year.year_value = 2021\nGROUP BY dim_sub_district.sub_district_name\nORDER BY total_rotavirus_3 DESC\nLIMIT 5",
+      "error_info": null
+    },
+    {
+      "instance_id": "808a7a77",
+      "question": "¿Qué subdistritos reportaron al menos una primera dosis de la vacuna contra el Rotavirus pero 0 terceras dosis durante el año 2021?",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.ROTAVIRUS_1) > 0 AND SUM(T2.ROTAVIRUS_3) = 0",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name\nFROM fact_child_immunization_specialized\nJOIN dim_sub_district ON fact_child_immunization_specialized.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_child_immunization_specialized.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\nGROUP BY dim_sub_district.sub_district_name\nHAVING SUM(fact_child_immunization_specialized.rotavirus_1) >= 1\n   AND SUM(fact_child_immunization_specialized.rotavirus_3) = 0",
+      "error_info": null
+    },
+    {
+      "instance_id": "d8f0dfd8",
+      "question": "¿Qué subdistritos registraron más de 500 dosis tanto de Vitamina A (Dosis 1) como de Rotavirus (Dosis 1) durante el año 2022?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2022' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.VITAMIN_A_DOSE_1) > 500 AND SUM(T2.ROTAVIRUS_1) > 500",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name,\n       SUM(fact_child_immunization_specialized.vitamin_a_dose_1) as total_vitamin_a_dose_1,\n       SUM(fact_child_immunization_specialized.rotavirus_1) as total_rotavirus_1\nFROM fact_child_immunization_specialized\nJOIN dim_sub_district ON fact_child_immunization_specialized.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_child_immunization_specialized.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2022\nGROUP BY dim_sub_district.sub_district_name\nHAVING SUM(fact_child_immunization_specialized.vitamin_a_dose_1) > 500\n   AND SUM(fact_child_immunization_specialized.rotavirus_1) > 500\nORDER BY dim_sub_district.sub_district_name",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "8bf6dcf9",
+      "question": "Identifica los subdistritos que, en 2021, reportaron ya sea más de 15 inmunizaciones de Rotavirus 1 en áreas Rural o más de 1 administraciones de la primera dosis de vitamina A en áreas Urban, ordenados alfabéticamente.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' AND ( (T1.TYPE_OF_AREA = 'Rural' AND T2.ROTAVIRUS_1 > 15.0000000000000000) OR (T1.TYPE_OF_AREA = 'Urban' AND T2.VITAMIN_A_DOSE_1 > 1.00000000000000000000) ) GROUP BY T1.SUB_DISTRICT_NAME ORDER BY T1.SUB_DISTRICT_NAME ASC",
+      "predicted_sql": "SELECT DISTINCT dim_sub_district.sub_district_name\nFROM dim_sub_district\nJOIN fact_child_immunization_specialized ON dim_sub_district.sub_district_id = fact_child_immunization_specialized.sub_district_id\nJOIN dim_month ON fact_child_immunization_specialized.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\n  AND (\n    (dim_sub_district.type_of_area = 'Rural' AND fact_child_immunization_specialized.rotavirus_1 > 15)\n    OR\n    (dim_sub_district.type_of_area = 'Urban' AND fact_child_immunization_specialized.vitamin_a_dose_1 > 1)\n  )\nORDER BY dim_sub_district.sub_district_name ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "60b35c55",
+      "question": "Proporcione los ID de inmunización y los conteos de niños mayores de 10 años que recibieron las vacunas TT10 o TD10 en áreas Rural durante 2021, ordenados por el número de niños vacunados.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.IMMUNIZATION_ADOLESCENT_ID, T1.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 FROM FACT_CHILD_IMMUNIZATION_ADOLESCENT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T1.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T2.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' AND T1.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 > 0 ORDER BY T1.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10",
+      "predicted_sql": "SELECT fact_child_immunization_adolescent.immunization_adolescent_id,\n       SUM(fact_child_immunization_adolescent.children_more_than_10_years_tt10_td10) AS total_vaccinated\nFROM fact_child_immunization_adolescent\nJOIN dim_sub_district ON fact_child_immunization_adolescent.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_child_immunization_adolescent.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_sub_district.type_of_area = 'Rural' AND dim_year.year_value = 2021\nGROUP BY fact_child_immunization_adolescent.immunization_adolescent_id\nORDER BY total_vaccinated DESC",
+      "error_info": "operator does not exist: character varying > integer\nLINE 1: ...021' AND T1.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 > 0 ORDER ...\n                                                             ^\nHINT:  No operator matches the given name and argument types. You might need to add explicit type casts.\n"
+    },
+    {
+      "instance_id": "2bb22b3e",
+      "question": "Para el año 2021, proporcione el recuento total de niños mayores de 10 y 16 años que recibieron inmunizaciones, desglosado por subdistrito y tipo de área.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA, SUM(T2.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 + T2.CHILDREN_MORE_THAN_16_YEARS_TT16_TD16) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_ADOLESCENT AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name, dim_sub_district.type_of_area,\n       SUM(fact_child_immunization_adolescent.children_more_than_10_years_tt10_td10) +\n       SUM(fact_child_immunization_adolescent.children_more_than_16_years_tt16_td16) AS total_children_immunized\nFROM fact_child_immunization_adolescent\nJOIN dim_sub_district ON fact_child_immunization_adolescent.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_child_immunization_adolescent.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\nGROUP BY dim_sub_district.sub_district_id, dim_sub_district.type_of_area",
+      "error_info": "operator does not exist: character varying + character varying\nLINE 1: ...REA, SUM(T2.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 + T2.CHILD...\n                                                             ^\nHINT:  No operator matches the given name and argument types. You might need to add explicit type casts.\n"
+    },
+    {
+      "instance_id": "5eeed748",
+      "question": "Proporcione un desglose del número total de niños mayores de 10 y 16 años que recibieron inmunizaciones en 2021, categorizado por subdistrito y tipo de área.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA, SUM(T2.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 + T2.CHILDREN_MORE_THAN_16_YEARS_TT16_TD16) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_ADOLESCENT AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA",
+      "predicted_sql": "SELECT\n    dim_sub_district.sub_district_name,\n    dim_sub_district.type_of_area,\n    SUM(fact_child_immunization_adolescent.children_more_than_10_years_tt10_td10) AS total_children_over_10_years,\n    SUM(fact_child_immunization_adolescent.children_more_than_16_years_tt16_td16) AS total_children_over_16_years\nFROM fact_child_immunization_adolescent\nJOIN dim_sub_district ON fact_child_immunization_adolescent.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_child_immunization_adolescent.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\nGROUP BY\n    dim_sub_district.sub_district_id,\n    dim_sub_district.sub_district_name,\n    dim_sub_district.type_of_area\nORDER BY dim_sub_district.sub_district_name",
+      "error_info": "operator does not exist: character varying + character varying\nLINE 1: ...REA, SUM(T2.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 + T2.CHILD...\n                                                             ^\nHINT:  No operator matches the given name and argument types. You might need to add explicit type casts.\n"
+    },
+    {
+      "instance_id": "e24c7b37",
+      "question": "Clasifique los subdistritos por el número total de niños mayores de 10 y 16 años que recibieron inmunizaciones para adolescentes en 2021, excluyendo aquellos sin registros.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 + T2.CHILDREN_MORE_THAN_16_YEARS_TT16_TD16) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_ADOLESCENT AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 + T2.CHILDREN_MORE_THAN_16_YEARS_TT16_TD16) > 0 ORDER BY SUM(T2.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 + T2.CHILDREN_MORE_THAN_16_YEARS_TT16_TD16) DESC",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name,\n       SUM(fact_child_immunization_adolescent.children_more_than_10_years_tt10_td10 +\n           fact_child_immunization_adolescent.children_more_than_16_years_tt16_td16) AS total_immunizations\nFROM fact_child_immunization_adolescent\nJOIN dim_sub_district ON fact_child_immunization_adolescent.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_child_immunization_adolescent.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\nGROUP BY dim_sub_district.sub_district_name\nHAVING SUM(fact_child_immunization_adolescent.children_more_than_10_years_tt10_td10 +\n           fact_child_immunization_adolescent.children_more_than_16_years_tt16_td16) > 0\nORDER BY total_immunizations DESC",
+      "error_info": "operator does not exist: character varying + character varying\nLINE 1: ...AME, SUM(T2.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 + T2.CHILD...\n                                                             ^\nHINT:  No operator matches the given name and argument types. You might need to add explicit type casts.\n"
+    },
+    {
+      "instance_id": "52abe7b3",
+      "question": "¿Qué cinco subdistritos Rural tuvieron el mayor número de niños mayores de 10 años que recibieron inmunizaciones en 2021?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_ADOLESCENT AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10) DESC LIMIT 5",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name,\n       SUM(fact_child_immunization_adolescent.children_more_than_10_years_tt10_td10) as total_immunizations\nFROM fact_child_immunization_adolescent\nJOIN dim_sub_district ON fact_child_immunization_adolescent.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_child_immunization_adolescent.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_sub_district.type_of_area = 'Rural'\n  AND dim_year.year_value = 2021\nGROUP BY dim_sub_district.sub_district_name\nORDER BY total_immunizations DESC\nLIMIT 5",
+      "error_info": "function sum(character varying) does not exist\nLINE 1: SELECT T1.SUB_DISTRICT_NAME, SUM(T2.CHILDREN_MORE_THAN_10_YE...\n                                     ^\nHINT:  No function matches the given name and argument types. You might need to add explicit type casts.\n"
+    },
+    {
+      "instance_id": "3315046b",
+      "question": "Identifica los subdistritos y sus tipos de área donde más de 34 niños mayores de 10 años recibieron su primera dosis de la vacuna TT o TD durante September, 2020.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_ADOLESCENT AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T2.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 > 34.0000000000000000 AND T3.MONTH_NAME = 'September, 2020' AND T4.YEAR_VALUE = '2020'",
+      "predicted_sql": "SELECT\n    dim_sub_district.sub_district_name,\n    dim_sub_district.type_of_area\nFROM fact_child_immunization_adolescent\nJOIN dim_sub_district ON fact_child_immunization_adolescent.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_child_immunization_adolescent.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_month.month_name = 'September'\n    AND dim_year.year_value = 2020\n    AND fact_child_immunization_adolescent.children_more_than_10_years_tt10_td10 > 34",
+      "error_info": "operator does not exist: character varying > numeric\nLINE 1: ...ID WHERE T2.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 > 34.00000...\n                                                             ^\nHINT:  No operator matches the given name and argument types. You might need to add explicit type casts.\n"
+    },
+    {
+      "instance_id": "cc5153b4",
+      "question": "Identifica los subdistritos que reportaron al menos un niño mayor de cinco años que recibió el segundo refuerzo de DPT en 2021, específicamente tanto en áreas rurales como urbanas.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_ADOLESCENT AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T2.CHILDREN_MORE_THAN_5_YEARS_DPT_5_2ND_BOOSTER > 0.00000000000000000000 AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(DISTINCT T1.TYPE_OF_AREA) = 2",
+      "predicted_sql": "SELECT DISTINCT dim_sub_district.sub_district_name\nFROM fact_child_immunization_adolescent\nJOIN dim_sub_district ON fact_child_immunization_adolescent.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_child_immunization_adolescent.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\n  AND fact_child_immunization_adolescent.children_more_than_5_years_dpt_5_2nd_booster > 0\n  AND dim_sub_district.type_of_area IN ('rural', 'urban')",
+      "error_info": "operator does not exist: character varying > numeric\nLINE 1: ...E T2.CHILDREN_MORE_THAN_5_YEARS_DPT_5_2ND_BOOSTER > 0.000000...\n                                                             ^\nHINT:  No operator matches the given name and argument types. You might need to add explicit type casts.\n"
+    },
+    {
+      "instance_id": "e7cbc219",
+      "question": "Identifica los subdistritos que registraron al menos un niño que recibió el segundo refuerzo de DPT (DPT 5) en 2021 tanto en las áreas Rural como Urban.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_ADOLESCENT AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' AND T2.CHILDREN_MORE_THAN_5_YEARS_DPT_5_2ND_BOOSTER > 0 AND T1.TYPE_OF_AREA IN ('Rural', 'Urban') GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(DISTINCT T1.TYPE_OF_AREA) = 2",
+      "predicted_sql": "SELECT DISTINCT T1.sub_district_name\nFROM fact_child_immunization_adolescent AS F\nJOIN dim_sub_district AS T1 ON F.sub_district_id = T1.sub_district_id\nJOIN dim_month AS T2 ON F.month_id = T2.month_id\nJOIN dim_year AS T3 ON T2.year_id = T3.year_id\nWHERE T3.year_value = 2021\n  AND F.children_more_than_5_years_dpt_5_2nd_booster > 0\n  AND T1.type_of_area IN ('Rural', 'Urban')\nGROUP BY T1.sub_district_name\nHAVING COUNT(DISTINCT T1.type_of_area) = 2\nORDER BY T1.sub_district_name",
+      "error_info": "operator does not exist: character varying > integer\nLINE 1: ...D T2.CHILDREN_MORE_THAN_5_YEARS_DPT_5_2ND_BOOSTER > 0 AND T1...\n                                                             ^\nHINT:  No operator matches the given name and argument types. You might need to add explicit type casts.\n"
+    },
+    {
+      "instance_id": "21c83e12",
+      "question": "Identifica los subdistritos que registraron al menos un niño que recibió el segundo refuerzo de DPT (después de los 5 años) en 2021 tanto en áreas urbanas como rurales, enumerados alfabéticamente.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_ADOLESCENT AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' AND T2.CHILDREN_MORE_THAN_5_YEARS_DPT_5_2ND_BOOSTER > 0 GROUP BY T1.SUB_DISTRICT_NAME HAVING COUNT(DISTINCT T1.TYPE_OF_AREA) = 2 ORDER BY T1.SUB_DISTRICT_NAME ASC",
+      "predicted_sql": "SELECT DISTINCT\n    T2.sub_district_id,\n    T2.sub_district_name,\n    T2.type_of_area\nFROM fact_child_immunization_adolescent AS T1\nJOIN dim_sub_district AS T2 ON T1.sub_district_id = T2.sub_district_id\nJOIN dim_month AS T3 ON T1.month_id = T3.month_id\nJOIN dim_year AS T4 ON T3.year_id = T4.year_id\nWHERE T4.year_value = 2021\n  AND T1.children_more_than_5_years_dpt_5_2nd_booster >= 1\n  AND T2.type_of_area IN ('Urban', 'Rural')\nGROUP BY T2.sub_district_id, T2.sub_district_name\nHAVING COUNT(DISTINCT T2.type_of_area) = 2\nORDER BY T2.sub_district_name ASC",
+      "error_info": "operator does not exist: character varying > integer\nLINE 1: ...D T2.CHILDREN_MORE_THAN_5_YEARS_DPT_5_2ND_BOOSTER > 0 GROUP ...\n                                                             ^\nHINT:  No operator matches the given name and argument types. You might need to add explicit type casts.\n"
+    },
+    {
+      "instance_id": "3a8774a9",
+      "question": "Identifica los subdistritos que en 2021 o bien reportaron más de 34.0 niños mayores de 10 años que recibieron su inmunización TT10/TD10, o bien son áreas Urban con más de 1.0 niño mayor de 16 años que recibió su dosis TT16/TD16.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_CHILD_IMMUNIZATION_ADOLESCENT AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE (T4.YEAR_VALUE = '2021' AND T2.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 > 34.0) OR (T1.TYPE_OF_AREA = 'Urban' AND T4.YEAR_VALUE = '2021' AND T2.CHILDREN_MORE_THAN_16_YEARS_TT16_TD16 > 1.0) GROUP BY T1.SUB_DISTRICT_NAME",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name\nFROM fact_child_immunization_adolescent\nJOIN dim_sub_district ON fact_child_immunization_adolescent.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_child_immunization_adolescent.month_id = dim_month.month_id\nWHERE dim_month.year_id IN (SELECT year_id FROM dim_year WHERE year_value = 2021)\nGROUP BY dim_sub_district.sub_district_id, dim_sub_district.sub_district_name\nHAVING SUM(fact_child_immunization_adolescent.children_more_than_10_years_tt10_td10) > 34.0\n    OR (dim_sub_district.type_of_area = 'Urban' AND SUM(fact_child_immunization_adolescent.children_more_than_16_years_tt16_td16) > 1.0)",
+      "error_info": "operator does not exist: character varying > numeric\nLINE 1: ...021' AND T2.CHILDREN_MORE_THAN_10_YEARS_TT10_TD10 > 34.0) OR...\n                                                             ^\nHINT:  No operator matches the given name and argument types. You might need to add explicit type casts.\n"
+    },
+    {
+      "instance_id": "ebc5f112",
+      "question": "Enumera los nombres y los ID de distrito de todos los subdistritos Rural.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT SUB_DISTRICT_NAME, DISTRICT_ID FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Rural';",
+      "predicted_sql": "SELECT ds.sub_district_name, dd.district_id, dd.district_name\nFROM dim_sub_district ds\nJOIN dim_district dd ON ds.district_id = dd.district_id\nWHERE ds.type_of_area = 'Rural'\nORDER BY dd.district_name, ds.sub_district_name",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "158cea0b",
+      "question": "Proporcione los ID y nombres de todos los subdistritos Rural, incluyendo los ID de sus distritos padre.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.SUB_DISTRICT_ID, T2.SUB_DISTRICT_NAME, T2.DISTRICT_ID FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T2.TYPE_OF_AREA = 'Rural';",
+      "predicted_sql": "SELECT\n    ds.sub_district_id,\n    ds.sub_district_name,\n    ds.district_id,\n    dm.month_value,\n    SUM(fos.outpatient_attendance_allopathic) AS total_outpatient_attendance\nFROM dim_sub_district ds\nJOIN fact_outpatient_services fos ON ds.sub_district_id = fos.sub_district_id\nJOIN dim_month dm ON fos.month_id = dm.month_id\nJOIN dim_year dy ON dm.year_id = dy.year_id\nWHERE ds.type_of_area = 'Rural'\n    AND dy.year_value = 2021\nGROUP BY ds.sub_district_id, ds.sub_district_name, ds.district_id, dm.month_value\nORDER BY ds.sub_district_id, dm.month_value",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "208ad031",
+      "question": "Proporcione un desglose por tipo de área del número total de mujeres embarazadas registradas para atención prenatal y la tasa promedio de mujeres que recibieron cuatro o más chequeos durante 2021.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.TYPE_OF_AREA, SUM(T2.PREGNANT_WOMEN_REGISTERED_FOR_ANC), AVG(T2.PW_RECEIVED_4_OR_MORE_ANC_CHECKUPS) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_ANC_REGISTRATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.TYPE_OF_AREA",
+      "predicted_sql": "SELECT dim_sub_district.type_of_area,\n       SUM(fact_maternal_anc_registration.pregnant_women_registered_for_anc) AS total_registered,\n       AVG(CASE\n           WHEN fact_maternal_anc_registration.pregnant_women_registered_for_anc > 0\n           THEN 1.0 * fact_maternal_anc_registration.pw_received_4_or_more_anc_checkups /\n                fact_maternal_anc_registration.pregnant_women_registered_for_anc\n           ELSE NULL\n       END) AS avg_rate_4_or_more_checkups\nFROM fact_maternal_anc_registration\nJOIN dim_sub_district ON fact_maternal_anc_registration.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_maternal_anc_registration.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\nGROUP BY dim_sub_district.type_of_area",
+      "error_info": null
+    },
+    {
+      "instance_id": "e0b518aa",
+      "question": "¿Qué subdistritos Rural registraron al menos una mujer embarazada que se inscribió para atención prenatal durante el año 2021?",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_ANC_REGISTRATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.PREGNANT_WOMEN_REGISTERED_FOR_ANC) > 0",
+      "predicted_sql": "SELECT DISTINCT T1.sub_district_name\nFROM dim_sub_district AS T1\nJOIN fact_maternal_anc_registration AS T2 ON T1.sub_district_id = T2.sub_district_id\nJOIN dim_month AS T3 ON T2.month_id = T3.month_id\nJOIN dim_year AS T4 ON T3.year_id = T4.year_id\nWHERE T1.type_of_area = 'Rural'\n  AND T4.year_value = 2021\n  AND T2.pregnant_women_registered_for_anc >= 1",
+      "error_info": null
+    },
+    {
+      "instance_id": "0a3e867a",
+      "question": "Enumera los subdistritos Rural que tuvieron más de 10 mujeres embarazadas registradas para atención prenatal en 2021, ordenados del mayor al menor número de registros.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_ANC_REGISTRATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.PREGNANT_WOMEN_REGISTERED_FOR_ANC) > 10 ORDER BY SUM(T2.PREGNANT_WOMEN_REGISTERED_FOR_ANC) DESC",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name\nFROM dim_sub_district\nJOIN fact_maternal_anc_registration\n    ON dim_sub_district.sub_district_id = fact_maternal_anc_registration.sub_district_id\nJOIN dim_month\n    ON fact_maternal_anc_registration.month_id = dim_month.month_id\nJOIN dim_year\n    ON dim_month.year_id = dim_year.year_id\nWHERE dim_sub_district.type_of_area = 'Rural'\n  AND dim_year.year_value = 2021\nGROUP BY dim_sub_district.sub_district_id\nHAVING SUM(fact_maternal_anc_registration.pregnant_women_registered_for_anc) > 10\nORDER BY SUM(fact_maternal_anc_registration.pregnant_women_registered_for_anc) DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "548d5bcd",
+      "question": "Clasifica los subdistritos Urban según el número total de mujeres embarazadas que recibieron cuatro o más controles de atención prenatal durante el año 2021, comenzando por el más alto.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.PW_RECEIVED_4_OR_MORE_ANC_CHECKUPS) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_ANC_REGISTRATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Urban' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.PW_RECEIVED_4_OR_MORE_ANC_CHECKUPS) DESC",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name, SUM(fact_maternal_anc_registration.pw_received_4_or_more_anc_checkups) AS total_checkups\nFROM dim_sub_district\nJOIN fact_maternal_anc_registration ON dim_sub_district.sub_district_id = fact_maternal_anc_registration.sub_district_id\nJOIN dim_month ON fact_maternal_anc_registration.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_sub_district.type_of_area = 'Urban' AND dim_year.year_value = 2021\nGROUP BY dim_sub_district.sub_district_name\nORDER BY total_checkups DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "4015b829",
+      "question": "Clasifica los subdistritos Urban según el número total de mujeres embarazadas que recibieron cuatro o más controles prenatales durante el año 2021, comenzando con el recuento más alto.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T3.PW_RECEIVED_4_OR_MORE_ANC_CHECKUPS) FROM DIM_SUB_DISTRICT AS T1 JOIN DIM_MONTH AS T2 ON T1.SUB_DISTRICT_ID = T1.SUB_DISTRICT_ID JOIN FACT_MATERNAL_ANC_REGISTRATION AS T3 ON T1.SUB_DISTRICT_ID = T3.SUB_DISTRICT_ID JOIN DIM_YEAR AS T4 ON T2.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Urban' AND T4.YEAR_VALUE = '2021' AND T3.MONTH_ID = T2.MONTH_ID GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T3.PW_RECEIVED_4_OR_MORE_ANC_CHECKUPS) DESC",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name, SUM(fact_maternal_anc_registration.pw_received_4_or_more_anc_checkups) as total_pw_4_or_more_anc\nFROM dim_sub_district\nJOIN fact_maternal_anc_registration ON dim_sub_district.sub_district_id = fact_maternal_anc_registration.sub_district_id\nJOIN dim_month ON fact_maternal_anc_registration.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_sub_district.type_of_area = 'Urban'\n  AND dim_year.year_value = 2021\n  AND dim_sub_district.sub_district_id IN (\n      -- Subdistricts with data in 2021\n      SELECT DISTINCT f1.sub_district_id\n      FROM fact_outpatient_services f1\n      JOIN dim_month m1 ON f1.month_id = m1.month_id\n      JOIN dim_year y1 ON m1.year_id = y1.year_id\n      WHERE y1.year_value = 2021\n      INTERSECT\n      -- Subdistricts with data in 2022\n      SELECT DISTINCT f2.sub_district_id\n      FROM fact_outpatient_services f2\n      JOIN dim_month m2 ON f2.month_id = m2.month_id\n      JOIN dim_year y2 ON m2.year_id = y2.year_id\n      WHERE y2.year_value = 2022\n  )\nGROUP BY dim_sub_district.sub_district_name\nORDER BY total_pw_4_or_more_anc DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "8a6f7140",
+      "question": "Identifica los subdistritos y sus tipos de área donde más de 500 mujeres se registraron para atención prenatal dentro de su primer trimestre durante el año 2021.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_ANC_REGISTRATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA HAVING SUM(T2.ANC_REGISTERED_WITHIN_1ST_TRIMESTER) > 500",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name, dim_sub_district.type_of_area\nFROM dim_sub_district\nJOIN fact_maternal_anc_registration ON dim_sub_district.sub_district_id = fact_maternal_anc_registration.sub_district_id\nJOIN dim_month ON fact_maternal_anc_registration.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\nGROUP BY dim_sub_district.sub_district_id, dim_sub_district.sub_district_name, dim_sub_district.type_of_area\nHAVING SUM(fact_maternal_anc_registration.anc_registered_within_1st_trimester) > 500",
+      "error_info": null
+    },
+    {
+      "instance_id": "c440c2e9",
+      "question": "Identifica los subdistritos y sus tipos de área donde se registraron más de 5 inscripciones de atención prenatal dentro del primer trimestre durante el año 2021.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_ANC_REGISTRATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA HAVING SUM(T2.ANC_REGISTERED_WITHIN_1ST_TRIMESTER) > 5",
+      "predicted_sql": "SELECT DISTINCT dim_sub_district.sub_district_name, dim_sub_district.type_of_area\nFROM fact_outpatient_services\nJOIN dim_sub_district ON fact_outpatient_services.sub_district_id = dim_sub_district.sub_district_id\nWHERE fact_outpatient_services.sub_district_id IN (\n    SELECT DISTINCT f1.sub_district_id\n    FROM fact_outpatient_services f1\n    JOIN dim_month m1 ON f1.month_id = m1.month_id\n    JOIN dim_year y1 ON m1.year_id = y1.year_id\n    WHERE y1.year_value = 2021\n    INTERSECT\n    SELECT DISTINCT f2.sub_district_id\n    FROM fact_outpatient_services f2\n    JOIN dim_month m2 ON f2.month_id = m2.month_id\n    JOIN dim_year y2 ON m2.year_id = y2.year_id\n    WHERE y2.year_value = 2022\n)\nORDER BY dim_sub_district.sub_district_name",
+      "error_info": null
+    },
+    {
+      "instance_id": "46d7c26f",
+      "question": "Identifica los subdistritos y sus tipos de área donde se registraron más de 5 inscripciones de atención prenatal dentro del primer trimestre durante el año 2021.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_ANC_REGISTRATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA HAVING SUM(T2.ANC_REGISTERED_WITHIN_1ST_TRIMESTER) > 5",
+      "predicted_sql": "SELECT DISTINCT T1.sub_district_name, T1.type_of_area\nFROM dim_sub_district AS T1\nJOIN fact_maternal_anc_registration AS T2 ON T1.sub_district_id = T2.sub_district_id\nJOIN dim_month AS T3 ON T2.month_id = T3.month_id\nJOIN dim_year AS T4 ON T3.year_id = T4.year_id\nWHERE T4.year_value = 2021\n  AND T2.anc_registered_within_1st_trimester > 5",
+      "error_info": null
+    },
+    {
+      "instance_id": "7b7a0b0d",
+      "question": "Identifica los subdistritos Rural que tuvieron registros maternos de ANC en 2022 pero no registraron ninguno en 2021.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_ANC_REGISTRATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2022' EXCEPT SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_ANC_REGISTRATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021';",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name\nFROM dim_sub_district\nWHERE dim_sub_district.type_of_area = 'Rural'\n  AND dim_sub_district.sub_district_id IN (\n    SELECT fact_maternal_anc_registration.sub_district_id\n    FROM fact_maternal_anc_registration\n    JOIN dim_month ON fact_maternal_anc_registration.month_id = dim_month.month_id\n    JOIN dim_year ON dim_month.year_id = dim_year.year_id\n    WHERE dim_year.year_value = 2022\n      AND fact_maternal_anc_registration.pregnant_women_registered_for_anc > 0\n  )\n  AND dim_sub_district.sub_district_id NOT IN (\n    SELECT fact_maternal_anc_registration.sub_district_id\n    FROM fact_maternal_anc_registration\n    JOIN dim_month ON fact_maternal_anc_registration.month_id = dim_month.month_id\n    JOIN dim_year ON dim_month.year_id = dim_year.year_id\n    WHERE dim_year.year_value = 2021\n      AND fact_maternal_anc_registration.pregnant_women_registered_for_anc > 0\n  )",
+      "error_info": null
+    },
+    {
+      "instance_id": "f43899e2",
+      "question": "Enumera los nombres de los subdistritos Rural, en orden alfabético, donde más de 5000 mujeres embarazadas se han registrado para atención prenatal.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_ANC_REGISTRATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Rural' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.PREGNANT_WOMEN_REGISTERED_FOR_ANC) > 5000 ORDER BY T1.SUB_DISTRICT_NAME",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name\nFROM dim_sub_district\nJOIN fact_maternal_anc_registration ON dim_sub_district.sub_district_id = fact_maternal_anc_registration.sub_district_id\nWHERE dim_sub_district.type_of_area = 'Rural'\nGROUP BY dim_sub_district.sub_district_id\nHAVING SUM(fact_maternal_anc_registration.pregnant_women_registered_for_anc) > 5000\nORDER BY dim_sub_district.sub_district_name ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "075bb6c8",
+      "question": "Identifica todos los subdistritos Rural así como cualquier subdistrito que haya registrado más de 5000 inscripciones de atención prenatal en un solo mes.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 WHERE T1.TYPE_OF_AREA = 'Rural' UNION SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_ANC_REGISTRATION AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID GROUP BY T1.SUB_DISTRICT_NAME, T3.MONTH_NAME HAVING SUM(T2.PREGNANT_WOMEN_REGISTERED_FOR_ANC) > 5000",
+      "predicted_sql": "SELECT DISTINCT ds.sub_district_id, ds.sub_district_name\nFROM dim_sub_district ds\nWHERE ds.type_of_area = 'Rural'\n   OR ds.sub_district_id IN (\n       SELECT sub_district_id\n       FROM fact_maternal_anc_registration\n       WHERE pregnant_women_registered_for_anc > 5000\n   )\nORDER BY ds.sub_district_id",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "b270eebc",
+      "question": "Para el año 2021, proporcione un desglose por tipo de área que muestre el número total de mujeres embarazadas con niveles de hemoglobina por debajo de 11 y el número promedio de pruebas de hemoglobina realizadas.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.TYPE_OF_AREA, SUM(T1.PW_HB_LESS_THAN_11), AVG(T1.HAEMOGLOBIN_TESTS_CONDUCTED) FROM FACT_MATERNAL_HEALTH_TESTING AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T1.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T2.TYPE_OF_AREA",
+      "predicted_sql": "SELECT dim_sub_district.type_of_area,\n       SUM(fact_maternal_health_testing.pw_hb_less_than_11) AS total_pw_low_hb,\n       AVG(fact_maternal_health_testing.haemoglobin_tests_conducted) AS avg_hb_tests\nFROM fact_maternal_health_testing\nJOIN dim_sub_district ON fact_maternal_health_testing.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_maternal_health_testing.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\nGROUP BY dim_sub_district.type_of_area\nORDER BY dim_sub_district.type_of_area",
+      "error_info": null
+    },
+    {
+      "instance_id": "92acc01c",
+      "question": "Para el año 2021, proporcione un desglose por tipo de área del número total de mujeres embarazadas con niveles de hemoglobina por debajo de 11 y el número promedio de pruebas de hemoglobina realizadas, específicamente para las áreas donde el recuento de casos con hemoglobina baja es inferior a 38, ordenado por el total de casos en orden descendente.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.TYPE_OF_AREA, SUM(T2.PW_HB_LESS_THAN_11), AVG(T2.HAEMOGLOBIN_TESTS_CONDUCTED) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_HEALTH_TESTING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T2.PW_HB_LESS_THAN_11 < 38.0000000000000000 AND T4.YEAR_VALUE = '2021' GROUP BY T1.TYPE_OF_AREA ORDER BY SUM(T2.PW_HB_LESS_THAN_11) DESC",
+      "predicted_sql": "SELECT\n    ds.type_of_area,\n    SUM(fmh.pw_hb_less_than_11) AS total_low_hemoglobin_cases,\n    AVG(fmh.haemoglobin_tests_conducted) AS avg_hemoglobin_tests\nFROM fact_maternal_health_testing fmh\nJOIN dim_sub_district ds ON fmh.sub_district_id = ds.sub_district_id\nJOIN dim_month dm ON fmh.month_id = dm.month_id\nJOIN dim_year dy ON dm.year_id = dy.year_id\nWHERE dy.year_value = 2021\nGROUP BY ds.type_of_area\nHAVING SUM(fmh.pw_hb_less_than_11) < 38\nORDER BY total_low_hemoglobin_cases DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "cbb8f4ec",
+      "question": "¿Qué subdistritos Rural reportaron más de 500 casos de mujeres embarazadas con niveles de hemoglobina por debajo de 11 durante el año 2021?",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_HEALTH_TESTING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.PW_HB_LESS_THAN_11) > 500",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name\nFROM fact_maternal_health_testing\nJOIN dim_sub_district ON fact_maternal_health_testing.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_maternal_health_testing.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_sub_district.type_of_area = 'Rural'\n  AND dim_year.year_value = 2021\nGROUP BY dim_sub_district.sub_district_name\nHAVING SUM(fact_maternal_health_testing.pw_hb_less_than_11) > 500\nORDER BY dim_sub_district.sub_district_name",
+      "error_info": null
+    },
+    {
+      "instance_id": "8574cf17",
+      "question": "¿Qué subdistritos Rural reportaron más de 500 mujeres embarazadas con niveles de hemoglobina por debajo de 11 en el año 2021?",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_HEALTH_TESTING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.PW_HB_LESS_THAN_11) > 500",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name\nFROM fact_maternal_health_testing\nJOIN dim_sub_district ON fact_maternal_health_testing.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_maternal_health_testing.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_sub_district.type_of_area = 'Rural'\n  AND dim_year.year_value = 2021\nGROUP BY dim_sub_district.sub_district_name\nHAVING SUM(fact_maternal_health_testing.pw_hb_less_than_11) > 500",
+      "error_info": null
+    },
+    {
+      "instance_id": "77b3cae2",
+      "question": "Proporcione un desglose de los subdistritos y sus tipos de área, mostrando el recuento total de mujeres embarazadas con niveles de hemoglobina por debajo de 11 para el primer año, centrándose solo en los registros donde el recuento es menor que 38 y clasificando los resultados de mayor a menor.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA, SUM(T2.PW_HB_LESS_THAN_11) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_HEALTH_TESTING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID WHERE T3.YEAR_ID = 1 AND T2.PW_HB_LESS_THAN_11 < 38.0000000000000000 GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA ORDER BY SUM(T2.PW_HB_LESS_THAN_11) DESC",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name, dim_sub_district.type_of_area,\n       SUM(fact_maternal_health_testing.pw_hb_less_than_11) AS total_hb_below_11\nFROM fact_maternal_health_testing\nJOIN dim_sub_district ON fact_maternal_health_testing.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_maternal_health_testing.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\n  AND dim_sub_district.type_of_area = 'Rural'\nGROUP BY dim_sub_district.sub_district_id, dim_sub_district.sub_district_name, dim_sub_district.type_of_area\nHAVING SUM(fact_maternal_health_testing.pw_hb_less_than_11) < 38\nORDER BY total_hb_below_11 DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "8447923f",
+      "question": "Identifica los 5 principales subdistritos Rural con el mayor número de mujeres embarazadas registradas con niveles de hemoglobina por debajo de 11 en 2021.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.PW_HB_LESS_THAN_11) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_HEALTH_TESTING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.PW_HB_LESS_THAN_11) DESC LIMIT 5",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name,\n       SUM(fact_maternal_health_testing.pw_hb_less_than_11) AS total_low_hb\nFROM dim_sub_district\nJOIN fact_maternal_health_testing ON dim_sub_district.sub_district_id = fact_maternal_health_testing.sub_district_id\nJOIN fact_outpatient_services ON dim_sub_district.sub_district_id = fact_outpatient_services.sub_district_id\nJOIN dim_month ON fact_maternal_health_testing.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_sub_district.type_of_area = 'Rural'\n  AND dim_year.year_value = 2021\nGROUP BY dim_sub_district.sub_district_id, dim_sub_district.sub_district_name\nHAVING SUM(fact_outpatient_services.outpatient_attendance_allopathic) > 5000\nORDER BY total_low_hb DESC\nLIMIT 5",
+      "error_info": null
+    },
+    {
+      "instance_id": "faf5ea81",
+      "question": "Identifica los subdistritos y sus tipos de área donde menos de 38 mujeres embarazadas tenían niveles de hemoglobina por debajo de 11 en September, 2020, excluyendo las áreas sin casos registrados.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_HEALTH_TESTING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T2.PW_HB_LESS_THAN_11 < 38.0000000000000000 AND T3.MONTH_VALUE = 'September, 2020' AND T4.YEAR_VALUE = '2020' GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA HAVING SUM(T2.PW_HB_LESS_THAN_11) > 0.00000000000000000000",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name, dim_sub_district.type_of_area\nFROM fact_maternal_health_testing\nJOIN dim_sub_district ON fact_maternal_health_testing.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_maternal_health_testing.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_month.month_name = 'September'\n  AND dim_year.year_value = 2020\n  AND fact_maternal_health_testing.pw_hb_less_than_11 < 38\n  AND fact_maternal_health_testing.pw_hb_less_than_11 > 0\nGROUP BY dim_sub_district.sub_district_name, dim_sub_district.type_of_area\nORDER BY dim_sub_district.sub_district_name",
+      "error_info": null
+    },
+    {
+      "instance_id": "11987d35",
+      "question": "Identifica los subdistritos y sus tipos de área donde se registraron más de 5 mujeres embarazadas con niveles de hemoglobina por debajo de 11 durante September, 2020.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_HEALTH_TESTING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T3.MONTH_VALUE = 'September, 2020' AND T4.YEAR_VALUE = '2020' GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA HAVING SUM(T2.PW_HB_LESS_THAN_11) > 5",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name, dim_sub_district.type_of_area\nFROM fact_maternal_health_testing\nJOIN dim_sub_district ON fact_maternal_health_testing.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_maternal_health_testing.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_month.month_name = 'September'\n  AND dim_year.year_value = 2020\nGROUP BY dim_sub_district.sub_district_name, dim_sub_district.type_of_area\nHAVING SUM(fact_maternal_health_testing.pw_hb_less_than_11) > 5",
+      "error_info": null
+    },
+    {
+      "instance_id": "4bb11c24",
+      "question": "¿Qué subdistritos reportaron casos de mujeres embarazadas con niveles de hemoglobina por debajo de 11 en áreas Rural pero no tuvieron tales casos en áreas Urban durante el año 2021?",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_HEALTH_TESTING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(CASE WHEN T1.TYPE_OF_AREA = 'Rural' AND T2.PW_HB_LESS_THAN_11 > 0 THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN T1.TYPE_OF_AREA = 'Urban' AND T2.PW_HB_LESS_THAN_11 > 0 THEN 1 ELSE 0 END) = 0 ORDER BY T1.SUB_DISTRICT_NAME",
+      "predicted_sql": "SELECT DISTINCT dim_sub_district.sub_district_name\nFROM fact_maternal_health_testing\nJOIN dim_sub_district ON fact_maternal_health_testing.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_maternal_health_testing.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\n  AND dim_sub_district.type_of_area = 'Rural'\n  AND fact_maternal_health_testing.pw_hb_less_than_11 > 0\n  AND dim_sub_district.sub_district_id NOT IN (\n    SELECT DISTINCT fact_maternal_health_testing.sub_district_id\n    FROM fact_maternal_health_testing\n    JOIN dim_sub_district ON fact_maternal_health_testing.sub_district_id = dim_sub_district.sub_district_id\n    JOIN dim_month ON fact_maternal_health_testing.month_id = dim_month.month_id\n    JOIN dim_year ON dim_month.year_id = dim_year.year_id\n    WHERE dim_year.year_value = 2021\n      AND dim_sub_district.type_of_area = 'Urban'\n      AND fact_maternal_health_testing.pw_hb_less_than_11 > 0\n  )\nORDER BY dim_sub_district.sub_district_name",
+      "error_info": null
+    },
+    {
+      "instance_id": "dd941ee2",
+      "question": "Identifica los subdistritos que están clasificados como áreas Rural o que han reportado más de 38 mujeres embarazadas con niveles de hemoglobina por debajo de 11.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_HEALTH_TESTING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T2.PW_HB_LESS_THAN_11 > 38.0 OR T1.TYPE_OF_AREA = 'Rural'",
+      "predicted_sql": "SELECT\n    dim_sub_district.sub_district_name,\n    SUM(fact_outpatient_services.outpatient_attendance_allopathic) AS total_attendance\nFROM dim_sub_district\nLEFT JOIN fact_outpatient_services\n    ON dim_sub_district.sub_district_id = fact_outpatient_services.sub_district_id\nLEFT JOIN dim_month\n    ON fact_outpatient_services.month_id = dim_month.month_id\nLEFT JOIN dim_year\n    ON dim_month.year_id = dim_year.year_id\nWHERE dim_sub_district.type_of_area = 'Rural'\n    AND dim_year.year_value = 2021\nGROUP BY dim_sub_district.sub_district_name\nORDER BY total_attendance DESC\nLIMIT 5",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "e425f148",
+      "question": "Identifica todos los subdistritos Rural, destacando específicamente aquellos donde se registraron más de 500 mujeres embarazadas con niveles de hemoglobina por debajo de 11.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_MATERNAL_HEALTH_TESTING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Rural' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.PW_HB_LESS_THAN_11) > 500 UNION SELECT SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT WHERE TYPE_OF_AREA = 'Rural'",
+      "predicted_sql": "SELECT\n    dim_sub_district.sub_district_name,\n    SUM(fact_outpatient_services.outpatient_attendance_allopathic) AS total_attendance\nFROM dim_sub_district\nJOIN fact_outpatient_services\n    ON dim_sub_district.sub_district_id = fact_outpatient_services.sub_district_id\nJOIN dim_month\n    ON fact_outpatient_services.month_id = dim_month.month_id\nJOIN dim_year\n    ON dim_month.year_id = dim_year.year_id\nWHERE dim_sub_district.type_of_area = 'Rural'\n    AND dim_year.year_value = 2021\nGROUP BY dim_sub_district.sub_district_id, dim_sub_district.sub_district_name\nORDER BY total_attendance DESC\nLIMIT 5",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "ac40dd45",
+      "question": "Proporcione una lista alfabética de los subdistritos Rural junto con sus ID de distrito asociados.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.SUB_DISTRICT_NAME, T2.DISTRICT_ID, T1.DISTRICT_ID FROM DIM_DISTRICT AS T1 JOIN DIM_SUB_DISTRICT AS T2 ON T1.DISTRICT_ID = T2.DISTRICT_ID WHERE T2.TYPE_OF_AREA = 'Rural' ORDER BY T2.SUB_DISTRICT_NAME",
+      "predicted_sql": "SELECT ds.sub_district_name, ds.district_id, SUM(fos.outpatient_attendance_allopathic) AS total_outpatient_attendance\nFROM dim_sub_district ds\nJOIN fact_outpatient_services fos ON ds.sub_district_id = fos.sub_district_id\nJOIN dim_month dm ON fos.month_id = dm.month_id\nJOIN dim_year dy ON dm.year_id = dy.year_id\nWHERE ds.type_of_area = 'Rural' AND dy.year_value = 2021\nGROUP BY ds.sub_district_name, ds.district_id\nORDER BY total_outpatient_attendance DESC\nLIMIT 5",
+      "error_info": null
+    },
+    {
+      "instance_id": "a8da6782",
+      "question": "Proporcione un desglose del total de ciclos de píldoras orales y condones distribuidos en 2021, categorizado por el tipo de área.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.TYPE_OF_AREA, SUM(T2.COMBINED_ORAL_PILL_CYCLES_DISTRIBUTED), SUM(T2.CONDOM_PIECES_DISTRIBUTED) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_FAMILY_PLANNING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.TYPE_OF_AREA ORDER BY T1.TYPE_OF_AREA",
+      "predicted_sql": "SELECT\n    dim_sub_district.sub_district_name,\n    dim_sub_district.type_of_area,\n    SUM(fact_family_planning.combined_oral_pill_cycles_distributed) AS total_oral_pill_cycles,\n    SUM(fact_family_planning.condom_pieces_distributed) AS total_condoms\nFROM fact_family_planning\nJOIN dim_sub_district ON fact_family_planning.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_family_planning.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2021\nGROUP BY dim_sub_district.sub_district_name, dim_sub_district.type_of_area\nORDER BY dim_sub_district.sub_district_name",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "0ae728bb",
+      "question": "Proporcione un desglose de los ciclos de píldoras orales y los condones distribuidos en 2021 por tipo de área, clasificados por el volumen de distribución de píldoras para las áreas con distribución activa.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.TYPE_OF_AREA, SUM(T2.COMBINED_ORAL_PILL_CYCLES_DISTRIBUTED), SUM(T2.CONDOM_PIECES_DISTRIBUTED) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_FAMILY_PLANNING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.TYPE_OF_AREA HAVING SUM(T2.COMBINED_ORAL_PILL_CYCLES_DISTRIBUTED) > 0 ORDER BY SUM(T2.COMBINED_ORAL_PILL_CYCLES_DISTRIBUTED) DESC",
+      "predicted_sql": "SELECT dim_sub_district.type_of_area,\n       dim_sub_district.sub_district_name,\n       SUM(fact_family_planning.combined_oral_pill_cycles_distributed) AS total_pill_cycles,\n       SUM(fact_family_planning.condom_pieces_distributed) AS total_condoms,\n       SUM(fact_outpatient_services.outpatient_attendance_allopathic) AS total_outpatient_attendance\nFROM fact_family_planning\nJOIN dim_sub_district ON fact_family_planning.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_family_planning.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nJOIN fact_outpatient_services ON fact_family_planning.sub_district_id = fact_outpatient_services.sub_district_id\n    AND fact_family_planning.month_id = fact_outpatient_services.month_id\nWHERE dim_year.year_value = 2021\nGROUP BY dim_sub_district.type_of_area, dim_sub_district.sub_district_name\nORDER BY SUM(fact_family_planning.combined_oral_pill_cycles_distributed) DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "cc96cd23",
+      "question": "Enumera los subdistritos Rural que han distribuido más de 5000 condones, ordenados del mayor al menor volumen de distribución.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_FAMILY_PLANNING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T1.TYPE_OF_AREA = 'Rural' GROUP BY T1.SUB_DISTRICT_ID, T1.SUB_DISTRICT_NAME HAVING SUM(T2.CONDOM_PIECES_DISTRIBUTED) > 5000 ORDER BY SUM(T2.CONDOM_PIECES_DISTRIBUTED) DESC",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name,\n       SUM(fact_family_planning.condom_pieces_distributed) AS total_condoms\nFROM dim_sub_district\nJOIN fact_family_planning ON dim_sub_district.sub_district_id = fact_family_planning.sub_district_id\nJOIN dim_month ON fact_family_planning.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_sub_district.type_of_area = 'Rural'\n  AND dim_year.year_value = 2021\nGROUP BY dim_sub_district.sub_district_id, dim_sub_district.sub_district_name\nHAVING SUM(fact_family_planning.condom_pieces_distributed) > 5000\nORDER BY total_condoms DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "52be298a",
+      "question": "Identifica los 5 principales subdistritos Rural que distribuyeron el mayor número de ciclos combinados de píldoras orales durante todo el año 2021.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.COMBINED_ORAL_PILL_CYCLES_DISTRIBUTED) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_FAMILY_PLANNING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.COMBINED_ORAL_PILL_CYCLES_DISTRIBUTED) DESC LIMIT 5",
+      "predicted_sql": "SELECT DISTINCT dim_sub_district.sub_district_name,\n       SUM(fact_family_planning.combined_oral_pill_cycles_distributed) as total_pills\nFROM dim_sub_district\nJOIN fact_family_planning ON dim_sub_district.sub_district_id = fact_family_planning.sub_district_id\nJOIN dim_month ON fact_family_planning.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_sub_district.type_of_area = 'Rural'\n  AND dim_year.year_value = 2021\n  AND dim_sub_district.sub_district_id NOT IN (\n      SELECT DISTINCT ds1.sub_district_id\n      FROM dim_sub_district ds1\n      JOIN dim_sub_district ds2 ON ds1.district_id = ds2.district_id\n      JOIN fact_outpatient_services fos ON ds2.sub_district_id = fos.sub_district_id\n      JOIN dim_month dm ON fos.month_id = dm.month_id\n      JOIN dim_year dy ON dm.year_id = dy.year_id\n      WHERE ds2.type_of_area = 'Urban'\n        AND dy.year_value = 2022\n  )\nGROUP BY dim_sub_district.sub_district_name\nORDER BY total_pills DESC\nLIMIT 5",
+      "error_info": null
+    },
+    {
+      "instance_id": "038d92ee",
+      "question": "Identifica los 5 principales subdistritos Rural que distribuyeron el mayor número total de ciclos combinados de píldoras orales durante todo el año 2021.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, SUM(T2.COMBINED_ORAL_PILL_CYCLES_DISTRIBUTED) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_FAMILY_PLANNING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME ORDER BY SUM(T2.COMBINED_ORAL_PILL_CYCLES_DISTRIBUTED) DESC LIMIT 5",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name, SUM(fact_family_planning.combined_oral_pill_cycles_distributed) AS total_pill_cycles\nFROM dim_sub_district\nJOIN fact_family_planning ON dim_sub_district.sub_district_id = fact_family_planning.sub_district_id\nJOIN dim_month ON fact_family_planning.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_sub_district.type_of_area = 'Rural' AND dim_year.year_value = 2021\nGROUP BY dim_sub_district.sub_district_name\nORDER BY total_pill_cycles DESC\nLIMIT 5",
+      "error_info": null
+    },
+    {
+      "instance_id": "6f0e6ed7",
+      "question": "Proporcione una lista clasificada de los subdistritos y sus tipos de área que distribuyeron condones en 2021, mostrando la cantidad total proporcionada para cada uno.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA, SUM(T2.CONDOM_PIECES_DISTRIBUTED) FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_FAMILY_PLANNING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2021' GROUP BY T1.SUB_DISTRICT_NAME, T1.TYPE_OF_AREA HAVING SUM(T2.CONDOM_PIECES_DISTRIBUTED) > 0 ORDER BY SUM(T2.CONDOM_PIECES_DISTRIBUTED) DESC",
+      "predicted_sql": "SELECT DISTINCT\n    ds.sub_district_name,\n    ds.type_of_area,\n    SUM(ff.condom_pieces_distributed) AS total_condoms_distributed\nFROM fact_family_planning ff\nJOIN dim_sub_district ds ON ff.sub_district_id = ds.sub_district_id\nJOIN dim_month dm ON ff.month_id = dm.month_id\nJOIN dim_year dy ON dm.year_id = dy.year_id\nWHERE dy.year_value = 2021\n    AND ff.condom_pieces_distributed IS NOT NULL\n    AND ff.condom_pieces_distributed > 0\n    AND ds.type_of_area IN ('Urban', 'Rural')\nGROUP BY ds.sub_district_name, ds.type_of_area\nORDER BY total_condoms_distributed DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "792156ef",
+      "question": "¿Qué subdistritos distribuyeron ciclos de píldoras anticonceptivas orales combinadas pero no distribuyeron ningún condón durante el año 2022?",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_FAMILY_PLANNING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2022' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.COMBINED_ORAL_PILL_CYCLES_DISTRIBUTED) > 0 AND SUM(T2.CONDOM_PIECES_DISTRIBUTED) = 0",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name\nFROM fact_family_planning\nJOIN dim_sub_district ON fact_family_planning.sub_district_id = dim_sub_district.sub_district_id\nJOIN dim_month ON fact_family_planning.month_id = dim_month.month_id\nJOIN dim_year ON dim_month.year_id = dim_year.year_id\nWHERE dim_year.year_value = 2022\nGROUP BY dim_sub_district.sub_district_id\nHAVING SUM(fact_family_planning.combined_oral_pill_cycles_distributed) > 0\n   AND SUM(fact_family_planning.condom_pieces_distributed) = 0\nORDER BY dim_sub_district.sub_district_name ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "554e01a1",
+      "question": "¿Qué subdistritos distribuyeron ciclos de píldoras anticonceptivas orales combinadas pero no distribuyeron ningún condón durante el año 2022?",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_FAMILY_PLANNING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID JOIN DIM_MONTH AS T3 ON T2.MONTH_ID = T3.MONTH_ID JOIN DIM_YEAR AS T4 ON T3.YEAR_ID = T4.YEAR_ID WHERE T4.YEAR_VALUE = '2022' GROUP BY T1.SUB_DISTRICT_NAME HAVING SUM(T2.COMBINED_ORAL_PILL_CYCLES_DISTRIBUTED) > 0.0000000000000000 AND SUM(T2.CONDOM_PIECES_DISTRIBUTED) = 0.0000000000000000",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name\nFROM dim_sub_district\nWHERE sub_district_id IN (\n    SELECT fact_family_planning.sub_district_id\n    FROM fact_family_planning\n    JOIN dim_month ON fact_family_planning.month_id = dim_month.month_id\n    JOIN dim_year ON dim_month.year_id = dim_year.year_id\n    WHERE dim_year.year_value = 2022\n    GROUP BY fact_family_planning.sub_district_id\n    HAVING SUM(fact_family_planning.combined_oral_pill_cycles_distributed) > 0\n       AND SUM(fact_family_planning.condom_pieces_distributed) = 0\n)",
+      "error_info": null
+    },
+    {
+      "instance_id": "3b902ac4",
+      "question": "Enumera los subdistritos, en orden alfabético, que han distribuido más de 5000 ciclos de píldoras orales o más de 10000 condones.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT_NAME FROM DIM_SUB_DISTRICT AS T1 JOIN FACT_FAMILY_PLANNING AS T2 ON T1.SUB_DISTRICT_ID = T2.SUB_DISTRICT_ID WHERE T2.COMBINED_ORAL_PILL_CYCLES_DISTRIBUTED > 5000 OR T2.CONDOM_PIECES_DISTRIBUTED > 10000 GROUP BY T1.SUB_DISTRICT_NAME ORDER BY T1.SUB_DISTRICT_NAME ASC",
+      "predicted_sql": "SELECT dim_sub_district.sub_district_name\nFROM dim_sub_district\nJOIN fact_family_planning ON dim_sub_district.sub_district_id = fact_family_planning.sub_district_id\nGROUP BY dim_sub_district.sub_district_id, dim_sub_district.sub_district_name\nHAVING SUM(fact_family_planning.combined_oral_pill_cycles_distributed) > 5000\n    OR SUM(fact_family_planning.condom_pieces_distributed) > 10000\nORDER BY dim_sub_district.sub_district_name ASC",
+      "error_info": "Result mismatch"
+    }
+  ]
+}

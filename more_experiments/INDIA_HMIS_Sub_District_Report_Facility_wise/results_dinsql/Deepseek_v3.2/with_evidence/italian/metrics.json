@@ -1,0 +1,909 @@
+{
+  "summary": {
+    "total": 100,
+    "execution_correct": 0,
+    "execution_accuracy": 0.0
+  },
+  "results": [
+    {
+      "instance_id": "9436b588",
+      "question": "Fornisci i dati sulla vaccinazione alla nascita con BCG e OPV per i sotto-distretti rurali delle Isole Andamane e Nicobare.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, T2.BCG_VACCINE, T2.OPV_0_BIRTH_DOSE FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CHILD_IMMUNIZATION_ROUTINE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T1.TYPE_OF_AREA = 'Rural';",
+      "predicted_sql": "SELECT T1.sub_district,\n       SUM(T2.bcg_vaccine) AS total_bcg,\n       SUM(T2.opv_0_birth_dose) AS total_opv_0\nFROM dim_geography AS T1\nJOIN fact_child_immunization_routine AS T2 ON T1.geography_id = T2.geography_id\nWHERE T1.type_of_area = 'Rural'\n  AND T1.state = 'Andaman And Nicobar Islands'\nGROUP BY T1.sub_district",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...ISTRICT, T2.BCG_VACCINE, T2.OPV_0_BIRTH_DOSE FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "6670cfc6",
+      "question": "Fornisci una ripartizione per sottodistretto del totale delle vaccinazioni con dose alla nascita di BCG e OPV somministrate nelle aree rurali delle Isole Andamane e Nicobare.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T2.BCG_VACCINE), SUM(T2.OPV_0_BIRTH_DOSE) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CHILD_IMMUNIZATION_ROUTINE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T1.TYPE_OF_AREA = 'Rural' GROUP BY T1.SUB_DISTRICT ORDER BY T1.SUB_DISTRICT",
+      "predicted_sql": "SELECT dim_geography.sub_district,\n       SUM(fact_child_immunization_routine.bcg_vaccine),\n       SUM(fact_child_immunization_routine.opv_0_birth_dose)\nFROM dim_geography\nJOIN fact_child_immunization_routine ON dim_geography.geography_id = fact_child_immunization_routine.geography_id\nWHERE dim_geography.state = 'Andaman And Nicobar Islands'\n  AND dim_geography.type_of_area = 'Rural'\nGROUP BY dim_geography.sub_district",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...UM(T2.BCG_VACCINE), SUM(T2.OPV_0_BIRTH_DOSE) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "7e9aecde",
+      "question": "Classifica i sub-district Rural di Andaman and Nicobar Islands in base al totale delle vaccinazioni BCG, mostrando i conteggi sia per BCG sia per le dosi di nascita OPV per quelli con almeno una vaccinazione BCG registrata.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T2.BCG_VACCINE), SUM(T2.OPV_0_BIRTH_DOSE) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CHILD_IMMUNIZATION_ROUTINE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T1.TYPE_OF_AREA = 'Rural' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.BCG_VACCINE) > 0.00000000000000000000 ORDER BY SUM(T2.BCG_VACCINE) DESC",
+      "predicted_sql": "SELECT\n    dg.sub_district,\n    SUM(fcir.bcg_vaccine) AS total_bcg_vaccinations,\n    SUM(fcir.opv_0_birth_dose) AS total_opv_birth_doses\nFROM dim_geography dg\nJOIN fact_child_immunization_routine fcir\n    ON dg.geography_id = fcir.geography_id\nWHERE dg.type_of_area = 'Rural'\n    AND dg.state = 'Andaman And Nicobar Islands'\n    AND fcir.bcg_vaccine > 0\nGROUP BY dg.sub_district\nORDER BY SUM(fcir.bcg_vaccine) DESC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...UM(T2.BCG_VACCINE), SUM(T2.OPV_0_BIRTH_DOSE) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "f5fc242c",
+      "question": "Fornisci una suddivisione per stato e tipo di area che mostri il numero totale di vaccinazioni BCG insieme alla media della prima dose del vaccino pentavalente.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.STATE, T1.TYPE_OF_AREA, SUM(T2.BCG_VACCINE), AVG(T2.PENTAVALENT_1) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CHILD_IMMUNIZATION_ROUTINE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE, T1.TYPE_OF_AREA",
+      "predicted_sql": "SELECT\n    SUM(fact_child_immunization_routine.bcg_vaccine),\n    AVG(fact_child_immunization_routine.pentavalent_1),\n    dim_geography.state,\n    dim_geography.type_of_area\nFROM fact_child_immunization_routine\nJOIN dim_geography ON fact_child_immunization_routine.geography_id = dim_geography.geography_id\nGROUP BY dim_geography.state, dim_geography.type_of_area",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ..., SUM(T2.BCG_VACCINE), AVG(T2.PENTAVALENT_1) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "7414d9e6",
+      "question": "Fornisci una ripartizione per stato e tipo di area che mostri il totale delle vaccinazioni BCG e la copertura media della prima dose di Pentavalente.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.STATE, T1.TYPE_OF_AREA, SUM(T2.BCG_VACCINE), AVG(T2.PENTAVALENT_1) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CHILD_IMMUNIZATION_ROUTINE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE, T1.TYPE_OF_AREA ORDER BY T1.STATE ASC",
+      "predicted_sql": "SELECT dim_geography.state,\n       dim_geography.type_of_area,\n       SUM(fact_child_immunization_routine.bcg_vaccine) AS total_bcg_vaccinations,\n       AVG(fact_child_immunization_routine.pentavalent_1) AS avg_pentavalent_1_coverage\nFROM fact_child_immunization_routine\nJOIN dim_geography ON fact_child_immunization_routine.geography_id = dim_geography.geography_id\nGROUP BY dim_geography.state, dim_geography.type_of_area",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ..., SUM(T2.BCG_VACCINE), AVG(T2.PENTAVALENT_1) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "d3a40dbb",
+      "question": "Fornisci una suddivisione per stato e tipo di area in India che mostri il totale delle vaccinazioni BCG e la media della prima dose di Pentavalente, concentrandoti solo sulle località con più registrazioni di immunizzazione.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.STATE, T2.TYPE_OF_AREA, SUM(T1.BCG_VACCINE), AVG(T1.PENTAVALENT_1) FROM FACT_CHILD_IMMUNIZATION_ROUTINE AS T1 INNER JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T2.COUNTRY = 'India' GROUP BY T2.STATE, T2.TYPE_OF_AREA HAVING COUNT(T1.IMMUNIZATION_ROUTINE_ID) > 1 ORDER BY T2.STATE ASC",
+      "predicted_sql": "SELECT dim_geography.state, dim_geography.type_of_area,\n       SUM(fact_child_immunization_routine.bcg_vaccine) AS total_bcg_vaccinations,\n       AVG(fact_child_immunization_routine.pentavalent_1) AS average_pentavalent_first_dose\nFROM dim_geography\nJOIN fact_child_immunization_routine\nON dim_geography.geography_id = fact_child_immunization_routine.geography_id\nWHERE dim_geography.country = 'India'\nGROUP BY dim_geography.state, dim_geography.type_of_area\nHAVING COUNT(fact_child_immunization_routine.geography_id) > 1",
+      "error_info": "relation \"fact_child_immunization_routine\" does not exist\nLINE 1: ..., SUM(T1.BCG_VACCINE), AVG(T1.PENTAVALENT_1) FROM FACT_CHILD...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "32ef4b35",
+      "question": "Quali sottodistretti rurali hanno registrato più di 500 vaccinazioni BCG totali?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CHILD_IMMUNIZATION_ROUTINE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.TYPE_OF_AREA = 'Rural' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.BCG_VACCINE) > 500",
+      "predicted_sql": "SELECT T1.sub_district\nFROM dim_geography AS T1\nJOIN fact_child_immunization_routine AS T2 ON T1.geography_id = T2.geography_id\nWHERE T1.type_of_area = 'Rural'\nGROUP BY T1.sub_district\nHAVING SUM(T2.bcg_vaccine) > 500",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CH...\n                                    ^\n"
+    },
+    {
+      "instance_id": "f1aeb869",
+      "question": "Elenca i sottodistretti rurali in cui sono stati somministrati più di 500 vaccini BCG, ordinati dal totale più alto al più basso.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CHILD_IMMUNIZATION_ROUTINE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.TYPE_OF_AREA = 'Rural' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.BCG_VACCINE) > 500 ORDER BY SUM(T2.BCG_VACCINE) DESC",
+      "predicted_sql": "SELECT T1.sub_district, SUM(T2.bcg_vaccine)\nFROM dim_geography AS T1\nJOIN fact_child_immunization_routine AS T2 ON T1.geography_id = T2.geography_id\nWHERE T1.type_of_area = 'Rural'\nGROUP BY T1.sub_district\nHAVING SUM(T2.bcg_vaccine) > 500\nORDER BY SUM(T2.bcg_vaccine) DESC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CH...\n                                    ^\n"
+    },
+    {
+      "instance_id": "eb2d5b40",
+      "question": "Classifica i sottodistretti in base al totale delle visite ambulatoriali allopatiche, dal più alto al più basso.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.SUB_DISTRICT ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+      "predicted_sql": "SELECT dim_geography.sub_district, SUM(fact_outpatient_services.outpatient_attendance_allopathic) AS total_attendance\nFROM dim_geography\nJOIN fact_outpatient_services ON dim_geography.geography_id = fact_outpatient_services.geography_id\nGROUP BY dim_geography.sub_district\nORDER BY total_attendance DESC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...CT, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "879ca700",
+      "question": "Classifica i sottodistretti in base al totale delle visite ambulatoriali allopatiche, dal più alto al più basso.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.SUB_DISTRICT ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+      "predicted_sql": "SELECT dim_geography.sub_district,\n       SUM(fact_outpatient_services.outpatient_attendance_allopathic) AS total_attendance\nFROM fact_outpatient_services\nJOIN dim_geography ON fact_outpatient_services.geography_id = dim_geography.geography_id\nGROUP BY dim_geography.sub_district\nORDER BY total_attendance DESC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...CT, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "505ec491",
+      "question": "Classifica i sottodistretti in base al totale delle visite ambulatoriali allopatiche, escludendo quelli senza visite registrate.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 0.00000000000000000000 ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+      "predicted_sql": "SELECT T2.sub_district,\n       SUM(T1.outpatient_attendance_allopathic) AS total_attendance\nFROM fact_outpatient_services AS T1\nJOIN dim_geography AS T2 ON T1.geography_id = T2.geography_id\nGROUP BY T2.sub_district\nHAVING SUM(T1.outpatient_attendance_allopathic) > 0\nORDER BY total_attendance DESC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...CT, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "ca81285d",
+      "question": "Quali cinque sottodistretti rurali hanno registrato il numero totale più elevato di vaccinazioni BCG?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T2.BCG_VACCINE) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CHILD_IMMUNIZATION_ROUTINE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.TYPE_OF_AREA = 'Rural' GROUP BY T1.SUB_DISTRICT ORDER BY SUM(T2.BCG_VACCINE) DESC LIMIT 5",
+      "predicted_sql": "SELECT T1.sub_district, SUM(T2.bcg_vaccine) AS total_bcg\nFROM dim_geography AS T1\nJOIN fact_child_immunization_routine AS T2 ON T1.geography_id = T2.geography_id\nWHERE T1.type_of_area = 'Rural'\nGROUP BY T1.sub_district\nORDER BY total_bcg DESC\nLIMIT 5",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT, SUM(T2.BCG_VACCINE) FROM DIM_GEOGRAP...\n                                                         ^\n"
+    },
+    {
+      "instance_id": "6a745934",
+      "question": "Quali cinque sottodistretti rurali hanno registrato il numero totale più elevato di vaccinazioni BCG?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T2.BCG_VACCINE) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CHILD_IMMUNIZATION_ROUTINE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.TYPE_OF_AREA = 'Rural' GROUP BY T1.SUB_DISTRICT ORDER BY SUM(T2.BCG_VACCINE) DESC LIMIT 5",
+      "predicted_sql": "SELECT\n    T1.sub_district,\n    SUM(T2.bcg_vaccine) AS total_bcg_vaccinations\nFROM dim_geography AS T1\nJOIN fact_child_immunization_routine AS T2\n    ON T1.geography_id = T2.geography_id\nWHERE T1.type_of_area = 'Rural'\nGROUP BY T1.sub_district\nORDER BY total_bcg_vaccinations DESC\nLIMIT 5",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT, SUM(T2.BCG_VACCINE) FROM DIM_GEOGRAP...\n                                                         ^\n"
+    },
+    {
+      "instance_id": "b04c5691",
+      "question": "Classifica i sotto-distretti urbani in base al totale delle visite ambulatoriali allopatiche, mostrando sia il numero di visite sia il totale delle vaccinazioni BCG somministrate in ciascuno.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC), SUM(T3.BCG_VACCINE) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CHILD_IMMUNIZATION_ROUTINE AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T1.TYPE_OF_AREA = 'Urban' GROUP BY T1.SUB_DISTRICT ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+      "predicted_sql": "SELECT\n    dim_geography.sub_district,\n    COALESCE(SUM(fact_outpatient_services.outpatient_attendance_allopathic), 0) AS total_outpatient_attendance,\n    COALESCE(SUM(fact_child_immunization_routine.bcg_vaccine), 0) AS total_bcg_vaccinations\nFROM dim_geography\nLEFT JOIN fact_outpatient_services\n    ON dim_geography.geography_id = fact_outpatient_services.geography_id\nLEFT JOIN fact_child_immunization_routine\n    ON dim_geography.geography_id = fact_child_immunization_routine.geography_id\nWHERE dim_geography.type_of_area = 'Urban'\nGROUP BY dim_geography.sub_district\nORDER BY total_outpatient_attendance DESC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ..._ATTENDANCE_ALLOPATHIC), SUM(T3.BCG_VACCINE) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "8f9d1458",
+      "question": "Fornisci una ripartizione del totale delle visite ambulatoriali allopatiche e delle vaccinazioni BCG per ciascun sotto-distretto urbano, ordinata in base al volume più elevato di visite.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC), SUM(T3.BCG_VACCINE) FROM DIM_GEOGRAPHY AS T1 INNER JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN FACT_CHILD_IMMUNIZATION_ROUTINE AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T1.TYPE_OF_AREA = 'Urban' GROUP BY T1.SUB_DISTRICT ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+      "predicted_sql": "SELECT\n    T1.sub_district,\n    COALESCE(SUM(T2.outpatient_attendance_allopathic), 0) +\n    COALESCE(SUM(T3.bcg_vaccine), 0) AS total_volume\nFROM dim_geography AS T1\nLEFT JOIN fact_outpatient_services AS T2\n    ON T1.geography_id = T2.geography_id\nLEFT JOIN fact_child_immunization_routine AS T3\n    ON T1.geography_id = T3.geography_id\nWHERE T1.type_of_area = 'Urban'\nGROUP BY T1.sub_district\nORDER BY total_volume DESC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ..._ATTENDANCE_ALLOPATHIC), SUM(T3.BCG_VACCINE) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "2b2b7b33",
+      "question": "Identifica i sottodistretti che hanno registrato presenze ambulatoriali allopatiche ma non hanno segnalato alcuna vaccinazione BCG.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 0 AND T1.SUB_DISTRICT NOT IN (SELECT T3.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T3 JOIN FACT_CHILD_IMMUNIZATION_ROUTINE AS T4 ON T3.GEOGRAPHY_ID = T4.GEOGRAPHY_ID GROUP BY T3.SUB_DISTRICT HAVING SUM(T4.BCG_VACCINE) > 0) ORDER BY T1.SUB_DISTRICT ASC",
+      "predicted_sql": "SELECT DISTINCT dim_geography.sub_district\nFROM dim_geography\nJOIN fact_outpatient_services\n    ON dim_geography.geography_id = fact_outpatient_services.geography_id\nLEFT JOIN fact_child_immunization_routine\n    ON dim_geography.geography_id = fact_child_immunization_routine.geography_id\n    AND fact_outpatient_services.time_id = fact_child_immunization_routine.time_id\nWHERE fact_outpatient_services.outpatient_attendance_allopathic > 0\n    AND fact_child_immunization_routine.bcg_vaccine IS NULL",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OU...\n                                    ^\n"
+    },
+    {
+      "instance_id": "467d7795",
+      "question": "Quali sotto-distretti hanno registrato più di 5,000 visite ambulatoriali allopatiche e oltre 1,000 vaccinazioni BCG?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CHILD_IMMUNIZATION_ROUTINE AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC > 5000 AND T3.BCG_VACCINE > 1000",
+      "predicted_sql": "SELECT DISTINCT T1.sub_district\nFROM dim_geography AS T1\nJOIN fact_outpatient_services AS T2 ON T1.geography_id = T2.geography_id\nJOIN fact_child_immunization_routine AS T3 ON T1.geography_id = T3.geography_id\n    AND T2.time_id = T3.time_id\nWHERE T2.outpatient_attendance_allopathic > 0\n    AND T3.bcg_vaccine = 0\nGROUP BY T1.sub_district\nHAVING SUM(T2.outpatient_attendance_allopathic) > 5000\n    AND SUM(T3.bcg_vaccine) > 1000",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OU...\n                                    ^\n"
+    },
+    {
+      "instance_id": "eb782162",
+      "question": "Identifica i sottodistretti che hanno registrato più di 5,000 visite ambulatoriali allopatiche e somministrato oltre 1,000 vaccini BCG.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CHILD_IMMUNIZATION_ROUTINE AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 5000 AND SUM(T3.BCG_VACCINE) > 1000",
+      "predicted_sql": "SELECT dim_geography.sub_district\nFROM dim_geography\nWHERE EXISTS (\n    SELECT 1 FROM fact_outpatient_services\n    WHERE fact_outpatient_services.geography_id = dim_geography.geography_id\n    AND fact_outpatient_services.outpatient_attendance_allopathic > 5000\n)\nAND EXISTS (\n    SELECT 1 FROM fact_child_immunization_routine\n    WHERE fact_child_immunization_routine.geography_id = dim_geography.geography_id\n    AND fact_child_immunization_routine.bcg_vaccine > 1000\n)",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OU...\n                                    ^\n"
+    },
+    {
+      "instance_id": "67f309d2",
+      "question": "Identifica i sottodistretti rurali che hanno registrato più di 5,000 visite ambulatoriali allopatiche oppure somministrato oltre 1,000 vaccini BCG.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CHILD_IMMUNIZATION_ROUTINE AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND (T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC > 5000 OR T3.BCG_VACCINE > 1000);",
+      "predicted_sql": "SELECT dim_geography.sub_district\nFROM dim_geography\nJOIN fact_outpatient_services ON dim_geography.geography_id = fact_outpatient_services.geography_id\nJOIN fact_child_immunization_routine ON dim_geography.geography_id = fact_child_immunization_routine.geography_id\nGROUP BY dim_geography.sub_district\nHAVING SUM(fact_outpatient_services.outpatient_attendance_allopathic) > 5000\n   AND SUM(fact_child_immunization_routine.bcg_vaccine) > 1000",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OU...\n                                    ^\n"
+    },
+    {
+      "instance_id": "03bc0f88",
+      "question": "Identifica i sottodistretti rurali che hanno registrato più di 5,000 visite ambulatoriali allopatiche oppure oltre 1,000 vaccinazioni BCG, elencati in ordine alfabetico.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_CHILD_IMMUNIZATION_ROUTINE AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T1.TYPE_OF_AREA = 'Rural' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 5000 OR SUM(T3.BCG_VACCINE) > 1000 ORDER BY T1.SUB_DISTRICT ASC",
+      "predicted_sql": "SELECT dim_geography.sub_district\nFROM dim_geography\nLEFT JOIN fact_outpatient_services ON dim_geography.geography_id = fact_outpatient_services.geography_id\nLEFT JOIN fact_child_immunization_routine ON dim_geography.geography_id = fact_child_immunization_routine.geography_id\nGROUP BY dim_geography.sub_district\nHAVING SUM(fact_outpatient_services.outpatient_attendance_allopathic) > 5000\n    OR SUM(fact_child_immunization_routine.bcg_vaccine) > 1000\nORDER BY dim_geography.sub_district ASC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OU...\n                                    ^\n"
+    },
+    {
+      "instance_id": "7f34598b",
+      "question": "Quali sottodistretti rurali hanno riportato un'affluenza attiva di pazienti ambulatoriali allopatici durante l'anno 2022?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T3.YEAR = '2022' AND T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC > 0",
+      "predicted_sql": "SELECT DISTINCT T1.sub_district\nFROM dim_geography AS T1\nJOIN fact_outpatient_services AS T2 ON T1.geography_id = T2.geography_id\nJOIN fact_child_immunization_routine AS T3 ON T1.geography_id = T3.geography_id\nJOIN dim_time AS T4 ON T2.time_id = T4.time_id\nWHERE T2.outpatient_attendance_allopathic > 5000\n  AND T3.bcg_vaccine > 1000\n  AND T4.year = 2022",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OU...\n                                    ^\n"
+    },
+    {
+      "instance_id": "003ab41d",
+      "question": "Elenca tutti i sottodistretti rurali che hanno registrato almeno una certa affluenza ambulatoriale allopatica durante l'anno 2022, ordinati alfabeticamente.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T3.YEAR = '2022' AND T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC > 0.00000000000000000000 GROUP BY T1.SUB_DISTRICT ORDER BY T1.SUB_DISTRICT ASC",
+      "predicted_sql": "SELECT DISTINCT dim_geography.sub_district\nFROM dim_geography\nLEFT JOIN fact_outpatient_services ON dim_geography.geography_id = fact_outpatient_services.geography_id\nLEFT JOIN fact_child_immunization_routine ON dim_geography.geography_id = fact_child_immunization_routine.geography_id\nWHERE dim_geography.type_of_area = 'Rural'\nAND (\n    (fact_outpatient_services.year = 2022 AND fact_outpatient_services.outpatient_attendance_allopathic > 5000)\n    OR\n    (fact_child_immunization_routine.year = 2022 AND fact_child_immunization_routine.bcg_vaccine > 1000)\n)\nORDER BY dim_geography.sub_district ASC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OU...\n                                    ^\n"
+    },
+    {
+      "instance_id": "00c83cbc",
+      "question": "Fornisci il totale delle presenze ambulatoriali allopatiche per ciascun distretto e tipo di area registrate durante l’anno 2022.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.DISTRICT, T1.TYPE_OF_AREA, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2022' GROUP BY T1.DISTRICT, T1.TYPE_OF_AREA",
+      "predicted_sql": "SELECT\n    dim_geography.sub_district,\n    dim_geography.type_of_area,\n    SUM(fact_outpatient_services.outpatient_attendance_allopathic) AS total_outpatient_attendance\nFROM dim_geography\nJOIN fact_outpatient_services ON dim_geography.geography_id = fact_outpatient_services.geography_id\nJOIN fact_child_immunization_routine ON dim_geography.geography_id = fact_child_immunization_routine.geography_id\nJOIN dim_time ON fact_outpatient_services.time_id = dim_time.time_id\nWHERE dim_time.year = 2022\n    AND dim_geography.type_of_area = 'Rural'\n    AND (fact_outpatient_services.outpatient_attendance_allopathic > 5000\n         OR fact_child_immunization_routine.bcg_vaccine > 1000)\nGROUP BY dim_geography.sub_district, dim_geography.type_of_area\nORDER BY dim_geography.sub_district ASC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...EA, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "afaf1743",
+      "question": "Fornisci una ripartizione del totale delle visite ambulatoriali allopatiche per distretto e tipologia di area per l’anno 2022.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.DISTRICT, T1.TYPE_OF_AREA, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2022' GROUP BY T1.DISTRICT, T1.TYPE_OF_AREA ORDER BY T1.DISTRICT",
+      "predicted_sql": "SELECT sum(T1.outpatient_attendance_allopathic) as total_visits,\n       T2.sub_district,\n       T2.type_of_area\nFROM fact_outpatient_services AS T1\nJOIN dim_geography AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_time AS T3 ON T1.time_id = T3.time_id\nWHERE T3.year = 2022\n  AND T1.outpatient_attendance_allopathic > 0\nGROUP BY T2.sub_district, T2.type_of_area\nORDER BY T2.sub_district, T2.type_of_area",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...EA, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "3cea82f9",
+      "question": "Quali sottodistretti nelle Isole Andamane e Nicobare hanno registrato più di 5,000 visite ambulatoriali allopatiche durante ottobre 2021? Elencali in ordine decrescente di affluenza.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T3.MONTH = 'October, 2021' AND T3.YEAR = '2021' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 5000 ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+      "predicted_sql": "SELECT dim_geography.sub_district,\n       SUM(fact_outpatient_services.outpatient_attendance_allopathic) as total_attendance\nFROM dim_geography\nJOIN fact_outpatient_services ON dim_geography.geography_id = fact_outpatient_services.geography_id\nJOIN dim_time ON fact_outpatient_services.time_id = dim_time.time_id\nWHERE dim_geography.state_union_territory = 'Andaman and Nicobar Islands'\n  AND dim_geography.type_of_area = 'Rural'\n  AND dim_time.year = 2021\n  AND dim_time.month = 'October'\n  AND fact_outpatient_services.outpatient_attendance_allopathic > 0\nGROUP BY dim_geography.sub_district\nHAVING SUM(fact_outpatient_services.outpatient_attendance_allopathic) > 5000\nORDER BY total_attendance DESC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OU...\n                                    ^\n"
+    },
+    {
+      "instance_id": "1ffd35d6",
+      "question": "Classifica i sotto-distretti urbani in base alla loro affluenza ambulatoriale allopatica per l'anno 2022, iniziando da quello con il valore più alto.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.TYPE_OF_AREA = 'Urban' AND T3.YEAR = '2022' ORDER BY T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC DESC",
+      "predicted_sql": "SELECT T1.sub_district, T2.outpatient_attendance_allopathic\nFROM dim_geography AS T1\nJOIN fact_outpatient_services AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_time AS T3 ON T2.time_id = T3.time_id\nWHERE T1.country = 'India'\n  AND T1.type_of_area = 'Rural'\n  AND T3.year = 2022\n  AND T2.outpatient_attendance_allopathic > 0\nORDER BY T2.outpatient_attendance_allopathic DESC, T1.sub_district ASC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OU...\n                                    ^\n"
+    },
+    {
+      "instance_id": "1421ebed",
+      "question": "Classifica i sotto-distretti urbani in base al totale delle visite ambulatoriali allopatiche per l'anno 2022, iniziando dal più alto.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.TYPE_OF_AREA = 'Urban' AND T3.YEAR = '2022' GROUP BY T1.SUB_DISTRICT ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+      "predicted_sql": "SELECT T2.sub_district, SUM(T1.outpatient_attendance_allopathic) AS total_visits\nFROM fact_outpatient_services AS T1\nJOIN dim_geography AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_time AS T3 ON T1.time_id = T3.time_id\nWHERE T3.year = 2022 AND T2.type_of_area = 'Urban'\nGROUP BY T2.sub_district\nORDER BY SUM(T1.outpatient_attendance_allopathic) DESC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...CT, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "2db92e12",
+      "question": "Classifica i sotto-distretti urbani in base al totale delle visite ambulatoriali allopatiche per l'anno 2022, dal più alto al più basso.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T3.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_TIME AS T2 ON T3.TIME_ID = T2.TIME_ID WHERE T1.TYPE_OF_AREA = 'Urban' AND T2.YEAR = '2022' GROUP BY T1.SUB_DISTRICT ORDER BY SUM(T3.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+      "predicted_sql": "SELECT T2.district, T2.type_of_area, SUM(T1.outpatient_attendance_allopathic) AS total_attendance\nFROM fact_outpatient_services AS T1\nJOIN dim_geography AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_time AS T3 ON T1.time_id = T3.time_id\nWHERE T3.year = '2022'\nGROUP BY T2.district, T2.type_of_area\nORDER BY total_attendance DESC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...CT, SUM(T3.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "f42a155d",
+      "question": "Identifica i 5 principali sotto-distretti rurali nelle Isole Andamane e Nicobare con il più alto numero totale di visite ambulatoriali allopatiche per l'anno 2020.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T1.TYPE_OF_AREA = 'Rural' AND T3.YEAR = '2020' GROUP BY T1.SUB_DISTRICT ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC LIMIT 5",
+      "predicted_sql": "SELECT T1.sub_district, SUM(T2.outpatient_attendance_allopathic) AS total_visits\nFROM dim_geography AS T1\nJOIN fact_outpatient_services AS T2 ON T1.geography_key = T2.geography_key\nJOIN dim_time AS T3 ON T3.time_key = T2.time_key\nWHERE T1.state = 'Andaman and Nicobar Islands'\n  AND T1.type_of_area = 'rural'\n  AND T3.year = 2020\nGROUP BY T1.sub_district\nORDER BY total_visits DESC\nLIMIT 5",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OU...\n                                    ^\n"
+    },
+    {
+      "instance_id": "5aef112a",
+      "question": "Identifica i 5 principali sottodistretti rurali nelle Isole Andamane e Nicobare con il più alto numero totale di visite ambulatoriali allopatiche per l'anno 2021.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T3.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_GEOGRAPHY AS T1 JOIN DIM_TIME AS T2 ON T1.GEOGRAPHY_ID = T2.TIME_ID JOIN FACT_OUTPATIENT_SERVICES AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T1.TYPE_OF_AREA = 'Rural' AND T2.YEAR = '2021' GROUP BY T1.SUB_DISTRICT ORDER BY SUM(T3.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC LIMIT 5",
+      "predicted_sql": "SELECT dim_geography.sub_district\nFROM dim_geography\nJOIN fact_outpatient_services ON dim_geography.geography_id = fact_outpatient_services.geography_id\nJOIN dim_time ON dim_time.time_id = fact_outpatient_services.time_id\nWHERE dim_geography.state = 'Andaman And Nicobar Islands'\n  AND dim_time.year = 2021\nGROUP BY dim_geography.sub_district\nORDER BY SUM(fact_outpatient_services.outpatient_attendance_allopathic) DESC\nLIMIT 5",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...CT, SUM(T3.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "dd4cc6a3",
+      "question": "Fornisci una ripartizione del totale delle visite ambulatoriali allopatiche per l’anno 2022, suddivisa per sottodistretto, stato e tipologia di area.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, T1.STATE, T1.TYPE_OF_AREA, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2022' GROUP BY T1.SUB_DISTRICT, T1.STATE, T1.TYPE_OF_AREA ORDER BY T1.SUB_DISTRICT",
+      "predicted_sql": "SELECT dim_geography.sub_district, dim_geography.state, dim_geography.area_type,\n       SUM(fact_outpatient_services.outpatient_attendance_allopathic) as total_outpatient_attendance\nFROM fact_outpatient_services\nJOIN dim_geography ON fact_outpatient_services.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_outpatient_services.time_id = dim_time.time_id\nWHERE dim_geography.state = 'Andaman And Nicobar Islands'\n  AND dim_time.month = 'October, 2021'\n  AND fact_outpatient_services.outpatient_attendance_allopathic > 5000\nGROUP BY dim_geography.sub_district, dim_geography.state, dim_geography.area_type\nORDER BY SUM(fact_outpatient_services.outpatient_attendance_allopathic) DESC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...EA, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "6a80264a",
+      "question": "Fornisci una ripartizione del totale delle visite ambulatoriali allopatiche per l’anno 2022 per sotto-distretto, stato e tipo di area, escludendo le località senza presenze e classificandole dalla più alta alla più bassa.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, T1.STATE, T1.TYPE_OF_AREA, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2022' GROUP BY T1.SUB_DISTRICT, T1.STATE, T1.TYPE_OF_AREA HAVING SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 0 ORDER BY SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) DESC",
+      "predicted_sql": "SELECT SUM(fact_outpatient_services.outpatient_attendance_allopathic) AS total_attendance,\n       dim_geography.sub_district,\n       dim_geography.state,\n       dim_geography.type_of_area\nFROM fact_outpatient_services\nJOIN dim_geography ON fact_outpatient_services.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_outpatient_services.time_id = dim_time.time_id\nWHERE dim_time.year = 2022\n  AND dim_geography.type_of_area = 'Urban'\n  AND fact_outpatient_services.outpatient_attendance_allopathic > 0\nGROUP BY dim_geography.sub_district, dim_geography.state, dim_geography.type_of_area\nORDER BY total_attendance DESC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...EA, SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "6df9c007",
+      "question": "Quali sottodistretti hanno registrato visite ambulatoriali allopatiche nel 2022 ma non ne hanno registrate nel 2021?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2022' AND T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC > 0 EXCEPT SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2021' AND T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC > 0",
+      "predicted_sql": "SELECT dim_geography.sub_district\nFROM fact_outpatient_services\nJOIN dim_geography ON fact_outpatient_services.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_outpatient_services.time_id = dim_time.time_id\nWHERE dim_geography.type_of_area = 'Urban'\n  AND dim_time.year IN (2021, 2022)\nGROUP BY dim_geography.sub_district\nHAVING SUM(CASE WHEN dim_time.year = 2022 THEN fact_outpatient_services.outpatient_attendance_allopathic ELSE 0 END) > 0\n   AND SUM(CASE WHEN dim_time.year = 2021 THEN fact_outpatient_services.outpatient_attendance_allopathic ELSE 0 END) = 0\nORDER BY SUM(CASE WHEN dim_time.year = 2022 THEN fact_outpatient_services.outpatient_attendance_allopathic ELSE 0 END) DESC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OU...\n                                    ^\n"
+    },
+    {
+      "instance_id": "ad3d03d6",
+      "question": "Identifica i sottodistretti che hanno riportato costantemente presenze ambulatoriali allopatiche sia nel 2021 che nel 2022, elencati in ordine alfabetico.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR IN ('2021', '2022') AND T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC > 0 GROUP BY T1.SUB_DISTRICT HAVING COUNT(DISTINCT T3.YEAR) = 2 ORDER BY T1.SUB_DISTRICT ASC",
+      "predicted_sql": "SELECT dim_geography.sub_district\nFROM dim_geography\nJOIN fact_outpatient_services ON dim_geography.geography_id = fact_outpatient_services.geography_id\nJOIN dim_time ON fact_outpatient_services.time_id = dim_time.time_id\nWHERE dim_time.year = 2021\n  AND fact_outpatient_services.outpatient_attendance_allopathic > 0\n  AND dim_geography.type_of_area = 'Urban'\nINTERSECT\nSELECT dim_geography.sub_district\nFROM dim_geography\nJOIN fact_outpatient_services ON dim_geography.geography_id = fact_outpatient_services.geography_id\nJOIN dim_time ON fact_outpatient_services.time_id = dim_time.time_id\nWHERE dim_time.year = 2022\n  AND fact_outpatient_services.outpatient_attendance_allopathic > 0\n  AND dim_geography.type_of_area = 'Urban'\nORDER BY sub_district",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OU...\n                                    ^\n"
+    },
+    {
+      "instance_id": "c2377545",
+      "question": "Elenca i sottodistretti unici che sono classificati come rurali oppure che hanno registrato servizi ambulatoriali durante l'anno 2022.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT DISTINCT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2022' OR T1.TYPE_OF_AREA = 'Rural';",
+      "predicted_sql": "SELECT dim_geography.sub_district\nFROM dim_geography\nLEFT JOIN fact_outpatient_services ON dim_geography.geography_id = fact_outpatient_services.geography_id\nLEFT JOIN dim_time ON fact_outpatient_services.time_id = dim_time.time_id\nWHERE dim_geography.state = 'Andaman And Nicobar Islands'\n    AND (dim_geography.type_of_area = 'Rural' OR dim_time.year = 2022)\nGROUP BY dim_geography.sub_district\nORDER BY SUM(fact_outpatient_services.outpatient_attendance_allopathic) DESC\nLIMIT 5",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT DISTINCT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOI...\n                                             ^\n"
+    },
+    {
+      "instance_id": "e95e91d7",
+      "question": "Fornisci un elenco alfabetico dei sottodistretti che hanno registrato servizi ambulatoriali nel 2022 o che sono classificati come aree rurali.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT DISTINCT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2022' OR T1.TYPE_OF_AREA = 'Rural' ORDER BY T1.SUB_DISTRICT",
+      "predicted_sql": "SELECT T2.sub_district, SUM(T1.outpatient_attendance_allopathic) AS total_attendance\nFROM fact_outpatient_services AS T1\nJOIN dim_geography AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_time AS T3 ON T1.time_id = T3.time_id\nWHERE T2.state = 'Andaman And Nicobar Islands'\n  AND T2.type_of_area = 'Rural'\n  AND T3.year = 2022\nGROUP BY T2.sub_district\nORDER BY total_attendance DESC\nLIMIT 5",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT DISTINCT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOI...\n                                             ^\n"
+    },
+    {
+      "instance_id": "b6a7b81b",
+      "question": "Elenca i nomi dei sottodistretti rurali o di quelli con registrazioni del 2022 che hanno riportato almeno una certa affluenza ambulatoriale allopatica, ordinati alfabeticamente.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 LEFT JOIN FACT_OUTPATIENT_SERVICES AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID LEFT JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2022' OR T1.TYPE_OF_AREA = 'Rural' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.OUTPATIENT_ATTENDANCE_ALLOPATHIC) > 0 ORDER BY T1.SUB_DISTRICT ASC",
+      "predicted_sql": "SELECT T1.sub_district\nFROM dim_geography AS T1\nJOIN fact_outpatient_services AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_time AS T3 ON T3.time_id = T2.time_id\nWHERE T1.country = 'India'\nAND (T1.type_of_area = 'Rural' OR T3.year = 2022)\nAND T2.outpatient_attendance_allopathic > 0\nGROUP BY T1.sub_district\nORDER BY T1.sub_district ASC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 LEFT JOIN FA...\n                                    ^\n"
+    },
+    {
+      "instance_id": "192c033b",
+      "question": "Quali sottodistretti rurali hanno segnalato almeno una somministrazione della prima dose di vitamina A durante l'anno 2022?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T3.YEAR = '2022' AND T2.VITAMIN_A_DOSE_1 > 0.00000000000000000000",
+      "predicted_sql": "SELECT T3.sub_district, T3.state\nFROM fact_outpatient_services AS T1\nJOIN dim_time AS T2 ON T1.time_id = T2.time_id\nJOIN dim_geography AS T3 ON T1.geography_id = T3.geography_id\nWHERE T2.year = 2022\n  AND T3.type_of_area = 'rural'\nGROUP BY T3.sub_district, T3.state\nHAVING SUM(T1.outpatient_attendance_allopathic) >= 1",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CH...\n                                    ^\n"
+    },
+    {
+      "instance_id": "c651817a",
+      "question": "Elenca i nomi dei sottodistretti rurali, in ordine alfabetico, che hanno registrato almeno una somministrazione della prima dose di vitamina A durante l'anno 2022.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T3.YEAR = '2022' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.VITAMIN_A_DOSE_1) > 0 ORDER BY T1.SUB_DISTRICT ASC",
+      "predicted_sql": "SELECT dim_geography.sub_district\nFROM fact_outpatient_services\nJOIN dim_geography ON fact_outpatient_services.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_outpatient_services.time_id = dim_time.time_id\nWHERE dim_geography.type_of_area = 'rural'\n  AND dim_time.year = 2022\nGROUP BY dim_geography.sub_district\nHAVING SUM(fact_outpatient_services.outpatient_attendance_allopathic) >= 1\nORDER BY dim_geography.sub_district ASC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CH...\n                                    ^\n"
+    },
+    {
+      "instance_id": "f9c1581b",
+      "question": "Fornisci una ripartizione annuale per state del numero totale di prime dosi di Vitamin A e Measles-Rubella (MCV 1st dose) somministrate ai lattanti di età compresa tra 9 e 11 mesi, ordinate cronologicamente.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.STATE, T3.YEAR, SUM(T1.VITAMIN_A_DOSE_1), SUM(T1.MEASLES_RUBELLA_MCV_1ST_DOSE_9_11_MONTHS) FROM FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID GROUP BY T2.STATE, T3.YEAR ORDER BY T3.YEAR ASC",
+      "predicted_sql": "SELECT dim_time.year, dim_geography.state,\n       SUM(fact_outpatient_services.vitamin_a_doses) AS total_vitamin_a,\n       SUM(fact_outpatient_services.mcv_first_dose) AS total_mcv_first_dose\nFROM fact_outpatient_services\nJOIN dim_time ON fact_outpatient_services.time_id = dim_time.time_id\nJOIN dim_geography ON fact_outpatient_services.geography_id = dim_geography.geography_id\nWHERE fact_outpatient_services.age_group = '9-11 months'\n  AND dim_time.year = '2022'\nGROUP BY dim_time.year, dim_geography.state\nHAVING SUM(fact_outpatient_services.vitamin_a_doses) > 0\n   AND SUM(fact_outpatient_services.mcv_first_dose) > 0\nORDER BY dim_time.year, dim_geography.state",
+      "error_info": "relation \"fact_child_immunization_specialized\" does not exist\nLINE 1: ...T1.MEASLES_RUBELLA_MCV_1ST_DOSE_9_11_MONTHS) FROM FACT_CHILD...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "1b1775cf",
+      "question": "Fornisci una ripartizione annuale per state del totale delle prime dosi somministrate di Vitamin A e Measles-Rubella (9-11 mesi), escludendo tutti i record senza dati su Vitamin A e ordinando per gli anni più recenti.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.STATE, T3.YEAR, SUM(T1.VITAMIN_A_DOSE_1), SUM(T1.MEASLES_RUBELLA_MCV_1ST_DOSE_9_11_MONTHS) FROM FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T1 INNER JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID GROUP BY T2.STATE, T3.YEAR HAVING SUM(T1.VITAMIN_A_DOSE_1) > 0.00000000000000000000 ORDER BY T3.YEAR DESC, T2.STATE ASC",
+      "predicted_sql": "SELECT dim_time.year, dim_geography.state,\n       SUM(fact_vaccination.vitamin_a_first_dose + fact_vaccination.measles_rubella_9_11_months_first_dose) as total_first_doses\nFROM fact_vaccination\nJOIN dim_geography ON fact_vaccination.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_vaccination.time_id = dim_time.time_id\nWHERE fact_vaccination.vitamin_a_first_dose IS NOT NULL\n  AND fact_vaccination.measles_rubella_9_11_months_first_dose IS NOT NULL\nGROUP BY dim_time.year, dim_geography.state\nORDER BY dim_time.year DESC",
+      "error_info": "relation \"fact_child_immunization_specialized\" does not exist\nLINE 1: ...T1.MEASLES_RUBELLA_MCV_1ST_DOSE_9_11_MONTHS) FROM FACT_CHILD...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "22579f1c",
+      "question": "Quali sottodistretti rurali hanno registrato più di 10 somministrazioni della seconda dose del vaccino MR per i bambini di età compresa tra 16 e 24 mesi durante il 2021?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T3.YEAR = '2021' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.MR_2ND_DOSE_16_24_MONTHS) > 10",
+      "predicted_sql": "SELECT dim_geography.sub_district\nFROM fact_vaccinations\nJOIN dim_time ON fact_vaccinations.time_id = dim_time.time_id\nJOIN dim_geography ON fact_vaccinations.geography_id = dim_geography.geography_id\nJOIN dim_patient ON fact_vaccinations.patient_id = dim_patient.patient_id\nWHERE dim_time.year = 2021\nAND dim_patient.age_group = '16-24 months'\nGROUP BY dim_geography.sub_district\nHAVING SUM(fact_vaccinations.MR_second_dose) > 10",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CH...\n                                    ^\n"
+    },
+    {
+      "instance_id": "5cfd4d5f",
+      "question": "Quali sottodistretti rurali hanno registrato più di 10 somministrazioni della seconda dose del vaccino MR ai bambini di età compresa tra 16 e 24 mesi durante l'anno 2021?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T3.YEAR = '2021' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.MR_2ND_DOSE_16_24_MONTHS) > 10",
+      "predicted_sql": "SELECT dim_geography.sub_district\nFROM fact_vaccinations\nJOIN dim_geography ON fact_vaccinations.geography_id = dim_geography.geography_id\nJOIN dim_age ON fact_vaccinations.age_group_id = dim_age.age_group_id\nJOIN dim_time ON fact_vaccinations.time_id = dim_time.time_id\nWHERE dim_age.age_group = '16-24 months'\n  AND dim_time.year = 2021\n  AND dim_geography.area_type = 'Rural'\nGROUP BY dim_geography.sub_district\nHAVING SUM(fact_vaccinations.mr_second_dose) > 10\nORDER BY dim_geography.sub_district ASC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CH...\n                                    ^\n"
+    },
+    {
+      "instance_id": "d5e0f430",
+      "question": "Elenca i sottodistretti rurali che hanno registrato più di 10 somministrazioni della seconda dose del vaccino MR per i bambini di età compresa tra 16 e 24 mesi nel 2021, classificati in base al numero totale di dosi somministrate.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T3.YEAR = '2021' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.MR_2ND_DOSE_16_24_MONTHS) > 10 ORDER BY SUM(T2.MR_2ND_DOSE_16_24_MONTHS) DESC",
+      "predicted_sql": "SELECT dim_geography.sub_district, SUM(fact_vaccinations.doses_administered) as total_doses\nFROM dim_geography\nINNER JOIN fact_vaccinations ON dim_geography.geography_id = fact_vaccinations.geography_id\nINNER JOIN dim_time ON fact_vaccinations.time_id = dim_time.time_id\nINNER JOIN dim_patient ON fact_vaccinations.patient_id = dim_patient.patient_id\nWHERE dim_geography.sub_district IN (\n    SELECT DISTINCT dim_geography.sub_district\n    FROM dim_geography\n    WHERE dim_geography.type_of_area = 'Rural'\n    UNION\n    SELECT DISTINCT dim_geography.sub_district\n    FROM dim_geography\n    INNER JOIN fact_outpatient_services ON dim_geography.geography_id = fact_outpatient_services.geography_id\n    INNER JOIN dim_time ON fact_outpatient_services.time_id = dim_time.time_id\n    WHERE dim_time.year = 2022\n)\nAND fact_vaccinations.vaccine_type = 'MR'\nAND fact_vaccinations.dose_number = 2\nAND dim_patient.age_in_months BETWEEN 16 AND 24\nAND dim_time.year = 2021\nGROUP BY dim_geography.sub_district\nHAVING SUM(fact_vaccinations.doses_administered) > 10\nORDER BY SUM(fact_vaccinations.doses_administered) DESC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CH...\n                                    ^\n"
+    },
+    {
+      "instance_id": "635d7a98",
+      "question": "Classifica i sottodistretti rurali di North and Middle Andaman in base al numero totale di prime dosi di integratori di vitamina A somministrate nel 2020.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T2.VITAMIN_A_DOSE_1) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T1.DISTRICT = 'North And Middle Andaman' AND T3.YEAR = '2020' GROUP BY T1.SUB_DISTRICT ORDER BY SUM(T2.VITAMIN_A_DOSE_1) DESC",
+      "predicted_sql": "SELECT T1.sub_district,\n       SUM(T2.vitamin_a_first_dose) AS total_first_doses\nFROM dim_geography AS T1\nJOIN fact_outpatient_services AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_time AS T3 ON T2.time_id = T3.time_id\nWHERE T1.type_of_area = 'Rural'\n  AND T1.district = 'North and Middle Andaman'\n  AND T3.year = 2020\nGROUP BY T1.sub_district\nORDER BY total_first_doses DESC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...CT T1.SUB_DISTRICT, SUM(T2.VITAMIN_A_DOSE_1) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "0430f81d",
+      "question": "Classifica i sottodistretti rurali di North and Middle Andaman in base al numero totale di prime dosi di vitamina A somministrate nel 2021, dal più alto al più basso.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T3.VITAMIN_A_DOSE_1) FROM DIM_GEOGRAPHY AS T1 JOIN DIM_TIME AS T2 ON T1.GEOGRAPHY_ID = T2.TIME_ID JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T1.DISTRICT = 'North And Middle Andaman' AND T1.TYPE_OF_AREA = 'Rural' AND T2.YEAR = '2021' GROUP BY T1.SUB_DISTRICT ORDER BY SUM(T3.VITAMIN_A_DOSE_1) DESC",
+      "predicted_sql": "SELECT dim_geography.sub_district, SUM(fact_outpatient_services.vitamin_a_first_dose) AS total_vitamin_a_first_dose\nFROM dim_geography\nINNER JOIN fact_outpatient_services ON dim_geography.geography_id = fact_outpatient_services.geography_id\nINNER JOIN dim_time ON fact_outpatient_services.time_id = dim_time.time_id\nWHERE dim_geography.type_of_area = 'Rural'\n  AND dim_geography.district = 'North and Middle Andaman'\n  AND dim_time.year = 2021\nGROUP BY dim_geography.sub_district\nORDER BY total_vitamin_a_first_dose DESC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...CT T1.SUB_DISTRICT, SUM(T3.VITAMIN_A_DOSE_1) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "95a89de4",
+      "question": "Elenca i cinque sottodistretti principali delle Isole Andamane e Nicobare con il numero totale più alto di somministrazioni della prima dose di vitamina A registrate nel 2021.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T2.VITAMIN_A_DOSE_1) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T3.YEAR = '2021' GROUP BY T1.SUB_DISTRICT ORDER BY SUM(T2.VITAMIN_A_DOSE_1) DESC LIMIT 5",
+      "predicted_sql": "SELECT T2.sub_district, SUM(T1.vitamin_a_dose_1)\nFROM fact_child_immunization_specialized AS T1\nJOIN dim_geography AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_time AS T3 ON T1.time_id = T3.time_id\nWHERE T2.area_name = 'Andaman and Nicobar Islands'\n  AND T2.type_of_area = 'Rural'\n  AND T3.year = 2022\n  AND T1.vitamin_a_dose_1 > 0\nGROUP BY T2.sub_district\nORDER BY SUM(T1.vitamin_a_dose_1) DESC\nLIMIT 5",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...CT T1.SUB_DISTRICT, SUM(T2.VITAMIN_A_DOSE_1) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "2c355a90",
+      "question": "Elenca i cinque sottodistretti principali delle Isole Andamane e Nicobare con il numero totale più alto di somministrazioni della prima dose di vitamina A registrate nel 2021.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T2.VITAMIN_A_DOSE_1) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T3.YEAR = '2021' GROUP BY T1.SUB_DISTRICT ORDER BY SUM(T2.VITAMIN_A_DOSE_1) DESC LIMIT 5",
+      "predicted_sql": "SELECT dim_geography.sub_district, SUM(fact_child_immunization_specialized.vitamin_a_dose_1) AS total_dose1\nFROM fact_child_immunization_specialized\nJOIN dim_geography ON fact_child_immunization_specialized.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_child_immunization_specialized.time_id = dim_time.time_id\nWHERE dim_geography.state_ut = 'Andaman and Nicobar Islands'\n  AND dim_geography.type_of_area = 'Rural'\n  AND dim_time.year = 2022\n  AND fact_child_immunization_specialized.vitamin_a_dose_1 > 0\nGROUP BY dim_geography.sub_district\nORDER BY total_dose1 DESC\nLIMIT 5",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...CT T1.SUB_DISTRICT, SUM(T2.VITAMIN_A_DOSE_1) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "75e68a47",
+      "question": "Identifica i 5 sottodistretti principali delle Isole Andamane e Nicobare con il numero totale più elevato di somministrazioni della prima dose di vitamina A registrate nel 2021.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T2.VITAMIN_A_DOSE_1) FROM DIM_GEOGRAPHY AS T1 INNER JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T3.YEAR = '2021' GROUP BY T1.SUB_DISTRICT ORDER BY SUM(T2.VITAMIN_A_DOSE_1) DESC LIMIT 5",
+      "predicted_sql": "SELECT dim_geography.sub_district,\n       SUM(fact_child_immunization_specialized.vitamin_a_dose_1) AS total_dose1\nFROM dim_geography\nJOIN fact_child_immunization_specialized ON dim_geography.geography_id = fact_child_immunization_specialized.geography_id\nJOIN dim_time ON dim_time.time_id = fact_child_immunization_specialized.time_id\nWHERE dim_time.year = 2022\n  AND dim_geography.type_of_area = 'Rural'\n  AND dim_geography.state = 'Andaman and Nicobar Islands'\n  AND fact_child_immunization_specialized.vitamin_a_dose_1 > 0\nGROUP BY dim_geography.sub_district\nORDER BY total_dose1 DESC\nLIMIT 5",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...CT T1.SUB_DISTRICT, SUM(T2.VITAMIN_A_DOSE_1) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "ca622d7e",
+      "question": "Fornisci una ripartizione per sottodistretto del totale delle prime dosi di vitamina A e delle vaccinazioni contro morbillo-rosolia (MCV1) somministrate nelle Isole Andamane e Nicobare durante il 2021.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T2.VITAMIN_A_DOSE_1), SUM(T2.MEASLES_RUBELLA_MCV_1ST_DOSE_9_11_MONTHS) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T3.YEAR = '2021' GROUP BY T1.SUB_DISTRICT",
+      "predicted_sql": "SELECT T2.subdistrict,\n       SUM(T1.vitamin_a_dose_1),\n       SUM(T1.measles_rubella_mcv_1st_dose_9_11_months)\nFROM fact_child_immunization_specialized AS T1\nJOIN dim_geography AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_time AS T3 ON T1.time_id = T3.time_id\nWHERE T2.state = 'Andaman and Nicobar Islands'\n  AND T3.year = 2021\nGROUP BY T2.subdistrict",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...T2.MEASLES_RUBELLA_MCV_1ST_DOSE_9_11_MONTHS) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "3c44a602",
+      "question": "Quali sub-districts Rural hanno riportato almeno una dose Rotavirus 1 ma zero somministrazioni di Vitamin A dose 1 durante l'anno 2020?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T3.YEAR = '2020' AND T2.ROTAVIRUS_1 > 0.00000000000000000000 AND T2.VITAMIN_A_DOSE_1 = 0.00000000000000000000",
+      "predicted_sql": "SELECT dim_geography.sub_district\nFROM fact_child_immunization_specialized\nJOIN dim_geography ON fact_child_immunization_specialized.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_child_immunization_specialized.time_id = dim_time.time_id\nWHERE dim_geography.rural = 'Rural' AND dim_time.year = 2020\nGROUP BY dim_geography.sub_district\nHAVING SUM(fact_child_immunization_specialized.rotavirus_dose_1) >= 1\n   AND SUM(fact_child_immunization_specialized.vitamin_a_dose_1) = 0\nORDER BY dim_geography.sub_district",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CH...\n                                    ^\n"
+    },
+    {
+      "instance_id": "60f65c76",
+      "question": "Quali sottodistretti rurali hanno riportato almeno alcune vaccinazioni contro il Rotavirus 1 nel 2022 ma avevano zero prime dosi registrate di Vitamina A?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T3.YEAR = '2022' AND T2.ROTAVIRUS_1 > 0.00000000000000000000 GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.VITAMIN_A_DOSE_1) = 0.00000000000000000000",
+      "predicted_sql": "SELECT DISTINCT dim_geography.subdistrict\nFROM fact_child_immunization_specialized\nJOIN dim_geography ON fact_child_immunization_specialized.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_child_immunization_specialized.time_id = dim_time.time_id\nWHERE dim_time.year = 2022\n  AND fact_child_immunization_specialized.rotavirus_1 > 0\n  AND fact_child_immunization_specialized.vitamin_a_dose_1 = 0\n  AND dim_geography.rural_urban = 'Rural'\nORDER BY dim_geography.subdistrict",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CH...\n                                    ^\n"
+    },
+    {
+      "instance_id": "41f6ae2b",
+      "question": "Identifica i sottodistretti rurali che hanno riportato almeno una prima dose del vaccino contro il Rotavirus ma zero prime dosi di Vitamina A nel 2020, elencati in ordine alfabetico.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T3.YEAR = '2020' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.ROTAVIRUS_1) > 0.00000000000000000000 AND SUM(T2.VITAMIN_A_DOSE_1) = 0.00000000000000000000 ORDER BY T1.SUB_DISTRICT ASC",
+      "predicted_sql": "SELECT DISTINCT dim_geography.sub_district\nFROM dim_geography\nJOIN fact_child_immunization_specialized\n    ON dim_geography.geography_id = fact_child_immunization_specialized.geography_id\nJOIN dim_time\n    ON dim_time.time_id = fact_child_immunization_specialized.time_id\nWHERE dim_geography.type_of_area = 'Rural'\n    AND dim_time.year = 2020\n    AND fact_child_immunization_specialized.rotavirus_1st_dose >= 1\n    AND fact_child_immunization_specialized.vitamin_a_1st_dose = 0\n    AND fact_child_immunization_specialized.mr_2nd_dose_16_24_months > 10\nORDER BY dim_geography.sub_district ASC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CH...\n                                    ^\n"
+    },
+    {
+      "instance_id": "65bc6b7a",
+      "question": "Quali sottodistretti hanno registrato più di 500 dosi sia di vitamina A sia del primo vaccino contro morbillo-rosolia nel 2022?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2022' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.VITAMIN_A_DOSE_1) > 500 AND SUM(T2.MEASLES_RUBELLA_MCV_1ST_DOSE_9_11_MONTHS) > 500",
+      "predicted_sql": "SELECT T1.sub_district\nFROM dim_geography AS T1\nJOIN fact_child_immunization_specialized AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_time AS T3 ON T2.time_id = T3.time_id\nWHERE T3.year = 2022\n  AND T1.type_of_area = 'Rural'\nGROUP BY T1.sub_district\nHAVING SUM(T2.vitamin_a_dose) > 500\n   AND SUM(T2.mr_1st_dose_9_12_months) > 500",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CH...\n                                    ^\n"
+    },
+    {
+      "instance_id": "a7dacca2",
+      "question": "Quali sottodistretti hanno registrato più di 500 dosi ciascuno di vitamina A e del primo vaccino contro morbillo-rosolia nel 2022?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2022' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.VITAMIN_A_DOSE_1) > 500 AND SUM(T2.MEASLES_RUBELLA_MCV_1ST_DOSE_9_11_MONTHS) > 500",
+      "predicted_sql": "SELECT T2.sub_district\nFROM fact_child_immunization_specialized AS T1\nJOIN dim_geography AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_time AS T3 ON T1.time_id = T3.time_id\nWHERE T3.year = 2022\n    AND T2.type_of_area = 'Rural'\nGROUP BY T2.sub_district\nHAVING SUM(T1.vitamin_a_dose) > 500\n    AND SUM(T1.mr_1st_dose) > 500\nORDER BY SUM(T1.mr_1st_dose) DESC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CH...\n                                    ^\n"
+    },
+    {
+      "instance_id": "f760b271",
+      "question": "Elenca i sottodistretti che hanno registrato più di 500 dosi sia di Vitamina A (1ª dose) sia di Morbillo-Rosolia (MCV 1ª dose) durante l'anno 2022, ordinati alfabeticamente.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2022' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.VITAMIN_A_DOSE_1) > 500 AND SUM(T2.MEASLES_RUBELLA_MCV_1ST_DOSE_9_11_MONTHS) > 500 ORDER BY T1.SUB_DISTRICT ASC",
+      "predicted_sql": "SELECT dim_geography.sub_district\nFROM fact_child_immunization_specialized\nJOIN dim_geography ON fact_child_immunization_specialized.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_child_immunization_specialized.time_id = dim_time.time_id\nWHERE dim_time.year = 2022\n  AND dim_geography.district = 'North And Middle Andaman'\n  AND dim_geography.type_of_area = 'Rural'\nGROUP BY dim_geography.sub_district\nHAVING SUM(fact_child_immunization_specialized.vitamin_a_dose_1) > 500\n   AND SUM(fact_child_immunization_specialized.mcv_dose_1) > 500\nORDER BY dim_geography.sub_district ASC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CH...\n                                    ^\n"
+    },
+    {
+      "instance_id": "5ea6b986",
+      "question": "Identifica i sottodistretti in cui sono state somministrate più di 500 prime dosi di vaccino contro il Rotavirus nelle aree rurali, oppure più di 500 prime dosi di Vitamina A nelle aree urbane.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE (T1.TYPE_OF_AREA = 'Rural' AND T2.ROTAVIRUS_1 > 500) OR (T1.TYPE_OF_AREA = 'Urban' AND T2.VITAMIN_A_DOSE_1 > 500) GROUP BY T1.SUB_DISTRICT",
+      "predicted_sql": "SELECT dim_geography.sub_district\nFROM fact_child_immunization_specialized\nJOIN dim_geography ON fact_child_immunization_specialized.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_child_immunization_specialized.time_id = dim_time.time_id\nWHERE dim_time.year = 2021\n    AND dim_geography.district = 'North And Middle Andaman'\nGROUP BY dim_geography.sub_district\nHAVING\n    SUM(CASE WHEN dim_geography.type_of_area = 'Rural' THEN fact_child_immunization_specialized.rotavirus_dose_1 ELSE 0 END) > 500\n    OR\n    SUM(CASE WHEN dim_geography.type_of_area = 'Urban' THEN fact_child_immunization_specialized.vitamin_a_dose_1 ELSE 0 END) > 500\nORDER BY\n    GREATEST(\n        SUM(CASE WHEN dim_geography.type_of_area = 'Rural' THEN fact_child_immunization_specialized.rotavirus_dose_1 ELSE 0 END),\n        SUM(CASE WHEN dim_geography.type_of_area = 'Urban' THEN fact_child_immunization_specialized.vitamin_a_dose_1 ELSE 0 END)\n    ) DESC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CH...\n                                    ^\n"
+    },
+    {
+      "instance_id": "e76d08a7",
+      "question": "Identifica i sottodistretti che hanno registrato oltre 500 prime dosi di Rotavirus nelle aree rurali oppure oltre 500 prime dosi di Vitamina A nelle aree urbane, ordinati alfabeticamente.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CHILD_IMMUNIZATION_SPECIALIZED AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.SUB_DISTRICT, T1.TYPE_OF_AREA HAVING (T1.TYPE_OF_AREA = 'Rural' AND SUM(T2.ROTAVIRUS_1) > 500) OR (T1.TYPE_OF_AREA = 'Urban' AND SUM(T2.VITAMIN_A_DOSE_1) > 500) ORDER BY T1.SUB_DISTRICT ASC",
+      "predicted_sql": "SELECT dim_geography.sub_district\nFROM fact_child_immunization_specialized\nJOIN dim_geography ON fact_child_immunization_specialized.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_child_immunization_specialized.time_id = dim_time.time_id\nWHERE dim_geography.state = 'Andaman And Nicobar Islands'\n  AND dim_time.year = 2021\n  AND (\n    (dim_geography.area_type = 'rural' AND fact_child_immunization_specialized.rotavirus_dose_1 > 500)\n    OR (dim_geography.area_type = 'urban' AND fact_child_immunization_specialized.vitamin_a_dose_1 > 500)\n  )\nGROUP BY dim_geography.sub_district\nORDER BY dim_geography.sub_district ASC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_CH...\n                                    ^\n"
+    },
+    {
+      "instance_id": "7c06d106",
+      "question": "Quali sottodistretti rurali nelle Isole Andamane e Nicobare hanno avuto almeno una donna incinta che ha ricevuto quattro o più controlli di assistenza prenatale nel 2020?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MATERNAL_REGISTRATION_TESTING AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T1.TYPE_OF_AREA = 'Rural' AND T3.YEAR = '2020' AND T2.PREGNANCY_WOMEN_RECEIVED_4_OR_MORE_ANC_CHECKUPS > 0.00000000000000000000",
+      "predicted_sql": "SELECT T1.sub_district\nFROM dim_geography AS T1\nJOIN fact_maternal_health AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_time AS T3 ON T3.time_id = T2.time_id\nWHERE T1.state = 'Andaman And Nicobar Islands'\n  AND T3.year = 2021\n  AND T2.prenatal_care_visits >= 4\nGROUP BY T1.sub_district\nORDER BY COUNT(*) DESC\nLIMIT 5",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MA...\n                                    ^\n"
+    },
+    {
+      "instance_id": "9a67da93",
+      "question": "Elenca i sottodistretti rurali dell'India, in ordine alfabetico, in cui almeno una donna incinta ha ricevuto quattro o più controlli di assistenza prenatale nel corso dell'anno 2021.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MATERNAL_REGISTRATION_TESTING AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.COUNTRY = 'India' AND T1.TYPE_OF_AREA = 'Rural' AND T3.YEAR = '2021' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.PREGNANCY_WOMEN_RECEIVED_4_OR_MORE_ANC_CHECKUPS) > 0 ORDER BY T1.SUB_DISTRICT ASC",
+      "predicted_sql": "SELECT DISTINCT dim_geography.sub_district\nFROM dim_geography\nJOIN fact_maternal_health ON dim_geography.geography_id = fact_maternal_health.geography_id\nJOIN dim_time ON fact_maternal_health.time_id = dim_time.time_id\nWHERE dim_geography.country = 'India'\n  AND dim_geography.area_type = 'rural'\n  AND fact_maternal_health.prenatal_care_visits >= 4\n  AND dim_time.year = 2021\nORDER BY dim_geography.sub_district ASC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MA...\n                                    ^\n"
+    },
+    {
+      "instance_id": "1d35667b",
+      "question": "Identifica i sotto-distretti rurali in India che hanno registrato almeno un caso di donne che hanno ricevuto quattro o più controlli di assistenza prenatale durante l'anno 2021, elencati in ordine alfabetico.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T3.SUB_DISTRICT FROM FACT_MATERNAL_REGISTRATION_TESTING AS T1 JOIN DIM_TIME AS T2 ON T1.TIME_ID = T2.TIME_ID JOIN DIM_GEOGRAPHY AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T3.COUNTRY = 'India' AND T3.TYPE_OF_AREA = 'Rural' AND T2.YEAR = '2021' GROUP BY T3.SUB_DISTRICT HAVING SUM(T1.PREGNANCY_WOMEN_RECEIVED_4_OR_MORE_ANC_CHECKUPS) > 0.00000000000000000000 ORDER BY T3.SUB_DISTRICT ASC",
+      "predicted_sql": "SELECT DISTINCT dim_geography.sub_district\nFROM fact_prenatal_care\nJOIN dim_geography ON fact_prenatal_care.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_prenatal_care.time_id = dim_time.time_id\nWHERE dim_geography.country = 'India'\n  AND dim_geography.rural_urban = 'Rural'\n  AND dim_time.year = 2021\n  AND fact_prenatal_care.anc_4_visits >= 1\nORDER BY dim_geography.sub_district ASC",
+      "error_info": "relation \"fact_maternal_registration_testing\" does not exist\nLINE 1: SELECT T3.SUB_DISTRICT FROM FACT_MATERNAL_REGISTRATION_TESTI...\n                                    ^\n"
+    },
+    {
+      "instance_id": "b1dd527f",
+      "question": "Identifica i sottodistretti nelle Isole Andamane e Nicobare in cui meno della metà delle donne in gravidanza registrate ha ricevuto quattro o più controlli ANC nel corso del 2021.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MATERNAL_REGISTRATION_TESTING AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T3.YEAR = '2021' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.PREGNANCY_WOMEN_RECEIVED_4_OR_MORE_ANC_CHECKUPS) / NULLIF(SUM(T2.PREGNANT_WOMEN_REGISTERED_FOR_ANC), 0) < 0.5 ORDER BY T1.SUB_DISTRICT",
+      "predicted_sql": "SELECT dim_geography.sub_district\nFROM fact_child_immunization_specialized\nJOIN dim_geography ON fact_child_immunization_specialized.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_child_immunization_specialized.time_id = dim_time.time_id\nWHERE dim_geography.state = 'Andaman And Nicobar Islands' AND dim_time.year = 2021\nGROUP BY dim_geography.sub_district\nHAVING SUM(fact_child_immunization_specialized.anc_4_visits) < 0.5 * SUM(fact_child_immunization_specialized.registered_pregnant_women)",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MA...\n                                    ^\n"
+    },
+    {
+      "instance_id": "68aa6a30",
+      "question": "Identifica i sottodistretti nelle Isole Andamane e Nicobare in cui meno del 50% delle donne in gravidanza registrate per l'assistenza prenatale ha effettivamente ricevuto quattro o più controlli ANC nel 2021.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MATERNAL_REGISTRATION_TESTING AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T3.YEAR = '2021' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.PREGNANCY_WOMEN_RECEIVED_4_OR_MORE_ANC_CHECKUPS) * 1.0 / NULLIF(SUM(T2.PREGNANT_WOMEN_REGISTERED_FOR_ANC), 0) < 0.5 ORDER BY T1.SUB_DISTRICT ASC",
+      "predicted_sql": "SELECT dim_geography.sub_district\nFROM fact_anc_coverage\nJOIN dim_geography ON fact_anc_coverage.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_anc_coverage.time_id = dim_time.time_id\nWHERE dim_geography.state = 'Andaman And Nicobar Islands'\n  AND dim_time.year = 2021\n  AND fact_anc_coverage.registered_women > 0\n  AND (fact_anc_coverage.women_received_4_or_more_anc * 100.0 / fact_anc_coverage.registered_women) < 50",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MA...\n                                    ^\n"
+    },
+    {
+      "instance_id": "f7c5a079",
+      "question": "Classifica i sottodistretti delle Isole Andamane e Nicobare in base alla percentuale di registrazioni precoci per l'assistenza prenatale nell'anno 2021.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T2.ANC_REGISTERED_WITHIN_1ST_TRIMESTER) * 100.0 / SUM(T2.PREGNANT_WOMEN_REGISTERED_FOR_ANC) AS EARLY_REGISTRATION_PERCENTAGE FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MATERNAL_REGISTRATION_TESTING AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T3.YEAR = '2021' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.PREGNANT_WOMEN_REGISTERED_FOR_ANC) > 0 ORDER BY EARLY_REGISTRATION_PERCENTAGE DESC",
+      "predicted_sql": "SELECT\n    T2.sub_district,\n    ROUND(100.0 * SUM(CASE WHEN T1.early_registration_prenatal_care = 1 THEN 1 ELSE 0 END) / COUNT(*), 2) AS early_registration_percentage\nFROM fact_child_immunization_specialized AS T1\nJOIN dim_geography AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_time AS T3 ON T1.time_id = T3.time_id\nWHERE T2.area = 'Andaman and Nicobar Islands'\n    AND T2.type_of_area = 'Rural'\n    AND T3.year = 2021\n    AND T1.rotavirus_1 > 0\n    AND T1.vitamin_a_dose_1 = 0\nGROUP BY T2.sub_district\nORDER BY early_registration_percentage DESC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...ED_FOR_ANC) AS EARLY_REGISTRATION_PERCENTAGE FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "ea71f5ed",
+      "question": "Identifica i 5 sottodistretti principali delle Isole Andamane e Nicobare con il maggior numero di donne in gravidanza registrate con livelli di emoglobina inferiori a 11 nel 2021.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T2.PREGNANCY_WOMEN_HB_LEVEL_LESS_11) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MATERNAL_REGISTRATION_TESTING AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T3.YEAR = '2021' GROUP BY T1.SUB_DISTRICT ORDER BY SUM(T2.PREGNANCY_WOMEN_HB_LEVEL_LESS_11) DESC LIMIT 5",
+      "predicted_sql": "SELECT dim_geography.sub_district, COUNT(*) AS pregnant_women_count\nFROM dim_geography\nJOIN fact_pregnant_women ON dim_geography.geography_id = fact_pregnant_women.geography_id\nJOIN dim_time ON fact_pregnant_women.time_id = dim_time.time_id\nWHERE fact_pregnant_women.hemoglobin_level < 11\n  AND dim_time.year = 2021\n  AND dim_geography.state = 'Andaman and Nicobar Islands'\n  AND dim_geography.type_of_area = 'Rural'\nGROUP BY dim_geography.sub_district\nORDER BY pregnant_women_count DESC\nLIMIT 5",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...CT, SUM(T2.PREGNANCY_WOMEN_HB_LEVEL_LESS_11) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "03c760fa",
+      "question": "Identifica i 5 sottodistretti principali delle Isole Andamane e Nicobare con il maggior numero di donne in gravidanza registrate con livelli di emoglobina inferiori a 11 nel 2021.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T2.PREGNANCY_WOMEN_HB_LEVEL_LESS_11) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MATERNAL_REGISTRATION_TESTING AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T3.YEAR = '2021' GROUP BY T1.SUB_DISTRICT ORDER BY SUM(T2.PREGNANCY_WOMEN_HB_LEVEL_LESS_11) DESC LIMIT 5",
+      "predicted_sql": "SELECT dim_geography.sub_district, COUNT(*) AS pregnant_count\nFROM fact_child_immunization_specialized\nJOIN dim_geography ON fact_child_immunization_specialized.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_child_immunization_specialized.time_id = dim_time.time_id\nWHERE dim_geography.state = 'Andaman and Nicobar Islands'\n  AND dim_time.year = 2021\n  AND fact_child_immunization_specialized.rotavirus_1 > 0\n  AND fact_child_immunization_specialized.vitamin_a_dose_1 = 0\n  AND dim_geography.type_of_area = 'Rural'\nGROUP BY dim_geography.sub_district\nORDER BY pregnant_count DESC\nLIMIT 5",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...CT, SUM(T2.PREGNANCY_WOMEN_HB_LEVEL_LESS_11) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "4011885c",
+      "question": "Identifica i sottodistretti e i rispettivi stati in cui vi è stata almeno una registrazione di assistenza prenatale entro il primo trimestre durante l'anno 2022.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, T1.STATE FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MATERNAL_REGISTRATION_TESTING AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2022' GROUP BY T1.SUB_DISTRICT, T1.STATE HAVING SUM(T2.ANC_REGISTERED_WITHIN_1ST_TRIMESTER) > 0",
+      "predicted_sql": "SELECT DISTINCT dim_geography.sub_district, dim_geography.state\nFROM fact_prenatal_care\nJOIN dim_geography ON fact_prenatal_care.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_prenatal_care.time_id = dim_time.time_id\nWHERE dim_time.year = 2022\nAND fact_prenatal_care.trimester <= 1\nAND fact_prenatal_care.registration >= 1",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT, T1.STATE FROM DIM_GEOGRAPHY AS T1 JO...\n                                              ^\n"
+    },
+    {
+      "instance_id": "12ef6084",
+      "question": "Identifica i sottodistretti e i rispettivi stati in cui più di 10 donne si sono registrate per l'assistenza prenatale entro il primo trimestre nel 2022, classificati in base al numero più alto di registrazioni.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, T1.STATE FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MATERNAL_REGISTRATION_TESTING AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2022' GROUP BY T1.SUB_DISTRICT, T1.STATE HAVING SUM(T2.ANC_REGISTERED_WITHIN_1ST_TRIMESTER) > 10 ORDER BY SUM(T2.ANC_REGISTERED_WITHIN_1ST_TRIMESTER) DESC",
+      "predicted_sql": "SELECT dim_geography.sub_district, dim_geography.state\nFROM fact_anc_register\nJOIN dim_geography ON fact_anc_register.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_anc_register.time_id = dim_time.time_id\nWHERE dim_time.year = 2022\nGROUP BY dim_geography.sub_district, dim_geography.state\nHAVING SUM(fact_anc_register.anc_1st_trimester_registration) > 10\nORDER BY SUM(fact_anc_register.anc_1st_trimester_registration) DESC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT, T1.STATE FROM DIM_GEOGRAPHY AS T1 JO...\n                                              ^\n"
+    },
+    {
+      "instance_id": "f5a63b9c",
+      "question": "Quali sotto-distretti urbani hanno segnalato casi di donne in gravidanza con livelli di emoglobina inferiori a 11 ma non hanno utilizzato alcun kit per test di gravidanza durante il 2022?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MATERNAL_REGISTRATION_TESTING AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.TYPE_OF_AREA = 'Urban' AND T3.YEAR = '2022' AND T2.PREGNANCY_WOMEN_HB_LEVEL_LESS_11 > 0.00000000000000000000 AND T2.NUMBER_OF_PREGNANCY_TEST_KITS_USED = 0.00000000000000000000",
+      "predicted_sql": "SELECT DISTINCT dim_geography.sub_district\nFROM fact_pregnancy_data\nJOIN dim_time ON fact_pregnancy_data.time_id = dim_time.time_id\nJOIN dim_geography ON fact_pregnancy_data.geography_id = dim_geography.geography_id\nWHERE dim_time.year = 2022\n  AND fact_pregnancy_data.hemoglobin_level < 11\n  AND fact_pregnancy_data.pregnancy_test_kits_used = 0\nORDER BY dim_geography.sub_district ASC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MA...\n                                    ^\n"
+    },
+    {
+      "instance_id": "84e63d10",
+      "question": "Identifica i sotto-distretti urbani che hanno segnalato casi di donne in gravidanza con livelli di emoglobina inferiori a 11 nel 2021, pur non avendo utilizzato alcun kit per il test di gravidanza.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MATERNAL_REGISTRATION_TESTING AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.TYPE_OF_AREA = 'Urban' AND T3.YEAR = '2021' AND T2.PREGNANCY_WOMEN_HB_LEVEL_LESS_11 > 0.00000000000000000000 AND T2.NUMBER_OF_PREGNANCY_TEST_KITS_USED = 0.00000000000000000000 GROUP BY T1.SUB_DISTRICT",
+      "predicted_sql": "SELECT DISTINCT dim_geography.sub_district\nFROM dim_geography\nJOIN fact_child_immunization_specialized\nON dim_geography.geography_id = fact_child_immunization_specialized.geography_id\nWHERE dim_geography.type_of_area = 'Urban'\nAND fact_child_immunization_specialized.year = 2021\nAND fact_child_immunization_specialized.hemoglobin_level < 11\nAND fact_child_immunization_specialized.pregnancy_test_kit_used = 'No'",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MA...\n                                    ^\n"
+    },
+    {
+      "instance_id": "4d7b7297",
+      "question": "Identifica i sotto-distretti urbani che hanno segnalato casi di donne in gravidanza con livelli di emoglobina inferiori a 11 nel 2020, ma non hanno registrato alcun utilizzo di test di gravidanza.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.SUB_DISTRICT FROM FACT_MATERNAL_REGISTRATION_TESTING AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T2.TYPE_OF_AREA = 'Urban' AND T3.YEAR = '2020' GROUP BY T2.SUB_DISTRICT HAVING SUM(T1.PREGNANCY_WOMEN_HB_LEVEL_LESS_11) > 0.00000000000000000000 AND SUM(T1.NUMBER_OF_PREGNANCY_TEST_KITS_USED) = 0.00000000000000000000 ORDER BY T2.SUB_DISTRICT ASC",
+      "predicted_sql": "SELECT DISTINCT G.sub_district\nFROM dim_geography G\nJOIN fact_pregnant_women_hemoglobin H\n  ON G.geography_id = H.geography_id\nWHERE G.type_of_area = 'Urban'\n  AND H.hemoglobin_level < 11\n  AND H.year = 2020\n  AND NOT EXISTS (\n    SELECT 1\n    FROM fact_pregnancy_tests PT\n    WHERE PT.geography_id = G.geography_id\n      AND PT.year = 2020\n  )",
+      "error_info": "relation \"fact_maternal_registration_testing\" does not exist\nLINE 1: SELECT T2.SUB_DISTRICT FROM FACT_MATERNAL_REGISTRATION_TESTI...\n                                    ^\n"
+    },
+    {
+      "instance_id": "051a20fa",
+      "question": "Quali sottodistretti hanno segnalato casi di donne in gravidanza con livelli di emoglobina inferiori a 11, utilizzando al contempo kit per test di gravidanza nel corso del 2022?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MATERNAL_REGISTRATION_TESTING AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T2.PREGNANCY_WOMEN_HB_LEVEL_LESS_11 > 0 AND T2.NUMBER_OF_PREGNANCY_TEST_KITS_USED > 0 AND T3.YEAR = '2022' GROUP BY T1.SUB_DISTRICT",
+      "predicted_sql": "SELECT DISTINCT dim_geography.sub_district\nFROM dim_geography\nJOIN fact_pregnant_women_hemoglobin ON dim_geography.geography_id = fact_pregnant_women_hemoglobin.geography_id\nJOIN fact_pregnancy_test_kits ON dim_geography.geography_id = fact_pregnancy_test_kits.geography_id\nJOIN dim_date AS d1 ON fact_pregnant_women_hemoglobin.date_id = d1.date_id\nJOIN dim_date AS d2 ON fact_pregnancy_test_kits.date_id = d2.date_id\nWHERE fact_pregnant_women_hemoglobin.hemoglobin_level < 11\n  AND fact_pregnancy_test_kits.kits_used > 0\n  AND d1.year = 2022\n  AND d2.year = 2022\nORDER BY dim_geography.sub_district",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MA...\n                                    ^\n"
+    },
+    {
+      "instance_id": "e41f874a",
+      "question": "Identifica i sottodistretti che hanno riportato sia casi di donne in gravidanza anemiche sia l'uso di test di gravidanza durante l'anno 2020, elencati in ordine alfabetico.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MATERNAL_REGISTRATION_TESTING AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2020' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.PREGNANCY_WOMEN_HB_LEVEL_LESS_11) > 0.00000000000000000000 AND SUM(T2.NUMBER_OF_PREGNANCY_TEST_KITS_USED) > 0.00000000000000000000 ORDER BY T1.SUB_DISTRICT ASC",
+      "predicted_sql": "SELECT DISTINCT dim_geography.sub_district\nFROM dim_geography\nJOIN fact_maternal_registration_testing ON dim_geography.geography_id = fact_maternal_registration_testing.geography_id\nJOIN dim_time ON dim_time.time_id = fact_maternal_registration_testing.time_id\nWHERE dim_time.year = 2020\n  AND dim_geography.type_of_area = 'Rural'\n  AND dim_geography.state = 'Andaman And Nicobar Islands'\n  AND fact_maternal_registration_testing.pregnancy_women_received_4_or_more_anc_checkups >= 1\n  AND fact_maternal_registration_testing.pregnant_women_with_anemia >= 1\n  AND fact_maternal_registration_testing.pregnancy_testing >= 1\nORDER BY dim_geography.sub_district",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MA...\n                                    ^\n"
+    },
+    {
+      "instance_id": "6327eb26",
+      "question": "Identifica i sottodistretti che nel 2022 avevano più di 500 donne in gravidanza registrate per l'assistenza prenatale oppure hanno utilizzato oltre 200 kit per test di gravidanza.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MATERNAL_REGISTRATION_TESTING AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2022' AND (T2.PREGNANT_WOMEN_REGISTERED_FOR_ANC > 500 OR T2.NUMBER_OF_PREGNANCY_TEST_KITS_USED > 200)",
+      "predicted_sql": "SELECT T1.sub_district\nFROM dim_geography AS T1\nJOIN fact_maternal_registration_testing AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_time AS T3 ON T2.time_id = T3.time_id\nWHERE T1.country = 'India'\nAND T1.type_of_area = 'Rural'\nAND T3.year = 2022\nAND (T2.pregnant_women_registered_for_prenatal_care > 500\nOR T2.pregnancy_test_kits_used > 200)\nORDER BY T1.sub_district ASC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MA...\n                                    ^\n"
+    },
+    {
+      "instance_id": "636906c1",
+      "question": "Identifica i sottodistretti che nel 2022 avevano o più di 500 donne in gravidanza registrate per l'assistenza prenatale oppure hanno utilizzato oltre 200 kit per test di gravidanza.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MATERNAL_REGISTRATION_TESTING AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2022' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.PREGNANT_WOMEN_REGISTERED_FOR_ANC) > 500 OR SUM(T2.NUMBER_OF_PREGNANCY_TEST_KITS_USED) > 200",
+      "predicted_sql": "SELECT DISTINCT dim_geography.sub_district\nFROM dim_geography\nJOIN fact_maternal_registration_testing ON dim_geography.geography_id = fact_maternal_registration_testing.geography_id\nJOIN dim_time ON fact_maternal_registration_testing.time_id = dim_time.time_id\nWHERE dim_geography.country = 'India'\n  AND dim_geography.type_of_area = 'Rural'\n  AND dim_time.year = 2022\n  AND (fact_maternal_registration_testing.pregnant_women_registered_for_anc > 500\n       OR fact_maternal_registration_testing.pregnancy_testing_kits_used > 200)\nORDER BY dim_geography.sub_district",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MA...\n                                    ^\n"
+    },
+    {
+      "instance_id": "5de7274c",
+      "question": "Identifica i sottodistretti che nel 2022 avevano registrato più di 500 donne in gravidanza per l'assistenza prenatale oppure avevano utilizzato oltre 200 kit per test di gravidanza, elencati in ordine alfabetico.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MATERNAL_REGISTRATION_TESTING AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2022' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.PREGNANT_WOMEN_REGISTERED_FOR_ANC) > 500 OR SUM(T2.NUMBER_OF_PREGNANCY_TEST_KITS_USED) > 200 ORDER BY T1.SUB_DISTRICT ASC",
+      "predicted_sql": "SELECT T2.sub_district\nFROM fact_maternal_registration_testing AS T1\nJOIN dim_geography AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_time AS T3 ON T1.time_id = T3.time_id\nWHERE T3.year = 2020 AND T2.type_of_area = 'Rural'\nGROUP BY T2.sub_district\nHAVING SUM(T1.pregnant_women_registered_for_anc) > 500\n    OR SUM(T1.number_of_hb_tests_conducted) > 200\nORDER BY T2.sub_district ASC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_MA...\n                                    ^\n"
+    },
+    {
+      "instance_id": "ff0261c6",
+      "question": "Per l'anno 2020, fornisci le statistiche delle sessioni di immunizzazione e i dettagli sulla distribuzione della pianificazione familiare per ciascun sottodistretto delle Isole Andamane e Nicobare.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.SUB_DISTRICT, T1.IMMUNISATION_SESSIONS_PLANNED, T1.IMMUNISATION_SESSIONS_HELD, T1.COMBINED_ORAL_PILL_CYCLES_DISTRIBUTED, T1.CONDOM_PIECES_DISTRIBUTED FROM FACT_PROGRAM_MANAGEMENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T2.STATE = 'Andaman And Nicobar Islands' AND T3.YEAR = '2020';",
+      "predicted_sql": "SELECT dim_geography.sub_district,\n       SUM(fact_maternal_registration_testing.pregnant_women_registered_for_anc),\n       AVG(fact_maternal_registration_testing.number_of_hb_tests_conducted)\nFROM fact_maternal_registration_testing\nJOIN dim_geography ON fact_maternal_registration_testing.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_maternal_registration_testing.time_id = dim_time.time_id\nWHERE dim_geography.type_of_area = 'Rural'\n      AND dim_time.year = 2022\n      AND dim_geography.area_name = 'Andaman and Nicobar Islands'\nGROUP BY dim_geography.sub_district",
+      "error_info": "relation \"fact_program_management\" does not exist\nLINE 1: ...ES_DISTRIBUTED, T1.CONDOM_PIECES_DISTRIBUTED FROM FACT_PROGR...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "7e253f1f",
+      "question": "Fornisci i dettagli della gestione del programma del 2021, comprese le sessioni di immunizzazione e la distribuzione di preservativi, per i sottodistretti delle Isole Andamane e Nicobare, classificati per tipo di area.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, T1.TYPE_OF_AREA, T2.YEAR, T3.IMMUNISATION_SESSIONS_PLANNED, T3.IMMUNISATION_SESSIONS_HELD, T3.CONDOM_PIECES_DISTRIBUTED FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PROGRAM_MANAGEMENT AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID JOIN DIM_TIME AS T2 ON T3.TIME_ID = T2.TIME_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.YEAR = '2021' GROUP BY T1.SUB_DISTRICT, T1.TYPE_OF_AREA, T2.YEAR, T3.IMMUNISATION_SESSIONS_PLANNED, T3.IMMUNISATION_SESSIONS_HELD, T3.CONDOM_PIECES_DISTRIBUTED ORDER BY T1.TYPE_OF_AREA",
+      "predicted_sql": "SELECT T2.sub_district, T2.area_type\nFROM fact_maternal_registration_testing AS T1\nJOIN dim_geography AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_time AS T3 ON T1.time_id = T3.time_id\nWHERE T2.state = 'Andaman And Nicobar Islands'\n  AND T3.year = '2021'\n  AND T1.pregnancy_women_received_4_or_more_anc_checkups < 0.5 * T1.pregnant_women_registered_for_anc\nORDER BY T2.area_type",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ..._SESSIONS_HELD, T3.CONDOM_PIECES_DISTRIBUTED FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "d11c1bfd",
+      "question": "Per l'anno 2021 nelle Isole Andamane e Nicobare, fornisci una ripartizione per sottodistretto delle sessioni di immunizzazione pianificate e svolte, insieme ai totali di distribuzione di pillole orali e preservativi, per le aree in cui era stata pianificata almeno una sessione. Ordina i risultati in base al numero di sessioni svolte.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T3.IMMUNISATION_SESSIONS_PLANNED), SUM(T3.IMMUNISATION_SESSIONS_HELD), SUM(T3.COMBINED_ORAL_PILL_CYCLES_DISTRIBUTED), SUM(T3.CONDOM_PIECES_DISTRIBUTED) FROM DIM_GEOGRAPHY AS T1 INNER JOIN FACT_PROGRAM_MANAGEMENT AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID INNER JOIN DIM_TIME AS T2 ON T3.TIME_ID = T2.TIME_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T2.YEAR = '2021' GROUP BY T1.SUB_DISTRICT HAVING SUM(T3.IMMUNISATION_SESSIONS_PLANNED) > 0 ORDER BY SUM(T3.IMMUNISATION_SESSIONS_HELD) DESC",
+      "predicted_sql": "SELECT dim_geography.sub_district,\n       SUM(fact_immunization_sessions.planned_sessions) AS total_planned,\n       SUM(fact_immunization_sessions.conducted_sessions) AS total_conducted,\n       SUM(fact_contraceptive_distribution.oral_pills_distributed) AS total_oral_pills,\n       SUM(fact_contraceptive_distribution.condoms_distributed) AS total_condoms\nFROM dim_geography\nJOIN fact_immunization_sessions ON dim_geography.geography_id = fact_immunization_sessions.geography_id\nJOIN dim_time ON fact_immunization_sessions.time_id = dim_time.time_id\nJOIN fact_contraceptive_distribution ON fact_immunization_sessions.geography_id = fact_contraceptive_distribution.geography_id\n   AND fact_immunization_sessions.time_id = fact_contraceptive_distribution.time_id\nJOIN fact_maternal_registration_testing ON dim_geography.geography_id = fact_maternal_registration_testing.geography_id\n   AND dim_time.time_id = fact_maternal_registration_testing.time_id\nWHERE dim_geography.state = 'Andaman And Nicobar Islands'\n   AND dim_time.year = 2021\n   AND (fact_maternal_registration_testing.pregnancy_women_received_4_or_more_anc_checkups::FLOAT /\n        NULLIF(fact_maternal_registration_testing.pregnant_women_registered_for_anc, 0)) * 100 < 50\nGROUP BY dim_geography.sub_district\nHAVING SUM(fact_immunization_sessions.planned_sessions) >= 1\nORDER BY total_conducted DESC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...TRIBUTED), SUM(T3.CONDOM_PIECES_DISTRIBUTED) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "43bfb4f0",
+      "question": "Per l'anno 2020, fornisci una ripartizione per sotto-distretto del totale delle sessioni di immunizzazione svolte e del numero medio di sessioni in cui era presente un'operatrice ASHA.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T0.IMMUNISATION_SESSIONS_HELD), AVG(T0.IMMUNISATION_SESSIONS_WITH_ASHA_PRESENT) FROM FACT_PROGRAM_MANAGEMENT T0 JOIN DIM_GEOGRAPHY T1 ON T0.GEOGRAPHY_ID = T1.GEOGRAPHY_ID JOIN DIM_TIME T2 ON T0.TIME_ID = T2.TIME_ID WHERE T2.YEAR = '2020' GROUP BY T1.SUB_DISTRICT",
+      "predicted_sql": "SELECT dim_geography.sub_district,\n       SUM(fact_immunization_sessions.total_sessions) as total_sessions,\n       AVG(fact_immunization_sessions.sessions_with_asha) as avg_sessions_with_asha\nFROM fact_immunization_sessions\nJOIN dim_geography ON fact_immunization_sessions.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_immunization_sessions.time_id = dim_time.time_id\nWHERE dim_time.year = 2020\n  AND dim_geography.state = 'Andaman And Nicobar Islands'\nGROUP BY dim_geography.sub_district\nORDER BY avg_sessions_with_asha DESC",
+      "error_info": "relation \"fact_program_management\" does not exist\nLINE 1: ...(T0.IMMUNISATION_SESSIONS_WITH_ASHA_PRESENT) FROM FACT_PROGR...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "88495621",
+      "question": "Fornisci una ripartizione per sotto-distretto del numero totale di sessioni di immunizzazione svolte e del numero medio di sessioni a cui hanno partecipato le operatrici ASHA durante l’anno 2022.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T2.IMMUNISATION_SESSIONS_HELD), AVG(T2.IMMUNISATION_SESSIONS_WITH_ASHA_PRESENT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PROGRAM_MANAGEMENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2022' GROUP BY T1.SUB_DISTRICT ORDER BY T1.SUB_DISTRICT",
+      "predicted_sql": "SELECT T2.sub_district,\n       SUM(T1.pregnancy_women_hb_level_less_11) as total_sessions,\n       AVG(T1.asha_sessions_attended) as avg_asha_sessions\nFROM fact_maternal_registration_testing AS T1\nJOIN dim_geography AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_time AS T3 ON T1.time_id = T3.time_id\nWHERE T2.state = 'Andaman And Nicobar Islands'\n  AND T3.year = 2021\nGROUP BY T2.sub_district\nORDER BY total_sessions DESC\nLIMIT 5",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...(T2.IMMUNISATION_SESSIONS_WITH_ASHA_PRESENT) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "f475b831",
+      "question": "Per l'anno 2022, fornisci una ripartizione per sotto-distretto del numero totale di sessioni di immunizzazione svolte e del numero medio di sessioni a cui ha partecipato un'operatrice ASHA, classificata dall'attività più alta a quella più bassa.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T2.IMMUNISATION_SESSIONS_HELD), AVG(T2.IMMUNISATION_SESSIONS_WITH_ASHA_PRESENT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PROGRAM_MANAGEMENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2022' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.IMMUNISATION_SESSIONS_HELD) > 0 ORDER BY SUM(T2.IMMUNISATION_SESSIONS_HELD) DESC",
+      "predicted_sql": "SELECT T2.sub_district,\n       SUM(T1.pregnancy_women_hb_level_less_11) AS total_sessions,\n       AVG(T1.pregnancy_women_hb_level_less_11) AS avg_asha_sessions_per_subdistrict\nFROM fact_maternal_registration_testing AS T1\nJOIN dim_geography AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_time AS T3 ON T1.time_id = T3.time_id\nWHERE T3.year = 2021 AND T2.state = 'Andaman And Nicobar Islands'\nGROUP BY T2.sub_district\nORDER BY total_sessions DESC\nLIMIT 5",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...(T2.IMMUNISATION_SESSIONS_WITH_ASHA_PRESENT) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "d151bc24",
+      "question": "Identifica i sottodistretti rurali in cui è stato effettivamente svolto meno della metà delle sessioni di immunizzazione pianificate, elencati in ordine alfabetico.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PROGRAM_MANAGEMENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.TYPE_OF_AREA = 'Rural' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.IMMUNISATION_SESSIONS_HELD) * 2 < SUM(T2.IMMUNISATION_SESSIONS_PLANNED) ORDER BY T1.SUB_DISTRICT ASC",
+      "predicted_sql": "SELECT dim_geography.sub_district\nFROM fact_maternal_registration_testing\nJOIN dim_geography ON fact_maternal_registration_testing.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_maternal_registration_testing.time_id = dim_time.time_id\nWHERE dim_geography.state = 'Andaman And Nicobar Islands'\n  AND dim_time.year = 2021\n  AND fact_maternal_registration_testing.sessions_held < 0.5 * fact_maternal_registration_testing.sessions_planned\nGROUP BY dim_geography.sub_district\nORDER BY SUM(fact_maternal_registration_testing.pregnancy_women_hb_level_less_11) DESC\nLIMIT 5",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PR...\n                                    ^\n"
+    },
+    {
+      "instance_id": "5249a015",
+      "question": "Elenca i sottodistretti rurali dell'India, classificati in base al numero totale di preservativi distribuiti nel 2020, iniziando da quello con il numero più alto.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PROGRAM_MANAGEMENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.COUNTRY = 'India' AND T1.TYPE_OF_AREA = 'Rural' AND T3.YEAR = '2020' GROUP BY T1.SUB_DISTRICT ORDER BY SUM(T2.CONDOM_PIECES_DISTRIBUTED) DESC",
+      "predicted_sql": "SELECT dim_geography.sub_district, dim_geography.state,\n       SUM(fact_contraceptive_distribution.total_condoms_distributed) as total_condoms_distributed\nFROM fact_contraceptive_distribution\nJOIN dim_geography ON fact_contraceptive_distribution.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_contraceptive_distribution.time_id = dim_time.time_id\nWHERE dim_geography.rural_urban = 'Rural'\n  AND dim_geography.country = 'India'\n  AND dim_time.year = 2020\nGROUP BY dim_geography.sub_district, dim_geography.state\nORDER BY SUM(fact_contraceptive_distribution.total_condoms_distributed) DESC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PR...\n                                    ^\n"
+    },
+    {
+      "instance_id": "87e1a2ce",
+      "question": "Fornisci un elenco classificato dei sottodistretti rurali delle Isole Andamane e Nicobare in base al numero totale di preservativi distribuiti nel 2021, iniziando da quello con il valore più alto.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T2.CONDOM_PIECES_DISTRIBUTED) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PROGRAM_MANAGEMENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T1.TYPE_OF_AREA = 'Rural' AND T3.YEAR = '2021' GROUP BY T1.SUB_DISTRICT ORDER BY SUM(T2.CONDOM_PIECES_DISTRIBUTED) DESC",
+      "predicted_sql": "SELECT dim_geography.sub_district, dim_geography.state,\n       SUM(fact_maternal_registration_testing.condoms_distributed) AS total_condoms\nFROM fact_maternal_registration_testing\nJOIN dim_geography ON fact_maternal_registration_testing.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_maternal_registration_testing.time_id = dim_time.time_id\nWHERE dim_time.year = 2021\n  AND dim_geography.state = 'Andaman and Nicobar Islands'\n  AND dim_geography.rural_urban = 'Rural'\n  AND fact_maternal_registration_testing.anc_registered_within_1st_trimester > 0\nGROUP BY dim_geography.sub_district, dim_geography.state\nORDER BY total_condoms DESC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ..._DISTRICT, SUM(T2.CONDOM_PIECES_DISTRIBUTED) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "f1a440e0",
+      "question": "Classifica i sottodistretti rurali delle Isole Andamane e Nicobare in base al numero totale di preservativi distribuiti nel 2020, iniziando da quello con il valore più alto.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T2.CONDOM_PIECES_DISTRIBUTED) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PROGRAM_MANAGEMENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.STATE = 'Andaman And Nicobar Islands' AND T1.TYPE_OF_AREA = 'Rural' AND T3.YEAR = '2020' GROUP BY T1.SUB_DISTRICT ORDER BY SUM(T2.CONDOM_PIECES_DISTRIBUTED) DESC",
+      "predicted_sql": "SELECT T2.sub_district, SUM(T1.condoms_distributed) as total_condoms_distributed\nFROM fact_maternal_registration_testing AS T1\nJOIN dim_geography AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_time AS T3 ON T1.time_id = T3.time_id\nWHERE T2.state = 'Andamane e Nicobare' AND T3.year = 2020\nGROUP BY T2.sub_district\nORDER BY SUM(T1.condoms_distributed) DESC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ..._DISTRICT, SUM(T2.CONDOM_PIECES_DISTRIBUTED) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "a062cf3e",
+      "question": "Quali cinque sotto-distretti urbani hanno registrato il maggior numero di sessioni di immunizzazione con la presenza di un operatore ASHA durante il 2022?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PROGRAM_MANAGEMENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.TYPE_OF_AREA = 'Urban' AND T3.YEAR = '2022' GROUP BY T1.SUB_DISTRICT ORDER BY SUM(T2.IMMUNISATION_SESSIONS_WITH_ASHA_PRESENT) DESC LIMIT 5",
+      "predicted_sql": "SELECT T1.sub_district, COUNT(*) AS session_count\nFROM dim_geography AS T1\nJOIN fact_immunization_sessions AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_time AS T3 ON T2.time_id = T3.time_id\nJOIN fact_maternal_registration_testing AS T4 ON T1.geography_id = T4.geography_id AND T2.time_id = T4.time_id\nWHERE T1.type_of_area = 'Urban'\n  AND T2.asha_worker_present = 'Yes'\n  AND T3.year = 2022\n  AND T4.pregnancy_women_hb_level_less_11 > 0\n  AND T4.number_of_pregnancy_test_kits_used = 0\nGROUP BY T1.sub_district\nORDER BY session_count DESC\nLIMIT 5",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PR...\n                                    ^\n"
+    },
+    {
+      "instance_id": "b6c958be",
+      "question": "Identifica i 5 principali sotto-distretti urbani che hanno svolto il maggior numero di sessioni di immunizzazione con la presenza di un operatore ASHA durante il 2022.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T2.IMMUNISATION_SESSIONS_WITH_ASHA_PRESENT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PROGRAM_MANAGEMENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.TYPE_OF_AREA = 'Urban' AND T3.YEAR = '2022' GROUP BY T1.SUB_DISTRICT ORDER BY SUM(T2.IMMUNISATION_SESSIONS_WITH_ASHA_PRESENT) DESC LIMIT 5",
+      "predicted_sql": "SELECT T1.sub_district, COUNT(*) AS session_count\nFROM dim_geography AS T1\nJOIN fact_immunization_sessions AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_time AS T3 ON T2.time_id = T3.time_id\nWHERE T1.type_of_area = 'Urban'\n  AND T3.year = 2022\n  AND T2.asha_worker_present = 1\nGROUP BY T1.sub_district\nORDER BY session_count DESC\nLIMIT 5",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...(T2.IMMUNISATION_SESSIONS_WITH_ASHA_PRESENT) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "20406555",
+      "question": "Identifica i 5 principali sotto-distretti urbani che hanno registrato il numero totale più elevato di sessioni di immunizzazione a cui hanno partecipato gli operatori ASHA durante il 2022.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T2.IMMUNISATION_SESSIONS_WITH_ASHA_PRESENT) FROM DIM_GEOGRAPHY AS T1 INNER JOIN FACT_PROGRAM_MANAGEMENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.TYPE_OF_AREA = 'Urban' AND T3.YEAR = '2022' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.IMMUNISATION_SESSIONS_WITH_ASHA_PRESENT) > 0.00000000000000000000 ORDER BY SUM(T2.IMMUNISATION_SESSIONS_WITH_ASHA_PRESENT) DESC LIMIT 5",
+      "predicted_sql": "SELECT T1.sub_district, SUM(T2.asha_immunization_sessions)\nFROM dim_geography AS T1\nJOIN fact_maternal_registration_testing AS T2 ON T2.geography_id = T1.geography_id\nJOIN dim_time AS T3 ON T2.time_id = T3.time_id\nWHERE T1.type_of_area = 'Urban'\n  AND T3.year = 2020\n  AND T2.pregnancy_women_hb_level_less_11 > 0\n  AND T2.number_of_pregnancy_test_kits_used = 0\nGROUP BY T1.sub_district\nORDER BY SUM(T2.asha_immunization_sessions) DESC\nLIMIT 5",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...(T2.IMMUNISATION_SESSIONS_WITH_ASHA_PRESENT) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "e0581913",
+      "question": "Per l'anno 2022, fornisci una ripartizione per sotto-distretto del numero totale di sessioni di immunizzazione svolte e di quante di queste sessioni si sono tenute con la presenza di un'operatrice ASHA nelle aree rurali.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T2.IMMUNISATION_SESSIONS_HELD), SUM(T2.IMMUNISATION_SESSIONS_WITH_ASHA_PRESENT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PROGRAM_MANAGEMENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T3.YEAR = '2022' GROUP BY T1.SUB_DISTRICT",
+      "predicted_sql": "SELECT dim_geography.sub_district,\n       SUM(fact_immunization_sessions.total_sessions),\n       SUM(fact_immunization_sessions.asha_present_sessions)\nFROM fact_immunization_sessions\nJOIN dim_geography ON fact_immunization_sessions.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_immunization_sessions.time_id = dim_time.time_id\nWHERE dim_time.year = 2022 AND dim_geography.area_type = 'rural'\nGROUP BY dim_geography.sub_district",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...(T2.IMMUNISATION_SESSIONS_WITH_ASHA_PRESENT) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "e38fd56d",
+      "question": "Classifica i sotto-distretti rurali in base al numero totale di sessioni di immunizzazione svolte nel 2022, mostrando anche quante di queste sessioni hanno avuto la presenza di un operatore ASHA.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT, SUM(T2.IMMUNISATION_SESSIONS_HELD), SUM(T2.IMMUNISATION_SESSIONS_WITH_ASHA_PRESENT) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PROGRAM_MANAGEMENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T1.TYPE_OF_AREA = 'Rural' AND T3.YEAR = '2022' GROUP BY T1.SUB_DISTRICT ORDER BY SUM(T2.IMMUNISATION_SESSIONS_HELD) DESC",
+      "predicted_sql": "SELECT\n    T1.sub_district,\n    SUM(T2.immunization_session_count) AS total_sessions,\n    SUM(CASE WHEN T2.asha_worker_present = 1 THEN 1 ELSE 0 END) AS sessions_with_asha\nFROM dim_geography AS T1\nJOIN fact_immunization_sessions AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_time AS T3 ON T3.time_id = T2.time_id\nWHERE T3.year = 2022\n    AND T1.area_type = 'rural'  -- Assuming there's a column to identify rural areas\nGROUP BY T1.sub_district\nORDER BY T1.sub_district",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: ...(T2.IMMUNISATION_SESSIONS_WITH_ASHA_PRESENT) FROM DIM_GEOGRA...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "f74dc055",
+      "question": "Identifica i sottodistretti che hanno condotto sessioni di immunizzazione nel 2020 ma non hanno distribuito alcun ciclo di pillole orali combinate.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PROGRAM_MANAGEMENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2020' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.IMMUNISATION_SESSIONS_HELD) > 0 AND SUM(T2.COMBINED_ORAL_PILL_CYCLES_DISTRIBUTED) = 0",
+      "predicted_sql": "SELECT DISTINCT dim_geography.sub_district\nFROM fact_maternal_registration_testing\nJOIN dim_geography ON fact_maternal_registration_testing.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_maternal_registration_testing.time_id = dim_time.time_id\nWHERE dim_time.year = 2020\n  AND fact_maternal_registration_testing.pregnancy_women_hb_level_less_11 > 0\n  AND fact_maternal_registration_testing.number_of_pregnancy_test_kits_used > 0\nORDER BY dim_geography.sub_district ASC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PR...\n                                    ^\n"
+    },
+    {
+      "instance_id": "7daf5e17",
+      "question": "Quali sottodistretti hanno condotto sessioni di immunizzazione nel 2021 ma non hanno distribuito alcun ciclo di pillole orali combinate?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PROGRAM_MANAGEMENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2021' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.IMMUNISATION_SESSIONS_HELD) > 0.00000000000000000000 AND SUM(T2.COMBINED_ORAL_PILL_CYCLES_DISTRIBUTED) = 0.00000000000000000000",
+      "predicted_sql": "SELECT DISTINCT dim_geography.sub_district\nFROM fact_immunization_sessions\nJOIN dim_geography ON fact_immunization_sessions.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_immunization_sessions.time_id = dim_time.time_id\nWHERE dim_time.year = 2021\nAND dim_geography.sub_district NOT IN (\n    SELECT DISTINCT dim_geography.sub_district\n    FROM fact_combined_oral_pill_cycles\n    JOIN dim_geography ON fact_combined_oral_pill_cycles.geography_id = dim_geography.geography_id\n    JOIN dim_time ON fact_combined_oral_pill_cycles.time_id = dim_time.time_id\n    WHERE dim_time.year = 2021\n)\nORDER BY dim_geography.sub_district",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PR...\n                                    ^\n"
+    },
+    {
+      "instance_id": "e6011e7c",
+      "question": "Quali sottodistretti hanno tenuto sessioni di immunizzazione nel 2021 ma non hanno distribuito alcun ciclo di pillole orali combinate?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PROGRAM_MANAGEMENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2021' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.IMMUNISATION_SESSIONS_HELD) > 0.00000000000000000000 AND SUM(T2.COMBINED_ORAL_PILL_CYCLES_DISTRIBUTED) = 0.00000000000000000000",
+      "predicted_sql": "SELECT DISTINCT dim_geography.sub_district\nFROM dim_geography\nWHERE dim_geography.geography_id IN (\n    SELECT fact_immunization_sessions.geography_id\n    FROM fact_immunization_sessions\n    JOIN dim_time ON fact_immunization_sessions.time_id = dim_time.time_id\n    WHERE dim_time.year = 2021\n)\nAND dim_geography.geography_id NOT IN (\n    SELECT fact_immunization_sessions.geography_id\n    FROM fact_immunization_sessions\n    JOIN dim_time ON fact_immunization_sessions.time_id = dim_time.time_id\n    WHERE dim_time.year = 2021\n    AND fact_immunization_sessions.oral_combined_pills_cycles_distributed > 0\n)",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PR...\n                                    ^\n"
+    },
+    {
+      "instance_id": "79290449",
+      "question": "Quali sottodistretti hanno tenuto più di 50 sessioni di immunizzazione e distribuito oltre 1,000 preservativi durante l'anno 2022?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PROGRAM_MANAGEMENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2022' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.IMMUNISATION_SESSIONS_HELD) > 50 AND SUM(T2.CONDOM_PIECES_DISTRIBUTED) > 1000",
+      "predicted_sql": "SELECT T3.sub_district\nFROM fact_maternal_registration_testing AS T1\nJOIN dim_time AS T2 ON T1.time_id = T2.time_id\nJOIN dim_geography AS T3 ON T1.geography_id = T3.geography_id\nWHERE T2.year = 2022\n  AND T1.immunization_sessions_held > 50\n  AND T1.condoms_distributed > 1000\nORDER BY T3.sub_district ASC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PR...\n                                    ^\n"
+    },
+    {
+      "instance_id": "fc3859dc",
+      "question": "Quali sottodistretti hanno tenuto più di 50 sessioni di immunizzazione e distribuito oltre 1,000 preservativi durante l'anno 2022?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PROGRAM_MANAGEMENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2022' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.IMMUNISATION_SESSIONS_HELD) > 50 AND SUM(T2.CONDOM_PIECES_DISTRIBUTED) > 1000",
+      "predicted_sql": "SELECT T2.sub_district,\n       SUM(T1.immunisation_sessions_held) AS total_sessions_held,\n       SUM(T1.condom_pieces_distributed) AS total_condoms_distributed\nFROM fact_program_management AS T1\nJOIN dim_geography AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_time AS T3 ON T1.time_id = T3.time_id\nWHERE T2.state = 'Andaman And Nicobar Islands'\n  AND T3.year = 2022\nGROUP BY T2.sub_district\nHAVING SUM(T1.immunisation_sessions_held) > 50\n   AND SUM(T1.condom_pieces_distributed) > 1000\nORDER BY T2.sub_district",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PR...\n                                    ^\n"
+    },
+    {
+      "instance_id": "de97f013",
+      "question": "Identifica i sottodistretti che hanno tenuto più di 50 sessioni di immunizzazione e distribuito oltre 1,000 preservativi nel 2022, classificati in base al numero totale di sessioni.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PROGRAM_MANAGEMENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2022' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.IMMUNISATION_SESSIONS_HELD) > 50 AND SUM(T2.CONDOM_PIECES_DISTRIBUTED) > 1000 ORDER BY SUM(T2.IMMUNISATION_SESSIONS_HELD) DESC",
+      "predicted_sql": "SELECT dim_geography.sub_district,\n       dim_geography.type_of_area,\n       SUM(fact_program_management.immunisation_sessions_held) as total_sessions,\n       SUM(fact_program_management.condom_pieces_distributed) as total_condoms\nFROM fact_program_management\nJOIN dim_geography ON fact_program_management.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_program_management.time_id = dim_time.time_id\nWHERE dim_time.year = 2022\n  AND dim_geography.state = 'Andaman And Nicobar Islands'\nGROUP BY dim_geography.sub_district, dim_geography.type_of_area\nHAVING SUM(fact_program_management.immunisation_sessions_held) > 50\n   AND SUM(fact_program_management.condom_pieces_distributed) > 1000\nORDER BY total_sessions DESC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PR...\n                                    ^\n"
+    },
+    {
+      "instance_id": "bb8710c3",
+      "question": "Quali sottodistretti hanno svolto più di 50 sessioni di immunizzazione oppure hanno avuto oltre 40 sessioni con la presenza di un operatore ASHA nel 2022?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PROGRAM_MANAGEMENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2022' AND (T2.IMMUNISATION_SESSIONS_HELD > 50 OR T2.IMMUNISATION_SESSIONS_WITH_ASHA_PRESENT > 40);",
+      "predicted_sql": "SELECT T2.sub_district,\n       SUM(T1.immunisation_sessions_planned) AS total_sessions_planned,\n       SUM(T1.immunisation_sessions_held) AS total_sessions_held,\n       SUM(T1.combined_oral_pill_cycles_distributed) AS total_pill_cycles,\n       SUM(T1.condom_pieces_distributed) AS total_condom_pieces\nFROM fact_program_management AS T1\nJOIN dim_geography AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_time AS T3 ON T1.time_id = T3.time_id\nWHERE T3.year = 2022\n  AND T2.state = 'Andaman And Nicobar Islands'\n  AND T1.immunisation_sessions_planned >= 1\nGROUP BY T2.sub_district\nHAVING SUM(T1.immunisation_sessions_held) > 50\n    OR SUM(T1.asha_present_in_immunisation_session) > 40\nORDER BY SUM(T1.immunisation_sessions_held) DESC",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PR...\n                                    ^\n"
+    },
+    {
+      "instance_id": "1d7f6147",
+      "question": "Quali sottodistretti hanno tenuto più di 50 sessioni di immunizzazione oppure hanno avuto oltre 40 sessioni con la presenza di un operatore ASHA durante il 2021?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PROGRAM_MANAGEMENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2021' GROUP BY T1.SUB_DISTRICT HAVING SUM(T2.IMMUNISATION_SESSIONS_HELD) > 50 OR SUM(T2.IMMUNISATION_SESSIONS_WITH_ASHA_PRESENT) > 40",
+      "predicted_sql": "SELECT dim_geography.sub_district,\n       SUM(fact_program_management.immunisation_sessions_held) as total_sessions_held,\n       SUM(fact_program_management.immunisation_sessions_with_asha_present) as total_asha_present_sessions\nFROM fact_program_management\nJOIN dim_geography ON fact_program_management.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_program_management.time_id = dim_time.time_id\nWHERE dim_time.year = 2021\nGROUP BY dim_geography.sub_district\nHAVING SUM(fact_program_management.immunisation_sessions_held) > 50\n    OR SUM(fact_program_management.immunisation_sessions_with_asha_present) > 40",
+      "error_info": "relation \"dim_geography\" does not exist\nLINE 1: SELECT T1.SUB_DISTRICT FROM DIM_GEOGRAPHY AS T1 JOIN FACT_PR...\n                                    ^\n"
+    },
+    {
+      "instance_id": "d4b652de",
+      "question": "Identifica i sottodistretti che hanno condotto più di 50 sessioni di immunizzazione o che hanno avuto oltre 40 sessioni con la presenza di un operatore ASHA durante il 2020, classificati in base al numero totale di sessioni svolte.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.SUB_DISTRICT FROM FACT_PROGRAM_MANAGEMENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.YEAR = '2020' GROUP BY T2.SUB_DISTRICT HAVING SUM(T1.IMMUNISATION_SESSIONS_HELD) > 50 OR SUM(T1.IMMUNISATION_SESSIONS_WITH_ASHA_PRESENT) > 40 ORDER BY SUM(T1.IMMUNISATION_SESSIONS_HELD) DESC",
+      "predicted_sql": "SELECT dim_geography.sub_district,\n       SUM(fact_program_management.immunisation_sessions_held) AS total_sessions,\n       SUM(fact_program_management.immunisation_sessions_with_asha_present) AS total_asha_sessions\nFROM fact_program_management\nJOIN dim_geography ON fact_program_management.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_program_management.time_id = dim_time.time_id\nWHERE dim_time.year = 2020\nGROUP BY dim_geography.sub_district\nHAVING SUM(fact_program_management.immunisation_sessions_held) > 50\n    OR SUM(fact_program_management.immunisation_sessions_with_asha_present) > 40\nORDER BY total_sessions DESC",
+      "error_info": "relation \"fact_program_management\" does not exist\nLINE 1: SELECT T2.SUB_DISTRICT FROM FACT_PROGRAM_MANAGEMENT AS T1 JO...\n                                    ^\n"
+    }
+  ]
+}

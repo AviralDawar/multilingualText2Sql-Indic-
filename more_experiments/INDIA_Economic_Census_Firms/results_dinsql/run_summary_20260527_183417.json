@@ -1,0 +1,273 @@
+{
+  "started_at": "2026-05-27T18:19:39",
+  "config_path": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/psql_server/postgres_local_credential.json",
+  "use_database": "indicdb",
+  "experiment_workers": 6,
+  "models": [
+    {
+      "name": "Deepseek_v3.2",
+      "model_id": "deepseek/deepseek-v3.2"
+    }
+  ],
+  "evidence_modes": [
+    {
+      "name": "with_evidence",
+      "use_real_evidence": true
+    }
+  ],
+  "datasets": [
+    {
+      "name": "INDIA_Economic_Census_Firms",
+      "schema": "india_economic_census_firms",
+      "base_dir": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms",
+      "output_root": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql",
+      "evidence_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_Economic_Census_Firms_text2sql_evidence.json",
+      "models": [
+        {
+          "name": "Deepseek_v3.2",
+          "model_id": "deepseek/deepseek-v3.2",
+          "evidence_modes": [
+            {
+              "name": "with_evidence",
+              "use_real_evidence": true,
+              "languages": [
+                {
+                  "language": "arabic",
+                  "evidence_mode": "with_evidence",
+                  "question_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/sampled_tasks/INDIA_Economic_Census_Firms_text2sql_20260318_030334_arabic.jsonl",
+                  "evidence_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_Economic_Census_Firms_text2sql_evidence.json",
+                  "prediction_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/arabic/predictions.jsonl",
+                  "metrics_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/arabic/metrics.json",
+                  "din_sql_log": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/arabic/din_sql.log",
+                  "evaluate_log": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/arabic/evaluate_metrics.log",
+                  "status": "completed",
+                  "din_sql_command": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/venv/bin/python3 /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/DIN-SQL.py --questions /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/sampled_tasks/INDIA_Economic_Census_Firms_text2sql_20260318_030334_arabic.jsonl --evidence /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_Economic_Census_Firms_text2sql_evidence.json --output /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/arabic/predictions.jsonl --config /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/psql_server/postgres_local_credential.json --use-database indicdb --use-schema india_economic_census_firms --model deepseek/deepseek-v3.2 --max-workers 5 --max-requests-per-minute 60.0 --max-retries 6 --retry-backoff-seconds 2.0",
+                  "din_sql_returncode": 0,
+                  "evaluate_command": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/venv/bin/python3 /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/evaluate_metrics.py --pairs /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/arabic/predictions.jsonl --output /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/arabic/metrics.json --config /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/psql_server/postgres_local_credential.json --use-database indicdb --use-schema india_economic_census_firms --id-col pair_id --execution-only",
+                  "evaluate_returncode": 0,
+                  "metrics_summary": {
+                    "total": 21,
+                    "execution_correct": 18,
+                    "execution_accuracy": 0.8571428571428571
+                  }
+                },
+                {
+                  "language": "chinese",
+                  "evidence_mode": "with_evidence",
+                  "question_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/sampled_tasks/INDIA_Economic_Census_Firms_text2sql_20260318_030334_chinese.jsonl",
+                  "evidence_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_Economic_Census_Firms_text2sql_evidence.json",
+                  "prediction_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/chinese/predictions.jsonl",
+                  "metrics_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/chinese/metrics.json",
+                  "din_sql_log": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/chinese/din_sql.log",
+                  "evaluate_log": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/chinese/evaluate_metrics.log",
+                  "status": "completed",
+                  "din_sql_command": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/venv/bin/python3 /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/DIN-SQL.py --questions /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/sampled_tasks/INDIA_Economic_Census_Firms_text2sql_20260318_030334_chinese.jsonl --evidence /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_Economic_Census_Firms_text2sql_evidence.json --output /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/chinese/predictions.jsonl --config /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/psql_server/postgres_local_credential.json --use-database indicdb --use-schema india_economic_census_firms --model deepseek/deepseek-v3.2 --max-workers 5 --max-requests-per-minute 60.0 --max-retries 6 --retry-backoff-seconds 2.0",
+                  "din_sql_returncode": 0,
+                  "evaluate_command": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/venv/bin/python3 /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/evaluate_metrics.py --pairs /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/chinese/predictions.jsonl --output /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/chinese/metrics.json --config /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/psql_server/postgres_local_credential.json --use-database indicdb --use-schema india_economic_census_firms --id-col pair_id --execution-only",
+                  "evaluate_returncode": 0,
+                  "metrics_summary": {
+                    "total": 22,
+                    "execution_correct": 20,
+                    "execution_accuracy": 0.9090909090909091
+                  }
+                },
+                {
+                  "language": "french",
+                  "evidence_mode": "with_evidence",
+                  "question_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/sampled_tasks/INDIA_Economic_Census_Firms_text2sql_20260318_030334_french.jsonl",
+                  "evidence_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_Economic_Census_Firms_text2sql_evidence.json",
+                  "prediction_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/french/predictions.jsonl",
+                  "metrics_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/french/metrics.json",
+                  "din_sql_log": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/french/din_sql.log",
+                  "evaluate_log": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/french/evaluate_metrics.log",
+                  "status": "completed",
+                  "din_sql_command": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/venv/bin/python3 /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/DIN-SQL.py --questions /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/sampled_tasks/INDIA_Economic_Census_Firms_text2sql_20260318_030334_french.jsonl --evidence /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_Economic_Census_Firms_text2sql_evidence.json --output /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/french/predictions.jsonl --config /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/psql_server/postgres_local_credential.json --use-database indicdb --use-schema india_economic_census_firms --model deepseek/deepseek-v3.2 --max-workers 5 --max-requests-per-minute 60.0 --max-retries 6 --retry-backoff-seconds 2.0",
+                  "din_sql_returncode": 0,
+                  "evaluate_command": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/venv/bin/python3 /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/evaluate_metrics.py --pairs /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/french/predictions.jsonl --output /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/french/metrics.json --config /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/psql_server/postgres_local_credential.json --use-database indicdb --use-schema india_economic_census_firms --id-col pair_id --execution-only",
+                  "evaluate_returncode": 0,
+                  "metrics_summary": {
+                    "total": 21,
+                    "execution_correct": 21,
+                    "execution_accuracy": 1.0
+                  }
+                },
+                {
+                  "language": "italian",
+                  "evidence_mode": "with_evidence",
+                  "question_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/sampled_tasks/INDIA_Economic_Census_Firms_text2sql_20260318_030334_italian.jsonl",
+                  "evidence_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_Economic_Census_Firms_text2sql_evidence.json",
+                  "prediction_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/italian/predictions.jsonl",
+                  "metrics_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/italian/metrics.json",
+                  "din_sql_log": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/italian/din_sql.log",
+                  "evaluate_log": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/italian/evaluate_metrics.log",
+                  "status": "completed",
+                  "din_sql_command": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/venv/bin/python3 /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/DIN-SQL.py --questions /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/sampled_tasks/INDIA_Economic_Census_Firms_text2sql_20260318_030334_italian.jsonl --evidence /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_Economic_Census_Firms_text2sql_evidence.json --output /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/italian/predictions.jsonl --config /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/psql_server/postgres_local_credential.json --use-database indicdb --use-schema india_economic_census_firms --model deepseek/deepseek-v3.2 --max-workers 5 --max-requests-per-minute 60.0 --max-retries 6 --retry-backoff-seconds 2.0",
+                  "din_sql_returncode": 0,
+                  "evaluate_command": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/venv/bin/python3 /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/evaluate_metrics.py --pairs /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/italian/predictions.jsonl --output /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/italian/metrics.json --config /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/psql_server/postgres_local_credential.json --use-database indicdb --use-schema india_economic_census_firms --id-col pair_id --execution-only",
+                  "evaluate_returncode": 0,
+                  "metrics_summary": {
+                    "total": 21,
+                    "execution_correct": 20,
+                    "execution_accuracy": 0.9523809523809523
+                  }
+                },
+                {
+                  "language": "korean",
+                  "evidence_mode": "with_evidence",
+                  "question_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/sampled_tasks/INDIA_Economic_Census_Firms_text2sql_20260318_030334_korean.jsonl",
+                  "evidence_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_Economic_Census_Firms_text2sql_evidence.json",
+                  "prediction_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/korean/predictions.jsonl",
+                  "metrics_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/korean/metrics.json",
+                  "din_sql_log": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/korean/din_sql.log",
+                  "evaluate_log": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/korean/evaluate_metrics.log",
+                  "status": "completed",
+                  "din_sql_command": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/venv/bin/python3 /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/DIN-SQL.py --questions /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/sampled_tasks/INDIA_Economic_Census_Firms_text2sql_20260318_030334_korean.jsonl --evidence /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_Economic_Census_Firms_text2sql_evidence.json --output /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/korean/predictions.jsonl --config /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/psql_server/postgres_local_credential.json --use-database indicdb --use-schema india_economic_census_firms --model deepseek/deepseek-v3.2 --max-workers 5 --max-requests-per-minute 60.0 --max-retries 6 --retry-backoff-seconds 2.0",
+                  "din_sql_returncode": 0,
+                  "evaluate_command": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/venv/bin/python3 /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/evaluate_metrics.py --pairs /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/korean/predictions.jsonl --output /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/korean/metrics.json --config /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/psql_server/postgres_local_credential.json --use-database indicdb --use-schema india_economic_census_firms --id-col pair_id --execution-only",
+                  "evaluate_returncode": 0,
+                  "metrics_summary": {
+                    "total": 21,
+                    "execution_correct": 19,
+                    "execution_accuracy": 0.9047619047619048
+                  }
+                },
+                {
+                  "language": "spanish",
+                  "evidence_mode": "with_evidence",
+                  "question_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/sampled_tasks/INDIA_Economic_Census_Firms_text2sql_20260318_030334_spanish.jsonl",
+                  "evidence_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_Economic_Census_Firms_text2sql_evidence.json",
+                  "prediction_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/spanish/predictions.jsonl",
+                  "metrics_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/spanish/metrics.json",
+                  "din_sql_log": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/spanish/din_sql.log",
+                  "evaluate_log": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/spanish/evaluate_metrics.log",
+                  "status": "completed",
+                  "din_sql_command": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/venv/bin/python3 /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/DIN-SQL.py --questions /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/sampled_tasks/INDIA_Economic_Census_Firms_text2sql_20260318_030334_spanish.jsonl --evidence /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_Economic_Census_Firms_text2sql_evidence.json --output /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/spanish/predictions.jsonl --config /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/psql_server/postgres_local_credential.json --use-database indicdb --use-schema india_economic_census_firms --model deepseek/deepseek-v3.2 --max-workers 5 --max-requests-per-minute 60.0 --max-retries 6 --retry-backoff-seconds 2.0",
+                  "din_sql_returncode": 0,
+                  "evaluate_command": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/venv/bin/python3 /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/evaluate_metrics.py --pairs /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/spanish/predictions.jsonl --output /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_Economic_Census_Firms/results_dinsql/Deepseek_v3.2/with_evidence/spanish/metrics.json --config /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/psql_server/postgres_local_credential.json --use-database indicdb --use-schema india_economic_census_firms --id-col pair_id --execution-only",
+                  "evaluate_returncode": 0,
+                  "metrics_summary": {
+                    "total": 22,
+                    "execution_correct": 20,
+                    "execution_accuracy": 0.9090909090909091
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "INDIA_PRIMARY_POPULATION_CENSUS_1991",
+      "schema": "india_primary_population_census_1991",
+      "base_dir": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991",
+      "output_root": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql",
+      "evidence_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence.json",
+      "models": [
+        {
+          "name": "Deepseek_v3.2",
+          "model_id": "deepseek/deepseek-v3.2",
+          "evidence_modes": [
+            {
+              "name": "with_evidence",
+              "use_real_evidence": true,
+              "languages": [
+                {
+                  "language": "arabic",
+                  "evidence_mode": "with_evidence",
+                  "question_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/sampled_tasks/INDIA_PRIMARY_POPULATION_CENSUS_1991_text2sql_20260316_104923_arabic.jsonl",
+                  "evidence_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence.json",
+                  "prediction_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/arabic/predictions.jsonl",
+                  "metrics_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/arabic/metrics.json",
+                  "din_sql_log": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/arabic/din_sql.log",
+                  "evaluate_log": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/arabic/evaluate_metrics.log",
+                  "status": "evaluation_failed",
+                  "din_sql_command": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/venv/bin/python3 /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/DIN-SQL.py --questions /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/sampled_tasks/INDIA_PRIMARY_POPULATION_CENSUS_1991_text2sql_20260316_104923_arabic.jsonl --evidence /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence.json --output /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/arabic/predictions.jsonl --config /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/psql_server/postgres_local_credential.json --use-database indicdb --use-schema india_primary_population_census_1991 --model deepseek/deepseek-v3.2 --max-workers 5 --max-requests-per-minute 60.0 --max-retries 6 --retry-backoff-seconds 2.0",
+                  "din_sql_returncode": 0,
+                  "evaluate_command": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/venv/bin/python3 /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/evaluate_metrics.py --pairs /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/arabic/predictions.jsonl --output /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/arabic/metrics.json --config /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/psql_server/postgres_local_credential.json --use-database indicdb --use-schema india_primary_population_census_1991 --id-col pair_id --execution-only",
+                  "evaluate_returncode": 1
+                },
+                {
+                  "language": "chinese",
+                  "evidence_mode": "with_evidence",
+                  "question_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/sampled_tasks/INDIA_PRIMARY_POPULATION_CENSUS_1991_text2sql_20260316_104923_chinese.jsonl",
+                  "evidence_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence.json",
+                  "prediction_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/chinese/predictions.jsonl",
+                  "metrics_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/chinese/metrics.json",
+                  "din_sql_log": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/chinese/din_sql.log",
+                  "evaluate_log": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/chinese/evaluate_metrics.log",
+                  "status": "evaluation_failed",
+                  "din_sql_command": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/venv/bin/python3 /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/DIN-SQL.py --questions /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/sampled_tasks/INDIA_PRIMARY_POPULATION_CENSUS_1991_text2sql_20260316_104923_chinese.jsonl --evidence /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence.json --output /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/chinese/predictions.jsonl --config /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/psql_server/postgres_local_credential.json --use-database indicdb --use-schema india_primary_population_census_1991 --model deepseek/deepseek-v3.2 --max-workers 5 --max-requests-per-minute 60.0 --max-retries 6 --retry-backoff-seconds 2.0",
+                  "din_sql_returncode": 0,
+                  "evaluate_command": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/venv/bin/python3 /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/evaluate_metrics.py --pairs /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/chinese/predictions.jsonl --output /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/chinese/metrics.json --config /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/psql_server/postgres_local_credential.json --use-database indicdb --use-schema india_primary_population_census_1991 --id-col pair_id --execution-only",
+                  "evaluate_returncode": 1
+                },
+                {
+                  "language": "french",
+                  "evidence_mode": "with_evidence",
+                  "question_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/sampled_tasks/INDIA_PRIMARY_POPULATION_CENSUS_1991_text2sql_20260316_104923_french.jsonl",
+                  "evidence_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence.json",
+                  "prediction_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/french/predictions.jsonl",
+                  "metrics_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/french/metrics.json",
+                  "din_sql_log": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/french/din_sql.log",
+                  "evaluate_log": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/french/evaluate_metrics.log",
+                  "status": "evaluation_failed",
+                  "din_sql_command": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/venv/bin/python3 /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/DIN-SQL.py --questions /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/sampled_tasks/INDIA_PRIMARY_POPULATION_CENSUS_1991_text2sql_20260316_104923_french.jsonl --evidence /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence.json --output /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/french/predictions.jsonl --config /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/psql_server/postgres_local_credential.json --use-database indicdb --use-schema india_primary_population_census_1991 --model deepseek/deepseek-v3.2 --max-workers 5 --max-requests-per-minute 60.0 --max-retries 6 --retry-backoff-seconds 2.0",
+                  "din_sql_returncode": 0,
+                  "evaluate_command": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/venv/bin/python3 /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/evaluate_metrics.py --pairs /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/french/predictions.jsonl --output /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/french/metrics.json --config /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/psql_server/postgres_local_credential.json --use-database indicdb --use-schema india_primary_population_census_1991 --id-col pair_id --execution-only",
+                  "evaluate_returncode": 1
+                },
+                {
+                  "language": "italian",
+                  "evidence_mode": "with_evidence",
+                  "question_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/sampled_tasks/INDIA_PRIMARY_POPULATION_CENSUS_1991_text2sql_20260316_104923_italian.jsonl",
+                  "evidence_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence.json",
+                  "prediction_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/italian/predictions.jsonl",
+                  "metrics_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/italian/metrics.json",
+                  "din_sql_log": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/italian/din_sql.log",
+                  "evaluate_log": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/italian/evaluate_metrics.log",
+                  "status": "evaluation_failed",
+                  "din_sql_command": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/venv/bin/python3 /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/DIN-SQL.py --questions /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/sampled_tasks/INDIA_PRIMARY_POPULATION_CENSUS_1991_text2sql_20260316_104923_italian.jsonl --evidence /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence.json --output /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/italian/predictions.jsonl --config /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/psql_server/postgres_local_credential.json --use-database indicdb --use-schema india_primary_population_census_1991 --model deepseek/deepseek-v3.2 --max-workers 5 --max-requests-per-minute 60.0 --max-retries 6 --retry-backoff-seconds 2.0",
+                  "din_sql_returncode": 0,
+                  "evaluate_command": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/venv/bin/python3 /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/evaluate_metrics.py --pairs /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/italian/predictions.jsonl --output /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/italian/metrics.json --config /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/psql_server/postgres_local_credential.json --use-database indicdb --use-schema india_primary_population_census_1991 --id-col pair_id --execution-only",
+                  "evaluate_returncode": 1
+                },
+                {
+                  "language": "korean",
+                  "evidence_mode": "with_evidence",
+                  "question_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/sampled_tasks/INDIA_PRIMARY_POPULATION_CENSUS_1991_text2sql_20260316_104923_korean.jsonl",
+                  "evidence_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence.json",
+                  "prediction_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/korean/predictions.jsonl",
+                  "metrics_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/korean/metrics.json",
+                  "din_sql_log": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/korean/din_sql.log",
+                  "evaluate_log": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/korean/evaluate_metrics.log",
+                  "status": "evaluation_failed",
+                  "din_sql_command": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/venv/bin/python3 /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/DIN-SQL.py --questions /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/sampled_tasks/INDIA_PRIMARY_POPULATION_CENSUS_1991_text2sql_20260316_104923_korean.jsonl --evidence /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence.json --output /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/korean/predictions.jsonl --config /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/psql_server/postgres_local_credential.json --use-database indicdb --use-schema india_primary_population_census_1991 --model deepseek/deepseek-v3.2 --max-workers 5 --max-requests-per-minute 60.0 --max-retries 6 --retry-backoff-seconds 2.0",
+                  "din_sql_returncode": 0,
+                  "evaluate_command": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/venv/bin/python3 /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/evaluate_metrics.py --pairs /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/korean/predictions.jsonl --output /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/korean/metrics.json --config /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/psql_server/postgres_local_credential.json --use-database indicdb --use-schema india_primary_population_census_1991 --id-col pair_id --execution-only",
+                  "evaluate_returncode": 1
+                },
+                {
+                  "language": "spanish",
+                  "evidence_mode": "with_evidence",
+                  "question_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/sampled_tasks/INDIA_PRIMARY_POPULATION_CENSUS_1991_text2sql_20260316_104923_spanish.jsonl",
+                  "evidence_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence.json",
+                  "prediction_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/spanish/predictions.jsonl",
+                  "metrics_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/spanish/metrics.json",
+                  "din_sql_log": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/spanish/din_sql.log",
+                  "evaluate_log": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/spanish/evaluate_metrics.log",
+                  "status": "evaluation_failed",
+                  "din_sql_command": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/venv/bin/python3 /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/DIN-SQL.py --questions /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/sampled_tasks/INDIA_PRIMARY_POPULATION_CENSUS_1991_text2sql_20260316_104923_spanish.jsonl --evidence /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_PRIMARY_POPULATION_CENSUS_1991_evidence.json --output /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/spanish/predictions.jsonl --config /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/psql_server/postgres_local_credential.json --use-database indicdb --use-schema india_primary_population_census_1991 --model deepseek/deepseek-v3.2 --max-workers 5 --max-requests-per-minute 60.0 --max-retries 6 --retry-backoff-seconds 2.0",
+                  "din_sql_returncode": 0,
+                  "evaluate_command": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/venv/bin/python3 /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/evaluate_metrics.py --pairs /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/spanish/predictions.jsonl --output /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_PRIMARY_POPULATION_CENSUS_1991/results_dinsql/Deepseek_v3.2/with_evidence/spanish/metrics.json --config /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/psql_server/postgres_local_credential.json --use-database indicdb --use-schema india_primary_population_census_1991 --id-col pair_id --execution-only",
+                  "evaluate_returncode": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "finished_at": "2026-05-27T18:34:17"
+}

@@ -1,0 +1,630 @@
+{
+  "summary": {
+    "total": 69,
+    "execution_correct": 54,
+    "execution_accuracy": 0.782608695652174
+  },
+  "results": [
+    {
+      "instance_id": "766ad2ba",
+      "question": "사상자 수가 2보다 많고 관련된 운전자의 운전 경력이 1-2yr인 사고들의 사고 ID를 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.ACCIDENT_ID FROM FACT_ACCIDENT AS T1 JOIN DIM_DRIVER AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID WHERE T1.NUMBER_OF_CASUALTIES > 2 AND T2.DRIVING_EXPERIENCE = '1-2yr';",
+      "predicted_sql": "SELECT fact_accident.accident_id\nFROM fact_accident\nJOIN dim_driver ON fact_accident.driver_id = dim_driver.driver_id\nWHERE fact_accident.number_of_casualties > 2\n    AND dim_driver.driving_experience = '1-2yr'",
+      "error_info": null
+    },
+    {
+      "instance_id": "87f86ad9",
+      "question": "사상자 수가 2보다 많고 관련 운전자의 운전 경력이 1-2yr인 모든 사고의 사고 ID를 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.ACCIDENT_ID FROM FACT_ACCIDENT AS T1 JOIN DIM_DRIVER AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID WHERE T1.NUMBER_OF_CASUALTIES > 2 AND T2.DRIVING_EXPERIENCE = '1-2yr';",
+      "predicted_sql": "SELECT T1.accident_id\nFROM fact_accident AS T1\nJOIN dim_driver AS T2 ON T1.driver_id = T2.driver_id\nWHERE T1.number_of_casualties > 2\n  AND T2.driving_experience = '1-2yr'",
+      "error_info": null
+    },
+    {
+      "instance_id": "fbef6271",
+      "question": "운전 경력이 1-2yr인 운전자에 대해 각 사고 심각도와 사고 ID의 총개수를 나열하되, 사고가 1건을 초과하는 심각도 수준만 표시하고 결과를 사고 심각도순으로 정렬하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.ACCIDENT_SEVERITY, COUNT(T1.ACCIDENT_ID) FROM FACT_ACCIDENT AS T1 JOIN DIM_DRIVER AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID WHERE T2.DRIVING_EXPERIENCE = '1-2yr' GROUP BY T1.ACCIDENT_SEVERITY HAVING COUNT(T1.ACCIDENT_ID) > 1 ORDER BY T1.ACCIDENT_SEVERITY",
+      "predicted_sql": "SELECT\n    fa.accident_severity,\n    COUNT(fa.accident_id) AS total_accidents\nFROM",
+      "error_info": "syntax error at end of input\nLINE 4: FROM\n            ^\n"
+    },
+    {
+      "instance_id": "1c2bc7c6",
+      "question": "운전 경력이 1-2yr인 운전자가 관련된 사례 중에서, 각 사고의 총 사상자 수 합계가 3보다 큰 사고들의 사고 ID를 최대 사상자 수의 내림차순으로 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.ACCIDENT_ID FROM DIM_DRIVER AS T1 INNER JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID LEFT JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.DRIVING_EXPERIENCE = '1-2yr' GROUP BY T2.ACCIDENT_ID HAVING SUM(T2.NUMBER_OF_CASUALTIES) > 3 ORDER BY MAX(T2.NUMBER_OF_CASUALTIES) DESC",
+      "predicted_sql": "SELECT fact_accident.accident_id\nFROM fact_accident\nJOIN dim_driver ON fact_accident.driver_id = dim_driver.driver_id\nWHERE dim_driver.driving_experience = '1-2yr'\n  AND fact_accident.number_of_casualties > 3\nORDER BY fact_accident.number_of_casualties DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "3cfe7990",
+      "question": "운전자의 각 연령대별로 연령대, 평균 사상자 수, 그리고 사고 ID의 총 개수를 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), COUNT(T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.AGE_BAND_OF_DRIVER",
+      "predicted_sql": "SELECT T2.age_band_of_driver,\n       AVG(T1.number_of_casualties),\n       COUNT(DISTINCT T1.accident_id)\nFROM fact_accident AS T1\nJOIN dim_driver AS T2 ON T1.driver_id = T2.driver_id\nGROUP BY T2.age_band_of_driver",
+      "error_info": null
+    },
+    {
+      "instance_id": "7768a6de",
+      "question": "운전자의 각 연령대별로 연령대 자체, 평균 사상자 수, 그리고 사고 ID의 총 개수를 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), COUNT(T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.AGE_BAND_OF_DRIVER",
+      "predicted_sql": "SELECT T2.age_band_of_driver,\n       AVG(T1.number_of_casualties) AS average_casualties,\n       COUNT(DISTINCT T1.accident_id) AS total_accident_count\nFROM fact_accident AS T1\nJOIN dim_driver AS T2 ON T1.driver_id = T2.driver_id\nGROUP BY T2.age_band_of_driver",
+      "error_info": null
+    },
+    {
+      "instance_id": "9b1772a3",
+      "question": "운전자의 각 연령대별로 연령대, 평균 사상자 수, 그리고 사고 ID의 총 개수를 나열하되, 평균 사상자 수가 1보다 큰 그룹만 필터링하고 결과는 사고 건수의 내림차순으로 정렬하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), COUNT(T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.AGE_BAND_OF_DRIVER HAVING AVG(T2.NUMBER_OF_CASUALTIES) > 1 ORDER BY COUNT(T2.ACCIDENT_ID) DESC",
+      "predicted_sql": "SELECT\n    dim_driver.age_band_of_driver,\n    AVG(fact_accident.number_of_casualties) AS avg_casualties,\n    COUNT(fact_accident.accident_id) AS accident_count\nFROM fact_accident\nJOIN dim_driver ON fact_accident.driver_id = dim_driver.driver_id\nGROUP BY dim_driver.age_band_of_driver\nHAVING AVG(fact_accident.number_of_casualties) > 1\nORDER BY COUNT(fact_accident.accident_id) DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "b09b770f",
+      "question": "운전자의 연령대별로, 1건보다 많은 사고에 연루된 운전자들에 대해 연령대, 평균 사상자 수, 그리고 고유한 사고 ID의 총 개수는 무엇이며, 평균 사상자 수의 내림차순으로 정렬하면 어떻게 됩니까?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), COUNT(DISTINCT T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.AGE_BAND_OF_DRIVER HAVING COUNT(T2.ACCIDENT_ID) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+      "predicted_sql": "SELECT\n    d.age_band_of_driver,\n    AVG(f.number_of_casualties) AS average_casualties,\n    COUNT(DISTINCT f.accident_id) AS total_unique_accidents\nFROM fact_accident f\nJOIN dim_driver d ON f.driver_id = d.driver_id\nWHERE f.driver_id IN (\n    SELECT driver_id\n    FROM fact_accident\n    GROUP BY driver_id\n    HAVING COUNT(DISTINCT accident_id) > 1\n)\nGROUP BY d.age_band_of_driver\nORDER BY average_casualties DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "046b8b21",
+      "question": "평균 사상자 수가 가장 높은 운전자 연령대와 사상자 심각도 조합 상위 5개를 나열하고, 각 그룹의 연령대, 평균 사상자 수, 그리고 사상자 심각도를 보여주세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), T3.CASUALTY_SEVERITY FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.AGE_BAND_OF_DRIVER, T3.CASUALTY_SEVERITY ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC LIMIT 5",
+      "predicted_sql": "SELECT\n    dim_driver.age_band_of_driver,\n    bridge_accident_casualty.casualty_severity,\n    AVG(fact_accident.number_of_casualties) as avg_casualties\nFROM dim_driver\nJOIN fact_accident ON dim_driver.driver_id = fact_accident.driver_id\nJOIN bridge_accident_casualty ON fact_accident.accident_id = bridge_accident_casualty.accident_id\nGROUP BY dim_driver.age_band_of_driver, bridge_accident_casualty.casualty_severity\nORDER BY avg_casualties DESC\nLIMIT 5",
+      "error_info": null
+    },
+    {
+      "instance_id": "cf10373b",
+      "question": "운전자의 연령대와 각 연령대별 평균 사상자 수를 평균 사상자 수의 내림차순으로 정렬하여 상위 5개 결과만 보여주세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.AGE_BAND_OF_DRIVER ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC LIMIT 5",
+      "predicted_sql": "SELECT dim_driver.age_band_of_driver, AVG(fact_accident.number_of_casualties)\nFROM fact_accident\nJOIN dim_driver ON fact_accident.driver_id = dim_driver.driver_id\nGROUP BY dim_driver.age_band_of_driver\nORDER BY AVG(fact_accident.number_of_casualties) DESC\nLIMIT 5",
+      "error_info": null
+    },
+    {
+      "instance_id": "7f0c5971",
+      "question": "운전자 연령대와 평균 사상자 수, 그리고 사상자 심각도를 보여주되, 운전자 연령대와 사상자 심각도별로 그룹화하고 평균 사상자 수가 1보다 큰 그룹만 대상으로 하며, 평균 사상자 수의 내림차순으로 상위 5개 결과를 나열하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), T3.CASUALTY_SEVERITY FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.AGE_BAND_OF_DRIVER, T3.CASUALTY_SEVERITY HAVING AVG(T2.NUMBER_OF_CASUALTIES) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC LIMIT 5",
+      "predicted_sql": "SELECT dim_driver.age_band_of_driver,\n       bridge_accident_casualty.casualty_severity,\n       AVG(casualty_count) as avg_casualties\nFROM dim_driver\nJOIN fact_accident ON dim_driver.driver_id = fact_accident.driver_id\nJOIN bridge_accident_casualty ON fact_accident.accident_id = bridge_accident_casualty.accident_id\nJOIN (\n    SELECT accident_id, casualty_severity, COUNT(*) as casualty_count\n    FROM bridge_accident_casualty\n    GROUP BY accident_id, casualty_severity\n) casualty_counts ON bridge_accident_casualty.accident_id = casualty_counts.accident_id\n                  AND bridge_accident_casualty.casualty_severity = casualty_counts.casualty_severity\nGROUP BY dim_driver.age_band_of_driver, bridge_accident_casualty.casualty_severity\nHAVING avg_casualties > 1\nORDER BY avg_casualties DESC\nLIMIT 5",
+      "error_info": "column \"avg_casualties\" does not exist\nLINE 14: HAVING avg_casualties > 1\n                ^\n"
+    },
+    {
+      "instance_id": "8567458b",
+      "question": "사고가 1건을 초과한 운전자 연령대 중에서 평균 사상자 수를 기준으로 내림차순 정렬했을 때 상위 5개 운전자 연령대의 운전자 연령대, 평균 사상자 수, 그리고 사상자 심각도의 총합을 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), SUM(T3.CASUALTY_SEVERITY) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.AGE_BAND_OF_DRIVER HAVING COUNT(T2.ACCIDENT_ID) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC LIMIT 5",
+      "predicted_sql": "SELECT\n    dim_driver.age_band_of_driver,\n    AVG(fact_accident.number_of_casualties) AS average_casualties,\n    SUM(bridge_accident_casualty.casualty_severity) AS total_casualty_severity\nFROM dim_driver\nJOIN fact_accident ON dim_driver.driver_id = fact_accident.driver_id\nJOIN bridge_accident_casualty ON fact_accident.accident_id = bridge_accident_casualty.accident_id\nGROUP BY dim_driver.age_band_of_driver\nHAVING COUNT(DISTINCT fact_accident.accident_id) > 1\nORDER BY AVG(fact_accident.number_of_casualties) DESC\nLIMIT 5",
+      "error_info": null
+    },
+    {
+      "instance_id": "cf18af22",
+      "question": "casualty class가 'Pedestrian'이고 casualty의 fitness가 'Normal'인 레코드에 대해 casualty dimension의 모든 열을 보여줘.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT * FROM DIM_CASUALTY WHERE CASUALTY_CLASS = 'Pedestrian' AND FITNESS_OF_CASUALTY = 'Normal';",
+      "predicted_sql": "SELECT * FROM dim_casualty WHERE casualty_class = 'Pedestrian' AND fitness_of_casualty = 'Normal'",
+      "error_info": null
+    },
+    {
+      "instance_id": "7048add7",
+      "question": "적합성이 \"Normal\"로 기록된 \"Pedestrian\"으로 분류된 모든 개인에 대해, 사상자 ID와 사상자의 성별을 성별의 알파벳순으로 나열하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.CASUALTY_ID, T1.SEX_OF_CASUALTY FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' AND T1.FITNESS_OF_CASUALTY = 'Normal' ORDER BY T1.SEX_OF_CASUALTY ASC",
+      "predicted_sql": "SELECT casualty_id, sex_of_casualty\nFROM dim_casualty\nWHERE casualty_class = 'Pedestrian'\n  AND fitness_of_casualty = 'Normal'\nORDER BY sex_of_casualty",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "c24c13f9",
+      "question": "피해자의 적합성이 Normal이고 Pedestrian으로 분류된 피해자들의 casualty ID를 casualty ID별로 그룹화하여 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.CASUALTY_ID FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' GROUP BY T1.CASUALTY_ID HAVING T1.FITNESS_OF_CASUALTY = 'Normal';",
+      "predicted_sql": "SELECT DISTINCT casualty_id\nFROM dim_casualty\nWHERE casualty_class = 'Pedestrian'\n  AND fitness_of_casualty = 'Normal'",
+      "error_info": null
+    },
+    {
+      "instance_id": "3de8a963",
+      "question": "'Pedestrian'로 분류되고 적합성 수준이 'Normal'인 사상자들에 대해, 각 사상자가 최소 1건의 사고와 연관되어 있도록 하면서 사상자 ID, 사상자 등급, 사상자의 성별, 그리고 사고 심각도를 나열하고, 결과를 사상자 등급별로 정렬하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.CASUALTY_ID, T1.CASUALTY_CLASS, T1.SEX_OF_CASUALTY, T3.ACCIDENT_SEVERITY FROM DIM_CASUALTY AS T1 INNER JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID INNER JOIN FACT_ACCIDENT AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' AND T1.FITNESS_OF_CASUALTY = 'Normal' GROUP BY T1.CASUALTY_ID, T1.CASUALTY_CLASS, T1.SEX_OF_CASUALTY, T3.ACCIDENT_SEVERITY HAVING COUNT(T2.ACCIDENT_ID) >= 1 ORDER BY T1.CASUALTY_CLASS ASC",
+      "predicted_sql": "SELECT DISTINCT\n    dim_casualty.casualty_id,\n    dim_casualty.casualty_class,\n    dim_casualty.sex_of_casualty,\n    fact_accident.accident_severity\nFROM dim_casualty\nJOIN bridge_accident_casualty ON dim_casualty.casualty_id = bridge_accident_casualty.casualty_id\nJOIN fact_accident ON bridge_accident_casualty.accident_id = fact_accident.accident_id\nWHERE dim_casualty.casualty_class = 'Pedestrian'\n    AND dim_casualty.fitness_of_casualty = 'Normal'\nORDER BY dim_casualty.casualty_class",
+      "error_info": null
+    },
+    {
+      "instance_id": "8d7cf5db",
+      "question": "Pedestrian으로 분류된 사상자에 대해, 각 사상자의 성별과 해당 평균 사상자 심각도를 사상자의 성별별로 그룹화하여 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SEX_OF_CASUALTY, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' GROUP BY T1.SEX_OF_CASUALTY",
+      "predicted_sql": "SELECT dim_casualty.sex_of_casualty,\n       AVG(bridge_accident_casualty.casualty_severity) AS avg_casualty_severity\nFROM dim_casualty\nJOIN bridge_accident_casualty ON dim_casualty.casualty_id = bridge_accident_casualty.casualty_id\nWHERE dim_casualty.casualty_class = 'Pedestrian'\nGROUP BY dim_casualty.sex_of_casualty\nORDER BY dim_casualty.sex_of_casualty",
+      "error_info": null
+    },
+    {
+      "instance_id": "ae17899a",
+      "question": "Pedestrian으로 분류된 사상자에 대해, 사상자의 성별별로 그룹화하여 각 사상자 성별과 평균 사상자 심각도를 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SEX_OF_CASUALTY, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' GROUP BY T1.SEX_OF_CASUALTY",
+      "predicted_sql": "SELECT T1.sex_of_casualty, AVG(T2.casualty_severity)\nFROM dim_casualty AS T1\nJOIN bridge_accident_casualty AS T2 ON T1.casualty_id = T2.casualty_id\nWHERE T1.casualty_class = 'Pedestrian'\nGROUP BY T1.sex_of_casualty",
+      "error_info": null
+    },
+    {
+      "instance_id": "7265cf38",
+      "question": "Pedestrian로 분류된 사상자에 대해, 각 사상자의 성별과 해당 평균 사상자 심각도를 나열하되, 평균 심각도가 1보다 큰 그룹만 필터링하고 결과를 사상자의 성별 순으로 정렬하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SEX_OF_CASUALTY, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' GROUP BY T1.SEX_OF_CASUALTY HAVING AVG(T2.CASUALTY_SEVERITY) > 1 ORDER BY T1.SEX_OF_CASUALTY",
+      "predicted_sql": "SELECT\n    dc.sex_of_casualty,\n    AVG(bac.casualty_severity) AS avg_severity\nFROM",
+      "error_info": "syntax error at end of input\nLINE 4: FROM\n            ^\n"
+    },
+    {
+      "instance_id": "e504e82d",
+      "question": "\"Driver or rider\" 또는 \"Pedestrian\"에 해당하고 연령대가 \"18-30\" 또는 \"31-50\"인 사상자들에 대해, 성별별로 그룹화하여 사상자의 성별과 평균 사상자 심각도를 보여주고, 평균 심각도가 1보다 큰 경우만 포함하며, 결과는 평균 사상자 심각도의 내림차순으로 정렬하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.SEX_OF_CASUALTY, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 INNER JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID INNER JOIN FACT_ACCIDENT AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.CASUALTY_CLASS IN ('Driver or rider', 'Pedestrian') AND T1.AGE_BAND_OF_CASUALTY IN ('31-50', '18-30') GROUP BY T1.SEX_OF_CASUALTY HAVING AVG(T2.CASUALTY_SEVERITY) > 1 ORDER BY AVG(T2.CASUALTY_SEVERITY) DESC",
+      "predicted_sql": "SELECT\n    c.sex_of_casualty,\n    AVG(b.casualty_severity) AS avg_casualty_severity\nFROM",
+      "error_info": "syntax error at end of input\nLINE 4: FROM\n            ^\n"
+    },
+    {
+      "instance_id": "306138c8",
+      "question": "각 분류별 사상자 등급과 평균 사상자 심각도를 평균 심각도가 높은 순서부터 낮은 순서로 나열하고, 상위 10개 결과만 보여주세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.CASUALTY_CLASS, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID GROUP BY T1.CASUALTY_CLASS ORDER BY AVG(T2.CASUALTY_SEVERITY) DESC LIMIT 10",
+      "predicted_sql": "SELECT T2.casualty_class, AVG(T1.casualty_severity)\nFROM bridge_accident_casualty AS T1\nJOIN dim_casualty AS T2 ON T1.casualty_id = T2.casualty_id\nGROUP BY T2.casualty_class\nORDER BY AVG(T1.casualty_severity) DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "a3527c36",
+      "question": "각 사상자 분류별로 사상자 분류와 평균 사상자 심각도를 보여주고, 평균 심각도가 높은 순서에서 낮은 순서로 정렬하며, 상위 10개 결과만 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.CASUALTY_CLASS, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID GROUP BY T1.CASUALTY_CLASS ORDER BY AVG(T2.CASUALTY_SEVERITY) DESC LIMIT 10",
+      "predicted_sql": "SELECT dim_casualty.casualty_class, avg(bridge_accident_casualty.casualty_severity)\nFROM dim_casualty\nJOIN bridge_accident_casualty ON dim_casualty.casualty_id = bridge_accident_casualty.casualty_id\nGROUP BY dim_casualty.casualty_class\nORDER BY avg(bridge_accident_casualty.casualty_severity) DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "e152aadf",
+      "question": "평균 사상자 심각도가 1보다 큰 사상자 등급을 평균 심각도가 높은 순서부터 낮은 순서로 정렬하여 나열하고, 상위 10개 결과만 보여주세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.CASUALTY_CLASS FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID GROUP BY T1.CASUALTY_CLASS HAVING AVG(T2.CASUALTY_SEVERITY) > 1 ORDER BY AVG(T2.CASUALTY_SEVERITY) DESC LIMIT 10",
+      "predicted_sql": "SELECT T2.casualty_class, AVG(T1.casualty_severity) AS avg_severity\nFROM bridge_accident_casualty AS T1\nJOIN dim_casualty AS T2 ON T1.casualty_id = T2.casualty_id\nGROUP BY T2.casualty_class\nHAVING AVG(T1.casualty_severity) > 1\nORDER BY avg_severity DESC\nLIMIT 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "d6f75ea7",
+      "question": "각 사상자 분류와 해당 사상자 분류의 평균 사상자 심각도를 나열하고, 평균 사상자 심각도의 내림차순으로 정렬하여 상위 10개 결과만 보여주세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.CASUALTY_CLASS, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID GROUP BY T1.CASUALTY_CLASS ORDER BY AVG(T2.CASUALTY_SEVERITY) DESC LIMIT 10",
+      "predicted_sql": "SELECT dim_casualty.casualty_class,\n       AVG(bridge_accident_casualty.casualty_severity) AS avg_severity\nFROM dim_casualty\nJOIN bridge_accident_casualty ON dim_casualty.casualty_id = bridge_accident_casualty.casualty_id\nGROUP BY dim_casualty.casualty_class\nORDER BY avg_severity DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "280e1324",
+      "question": "사상자의 성별, 연령대, 근무 상태와 함께 사상자 심각도를 심각도 수준이 가장 높은 것부터 가장 낮은 것 순으로 정렬하여 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY, T2.CASUALTY_SEVERITY FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID ORDER BY T2.CASUALTY_SEVERITY DESC",
+      "predicted_sql": "SELECT dim_casualty.sex_of_casualty,\n       dim_casualty.age_band_of_casualty,\n       dim_casualty.work_of_casualty,\n       bridge_accident_casualty.casualty_severity\nFROM dim_casualty\nJOIN bridge_accident_casualty ON dim_casualty.casualty_id = bridge_accident_casualty.casualty_id\nORDER BY bridge_accident_casualty.casualty_severity DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "428302b5",
+      "question": "각 사상자의 성별, 연령대, 근무 상태와 사상자 심각도를 나열하고, 사상자 심각도가 높은 순서로 정렬하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY, T2.CASUALTY_SEVERITY FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID ORDER BY T2.CASUALTY_SEVERITY DESC",
+      "predicted_sql": "SELECT dim_casualty.sex_of_casualty,\n       dim_casualty.age_band_of_casualty,\n       dim_casualty.work_of_casualty,\n       bridge_accident_casualty.casualty_severity\nFROM dim_casualty\nJOIN bridge_accident_casualty ON dim_casualty.casualty_id = bridge_accident_casualty.casualty_id\nORDER BY bridge_accident_casualty.casualty_severity ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "6526c5cd",
+      "question": "각 그룹별로 평균 사상자 심각도가 1보다 큰 경우에 대해, 사상자의 성별, 사상자의 연령대, 사상자의 근무 상태와 함께 평균 사상자 심각도를 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID GROUP BY T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY HAVING AVG(T2.CASUALTY_SEVERITY) > 1",
+      "predicted_sql": "SELECT T1.sex_of_casualty,\n       T1.age_band_of_casualty,\n       T1.work_of_casualty,\n       AVG(T2.casualty_severity) AS avg_casualty_severity\nFROM dim_casualty AS T1\nJOIN bridge_accident_casualty AS T2 ON T1.casualty_id = T2.casualty_id\nGROUP BY T1.sex_of_casualty, T1.age_band_of_casualty, T1.work_of_casualty\nHAVING AVG(T2.casualty_severity) > 1",
+      "error_info": null
+    },
+    {
+      "instance_id": "fd8870b7",
+      "question": "사상자의 성별, 사상자의 연령대, 사상자의 근무 상태, 그리고 사상자 심각도를 나열하고, 각 그룹에 대해 사고가 적어도 1건 이상 있는 경우의 사고 ID 총개수를 함께 보여주되, 사상자 심각도를 내림차순으로 정렬하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY, T2.CASUALTY_SEVERITY, COUNT(T3.ACCIDENT_ID) FROM DIM_CASUALTY AS T1 INNER JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID INNER JOIN FACT_ACCIDENT AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY, T2.CASUALTY_SEVERITY HAVING COUNT(T3.ACCIDENT_ID) >= 1 ORDER BY T2.CASUALTY_SEVERITY DESC",
+      "predicted_sql": "SELECT T1.sex_of_casualty,\n       T1.age_band_of_casualty,\n       T1.work_of_casualty,\n       T2.casualty_severity,\n       COUNT(DISTINCT T2.accident_id) AS accident_count\nFROM dim_casualty AS T1\nJOIN bridge_accident_casualty AS T2 ON T1.casualty_id = T2.casualty_id\nGROUP BY T1.sex_of_casualty,\n         T1.age_band_of_casualty,\n         T1.work_of_casualty,\n         T2.casualty_severity\nORDER BY T2.casualty_severity DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "e6ce2687",
+      "question": "Pedestrian으로 분류되고 사상자 심각도 수준이 2인 사상자들의 ID를 나열하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.CASUALTY_ID FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' AND T2.CASUALTY_SEVERITY = 2;",
+      "predicted_sql": "SELECT DISTINCT dim_casualty.casualty_id\nFROM dim_casualty\nJOIN bridge_accident_casualty ON dim_casualty.casualty_id = bridge_accident_casualty.casualty_id\nWHERE dim_casualty.casualty_class = 'Pedestrian'\n  AND bridge_accident_casualty.casualty_severity = 2\nORDER BY dim_casualty.casualty_id ASC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "946fede9",
+      "question": "Pedestrian으로 분류되고 사상자 심각도 수준이 2인 모든 사상자의 ID를 나열하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.CASUALTY_ID FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' AND T2.CASUALTY_SEVERITY = 2",
+      "predicted_sql": "SELECT DISTINCT dim_casualty.casualty_id\nFROM dim_casualty\nJOIN bridge_accident_casualty ON dim_casualty.casualty_id = bridge_accident_casualty.casualty_id\nWHERE dim_casualty.casualty_class = 'Pedestrian'\n  AND bridge_accident_casualty.casualty_severity = 2\nORDER BY dim_casualty.casualty_id ASC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "94ebfb34",
+      "question": "사상자 심각도가 2인 기록 중에서 사상자 등급이 'Pedestrian'인 경우만 필터링하여 표시하고, 사상자 등급별로 정렬했을 때 교량 사고 사상자 ID의 총 개수와 사상자 등급을 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.CASUALTY_CLASS, COUNT(T2.BRIDGE_ACCIDENT_CASUALTY_ID) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T2.CASUALTY_SEVERITY = 2 GROUP BY T1.CASUALTY_CLASS HAVING T1.CASUALTY_CLASS = 'Pedestrian' ORDER BY T1.CASUALTY_CLASS",
+      "predicted_sql": "SELECT COUNT(T1.bridge_accident_casualty_id), T2.casualty_class\nFROM bridge_accident_casualty AS T1\nJOIN dim_casualty AS T2 ON T1.casualty_id = T2.casualty_id\nWHERE T1.casualty_severity = 2\n  AND T2.casualty_class = 'Pedestrian'\nGROUP BY T2.casualty_class\nORDER BY T2.casualty_class",
+      "error_info": null
+    },
+    {
+      "instance_id": "4a7c38dd",
+      "question": "사상자 분류가 'Pedestrian'이고 사상자 심각도가 2단계인 모든 기록에 대해, 사상자 분류로 그룹화하고 정렬하여 사상자 분류를 보여주세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.CASUALTY_CLASS FROM DIM_CASUALTY AS T1 INNER JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID INNER JOIN FACT_ACCIDENT AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' AND T2.CASUALTY_SEVERITY = 2 GROUP BY T1.CASUALTY_CLASS ORDER BY T1.CASUALTY_CLASS ASC",
+      "predicted_sql": "SELECT dim_casualty.casualty_class\nFROM bridge_accident_casualty\nJOIN dim_casualty ON bridge_accident_casualty.casualty_id = dim_casualty.casualty_id\nWHERE dim_casualty.casualty_class = 'Pedestrian'\n  AND bridge_accident_casualty.casualty_severity = 2\nGROUP BY dim_casualty.casualty_class\nORDER BY dim_casualty.casualty_class",
+      "error_info": null
+    },
+    {
+      "instance_id": "94e894a9",
+      "question": "Monday에 발생한 사고에 대해, 사고가 발생한 각 지역별로 평균 사상자 수와 사고 ID의 총 개수를 사고 지역별로 그룹화하여 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.AREA_ACCIDENT_OCCURRED, AVG(T1.NUMBER_OF_CASUALTIES), COUNT(T1.ACCIDENT_ID) FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Monday' GROUP BY T2.AREA_ACCIDENT_OCCURRED",
+      "predicted_sql": "SELECT\n    dim_geography.area_accident_occurred,\n    AVG(fact_accident.number_of_casualties) AS avg_casualties,\n    COUNT(fact_accident.accident_id) AS total_accidents\nFROM fact_accident\nJOIN dim_time ON fact_accident.time_id = dim_time.time_id\nJOIN dim_geography ON fact_accident.geography_id = dim_geography.geography_id\nWHERE dim_time.day_of_week = 'Monday'\nGROUP BY dim_geography.area_accident_occurred\nORDER BY dim_geography.area_accident_occurred",
+      "error_info": null
+    },
+    {
+      "instance_id": "9e2c6bbe",
+      "question": "Friday에 발생한 사고들에 대해, 사고가 발생한 각 지역과 함께 해당 지역의 평균 사상자 수 및 사고 ID의 총 개수를 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.AREA_ACCIDENT_OCCURRED, AVG(T1.NUMBER_OF_CASUALTIES), COUNT(T1.ACCIDENT_ID) FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Friday' GROUP BY T2.AREA_ACCIDENT_OCCURRED",
+      "predicted_sql": "SELECT\n    T2.area_accident_occurred,\n    AVG(T1.number_of_casualties) AS average_casualties,\n    COUNT(DISTINCT T1.accident_id) AS total_accidents\nFROM fact_accident AS T1\nJOIN dim_time AS T3 ON T1.time_id = T3.time_id\nJOIN dim_geography AS T2 ON T1.geography_id = T2.geography_id\nWHERE T3.day_of_week = 'Friday'\nGROUP BY T2.area_accident_occurred",
+      "error_info": null
+    },
+    {
+      "instance_id": "5be88ed8",
+      "question": "Monday에 발생한 사고들에 대해, 사고가 발생한 각 지역과 그 지역의 사고당 평균 사상자 수, 그리고 사고 ID의 총 개수를 나열하되, 최소 1건 이상의 사고가 있는 지역만 표시하고 결과는 평균 사상자 수가 높은 순서부터 낮은 순서로 정렬하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.AREA_ACCIDENT_OCCURRED, AVG(T1.NUMBER_OF_CASUALTIES), COUNT(T1.ACCIDENT_ID) FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Monday' GROUP BY T2.AREA_ACCIDENT_OCCURRED HAVING COUNT(T1.ACCIDENT_ID) > 0 ORDER BY AVG(T1.NUMBER_OF_CASUALTIES) DESC",
+      "predicted_sql": "SELECT dim_geography.area_accident_occurred,\n       AVG(fact_accident.number_of_casualties) AS avg_casualties_per_accident,\n       COUNT(DISTINCT fact_accident.accident_id) AS total_accidents\nFROM fact_accident\nJOIN dim_geography ON fact_accident.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_accident.time_id = dim_time.time_id\nWHERE dim_time.day_of_week = 'Monday'\nGROUP BY dim_geography.area_accident_occurred\nHAVING COUNT(DISTINCT fact_accident.accident_id) >= 1\nORDER BY avg_casualties_per_accident DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "ff0e8585",
+      "question": "Monday에 발생한 사고에 대해, 사고가 발생한 각 지역과 함께 평균 사상자 수 및 사고 ID의 총 개수를 지역별로 그룹화하여 나열하고, 평균 사상자 수의 내림차순으로 정렬하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.AREA_ACCIDENT_OCCURRED, AVG(T1.NUMBER_OF_CASUALTIES), COUNT(T1.ACCIDENT_ID) FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Monday' GROUP BY T2.AREA_ACCIDENT_OCCURRED HAVING COUNT(T1.ACCIDENT_ID) > 0 ORDER BY AVG(T1.NUMBER_OF_CASUALTIES) DESC",
+      "predicted_sql": "SELECT dim_geography.area_accident_occurred,\n       AVG(fact_accident.number_of_casualties),\n       COUNT(DISTINCT fact_accident.accident_id)\nFROM fact_accident\nJOIN dim_time ON fact_accident.time_id = dim_time.time_id\nJOIN dim_geography ON fact_accident.geography_id = dim_geography.geography_id\nWHERE dim_time.day_of_week = 'Monday'\nGROUP BY dim_geography.area_accident_occurred\nORDER BY AVG(fact_accident.number_of_casualties) DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "38852ca5",
+      "question": "사상자가 5명을 초과했거나 Sunday에 발생한 사건들에 대해, 사고가 발생한 고유한 지역을 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT DISTINCT T2.AREA_ACCIDENT_OCCURRED FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T1.NUMBER_OF_CASUALTIES > 5 OR T3.DAY_OF_WEEK IN ('Sunday')",
+      "predicted_sql": "SELECT DISTINCT dim_geography.area_accident_occurred\nFROM fact_accident\nJOIN dim_geography ON fact_accident.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_accident.time_id = dim_time.time_id\nWHERE fact_accident.number_of_casualties > 5 OR dim_time.day_of_week = 'Sunday'",
+      "error_info": null
+    },
+    {
+      "instance_id": "fa6e1133",
+      "question": "사상자 수가 5보다 크거나 요일이 Sunday인 모든 기록에 대해 사고가 발생한 지역을 나열하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.AREA_ACCIDENT_OCCURRED FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T2.NUMBER_OF_CASUALTIES > 5 OR T3.DAY_OF_WEEK IN ('Sunday');",
+      "predicted_sql": "SELECT dim_geography.area_accident_occurred\nFROM fact_accident\nJOIN dim_geography ON fact_accident.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_accident.time_id = dim_time.time_id\nWHERE fact_accident.number_of_casualties > 5 OR dim_time.day_of_week = 'Sunday'\nGROUP BY dim_geography.area_accident_occurred",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "8d4fc698",
+      "question": "단일 사고에서의 최대 사상자 수가 5를 초과하거나 기록된 요일 수가 1보다 큰 지역들에 대해, 사고가 발생한 지역을 알파벳순으로 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.AREA_ACCIDENT_OCCURRED FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID GROUP BY T1.AREA_ACCIDENT_OCCURRED HAVING MAX(T2.NUMBER_OF_CASUALTIES) > 5 OR COUNT(T3.DAY_OF_WEEK) > 1 ORDER BY T1.AREA_ACCIDENT_OCCURRED",
+      "predicted_sql": "SELECT g.area_accident_occurred\nFROM fact_accident f\nJOIN dim_geography g ON f.geography_id = g.geography_id\nJOIN dim_time t ON f.time_id = t.time_id\nGROUP BY g.area_accident_occurred\nHAVING MAX(f.number_of_casualties) > 5\n    OR COUNT(DISTINCT t.day_of_week) > 1\nORDER BY g.area_accident_occurred ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "6036219b",
+      "question": "사상자가 5명을 초과한 사고가 적어도 1건 있었거나 Sunday 또는 Monday에 발생한 사고가 적어도 1건 있었던 위치들에 대해, 사고가 발생한 지역을 나열하고 결과를 지역 이름의 알파벳순으로 정렬하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.AREA_ACCIDENT_OCCURRED FROM FACT_ACCIDENT AS T1 INNER JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID GROUP BY T2.AREA_ACCIDENT_OCCURRED HAVING SUM(CASE WHEN T1.NUMBER_OF_CASUALTIES > 5 THEN 1 ELSE 0 END) > 0 OR SUM(CASE WHEN T3.DAY_OF_WEEK IN ('Sunday', 'Monday') THEN 1 ELSE 0 END) > 0 ORDER BY T2.AREA_ACCIDENT_OCCURRED ASC",
+      "predicted_sql": "SELECT DISTINCT dim_geography.area_accident_occurred\nFROM fact_accident\nJOIN dim_geography ON fact_accident.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_accident.time_id = dim_time.time_id\nWHERE fact_accident.number_of_casualties > 5\n   OR dim_time.day_of_week IN ('Sunday', 'Monday')\nORDER BY dim_geography.area_accident_occurred ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "d26b618e",
+      "question": "Sunday에 발생했고 1대보다 많은 차량이 관련된 모든 사고에 대해, 사고 지역별로 그룹화하고 사고 지역 순으로 정렬하여 사고가 발생한 지역을 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.AREA_ACCIDENT_OCCURRED FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Sunday' AND T1.NUMBER_OF_VEHICLES_INVOLVED > 1 AND T3.DAY_OF_WEEK = 'Sunday' GROUP BY T2.AREA_ACCIDENT_OCCURRED ORDER BY T2.AREA_ACCIDENT_OCCURRED",
+      "predicted_sql": "SELECT dim_geography.area_accident_occurred\nFROM fact_accident\nJOIN dim_time ON fact_accident.time_id = dim_time.time_id\nJOIN dim_geography ON fact_accident.geography_id = dim_geography.geography_id\nWHERE dim_time.day_of_week = 'Sunday'\n  AND fact_accident.number_of_vehicles_involved > 1\nGROUP BY dim_geography.area_accident_occurred\nORDER BY dim_geography.area_accident_occurred",
+      "error_info": null
+    },
+    {
+      "instance_id": "9f67d6f2",
+      "question": "일요일 Sunday에 차량이 1대보다 많이 관련된 사고가 발생한 사건들에 대해, 월요일 Monday에는 사고가 전혀 발생하지 않은 지역들을 나열하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.AREA_ACCIDENT_OCCURRED FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Sunday' AND T1.NUMBER_OF_VEHICLES_INVOLVED > 1 GROUP BY T2.AREA_ACCIDENT_OCCURRED HAVING COUNT(CASE WHEN T3.DAY_OF_WEEK = 'Monday' THEN 1 END) = 0",
+      "predicted_sql": "SELECT DISTINCT dim_geography.area_accident_occurred\nFROM fact_accident\nJOIN dim_time ON fact_accident.time_id = dim_time.time_id\nJOIN dim_geography ON fact_accident.geography_id = dim_geography.geography_id\nWHERE dim_time.day_of_week = 'Sunday'\n  AND fact_accident.number_of_vehicles_involved > 1\n  AND NOT EXISTS (\n    SELECT 1\n    FROM fact_accident fa2\n    JOIN dim_time dt2 ON fa2.time_id = dt2.time_id\n    JOIN dim_geography dg2 ON fa2.geography_id = dg2.geography_id\n    WHERE dt2.day_of_week = 'Monday'\n      AND dg2.area_accident_occurred = dim_geography.area_accident_occurred\n  )",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "b844e893",
+      "question": "사고가 발생한 각 지역에 대해 지역 이름과 평균 사상자 수를 평균 사상자 수가 높은 순서부터 낮은 순서로 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.AREA_ACCIDENT_OCCURRED, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.AREA_ACCIDENT_OCCURRED ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+      "predicted_sql": "SELECT T2.area_accident_occurred, AVG(T1.number_of_casualties) AS average_casualties\nFROM fact_accident AS T1\nJOIN dim_geography AS T2 ON T1.geography_id = T2.geography_id\nGROUP BY T2.area_accident_occurred\nORDER BY AVG(T1.number_of_casualties) DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "df672efe",
+      "question": "사고가 발생한 각 지역에 대해 지역 이름과 평균 사상자 수를 평균 사상자 수의 내림차순으로 정렬하여 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.AREA_ACCIDENT_OCCURRED, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.AREA_ACCIDENT_OCCURRED ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+      "predicted_sql": "SELECT dim_geography.area_accident_occurred,\n       AVG(fact_accident.number_of_casualties) AS average_casualties\nFROM fact_accident\nJOIN dim_geography ON fact_accident.geography_id = dim_geography.geography_id\nGROUP BY dim_geography.area_accident_occurred\nORDER BY average_casualties DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "49d23186",
+      "question": "평균 사상자 수가 1보다 큰 사고가 발생한 지역을 나열하고, 이 평균을 기준으로 결과를 내림차순으로 정렬하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.AREA_ACCIDENT_OCCURRED FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.AREA_ACCIDENT_OCCURRED HAVING AVG(T2.NUMBER_OF_CASUALTIES) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+      "predicted_sql": "SELECT\n    dim_geography.area_accident_occurred,\n    AVG(fact_accident.number_of_casualties) AS avg_casualties\nFROM fact_accident\nJOIN dim_geography ON fact_accident.geography_id = dim_geography.geography_id\nGROUP BY dim_geography.area_accident_occurred\nHAVING AVG(fact_accident.number_of_casualties) > 1\nORDER BY avg_casualties DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "9f31bb55",
+      "question": "사고가 발생한 각 지역에 대해, 기록된 사고가 1건보다 많은 경우 지역 이름과 평균 사상자 수를 평균이 가장 높은 것부터 가장 낮은 것까지 정렬하여 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.AREA_ACCIDENT_OCCURRED, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.AREA_ACCIDENT_OCCURRED HAVING COUNT(T2.ACCIDENT_ID) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+      "predicted_sql": "SELECT\n    T2.area_accident_occurred,\n    AVG(T1.number_of_casualties) AS average_casualties\nFROM fact_accident AS T1\nJOIN dim_geography AS T2 ON T1.geography_id = T2.geography_id\nGROUP BY T2.area_accident_occurred\nHAVING COUNT(T1.accident_id) > 1\nORDER BY average_casualties DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "2736c3fd",
+      "question": "사상자 수가 2보다 큰 사고들에 대해, 기록에서 1번보다 많이 나타나는 조명 상태의 조명 상태를 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.LIGHT_CONDITIONS FROM FACT_ACCIDENT AS T1 JOIN DIM_ENVIRONMENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID WHERE T1.NUMBER_OF_CASUALTIES > 2 GROUP BY T2.LIGHT_CONDITIONS HAVING COUNT(T2.LIGHT_CONDITIONS) > 1",
+      "predicted_sql": "SELECT dim_environment.light_conditions\nFROM fact_accident\nJOIN dim_environment ON fact_accident.environment_id = dim_environment.environment_id\nWHERE fact_accident.number_of_casualties > 2\nGROUP BY dim_environment.light_conditions\nHAVING COUNT(*) > 1",
+      "error_info": null
+    },
+    {
+      "instance_id": "71d5f8f4",
+      "question": "사상자 수가 2보다 많고 요일이 Sunday가 아닌 사고들의 서로 다른 조명 상태를 조명 상태의 알파벳순으로 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT DISTINCT T2.LIGHT_CONDITIONS FROM FACT_ACCIDENT AS T1 JOIN DIM_ENVIRONMENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T1.NUMBER_OF_CASUALTIES > 2 AND T3.DAY_OF_WEEK != 'Sunday' ORDER BY T2.LIGHT_CONDITIONS ASC",
+      "predicted_sql": "SELECT DISTINCT T3.light_conditions\nFROM fact_accident AS T1\nJOIN dim_time AS T2 ON T1.time_id = T2.time_id\nJOIN dim_environment AS T3 ON T1.environment_id = T3.environment_id\nWHERE T1.number_of_casualties > 2\nAND T2.day_of_week != 'Sunday'\nORDER BY T3.light_conditions ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "cddd642a",
+      "question": "조명 상태와 날씨 상태별로 그룹화하여 조명 상태, 날씨 상태, 그리고 총 사상자 수를 보여주고, 사상자 수 합계가 높은 것부터 낮은 것 순으로 정렬하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS, SUM(T2.NUMBER_OF_CASUALTIES) FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS ORDER BY SUM(T2.NUMBER_OF_CASUALTIES) DESC",
+      "predicted_sql": "SELECT T2.light_conditions, T2.weather_conditions, SUM(T1.number_of_casualties) AS total_casualties\nFROM fact_accident AS T1\nJOIN dim_environment AS T2 ON T1.environment_id = T2.environment_id\nGROUP BY T2.light_conditions, T2.weather_conditions\nORDER BY total_casualties DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "0bb2c4d3",
+      "question": "조명 상태와 날씨 상태의 각 조합별 총 사상자 수를 나열하되, 조명 상태와 날씨 상태로 그룹화하고 총 사상자 수의 내림차순으로 정렬하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS, SUM(T2.NUMBER_OF_CASUALTIES) FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS ORDER BY SUM(T2.NUMBER_OF_CASUALTIES) DESC",
+      "predicted_sql": "SELECT T2.light_conditions, T2.weather_conditions, SUM(T1.number_of_casualties) AS total_casualties\nFROM fact_accident AS T1\nJOIN dim_environment AS T2 ON T1.environment_id = T2.environment_id\nGROUP BY T2.light_conditions, T2.weather_conditions\nORDER BY total_casualties DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "bbc25a79",
+      "question": "총 사상자 수가 2를 초과하는 모든 환경 설정에 대해 조명 상태와 날씨 상태를 나열하고, 이 결과를 총 사상자 수의 합계를 기준으로 내림차순으로 표시하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.LIGHT_CONDITIONS, T2.WEATHER_CONDITIONS FROM FACT_ACCIDENT AS T1 JOIN DIM_ENVIRONMENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T2.LIGHT_CONDITIONS, T2.WEATHER_CONDITIONS HAVING SUM(T1.NUMBER_OF_CASUALTIES) > 2 ORDER BY SUM(T1.NUMBER_OF_CASUALTIES) DESC",
+      "predicted_sql": "SELECT T2.light_conditions, T2.weather_conditions, SUM(T1.number_of_casualties)\nFROM fact_accident AS T1\nJOIN dim_environment AS T2 ON T1.environment_id = T2.environment_id\nGROUP BY T2.light_conditions, T2.weather_conditions\nHAVING SUM(T1.number_of_casualties) > 2\nORDER BY SUM(T1.number_of_casualties) DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "a914e6b9",
+      "question": "총 사상자 수가 2를 초과하는 각 조합에 대해 조명 상태와 기상 상태를 총 사상자 수와 함께 나열하고, 결과를 사상자 수가 높은 순서부터 낮은 순서로 정렬하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS, SUM(T2.NUMBER_OF_CASUALTIES) FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS HAVING SUM(T2.NUMBER_OF_CASUALTIES) > 2 ORDER BY SUM(T2.NUMBER_OF_CASUALTIES) DESC",
+      "predicted_sql": "SELECT T2.light_conditions,\n       T2.weather_conditions,\n       SUM(T1.number_of_casualties) AS total_casualties\nFROM fact_accident AS T1\nJOIN dim_environment AS T2 ON T1.environment_id = T2.environment_id\nGROUP BY T2.light_conditions, T2.weather_conditions\nHAVING SUM(T1.number_of_casualties) > 2\nORDER BY total_casualties DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "7e40fd48",
+      "question": "모든 사고에 대해 기록된 서로 다른 조명 상태와 날씨 상태를 나열하고, 결과를 조명 상태별로 정렬하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT DISTINCT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID ORDER BY T1.LIGHT_CONDITIONS",
+      "predicted_sql": "SELECT DISTINCT dim_environment.light_conditions, dim_environment.weather_conditions\nFROM fact_accident\nJOIN dim_environment ON fact_accident.environment_id = dim_environment.environment_id\nORDER BY dim_environment.light_conditions",
+      "error_info": null
+    },
+    {
+      "instance_id": "5e66cfee",
+      "question": "사고에 대해 기록된 서로 다른 조명 상태와 날씨 상태를 조명 상태를 기준으로 알파벳순으로 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT DISTINCT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID ORDER BY T1.LIGHT_CONDITIONS ASC",
+      "predicted_sql": "SELECT DISTINCT dim_environment.light_conditions, dim_environment.weather_conditions\nFROM fact_accident\nJOIN dim_environment ON fact_accident.environment_id = dim_environment.environment_id\nORDER BY dim_environment.light_conditions ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "38a1b6a9",
+      "question": "적어도 1건의 사고와 관련된 이 두 요소의 각 고유한 조합에 대해 조명 상태와 날씨 상태를 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS HAVING COUNT(T2.ACCIDENT_ID) >= 1",
+      "predicted_sql": "SELECT DISTINCT dim_environment.light_conditions, dim_environment.weather_conditions\nFROM fact_accident\nJOIN dim_environment ON fact_accident.environment_id = dim_environment.environment_id",
+      "error_info": null
+    },
+    {
+      "instance_id": "c589abbd",
+      "question": "적어도 1건의 사고가 기록된 모든 환경에 대해 서로 다른 조명 상태와 날씨 상태를 나열하고, 결과를 조명 상태를 기준으로 알파벳순으로 정렬하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT DISTINCT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS HAVING COUNT(T2.ACCIDENT_ID) >= 1 ORDER BY T1.LIGHT_CONDITIONS ASC",
+      "predicted_sql": "SELECT DISTINCT T1.light_conditions, T1.weather_conditions\nFROM dim_environment AS T1\nJOIN fact_accident AS T2 ON T1.environment_id = T2.environment_id\nORDER BY T1.light_conditions",
+      "error_info": null
+    },
+    {
+      "instance_id": "5b96834d",
+      "question": "사상자 수가 2보다 크고 조명 상태가 'Darkness - no lighting'인 모든 사고의 사고 ID를, 사상자 수의 내림차순으로 정렬하여 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.ACCIDENT_ID FROM FACT_ACCIDENT AS T1 JOIN DIM_ENVIRONMENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID WHERE T1.NUMBER_OF_CASUALTIES > 2 AND T2.LIGHT_CONDITIONS = 'Darkness - no lighting' ORDER BY T1.NUMBER_OF_CASUALTIES DESC",
+      "predicted_sql": "SELECT fact_accident.accident_id\nFROM fact_accident\nJOIN dim_environment ON fact_accident.environment_id = dim_environment.environment_id\nWHERE fact_accident.number_of_casualties > 2\n  AND dim_environment.light_conditions = 'Darkness - no lighting'\nORDER BY fact_accident.number_of_casualties DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "1640e576",
+      "question": "조명 상태가 Darkness - no lighting인 환경에 대해, 해당 환경 ID별로 사상자 수의 합이 5보다 큰 경우 각 환경 ID와 사고 ID의 총 개수를 나열하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.ENVIRONMENT_ID, COUNT(T2.ACCIDENT_ID) FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID WHERE T1.LIGHT_CONDITIONS = 'Darkness - no lighting' GROUP BY T1.ENVIRONMENT_ID HAVING SUM(T2.NUMBER_OF_CASUALTIES) > 5",
+      "predicted_sql": "SELECT\n    de.environment_id,\n    COUNT(DISTINCT fa.accident_id) AS total_accident_count\nFROM",
+      "error_info": "syntax error at end of input\nLINE 4: FROM\n            ^\n"
+    },
+    {
+      "instance_id": "547dfb70",
+      "question": "조명 상태가 'Darkness - no lighting'이고 충돌 유형이 'Vehicle with vehicle collision'인 각 사고에 대해, 총 사상자 수가 5보다 큰 사고들의 사고 ID와 총 사상자 수의 합계를 사상자 수가 가장 많은 것부터 가장 적은 것 순으로 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.ACCIDENT_ID, SUM(T1.NUMBER_OF_CASUALTIES) FROM FACT_ACCIDENT AS T1 INNER JOIN DIM_ENVIRONMENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID INNER JOIN DIM_ACCIDENT_EVENT AS T3 ON T1.ACCIDENT_EVENT_ID = T3.ACCIDENT_EVENT_ID WHERE T2.LIGHT_CONDITIONS = 'Darkness - no lighting' AND T3.TYPE_OF_COLLISION = 'Vehicle with vehicle collision' GROUP BY T1.ACCIDENT_ID HAVING SUM(T1.NUMBER_OF_CASUALTIES) > 5 ORDER BY SUM(T1.NUMBER_OF_CASUALTIES) DESC",
+      "predicted_sql": "SELECT T1.accident_id, T1.number_of_casualties\nFROM fact_accident AS T1\nJOIN dim_environment AS T2 ON T1.environment_id = T2.environment_id\nJOIN dim_accident_event AS T3 ON T1.accident_event_id = T3.accident_event_id\nWHERE T2.light_conditions = 'Darkness - no lighting'\nAND T3.type_of_collision = 'Vehicle with vehicle collision'\nAND T1.number_of_casualties > 5\nORDER BY T1.number_of_casualties DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "b73a538f",
+      "question": "운전 경력이 1-2yr인 운전자에 대해, 각 사고 심각도와 해당 심각도의 발생 횟수를 나열하되, 그룹의 평균 사고 ID가 1보다 큰 경우만 포함하고, 사고 심각도 순으로 정렬하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.ACCIDENT_SEVERITY, COUNT(T1.ACCIDENT_SEVERITY) FROM FACT_ACCIDENT AS T1 JOIN DIM_DRIVER AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID WHERE T2.DRIVING_EXPERIENCE = '1-2yr' GROUP BY T1.ACCIDENT_SEVERITY HAVING AVG(T1.ACCIDENT_ID) > 1 ORDER BY T1.ACCIDENT_SEVERITY",
+      "predicted_sql": "SELECT T1.accident_severity, COUNT(*)\nFROM fact_accident AS T1\nJOIN dim_driver AS T2 ON T1.driver_id = T2.driver_id\nWHERE T2.driving_experience = '1-2yr'\nGROUP BY T1.accident_severity\nHAVING AVG(T1.accident_id) > 1\nORDER BY T1.accident_severity",
+      "error_info": null
+    },
+    {
+      "instance_id": "d3c43b0a",
+      "question": "운전 경력이 1-2yr 사이이거나 교육 수준이 Junior high school인 운전자들의 driver dimension에서 모든 열과 세부 정보를 보여주세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT * FROM DIM_DRIVER WHERE DRIVING_EXPERIENCE = '1-2yr' OR EDUCATIONAL_LEVEL = 'Junior high school';",
+      "predicted_sql": "SELECT *\nFROM dim_driver\nWHERE driving_experience = '1-2yr'\n   OR educational_level = 'Junior high school'",
+      "error_info": null
+    },
+    {
+      "instance_id": "4958cea5",
+      "question": "운전 경력이 '1-2yr'이거나 교육 수준이 'Junior high school'인 모든 기록에 대해 운전자 ID와 운전자의 연령대를 운전자 ID 순으로 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT DRIVER_ID, AGE_BAND_OF_DRIVER FROM DIM_DRIVER WHERE DRIVING_EXPERIENCE = '1-2yr' OR EDUCATIONAL_LEVEL = 'Junior high school' ORDER BY DRIVER_ID",
+      "predicted_sql": "SELECT driver_id, age_band_of_driver\nFROM dim_driver\nWHERE driving_experience = '1-2yr' OR educational_level = 'Junior high school'\nORDER BY driver_id",
+      "error_info": null
+    },
+    {
+      "instance_id": "e1d7950c",
+      "question": "운전 경력이 '1-2yr'이거나 교육 수준이 'Junior high school'인 운전자들에 대해, 운전 경력 수준과 사고 ID의 총개수를 나열하되, 결과는 운전 경력별로 그룹화하고 사고가 1건을 초과하는 그룹만 포함하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.DRIVING_EXPERIENCE, COUNT(T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID WHERE T1.DRIVING_EXPERIENCE = '1-2yr' OR T1.EDUCATIONAL_LEVEL = 'Junior high school' GROUP BY T1.DRIVING_EXPERIENCE HAVING COUNT(T2.ACCIDENT_ID) > 1",
+      "predicted_sql": "SELECT T2.driving_experience, COUNT(T1.accident_id) AS total_accidents\nFROM fact_accident AS T1\nJOIN dim_driver AS T2 ON T1.driver_id = T2.driver_id\nWHERE T2.driving_experience = '1-2yr' OR T2.educational_level = 'Junior high school'\nGROUP BY T2.driving_experience\nHAVING COUNT(T1.accident_id) > 1",
+      "error_info": null
+    },
+    {
+      "instance_id": "cab01d87",
+      "question": "운전 경력이 1-2yr이거나 교육 수준이 Junior high school인 운전자에 대해, 사고가 0건인 경우도 포함하여, 각 운전자의 ID, 연령대, 성별과 각 운전자의 총 사고 건수를 나열하고, 결과를 사고 건수의 내림차순으로 정렬하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.DRIVER_ID, T1.AGE_BAND_OF_DRIVER, T1.SEX_OF_DRIVER, COUNT(T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 LEFT JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID LEFT JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.DRIVING_EXPERIENCE = '1-2yr' OR T1.EDUCATIONAL_LEVEL = 'Junior high school' GROUP BY T1.DRIVER_ID, T1.AGE_BAND_OF_DRIVER, T1.SEX_OF_DRIVER HAVING COUNT(T2.ACCIDENT_ID) >= 0 ORDER BY COUNT(T2.ACCIDENT_ID) DESC",
+      "predicted_sql": "SELECT\n    T1.driver_id,\n    T1.age_band_of_driver,\n    T1.sex_of_driver,\n    COUNT(T2.accident_id) AS accident_count\nFROM dim_driver AS T1\nLEFT JOIN fact_accident AS T2 ON T1.driver_id = T2.driver_id\nWHERE T1.driving_experience = '1-2yr'\n   OR T1.educational_level = 'Junior high school'\nGROUP BY T1.driver_id\nORDER BY accident_count DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "2376f2ec",
+      "question": "각 교육 수준과 운전 경력의 조합별로 교육 수준, 운전 경력, 그리고 평균 사상자 수를 평균 사상자 수 순으로 나열하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE ORDER BY AVG(T2.NUMBER_OF_CASUALTIES)",
+      "predicted_sql": "SELECT T2.educational_level,\n       T2.driving_experience,\n       AVG(T1.number_of_casualties) AS avg_casualties\nFROM fact_accident AS T1\nJOIN dim_driver AS T2 ON T1.driver_id = T2.driver_id\nGROUP BY T2.educational_level, T2.driving_experience\nORDER BY avg_casualties",
+      "error_info": null
+    },
+    {
+      "instance_id": "0c81d217",
+      "question": "운전자들의 교육 수준과 운전 경력을, 사고당 평균 사상자 수와 함께 나열하되, 교육 수준과 운전 경력별로 그룹화하고 평균 사상자 수의 내림차순으로 정렬하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+      "predicted_sql": "SELECT T2.educational_level,\n       T2.driving_experience,\n       AVG(T1.number_of_casualties) AS avg_casualties\nFROM fact_accident AS T1\nJOIN dim_driver AS T2 ON T1.driver_id = T2.driver_id\nGROUP BY T2.educational_level, T2.driving_experience\nORDER BY avg_casualties DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "b4058904",
+      "question": "사고에서 평균 사상자 수가 1보다 큰 경우에 대해, 이 두 속성으로 그룹화한 운전자들의 교육 수준과 운전 경력을 나열하고, 그 평균값으로 결과를 정렬하세요.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE HAVING AVG(T2.NUMBER_OF_CASUALTIES) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES);",
+      "predicted_sql": "SELECT T2.educational_level,\n       T2.driving_experience,\n       AVG(T1.number_of_casualties) AS avg_casualties\nFROM fact_accident AS T1\nJOIN dim_driver AS T2 ON T1.driver_id = T2.driver_id\nGROUP BY T2.educational_level, T2.driving_experience\nHAVING AVG(T1.number_of_casualties) > 1\nORDER BY avg_casualties ASC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "0b93f640",
+      "question": "연령대가 '31-50' 또는 '18-30'인 Male 운전자들에 대해, 사고가 1건보다 많은 그룹만 대상으로 그들의 교육 수준과 운전 경력, 그리고 사고당 평균 사상자 수를 나열하고, 결과를 평균 사상자 수의 내림차순으로 정렬하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.AGE_BAND_OF_DRIVER IN ('31-50', '18-30') AND T1.SEX_OF_DRIVER = 'Male' GROUP BY T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE HAVING COUNT(T2.ACCIDENT_ID) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC;",
+      "predicted_sql": "SELECT\n    dim_driver.educational_level,\n    dim_driver.driving_experience,\n    SUM(fact_accident.number_of_casualties) * 1.0 / COUNT(DISTINCT fact_accident.accident_id) AS avg_casualties_per_accident\nFROM dim_driver\nJOIN fact_accident ON dim_driver.driver_id = fact_accident.driver_id\nWHERE dim_driver.sex_of_driver = 'Male'\n    AND dim_driver.age_band_of_driver IN ('31-50', '18-30')\nGROUP BY dim_driver.educational_level, dim_driver.driving_experience\nHAVING COUNT(DISTINCT fact_accident.accident_id) > 1\nORDER BY avg_casualties_per_accident DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "0469fe97",
+      "question": "Sunday에 발생한 사고에 적어도 1건 연루된 운전자들의 교육 수준을 나열하고, 이 교육 수준들을 알파벳 오름차순으로 표시하세요.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.EDUCATIONAL_LEVEL FROM DIM_DRIVER T1 JOIN FACT_ACCIDENT T0 ON T1.DRIVER_ID = T0.DRIVER_ID JOIN DIM_TIME T2 ON T0.TIME_ID = T2.TIME_ID WHERE T2.DAY_OF_WEEK = 'Sunday' GROUP BY T1.EDUCATIONAL_LEVEL HAVING COUNT(T0.ACCIDENT_ID) > 0 ORDER BY T1.EDUCATIONAL_LEVEL ASC",
+      "predicted_sql": "SELECT DISTINCT T3.educational_level\nFROM fact_accident AS T1\nJOIN dim_time AS T2 ON T1.time_id = T2.time_id\nJOIN dim_driver AS T3 ON T1.driver_id = T3.driver_id\nWHERE T2.day_of_week = 'Sunday'\nORDER BY T3.educational_level ASC",
+      "error_info": null
+    }
+  ]
+}

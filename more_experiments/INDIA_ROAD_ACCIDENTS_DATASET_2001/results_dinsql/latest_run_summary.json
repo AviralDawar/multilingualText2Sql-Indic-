@@ -1,0 +1,41 @@
+{
+  "name": "INDIA_ROAD_ACCIDENTS_DATASET_2001",
+  "schema": "india_road_accidents_dataset_2001",
+  "base_dir": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_ROAD_ACCIDENTS_DATASET_2001",
+  "output_root": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_ROAD_ACCIDENTS_DATASET_2001/results_dinsql",
+  "evidence_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_ROAD_ACCIDENTS_DATASET_2001_evidence.json",
+  "models": [
+    {
+      "name": "Deepseek_v3.2",
+      "model_id": "deepseek/deepseek-v3.2",
+      "evidence_modes": [
+        {
+          "name": "with_evidence",
+          "use_real_evidence": true,
+          "languages": [
+            {
+              "language": "english",
+              "evidence_mode": "with_evidence",
+              "question_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_ROAD_ACCIDENTS_DATASET_2001/sampled_tasks/INDIA_ROAD_ACCIDENTS_DATASET_2001_text2sql_20260312_124803.jsonl",
+              "evidence_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_ROAD_ACCIDENTS_DATASET_2001_evidence.json",
+              "prediction_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_ROAD_ACCIDENTS_DATASET_2001/results_dinsql/Deepseek_v3.2/with_evidence/english/predictions.jsonl",
+              "metrics_file": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_ROAD_ACCIDENTS_DATASET_2001/results_dinsql/Deepseek_v3.2/with_evidence/english/metrics.json",
+              "din_sql_log": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_ROAD_ACCIDENTS_DATASET_2001/results_dinsql/Deepseek_v3.2/with_evidence/english/din_sql.log",
+              "evaluate_log": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_ROAD_ACCIDENTS_DATASET_2001/results_dinsql/Deepseek_v3.2/with_evidence/english/evaluate_metrics.log",
+              "status": "completed",
+              "din_sql_command": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/venv/bin/python3 /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/DIN-SQL.py --questions /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_ROAD_ACCIDENTS_DATASET_2001/sampled_tasks/INDIA_ROAD_ACCIDENTS_DATASET_2001_text2sql_20260312_124803.jsonl --evidence /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/evidence_files/INDIA_ROAD_ACCIDENTS_DATASET_2001_evidence.json --output /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_ROAD_ACCIDENTS_DATASET_2001/results_dinsql/Deepseek_v3.2/with_evidence/english/predictions.jsonl --config /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/psql_server/postgres_local_credential.json --use-database indicdb --use-schema india_road_accidents_dataset_2001 --model deepseek/deepseek-v3.2 --max-workers 5 --max-requests-per-minute 60.0 --max-retries 6 --retry-backoff-seconds 2.0",
+              "din_sql_returncode": 0,
+              "evaluate_command": "/media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/venv/bin/python3 /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/evaluate_metrics.py --pairs /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_ROAD_ACCIDENTS_DATASET_2001/results_dinsql/Deepseek_v3.2/with_evidence/english/predictions.jsonl --output /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/more_experiments/INDIA_ROAD_ACCIDENTS_DATASET_2001/results_dinsql/Deepseek_v3.2/with_evidence/english/metrics.json --config /media/roshan/Vault/UNI/Thesis/text2sql/multilingualText2Sql-Indic-/psql_server/postgres_local_credential.json --use-database indicdb --use-schema india_road_accidents_dataset_2001 --id-col pair_id --execution-only",
+              "evaluate_returncode": 0,
+              "metrics_summary": {
+                "total": 69,
+                "execution_correct": 57,
+                "execution_accuracy": 0.8260869565217391
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

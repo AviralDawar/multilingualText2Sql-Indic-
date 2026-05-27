@@ -1,0 +1,909 @@
+{
+  "summary": {
+    "total": 100,
+    "execution_correct": 36,
+    "execution_accuracy": 0.36
+  },
+  "results": [
+    {
+      "instance_id": "db637eb6",
+      "question": "Fornisci l’ID del nucleo familiare, l’indice patrimoniale e il tipo di contatto secondario della rete sociale per tutti i nuclei familiari appartenenti alla categoria OBC.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT HOUSEHOLD_ID, HOUSEHOLD_ASSETS_INDEX, SOCIAL_NETWORK_CONTACT_2_TYPE FROM DIM_HOUSEHOLD_SOCIAL WHERE CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC';",
+      "predicted_sql": "SELECT household_id, household_assets_index, social_network_contact_2_type\nFROM dim_household_social\nWHERE caste_religion_group_8_category = 'OBC'",
+      "error_info": null
+    },
+    {
+      "instance_id": "21e0ce63",
+      "question": "Elenca gli ID delle famiglie, gli indici patrimoniali e i tipi di contatto della rete sociale secondaria per tutte le famiglie nella categoria OBC, ordinati dall’indice patrimoniale più basso al più alto.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' ORDER BY T2.HOUSEHOLD_ASSETS_INDEX ASC",
+      "predicted_sql": "SELECT household_id, household_assets_index, social_network_contact_2_type\nFROM dim_household_social\nWHERE caste_religion_group_8_category = 'OBC'\nORDER BY household_assets_index ASC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "c8f78b4a",
+      "question": "Fornisci l’indice patrimoniale e i tipi di contatto della rete sociale secondaria per le famiglie cristiane, ordinati dalla ricchezza più alta alla più bassa.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' GROUP BY T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE HAVING COUNT(T3.CONSUMPTION_ID) >= 0 ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+      "predicted_sql": "SELECT household_assets_index, social_network_contact_2_type\nFROM dim_household_social\nWHERE caste_religion_group_8_category = 'Christian'\nORDER BY household_assets_index DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "a1d8e0fc",
+      "question": "Fornisci l’indice patrimoniale e i tipi di contatto della rete sociale secondaria per le famiglie della categoria OBC che hanno registrato un consumo di utenze, ordinati in base al loro stato di ricchezza.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN FACT_UTILITY_CONSUMPTION AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' GROUP BY T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE HAVING COUNT(T3.UTILITY_ID) >= 1 ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+      "predicted_sql": "SELECT T1.household_assets_index, T1.social_network_contact_2_type\nFROM dim_household_social AS T1\nJOIN fact_utility_consumption AS T2 ON T1.household_id = T2.household_id\nWHERE T1.caste_religion_group_8_category = 'OBC'\nORDER BY T1.household_assets_index DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "490d74ea",
+      "question": "Fornisci l’indice patrimoniale e i tipi di contatto della rete sociale secondaria per le famiglie musulmane, ordinati dalla ricchezza più alta alla più bassa.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN FACT_FOOD_CONSUMPTION AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Muslim' GROUP BY T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE HAVING COUNT(T3.FOOD_CONSUMPTION_ID) >= 0 ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+      "predicted_sql": "SELECT household_assets_index, social_network_contact_2_type\nFROM dim_household_social\nWHERE caste_religion_group_8_category = 'Muslim'\nORDER BY household_assets_index DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "8ed8a672",
+      "question": "Fornisci una ripartizione della spesa media mensile delle famiglie e del numero totale di famiglie, classificata per tipi di contatti nella rete sociale e per gruppi religiosi o caste, ordinata dalla spesa più alta alla più bassa.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.SOCIAL_NETWORK_CONTACT_2_TYPE, AVG(T1.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS), COUNT(T1.HOUSEHOLD_ID) FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN DIM_HOUSEHOLD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.SOCIAL_NETWORK_CONTACT_2_TYPE HAVING COUNT(T1.HOUSEHOLD_ID) > 0 ORDER BY AVG(T1.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) DESC",
+      "predicted_sql": "SELECT\n    dim_household_social.social_network_contact_2_type,\n    dim_household_social.caste_religion_group_8_category,\n    AVG(fact_household_consumption.monthly_total_consumption_expenditure_rs) AS average_monthly_expenditure,\n    COUNT(DISTINCT dim_household_social.household_id) AS total_household_count\nFROM dim_household_social\nJOIN fact_household_consumption\n    ON dim_household_social.household_id = fact_household_consumption.household_id\nGROUP BY\n    dim_household_social.social_network_contact_2_type,\n    dim_household_social.caste_religion_group_8_category\nORDER BY\n    average_monthly_expenditure DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "c175575e",
+      "question": "Identifica le famiglie che hanno un alto indice patrimoniale e utilizzano il primo tipo di contatto della rete sociale.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.SOCIAL_NETWORK_CONTACT_2_TYPE = '1' AND T2.HOUSEHOLD_ASSETS_INDEX >= '27' GROUP BY T1.HOUSEHOLD_ID",
+      "predicted_sql": "SELECT\n    dim_household_social.caste_religion_group_8_category,\n    AVG(fact_household_consumption.monthly_consumption_per_capita) AS average_monthly_per_capita_consumption,\n    COUNT(DISTINCT dim_household_social.household_id) AS total_number_of_households\nFROM dim_household_social\nLEFT JOIN fact_household_consumption\n    ON dim_household_social.household_id = fact_household_consumption.household_id\nWHERE dim_household_social.household_assets_index = 'alto'\n    AND dim_household_social.social_network_contact_2_type = 1\nGROUP BY dim_household_social.caste_religion_group_8_category",
+      "error_info": "invalid input syntax for type bigint: \"alto\"\nLINE 8: WHERE dim_household_social.household_assets_index = 'alto'\n                                                            ^\n"
+    },
+    {
+      "instance_id": "6abea354",
+      "question": "Identifica i nuclei familiari con un indice patrimoniale pari a 27 e un tipo specifico di contatto nella rete sociale, ordinati in base alla loro spesa totale mensile per consumi.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '27' AND T2.SOCIAL_NETWORK_CONTACT_2_TYPE = '1' GROUP BY T1.HOUSEHOLD_ID HAVING COUNT(T2.SOCIAL_ID) >= 1 ORDER BY SUM(T3.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) DESC;",
+      "predicted_sql": "SELECT\n    dim_household_social.caste_religion_group_8_category,\n    dim_household_social.social_network_contact_2_type,\n    AVG(fact_household_consumption.monthly_total_consumption_expenditure_rs) as average_spending,\n    COUNT(DISTINCT dim_household_social.household_id) as household_count\nFROM dim_household_social\nJOIN fact_household_consumption ON dim_household_social.household_id = fact_household_consumption.household_id\nWHERE dim_household_social.household_assets_index = 27\n    AND dim_household_social.social_network_contact_2_type IS NOT NULL\nGROUP BY\n    dim_household_social.caste_religion_group_8_category,\n    dim_household_social.social_network_contact_2_type\nORDER BY average_spending DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "705af9c7",
+      "question": "Elenca gli ID delle famiglie e le rispettive categorie di casta o religiose, ordinate in base al loro indice patrimoniale.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT HOUSEHOLD_ID, CASTE_RELIGION_GROUP_8_CATEGORY FROM DIM_HOUSEHOLD_SOCIAL ORDER BY HOUSEHOLD_ASSETS_INDEX;",
+      "predicted_sql": "SELECT DISTINCT household_id, caste_religion_group_8_category\nFROM dim_household_social\nWHERE household_assets_index = 27\n  AND social_network_contact_2_type IN (0, 1, -1)\nORDER BY household_assets_index DESC",
+      "error_info": "for SELECT DISTINCT, ORDER BY expressions must appear in select list\nLINE 5: ORDER BY household_assets_index DESC\n                 ^\n"
+    },
+    {
+      "instance_id": "51085f79",
+      "question": "Identifica le 10 famiglie cristiane con i punteggi più alti dell’indice patrimoniale.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC LIMIT 10",
+      "predicted_sql": "SELECT household_id, household_assets_index\nFROM dim_household_social\nWHERE caste_religion_group_8_category = 'Christian'\n  AND social_network_contact_2_type = 1\nORDER BY household_assets_index DESC\nLIMIT 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "47e7c1a0",
+      "question": "Identifica le 10 famiglie musulmane con la spesa mensile media più elevata, in particolare quelle la cui spesa supera la media nazionale complessiva.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, AVG(T2.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) FROM DIM_HOUSEHOLD AS T1 INNER JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN DIM_HOUSEHOLD_SOCIAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T3.CASTE_RELIGION_GROUP_8_CATEGORY = 'Muslim' GROUP BY T1.HOUSEHOLD_ID HAVING AVG(T2.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) > (SELECT AVG(MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) FROM FACT_HOUSEHOLD_CONSUMPTION) ORDER BY AVG(T2.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) DESC LIMIT 10",
+      "predicted_sql": "SELECT\n    dim_household_social.household_id,\n    fact_household_consumption.monthly_total_consumption_expenditure_rs\nFROM dim_household_social\nJOIN fact_household_consumption\n    ON dim_household_social.household_id = fact_household_consumption.household_id\nWHERE dim_household_social.caste_religion_group_8_category = 27\n    AND dim_household_social.social_network_contact_2_type = [specify value: 0, 1, or -1]\n    AND fact_household_consumption.monthly_total_consumption_expenditure_rs > (\n        SELECT AVG(monthly_total_consumption_expenditure_rs)\n        FROM fact_household_consumption\n    )\nORDER BY fact_household_consumption.monthly_total_consumption_expenditure_rs DESC\nLIMIT 10",
+      "error_info": "syntax error at or near \"[\"\nLINE 8: ..._household_social.social_network_contact_2_type = [specify v...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "b88f6a77",
+      "question": "Fornisci la casta o il gruppo religioso, l’asset index della famiglia e i tipi di contatti della rete sociale per tutte le famiglie in cui ha avuto luogo la cerimonia Gauna, ordinate in base al loro asset index.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE FROM DIM_HOUSEHOLD_MARITAL AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.DATE_OF_GAUNA IS NOT NULL GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE ORDER BY T2.HOUSEHOLD_ASSETS_INDEX",
+      "predicted_sql": "SELECT DISTINCT dim_household_social.caste_religion_group_8_category, dim_household_social.household_assets_index, dim_household_social.social_network_contact_2_type\nFROM dim_household_social\nJOIN dim_household_marital ON dim_household_social.household_id = dim_household_marital.household_id\nWHERE dim_household_marital.date_of_gauna IS NOT NULL\nORDER BY dim_household_social.household_assets_index",
+      "error_info": null
+    },
+    {
+      "instance_id": "8492d41f",
+      "question": "Elenca gli ID delle famiglie appartenenti alla categoria OBC che hanno un contatto principale nel social network, ordinati numericamente.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' AND T2.SOCIAL_NETWORK_CONTACT_2_TYPE = '1' ORDER BY T1.HOUSEHOLD_ID ASC",
+      "predicted_sql": "SELECT household_id\nFROM dim_household_social\nWHERE caste_religion_group_8_category = 'OBC'\n    AND social_network_contact_2_type IS NOT NULL\nORDER BY household_id",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "099f1ade",
+      "question": "Identifica tutte le famiglie che sono identificate come musulmane oppure che hanno una data registrata per la cerimonia del Gauna.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_HOUSEHOLD_MARITAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.CASTE_RELIGION_GROUP_8_CATEGORY = 'Muslim' OR T2.DATE_OF_GAUNA IS NOT NULL",
+      "predicted_sql": "SELECT dim_household_social.household_id, dim_household_social.caste_religion_group_8_category\nFROM dim_household_social\nLEFT JOIN dim_household_marital ON dim_household_social.household_id = dim_household_marital.household_id\nJOIN fact_household_consumption ON dim_household_social.household_id = fact_household_consumption.household_id\nWHERE (dim_household_social.caste_religion_group_8_category = 'Muslim' OR dim_household_marital.date_of_gauna IS NOT NULL)\nAND fact_household_consumption.monthly_consumption_per_capita > 300\nORDER BY dim_household_social.household_assets_index DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "76dd0073",
+      "question": "Identifica tutte le famiglie che sono identificate come cristiane oppure che hanno una data di Gauna registrata, ordinate per il loro ID famigliare.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 LEFT JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN DIM_HOUSEHOLD_MARITAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' OR T3.DATE_OF_GAUNA IS NOT NULL GROUP BY T1.HOUSEHOLD_ID ORDER BY T1.HOUSEHOLD_ID ASC",
+      "predicted_sql": "SELECT DISTINCT dim_household.household_id\nFROM dim_household\nLEFT JOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nLEFT JOIN dim_household_marital ON dim_household.household_id = dim_household_marital.household_id\nWHERE dim_household_social.caste_religion_group_8_category = 'Christian'\n   OR dim_household_marital.date_of_gauna IS NOT NULL\nORDER BY dim_household.household_id",
+      "error_info": null
+    },
+    {
+      "instance_id": "d520a0c9",
+      "question": "Identifica gli ID dei villaggi rurali del Tamil Nadu che hanno accesso all'acqua potabile ma sono privi di strutture sanitarie, ordinati per il loro ID geografico.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.GEOGRAPHY_ID FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.STATE = 'Tamil Nadu' AND T1.CENSUS_2001_URBAN_RURAL = 'Rural' AND T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '0' AND T2.VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR = '1' ORDER BY T1.GEOGRAPHY_ID",
+      "predicted_sql": "SELECT T1.geography_id\nFROM dim_geography_hierarchy AS T1\nJOIN dim_village_infrastructure AS T2 ON T1.geography_id = T2.geography_id\nWHERE T1.state = 'Tamil Nadu'\n  AND T1.census_2001_urban_rural = 'rural'\n  AND T2.village_drinking_water_available_indicator = 'yes'\n  AND T2.village_health_facility_available_indicator = 'no'\nORDER BY T1.geography_id",
+      "error_info": "invalid input syntax for type double precision: \"yes\"\nLINE 6:   AND T2.village_drinking_water_available_indicator = 'yes'\n                                                              ^\n"
+    },
+    {
+      "instance_id": "ca663f58",
+      "question": "Fornisci una ripartizione per state e disponibilità di assistenza sanitaria nel village, mostrando la media di monthly per capita consumption e il totale di non-food expenditure.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT AVG(T1.MONTHLY_CONSUMPTION_PER_CAPITA), SUM(T1.MONTHLY_NON_FOOD_EXPENDITURE_RS), T2.STATE, T3.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR FROM FACT_HOUSEHOLD_CONSUMPTION T1 JOIN DIM_GEOGRAPHY_HIERARCHY T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_VILLAGE_INFRASTRUCTURE T3 ON T2.GEOGRAPHY_ID = T3.GEOGRAPHY_ID GROUP BY T2.STATE, T3.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR",
+      "predicted_sql": "WITH national_average AS (\n    SELECT AVG(monthly_total_consumption_expenditure_rs) AS avg_national_consumption\n    FROM fact_household_consumption\n)\nSELECT\n    dim_geography_hierarchy.state,\n    dim_village_infrastructure.village_health_facility_available_indicator,\n    AVG(fact_household_consumption.monthly_consumption_per_capita) AS avg_monthly_consumption_per_capita,\n    SUM(fact_household_consumption.monthly_non_food_expenditure_rs) AS total_non_food_expenditure\nFROM fact_household_consumption\nJOIN dim_household_social ON fact_household_consumption.household_id = dim_household_social.household_id\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nCROSS JOIN national_average\nWHERE dim_household_social.caste_religion_group_8_category = 'Muslim'\n    AND fact_household_consumption.monthly_total_consumption_expenditure_rs > national_average.avg_national_consumption\nGROUP BY\n    dim_geography_hierarchy.state,\n    dim_village_infrastructure.village_health_facility_available_indicator\nORDER BY AVG(fact_household_consumption.monthly_total_consumption_expenditure_rs) DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "0d11cbfc",
+      "question": "Fornisci una ripartizione per stato e disponibilità di strutture sanitarie del consumo medio mensile pro capite e della spesa totale non alimentare, concentrandoti solo sulle aree in cui il consumo medio supera 329 e classificando i risultati in base alla spesa totale.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.STATE, T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR, AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA), SUM(T3.MONTHLY_NON_FOOD_EXPENDITURE_RS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 INNER JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID GROUP BY T1.STATE, T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR HAVING AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA) > 329 ORDER BY SUM(T3.MONTHLY_NON_FOOD_EXPENDITURE_RS) DESC",
+      "predicted_sql": "SELECT T1.state,\n       T2.village_health_facility_available_indicator,\n       AVG(T3.monthly_consumption_per_capita) AS avg_monthly_consumption_per_capita,\n       SUM(T3.monthly_non_food_expenditure_rs) AS total_non_food_expenditure\nFROM fact_household_consumption AS T3\nJOIN dim_geography_hierarchy AS T1 ON T3.geography_id = T1.geography_id\nJOIN dim_village_infrastructure AS T2 ON T1.geography_id = T2.geography_id\nGROUP BY T1.state, T2.village_health_facility_available_indicator\nHAVING AVG(T3.monthly_consumption_per_capita) > 329\nORDER BY SUM(T3.monthly_non_food_expenditure_rs)",
+      "error_info": null
+    },
+    {
+      "instance_id": "c4a941e4",
+      "question": "Identifica i codici dei quartieri rurali o dei villaggi che dispongono sia di una struttura sanitaria sia di una scuola.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' AND T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' AND T2.VILLAGE_SCHOOL_AVAILABLE_INDICATOR = '1'",
+      "predicted_sql": "SELECT dim_geography_hierarchy.psu_village_or_neighborhood_code\nFROM dim_geography_hierarchy\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'rural'\n  AND dim_village_infrastructure.village_health_facility_available_indicator = 1\n  AND dim_village_infrastructure.village_school_available_indicator = 1",
+      "error_info": null
+    },
+    {
+      "instance_id": "571ef167",
+      "question": "Identifica i codici dei villaggi rurali o dei quartieri che dispongono sia di una scuola sia di una struttura sanitaria.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' AND T2.VILLAGE_SCHOOL_AVAILABLE_INDICATOR = '1' AND T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' GROUP BY T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+      "predicted_sql": "SELECT T1.psu_village_or_neighborhood_code\nFROM dim_geography_hierarchy AS T1\nJOIN dim_village_infrastructure AS T2 ON T2.geography_id = T1.geography_id\nWHERE T1.census_2001_urban_rural = 'rural'\nAND T2.village_school_available_indicator = 1\nAND T2.village_health_facility_available_indicator = 1",
+      "error_info": null
+    },
+    {
+      "instance_id": "b0e06805",
+      "question": "Classifica gli stati in base al loro consumo medio mensile pro capite per le famiglie rurali, includendo solo gli stati con dati di consumo registrati.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.STATE, AVG(T1.MONTHLY_CONSUMPTION_PER_CAPITA) FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 INNER JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN DIM_HOUSEHOLD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T2.STATE HAVING COUNT(T1.CONSUMPTION_ID) > 0 ORDER BY AVG(T1.MONTHLY_CONSUMPTION_PER_CAPITA) DESC",
+      "predicted_sql": "SELECT dim_geography_hierarchy.state,\n       AVG(fact_household_consumption.monthly_consumption_per_capita) as avg_monthly_consumption_per_capita\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'rural'\n  AND fact_household_consumption.household_id IN (\n      SELECT household_id\n      FROM dim_household_social\n      WHERE caste_religion_group_8_category = 'OBC'\n        AND social_network_contact_2_type = 1\n  )\nGROUP BY dim_geography_hierarchy.state\nHAVING AVG(fact_household_consumption.monthly_consumption_per_capita) IS NOT NULL\nORDER BY avg_monthly_consumption_per_capita DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "f4ecfd72",
+      "question": "Identifica i 10 principali quartieri rurali dell'Uttar Pradesh con il più alto consumo medio mensile pro capite, indicando se ciascuno ha accesso a una struttura sanitaria del villaggio.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE, T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR, AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T1.STATE = 'Uttar Pradesh' AND T1.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE, T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR ORDER BY AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA) DESC LIMIT 10",
+      "predicted_sql": "SELECT\n    dim_geography_hierarchy.psu_village_or_neighborhood_code,\n    AVG(fact_household_consumption.monthly_consumption_per_capita) AS avg_monthly_consumption_per_capita,\n    dim_village_infrastructure.village_health_facility_available_indicator\nFROM dim_geography_hierarchy\nJOIN fact_household_consumption ON dim_geography_hierarchy.geography_id = fact_household_consumption.geography_id\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nWHERE dim_geography_hierarchy.state = 'Uttar Pradesh'\n    AND dim_geography_hierarchy.census_2001_urban_rural = 'rural'\nGROUP BY\n    dim_geography_hierarchy.psu_village_or_neighborhood_code,\n    dim_village_infrastructure.village_health_facility_available_indicator\nORDER BY avg_monthly_consumption_per_capita DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "cabd0d93",
+      "question": "Fornisci i 10 quartieri rurali dell'Uttar Pradesh con il più alto consumo medio mensile pro capite, indicando se ciascuno dispone di una struttura sanitaria del villaggio.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE, AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA), T3.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_VILLAGE_INFRASTRUCTURE AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T1.STATE = 'Uttar Pradesh' AND T1.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE, T3.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR ORDER BY AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA) DESC LIMIT 10",
+      "predicted_sql": "SELECT dim_geography_hierarchy.psu_village_or_neighborhood_code,\n       AVG(fact_household_consumption.monthly_consumption_per_capita) AS avg_monthly_consumption,\n       MAX(CASE WHEN dim_village_infrastructure.village_health_facility_available_indicator = 1 THEN 1 ELSE 0 END) AS has_health_facility\nFROM dim_geography_hierarchy\nJOIN fact_household_consumption ON dim_geography_hierarchy.geography_id = fact_household_consumption.geography_id\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nJOIN dim_household ON fact_household_consumption.household_id = dim_household.household_id\nJOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nWHERE dim_geography_hierarchy.state = 'Uttar Pradesh'\n  AND dim_geography_hierarchy.census_2001_urban_rural = 'rural'\n  AND dim_household_social.caste_religion_group_8_category = 'OBC'\n  AND dim_household_social.social_network_contact_2_type = 1\nGROUP BY dim_geography_hierarchy.psu_village_or_neighborhood_code\nORDER BY avg_monthly_consumption DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "69255140",
+      "question": "Calcola il consumo medio mensile pro capite per ciascuno stato e distretto, considerando solo i villaggi che dispongono di strutture sanitarie.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.STATE, T1.DISTRICT_CODE, AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_VILLAGE_INFRASTRUCTURE AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T3.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' GROUP BY T1.STATE, T1.DISTRICT_CODE",
+      "predicted_sql": "SELECT\n    dim_geography_hierarchy.state,\n    dim_geography_hierarchy.district_code,\n    AVG(fact_household_consumption.monthly_consumption_per_capita) AS avg_monthly_consumption_per_capita\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nJOIN dim_household_social ON fact_household_consumption.household_id = dim_household_social.household_id\nJOIN dim_household_marital ON fact_household_consumption.household_id = dim_household_marital.household_id\nWHERE dim_village_infrastructure.village_health_facility_available_indicator = 1\n    AND (dim_household_social.caste_religion_group_8_category = 'Muslim'\n         OR dim_household_marital.date_of_gauna IS NOT NULL)\nGROUP BY dim_geography_hierarchy.state, dim_geography_hierarchy.district_code",
+      "error_info": null
+    },
+    {
+      "instance_id": "6c68ace6",
+      "question": "Calcola il consumo medio mensile pro capite per ciascun distretto e stato, concentrandoti solo sulle aree in cui sono disponibili strutture sanitarie di villaggio.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.STATE, T1.DISTRICT_CODE, AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_VILLAGE_INFRASTRUCTURE AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T3.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' GROUP BY T1.STATE, T1.DISTRICT_CODE",
+      "predicted_sql": "SELECT DISTINCT dim_household_social.household_id\nFROM dim_household_social\nLEFT JOIN dim_household_marital ON dim_household_social.household_id = dim_household_marital.household_id\nWHERE dim_household_social.caste_religion_group_8_category = 'Christian'\n   OR dim_household_marital.date_of_gauna IS NOT NULL\nORDER BY CAST(dim_household_social.household_id AS INTEGER)",
+      "error_info": "for SELECT DISTINCT, ORDER BY expressions must appear in select list\nLINE 6: ORDER BY CAST(dim_household_social.household_id AS INTEGER)\n                 ^\n"
+    },
+    {
+      "instance_id": "ffa1a484",
+      "question": "Identifica i codici dei distretti che contengono villaggi rurali in cui sono disponibili strutture sanitarie ma non l'acqua potabile.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.DISTRICT_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T1.DISTRICT_CODE HAVING COUNT(CASE WHEN T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' THEN 1 END) > 0 AND COUNT(CASE WHEN T2.VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR = '1' THEN 1 END) = 0",
+      "predicted_sql": "SELECT DISTINCT dim_geography_hierarchy.district_code\nFROM dim_geography_hierarchy\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nJOIN fact_household_consumption ON dim_geography_hierarchy.geography_id = fact_household_consumption.geography_id\nJOIN dim_household ON fact_household_consumption.household_id = dim_household.household_id\nJOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nJOIN dim_household_marital ON dim_household.household_id = dim_household_marital.household_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'rural'\n  AND dim_village_infrastructure.village_health_facility_available_indicator = 1\n  AND dim_village_infrastructure.village_drinking_water_available_indicator = 0\n  AND (dim_household_social.caste_religion_group_8_category = 'Christian'\n       OR dim_household_marital.date_of_gauna IS NOT NULL)\nORDER BY dim_household.household_id",
+      "error_info": "for SELECT DISTINCT, ORDER BY expressions must appear in select list\nLINE 13: ORDER BY dim_household.household_id\n                  ^\n"
+    },
+    {
+      "instance_id": "1c5b8848",
+      "question": "Identifica i codici dei distretti che contengono villaggi rurali con accesso a strutture sanitarie ma senza disponibilità di acqua potabile, ordinati per codice del distretto.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.DISTRICT_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T1.DISTRICT_CODE HAVING SUM(CASE WHEN T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN T2.VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR = '1' THEN 1 ELSE 0 END) = 0 ORDER BY T1.DISTRICT_CODE ASC",
+      "predicted_sql": "SELECT DISTINCT T1.district_code\nFROM dim_geography_hierarchy AS T1\nJOIN dim_village_infrastructure AS T2 ON T1.geography_id = T2.geography_id\nWHERE T1.census_2001_urban_rural = 'Rural'\nAND T2.village_health_facility_available_indicator = '1'\nAND T2.village_drinking_water_available_indicator = '0'\nAND T1.state = 'Tamil Nadu'\nORDER BY T1.district_code",
+      "error_info": null
+    },
+    {
+      "instance_id": "3b1c9aff",
+      "question": "Identifica gli ID geografici dei villaggi rurali che hanno accesso sia alla scuola sia a una struttura sanitaria.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.GEOGRAPHY_ID FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' AND T2.VILLAGE_SCHOOL_AVAILABLE_INDICATOR = '1' AND T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1'",
+      "predicted_sql": "SELECT dim_geography_hierarchy.geography_id\nFROM dim_geography_hierarchy\nJOIN dim_village_infrastructure\nON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'Rural'\nAND dim_village_infrastructure.village_school_available_indicator = '1'\nAND dim_village_infrastructure.village_health_facility_available_indicator = '1'\nORDER BY dim_geography_hierarchy.geography_id",
+      "error_info": null
+    },
+    {
+      "instance_id": "6701182a",
+      "question": "Identifica tutte le aree rurali che dispongono sia di strutture scolastiche sia di strutture sanitarie, ordinate in base al loro ID geografico.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.GEOGRAPHY_ID FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' AND T2.VILLAGE_SCHOOL_AVAILABLE_INDICATOR = '1' AND T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' GROUP BY T1.GEOGRAPHY_ID ORDER BY T1.GEOGRAPHY_ID ASC",
+      "predicted_sql": "SELECT dim_geography_hierarchy.geography_id\nFROM dim_geography_hierarchy\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nWHERE dim_geography_hierarchy.state = 'Tamil Nadu'\nAND dim_geography_hierarchy.census_2001_urban_rural = 'Rural'\nAND dim_village_infrastructure.village_school_available_indicator = '1'\nAND dim_village_infrastructure.village_health_facility_available_indicator = '1'\nORDER BY dim_geography_hierarchy.geography_id",
+      "error_info": null
+    },
+    {
+      "instance_id": "93782300",
+      "question": "Identifica gli ID dei villaggi rurali che dispongono sia di una scuola sia di una struttura sanitaria e che hanno registrato almeno una voce di consumo familiare, ordinati numericamente.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.GEOGRAPHY_ID FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' AND T2.VILLAGE_SCHOOL_AVAILABLE_INDICATOR = '1' AND T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' GROUP BY T1.GEOGRAPHY_ID HAVING COUNT(T3.CONSUMPTION_ID) >= 1 ORDER BY T1.GEOGRAPHY_ID ASC",
+      "predicted_sql": "SELECT T1.geography_id\nFROM dim_geography_hierarchy AS T1\nJOIN dim_village_infrastructure AS T2 ON T1.geography_id = T2.geography_id\nJOIN fact_household_consumption AS T3 ON T1.geography_id = T3.geography_id\nWHERE T1.census_2001_urban_rural = 'rural'\n  AND T2.village_school_available_indicator = 1\n  AND T2.village_health_facility_available_indicator = 1\nORDER BY T1.geography_id",
+      "error_info": null
+    },
+    {
+      "instance_id": "7259cbe2",
+      "question": "Identifica le aree geografiche che hanno accesso a strutture sanitarie di villaggio oppure riportano un consumo mensile pro capite superiore a 5,000.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.GEOGRAPHY_ID FROM DIM_VILLAGE_INFRASTRUCTURE AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' OR T2.MONTHLY_CONSUMPTION_PER_CAPITA > 5000",
+      "predicted_sql": "SELECT\n    gh.state,\n    CASE\n        WHEN vi.village_health_facility_available_indicator = '1' THEN 'available'\n        WHEN vi.village_health_facility_available_indicator = '0' THEN 'not available'\n        ELSE vi.village_health_facility_available_indicator\n    END AS health_facility_available,\n    AVG(hc.monthly_consumption_per_capita) AS avg_per_capita_consumption,\n    SUM(hc.monthly_non_food_expenditure_rs) AS total_non_food_spending\nFROM fact_household_consumption hc\nINNER JOIN dim_geography_hierarchy gh ON hc.geography_id = gh.geography_id\nLEFT JOIN dim_village_infrastructure vi ON gh.geography_id = vi.geography_id\nWHERE (vi.village_health_facility_available_indicator = '1'\n       OR hc.monthly_consumption_per_capita > 5000)\n  AND vi.village_health_facility_available_indicator IN ('0', '1')\nGROUP BY gh.state,\n    CASE\n        WHEN vi.village_health_facility_available_indicator = '1' THEN 'available'\n        WHEN vi.village_health_facility_available_indicator = '0' THEN 'not available'\n        ELSE vi.village_health_facility_available_indicator\n    END\nORDER BY gh.state, health_facility_available",
+      "error_info": "invalid input syntax for type double precision: \"available\"\nLINE 4: ...ge_health_facility_available_indicator = '1' THEN 'available...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "9d718365",
+      "question": "Identifica gli ID geografici delle aree che dispongono di una struttura sanitaria di villaggio oppure di un consumo mensile pro capite superiore a 3,667, assicurandoti di includere solo le località con almeno una voce di consumo registrata.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.GEOGRAPHY_ID FROM DIM_GEOGRAPHY_HIERARCHY AS T1 LEFT JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID LEFT JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' OR T3.MONTHLY_CONSUMPTION_PER_CAPITA > 3667 GROUP BY T1.GEOGRAPHY_ID HAVING COUNT(T3.CONSUMPTION_ID) >= 1 ORDER BY T1.GEOGRAPHY_ID ASC",
+      "predicted_sql": "SELECT dim_geography_hierarchy.geography_id\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nWHERE dim_village_infrastructure.village_health_facility_available_indicator = 1\n   OR fact_household_consumption.monthly_consumption_per_capita > 3667\nGROUP BY dim_geography_hierarchy.geography_id,\n         dim_geography_hierarchy.state,\n         dim_village_infrastructure.village_health_facility_available_indicator\nHAVING AVG(fact_household_consumption.monthly_consumption_per_capita) > 329\nORDER BY SUM(fact_household_consumption.monthly_non_food_expenditure_rs) DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "6493ceb6",
+      "question": "Fornisci un elenco degli ID delle famiglie classificate come OBC che hanno un indice patrimoniale registrato, ordinato per ID.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' AND T2.HOUSEHOLD_ASSETS_INDEX IS NOT NULL ORDER BY T1.HOUSEHOLD_ID",
+      "predicted_sql": "SELECT household_id\nFROM dim_household_social\nWHERE caste_religion_group_8_category = 'OBC'\n  AND household_assets_index IS NOT NULL\nORDER BY household_id",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "bda085ac",
+      "question": "Fornisci un elenco degli ID delle famiglie musulmane che hanno un indice patrimoniale registrato, ordinato per il loro ID.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Muslim' AND T2.HOUSEHOLD_ASSETS_INDEX IS NOT NULL ORDER BY T1.HOUSEHOLD_ID",
+      "predicted_sql": "SELECT DISTINCT dim_household_social.household_id\nFROM dim_household_social\nJOIN fact_household_consumption ON dim_household_social.household_id = fact_household_consumption.household_id\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nWHERE dim_household_social.caste_religion_group_8_category = 'Muslim'\n  AND dim_household_social.household_assets_index IS NOT NULL\n  AND dim_geography_hierarchy.census_2001_urban_rural = 'Rural'\n  AND dim_village_infrastructure.village_school_available_indicator > 0\n  AND dim_village_infrastructure.village_health_facility_available_indicator > 0\nORDER BY dim_household_social.household_id",
+      "error_info": null
+    },
+    {
+      "instance_id": "83910589",
+      "question": "Fornisci l’indice patrimoniale e la spesa mensile media delle famiglie cristiane che spendono in media più di 300 rupie al mese, ordinate dall’indice patrimoniale più alto al più basso.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, AVG(T3.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' AND T2.HOUSEHOLD_ASSETS_INDEX IS NOT NULL GROUP BY T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX HAVING AVG(T3.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) > 300 ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+      "predicted_sql": "SELECT\n    ds.household_assets_index,\n    AVG(fhc.monthly_total_consumption_expenditure_rs) AS average_monthly_expenditure\nFROM dim_household_social ds\nJOIN fact_household_consumption fhc ON ds.household_id = fhc.household_id\nWHERE ds.caste_religion_group_8_category = 'Christian'\n    AND fhc.monthly_total_consumption_expenditure_rs > 300\nGROUP BY ds.household_id, ds.household_assets_index\nORDER BY ds.household_assets_index DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "14917044",
+      "question": "Per ciascuna casta e gruppo religioso, mostra l’asset index medio della famiglia e il numero totale di addetti alla cura degli animali, ordinati dall’asset index medio più alto al più basso.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, AVG(CAST(T2.HOUSEHOLD_ASSETS_INDEX AS NUMERIC)), SUM(CAST(T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS AS NUMERIC)) FROM DIM_HOUSEHOLD T1 JOIN DIM_HOUSEHOLD_SOCIAL T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY ORDER BY AVG(CAST(T2.HOUSEHOLD_ASSETS_INDEX AS NUMERIC)) DESC",
+      "predicted_sql": "SELECT dim_household_social.caste_religion_group_8_category,\n       AVG(dim_household_social.household_assets_index) AS avg_asset_index,\n       SUM(dim_household.household_number_of_animal_care_workers) AS total_animal_care_workers\nFROM dim_household_social\nJOIN dim_household ON dim_household_social.household_id = dim_household.household_id\nJOIN fact_household_consumption ON dim_household.household_id = fact_household_consumption.household_id\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'Rural'\nGROUP BY dim_household_social.caste_religion_group_8_category\nORDER BY AVG(dim_household_social.household_assets_index) DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "4bdaef0f",
+      "question": "Fornisci una suddivisione dell’ID sociale medio e del numero totale di addetti alla cura degli animali, raggruppati per categoria di casta/religione e tipo di contatto della rete sociale, per tutte le famiglie con membri registrati, ordinati in base all’ID sociale medio più alto.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.SOCIAL_NETWORK_CONTACT_2_TYPE, AVG(T2.SOCIAL_ID), SUM(CAST(T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS AS NUMERIC)) FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.SOCIAL_NETWORK_CONTACT_2_TYPE HAVING COUNT(T1.HOUSEHOLD_PERSON_CASE_ID) > 0 ORDER BY AVG(T2.SOCIAL_ID) DESC",
+      "predicted_sql": "SELECT\n    dim_household_social.caste_religion_group_8_category,\n    dim_household_social.social_network_contact_2_type,\n    AVG(dim_household_social.household_assets_index) AS average_social_id,\n    SUM(dim_household.household_number_of_animal_care_workers) AS total_animal_care_workers\nFROM dim_household_social\nJOIN dim_household ON dim_household_social.household_id = dim_household.household_id\nGROUP BY\n    dim_household_social.caste_religion_group_8_category,\n    dim_household_social.social_network_contact_2_type\nORDER BY average_social_id DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "aa7dc679",
+      "question": "Identifica tutte le famiglie appartenenti alla categoria OBC che hanno un indice patrimoniale superiore a 10.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' AND T2.HOUSEHOLD_ASSETS_INDEX > '10'",
+      "predicted_sql": "SELECT household_id\nFROM dim_household_social\nWHERE caste_religion_group_8_category = 'OBC'\n  AND household_assets_index > 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "7f1d4779",
+      "question": "Elenca gli ID delle famiglie e le rispettive categorie di casta o gruppo religioso, ordinate dal valore più alto al più basso in base al loro indice patrimoniale.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT HOUSEHOLD_ID, CASTE_RELIGION_GROUP_8_CATEGORY FROM DIM_HOUSEHOLD_SOCIAL ORDER BY HOUSEHOLD_ASSETS_INDEX DESC;",
+      "predicted_sql": "SELECT\n    dim_household.household_id,\n    dim_household_social.caste_religion_group_8_category,\n    AVG(fact_household_consumption.monthly_consumption_per_capita) AS avg_consumption,\n    CASE\n        WHEN dim_village_infrastructure.village_health_facility_available_indicator > 0 THEN 'Yes'\n        ELSE 'No'\n    END AS health_facility_access\nFROM dim_geography_hierarchy\nJOIN fact_household_consumption ON dim_geography_hierarchy.geography_id = fact_household_consumption.geography_id\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nJOIN dim_household ON fact_household_consumption.household_id = dim_household.household_id\nJOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nWHERE dim_geography_hierarchy.state = 'Uttar Pradesh'\n    AND dim_geography_hierarchy.census_2001_urban_rural = 'Rural'\nGROUP BY\n    dim_geography_hierarchy.psu_village_or_neighborhood_code,\n    dim_household.household_id,\n    dim_household_social.caste_religion_group_8_category,\n    dim_village_infrastructure.village_health_facility_available_indicator\nORDER BY avg_consumption DESC\nLIMIT 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "1ccaf231",
+      "question": "Identifica le 10 famiglie cristiane con l’indice patrimoniale più elevato.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL WHERE CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' ORDER BY HOUSEHOLD_ASSETS_INDEX DESC LIMIT 10;",
+      "predicted_sql": "SELECT\n    dgh.psu_village_or_neighborhood_code,\n    dgh.geography_id,\n    MAX(dvi.village_health_facility_available_indicator) as village_health_facility_available_indicator,\n    AVG(fhc.monthly_consumption_per_capita) as average_consumption\nFROM dim_household_social hs\nJOIN dim_household h ON hs.household_id = h.household_id\nJOIN fact_household_consumption fhc ON h.household_id = fhc.household_id\nJOIN dim_geography_hierarchy dgh ON fhc.geography_id = dgh.geography_id\nJOIN dim_village_infrastructure dvi ON dgh.geography_id = dvi.geography_id\nWHERE hs.caste_religion_group_8_category = 'Christian'\n    AND dgh.state = 'Uttar Pradesh'\n    AND dgh.census_2001_urban_rural = 'Rural'\nGROUP BY dgh.psu_village_or_neighborhood_code, dgh.geography_id\nORDER BY average_consumption DESC\nLIMIT 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "98f0a045",
+      "question": "Identifica gli ID dei casi delle dieci famiglie cristiane con i punteggi più alti dell’indice patrimoniale.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_PERSON_CASE_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC LIMIT 10",
+      "predicted_sql": "SELECT dim_household.household_person_case_id\nFROM dim_household_social\nJOIN dim_household ON dim_household_social.household_id = dim_household.household_id\nJOIN fact_household_consumption ON dim_household.household_id = fact_household_consumption.household_id\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nWHERE dim_household_social.caste_religion_group_8_category = 'Christian'\n    AND dim_geography_hierarchy.state = 'Uttar Pradesh'\n    AND dim_geography_hierarchy.census_2001_urban_rural = 'Rural'\nGROUP BY dim_geography_hierarchy.psu_village_or_neighborhood_code, dim_household.household_person_case_id\nORDER BY AVG(fact_household_consumption.monthly_consumption_per_capita) DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "0c9fb70c",
+      "question": "Identifica le 10 famiglie cristiane con gli indici patrimoniali più elevati e mostra la loro spesa media mensile totale per consumi.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, AVG(T2.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) FROM DIM_HOUSEHOLD AS T1 INNER JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN DIM_HOUSEHOLD_SOCIAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T3.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' GROUP BY T1.HOUSEHOLD_ID HAVING COUNT(T3.SOCIAL_ID) >= 1 ORDER BY MAX(T3.HOUSEHOLD_ASSETS_INDEX) DESC LIMIT 10",
+      "predicted_sql": "SELECT dim_household_social.household_id,\n       dim_household_social.household_assets_index,\n       AVG(fact_household_consumption.monthly_total_consumption_expenditure_rs) as avg_monthly_total_consumption\nFROM dim_household_social\nJOIN fact_household_consumption\n  ON dim_household_social.household_id = fact_household_consumption.household_id\nJOIN dim_geography_hierarchy\n  ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_village_infrastructure\n  ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nWHERE dim_household_social.caste_religion_group_8_category = 'Christian'\n  AND dim_village_infrastructure.village_health_facility_available_indicator = 1\n  AND dim_geography_hierarchy.census_2001_urban_rural = 'Rural'\nGROUP BY dim_household_social.household_id, dim_household_social.household_assets_index\nORDER BY dim_household_social.household_assets_index DESC\nLIMIT 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "f21079ed",
+      "question": "Fornisci il numero di addetti alla cura degli animali e le date di Gauna per tutte le famiglie cristiane.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS, T3.DATE_OF_GAUNA FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_HOUSEHOLD_MARITAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian';",
+      "predicted_sql": "SELECT DISTINCT dim_household.household_number_of_animal_care_workers, dim_household_marital.date_of_gauna\nFROM dim_household\nJOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nJOIN dim_household_marital ON dim_household.household_id = dim_household_marital.household_id\nWHERE dim_household_social.caste_religion_group_8_category = 'Christian'",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "aa876f79",
+      "question": "Fornisci il numero di addetti alla cura degli animali e le date di Gauna per le famiglie cristiane.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS, T3.DATE_OF_GAUNA FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_HOUSEHOLD_MARITAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' GROUP BY T3.DATE_OF_GAUNA, T2.CASTE_RELIGION_GROUP_8_CATEGORY, T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS ORDER BY T2.CASTE_RELIGION_GROUP_8_CATEGORY DESC",
+      "predicted_sql": "SELECT dim_household.household_number_of_animal_care_workers, dim_household_marital.date_of_gauna\nFROM dim_household\nJOIN dim_household_marital ON dim_household.household_id = dim_household_marital.household_id\nJOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nWHERE dim_household_social.caste_religion_group_8_category = 'Christian'",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "1cbbf0d2",
+      "question": "Identifica gli ID del nucleo familiare per le famiglie che hanno un indice dei beni del nucleo familiare pari a 27 e hanno registrato una data della cerimonia Gauna.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_HOUSEHOLD_MARITAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.HOUSEHOLD_ASSETS_INDEX = '27' AND T2.DATE_OF_GAUNA IS NOT NULL",
+      "predicted_sql": "SELECT DISTINCT dim_household.household_id\nFROM dim_household\nJOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nJOIN dim_household_marital ON dim_household.household_id = dim_household_marital.household_id\nJOIN fact_household_consumption ON dim_household.household_id = fact_household_consumption.household_id\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nWHERE dim_household_social.household_assets_index = 27\n  AND dim_household_marital.date_of_gauna IS NOT NULL\n  AND dim_geography_hierarchy.census_2001_urban_rural = 'Rural'\n  AND dim_village_infrastructure.village_health_facility_available_indicator = '1'\n  AND dim_village_infrastructure.village_drinking_water_available_indicator = '0'",
+      "error_info": null
+    },
+    {
+      "instance_id": "49f1774f",
+      "question": "Identifica gli ID delle famiglie più benestanti, in base all'indice patrimoniale, in cui almeno un membro ha celebrato una cerimonia Gauna, ordinati per il loro ID.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_HOUSEHOLD_MARITAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = (SELECT MAX(HOUSEHOLD_ASSETS_INDEX) FROM DIM_HOUSEHOLD_SOCIAL) GROUP BY T1.HOUSEHOLD_ID HAVING COUNT(T3.DATE_OF_GAUNA) >= 1 ORDER BY T1.HOUSEHOLD_ID ASC",
+      "predicted_sql": "SELECT DISTINCT dim_household_social.household_id\nFROM dim_household_social\nJOIN dim_household_marital ON dim_household_social.household_id = dim_household_marital.household_id\nWHERE dim_household_marital.date_of_gauna IS NOT NULL\n  AND dim_household_social.household_assets_index = (\n    SELECT MAX(household_assets_index)\n    FROM dim_household_social dhs2\n    JOIN dim_household_marital dhm2 ON dhs2.household_id = dhm2.household_id\n    WHERE dhm2.date_of_gauna IS NOT NULL\n  )\nORDER BY dim_household_social.household_id",
+      "error_info": null
+    },
+    {
+      "instance_id": "a29f6fad",
+      "question": "Identifica tutte le famiglie che hanno un indice patrimoniale pari a 27 oppure una data registrata per la cerimonia Gauna.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT DISTINCT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_HOUSEHOLD_MARITAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.HOUSEHOLD_ASSETS_INDEX = '27' OR T2.DATE_OF_GAUNA IS NOT NULL",
+      "predicted_sql": "SELECT dim_household.household_id\nFROM dim_household\nJOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nJOIN dim_household_marital ON dim_household.household_id = dim_household_marital.household_id\nWHERE dim_household_social.household_assets_index = 27 OR dim_household_marital.date_of_gauna IS NOT NULL",
+      "error_info": null
+    },
+    {
+      "instance_id": "a6ae852e",
+      "question": "Fornisci una ripartizione del numero totale di registri dei beni familiari e del numero di lavoratori per ciascuna categoria di casta e gruppo religioso.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.CASTE_RELIGION_GROUP_8_CATEGORY, COUNT(T1.HOUSEHOLD_ASSETS_INDEX), COUNT(T2.HOUSEHOLD_NUMBER_OF_WORKERS) FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_HOUSEHOLD AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID GROUP BY T1.CASTE_RELIGION_GROUP_8_CATEGORY",
+      "predicted_sql": "SELECT T1.caste_religion_group_8_category,\n       COUNT(*) AS total_household_assets_records,\n       SUM(T2.household_number_of_workers) AS total_workers\nFROM dim_household_social AS T1\nJOIN dim_household AS T2 ON T1.household_id = T2.household_id\nGROUP BY T1.caste_religion_group_8_category",
+      "error_info": null
+    },
+    {
+      "instance_id": "82810052",
+      "question": "Identifica gli ID delle famiglie appartenenti alla categoria OBC che si trovano nella fascia più alta dell'indice patrimoniale.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL WHERE CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' AND HOUSEHOLD_ASSETS_INDEX = '10';",
+      "predicted_sql": "SELECT household_id\nFROM dim_household_social\nWHERE caste_religion_group_8_category = 'OBC'\n  AND household_assets_index = (\n    SELECT MAX(household_assets_index)\n    FROM dim_household_social\n    WHERE caste_religion_group_8_category = 'OBC'\n  )\nORDER BY household_id",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "b46106b7",
+      "question": "Elenca gli ID delle famiglie e le rispettive categorie di casta o gruppo religioso, classificati dal più alto al più basso in base al loro indice patrimoniale.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT HOUSEHOLD_ID, CASTE_RELIGION_GROUP_8_CATEGORY FROM DIM_HOUSEHOLD_SOCIAL ORDER BY HOUSEHOLD_ASSETS_INDEX DESC;",
+      "predicted_sql": "SELECT DISTINCT dim_household.household_id, dim_household_social.caste_religion_group_8_category\nFROM dim_household\nJOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nJOIN fact_household_consumption ON dim_household.household_id = fact_household_consumption.household_id\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nWHERE (\n    dim_village_infrastructure.village_health_facility_available_indicator = 1\n    OR fact_household_consumption.monthly_consumption_per_capita > 5000\n)\nORDER BY dim_household_social.household_assets_index DESC",
+      "error_info": "for SELECT DISTINCT, ORDER BY expressions must appear in select list\nLINE 11: ORDER BY dim_household_social.household_assets_index DESC\n                  ^\n"
+    },
+    {
+      "instance_id": "8253a6c1",
+      "question": "Elenca gli ID delle famiglie e le rispettive categorie di casta o gruppo religioso, ordinati dall’indice patrimoniale familiare più alto al più basso.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.CASTE_RELIGION_GROUP_8_CATEGORY FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+      "predicted_sql": "SELECT DISTINCT dim_household.household_id, dim_household_social.caste_religion_group_8_category\nFROM dim_household\nJOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nORDER BY dim_household_social.household_assets_index DESC",
+      "error_info": "for SELECT DISTINCT, ORDER BY expressions must appear in select list\nLINE 4: ORDER BY dim_household_social.household_assets_index DESC\n                 ^\n"
+    },
+    {
+      "instance_id": "536be16d",
+      "question": "Elenca i 10 principali ID delle famiglie e i relativi indici patrimoniali per le famiglie musulmane o OBC che hanno un indice patrimoniale superiore a 10, ordinati dal più alto al più basso.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY IN ('OBC', 'Muslim') GROUP BY T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX HAVING MAX(T2.HOUSEHOLD_ASSETS_INDEX) > '10' ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC LIMIT 10",
+      "predicted_sql": "SELECT DISTINCT T1.household_id, T2.household_assets_index\nFROM dim_household AS T1\nJOIN dim_household_social AS T2 ON T1.household_id = T2.household_id\nJOIN fact_household_consumption AS T3 ON T1.household_id = T3.household_id\nJOIN dim_village_infrastructure AS T4 ON T3.geography_id = T4.geography_id\nWHERE (T2.caste_religion_group_8_category = 'Muslim' OR T2.caste_religion_group_8_category = 'OBC')\n  AND T2.household_assets_index > 10\n  AND (T4.village_health_facility_available_indicator = 1 OR T3.monthly_consumption_per_capita > 3667)\nORDER BY T2.household_assets_index DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "3012cd8e",
+      "question": "Fornisci l’ID sociale medio per le famiglie con bambini attualmente non iscritti a scuola, suddiviso per categoria di casta/religione e indice patrimoniale.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.CASTE_RELIGION_GROUP_8_CATEGORY, T1.HOUSEHOLD_ASSETS_INDEX, AVG(T1.SOCIAL_ID) FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_EDUCATION_CHILD AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CHILD_SCHOOL_ENROLLMENT_STATUS = '-1' GROUP BY T1.CASTE_RELIGION_GROUP_8_CATEGORY, T1.HOUSEHOLD_ASSETS_INDEX ORDER BY T1.CASTE_RELIGION_GROUP_8_CATEGORY",
+      "predicted_sql": "SELECT AVG(T1.household_id) AS average_household_id,\n       T1.caste_religion_group_8_category,\n       T1.household_assets_index\nFROM dim_household_social AS T1\nWHERE T1.household_id IN (\n    SELECT DISTINCT household_id\n    FROM dim_education_child\n    WHERE child_school_enrollment_status = 'Not enrolled'\n)\nAND T1.household_assets_index IS NOT NULL\nGROUP BY T1.caste_religion_group_8_category, T1.household_assets_index",
+      "error_info": "invalid input syntax for type bigint: \"Not enrolled\"\nLINE 8:     WHERE child_school_enrollment_status = 'Not enrolled'\n                                                   ^\n"
+    },
+    {
+      "instance_id": "2e736d46",
+      "question": "Per i bambini che attualmente non sono iscritti a scuola, mostra l'ID medio dell'istruzione suddiviso per gruppo di casta/religione e indice patrimoniale familiare, ordinato per categoria sociale.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.HOUSEHOLD_ASSETS_INDEX, AVG(T1.CHILD_EDUCATION_ID) FROM DIM_EDUCATION_CHILD T1 JOIN DIM_HOUSEHOLD_SOCIAL T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.CHILD_SCHOOL_ENROLLMENT_STATUS = '-1' GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.HOUSEHOLD_ASSETS_INDEX ORDER BY T2.CASTE_RELIGION_GROUP_8_CATEGORY ASC",
+      "predicted_sql": "SELECT AVG(T1.child_education_id) AS average_child_education_id,\n       T2.caste_religion_group_8_category,\n       T2.household_assets_index\nFROM dim_education_child AS T1\nJOIN dim_household_social AS T2 ON T1.household_id = T2.household_id\nWHERE T1.child_school_enrollment_status = 'not enrolled'\nGROUP BY T2.caste_religion_group_8_category, T2.household_assets_index\nORDER BY T2.caste_religion_group_8_category",
+      "error_info": "invalid input syntax for type bigint: \"not enrolled\"\nLINE 6: WHERE T1.child_school_enrollment_status = 'not enrolled'\n                                                  ^\n"
+    },
+    {
+      "instance_id": "565304fa",
+      "question": "Identifica gli ID delle famiglie classificati all’indice patrimoniale 17 che hanno figli con uno stato di iscrizione scolastica sconosciuto o non specificato.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_EDUCATION_CHILD AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.HOUSEHOLD_ASSETS_INDEX = '17' AND T2.CHILD_SCHOOL_ENROLLMENT_STATUS = '-1' GROUP BY T1.HOUSEHOLD_ID",
+      "predicted_sql": "SELECT DISTINCT dim_household_social.household_id\nFROM dim_household_social\nJOIN dim_education_child ON dim_household_social.household_id = dim_education_child.household_id\nWHERE dim_household_social.household_assets_index = 17\nAND dim_education_child.child_school_enrollment_status IN ('unknown', 'unspecified')\nORDER BY dim_household_social.household_id",
+      "error_info": "invalid input syntax for type bigint: \"unknown\"\nLINE 5: ...ducation_child.child_school_enrollment_status IN ('unknown',...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "8a7c69ea",
+      "question": "Identifica gli ID di tutte le famiglie con un asset index di 27, escludendo tutte le famiglie in cui i bambini hanno un enrollment status sconosciuto, ed elencali in ordine crescente.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '27' AND T1.HOUSEHOLD_ID NOT IN (SELECT HOUSEHOLD_ID FROM DIM_EDUCATION_CHILD WHERE CHILD_SCHOOL_ENROLLMENT_STATUS = '-1') GROUP BY T1.HOUSEHOLD_ID ORDER BY T1.HOUSEHOLD_ID ASC",
+      "predicted_sql": "SELECT household_id\nFROM dim_household_social\nWHERE household_assets_index = 27\nAND caste_religion_group_8_category = 'Muslim'\nAND household_id NOT IN (\n    SELECT household_id\n    FROM dim_education_child\n    WHERE child_school_enrollment_status = 'unknown'\n)\nORDER BY household_id ASC",
+      "error_info": "invalid input syntax for type bigint: \"unknown\"\nLINE 8:     WHERE child_school_enrollment_status = 'unknown'\n                                                   ^\n"
+    },
+    {
+      "instance_id": "962070d7",
+      "question": "Identifica i nuclei familiari che hanno un indice patrimoniale pari a 27 e includono bambini il cui stato di iscrizione scolastica è attualmente non registrato o mancante.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_EDUCATION_CHILD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '27' AND T3.CHILD_SCHOOL_ENROLLMENT_STATUS = '-1';",
+      "predicted_sql": "SELECT DISTINCT dim_household.household_id\nFROM dim_household\nJOIN dim_household_social ON dim_household_social.household_id = dim_household.household_id\nJOIN dim_education_child ON dim_education_child.household_id = dim_household.household_id\nWHERE dim_household_social.household_assets_index = 27\n  AND dim_education_child.child_school_enrollment_status IN ('not registered', 'missing')\nORDER BY dim_household.household_id",
+      "error_info": "invalid input syntax for type bigint: \"not registered\"\nLINE 6: ...ducation_child.child_school_enrollment_status IN ('not regis...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "1a6ea6be",
+      "question": "Identifica le famiglie con un indice patrimoniale superiore a 10 che hanno almeno un bambino attualmente non iscritto a scuola, ordinate in base al loro livello di ricchezza.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_EDUCATION_CHILD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX > '10' AND T3.CHILD_SCHOOL_ENROLLMENT_STATUS = '-1' GROUP BY T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX HAVING COUNT(T3.CHILD_EDUCATION_ID) >= 1 ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+      "predicted_sql": "SELECT\n    dim_household_social.caste_religion_group_8_category,\n    AVG(dim_household_social.social_id) AS avg_social_id,\n    SUM(dim_household.household_number_of_animal_care_workers) AS total_animal_care_workers\nFROM dim_household_social\nJOIN dim_household ON dim_household_social.household_id = dim_household.household_id\nWHERE dim_household_social.household_assets_index > 10\n    AND EXISTS (\n        SELECT 1\n        FROM dim_education_child\n        WHERE dim_education_child.household_id = dim_household_social.household_id\n            AND dim_education_child.child_school_enrollment_status = 'non iscritto'\n    )\nGROUP BY dim_household_social.caste_religion_group_8_category\nORDER BY dim_household_social.household_assets_index DESC",
+      "error_info": "invalid input syntax for type bigint: \"non iscritto\"\nLINE 12: ..._education_child.child_school_enrollment_status = 'non iscri...\n                                                              ^\n"
+    },
+    {
+      "instance_id": "906dc566",
+      "question": "Identifica tutte le famiglie che rientrano nella categoria più alta dell’indice patrimoniale oppure che hanno figli il cui stato di iscrizione scolastica non è attualmente registrato.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT DISTINCT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_EDUCATION_CHILD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '10' OR T3.CHILD_SCHOOL_ENROLLMENT_STATUS = '-1'",
+      "predicted_sql": "SELECT\n    dim_household_social.caste_religion_group_8_category,\n    AVG(dim_household_social.household_assets_index) AS average_wealth,\n    SUM(dim_household.household_number_of_animal_care_workers) AS total_animal_care_workers\nFROM dim_household\nLEFT JOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nLEFT JOIN dim_education_child ON dim_household.household_id = dim_education_child.household_id\nWHERE dim_household_social.household_assets_index = (\n    SELECT MAX(household_assets_index) FROM dim_household_social\n) OR dim_education_child.child_school_enrollment_status IS NULL\nGROUP BY dim_household_social.caste_religion_group_8_category\nORDER BY average_wealth DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "08d0677f",
+      "question": "Identifica tutte le famiglie nella categoria più alta dell’indice patrimoniale che hanno almeno un bambino iscritto a scuola, ordinate per ID della famiglia.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 LEFT JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN DIM_EDUCATION_CHILD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '10' GROUP BY T1.HOUSEHOLD_ID HAVING COUNT(T3.CHILD_SCHOOL_ENROLLMENT_STATUS) >= 1 OR T1.HOUSEHOLD_ID IN (SELECT HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL WHERE HOUSEHOLD_ASSETS_INDEX = '10') ORDER BY T1.HOUSEHOLD_ID ASC",
+      "predicted_sql": "SELECT dim_household.household_id\nFROM dim_household\nJOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nJOIN dim_education_child ON dim_household.household_id = dim_education_child.household_id\nWHERE dim_household_social.household_assets_index = (\n    SELECT MAX(household_assets_index) FROM dim_household_social\n)\nAND dim_education_child.child_school_enrollment_status = 'yes'\nGROUP BY dim_household.household_id\nORDER BY dim_household.household_id",
+      "error_info": "invalid input syntax for type bigint: \"yes\"\nLINE 8: ...D dim_education_child.child_school_enrollment_status = 'yes'\n                                                                  ^\n"
+    },
+    {
+      "instance_id": "db3bd75d",
+      "question": "Elenca gli ID delle famiglie OBC che hanno un alto indice patrimoniale e specifici contatti nella rete sociale, ordinati dalla maggiore alla minore ricchezza patrimoniale.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' AND T2.HOUSEHOLD_ASSETS_INDEX > '10' AND T2.SOCIAL_NETWORK_CONTACT_2_TYPE = '1' ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+      "predicted_sql": "SELECT household_id\nFROM dim_household_social\nWHERE caste_religion_group_8_category = 'OBC'\n  AND household_assets_index > 10\n  AND social_network_contact_2_type IS NOT NULL\nORDER BY household_assets_index DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "52ebce1e",
+      "question": "Fornisci una suddivisione per casta e gruppo religioso che mostri il reddito medio familiare, il totale dei prestiti in essere e il numero totale di addetti alla cura degli animali.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, AVG(CAST(T3.HOUSEHOLD_TOTAL_INCOME AS NUMERIC)), SUM(CAST(T3.HOUSEHOLD_TOTAL_OUTSTANDING_LOANS_RS AS NUMERIC)), SUM(CAST(T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS AS NUMERIC)) FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_LIVELIHOOD_INCOME AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY",
+      "predicted_sql": "SELECT T1.caste_religion_group_8_category,\n       AVG(T3.household_total_income),\n       SUM(T3.household_total_outstanding_loans_rs),\n       SUM(T2.household_number_of_animal_care_workers)\nFROM dim_household_social AS T1\nJOIN dim_household AS T2 ON T1.household_id = T2.household_id\nJOIN dim_livelihood_income AS T3 ON T2.household_id = T3.household_id\nWHERE T1.household_assets_index > 10\nGROUP BY T1.caste_religion_group_8_category",
+      "error_info": null
+    },
+    {
+      "instance_id": "a15d93e7",
+      "question": "Fornisci una suddivisione per casta e gruppo religioso che mostri il reddito medio familiare, il totale dei prestiti in essere e il numero di addetti alla cura degli animali per ciascun gruppo.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, AVG(CAST(T3.HOUSEHOLD_TOTAL_INCOME AS NUMERIC)), SUM(CAST(T3.HOUSEHOLD_TOTAL_OUTSTANDING_LOANS_RS AS NUMERIC)), COUNT(T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS) FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_LIVELIHOOD_INCOME AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY ORDER BY T2.CASTE_RELIGION_GROUP_8_CATEGORY",
+      "predicted_sql": "SELECT T1.caste_religion_group_8_category,\n       AVG(T3.household_total_income) AS average_household_income,\n       SUM(T3.household_total_outstanding_loans_rs) AS total_outstanding_loans,\n       SUM(T2.household_number_of_animal_care_workers) AS total_animal_care_workers\nFROM dim_household_social AS T1\nJOIN dim_household AS T2 ON T1.household_id = T2.household_id\nJOIN dim_livelihood_income AS T3 ON T2.household_id = T3.household_id\nGROUP BY T1.caste_religion_group_8_category\nORDER BY T1.caste_religion_group_8_category",
+      "error_info": null
+    },
+    {
+      "instance_id": "667db15d",
+      "question": "Fornisci una ripartizione delle statistiche sulle famiglie e sul reddito tra diversi gruppi di casta e religiosi, classificati in base al loro numero medio di famiglie.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, AVG(T3.HOUSEHOLD_ID), SUM(T3.INCOME_ID), SUM(T1.HOUSEHOLD_ID) FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID INNER JOIN DIM_LIVELIHOOD_INCOME AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY HAVING COUNT(T1.HOUSEHOLD_ID) > 0 ORDER BY AVG(T3.HOUSEHOLD_ID) DESC",
+      "predicted_sql": "SELECT dim_household_social.caste_religion_group_8_category,\n       COUNT(dim_household_social.household_id) AS household_count,\n       AVG(dim_livelihood_income.household_total_income) AS avg_income\nFROM dim_household_social\nJOIN dim_livelihood_income ON dim_household_social.household_id = dim_livelihood_income.household_id\nGROUP BY dim_household_social.caste_religion_group_8_category\nORDER BY household_count",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "f2b3ef63",
+      "question": "Fornisci gli ID delle famiglie e gli importi totali dei prestiti in sospeso per tutte le famiglie OBC, ordinati dall’indice patrimoniale più alto al più basso.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_TOTAL_OUTSTANDING_LOANS_RS FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_LIVELIHOOD_INCOME AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' ORDER BY T1.HOUSEHOLD_ASSETS_INDEX DESC",
+      "predicted_sql": "SELECT T1.household_id, SUM(T2.household_total_outstanding_loans_rs) AS total_outstanding_loans_rs\nFROM dim_household_social AS T1\nJOIN dim_livelihood_income AS T2 ON T1.household_id = T2.household_id\nWHERE T1.caste_religion_group_8_category = 'OBC'\nGROUP BY T1.household_id, T1.household_assets_index\nORDER BY T1.household_assets_index DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "2cf34a67",
+      "question": "Identifica le 10 famiglie OBC più ricche in base all’indice patrimoniale e mostra l’importo totale dei loro prestiti in essere.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_TOTAL_OUTSTANDING_LOANS_RS FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_LIVELIHOOD_INCOME AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' ORDER BY T1.HOUSEHOLD_ASSETS_INDEX DESC LIMIT 10",
+      "predicted_sql": "SELECT dim_household_social.household_id,\n       dim_household_social.household_assets_index,\n       dim_livelihood_income.household_total_outstanding_loans_rs\nFROM dim_household_social\nJOIN fact_household_consumption ON dim_household_social.household_id = fact_household_consumption.household_id\nJOIN dim_livelihood_income ON dim_household_social.household_id = dim_livelihood_income.household_id\nWHERE dim_household_social.caste_religion_group_8_category = 'OBC'\n  AND fact_household_consumption.monthly_total_consumption_expenditure_rs > 300\nORDER BY dim_household_social.household_assets_index DESC\nLIMIT 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "105fb1f7",
+      "question": "Fornisci l’indice dei beni familiari e la categoria socio-religiosa per le famiglie coinvolte nell’attività imprenditoriale di sottotipo 40 e che attualmente hanno prestiti in essere.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ASSETS_INDEX, T1.CASTE_RELIGION_GROUP_8_CATEGORY FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_LIVELIHOOD_INCOME AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.BUSINESS_1_ACTIVITY_SUBTYPE = '40' AND T2.HOUSEHOLD_TOTAL_OUTSTANDING_LOANS_RS > '0';",
+      "predicted_sql": "SELECT dim_household_social.household_id, dim_household_social.household_assets_index\nFROM dim_household_social\nJOIN dim_livelihood_income ON dim_household_social.household_id = dim_livelihood_income.household_id\nWHERE dim_livelihood_income.business_1_activity_subtype = 40\n  AND dim_livelihood_income.household_total_outstanding_loans_rs > 0\n  AND dim_household_social.caste_religion_group_8_category = 'Christian'\nORDER BY dim_household_social.household_assets_index DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "fab98bd3",
+      "question": "Fornisci una ripartizione delle famiglie con prestiti in essere coinvolte nel sottotipo di attività 40, classificate in base al loro indice patrimoniale e al gruppo casta-religione.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.HOUSEHOLD_ASSETS_INDEX, T2.CASTE_RELIGION_GROUP_8_CATEGORY, COUNT(*) FROM DIM_LIVELIHOOD_INCOME AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.BUSINESS_1_ACTIVITY_SUBTYPE = '40' AND T1.HOUSEHOLD_TOTAL_OUTSTANDING_LOANS_RS > '0' GROUP BY T2.HOUSEHOLD_ASSETS_INDEX, T2.CASTE_RELIGION_GROUP_8_CATEGORY ORDER BY T2.HOUSEHOLD_ASSETS_INDEX ASC",
+      "predicted_sql": "SELECT T1.household_person_case_id,\n       T3.household_assets_index,\n       T3.caste_religion_group_8_category\nFROM dim_household AS T1\nJOIN dim_livelihood_income AS T2 ON T1.household_id = T2.household_id\nJOIN dim_household_social AS T3 ON T1.household_id = T3.household_id\nWHERE T2.business_1_activity_subtype = 40\n  AND T2.household_total_outstanding_loans_rs > 0\n  AND T3.caste_religion_group_8_category = 'Christian'\nORDER BY T3.household_assets_index DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "18f440ca",
+      "question": "Fornisci una ripartizione del numero di famiglie per indice patrimoniale e gruppo sociale per le famiglie che svolgono attività imprenditoriali e che attualmente hanno prestiti in essere.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.HOUSEHOLD_ASSETS_INDEX, T2.CASTE_RELIGION_GROUP_8_CATEGORY, COUNT(T1.HOUSEHOLD_ID) FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID INNER JOIN DIM_LIVELIHOOD_INCOME AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T3.BUSINESS_1_ACTIVITY_SUBTYPE IS NOT NULL AND T3.HOUSEHOLD_TOTAL_OUTSTANDING_LOANS_RS > '0' GROUP BY T2.HOUSEHOLD_ASSETS_INDEX, T2.CASTE_RELIGION_GROUP_8_CATEGORY HAVING COUNT(T1.HOUSEHOLD_ID) >= 1 ORDER BY T2.CASTE_RELIGION_GROUP_8_CATEGORY DESC",
+      "predicted_sql": "SELECT\n    dim_household_social.household_assets_index,\n    dim_household_social.caste_religion_group_8_category,\n    COUNT(DISTINCT dim_household.household_id) as household_count\nFROM dim_household\nJOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nJOIN dim_livelihood_income ON dim_household.household_id = dim_livelihood_income.household_id\nWHERE dim_livelihood_income.business_1_activity_subtype IS NOT NULL\n    AND dim_livelihood_income.household_total_outstanding_loans_rs > 0\n    AND dim_household_social.caste_religion_group_8_category = 'Christian'\nGROUP BY\n    dim_household_social.household_assets_index,\n    dim_household_social.caste_religion_group_8_category\nORDER BY dim_household_social.household_assets_index DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "8839b1e9",
+      "question": "Identifica tutte le famiglie con un indice patrimoniale pari a 27 che non hanno alcun addetto alla cura degli animali, ordinate per ID.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '27' AND T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS = '0' GROUP BY T1.HOUSEHOLD_ID HAVING SUM(T1.HOUSEHOLD_ID) >= 1 ORDER BY T1.HOUSEHOLD_ID ASC",
+      "predicted_sql": "SELECT dim_household.household_id,\n       dim_household.household_number_of_animal_care_workers,\n       dim_household_marital.date_of_gauna\nFROM dim_household\nJOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nJOIN dim_household_marital ON dim_household.household_id = dim_household_marital.household_id\nWHERE dim_household_social.household_assets_index = 27\n  AND dim_household.household_number_of_animal_care_workers = 0\n  AND dim_household_social.caste_religion_group_8_category = 'Christian'\nORDER BY dim_household.household_id",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "be907e24",
+      "question": "Identifica gli ID delle famiglie cristiane che possiedono un indice patrimoniale superiore a 10 e sono coinvolte nell’attività commerciale del sottotipo 40.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_LIVELIHOOD_INCOME AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' AND T2.HOUSEHOLD_ASSETS_INDEX > '10' AND T3.BUSINESS_1_ACTIVITY_SUBTYPE = '40'",
+      "predicted_sql": "SELECT dim_household_social.household_id\nFROM dim_household_social\nJOIN dim_livelihood_income ON dim_household_social.household_id = dim_livelihood_income.household_id\nWHERE dim_household_social.caste_religion_group_8_category = 'Christian'\n  AND dim_household_social.household_assets_index > 10\n  AND dim_livelihood_income.business_1_activity_subtype = 40",
+      "error_info": null
+    },
+    {
+      "instance_id": "4f9e4ad6",
+      "question": "Identifica tutte le famiglie cristiane con un indice patrimoniale superiore a 10 che sono coinvolte in almeno un'attività commerciale, ordinate per indice patrimoniale in ordine decrescente.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_LIVELIHOOD_INCOME AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' AND T2.HOUSEHOLD_ASSETS_INDEX > '10' GROUP BY T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX HAVING COUNT(T3.BUSINESS_1_ACTIVITY_SUBTYPE) >= 1 ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+      "predicted_sql": "SELECT DISTINCT dim_household_social.household_id, dim_household_social.household_assets_index\nFROM dim_household_social\nJOIN dim_livelihood_income ON dim_household_social.household_id = dim_livelihood_income.household_id\nWHERE dim_household_social.caste_religion_group_8_category = 'Christian'\n  AND dim_household_social.household_assets_index > 10\n  AND dim_livelihood_income.business_1_activity_subtype IS NOT NULL\nORDER BY dim_household_social.household_assets_index DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "f9899e65",
+      "question": "Identifica tutte le famiglie che appartengono al gruppo sociale musulmano oppure sono coinvolte nell’attività economica di sottotipo 40, ordinate per ID.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_LIVELIHOOD_INCOME AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Muslim' OR T3.BUSINESS_1_ACTIVITY_SUBTYPE = '40' ORDER BY T1.HOUSEHOLD_ID",
+      "predicted_sql": "SELECT dim_household_social.household_id\nFROM dim_household_social\nJOIN dim_household_marital ON dim_household_social.household_id = dim_household_marital.household_id\nWHERE dim_household_social.caste_religion_group_8_category = 'musulmano'\n   OR dim_household_social.household_assets_index = 27\nGROUP BY dim_household_social.household_id\nHAVING COUNT(dim_household_marital.marital_id) = 1\n   AND SUM(CASE WHEN dim_household_marital.date_of_gauna IS NOT NULL THEN 1 ELSE 0 END) = 1\nORDER BY dim_household_social.household_id",
+      "error_info": null
+    },
+    {
+      "instance_id": "d34f7175",
+      "question": "Fornisci gli ID delle famiglie e gli importi della spesa mensile non alimentare per le famiglie rural situate in Maharashtra.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T1.MONTHLY_NON_FOOD_EXPENDITURE_RS FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.STATE = 'Maharashtra' AND T2.CENSUS_2001_URBAN_RURAL = 'Rural'",
+      "predicted_sql": "SELECT fact_household_consumption.household_id, fact_household_consumption.monthly_non_food_expenditure_rs\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_household_social ON fact_household_consumption.household_id = dim_household_social.household_id\nJOIN dim_household_marital ON fact_household_consumption.household_id = dim_household_marital.household_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'rural'\n  AND dim_geography_hierarchy.state = 'Maharashtra'\n  AND dim_household_social.household_assets_index = 27\n  AND dim_household_marital.date_of_gauna IS NOT NULL",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "8934e8ac",
+      "question": "Elenca gli ID delle famiglie e le loro spese mensili non alimentari per le aree rural nello state di Maharashtra.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T1.MONTHLY_NON_FOOD_EXPENDITURE_RS FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.STATE = 'Maharashtra' AND T2.CENSUS_2001_URBAN_RURAL = 'Rural'",
+      "predicted_sql": "SELECT T1.household_id, T1.monthly_non_food_expenditure_rs\nFROM fact_household_consumption AS T1\nJOIN dim_geography_hierarchy AS T2 ON T1.geography_id = T2.geography_id\nWHERE T2.census_2001_urban_rural = 'rural'\n  AND T2.state = 'Maharashtra'",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "1d002667",
+      "question": "Classifica le famiglie rurali del Maharashtra in base alla loro spesa mensile totale per beni non alimentari, iniziando da quelle che spendono di più.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, SUM(T2.MONTHLY_NON_FOOD_EXPENDITURE_RS) FROM DIM_HOUSEHOLD AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_GEOGRAPHY_HIERARCHY AS T3 ON T2.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T3.STATE = 'Maharashtra' AND T3.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T1.HOUSEHOLD_ID ORDER BY SUM(T2.MONTHLY_NON_FOOD_EXPENDITURE_RS) DESC",
+      "predicted_sql": "SELECT\n    fhc.household_id,\n    fhc.monthly_non_food_expenditure_rs,\n    dhs.household_assets_index\nFROM fact_household_consumption fhc\nJOIN dim_geography_hierarchy dgh ON fhc.geography_id = dgh.geography_id\nJOIN dim_household_social dhs ON fhc.household_id = dhs.household_id\nJOIN dim_household_marital dhm ON fhc.household_id = dhm.household_id\nWHERE dgh.state = 'Maharashtra'\n    AND dgh.census_2001_urban_rural = 'Rural'\n    AND dhm.date_of_gauna IS NOT NULL\nORDER BY fhc.monthly_non_food_expenditure_rs DESC,\n         dhs.household_assets_index DESC,\n         fhc.household_id ASC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "9132a51f",
+      "question": "Fornisci una ripartizione per stato e classificazione urbana/rurale del consumo medio mensile pro capite e delle spese non alimentari.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.STATE, T1.CENSUS_2001_URBAN_RURAL, AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA), AVG(T2.MONTHLY_NON_FOOD_EXPENDITURE_RS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE, T1.CENSUS_2001_URBAN_RURAL",
+      "predicted_sql": "SELECT dim_geography_hierarchy.state, dim_geography_hierarchy.census_2001_urban_rural,\n       AVG(fact_household_consumption.monthly_consumption_per_capita),\n       AVG(fact_household_consumption.monthly_non_food_expenditure_rs)\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_household ON fact_household_consumption.household_id = dim_household.household_id\nWHERE dim_household.household_id IN (\n    SELECT DISTINCT dim_household.household_id\n    FROM dim_household\n    LEFT JOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\n    LEFT JOIN dim_household_marital ON dim_household.household_id = dim_household_marital.household_id\n    WHERE dim_household_social.household_assets_index = '27' OR dim_household_marital.date_of_gauna IS NOT NULL\n)\nGROUP BY dim_geography_hierarchy.state, dim_geography_hierarchy.census_2001_urban_rural",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "234a5b39",
+      "question": "Fornisci una ripartizione per stato del consumo medio mensile pro capite e delle spese non alimentari, confrontando le aree urbane e rurali sulla base del censimento del 2001.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.STATE, T1.CENSUS_2001_URBAN_RURAL, AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA), AVG(T2.MONTHLY_NON_FOOD_EXPENDITURE_RS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE, T1.CENSUS_2001_URBAN_RURAL ORDER BY T1.STATE ASC",
+      "predicted_sql": "SELECT T2.state,\n       T2.census_2001_urban_rural,\n       AVG(T1.monthly_consumption_per_capita) AS avg_monthly_consumption_per_capita,\n       AVG(T1.monthly_non_food_expenditure_rs) AS avg_monthly_non_food_expenditure_rs\nFROM fact_household_consumption AS T1\nJOIN dim_geography_hierarchy AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_household AS hh ON T1.household_id = hh.household_id\nJOIN dim_household_social AS soc ON hh.household_id = soc.household_id\nJOIN dim_household_marital AS mar ON hh.household_id = mar.household_id\nWHERE soc.household_assets_index = 27 OR mar.date_of_gauna IS NOT NULL\nGROUP BY T2.state, T2.census_2001_urban_rural\nORDER BY T2.state, T2.census_2001_urban_rural",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "99cd5acd",
+      "question": "Classifica gli stati in base alla loro spesa mensile media non alimentare per le famiglie rurali, iniziando da quello con la più alta.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.STATE, AVG(T1.MONTHLY_NON_FOOD_EXPENDITURE_RS) FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T2.STATE ORDER BY AVG(T1.MONTHLY_NON_FOOD_EXPENDITURE_RS) DESC",
+      "predicted_sql": "SELECT dim_geography_hierarchy.state,\n       AVG(fact_household_consumption.monthly_non_food_expenditure_rs) AS avg_monthly_non_food_expenditure\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'rural'\nAND fact_household_consumption.household_id IN (\n    SELECT DISTINCT household_id FROM dim_household_social WHERE household_assets_index = '27'\n    UNION\n    SELECT DISTINCT household_id FROM dim_household_marital WHERE date_of_gauna IS NOT NULL\n)\nGROUP BY dim_geography_hierarchy.state\nORDER BY AVG(fact_household_consumption.monthly_non_food_expenditure_rs) DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "4398e9a5",
+      "question": "Classifica gli stati in base alla loro spesa media mensile delle famiglie per beni non alimentari nelle aree rurali, mostrando solo quelli con dati di consumo registrati.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.STATE, AVG(T1.MONTHLY_NON_FOOD_EXPENDITURE_RS) FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 INNER JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN DIM_HOUSEHOLD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T2.STATE HAVING COUNT(T1.HOUSEHOLD_ID) > 0 ORDER BY AVG(T1.MONTHLY_NON_FOOD_EXPENDITURE_RS) DESC",
+      "predicted_sql": "SELECT dim_geography_hierarchy.state,\n       AVG(fact_household_consumption.monthly_non_food_expenditure_rs) as avg_monthly_non_food_expenditure\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'rural'\n  AND fact_household_consumption.monthly_non_food_expenditure_rs IS NOT NULL\nGROUP BY dim_geography_hierarchy.state\nORDER BY avg_monthly_non_food_expenditure DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "f6f5311b",
+      "question": "Elenca la spesa mensile non alimentare e il numero di lavoratori per le prime 10 famiglie rurali dell'Uttar Pradesh con la spesa più elevata.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.MONTHLY_NON_FOOD_EXPENDITURE_RS, T2.HOUSEHOLD_NUMBER_OF_WORKERS FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 JOIN DIM_HOUSEHOLD AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_GEOGRAPHY_HIERARCHY AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T3.STATE = 'Uttar Pradesh' AND T3.CENSUS_2001_URBAN_RURAL = 'Rural' ORDER BY T1.MONTHLY_NON_FOOD_EXPENDITURE_RS DESC LIMIT 10",
+      "predicted_sql": "SELECT fact_household_consumption.monthly_non_food_expenditure_rs, dim_household.household_number_of_workers\nFROM fact_household_consumption\nJOIN dim_household ON fact_household_consumption.household_id = dim_household.household_id\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nWHERE dim_geography_hierarchy.state = 'Uttar Pradesh'\n  AND dim_geography_hierarchy.census_2001_urban_rural = 'rural'\nORDER BY fact_household_consumption.monthly_non_food_expenditure_rs DESC\nLIMIT 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "9f444cde",
+      "question": "Elenca la spesa mensile non alimentare e il numero di lavoratori per le 10 principali famiglie rurali dell'Uttar Pradesh con le spese più elevate.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.MONTHLY_NON_FOOD_EXPENDITURE_RS, T2.HOUSEHOLD_NUMBER_OF_WORKERS FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 JOIN DIM_HOUSEHOLD AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_GEOGRAPHY_HIERARCHY AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T3.STATE = 'Uttar Pradesh' AND T3.CENSUS_2001_URBAN_RURAL = 'Rural' ORDER BY T1.MONTHLY_NON_FOOD_EXPENDITURE_RS DESC LIMIT 10",
+      "predicted_sql": "SELECT fact_household_consumption.monthly_non_food_expenditure_rs,\n       dim_household.household_number_of_workers,\n       fact_household_consumption.household_id\nFROM fact_household_consumption\nJOIN dim_household ON fact_household_consumption.household_id = dim_household.household_id\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'rural'\n  AND dim_geography_hierarchy.state = 'Uttar Pradesh'\nORDER BY fact_household_consumption.monthly_total_consumption_expenditure_rs DESC\nLIMIT 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "11e70460",
+      "question": "Confronta la spesa media mensile non alimentare e il consumo pro capite tra le famiglie urbane e rurali sulla base delle classificazioni del censimento del 2001.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.CENSUS_2001_URBAN_RURAL, AVG(T0.MONTHLY_NON_FOOD_EXPENDITURE_RS), AVG(T0.MONTHLY_CONSUMPTION_PER_CAPITA) FROM FACT_HOUSEHOLD_CONSUMPTION T0 JOIN DIM_GEOGRAPHY_HIERARCHY T1 ON T0.GEOGRAPHY_ID = T1.GEOGRAPHY_ID GROUP BY T1.CENSUS_2001_URBAN_RURAL",
+      "predicted_sql": "SELECT\n    dh.census_2001_urban_rural,\n    AVG(fhc.monthly_non_food_expenditure_rs) AS avg_monthly_non_food_expenditure,\n    AVG(fhc.monthly_consumption_per_capita) AS avg_monthly_consumption_per_capita\nFROM fact_household_consumption fhc\nJOIN dim_geography_hierarchy dh ON fhc.geography_id = dh.geography_id\nJOIN dim_household_social ds ON fhc.household_id = ds.household_id\nWHERE ds.caste_religion_group_8_category = 'OBC'\n    AND ds.household_assets_index = (\n        SELECT MAX(household_assets_index)\n        FROM dim_household_social\n        WHERE caste_religion_group_8_category = 'OBC'\n    )\nGROUP BY dh.census_2001_urban_rural",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "64fc570d",
+      "question": "Confronta la spesa media mensile non alimentare e il consumo pro capite tra le aree urbane e rurali, ordinando per la spesa non alimentare più elevata.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.CENSUS_2001_URBAN_RURAL, AVG(T0.MONTHLY_NON_FOOD_EXPENDITURE_RS), AVG(T0.MONTHLY_CONSUMPTION_PER_CAPITA) FROM FACT_HOUSEHOLD_CONSUMPTION AS T0 JOIN DIM_GEOGRAPHY_HIERARCHY AS T1 ON T0.GEOGRAPHY_ID = T1.GEOGRAPHY_ID GROUP BY T1.CENSUS_2001_URBAN_RURAL ORDER BY AVG(T0.MONTHLY_NON_FOOD_EXPENDITURE_RS) DESC",
+      "predicted_sql": "SELECT\n    AVG(fact_household_consumption.monthly_non_food_expenditure_rs) AS avg_monthly_non_food_expenditure,\n    AVG(fact_household_consumption.monthly_consumption_per_capita) AS avg_monthly_consumption_per_capita,\n    dim_geography_hierarchy.census_2001_urban_rural\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_household_social ON fact_household_consumption.household_id = dim_household_social.household_id\nWHERE dim_household_social.caste_religion_group_8_category = 'OBC'\n    AND dim_household_social.household_assets_index = (\n        SELECT MAX(household_assets_index)\n        FROM dim_household_social\n        WHERE caste_religion_group_8_category = 'OBC'\n    )\nGROUP BY dim_geography_hierarchy.census_2001_urban_rural\nORDER BY AVG(fact_household_consumption.monthly_non_food_expenditure_rs) DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "044dcd8f",
+      "question": "Identifica gli stati in cui la spesa mensile massima non alimentare per le famiglie urbane non supera le 5,000 rupie.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.STATE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Urban' GROUP BY T1.STATE HAVING MAX(T2.MONTHLY_NON_FOOD_EXPENDITURE_RS) <= 5000",
+      "predicted_sql": "SELECT T2.state\nFROM fact_household_consumption AS T1\nJOIN dim_geography_hierarchy AS T2 ON T1.geography_id = T2.geography_id\nWHERE T2.census_2001_urban_rural = 'urban'\nGROUP BY T2.state\nHAVING MAX(T1.monthly_non_food_expenditure_rs) <= 5000",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "20170f0c",
+      "question": "Identifica gli stati in cui la spesa mensile massima non alimentare delle famiglie urbane non supera le 5,000 rupie.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.STATE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Urban' GROUP BY T1.STATE HAVING MAX(T2.MONTHLY_NON_FOOD_EXPENDITURE_RS) <= 5000",
+      "predicted_sql": "SELECT dim_geography_hierarchy.state\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'urban'\nGROUP BY dim_geography_hierarchy.state\nHAVING MAX(fact_household_consumption.monthly_non_food_expenditure_rs) <= 5000",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "5c857067",
+      "question": "Identifica i district codes per rural areas in cui la spesa mensile minima delle famiglie è inferiore a 500 rupees, ma la maximum non-food expenditure supera 2,000 rupees.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.DISTRICT_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T1.DISTRICT_CODE HAVING MIN(T2.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) < 500 AND MAX(T2.MONTHLY_NON_FOOD_EXPENDITURE_RS) > 2000",
+      "predicted_sql": "SELECT dim_geography_hierarchy.district_code\nFROM dim_geography_hierarchy\nJOIN fact_household_consumption ON dim_geography_hierarchy.geography_id = fact_household_consumption.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'rural'\nGROUP BY dim_geography_hierarchy.district_code\nHAVING MIN(fact_household_consumption.monthly_total_consumption_expenditure_rs) < 500\n   AND MAX(fact_household_consumption.monthly_non_food_expenditure_rs) > 2000\nORDER BY dim_geography_hierarchy.district_code",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "41a7fd0e",
+      "question": "Identifica i codici dei distretti rurali in cui almeno un nucleo familiare ha una spesa totale mensile inferiore a 500 rupie, mentre un altro ha una spesa non alimentare superiore a 2,000 rupie.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.DISTRICT_CODE FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T2.DISTRICT_CODE HAVING MIN(T1.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) < 500 AND MAX(T1.MONTHLY_NON_FOOD_EXPENDITURE_RS) > 2000",
+      "predicted_sql": "SELECT dim_geography_hierarchy.district_code\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'rural'\nGROUP BY dim_geography_hierarchy.district_code\nHAVING COUNT(DISTINCT CASE WHEN fact_household_consumption.monthly_total_consumption_expenditure_rs < 500\n                           THEN fact_household_consumption.household_id END) >= 1\n   AND COUNT(DISTINCT CASE WHEN fact_household_consumption.monthly_non_food_expenditure_rs > 2000\n                           THEN fact_household_consumption.household_id END) >= 1\n   AND COUNT(DISTINCT CASE WHEN fact_household_consumption.monthly_total_consumption_expenditure_rs < 500\n                           THEN fact_household_consumption.household_id END) +\n       COUNT(DISTINCT CASE WHEN fact_household_consumption.monthly_non_food_expenditure_rs > 2000\n                           THEN fact_household_consumption.household_id END) >\n       COUNT(DISTINCT CASE WHEN fact_household_consumption.monthly_total_consumption_expenditure_rs < 500\n                                AND fact_household_consumption.monthly_non_food_expenditure_rs > 2000\n                           THEN fact_household_consumption.household_id END) * 2",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "d5d1557a",
+      "question": "Identifica i codici dei distretti rurali che hanno almeno un nucleo familiare con una spesa mensile totale inferiore a 500 rupie e almeno un nucleo familiare la cui spesa mensile non alimentare supera le 2,000 rupie, ordinati per codice del distretto.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.DISTRICT_CODE FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T2.DISTRICT_CODE HAVING SUM(CASE WHEN T1.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS < 500 THEN 1 ELSE 0 END) >= 1 AND MAX(T1.MONTHLY_NON_FOOD_EXPENDITURE_RS) > 2000 ORDER BY T2.DISTRICT_CODE ASC",
+      "predicted_sql": "SELECT dim_geography_hierarchy.state, dim_geography_hierarchy.district_code\nFROM dim_geography_hierarchy\nJOIN fact_household_consumption ON dim_geography_hierarchy.geography_id = fact_household_consumption.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'rural'\nGROUP BY dim_geography_hierarchy.state, dim_geography_hierarchy.district_code\nHAVING\n    COUNT(DISTINCT CASE WHEN fact_household_consumption.monthly_total_consumption_expenditure_rs < 500\n          THEN fact_household_consumption.household_id END) >= 1\n    AND\n    COUNT(DISTINCT CASE WHEN fact_household_consumption.monthly_non_food_expenditure_rs > 2000\n          THEN fact_household_consumption.household_id END) >= 1\nORDER BY dim_geography_hierarchy.district_code",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "eb0de056",
+      "question": "Identifica gli stati e i codici distrettuali in cui le famiglie spendono più di 50,000 rupie al mese oppure impiegano cinque addetti alla cura degli animali.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.STATE, T1.DISTRICT_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD AS T3 ON T2.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS > 50000 OR T3.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS = '5';",
+      "predicted_sql": "SELECT DISTINCT dim_geography_hierarchy.state, dim_geography_hierarchy.district_code\nFROM fact_household_consumption\nJOIN dim_household ON fact_household_consumption.household_id = dim_household.household_id\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_household_social ON fact_household_consumption.household_id = dim_household_social.household_id\nWHERE (fact_household_consumption.monthly_total_consumption_expenditure_rs > 50000\n   OR dim_household.household_number_of_animal_care_workers = 5)\n   AND dim_household_social.caste_religion_group_8_category IN ('Christian', 'Muslim')\nORDER BY dim_household_social.household_assets_index DESC\nLIMIT 10",
+      "error_info": "for SELECT DISTINCT, ORDER BY expressions must appear in select list\nLINE 9: ORDER BY dim_household_social.household_assets_index DESC\n                 ^\n"
+    },
+    {
+      "instance_id": "06426722",
+      "question": "Identifica gli stati e i codici distrettuali in cui le famiglie spendono più di 60,000 rupie al mese oppure impiegano cinque addetti alla cura degli animali.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT DISTINCT T1.STATE, T1.DISTRICT_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD AS T3 ON T2.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS > 60000 OR T3.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS = '5';",
+      "predicted_sql": "SELECT DISTINCT T3.state, T3.district_code\nFROM fact_household_consumption AS T1\nJOIN dim_household AS T2 ON T1.household_id = T2.household_id\nJOIN dim_geography_hierarchy AS T3 ON T1.geography_id = T3.geography_id\nJOIN dim_household_social AS T4 ON T1.household_id = T4.household_id\nWHERE (T1.monthly_total_consumption_expenditure_rs > 60000\n       OR T2.household_number_of_animal_care_workers = 5)\n  AND T4.caste_religion_group_8_category IN ('Muslim', 'OBC')\n  AND T4.household_assets_index > 10\nORDER BY T3.state, T3.district_code",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "5ecd9202",
+      "question": "Identifica gli ID delle famiglie per i nuclei familiari classificati come OBC che rientrano nel 17º gruppo dell’indice patrimoniale.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL WHERE CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' AND HOUSEHOLD_ASSETS_INDEX = '17';",
+      "predicted_sql": "SELECT DISTINCT dhs.household_id\nFROM dim_household_social dhs\nJOIN dim_education_child dec ON dhs.household_id = dec.household_id\nWHERE dhs.caste_religion_group_8_category = 'OBC'\n    AND dhs.household_assets_index = 17\n    AND dec.child_school_enrollment_status = 'not enrolled'\nGROUP BY dhs.household_id\nHAVING AVG(dhs.social_id) IS NOT NULL\nORDER BY dhs.household_id DESC",
+      "error_info": "invalid input syntax for type bigint: \"not enrolled\"\nLINE 6:     AND dec.child_school_enrollment_status = 'not enrolled'\n                                                     ^\n"
+    },
+    {
+      "instance_id": "b835d830",
+      "question": "Qual è la spesa media complessiva per riso, grano e legumi per ciascun gruppo di casta e religione?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, AVG(T1.CONSUMPTION_RICE_EXPENDITURE_RS + T1.CONSUMPTION_WHEAT_EXPENDITURE_RS + T1.CONSUMPTION_PULSES_EXPENDITURE_RS) FROM FACT_FOOD_CONSUMPTION AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY",
+      "predicted_sql": "SELECT\n    AVG(fact_food_consumption.consumption_rice_expenditure_rs + fact_food_consumption.consumption_wheat_expenditure_rs + fact_food_consumption.consumption_pulses_expenditure_rs),\n    dim_household_social.caste_religion_group_8_category,\n    dim_household_social.household_assets_index\nFROM fact_food_consumption\nJOIN dim_household_social ON fact_food_consumption.household_id = dim_household_social.household_id\nJOIN dim_education_child ON fact_food_consumption.household_id = dim_education_child.household_id\nWHERE dim_education_child.child_school_enrollment_status = 2\nGROUP BY dim_household_social.caste_religion_group_8_category, dim_household_social.household_assets_index\nORDER BY dim_household_social.caste_religion_group_8_category",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "73f2d9f1",
+      "question": "Classifica i diversi gruppi di casta e religione in base alla loro spesa totale media per i cereali di base, in particolare riso, grano e legumi.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, AVG(T1.CONSUMPTION_RICE_EXPENDITURE_RS + T1.CONSUMPTION_WHEAT_EXPENDITURE_RS + T1.CONSUMPTION_PULSES_EXPENDITURE_RS) FROM FACT_FOOD_CONSUMPTION AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY ORDER BY AVG(T1.CONSUMPTION_RICE_EXPENDITURE_RS + T1.CONSUMPTION_WHEAT_EXPENDITURE_RS + T1.CONSUMPTION_PULSES_EXPENDITURE_RS) DESC",
+      "predicted_sql": "SELECT T1.caste_religion_group_8_category,\n       AVG(T2.consumption_rice_expenditure_rs + T2.consumption_wheat_expenditure_rs + T2.consumption_pulses_expenditure_rs) AS avg_total_cereal_expenditure\nFROM dim_household_social AS T1\nJOIN fact_food_consumption AS T2 ON T1.household_id = T2.household_id\nGROUP BY T1.caste_religion_group_8_category\nORDER BY avg_total_cereal_expenditure DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "97b68e44",
+      "question": "Classifica tutte le famiglie in base alla loro spesa totale combinata per riso e legumi, dalla più alta alla più bassa.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT HOUSEHOLD_ID, SUM(CONSUMPTION_RICE_EXPENDITURE_RS + CONSUMPTION_PULSES_EXPENDITURE_RS) FROM FACT_FOOD_CONSUMPTION JOIN DIM_HOUSEHOLD USING (HOUSEHOLD_ID) GROUP BY HOUSEHOLD_ID ORDER BY SUM(CONSUMPTION_RICE_EXPENDITURE_RS + CONSUMPTION_PULSES_EXPENDITURE_RS) DESC",
+      "predicted_sql": "SELECT dim_household.household_id,\n       SUM(fact_food_consumption.consumption_rice_expenditure_rs + fact_food_consumption.consumption_pulses_expenditure_rs) as total_spesa\nFROM dim_household\nJOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nJOIN dim_education_child ON dim_household.household_id = dim_education_child.household_id\nJOIN fact_food_consumption ON dim_household.household_id = fact_food_consumption.household_id\nWHERE dim_household_social.household_assets_index = 27\n  AND dim_education_child.child_school_enrollment_status = -1\nGROUP BY dim_household.household_id\nORDER BY total_spesa DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "b1890cab",
+      "question": "Elenca gli ID e le categorie di gruppo sociale delle dieci famiglie con la spesa totale più elevata per beni di prima necessità come riso, grano e legumi.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.CASTE_RELIGION_GROUP_8_CATEGORY, (T1.CONSUMPTION_RICE_EXPENDITURE_RS + T1.CONSUMPTION_WHEAT_EXPENDITURE_RS + T1.CONSUMPTION_PULSES_EXPENDITURE_RS) FROM FACT_FOOD_CONSUMPTION AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID ORDER BY (T1.CONSUMPTION_RICE_EXPENDITURE_RS + T1.CONSUMPTION_WHEAT_EXPENDITURE_RS + T1.CONSUMPTION_PULSES_EXPENDITURE_RS) DESC LIMIT 10",
+      "predicted_sql": "SELECT dim_household_social.household_id, dim_household_social.caste_religion_group_8_category\nFROM dim_household_social\nJOIN fact_food_consumption ON dim_household_social.household_id = fact_food_consumption.household_id\nJOIN dim_education_child ON dim_household_social.household_id = dim_education_child.household_id\nWHERE dim_household_social.household_assets_index = 17\n  AND dim_education_child.child_school_enrollment_status = -1\nGROUP BY dim_household_social.household_id, dim_household_social.caste_religion_group_8_category\nORDER BY SUM(fact_food_consumption.consumption_rice_expenditure_rs + fact_food_consumption.consumption_wheat_expenditure_rs + fact_food_consumption.consumption_pulses_expenditure_rs) DESC\nLIMIT 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "1f847b64",
+      "question": "Identifica le 10 famiglie con la spesa totale più elevata per riso, grano e legumi, e includi le rispettive categorie di casta o gruppo religioso.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.CASTE_RELIGION_GROUP_8_CATEGORY, SUM(T1.CONSUMPTION_RICE_EXPENDITURE_RS + T1.CONSUMPTION_WHEAT_EXPENDITURE_RS + T1.CONSUMPTION_PULSES_EXPENDITURE_RS) FROM FACT_FOOD_CONSUMPTION AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID GROUP BY T1.HOUSEHOLD_ID, T2.CASTE_RELIGION_GROUP_8_CATEGORY ORDER BY SUM(T1.CONSUMPTION_RICE_EXPENDITURE_RS + T1.CONSUMPTION_WHEAT_EXPENDITURE_RS + T1.CONSUMPTION_PULSES_EXPENDITURE_RS) DESC LIMIT 10",
+      "predicted_sql": "SELECT DISTINCT dim_household.household_id, dim_household_social.caste_religion_group_8_category\nFROM dim_household\nJOIN fact_food_consumption ON dim_household.household_id = fact_food_consumption.household_id\nJOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nGROUP BY dim_household.household_id, dim_household_social.caste_religion_group_8_category\nORDER BY SUM(fact_food_consumption.consumption_rice_expenditure_rs +\n             fact_food_consumption.consumption_wheat_expenditure_rs +\n             fact_food_consumption.consumption_pulses_expenditure_rs) DESC\nLIMIT 10",
+      "error_info": "for SELECT DISTINCT, ORDER BY expressions must appear in select list\nLINE 6: ORDER BY SUM(fact_food_consumption.consumption_rice_expendit...\n                 ^\n"
+    },
+    {
+      "instance_id": "52385ad2",
+      "question": "Fornisci una ripartizione della spesa totale per riso e legumi per diversi gruppi sociali e livelli patrimoniali, ordinata per categoria di casta e per la spesa più elevata per il riso.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.HOUSEHOLD_ASSETS_INDEX, SUM(T3.CONSUMPTION_RICE_EXPENDITURE_RS), SUM(T3.CONSUMPTION_PULSES_EXPENDITURE_RS) FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID INNER JOIN FACT_FOOD_CONSUMPTION AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.HOUSEHOLD_ASSETS_INDEX ORDER BY T2.CASTE_RELIGION_GROUP_8_CATEGORY ASC, SUM(T3.CONSUMPTION_RICE_EXPENDITURE_RS) DESC",
+      "predicted_sql": "SELECT\n    dim_household_social.caste_religion_group_8_category,\n    dim_household_social.household_assets_index,\n    SUM(fact_food_consumption.consumption_rice_expenditure_rs) AS total_rice_expenditure,\n    SUM(fact_food_consumption.consumption_pulses_expenditure_rs) AS total_pulses_expenditure\nFROM fact_food_consumption\nJOIN dim_household_social ON fact_food_consumption.household_id = dim_household_social.household_id\nJOIN dim_education_child ON fact_food_consumption.household_id = dim_education_child.household_id\nWHERE dim_household_social.household_assets_index = 27\n    AND dim_education_child.child_school_enrollment_status = -1\nGROUP BY\n    dim_household_social.caste_religion_group_8_category,\n    dim_household_social.household_assets_index\nORDER BY\n    dim_household_social.caste_religion_group_8_category ASC,\n    total_rice_expenditure DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "4ee96af4",
+      "question": "Identifica tutte le famiglie che hanno almeno 1 addetto alla cura degli animali e un social asset index di 27.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '27' AND T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS >= '1';",
+      "predicted_sql": "SELECT DISTINCT dim_household.household_id\nFROM dim_household\nINNER JOIN dim_household_social\nON dim_household.household_id = dim_household_social.household_id\nWHERE dim_household.household_number_of_animal_care_workers >= 1\nAND dim_household_social.household_assets_index = 27\nORDER BY dim_household.household_id",
+      "error_info": null
+    },
+    {
+      "instance_id": "2fef3613",
+      "question": "Identifica tutte le famiglie che hanno almeno cinque addetti alla cura degli animali e un indice patrimoniale pari a 17, ordinate per ID.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '17' AND T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS >= '5' ORDER BY T1.HOUSEHOLD_ID",
+      "predicted_sql": "select dim_household.household_id\nfrom dim_household\njoin dim_household_social on dim_household.household_id = dim_household_social.household_id\nwhere dim_household.household_number_of_animal_care_workers >= 5\n  and dim_household_social.household_assets_index = 17\norder by dim_household.household_id",
+      "error_info": null
+    }
+  ]
+}

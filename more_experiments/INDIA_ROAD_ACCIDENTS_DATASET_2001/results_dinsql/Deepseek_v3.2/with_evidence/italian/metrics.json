@@ -1,0 +1,630 @@
+{
+  "summary": {
+    "total": 69,
+    "execution_correct": 59,
+    "execution_accuracy": 0.855072463768116
+  },
+  "results": [
+    {
+      "instance_id": "766ad2ba",
+      "question": "Elenca gli ID degli incidenti per gli incidenti in cui il numero di vittime è maggiore di 2 e il conducente coinvolto ha 1-2yr di esperienza di guida.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.ACCIDENT_ID FROM FACT_ACCIDENT AS T1 JOIN DIM_DRIVER AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID WHERE T1.NUMBER_OF_CASUALTIES > 2 AND T2.DRIVING_EXPERIENCE = '1-2yr';",
+      "predicted_sql": "SELECT T1.accident_id\nFROM fact_accident AS T1\nJOIN dim_driver AS T2 ON T1.driver_id = T2.driver_id\nWHERE T1.number_of_casualties > 2\n  AND T2.driving_experience = '1-2yr'",
+      "error_info": null
+    },
+    {
+      "instance_id": "87f86ad9",
+      "question": "Elenca gli ID degli incidenti per tutti gli incidenti in cui il numero di vittime è maggiore di 2 e il conducente coinvolto ha 1-2yr di esperienza di guida.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.ACCIDENT_ID FROM FACT_ACCIDENT AS T1 JOIN DIM_DRIVER AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID WHERE T1.NUMBER_OF_CASUALTIES > 2 AND T2.DRIVING_EXPERIENCE = '1-2yr';",
+      "predicted_sql": "SELECT fact_accident.accident_id\nFROM fact_accident\nJOIN dim_driver ON fact_accident.driver_id = dim_driver.driver_id\nWHERE fact_accident.number_of_casualties > 2\nAND dim_driver.driving_experience = '1-2yr'",
+      "error_info": null
+    },
+    {
+      "instance_id": "fbef6271",
+      "question": "Elenca ogni gravità dell'incidente e il conteggio totale degli ID degli incidenti per i conducenti con 1-2yr di esperienza di guida, mostrando solo quei livelli di gravità che hanno più di 1 incidente, e ordina i risultati per la gravità dell'incidente.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.ACCIDENT_SEVERITY, COUNT(T1.ACCIDENT_ID) FROM FACT_ACCIDENT AS T1 JOIN DIM_DRIVER AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID WHERE T2.DRIVING_EXPERIENCE = '1-2yr' GROUP BY T1.ACCIDENT_SEVERITY HAVING COUNT(T1.ACCIDENT_ID) > 1 ORDER BY T1.ACCIDENT_SEVERITY",
+      "predicted_sql": "SELECT fact_accident.accident_severity, COUNT(fact_accident.accident_id)\nFROM fact_accident\nJOIN dim_driver ON fact_accident.driver_id = dim_driver.driver_id\nWHERE dim_driver.driving_experience = '1-2yr'\nGROUP BY fact_accident.accident_severity\nHAVING COUNT(fact_accident.accident_id) > 1\nORDER BY fact_accident.accident_severity",
+      "error_info": null
+    },
+    {
+      "instance_id": "1c2bc7c6",
+      "question": "Elenca gli ID degli incidenti per i casi che coinvolgono conducenti con 1-2yr di esperienza di guida, in cui la somma totale delle vittime per ciascun incidente è maggiore di 3, ordinati per il numero massimo di vittime in ordine decrescente.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.ACCIDENT_ID FROM DIM_DRIVER AS T1 INNER JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID LEFT JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.DRIVING_EXPERIENCE = '1-2yr' GROUP BY T2.ACCIDENT_ID HAVING SUM(T2.NUMBER_OF_CASUALTIES) > 3 ORDER BY MAX(T2.NUMBER_OF_CASUALTIES) DESC",
+      "predicted_sql": "SELECT fact_accident.accident_id, fact_accident.number_of_casualties\nFROM fact_accident\nJOIN dim_driver ON fact_accident.driver_id = dim_driver.driver_id\nWHERE dim_driver.driving_experience = '1-2yr'\n  AND fact_accident.number_of_casualties > 3\nORDER BY fact_accident.number_of_casualties DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "3cfe7990",
+      "question": "Per ogni fascia di età del conducente, elenca la fascia di età, il numero medio di vittime e il conteggio totale degli ID degli incidenti.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), COUNT(T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.AGE_BAND_OF_DRIVER",
+      "predicted_sql": "SELECT dim_driver.age_band_of_driver,\n       AVG(fact_accident.number_of_casualties) AS avg_casualties,\n       COUNT(DISTINCT fact_accident.accident_id) AS total_accidents\nFROM fact_accident\nJOIN dim_driver ON fact_accident.driver_id = dim_driver.driver_id\nGROUP BY dim_driver.age_band_of_driver",
+      "error_info": null
+    },
+    {
+      "instance_id": "7768a6de",
+      "question": "Per ogni fascia di età del conducente, elenca la fascia di età stessa, il numero medio di vittime e il conteggio totale degli ID degli incidenti.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), COUNT(T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.AGE_BAND_OF_DRIVER",
+      "predicted_sql": "SELECT dim_driver.age_band_of_driver,\n       AVG(fact_accident.number_of_casualties) AS avg_casualties,\n       COUNT(DISTINCT fact_accident.accident_id) AS total_accidents\nFROM fact_accident\nJOIN dim_driver ON fact_accident.driver_id = dim_driver.driver_id\nGROUP BY dim_driver.age_band_of_driver\nORDER BY dim_driver.age_band_of_driver",
+      "error_info": null
+    },
+    {
+      "instance_id": "9b1772a3",
+      "question": "Per ogni fascia d'età del conducente, elenca la fascia d'età, il numero medio di vittime e il conteggio totale degli ID degli incidenti, filtrando per i gruppi in cui il numero medio di vittime è maggiore di 1 e ordinando i risultati in base al conteggio degli incidenti in ordine decrescente.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), COUNT(T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.AGE_BAND_OF_DRIVER HAVING AVG(T2.NUMBER_OF_CASUALTIES) > 1 ORDER BY COUNT(T2.ACCIDENT_ID) DESC",
+      "predicted_sql": "SELECT T2.age_band_of_driver,\n       AVG(T1.number_of_casualties) AS avg_casualties,\n       COUNT(T1.accident_id) AS total_accidents\nFROM fact_accident AS T1\nJOIN dim_driver AS T2 ON T1.driver_id = T2.driver_id\nGROUP BY T2.age_band_of_driver\nHAVING AVG(T1.number_of_casualties) > 1\nORDER BY COUNT(T1.accident_id) DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "b09b770f",
+      "question": "Raggruppati per fascia d'età del conducente, qual è la fascia d'età, il numero medio di vittime e il conteggio totale degli ID univoci degli incidenti per quei conducenti coinvolti in più di 1 incidente, ordinati per il numero medio di vittime in ordine decrescente?",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), COUNT(DISTINCT T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.AGE_BAND_OF_DRIVER HAVING COUNT(T2.ACCIDENT_ID) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+      "predicted_sql": "SELECT\n    d.age_band_of_driver,\n    AVG(f.number_of_casualties) AS average_casualties,\n    COUNT(DISTINCT f.accident_id) AS total_unique_accidents\nFROM fact_accident f\nJOIN dim_driver d ON f.driver_id = d.driver_id\nWHERE f.driver_id IN (\n    SELECT driver_id\n    FROM fact_accident\n    GROUP BY driver_id\n    HAVING COUNT(DISTINCT accident_id) > 1\n)\nGROUP BY d.age_band_of_driver\nORDER BY average_casualties DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "046b8b21",
+      "question": "Elenca le prime 5 fasce d'età dei conducenti e gravità delle vittime che hanno il più alto numero medio di vittime, mostrando la fascia d'età, il numero medio di vittime e la gravità delle vittime per ciascun gruppo.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), T3.CASUALTY_SEVERITY FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.AGE_BAND_OF_DRIVER, T3.CASUALTY_SEVERITY ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC LIMIT 5",
+      "predicted_sql": "SELECT dim_driver.age_band_of_driver, bridge_accident_casualty.casualty_severity, AVG(fact_accident.number_of_casualties) AS average_casualties\nFROM dim_driver\nJOIN fact_accident ON dim_driver.driver_id = fact_accident.driver_id\nJOIN bridge_accident_casualty ON fact_accident.accident_id = bridge_accident_casualty.accident_id\nGROUP BY dim_driver.age_band_of_driver, bridge_accident_casualty.casualty_severity\nORDER BY AVG(fact_accident.number_of_casualties) DESC\nLIMIT 5",
+      "error_info": null
+    },
+    {
+      "instance_id": "cf10373b",
+      "question": "Elenca la fascia d'età del conducente e il numero medio di vittime per ciascuna fascia d'età, ordinati per il numero medio di vittime in ordine decrescente, mostrando solo i primi 5 risultati.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.AGE_BAND_OF_DRIVER ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC LIMIT 5",
+      "predicted_sql": "SELECT T2.age_band_of_driver, AVG(T1.number_of_casualties) AS average_casualties\nFROM fact_accident AS T1\nJOIN dim_driver AS T2 ON T1.driver_id = T2.driver_id\nGROUP BY T2.age_band_of_driver\nORDER BY average_casualties DESC\nLIMIT 5",
+      "error_info": null
+    },
+    {
+      "instance_id": "7f0c5971",
+      "question": "Mostra la fascia d'età del conducente, il numero medio di vittime e la gravità delle vittime, raggruppati per fascia d'età del conducente e gravità delle vittime, per quei gruppi in cui il numero medio di vittime è maggiore di 1, ed elenca i primi 5 risultati in ordine decrescente del numero medio di vittime.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), T3.CASUALTY_SEVERITY FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.AGE_BAND_OF_DRIVER, T3.CASUALTY_SEVERITY HAVING AVG(T2.NUMBER_OF_CASUALTIES) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC LIMIT 5",
+      "predicted_sql": "SELECT\n    dim_driver.age_band_of_driver,\n    bridge_accident_casualty.casualty_severity,\n    AVG(casualty_stats.casualty_count) as average_casualties\nFROM dim_driver\nJOIN fact_accident ON dim_driver.driver_id = fact_accident.driver_id\nJOIN bridge_accident_casualty ON fact_accident.accident_id = bridge_accident_casualty.accident_id\nJOIN (\n    SELECT\n        accident_id,\n        casualty_severity,\n        COUNT(casualty_id) as casualty_count\n    FROM bridge_accident_casualty\n    GROUP BY accident_id, casualty_severity\n) as casualty_stats ON bridge_accident_casualty.accident_id = casualty_stats.accident_id\n    AND bridge_accident_casualty.casualty_severity = casualty_stats.casualty_severity\nGROUP BY dim_driver.age_band_of_driver, bridge_accident_casualty.casualty_severity\nHAVING AVG(casualty_stats.casualty_count) > 1\nORDER BY AVG(casualty_stats.casualty_count) DESC\nLIMIT 5",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "8567458b",
+      "question": "Elenca la fascia di età del conducente, il numero medio di vittime e la somma totale della gravità delle vittime per le prime 5 fasce di età dei conducenti con più di 1 incidente, ordinate per il numero medio di vittime in ordine decrescente.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.AGE_BAND_OF_DRIVER, AVG(T2.NUMBER_OF_CASUALTIES), SUM(T3.CASUALTY_SEVERITY) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.AGE_BAND_OF_DRIVER HAVING COUNT(T2.ACCIDENT_ID) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC LIMIT 5",
+      "predicted_sql": "SELECT\n    dim_driver.age_band_of_driver,\n    AVG(fact_accident.number_of_casualties) as average_casualties,\n    SUM(bridge_accident_casualty.casualty_severity) as total_casualty_severity\nFROM dim_driver\nJOIN fact_accident ON dim_driver.driver_id = fact_accident.driver_id\nJOIN bridge_accident_casualty ON fact_accident.accident_id = bridge_accident_casualty.accident_id\nGROUP BY dim_driver.age_band_of_driver\nHAVING COUNT(DISTINCT fact_accident.accident_id) > 1\nORDER BY AVG(fact_accident.number_of_casualties) DESC\nLIMIT 5",
+      "error_info": null
+    },
+    {
+      "instance_id": "cf18af22",
+      "question": "Mostra tutte le colonne della dimensione casualty per i record in cui la classe del casualty è 'Pedestrian' e l'idoneità del casualty è 'Normal'.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT * FROM DIM_CASUALTY WHERE CASUALTY_CLASS = 'Pedestrian' AND FITNESS_OF_CASUALTY = 'Normal';",
+      "predicted_sql": "SELECT *\nFROM dim_casualty\nWHERE casualty_class = 'Pedestrian'\n  AND fitness_of_casualty = 'Normal'",
+      "error_info": null
+    },
+    {
+      "instance_id": "7048add7",
+      "question": "Elenca l'ID della vittima e il sesso della vittima per tutti gli individui classificati come \"Pedestrian\" la cui idoneità è stata registrata come \"Normal\", ordinati alfabeticamente per sesso.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.CASUALTY_ID, T1.SEX_OF_CASUALTY FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' AND T1.FITNESS_OF_CASUALTY = 'Normal' ORDER BY T1.SEX_OF_CASUALTY ASC",
+      "predicted_sql": "SELECT casualty_id, sex_of_casualty\nFROM dim_casualty\nWHERE casualty_class = 'Pedestrian'\n  AND fitness_of_casualty = 'Normal'\nORDER BY sex_of_casualty",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "c24c13f9",
+      "question": "Elenca gli ID dei feriti classificati come \"Pedestrian\" in cui la condizione del ferito è \"Normal\", raggruppati per il loro ID del ferito.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.CASUALTY_ID FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' GROUP BY T1.CASUALTY_ID HAVING T1.FITNESS_OF_CASUALTY = 'Normal';",
+      "predicted_sql": "SELECT casualty_id\nFROM dim_casualty\nWHERE casualty_class = 'Pedestrian'\n  AND fitness_of_casualty = 'Normal'\nGROUP BY casualty_id",
+      "error_info": null
+    },
+    {
+      "instance_id": "3de8a963",
+      "question": "Elenca l'ID del ferito, la classe del ferito, il sesso del ferito e la gravità dell'incidente per i feriti classificati come 'Pedestrian' che hanno un livello di idoneità 'Normal', assicurandoti che ogni ferito sia associato ad almeno 1 incidente, e ordina i risultati per classe del ferito.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.CASUALTY_ID, T1.CASUALTY_CLASS, T1.SEX_OF_CASUALTY, T3.ACCIDENT_SEVERITY FROM DIM_CASUALTY AS T1 INNER JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID INNER JOIN FACT_ACCIDENT AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' AND T1.FITNESS_OF_CASUALTY = 'Normal' GROUP BY T1.CASUALTY_ID, T1.CASUALTY_CLASS, T1.SEX_OF_CASUALTY, T3.ACCIDENT_SEVERITY HAVING COUNT(T2.ACCIDENT_ID) >= 1 ORDER BY T1.CASUALTY_CLASS ASC",
+      "predicted_sql": "SELECT DISTINCT dim_casualty.casualty_id,\n                dim_casualty.casualty_class,\n                dim_casualty.sex_of_casualty,\n                fact_accident.accident_severity\nFROM dim_casualty\nJOIN bridge_accident_casualty ON dim_casualty.casualty_id = bridge_accident_casualty.casualty_id\nJOIN fact_accident ON bridge_accident_casualty.accident_id = fact_accident.accident_id\nWHERE dim_casualty.casualty_class = 'Pedestrian'\n  AND dim_casualty.fitness_of_casualty = 'Normal'\nORDER BY dim_casualty.casualty_class",
+      "error_info": null
+    },
+    {
+      "instance_id": "8d7cf5db",
+      "question": "Per le vittime classificate come Pedestrian, elenca ciascun sesso della vittima e la corrispondente gravità media della vittima, raggruppati per sesso della vittima.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SEX_OF_CASUALTY, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' GROUP BY T1.SEX_OF_CASUALTY",
+      "predicted_sql": "SELECT T1.sex_of_casualty, AVG(T2.casualty_severity)\nFROM dim_casualty AS T1\nJOIN bridge_accident_casualty AS T2 ON T1.casualty_id = T2.casualty_id\nWHERE T1.casualty_class = 'Pedestrian'\nGROUP BY T1.sex_of_casualty",
+      "error_info": null
+    },
+    {
+      "instance_id": "ae17899a",
+      "question": "Per le vittime classificate come Pedestrian, elenca ciascun sesso della vittima insieme alla gravità media della vittima, raggruppata per il sesso della vittima.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SEX_OF_CASUALTY, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' GROUP BY T1.SEX_OF_CASUALTY",
+      "predicted_sql": "SELECT dim_casualty.sex_of_casualty, AVG(bridge_accident_casualty.casualty_severity) AS avg_casualty_severity\nFROM dim_casualty\nJOIN bridge_accident_casualty ON bridge_accident_casualty.casualty_id = dim_casualty.casualty_id\nWHERE dim_casualty.casualty_class = 'Pedestrian'\nGROUP BY dim_casualty.sex_of_casualty",
+      "error_info": null
+    },
+    {
+      "instance_id": "7265cf38",
+      "question": "Per le vittime classificate come Pedestrian, elenca ogni sesso della vittima e la corrispondente gravità media della vittima, filtrando per i gruppi in cui la gravità media è maggiore di 1, e ordina i risultati per il sesso della vittima.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SEX_OF_CASUALTY, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' GROUP BY T1.SEX_OF_CASUALTY HAVING AVG(T2.CASUALTY_SEVERITY) > 1 ORDER BY T1.SEX_OF_CASUALTY",
+      "predicted_sql": "SELECT dim_casualty.sex_of_casualty, AVG(bridge_accident_casualty.casualty_severity) AS avg_casualty_severity\nFROM dim_casualty\nJOIN bridge_accident_casualty ON dim_casualty.casualty_id = bridge_accident_casualty.casualty_id\nWHERE dim_casualty.casualty_class = 'Pedestrian'\nGROUP BY dim_casualty.sex_of_casualty\nHAVING AVG(bridge_accident_casualty.casualty_severity) > 1\nORDER BY dim_casualty.sex_of_casualty",
+      "error_info": null
+    },
+    {
+      "instance_id": "e504e82d",
+      "question": "Mostra il sesso del ferito e la gravità media del ferito per i feriti che sono \"Driver or rider\" oppure \"Pedestrian\" e rientrano nelle fasce d'età \"18-30\" o \"31-50\", raggruppati per sesso, dove la gravità media è maggiore di 1, e ordina i risultati per la gravità media del ferito in ordine decrescente.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SEX_OF_CASUALTY, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 INNER JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID INNER JOIN FACT_ACCIDENT AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.CASUALTY_CLASS IN ('Driver or rider', 'Pedestrian') AND T1.AGE_BAND_OF_CASUALTY IN ('31-50', '18-30') GROUP BY T1.SEX_OF_CASUALTY HAVING AVG(T2.CASUALTY_SEVERITY) > 1 ORDER BY AVG(T2.CASUALTY_SEVERITY) DESC",
+      "predicted_sql": "SELECT dim_casualty.sex_of_casualty,\n       AVG(bridge_accident_casualty.casualty_severity) AS average_casualty_severity\nFROM bridge_accident_casualty\nJOIN dim_casualty ON bridge_accident_casualty.casualty_id = dim_casualty.casualty_id\nWHERE dim_casualty.casualty_class IN ('Driver or rider', 'Pedestrian')\n  AND dim_casualty.age_band_of_casualty IN ('18-30', '31-50')\nGROUP BY dim_casualty.sex_of_casualty\nHAVING AVG(bridge_accident_casualty.casualty_severity) > 1\nORDER BY average_casualty_severity DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "306138c8",
+      "question": "Elenca la classe di vittime e la gravità media delle vittime per ciascuna classe, ordinate dalla gravità media più alta alla più bassa, e mostra solo i primi 10 risultati.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.CASUALTY_CLASS, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID GROUP BY T1.CASUALTY_CLASS ORDER BY AVG(T2.CASUALTY_SEVERITY) DESC LIMIT 10",
+      "predicted_sql": "SELECT T2.casualty_class, AVG(T1.casualty_severity)\nFROM bridge_accident_casualty AS T1\nJOIN dim_casualty AS T2 ON T1.casualty_id = T2.casualty_id\nGROUP BY T2.casualty_class\nORDER BY AVG(T1.casualty_severity) DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "a3527c36",
+      "question": "Mostra la classe di vittima e la gravità media delle vittime per ciascuna classe di vittima, ordinate per gravità media dalla più alta alla più bassa, ed elenca solo i primi 10 risultati.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.CASUALTY_CLASS, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID GROUP BY T1.CASUALTY_CLASS ORDER BY AVG(T2.CASUALTY_SEVERITY) DESC LIMIT 10",
+      "predicted_sql": "SELECT dim_casualty.casualty_class, AVG(bridge_accident_casualty.casualty_severity)\nFROM dim_casualty\nJOIN bridge_accident_casualty ON dim_casualty.casualty_id = bridge_accident_casualty.casualty_id\nGROUP BY dim_casualty.casualty_class\nORDER BY AVG(bridge_accident_casualty.casualty_severity) DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "e152aadf",
+      "question": "Elenca le classi di vittime in cui la gravità media delle vittime è maggiore di 1, ordinate per gravità media dalla più alta alla più bassa, e mostra solo i primi 10 risultati.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.CASUALTY_CLASS FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID GROUP BY T1.CASUALTY_CLASS HAVING AVG(T2.CASUALTY_SEVERITY) > 1 ORDER BY AVG(T2.CASUALTY_SEVERITY) DESC LIMIT 10",
+      "predicted_sql": "SELECT dim_casualty.casualty_class, AVG(bridge_accident_casualty.casualty_severity) AS avg_severity\nFROM bridge_accident_casualty\nJOIN dim_casualty ON bridge_accident_casualty.casualty_id = dim_casualty.casualty_id\nGROUP BY dim_casualty.casualty_class\nHAVING AVG(bridge_accident_casualty.casualty_severity) > 1\nORDER BY avg_severity DESC\nLIMIT 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "d6f75ea7",
+      "question": "Elenca la classe di vittima e la gravità media delle vittime per ciascuna classe di vittima, ordinate per la gravità media delle vittime in ordine decrescente, mostrando solo i primi 10 risultati.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.CASUALTY_CLASS, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID GROUP BY T1.CASUALTY_CLASS ORDER BY AVG(T2.CASUALTY_SEVERITY) DESC LIMIT 10",
+      "predicted_sql": "SELECT dim_casualty.casualty_class, AVG(bridge_accident_casualty.casualty_severity)\nFROM dim_casualty\nJOIN bridge_accident_casualty ON dim_casualty.casualty_id = bridge_accident_casualty.casualty_id\nGROUP BY dim_casualty.casualty_class\nORDER BY AVG(bridge_accident_casualty.casualty_severity) DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "280e1324",
+      "question": "Elenca il sesso, la fascia d'età e lo stato lavorativo della vittima, insieme alla gravità della vittima, ordinati per livello di gravità dal più alto al più basso.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY, T2.CASUALTY_SEVERITY FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID ORDER BY T2.CASUALTY_SEVERITY DESC",
+      "predicted_sql": "SELECT T1.sex_of_casualty, T1.age_band_of_casualty, T1.work_of_casualty, T2.casualty_severity\nFROM dim_casualty AS T1\nJOIN bridge_accident_casualty AS T2 ON T1.casualty_id = T2.casualty_id\nORDER BY T2.casualty_severity DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "428302b5",
+      "question": "Elenca il sesso, la fascia d'età e lo stato lavorativo di ciascuna vittima, insieme alla gravità della vittima, ordinati per gravità della vittima in ordine decrescente.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY, T2.CASUALTY_SEVERITY FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID ORDER BY T2.CASUALTY_SEVERITY DESC",
+      "predicted_sql": "SELECT T1.sex_of_casualty, T1.age_band_of_casualty, T1.work_of_casualty, T2.casualty_severity\nFROM dim_casualty AS T1\nJOIN bridge_accident_casualty AS T2 ON T1.casualty_id = T2.casualty_id\nORDER BY T2.casualty_severity DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "6526c5cd",
+      "question": "Elenca il sesso del ferito, la fascia d'età del ferito e lo stato lavorativo del ferito, insieme alla gravità media del ferito per ciascuno di questi gruppi, dove la gravità media del ferito è maggiore di 1.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY, AVG(T2.CASUALTY_SEVERITY) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID GROUP BY T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY HAVING AVG(T2.CASUALTY_SEVERITY) > 1",
+      "predicted_sql": "SELECT dim_casualty.sex_of_casualty, dim_casualty.age_band_of_casualty, dim_casualty.work_of_casualty, avg(bridge_accident_casualty.casualty_severity)\nFROM dim_casualty\nJOIN bridge_accident_casualty ON dim_casualty.casualty_id = bridge_accident_casualty.casualty_id\nGROUP BY dim_casualty.sex_of_casualty, dim_casualty.age_band_of_casualty, dim_casualty.work_of_casualty\nHAVING avg(bridge_accident_casualty.casualty_severity) > 1",
+      "error_info": null
+    },
+    {
+      "instance_id": "fd8870b7",
+      "question": "Elenca il sesso della vittima, la fascia d'età della vittima, lo stato lavorativo della vittima e la gravità della vittima, insieme al conteggio totale degli ID degli incidenti per ciascuno di questi gruppi, dove c'è almeno 1 incidente, ordinati per gravità della vittima in ordine decrescente.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY, T2.CASUALTY_SEVERITY, COUNT(T3.ACCIDENT_ID) FROM DIM_CASUALTY AS T1 INNER JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID INNER JOIN FACT_ACCIDENT AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.SEX_OF_CASUALTY, T1.AGE_BAND_OF_CASUALTY, T1.WORK_OF_CASUALTY, T2.CASUALTY_SEVERITY HAVING COUNT(T3.ACCIDENT_ID) >= 1 ORDER BY T2.CASUALTY_SEVERITY DESC",
+      "predicted_sql": "SELECT dim_casualty.sex_of_casualty,\n       dim_casualty.age_band_of_casualty,\n       dim_casualty.work_of_casualty,\n       bridge_accident_casualty.casualty_severity,\n       COUNT(DISTINCT bridge_accident_casualty.accident_id) AS accident_count\nFROM dim_casualty\nJOIN bridge_accident_casualty ON dim_casualty.casualty_id = bridge_accident_casualty.casualty_id\nGROUP BY dim_casualty.sex_of_casualty,\n         dim_casualty.age_band_of_casualty,\n         dim_casualty.work_of_casualty,\n         bridge_accident_casualty.casualty_severity\nHAVING COUNT(DISTINCT bridge_accident_casualty.accident_id) >= 1\nORDER BY bridge_accident_casualty.casualty_severity DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "e6ce2687",
+      "question": "Elenca gli ID dei feriti classificati come Pedestrian in cui il livello di gravità del ferito è 2.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.CASUALTY_ID FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' AND T2.CASUALTY_SEVERITY = 2;",
+      "predicted_sql": "SELECT T1.casualty_id\nFROM dim_casualty AS T1\nJOIN bridge_accident_casualty AS T2 ON T2.casualty_id = T1.casualty_id\nWHERE T1.casualty_class = 'Pedestrian'\n  AND T2.casualty_severity = 2",
+      "error_info": null
+    },
+    {
+      "instance_id": "946fede9",
+      "question": "Elenca gli ID dei feriti per tutti i feriti classificati come Pedestrian in cui il livello di gravità del ferito è 2.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.CASUALTY_ID FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' AND T2.CASUALTY_SEVERITY = 2",
+      "predicted_sql": "SELECT dim_casualty.casualty_id\nFROM dim_casualty\nJOIN bridge_accident_casualty ON bridge_accident_casualty.casualty_id = dim_casualty.casualty_id\nWHERE dim_casualty.casualty_class = 'Pedestrian'\nAND bridge_accident_casualty.casualty_severity = 2",
+      "error_info": null
+    },
+    {
+      "instance_id": "94ebfb34",
+      "question": "Elenca la classe di vittima e il conteggio totale degli ID delle vittime di incidenti su ponte per i record in cui la gravità della vittima è 2, filtrando specificamente per e mostrando solo la classe di vittima 'Pedestrian', ordinati per classe di vittima.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.CASUALTY_CLASS, COUNT(T2.BRIDGE_ACCIDENT_CASUALTY_ID) FROM DIM_CASUALTY AS T1 JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID WHERE T2.CASUALTY_SEVERITY = 2 GROUP BY T1.CASUALTY_CLASS HAVING T1.CASUALTY_CLASS = 'Pedestrian' ORDER BY T1.CASUALTY_CLASS",
+      "predicted_sql": "SELECT T2.casualty_class, COUNT(T1.bridge_accident_casualty_id) FROM bridge_accident_casualty AS T1 JOIN dim_casualty AS T2 ON T1.casualty_id = T2.casualty_id WHERE T1.casualty_severity = 2 AND T2.casualty_class = 'Pedestrian' GROUP BY T2.casualty_class ORDER BY T2.casualty_class",
+      "error_info": null
+    },
+    {
+      "instance_id": "4a7c38dd",
+      "question": "Mostra la classe della vittima per tutti i record in cui la classe della vittima è 'Pedestrian' e la gravità della vittima è di livello 2, raggruppati e ordinati per classe della vittima.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.CASUALTY_CLASS FROM DIM_CASUALTY AS T1 INNER JOIN BRIDGE_ACCIDENT_CASUALTY AS T2 ON T1.CASUALTY_ID = T2.CASUALTY_ID INNER JOIN FACT_ACCIDENT AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.CASUALTY_CLASS = 'Pedestrian' AND T2.CASUALTY_SEVERITY = 2 GROUP BY T1.CASUALTY_CLASS ORDER BY T1.CASUALTY_CLASS ASC",
+      "predicted_sql": "SELECT T2.casualty_class\nFROM bridge_accident_casualty AS T1\nJOIN dim_casualty AS T2 ON T1.casualty_id = T2.casualty_id\nWHERE T2.casualty_class = 'Pedestrian' AND T1.casualty_severity = 2\nGROUP BY T2.casualty_class\nORDER BY T2.casualty_class",
+      "error_info": null
+    },
+    {
+      "instance_id": "94e894a9",
+      "question": "Per gli incidenti verificatisi di Monday, elenca ogni area in cui si è verificato un incidente insieme al numero medio di vittime e al conteggio totale degli ID degli incidenti, raggruppati per l'area dell'incidente.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.AREA_ACCIDENT_OCCURRED, AVG(T1.NUMBER_OF_CASUALTIES), COUNT(T1.ACCIDENT_ID) FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Monday' GROUP BY T2.AREA_ACCIDENT_OCCURRED",
+      "predicted_sql": "SELECT\n    dim_geography.area_accident_occurred,\n    AVG(fact_accident.number_of_casualties) AS avg_casualties,\n    COUNT(DISTINCT fact_accident.accident_id) AS total_accidents\nFROM fact_accident\nJOIN dim_geography ON fact_accident.geography_id = dim_geography.geography_id\nJOIN dim_time ON fact_accident.time_id = dim_time.time_id\nWHERE dim_time.day_of_week = 'Monday'\nGROUP BY dim_geography.area_accident_occurred\nORDER BY dim_geography.area_accident_occurred",
+      "error_info": null
+    },
+    {
+      "instance_id": "9e2c6bbe",
+      "question": "Per gli incidenti avvenuti di Friday, elenca ogni area in cui si è verificato un incidente insieme al numero medio di vittime e al conteggio totale degli ID degli incidenti per ciascuna di queste aree.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.AREA_ACCIDENT_OCCURRED, AVG(T1.NUMBER_OF_CASUALTIES), COUNT(T1.ACCIDENT_ID) FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Friday' GROUP BY T2.AREA_ACCIDENT_OCCURRED",
+      "predicted_sql": "SELECT dim_geography.area_accident_occurred, avg(fact_accident.number_of_casualties), count(distinct fact_accident.accident_id)\nFROM fact_accident\nJOIN dim_time ON fact_accident.time_id = dim_time.time_id\nJOIN dim_geography ON fact_accident.geography_id = dim_geography.geography_id\nWHERE dim_time.day_of_week = 'Friday'\nGROUP BY dim_geography.area_accident_occurred",
+      "error_info": null
+    },
+    {
+      "instance_id": "5be88ed8",
+      "question": "Per gli incidenti avvenuti di Monday, elenca ogni area in cui si è verificato un incidente, il numero medio di vittime per incidente in quell'area e il conteggio totale degli ID degli incidenti, assicurandoti di mostrare solo le aree con almeno 1 incidente e ordinando i risultati in base al numero medio di vittime dal più alto al più basso.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.AREA_ACCIDENT_OCCURRED, AVG(T1.NUMBER_OF_CASUALTIES), COUNT(T1.ACCIDENT_ID) FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Monday' GROUP BY T2.AREA_ACCIDENT_OCCURRED HAVING COUNT(T1.ACCIDENT_ID) > 0 ORDER BY AVG(T1.NUMBER_OF_CASUALTIES) DESC",
+      "predicted_sql": "SELECT T3.area_accident_occurred,\n       AVG(T1.number_of_casualties) AS avg_casualties_per_accident,\n       COUNT(T1.accident_id) AS total_accident_count\nFROM fact_accident AS T1\nJOIN dim_time AS T2 ON T1.time_id = T2.time_id\nJOIN dim_geography AS T3 ON T1.geography_id = T3.geography_id\nWHERE T2.day_of_week = 'Monday'\nGROUP BY T3.area_accident_occurred\nORDER BY AVG(T1.number_of_casualties) DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "ff0e8585",
+      "question": "Per gli incidenti avvenuti di Monday, elenca ogni area in cui si è verificato l'incidente insieme al numero medio di vittime e al conteggio totale degli ID degli incidenti, raggruppati per area e ordinati per il numero medio di vittime in ordine decrescente.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.AREA_ACCIDENT_OCCURRED, AVG(T1.NUMBER_OF_CASUALTIES), COUNT(T1.ACCIDENT_ID) FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Monday' GROUP BY T2.AREA_ACCIDENT_OCCURRED HAVING COUNT(T1.ACCIDENT_ID) > 0 ORDER BY AVG(T1.NUMBER_OF_CASUALTIES) DESC",
+      "predicted_sql": "SELECT dim_geography.area_accident_occurred,\n       AVG(fact_accident.number_of_casualties),\n       COUNT(DISTINCT fact_accident.accident_id)\nFROM fact_accident\nJOIN dim_time ON fact_accident.time_id = dim_time.time_id\nJOIN dim_geography ON fact_accident.geography_id = dim_geography.geography_id\nWHERE dim_time.day_of_week = 'Monday'\nGROUP BY dim_geography.area_accident_occurred\nORDER BY AVG(fact_accident.number_of_casualties) DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "38852ca5",
+      "question": "Elenca le aree uniche in cui si sono verificati incidenti per i casi che hanno coinvolto più di 5 vittime o che si sono verificati di Sunday.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT DISTINCT T2.AREA_ACCIDENT_OCCURRED FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T1.NUMBER_OF_CASUALTIES > 5 OR T3.DAY_OF_WEEK IN ('Sunday')",
+      "predicted_sql": "SELECT DISTINCT T2.area_accident_occurred\nFROM fact_accident AS T1\nJOIN dim_geography AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_time AS T3 ON T1.time_id = T3.time_id\nWHERE T1.number_of_casualties > 5 OR T3.day_of_week = 'Sunday'",
+      "error_info": null
+    },
+    {
+      "instance_id": "fa6e1133",
+      "question": "Elenca l'area in cui si è verificato l'incidente per tutti i record in cui il numero di vittime è maggiore di 5 oppure il giorno della settimana è Sunday.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.AREA_ACCIDENT_OCCURRED FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID WHERE T2.NUMBER_OF_CASUALTIES > 5 OR T3.DAY_OF_WEEK IN ('Sunday');",
+      "predicted_sql": "SELECT DISTINCT T3.area_accident_occurred\nFROM fact_accident AS T1\nJOIN dim_geography AS T3 ON T1.geography_id = T3.geography_id\nJOIN dim_time AS T2 ON T1.time_id = T2.time_id\nWHERE T1.number_of_casualties > 5 OR T2.day_of_week = 'Sunday'",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "8d4fc698",
+      "question": "Elenca le aree in cui si sono verificati incidenti, ordinate alfabeticamente, per quelle aree in cui il numero massimo di vittime in un singolo incidente supera 5 o in cui il conteggio dei giorni della settimana registrati è maggiore di 1.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.AREA_ACCIDENT_OCCURRED FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T2.TIME_ID = T3.TIME_ID GROUP BY T1.AREA_ACCIDENT_OCCURRED HAVING MAX(T2.NUMBER_OF_CASUALTIES) > 5 OR COUNT(T3.DAY_OF_WEEK) > 1 ORDER BY T1.AREA_ACCIDENT_OCCURRED",
+      "predicted_sql": "SELECT dim_geography.area_accident_occurred\nFROM dim_geography\nJOIN fact_accident ON dim_geography.geography_id = fact_accident.geography_id\nJOIN dim_time ON fact_accident.time_id = dim_time.time_id\nGROUP BY dim_geography.area_accident_occurred\nHAVING MAX(fact_accident.number_of_casualties) > 5\n   OR COUNT(DISTINCT dim_time.day_of_week) > 1\nORDER BY dim_geography.area_accident_occurred",
+      "error_info": null
+    },
+    {
+      "instance_id": "6036219b",
+      "question": "Elenca le aree in cui si sono verificati incidenti per quelle località che hanno registrato almeno un incidente con più di 5 vittime oppure almeno un incidente avvenuto di Sunday o Monday, e ordina i risultati alfabeticamente per nome dell'area.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.AREA_ACCIDENT_OCCURRED FROM FACT_ACCIDENT AS T1 INNER JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID GROUP BY T2.AREA_ACCIDENT_OCCURRED HAVING SUM(CASE WHEN T1.NUMBER_OF_CASUALTIES > 5 THEN 1 ELSE 0 END) > 0 OR SUM(CASE WHEN T3.DAY_OF_WEEK IN ('Sunday', 'Monday') THEN 1 ELSE 0 END) > 0 ORDER BY T2.AREA_ACCIDENT_OCCURRED ASC",
+      "predicted_sql": "SELECT DISTINCT T1.area_accident_occurred\nFROM dim_geography AS T1\nJOIN fact_accident AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_time AS T3 ON T2.time_id = T3.time_id\nWHERE T2.number_of_casualties > 5\n   OR T3.day_of_week IN ('Sunday', 'Monday')\nORDER BY T1.area_accident_occurred",
+      "error_info": null
+    },
+    {
+      "instance_id": "d26b618e",
+      "question": "Elenca le aree in cui si sono verificati incidenti per tutti gli incidenti avvenuti di Sunday che hanno coinvolto più di 1 veicolo, raggruppati e ordinati per area dell'incidente.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.AREA_ACCIDENT_OCCURRED FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Sunday' AND T1.NUMBER_OF_VEHICLES_INVOLVED > 1 AND T3.DAY_OF_WEEK = 'Sunday' GROUP BY T2.AREA_ACCIDENT_OCCURRED ORDER BY T2.AREA_ACCIDENT_OCCURRED",
+      "predicted_sql": "SELECT DISTINCT dim_geography.area_accident_occurred\nFROM fact_accident\nJOIN dim_time ON fact_accident.time_id = dim_time.time_id\nJOIN dim_geography ON fact_accident.geography_id = dim_geography.geography_id\nWHERE fact_accident.number_of_vehicles_involved > 1\nAND dim_time.day_of_week = 'Sunday'\nORDER BY dim_geography.area_accident_occurred",
+      "error_info": null
+    },
+    {
+      "instance_id": "9f67d6f2",
+      "question": "Elenca le aree in cui si sono verificati incidenti per eventi che coinvolgono più di 1 veicolo di Sunday, in particolare per quelle aree in cui non si sono verificati incidenti di Monday.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.AREA_ACCIDENT_OCCURRED FROM FACT_ACCIDENT AS T1 JOIN DIM_GEOGRAPHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T3.DAY_OF_WEEK = 'Sunday' AND T1.NUMBER_OF_VEHICLES_INVOLVED > 1 GROUP BY T2.AREA_ACCIDENT_OCCURRED HAVING COUNT(CASE WHEN T3.DAY_OF_WEEK = 'Monday' THEN 1 END) = 0",
+      "predicted_sql": "SELECT DISTINCT T3.area_accident_occurred\nFROM fact_accident AS T1\nJOIN dim_time AS T2 ON T1.time_id = T2.time_id\nJOIN dim_geography AS T3 ON T1.geography_id = T3.geography_id\nWHERE T1.number_of_vehicles_involved > 1\n  AND T2.day_of_week = 'Sunday'\n  AND T3.area_accident_occurred NOT IN (\n    SELECT DISTINCT T6.area_accident_occurred\n    FROM fact_accident AS T4\n    JOIN dim_time AS T5 ON T4.time_id = T5.time_id\n    JOIN dim_geography AS T6 ON T4.geography_id = T6.geography_id\n    WHERE T5.day_of_week = 'Monday'\n  )",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "b844e893",
+      "question": "Per ogni area in cui si è verificato un incidente, elenca il nome dell'area e il numero medio di vittime, ordinati dal numero medio di vittime più alto al più basso.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.AREA_ACCIDENT_OCCURRED, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.AREA_ACCIDENT_OCCURRED ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+      "predicted_sql": "SELECT\n    T2.area_accident_occurred,\n    AVG(T1.number_of_casualties) AS average_casualties\nFROM fact_accident AS T1\nJOIN dim_geography AS T2 ON T1.geography_id = T2.geography_id\nGROUP BY T2.area_accident_occurred\nORDER BY average_casualties DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "df672efe",
+      "question": "Per ogni area in cui si è verificato un incidente, elenca il nome dell'area e il numero medio di vittime, ordinati in ordine decrescente per il conteggio medio delle vittime.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.AREA_ACCIDENT_OCCURRED, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.AREA_ACCIDENT_OCCURRED ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+      "predicted_sql": "SELECT T2.area_accident_occurred, AVG(T1.number_of_casualties) AS average_casualties\nFROM fact_accident AS T1\nJOIN dim_geography AS T2 ON T1.geography_id = T2.geography_id\nGROUP BY T2.area_accident_occurred\nORDER BY AVG(T1.number_of_casualties) DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "49d23186",
+      "question": "Elenca le aree in cui si sono verificati incidenti per i quali il numero medio di vittime è maggiore di 1, e ordina i risultati in base a questa media in ordine decrescente.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.AREA_ACCIDENT_OCCURRED FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.AREA_ACCIDENT_OCCURRED HAVING AVG(T2.NUMBER_OF_CASUALTIES) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+      "predicted_sql": "SELECT dim_geography.area_accident_occurred\nFROM dim_geography\nJOIN fact_accident ON dim_geography.geography_id = fact_accident.geography_id\nGROUP BY dim_geography.area_accident_occurred\nHAVING AVG(fact_accident.number_of_casualties) > 1\nORDER BY AVG(fact_accident.number_of_casualties) DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "9f31bb55",
+      "question": "Per ogni area in cui si è verificato un incidente, a condizione che siano registrati più di 1 incidente, elenca il nome dell'area e il numero medio di vittime, ordinati dalla media più alta alla più bassa.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.AREA_ACCIDENT_OCCURRED, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_GEOGRAPHY AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID GROUP BY T1.AREA_ACCIDENT_OCCURRED HAVING COUNT(T2.ACCIDENT_ID) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+      "predicted_sql": "SELECT dim_geography.area_accident_occurred, avg(fact_accident.number_of_casualties)\nFROM fact_accident\nJOIN dim_geography ON fact_accident.geography_id = dim_geography.geography_id\nGROUP BY dim_geography.area_accident_occurred\nHAVING count(fact_accident.accident_id) > 1\nORDER BY avg(fact_accident.number_of_casualties) DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "2736c3fd",
+      "question": "Elenca le condizioni di luce per gli incidenti in cui il numero di vittime è maggiore di 2, specificamente per quelle condizioni di luce che compaiono più di 1 volta nei record.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.LIGHT_CONDITIONS FROM FACT_ACCIDENT AS T1 JOIN DIM_ENVIRONMENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID WHERE T1.NUMBER_OF_CASUALTIES > 2 GROUP BY T2.LIGHT_CONDITIONS HAVING COUNT(T2.LIGHT_CONDITIONS) > 1",
+      "predicted_sql": "SELECT T2.light_conditions\nFROM fact_accident AS T1\nJOIN dim_environment AS T2 ON T1.environment_id = T2.environment_id\nWHERE T1.number_of_casualties > 2\nGROUP BY T2.light_conditions\nHAVING COUNT(*) > 1",
+      "error_info": null
+    },
+    {
+      "instance_id": "71d5f8f4",
+      "question": "Elenca le condizioni di luce distinte per gli incidenti in cui il numero di vittime è maggiore di 2 e il giorno della settimana non è Sunday, ordinate alfabeticamente per le condizioni di luce.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT DISTINCT T2.LIGHT_CONDITIONS FROM FACT_ACCIDENT AS T1 JOIN DIM_ENVIRONMENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID JOIN DIM_TIME AS T3 ON T1.TIME_ID = T3.TIME_ID WHERE T1.NUMBER_OF_CASUALTIES > 2 AND T3.DAY_OF_WEEK != 'Sunday' ORDER BY T2.LIGHT_CONDITIONS ASC",
+      "predicted_sql": "SELECT DISTINCT T3.light_conditions\nFROM fact_accident AS T1\nJOIN dim_time AS T2 ON T1.time_id = T2.time_id\nJOIN dim_environment AS T3 ON T1.environment_id = T3.environment_id\nWHERE T1.number_of_casualties > 2\n  AND T2.day_of_week != 'Sunday'\nORDER BY T3.light_conditions ASC",
+      "error_info": null
+    },
+    {
+      "instance_id": "cddd642a",
+      "question": "Mostra le condizioni di luce, le condizioni meteorologiche e il numero totale di vittime, raggruppati sia per condizioni di luce sia per condizioni meteorologiche, e ordinati dalla somma più alta alla più bassa di vittime.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS, SUM(T2.NUMBER_OF_CASUALTIES) FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS ORDER BY SUM(T2.NUMBER_OF_CASUALTIES) DESC",
+      "predicted_sql": "SELECT dim_environment.light_conditions,\n       dim_environment.weather_conditions,\n       SUM(fact_accident.number_of_casualties) AS total_casualties\nFROM fact_accident\nJOIN dim_environment ON fact_accident.environment_id = dim_environment.environment_id\nGROUP BY dim_environment.light_conditions, dim_environment.weather_conditions\nORDER BY total_casualties DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "0bb2c4d3",
+      "question": "Elenca le condizioni di luce e le condizioni meteorologiche insieme al numero totale di vittime per ciascuna combinazione, raggruppate per condizioni di luce e condizioni meteorologiche e ordinate per il totale delle vittime in ordine decrescente.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS, SUM(T2.NUMBER_OF_CASUALTIES) FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS ORDER BY SUM(T2.NUMBER_OF_CASUALTIES) DESC",
+      "predicted_sql": "SELECT T2.light_conditions, T2.weather_conditions, SUM(T1.number_of_casualties)\nFROM fact_accident AS T1\nJOIN dim_environment AS T2 ON T1.environment_id = T2.environment_id\nGROUP BY T2.light_conditions, T2.weather_conditions\nORDER BY SUM(T1.number_of_casualties) DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "bbc25a79",
+      "question": "Elenca le condizioni di luce e le condizioni meteorologiche per tutte le impostazioni ambientali in cui il numero totale di vittime supera 2, e visualizza questi risultati in ordine decrescente in base alla somma totale delle vittime.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.LIGHT_CONDITIONS, T2.WEATHER_CONDITIONS FROM FACT_ACCIDENT AS T1 JOIN DIM_ENVIRONMENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T2.LIGHT_CONDITIONS, T2.WEATHER_CONDITIONS HAVING SUM(T1.NUMBER_OF_CASUALTIES) > 2 ORDER BY SUM(T1.NUMBER_OF_CASUALTIES) DESC",
+      "predicted_sql": "SELECT T2.light_conditions, T2.weather_conditions\nFROM fact_accident AS T1\nJOIN dim_environment AS T2 ON T1.environment_id = T2.environment_id\nGROUP BY T2.light_conditions, T2.weather_conditions\nHAVING SUM(T1.number_of_casualties) > 2\nORDER BY SUM(T1.number_of_casualties) DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "a914e6b9",
+      "question": "Elenca le condizioni di luce e le condizioni meteorologiche insieme al numero totale di vittime per ogni combinazione, dove il totale delle vittime supera 2, e ordina i risultati dal numero più alto di vittime al più basso.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS, SUM(T2.NUMBER_OF_CASUALTIES) FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS HAVING SUM(T2.NUMBER_OF_CASUALTIES) > 2 ORDER BY SUM(T2.NUMBER_OF_CASUALTIES) DESC",
+      "predicted_sql": "SELECT dim_environment.light_conditions,\n       dim_environment.weather_conditions,\n       SUM(fact_accident.number_of_casualties) AS total_casualties\nFROM fact_accident\nJOIN dim_environment ON fact_accident.environment_id = dim_environment.environment_id\nGROUP BY dim_environment.light_conditions,\n         dim_environment.weather_conditions\nHAVING SUM(fact_accident.number_of_casualties) > 2\nORDER BY total_casualties DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "7e40fd48",
+      "question": "Elenca le diverse condizioni di luce e le condizioni meteorologiche registrate per tutti gli incidenti e ordina i risultati in base alle condizioni di luce.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT DISTINCT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID ORDER BY T1.LIGHT_CONDITIONS",
+      "predicted_sql": "SELECT DISTINCT T2.light_conditions, T2.weather_conditions\nFROM fact_accident AS T1\nJOIN dim_environment AS T2 ON T1.environment_id = T2.environment_id\nORDER BY T2.light_conditions",
+      "error_info": null
+    },
+    {
+      "instance_id": "5e66cfee",
+      "question": "Elenca le condizioni di luce distinte e le condizioni meteorologiche registrate per gli incidenti, ordinate alfabeticamente in base alle condizioni di luce.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT DISTINCT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID ORDER BY T1.LIGHT_CONDITIONS ASC",
+      "predicted_sql": "SELECT DISTINCT T2.light_conditions, T2.weather_conditions\nFROM fact_accident AS T1\nJOIN dim_environment AS T2 ON T1.environment_id = T2.environment_id\nORDER BY T2.light_conditions",
+      "error_info": null
+    },
+    {
+      "instance_id": "38a1b6a9",
+      "question": "Elenca le condizioni di luce e le condizioni meteorologiche per ogni combinazione unica di questi due fattori associata ad almeno 1 incidente.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS HAVING COUNT(T2.ACCIDENT_ID) >= 1",
+      "predicted_sql": "SELECT DISTINCT dim_environment.light_conditions, dim_environment.weather_conditions\nFROM fact_accident\nJOIN dim_environment ON fact_accident.environment_id = dim_environment.environment_id",
+      "error_info": null
+    },
+    {
+      "instance_id": "c589abbd",
+      "question": "Elenca le condizioni di luce distinte e le condizioni meteorologiche per tutti gli ambienti che hanno almeno 1 incidente registrato, e ordina i risultati alfabeticamente in base alle condizioni di luce.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT DISTINCT T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID GROUP BY T1.LIGHT_CONDITIONS, T1.WEATHER_CONDITIONS HAVING COUNT(T2.ACCIDENT_ID) >= 1 ORDER BY T1.LIGHT_CONDITIONS ASC",
+      "predicted_sql": "SELECT DISTINCT T1.light_conditions, T1.weather_conditions\nFROM dim_environment AS T1\nJOIN fact_accident AS T2 ON T1.environment_id = T2.environment_id\nORDER BY T1.light_conditions",
+      "error_info": null
+    },
+    {
+      "instance_id": "5b96834d",
+      "question": "Elenca gli ID degli incidenti per tutti gli incidenti in cui il numero di vittime è maggiore di 2 e le condizioni di illuminazione sono 'Darkness - no lighting', ordinati per numero di vittime in ordine decrescente.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.ACCIDENT_ID FROM FACT_ACCIDENT AS T1 JOIN DIM_ENVIRONMENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID WHERE T1.NUMBER_OF_CASUALTIES > 2 AND T2.LIGHT_CONDITIONS = 'Darkness - no lighting' ORDER BY T1.NUMBER_OF_CASUALTIES DESC",
+      "predicted_sql": "SELECT fact_accident.accident_id\nFROM fact_accident\nJOIN dim_environment ON fact_accident.environment_id = dim_environment.environment_id\nWHERE fact_accident.number_of_casualties > 2\n  AND dim_environment.light_conditions = 'Darkness - no lighting'\nORDER BY fact_accident.number_of_casualties DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "1640e576",
+      "question": "Per gli ambienti in cui le condizioni di illuminazione sono 'Darkness - no lighting', elenca ogni ID ambiente e il conteggio totale degli ID degli incidenti, a condizione che la somma del numero di vittime per quell'ID ambiente sia maggiore di 5.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.ENVIRONMENT_ID, COUNT(T2.ACCIDENT_ID) FROM DIM_ENVIRONMENT AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID WHERE T1.LIGHT_CONDITIONS = 'Darkness - no lighting' GROUP BY T1.ENVIRONMENT_ID HAVING SUM(T2.NUMBER_OF_CASUALTIES) > 5",
+      "predicted_sql": "SELECT\n    de.environment_id,\n    COUNT(DISTINCT fa.accident_id) AS total_accident_count\nFROM",
+      "error_info": "syntax error at end of input\nLINE 4: FROM\n            ^\n"
+    },
+    {
+      "instance_id": "547dfb70",
+      "question": "Elenca l'ID dell'incidente e la somma totale delle vittime per ciascun incidente in cui le condizioni di illuminazione erano 'Darkness - no lighting' e il tipo di collisione era 'Vehicle with vehicle collision', specificamente per quegli incidenti in cui il numero totale di vittime è maggiore di 5, ordinati dal numero più alto di vittime al più basso.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.ACCIDENT_ID, SUM(T1.NUMBER_OF_CASUALTIES) FROM FACT_ACCIDENT AS T1 INNER JOIN DIM_ENVIRONMENT AS T2 ON T1.ENVIRONMENT_ID = T2.ENVIRONMENT_ID INNER JOIN DIM_ACCIDENT_EVENT AS T3 ON T1.ACCIDENT_EVENT_ID = T3.ACCIDENT_EVENT_ID WHERE T2.LIGHT_CONDITIONS = 'Darkness - no lighting' AND T3.TYPE_OF_COLLISION = 'Vehicle with vehicle collision' GROUP BY T1.ACCIDENT_ID HAVING SUM(T1.NUMBER_OF_CASUALTIES) > 5 ORDER BY SUM(T1.NUMBER_OF_CASUALTIES) DESC",
+      "predicted_sql": "SELECT fact_accident.accident_id, fact_accident.number_of_casualties\nFROM fact_accident\nJOIN dim_environment ON fact_accident.environment_id = dim_environment.environment_id\nJOIN dim_accident_event ON fact_accident.accident_event_id = dim_accident_event.accident_event_id\nWHERE dim_environment.light_conditions = 'Darkness - no lighting'\nAND dim_accident_event.type_of_collision = 'Vehicle with vehicle collision'\nAND fact_accident.number_of_casualties > 5\nORDER BY fact_accident.number_of_casualties DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "b73a538f",
+      "question": "Elenca ogni gravità dell'incidente e il conteggio delle occorrenze per quella gravità, specificamente per i conducenti con 1-2yr di esperienza di guida, dove l'ID medio dell'incidente per il gruppo è maggiore di 1, ordinato per gravità dell'incidente.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.ACCIDENT_SEVERITY, COUNT(T1.ACCIDENT_SEVERITY) FROM FACT_ACCIDENT AS T1 JOIN DIM_DRIVER AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID WHERE T2.DRIVING_EXPERIENCE = '1-2yr' GROUP BY T1.ACCIDENT_SEVERITY HAVING AVG(T1.ACCIDENT_ID) > 1 ORDER BY T1.ACCIDENT_SEVERITY",
+      "predicted_sql": "SELECT fact_accident.accident_severity, COUNT(*) AS occurrence_count\nFROM fact_accident\nJOIN dim_driver ON fact_accident.driver_id = dim_driver.driver_id\nWHERE dim_driver.driving_experience = '1-2yr'\nGROUP BY fact_accident.accident_severity\nHAVING AVG(fact_accident.accident_id) > 1\nORDER BY fact_accident.accident_severity",
+      "error_info": null
+    },
+    {
+      "instance_id": "d3c43b0a",
+      "question": "Mostra tutte le colonne e i dettagli della dimensione dei conducenti per quei conducenti che hanno tra 1-2yr di esperienza di guida o il cui livello di istruzione è Junior high school.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT * FROM DIM_DRIVER WHERE DRIVING_EXPERIENCE = '1-2yr' OR EDUCATIONAL_LEVEL = 'Junior high school';",
+      "predicted_sql": "SELECT * FROM dim_driver\nWHERE driving_experience = '1-2yr'\n   OR educational_level = 'Junior high school'",
+      "error_info": null
+    },
+    {
+      "instance_id": "4958cea5",
+      "question": "Elenca l'ID del conducente e la fascia d'età del conducente per tutti i record in cui l'esperienza di guida è '1-2yr' oppure il livello di istruzione è 'Junior high school', ordinati per ID del conducente.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT DRIVER_ID, AGE_BAND_OF_DRIVER FROM DIM_DRIVER WHERE DRIVING_EXPERIENCE = '1-2yr' OR EDUCATIONAL_LEVEL = 'Junior high school' ORDER BY DRIVER_ID",
+      "predicted_sql": "SELECT driver_id, age_band_of_driver\nFROM dim_driver\nWHERE driving_experience = '1-2yr' OR educational_level = 'Junior high school'\nORDER BY driver_id",
+      "error_info": null
+    },
+    {
+      "instance_id": "e1d7950c",
+      "question": "Elenca i livelli di esperienza di guida e il conteggio totale degli ID degli incidenti per i conducenti che hanno o '1-2yr' di esperienza di guida oppure un livello di istruzione pari a 'Junior high school', raggruppando i risultati per esperienza di guida e includendo solo quei gruppi con più di 1 incidente.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.DRIVING_EXPERIENCE, COUNT(T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID WHERE T1.DRIVING_EXPERIENCE = '1-2yr' OR T1.EDUCATIONAL_LEVEL = 'Junior high school' GROUP BY T1.DRIVING_EXPERIENCE HAVING COUNT(T2.ACCIDENT_ID) > 1",
+      "predicted_sql": "SELECT d.driving_experience, COUNT(DISTINCT f.accident_id) as total_accidents\nFROM dim_driver d\nJOIN fact_accident f ON d.driver_id = f.driver_id\nWHERE d.driving_experience = '1-2yr' OR d.educational_level = 'Junior high school'\nGROUP BY d.driving_experience\nHAVING COUNT(DISTINCT f.accident_id) > 1\nORDER BY d.driving_experience DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "cab01d87",
+      "question": "Elenca l'ID del conducente, la fascia d'età del conducente e il sesso del conducente, insieme al conteggio totale degli incidenti per ciascun conducente, specificamente per coloro che hanno tra 1-2yr di esperienza di guida o il cui livello di istruzione è 'Junior high school', includendo quelli con 0 incidenti, e ordina i risultati in base al conteggio degli incidenti in ordine decrescente.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.DRIVER_ID, T1.AGE_BAND_OF_DRIVER, T1.SEX_OF_DRIVER, COUNT(T2.ACCIDENT_ID) FROM DIM_DRIVER AS T1 LEFT JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID LEFT JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.DRIVING_EXPERIENCE = '1-2yr' OR T1.EDUCATIONAL_LEVEL = 'Junior high school' GROUP BY T1.DRIVER_ID, T1.AGE_BAND_OF_DRIVER, T1.SEX_OF_DRIVER HAVING COUNT(T2.ACCIDENT_ID) >= 0 ORDER BY COUNT(T2.ACCIDENT_ID) DESC",
+      "predicted_sql": "SELECT T1.driver_id,\n       T1.age_band_of_driver,\n       T1.sex_of_driver,\n       COUNT(T2.accident_id) AS accident_count\nFROM dim_driver AS T1\nLEFT JOIN fact_accident AS T2 ON T1.driver_id = T2.driver_id\nWHERE T1.driving_experience = '1-2yr'\n   OR T1.educational_level = 'Junior high school'\nGROUP BY T1.driver_id,\n         T1.age_band_of_driver,\n         T1.sex_of_driver\nORDER BY accident_count DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "2376f2ec",
+      "question": "Elenca il livello di istruzione, l'esperienza di guida e il numero medio di vittime per ogni combinazione di livello di istruzione ed esperienza di guida, ordinati per il numero medio di vittime.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE ORDER BY AVG(T2.NUMBER_OF_CASUALTIES)",
+      "predicted_sql": "SELECT dim_driver.educational_level, dim_driver.driving_experience, AVG(fact_accident.number_of_casualties)\nFROM fact_accident\nJOIN dim_driver ON fact_accident.driver_id = dim_driver.driver_id\nGROUP BY dim_driver.educational_level, dim_driver.driving_experience\nORDER BY AVG(fact_accident.number_of_casualties)",
+      "error_info": null
+    },
+    {
+      "instance_id": "0c81d217",
+      "question": "Elenca il livello di istruzione e l'esperienza di guida dei conducenti, insieme al numero medio di vittime per incidente, raggruppati per livello di istruzione ed esperienza di guida, e ordinati in base al numero medio di vittime in ordine decrescente.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC",
+      "predicted_sql": "SELECT dim_driver.educational_level, dim_driver.driving_experience, AVG(fact_accident.number_of_casualties)\nFROM dim_driver\nJOIN fact_accident ON dim_driver.driver_id = fact_accident.driver_id\nGROUP BY dim_driver.educational_level, dim_driver.driving_experience\nORDER BY AVG(fact_accident.number_of_casualties) DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "b4058904",
+      "question": "Elenca il livello di istruzione e l'esperienza di guida dei conducenti, raggruppati per questi due attributi, per i quali il numero medio di vittime negli incidenti è maggiore di 1, e ordina i risultati in base a quel valore medio.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID GROUP BY T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE HAVING AVG(T2.NUMBER_OF_CASUALTIES) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES);",
+      "predicted_sql": "SELECT dim_driver.educational_level, dim_driver.driving_experience, avg(fact_accident.number_of_casualties) as avg_casualties\nFROM fact_accident\nJOIN dim_driver ON fact_accident.driver_id = dim_driver.driver_id\nGROUP BY dim_driver.educational_level, dim_driver.driving_experience\nHAVING avg(fact_accident.number_of_casualties) > 1\nORDER BY avg(fact_accident.number_of_casualties) ASC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "0b93f640",
+      "question": "Per i conducenti Male nelle fasce d'età '31-50' o '18-30', elenca il loro livello di istruzione e l'esperienza di guida insieme al numero medio di vittime per incidente, specificamente per quei gruppi con più di 1 incidente, e ordina i risultati in base al conteggio medio delle vittime in ordine decrescente.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE, AVG(T2.NUMBER_OF_CASUALTIES) FROM DIM_DRIVER AS T1 JOIN FACT_ACCIDENT AS T2 ON T1.DRIVER_ID = T2.DRIVER_ID JOIN BRIDGE_ACCIDENT_CASUALTY AS T3 ON T2.ACCIDENT_ID = T3.ACCIDENT_ID WHERE T1.AGE_BAND_OF_DRIVER IN ('31-50', '18-30') AND T1.SEX_OF_DRIVER = 'Male' GROUP BY T1.EDUCATIONAL_LEVEL, T1.DRIVING_EXPERIENCE HAVING COUNT(T2.ACCIDENT_ID) > 1 ORDER BY AVG(T2.NUMBER_OF_CASUALTIES) DESC;",
+      "predicted_sql": "SELECT dim_driver.educational_level,\n       dim_driver.driving_experience,\n       AVG(fact_accident.number_of_casualties::numeric) as avg_casualties_per_accident\nFROM dim_driver\nJOIN fact_accident ON dim_driver.driver_id = fact_accident.driver_id\nWHERE dim_driver.sex_of_driver = 'Male'\n  AND (dim_driver.age_band_of_driver = '31-50' OR dim_driver.age_band_of_driver = '18-30')\nGROUP BY dim_driver.educational_level, dim_driver.driving_experience\nHAVING COUNT(DISTINCT fact_accident.accident_id) > 1\nORDER BY avg_casualties_per_accident DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "0469fe97",
+      "question": "Elenca i livelli di istruzione dei conducenti coinvolti in almeno un incidente avvenuto di Sunday, e mostra questi livelli di istruzione in ordine alfabetico crescente.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.EDUCATIONAL_LEVEL FROM DIM_DRIVER T1 JOIN FACT_ACCIDENT T0 ON T1.DRIVER_ID = T0.DRIVER_ID JOIN DIM_TIME T2 ON T0.TIME_ID = T2.TIME_ID WHERE T2.DAY_OF_WEEK = 'Sunday' GROUP BY T1.EDUCATIONAL_LEVEL HAVING COUNT(T0.ACCIDENT_ID) > 0 ORDER BY T1.EDUCATIONAL_LEVEL ASC",
+      "predicted_sql": "SELECT DISTINCT T2.educational_level\nFROM fact_accident AS T1\nJOIN dim_driver AS T2 ON T1.driver_id = T2.driver_id\nJOIN dim_time AS T3 ON T1.time_id = T3.time_id\nWHERE T3.day_of_week = 'Sunday'\nORDER BY T2.educational_level ASC",
+      "error_info": null
+    }
+  ]
+}

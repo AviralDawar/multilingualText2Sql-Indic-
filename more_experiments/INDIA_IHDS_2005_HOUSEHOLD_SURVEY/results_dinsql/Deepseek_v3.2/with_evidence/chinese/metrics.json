@@ -1,0 +1,909 @@
+{
+  "summary": {
+    "total": 100,
+    "execution_correct": 38,
+    "execution_accuracy": 0.38
+  },
+  "results": [
+    {
+      "instance_id": "db637eb6",
+      "question": "提供所有属于 OBC 类别的家庭的家庭 ID、资产指数以及次级社会网络联系人类型。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT HOUSEHOLD_ID, HOUSEHOLD_ASSETS_INDEX, SOCIAL_NETWORK_CONTACT_2_TYPE FROM DIM_HOUSEHOLD_SOCIAL WHERE CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC';",
+      "predicted_sql": "SELECT household_id, household_assets_index, social_network_contact_2_type\nFROM dim_household_social\nWHERE caste_religion_group_8_category = 'OBC'",
+      "error_info": null
+    },
+    {
+      "instance_id": "21e0ce63",
+      "question": "列出所有属于 OBC 类别的家庭的家庭 ID、资产指数以及次级社会网络联系人类型，并按资产指数从低到高排序。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' ORDER BY T2.HOUSEHOLD_ASSETS_INDEX ASC",
+      "predicted_sql": "SELECT household_id, household_assets_index, social_network_contact_2_type\nFROM dim_household_social\nWHERE caste_religion_group_8_category = 'OBC'\nORDER BY household_assets_index ASC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "c8f78b4a",
+      "question": "请提供基督教家庭的资产指数和次级社交网络联系方式类型，并按财富从高到低排序。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' GROUP BY T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE HAVING COUNT(T3.CONSUMPTION_ID) >= 0 ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+      "predicted_sql": "SELECT household_assets_index, social_network_contact_2_type\nFROM dim_household_social\nWHERE caste_religion_group_8_category = 'Christian'\nORDER BY household_assets_index DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "a1d8e0fc",
+      "question": "提供已记录公用事业消费的 OBC 类别家庭的 asset index 和次要社会网络联系人类型，并按其财富状况排序。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN FACT_UTILITY_CONSUMPTION AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' GROUP BY T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE HAVING COUNT(T3.UTILITY_ID) >= 1 ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+      "predicted_sql": "SELECT T1.household_assets_index, T1.social_network_contact_2_type\nFROM dim_household_social AS T1\nJOIN fact_utility_consumption AS T2 ON T1.household_id = T2.household_id\nWHERE T1.caste_religion_group_8_category = 'OBC'\nORDER BY T1.household_assets_index DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "490d74ea",
+      "question": "按财富从高到低排序，提供穆斯林家庭的资产指数和次要社交网络联系方式类型。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN FACT_FOOD_CONSUMPTION AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Muslim' GROUP BY T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE HAVING COUNT(T3.FOOD_CONSUMPTION_ID) >= 0 ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+      "predicted_sql": "SELECT household_assets_index, social_network_contact_2_type\nFROM dim_household_social\nWHERE caste_religion_group_8_category = 'Muslim'\nORDER BY household_assets_index DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "8ed8a672",
+      "question": "按社交网络联系人类型以及宗教或种姓群体分类，提供家庭月均支出和家庭总数的明细，并按支出从高到低排序。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.SOCIAL_NETWORK_CONTACT_2_TYPE, AVG(T1.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS), COUNT(T1.HOUSEHOLD_ID) FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN DIM_HOUSEHOLD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.SOCIAL_NETWORK_CONTACT_2_TYPE HAVING COUNT(T1.HOUSEHOLD_ID) > 0 ORDER BY AVG(T1.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) DESC",
+      "predicted_sql": "SELECT\n    T1.caste_religion_group_8_category,\n    T1.social_network_contact_2_type,\n    AVG(T2.monthly_total_consumption_expenditure_rs) AS avg_monthly_expenditure,\n    COUNT(DISTINCT T1.household_id) AS total_households\nFROM dim_household_social AS T1\nJOIN fact_household_consumption AS T2 ON T1.household_id = T2.household_id\nGROUP BY\n    T1.caste_religion_group_8_category,\n    T1.social_network_contact_2_type\nORDER BY avg_monthly_expenditure DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "c175575e",
+      "question": "识别资产指数较高且使用第一类社会网络联系人的家庭。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.SOCIAL_NETWORK_CONTACT_2_TYPE = '1' AND T2.HOUSEHOLD_ASSETS_INDEX >= '27' GROUP BY T1.HOUSEHOLD_ID",
+      "predicted_sql": "SELECT\n    dim_household_social.caste_religion_group_8_category,\n    AVG(fact_household_consumption.monthly_consumption_per_capita) AS average_monthly_per_capita_consumption,\n    COUNT(DISTINCT dim_household_social.household_id) AS total_number_of_households\nFROM dim_household_social\nLEFT JOIN fact_household_consumption ON dim_household_social.household_id = fact_household_consumption.household_id\nWHERE dim_household_social.household_assets_index > (\n    SELECT AVG(household_assets_index)\n    FROM dim_household_social\n    WHERE social_network_contact_2_type = 1\n)\nAND dim_household_social.social_network_contact_2_type = 1\nGROUP BY dim_household_social.caste_religion_group_8_category\nORDER BY dim_household_social.caste_religion_group_8_category",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "6abea354",
+      "question": "识别资产指数为27且具有特定类型社会网络联系的家庭，并按其每月消费总支出进行排序。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '27' AND T2.SOCIAL_NETWORK_CONTACT_2_TYPE = '1' GROUP BY T1.HOUSEHOLD_ID HAVING COUNT(T2.SOCIAL_ID) >= 1 ORDER BY SUM(T3.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) DESC;",
+      "predicted_sql": "SELECT\n    T1.caste_religion_group_8_category,\n    T1.social_network_contact_2_type,\n    AVG(T2.monthly_total_consumption_expenditure_rs) AS average_spending,\n    COUNT(DISTINCT T1.household_id) AS household_count\nFROM dim_household_social AS T1\nJOIN fact_household_consumption AS T2 ON T1.household_id = T2.household_id\nWHERE T1.household_assets_index = 27\n    AND T1.social_network_contact_2_type IS NOT NULL\nGROUP BY\n    T1.caste_religion_group_8_category,\n    T1.social_network_contact_2_type\nORDER BY average_spending DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "705af9c7",
+      "question": "按资产指数排序，列出各户的家庭编号及其对应的种姓或宗教类别。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT HOUSEHOLD_ID, CASTE_RELIGION_GROUP_8_CATEGORY FROM DIM_HOUSEHOLD_SOCIAL ORDER BY HOUSEHOLD_ASSETS_INDEX;",
+      "predicted_sql": "SELECT household_id, caste_religion_group_8_category\nFROM dim_household_social\nWHERE household_assets_index = 27 AND social_network_contact_2_type = ?\nORDER BY household_id",
+      "error_info": "syntax error at or near \"ORDER\"\nLINE 4: ORDER BY household_id\n        ^\n"
+    },
+    {
+      "instance_id": "51085f79",
+      "question": "识别资产指数得分最高的前10个基督教家庭。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC LIMIT 10",
+      "predicted_sql": "SELECT DISTINCT h.household_id, hs.household_assets_index\nFROM dim_household_social hs\nJOIN dim_household h ON hs.household_id = h.household_id\nWHERE hs.caste_religion_group_8_category = '基督教'\n  AND hs.social_network_contact_2_type = 1\n  AND hs.household_assets_index > 10\nORDER BY hs.household_assets_index DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "47e7c1a0",
+      "question": "找出平均每月支出最高的前10个穆斯林家庭，且其支出高于全国总体平均水平。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, AVG(T2.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) FROM DIM_HOUSEHOLD AS T1 INNER JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN DIM_HOUSEHOLD_SOCIAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T3.CASTE_RELIGION_GROUP_8_CATEGORY = 'Muslim' GROUP BY T1.HOUSEHOLD_ID HAVING AVG(T2.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) > (SELECT AVG(MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) FROM FACT_HOUSEHOLD_CONSUMPTION) ORDER BY AVG(T2.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) DESC LIMIT 10",
+      "predicted_sql": "SELECT\n    f.household_id,\n    AVG(f.monthly_total_consumption_expenditure_rs) as avg_monthly_expenditure\nFROM fact_household_consumption f\nJOIN dim_household_social s ON f.household_id = s.household_id\nWHERE s.caste_religion_group_8_category = 'Muslim'\n    AND s.household_assets_index = 27\n    AND s.social_network_contact_2_type IN (0, 1, -1)\n    AND f.monthly_total_consumption_expenditure_rs > (\n        SELECT AVG(monthly_total_consumption_expenditure_rs)\n        FROM fact_household_consumption\n    )\nGROUP BY f.household_id\nORDER BY avg_monthly_expenditure DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "b88f6a77",
+      "question": "提供所有已举行过 Gauna 仪式的家庭的种姓或宗教群体、家庭 asset index 以及社会网络联系人类型，并按其 asset index 排序。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE FROM DIM_HOUSEHOLD_MARITAL AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.DATE_OF_GAUNA IS NOT NULL GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE ORDER BY T2.HOUSEHOLD_ASSETS_INDEX",
+      "predicted_sql": "SELECT DISTINCT dim_household_social.caste_religion_group_8_category,\n       dim_household_social.household_assets_index,\n       dim_household_social.social_network_contact_2_type\nFROM dim_household_social\nJOIN dim_household_marital ON dim_household_social.household_id = dim_household_marital.household_id\nWHERE dim_household_marital.date_of_gauna IS NOT NULL\nORDER BY dim_household_social.household_assets_index",
+      "error_info": null
+    },
+    {
+      "instance_id": "8492d41f",
+      "question": "列出属于 OBC 类别且有主要社会网络联系人的家庭 ID，并按数字顺序排序。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' AND T2.SOCIAL_NETWORK_CONTACT_2_TYPE = '1' ORDER BY T1.HOUSEHOLD_ID ASC",
+      "predicted_sql": "SELECT household_id\nFROM dim_household_social\nWHERE caste_religion_group_8_category = 'OBC'\n  AND social_network_contact_2_type IS NOT NULL\nORDER BY household_id ASC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "099f1ade",
+      "question": "找出所有被标识为 Muslim 或记录了 Gauna 仪式日期的家庭。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_HOUSEHOLD_MARITAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.CASTE_RELIGION_GROUP_8_CATEGORY = 'Muslim' OR T2.DATE_OF_GAUNA IS NOT NULL",
+      "predicted_sql": "SELECT DISTINCT ds.household_id, ds.caste_religion_group_8_category\nFROM dim_household_social ds\nLEFT JOIN dim_household_marital dm ON ds.household_id = dm.household_id\nWHERE ds.caste_religion_group_8_category = 'Muslim'\n   OR dm.date_of_gauna IS NOT NULL\nORDER BY ds.household_assets_index DESC",
+      "error_info": "for SELECT DISTINCT, ORDER BY expressions must appear in select list\nLINE 6: ORDER BY ds.household_assets_index DESC\n                 ^\n"
+    },
+    {
+      "instance_id": "76dd0073",
+      "question": "找出所有被标识为Christian或记录了Gauna日期的家庭，并按其家庭ID排序。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 LEFT JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN DIM_HOUSEHOLD_MARITAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' OR T3.DATE_OF_GAUNA IS NOT NULL GROUP BY T1.HOUSEHOLD_ID ORDER BY T1.HOUSEHOLD_ID ASC",
+      "predicted_sql": "SELECT DISTINCT T1.household_id\nFROM dim_household AS T1\nINNER JOIN dim_household_social AS T2 ON T1.household_id = T2.household_id\nINNER JOIN dim_household_marital AS T3 ON T1.household_id = T3.household_id\nWHERE T2.caste_religion_group_8_category = 'Christian' OR T3.date_of_gauna IS NOT NULL\nORDER BY T1.household_id",
+      "error_info": null
+    },
+    {
+      "instance_id": "d520a0c9",
+      "question": "找出Tamil Nadu中能够获得饮用水但缺乏health facilities的rural村庄的ID，并按其geography ID排序。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.GEOGRAPHY_ID FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.STATE = 'Tamil Nadu' AND T1.CENSUS_2001_URBAN_RURAL = 'Rural' AND T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '0' AND T2.VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR = '1' ORDER BY T1.GEOGRAPHY_ID",
+      "predicted_sql": "select dim_geography_hierarchy.geography_id\nfrom dim_geography_hierarchy\njoin dim_village_infrastructure on dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nwhere dim_geography_hierarchy.state = 'Tamil Nadu'\n  and dim_geography_hierarchy.census_2001_urban_rural = 'rural'\n  and dim_village_infrastructure.village_drinking_water_available_indicator = 'Yes'\n  and dim_village_infrastructure.village_health_facility_available_indicator = 'No'\norder by dim_geography_hierarchy.geography_id",
+      "error_info": "invalid input syntax for type double precision: \"Yes\"\nLINE 6: ...structure.village_drinking_water_available_indicator = 'Yes'\n                                                                  ^\n"
+    },
+    {
+      "instance_id": "ca663f58",
+      "question": "按州和村庄医疗服务可及性进行分类，显示人均月均消费和非食品总支出。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT AVG(T1.MONTHLY_CONSUMPTION_PER_CAPITA), SUM(T1.MONTHLY_NON_FOOD_EXPENDITURE_RS), T2.STATE, T3.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR FROM FACT_HOUSEHOLD_CONSUMPTION T1 JOIN DIM_GEOGRAPHY_HIERARCHY T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_VILLAGE_INFRASTRUCTURE T3 ON T2.GEOGRAPHY_ID = T3.GEOGRAPHY_ID GROUP BY T2.STATE, T3.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR",
+      "predicted_sql": "SELECT\n    T1.state,\n    T2.village_health_facility_available_indicator,\n    AVG(T3.monthly_consumption_per_capita) AS avg_monthly_consumption_per_capita,\n    SUM(T3.monthly_non_food_expenditure_rs) AS total_monthly_non_food_expenditure\nFROM dim_household_social AS T4\nJOIN fact_household_consumption AS T3 ON T4.household_id = T3.household_id\nJOIN dim_geography_hierarchy AS T1 ON T3.geography_id = T1.geography_id\nJOIN dim_village_infrastructure AS T2 ON T1.geography_id = T2.geography_id\nWHERE T4.caste_religion_group_8_category = 'Muslim'\n    AND T3.monthly_total_consumption_expenditure_rs > (\n        SELECT AVG(monthly_total_consumption_expenditure_rs)\n        FROM fact_household_consumption\n    )\nGROUP BY T1.state, T2.village_health_facility_available_indicator\nORDER BY T3.monthly_total_consumption_expenditure_rs DESC\nLIMIT 10",
+      "error_info": "column \"t3.monthly_total_consumption_expenditure_rs\" must appear in the GROUP BY clause or be used in an aggregate function\nLINE 16: ORDER BY T3.monthly_total_consumption_expenditure_rs DESC\n                  ^\n"
+    },
+    {
+      "instance_id": "0d11cbfc",
+      "question": "按州和卫生设施可用性细分平均每月人均消费和非食品总支出，仅关注平均消费超过329的地区，并按总支出对结果进行排序。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.STATE, T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR, AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA), SUM(T3.MONTHLY_NON_FOOD_EXPENDITURE_RS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 INNER JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID GROUP BY T1.STATE, T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR HAVING AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA) > 329 ORDER BY SUM(T3.MONTHLY_NON_FOOD_EXPENDITURE_RS) DESC",
+      "predicted_sql": "SELECT dim_geography_hierarchy.state,\n       dim_village_infrastructure.village_health_facility_available_indicator,\n       AVG(fact_household_consumption.monthly_consumption_per_capita) AS avg_monthly_consumption_per_capita,\n       AVG(fact_household_consumption.monthly_non_food_expenditure_rs) AS avg_monthly_non_food_expenditure_rs\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nGROUP BY dim_geography_hierarchy.state,\n         dim_village_infrastructure.village_health_facility_available_indicator\nHAVING AVG(fact_household_consumption.monthly_consumption_per_capita) > 329\nORDER BY AVG(fact_household_consumption.monthly_total_consumption_expenditure_rs) DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "c4a941e4",
+      "question": "识别同时拥有医疗设施和学校的农村社区或村庄的代码。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' AND T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' AND T2.VILLAGE_SCHOOL_AVAILABLE_INDICATOR = '1'",
+      "predicted_sql": "SELECT T1.psu_village_or_neighborhood_code\nFROM dim_geography_hierarchy AS T1\nJOIN dim_village_infrastructure AS T2 ON T1.geography_id = T2.geography_id\nWHERE T1.census_2001_urban_rural = 'Rural'\n  AND T2.village_health_facility_available_indicator = 1\n  AND T2.village_school_available_indicator = 1",
+      "error_info": null
+    },
+    {
+      "instance_id": "571ef167",
+      "question": "识别同时拥有学校和医疗设施的农村村庄或社区的代码。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' AND T2.VILLAGE_SCHOOL_AVAILABLE_INDICATOR = '1' AND T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' GROUP BY T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+      "predicted_sql": "SELECT dim_geography_hierarchy.geography_id\nFROM dim_geography_hierarchy\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = '农村'\n  AND dim_village_infrastructure.village_school_available_indicator = 1\n  AND dim_village_infrastructure.village_health_facility_available_indicator = 1",
+      "error_info": null
+    },
+    {
+      "instance_id": "b0e06805",
+      "question": "按农村家庭人均月均消费对各邦进行排名，仅包括有消费数据记录的邦。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.STATE, AVG(T1.MONTHLY_CONSUMPTION_PER_CAPITA) FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 INNER JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN DIM_HOUSEHOLD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T2.STATE HAVING COUNT(T1.CONSUMPTION_ID) > 0 ORDER BY AVG(T1.MONTHLY_CONSUMPTION_PER_CAPITA) DESC",
+      "predicted_sql": "SELECT\n    dgh.state,\n    AVG(fhc.monthly_consumption_per_capita) AS avg_monthly_consumption_per_capita\nFROM",
+      "error_info": "syntax error at end of input\nLINE 4: FROM\n            ^\n"
+    },
+    {
+      "instance_id": "f4ecfd72",
+      "question": "找出Uttar Pradesh中average monthly per capita consumption最高的前10个rural社区，并注明每个社区是否有village health facility。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE, T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR, AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T1.STATE = 'Uttar Pradesh' AND T1.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE, T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR ORDER BY AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA) DESC LIMIT 10",
+      "predicted_sql": "SELECT dim_geography_hierarchy.geography_id,\n       AVG(fact_household_consumption.monthly_consumption_per_capita) AS avg_consumption,\n       MAX(dim_village_infrastructure.village_health_facility_available_indicator) AS village_health_facility_available_indicator\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy\n  ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_village_infrastructure\n  ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nJOIN dim_household_social\n  ON fact_household_consumption.household_id = dim_household_social.household_id\nWHERE dim_geography_hierarchy.state = 'Uttar Pradesh'\n  AND dim_geography_hierarchy.census_2001_urban_rural = 'rural'\n  AND dim_household_social.caste_religion_group_8_category = 'OBC'\n  AND dim_household_social.social_network_contact_2_type = 1\nGROUP BY dim_geography_hierarchy.geography_id\nORDER BY avg_consumption DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "cabd0d93",
+      "question": "列出Uttar Pradesh中average monthly per capita consumption最高的前10个rural社区，并注明每个社区是否有village health facility。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE, AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA), T3.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_VILLAGE_INFRASTRUCTURE AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T1.STATE = 'Uttar Pradesh' AND T1.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE, T3.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR ORDER BY AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA) DESC LIMIT 10",
+      "predicted_sql": "SELECT dim_geography_hierarchy.psu_village_or_neighborhood_code,\n       AVG(fact_household_consumption.monthly_consumption_per_capita) AS avg_consumption,\n       dim_village_infrastructure.village_health_facility_available_indicator\nFROM dim_geography_hierarchy\nJOIN fact_household_consumption ON dim_geography_hierarchy.geography_id = fact_household_consumption.geography_id\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nJOIN dim_household ON fact_household_consumption.household_id = dim_household.household_id\nJOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nWHERE dim_geography_hierarchy.state = 'Uttar Pradesh'\n  AND dim_geography_hierarchy.census_2001_urban_rural = 'rural'\n  AND dim_household_social.caste_religion_group_8_category = 'OBC'\n  AND dim_household_social.social_network_contact_2_type = 1\nGROUP BY dim_geography_hierarchy.psu_village_or_neighborhood_code,\n         dim_village_infrastructure.village_health_facility_available_indicator\nORDER BY avg_consumption DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "69255140",
+      "question": "计算每个州和地区的人均月均消费，且仅关注拥有医疗设施的村庄。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.STATE, T1.DISTRICT_CODE, AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_VILLAGE_INFRASTRUCTURE AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T3.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' GROUP BY T1.STATE, T1.DISTRICT_CODE",
+      "predicted_sql": "SELECT dim_geography_hierarchy.state, dim_geography_hierarchy.district_code, AVG(fact_household_consumption.monthly_consumption_per_capita)\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nJOIN dim_household ON fact_household_consumption.household_id = dim_household.household_id\nJOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nJOIN dim_household_marital ON dim_household.household_id = dim_household_marital.household_id\nWHERE dim_village_infrastructure.village_health_facility_available_indicator = 1\nAND (\n    dim_household_social.caste_religion_group_8_category = 'Muslim'\n    OR dim_household_marital.date_of_gauna IS NOT NULL\n)\nGROUP BY dim_geography_hierarchy.state, dim_geography_hierarchy.district_code",
+      "error_info": null
+    },
+    {
+      "instance_id": "6c68ace6",
+      "question": "计算各区和各州的人均月均消费，且仅关注有村级卫生设施的地区。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.STATE, T1.DISTRICT_CODE, AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_VILLAGE_INFRASTRUCTURE AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T3.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' GROUP BY T1.STATE, T1.DISTRICT_CODE",
+      "predicted_sql": "SELECT dim_geography_hierarchy.district_code,\n       dim_geography_hierarchy.state,\n       AVG(fact_household_consumption.monthly_consumption_per_capita) AS avg_monthly_consumption_per_capita\nFROM dim_geography_hierarchy\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nJOIN fact_household_consumption ON dim_geography_hierarchy.geography_id = fact_household_consumption.geography_id\nWHERE dim_village_infrastructure.village_health_facility_available_indicator = 1\nGROUP BY dim_geography_hierarchy.district_code, dim_geography_hierarchy.state\nORDER BY dim_geography_hierarchy.district_code, dim_geography_hierarchy.state",
+      "error_info": null
+    },
+    {
+      "instance_id": "ffa1a484",
+      "question": "找出包含农村村庄且这些村庄有医疗设施但没有饮用水的地区代码。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.DISTRICT_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T1.DISTRICT_CODE HAVING COUNT(CASE WHEN T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' THEN 1 END) > 0 AND COUNT(CASE WHEN T2.VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR = '1' THEN 1 END) = 0",
+      "predicted_sql": "SELECT DISTINCT dim_geography_hierarchy.district_code\nFROM dim_geography_hierarchy\nJOIN dim_village_infrastructure\nON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'Rural'\n  AND dim_village_infrastructure.village_health_facility_available_indicator = 'Yes'\n  AND dim_village_infrastructure.village_drinking_water_available_indicator = 'No'",
+      "error_info": "invalid input syntax for type double precision: \"Yes\"\nLINE 6: ...tructure.village_health_facility_available_indicator = 'Yes'\n                                                                  ^\n"
+    },
+    {
+      "instance_id": "1c5b8848",
+      "question": "找出包含能够获得卫生设施但没有可用饮用水的农村村庄的地区代码，并按地区代码排序。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.DISTRICT_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T1.DISTRICT_CODE HAVING SUM(CASE WHEN T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN T2.VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR = '1' THEN 1 ELSE 0 END) = 0 ORDER BY T1.DISTRICT_CODE ASC",
+      "predicted_sql": "SELECT T1.district_code\nFROM dim_geography_hierarchy AS T1\nJOIN dim_village_infrastructure AS T2 ON T1.geography_id = T2.geography_id\nWHERE T1.census_2001_urban_rural = 'Rural'\n  AND T2.village_health_facility_available_indicator = '1'\n  AND T2.village_drinking_water_available_indicator = '0'\nORDER BY T1.district_code",
+      "error_info": null
+    },
+    {
+      "instance_id": "3b1c9aff",
+      "question": "识别同时具备学校和医疗设施可达性的农村村庄的地理编号。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.GEOGRAPHY_ID FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' AND T2.VILLAGE_SCHOOL_AVAILABLE_INDICATOR = '1' AND T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1'",
+      "predicted_sql": "SELECT T1.geography_id\nFROM dim_geography_hierarchy AS T1\nJOIN dim_village_infrastructure AS T2 ON T1.geography_id = T2.geography_id\nWHERE T1.state = 'Tamil Nadu'\n  AND T1.census_2001_urban_rural = 'Rural'\n  AND T2.village_school_available_indicator = '1'\n  AND T2.village_health_facility_available_indicator = '1'\nORDER BY T1.geography_id",
+      "error_info": null
+    },
+    {
+      "instance_id": "6701182a",
+      "question": "找出所有同时具备school和health facilities的rural村庄，并按其geography ID排序。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.GEOGRAPHY_ID FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' AND T2.VILLAGE_SCHOOL_AVAILABLE_INDICATOR = '1' AND T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' GROUP BY T1.GEOGRAPHY_ID ORDER BY T1.GEOGRAPHY_ID ASC",
+      "predicted_sql": "SELECT T1.geography_id\nFROM dim_geography_hierarchy AS T1\nJOIN dim_village_infrastructure AS T2 ON T1.geography_id = T2.geography_id\nWHERE T1.state = 'Tamil Nadu'\n  AND T1.census_2001_urban_rural = 'Rural'\n  AND T2.village_school_available_indicator = '1'\n  AND T2.village_health_facility_available_indicator = '1'\nORDER BY T1.geography_id",
+      "error_info": null
+    },
+    {
+      "instance_id": "93782300",
+      "question": "找出同时拥有学校和医疗设施，并且至少记录过一条家庭消费条目的农村村庄ID，按数字顺序排序。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.GEOGRAPHY_ID FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' AND T2.VILLAGE_SCHOOL_AVAILABLE_INDICATOR = '1' AND T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' GROUP BY T1.GEOGRAPHY_ID HAVING COUNT(T3.CONSUMPTION_ID) >= 1 ORDER BY T1.GEOGRAPHY_ID ASC",
+      "predicted_sql": "SELECT dim_geography_hierarchy.geography_id\nFROM dim_geography_hierarchy\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nWHERE dim_village_infrastructure.village_school_available_indicator = true\n  AND dim_village_infrastructure.village_health_facility_available_indicator = true\n  AND dim_geography_hierarchy.census_2001_urban_rural = '农村'\n  AND EXISTS (\n    SELECT 1\n    FROM fact_household_consumption\n    WHERE fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\n  )\nORDER BY dim_geography_hierarchy.geography_id",
+      "error_info": "operator does not exist: double precision = boolean\nLINE 4: ...age_infrastructure.village_school_available_indicator = true\n                                                                 ^\nHINT:  No operator matches the given name and argument types. You might need to add explicit type casts.\n"
+    },
+    {
+      "instance_id": "7259cbe2",
+      "question": "确定那些要么能够获得 village health facilities 服务、要么报告 monthly per capita consumption 超过 5,000 的 geographic areas。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.GEOGRAPHY_ID FROM DIM_VILLAGE_INFRASTRUCTURE AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' OR T2.MONTHLY_CONSUMPTION_PER_CAPITA > 5000",
+      "predicted_sql": "SELECT\n    dim_geography_hierarchy.state,\n    CASE\n        WHEN dim_village_infrastructure.village_health_facility_available_indicator = '1' THEN 'available'\n        WHEN dim_village_infrastructure.village_health_facility_available_indicator = '0' THEN 'not available'\n    END AS health_facility_available,\n    AVG(fact_household_consumption.monthly_consumption_per_capita) AS avg_per_capita_consumption,\n    SUM(fact_household_consumption.monthly_non_food_expenditure_rs) AS total_non_food_spending\nFROM dim_geography_hierarchy\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nJOIN fact_household_consumption ON dim_geography_hierarchy.geography_id = fact_household_consumption.geography_id\nWHERE dim_village_infrastructure.village_health_facility_available_indicator IN ('0', '1')\n    AND (dim_village_infrastructure.village_health_facility_available_indicator = '1'\n         OR fact_household_consumption.monthly_consumption_per_capita > 5000)\nGROUP BY\n    dim_geography_hierarchy.state,\n    CASE\n        WHEN dim_village_infrastructure.village_health_facility_available_indicator = '1' THEN 'available'\n        WHEN dim_village_infrastructure.village_health_facility_available_indicator = '0' THEN 'not available'\n    END\nORDER BY dim_geography_hierarchy.state, health_facility_available",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "9d718365",
+      "question": "找出满足以下任一条件的地区的地理编号：拥有村级卫生设施，或人均月消费超过 3,667，并确保只包含至少有一条消费记录的地点。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.GEOGRAPHY_ID FROM DIM_GEOGRAPHY_HIERARCHY AS T1 LEFT JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID LEFT JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' OR T3.MONTHLY_CONSUMPTION_PER_CAPITA > 3667 GROUP BY T1.GEOGRAPHY_ID HAVING COUNT(T3.CONSUMPTION_ID) >= 1 ORDER BY T1.GEOGRAPHY_ID ASC",
+      "predicted_sql": "SELECT DISTINCT T1.geography_id\nFROM dim_geography_hierarchy AS T1\nJOIN fact_household_consumption AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_village_infrastructure AS T3 ON T1.geography_id = T3.geography_id\nGROUP BY T1.geography_id, T1.state, T3.village_health_facility_available_indicator\nHAVING AVG(T2.monthly_consumption_per_capita) > 329\n   AND COUNT(T2.consumption_id) >= 1\nORDER BY SUM(T2.monthly_non_food_expenditure_rs) DESC",
+      "error_info": "for SELECT DISTINCT, ORDER BY expressions must appear in select list\nLINE 8: ORDER BY SUM(T2.monthly_non_food_expenditure_rs) DESC\n                 ^\n"
+    },
+    {
+      "instance_id": "6493ceb6",
+      "question": "提供被归类为 OBC 且记录了资产指数的家庭 ID 列表，并按其 ID 排序。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' AND T2.HOUSEHOLD_ASSETS_INDEX IS NOT NULL ORDER BY T1.HOUSEHOLD_ID",
+      "predicted_sql": "SELECT T1.household_id FROM dim_household AS T1 JOIN dim_household_social AS T2 ON T1.household_id = T2.household_id WHERE T2.caste_religion_group_8_category = 'OBC' AND T2.household_assets_index IS NOT NULL ORDER BY T1.household_id",
+      "error_info": null
+    },
+    {
+      "instance_id": "bda085ac",
+      "question": "提供一份有记录资产指数的穆斯林家庭的家庭ID列表，并按其ID排序。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Muslim' AND T2.HOUSEHOLD_ASSETS_INDEX IS NOT NULL ORDER BY T1.HOUSEHOLD_ID",
+      "predicted_sql": "SELECT dim_household_social.household_id\nFROM dim_household_social\nWHERE dim_household_social.caste_religion_group_8_category = 'Muslim'\n  AND dim_household_social.household_assets_index IS NOT NULL\nORDER BY dim_household_social.household_id",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "83910589",
+      "question": "提供平均每月支出超过300卢比的基督教家庭的资产指数和平均每月支出，并按资产指数从高到低排序。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, AVG(T3.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' AND T2.HOUSEHOLD_ASSETS_INDEX IS NOT NULL GROUP BY T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX HAVING AVG(T3.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) > 300 ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+      "predicted_sql": "SELECT\n    dim_household_social.household_assets_index,\n    AVG(fact_household_consumption.monthly_total_consumption_expenditure_rs) AS avg_monthly_expenditure\nFROM dim_household_social\nJOIN dim_household ON dim_household_social.household_id = dim_household.household_id\nJOIN fact_household_consumption ON dim_household.household_id = fact_household_consumption.household_id\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nWHERE dim_household_social.caste_religion_group_8_category LIKE '%Christian%'\n    AND dim_geography_hierarchy.census_2001_urban_rural = 'Rural'\n    AND dim_village_infrastructure.village_health_facility_available_indicator = 1\n    AND dim_village_infrastructure.village_school_available_indicator = 1\nGROUP BY dim_household_social.household_assets_index\nHAVING AVG(fact_household_consumption.monthly_total_consumption_expenditure_rs) > 300\nORDER BY dim_household_social.household_assets_index DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "14917044",
+      "question": "对于每个种姓和宗教群体，显示平均家庭资产指数以及动物护理工作者的总人数，并按平均财富从高到低排序。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, AVG(CAST(T2.HOUSEHOLD_ASSETS_INDEX AS NUMERIC)), SUM(CAST(T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS AS NUMERIC)) FROM DIM_HOUSEHOLD T1 JOIN DIM_HOUSEHOLD_SOCIAL T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY ORDER BY AVG(CAST(T2.HOUSEHOLD_ASSETS_INDEX AS NUMERIC)) DESC",
+      "predicted_sql": "SELECT T1.caste_religion_group_8_category,\n       AVG(T1.household_assets_index) AS avg_assets_index,\n       SUM(T4.household_number_of_animal_care_workers) AS total_animal_care_workers,\n       AVG(T3.monthly_consumption_per_capita) AS avg_monthly_consumption\nFROM dim_household_social AS T1\nJOIN dim_household AS T4 ON T1.household_id = T4.household_id\nJOIN fact_household_consumption AS T3 ON T1.household_id = T3.household_id\nJOIN dim_geography_hierarchy AS T2 ON T3.geography_id = T2.geography_id\nWHERE T2.census_2001_urban_rural = 'Rural'\nGROUP BY T1.caste_religion_group_8_category\nORDER BY AVG(T1.household_assets_index) DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "4bdaef0f",
+      "question": "按种姓/宗教类别和社会网络联系人类型分组，针对所有有已记录成员的家庭，提供平均社会身份编号和动物护理工作者总数的明细，并按平均社会身份编号从高到低排序。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.SOCIAL_NETWORK_CONTACT_2_TYPE, AVG(T2.SOCIAL_ID), SUM(CAST(T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS AS NUMERIC)) FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.SOCIAL_NETWORK_CONTACT_2_TYPE HAVING COUNT(T1.HOUSEHOLD_PERSON_CASE_ID) > 0 ORDER BY AVG(T2.SOCIAL_ID) DESC",
+      "predicted_sql": "SELECT dim_household_social.caste_religion_group_8_category,\n       dim_household_social.social_network_contact_2_type,\n       AVG(dim_household_social.social_id) as average_social_id,\n       SUM(dim_household.household_number_of_animal_care_workers) as total_animal_care_workers\nFROM dim_household_social\nJOIN dim_household ON dim_household_social.household_id = dim_household.household_id\nGROUP BY dim_household_social.caste_religion_group_8_category,\n         dim_household_social.social_network_contact_2_type\nORDER BY AVG(dim_household_social.social_id) DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "aa7dc679",
+      "question": "识别所有属于 OBC 类别且资产指数大于 10 的家庭。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' AND T2.HOUSEHOLD_ASSETS_INDEX > '10'",
+      "predicted_sql": "SELECT\n    dim_geography_hierarchy.state,\n    AVG(fact_household_consumption.monthly_consumption_per_capita) AS average_consumption\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'Rural'\nGROUP BY dim_geography_hierarchy.state\nORDER BY average_consumption DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "7f1d4779",
+      "question": "列出各户的家庭编号及其对应的种姓或宗教群体类别，并按其资产指数从高到低排序。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT HOUSEHOLD_ID, CASTE_RELIGION_GROUP_8_CATEGORY FROM DIM_HOUSEHOLD_SOCIAL ORDER BY HOUSEHOLD_ASSETS_INDEX DESC;",
+      "predicted_sql": "SELECT\n    T1.psu_village_or_neighborhood_code,\n    AVG(T2.monthly_consumption_per_capita) AS avg_consumption,\n    CASE\n        WHEN T3.village_health_facility_available_indicator > 0 THEN 'Yes'\n        ELSE 'No'\n    END AS health_facility_access\nFROM dim_geography_hierarchy AS T1\nJOIN fact_household_consumption AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_village_infrastructure AS T3 ON T1.geography_id = T3.geography_id\nWHERE T1.state = 'Uttar Pradesh'\n    AND T1.census_2001_urban_rural = 'Rural'\nGROUP BY T1.psu_village_or_neighborhood_code, T3.village_health_facility_available_indicator\nORDER BY avg_consumption DESC\nLIMIT 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "1ccaf231",
+      "question": "识别资产指数最高的前10个基督教家庭。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL WHERE CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' ORDER BY HOUSEHOLD_ASSETS_INDEX DESC LIMIT 10;",
+      "predicted_sql": "SELECT\n    dgh.psu_village_or_neighborhood_code,\n    MAX(dvi.village_health_facility_available_indicator) AS village_health_facility_available_indicator,\n    AVG(fhc.monthly_consumption_per_capita) AS average_consumption\nFROM dim_household_social AS dhs\nJOIN dim_household AS dh ON dhs.household_id = dh.household_id\nJOIN fact_household_consumption AS fhc ON dh.household_id = fhc.household_id\nJOIN dim_geography_hierarchy AS dgh ON fhc.geography_id = dgh.geography_id\nJOIN dim_village_infrastructure AS dvi ON dgh.geography_id = dvi.geography_id\nWHERE dhs.caste_religion_group_8_category = 'Christian'\n    AND dgh.state = 'Uttar Pradesh'\n    AND dgh.census_2001_urban_rural = 'Rural'\nGROUP BY dgh.psu_village_or_neighborhood_code, dgh.geography_id\nORDER BY average_consumption DESC\nLIMIT 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "98f0a045",
+      "question": "找出资产指数得分最高的十个基督教家庭的案例编号。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_PERSON_CASE_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC LIMIT 10",
+      "predicted_sql": "SELECT dim_household.household_person_case_id\nFROM dim_household_social\nJOIN dim_household ON dim_household_social.household_id = dim_household.household_id\nJOIN fact_household_consumption ON dim_household.household_id = fact_household_consumption.household_id\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nWHERE dim_household_social.caste_religion_group_8_category = 'Christian'\n  AND dim_geography_hierarchy.state = 'Uttar Pradesh'\n  AND dim_geography_hierarchy.census_2001_urban_rural = 'Rural'\nORDER BY dim_household_social.household_assets_index DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "0c9fb70c",
+      "question": "识别资产指数最高的前10个基督教家庭，并显示其月均总消费支出。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, AVG(T2.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) FROM DIM_HOUSEHOLD AS T1 INNER JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN DIM_HOUSEHOLD_SOCIAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T3.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' GROUP BY T1.HOUSEHOLD_ID HAVING COUNT(T3.SOCIAL_ID) >= 1 ORDER BY MAX(T3.HOUSEHOLD_ASSETS_INDEX) DESC LIMIT 10",
+      "predicted_sql": "SELECT\n    dim_household_social.household_id,\n    AVG(fact_household_consumption.monthly_total_consumption_expenditure_rs) AS avg_monthly_total_consumption_expenditure_rs\nFROM dim_household_social\nJOIN fact_household_consumption ON dim_household_social.household_id = fact_household_consumption.household_id\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nWHERE dim_household_social.caste_religion_group_8_category = 'Christian'\n    AND dim_village_infrastructure.village_health_facility_available_indicator = 1\n    AND dim_geography_hierarchy.census_2001_urban_rural = 'Rural'\nGROUP BY dim_household_social.household_id, dim_household_social.household_assets_index\nORDER BY dim_household_social.household_assets_index DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "f21079ed",
+      "question": "提供所有基督教家庭的动物护理工人数和 Gauna 日期。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS, T3.DATE_OF_GAUNA FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_HOUSEHOLD_MARITAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian';",
+      "predicted_sql": "SELECT DISTINCT dim_household.household_number_of_animal_care_workers, dim_household_marital.date_of_gauna\nFROM dim_household\nJOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nJOIN dim_household_marital ON dim_household.household_id = dim_household_marital.household_id\nWHERE dim_household_social.caste_religion_group_8_category = 'Christian'\nORDER BY dim_household.household_number_of_animal_care_workers, dim_household_marital.date_of_gauna",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "aa876f79",
+      "question": "提供Christian家庭的动物护理工作人员数量和Gauna日期。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS, T3.DATE_OF_GAUNA FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_HOUSEHOLD_MARITAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' GROUP BY T3.DATE_OF_GAUNA, T2.CASTE_RELIGION_GROUP_8_CATEGORY, T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS ORDER BY T2.CASTE_RELIGION_GROUP_8_CATEGORY DESC",
+      "predicted_sql": "SELECT dim_geography_hierarchy.state, dim_geography_hierarchy.district_code, AVG(fact_household_consumption.monthly_consumption_per_capita) AS avg_monthly_consumption_per_capita\nFROM dim_village_infrastructure\nJOIN dim_geography_hierarchy ON dim_village_infrastructure.geography_id = dim_geography_hierarchy.geography_id\nJOIN fact_household_consumption ON dim_geography_hierarchy.geography_id = fact_household_consumption.geography_id\nWHERE dim_village_infrastructure.village_health_facility_available_indicator = 1\nGROUP BY dim_geography_hierarchy.state, dim_geography_hierarchy.district_code\nHAVING COUNT(DISTINCT fact_household_consumption.household_id) > 1\nORDER BY avg_monthly_consumption_per_capita DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "1cbbf0d2",
+      "question": "找出家庭资产指数为27且记录了Gauna仪式日期的家庭的家庭ID。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_HOUSEHOLD_MARITAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.HOUSEHOLD_ASSETS_INDEX = '27' AND T2.DATE_OF_GAUNA IS NOT NULL",
+      "predicted_sql": "SELECT dim_household.household_id\nFROM dim_household\nJOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nJOIN dim_household_marital ON dim_household.household_id = dim_household_marital.household_id\nWHERE dim_household_social.household_assets_index = 27\n  AND dim_household_marital.date_of_gauna IS NOT NULL",
+      "error_info": null
+    },
+    {
+      "instance_id": "49f1774f",
+      "question": "根据asset index，找出至少有一名成员举行过Gauna仪式的最富有家庭的家庭ID，并按其ID排序。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_HOUSEHOLD_MARITAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = (SELECT MAX(HOUSEHOLD_ASSETS_INDEX) FROM DIM_HOUSEHOLD_SOCIAL) GROUP BY T1.HOUSEHOLD_ID HAVING COUNT(T3.DATE_OF_GAUNA) >= 1 ORDER BY T1.HOUSEHOLD_ID ASC",
+      "predicted_sql": "SELECT DISTINCT dm.household_id\nFROM dim_household_marital dm\nJOIN dim_household_social ds ON dm.household_id = ds.household_id\nWHERE dm.date_of_gauna IS NOT NULL\nORDER BY ds.household_assets_index DESC, dm.household_id",
+      "error_info": "for SELECT DISTINCT, ORDER BY expressions must appear in select list\nLINE 5: ORDER BY ds.household_assets_index DESC, dm.household_id\n                 ^\n"
+    },
+    {
+      "instance_id": "a29f6fad",
+      "question": "找出所有资产指数为27或有Gauna仪式记录日期的家庭。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT DISTINCT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_HOUSEHOLD_MARITAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.HOUSEHOLD_ASSETS_INDEX = '27' OR T2.DATE_OF_GAUNA IS NOT NULL",
+      "predicted_sql": "SELECT DISTINCT h.household_id\nFROM dim_household h\nLEFT JOIN dim_household_social s ON h.household_id = s.household_id\nLEFT JOIN dim_household_marital m ON h.household_id = m.household_id\nWHERE s.household_assets_index = 27 OR m.date_of_gauna IS NOT NULL",
+      "error_info": null
+    },
+    {
+      "instance_id": "a6ae852e",
+      "question": "请按各个种姓和宗教群体类别，分别提供家庭资产记录总数和工人数的明细。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.CASTE_RELIGION_GROUP_8_CATEGORY, COUNT(T1.HOUSEHOLD_ASSETS_INDEX), COUNT(T2.HOUSEHOLD_NUMBER_OF_WORKERS) FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_HOUSEHOLD AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID GROUP BY T1.CASTE_RELIGION_GROUP_8_CATEGORY",
+      "predicted_sql": "SELECT T1.caste_religion_group_8_category,\n       COUNT(*) AS total_household_asset_records,\n       SUM(T2.household_number_of_workers) AS total_workers\nFROM dim_household_social AS T1\nJOIN dim_household AS T2 ON T1.household_id = T2.household_id\nWHERE T1.household_id IN (\n    SELECT DISTINCT fact_household_consumption.household_id\n    FROM fact_household_consumption\n    WHERE fact_household_consumption.geography_id IN (\n        SELECT dim_geography_hierarchy.geography_id\n        FROM dim_geography_hierarchy\n        INNER JOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\n        WHERE dim_geography_hierarchy.census_2001_urban_rural = 'Rural'\n        AND dim_village_infrastructure.village_school_available_indicator > 0\n        AND dim_village_infrastructure.village_health_facility_available_indicator > 0\n    )\n)\nGROUP BY T1.caste_religion_group_8_category",
+      "error_info": null
+    },
+    {
+      "instance_id": "82810052",
+      "question": "识别属于 OBC 类别且处于最高资产指数等级的家庭的家庭编号。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL WHERE CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' AND HOUSEHOLD_ASSETS_INDEX = '10';",
+      "predicted_sql": "SELECT DISTINCT h.household_id\nFROM dim_household_social s\nJOIN dim_household h ON s.household_id = h.household_id\nWHERE s.caste_religion_group_8_category = 'OBC'\n  AND s.household_assets_index = (\n    SELECT MAX(household_assets_index)\n    FROM dim_household_social\n    WHERE caste_religion_group_8_category = 'OBC'\n  )\nORDER BY h.household_id",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "b46106b7",
+      "question": "列出各户的家庭编号及其对应的种姓或宗教群体类别，并按资产指数从高到低排序。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT HOUSEHOLD_ID, CASTE_RELIGION_GROUP_8_CATEGORY FROM DIM_HOUSEHOLD_SOCIAL ORDER BY HOUSEHOLD_ASSETS_INDEX DESC;",
+      "predicted_sql": "SELECT DISTINCT\n    dim_geography_hierarchy.state,\n    dim_geography_hierarchy.district_code,\n    dim_geography_hierarchy.psu_village_or_neighborhood_code,\n    dim_geography_hierarchy.census_2001_urban_rural,\n    dim_household.household_id,\n    dim_household_social.caste_religion_group_8_category\nFROM dim_household\nJOIN dim_household_social ON dim_household_social.household_id = dim_household.household_id\nJOIN fact_household_consumption ON fact_household_consumption.household_id = dim_household.household_id\nJOIN dim_geography_hierarchy ON dim_geography_hierarchy.geography_id = fact_household_consumption.geography_id\nJOIN dim_village_infrastructure ON dim_village_infrastructure.geography_id = dim_geography_hierarchy.geography_id\nWHERE (\n    dim_village_infrastructure.village_health_facility_available_indicator = 1\n    OR fact_household_consumption.monthly_consumption_per_capita > 5000\n)\nORDER BY dim_household_social.household_assets_index DESC",
+      "error_info": "for SELECT DISTINCT, ORDER BY expressions must appear in select list\nLINE 17: ORDER BY dim_household_social.household_assets_index DESC\n                  ^\n"
+    },
+    {
+      "instance_id": "8253a6c1",
+      "question": "列出各家庭的家庭编号及其对应的种姓或宗教群体类别，并按家庭资产指数从高到低排序。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.CASTE_RELIGION_GROUP_8_CATEGORY FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+      "predicted_sql": "SELECT DISTINCT dim_household.household_id, dim_household_social.caste_religion_group_8_category\nFROM dim_household\nJOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nJOIN fact_household_consumption ON dim_household.household_id = fact_household_consumption.household_id\nWHERE fact_household_consumption.geography_id IN (\n    SELECT geography_id FROM dim_village_infrastructure WHERE village_health_facility_available_indicator = 1\n    UNION\n    SELECT geography_id FROM fact_household_consumption WHERE monthly_consumption_per_capita > 3667\n)\nORDER BY dim_household_social.household_assets_index DESC",
+      "error_info": "for SELECT DISTINCT, ORDER BY expressions must appear in select list\nLINE 10: ORDER BY dim_household_social.household_assets_index DESC\n                  ^\n"
+    },
+    {
+      "instance_id": "536be16d",
+      "question": "列出资产指数大于 10 的穆斯林或 OBC 家庭中，资产指数最高到最低排序的前 10 个家庭 ID 及其资产指数。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY IN ('OBC', 'Muslim') GROUP BY T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX HAVING MAX(T2.HOUSEHOLD_ASSETS_INDEX) > '10' ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC LIMIT 10",
+      "predicted_sql": "SELECT DISTINCT ds.household_id, ds.household_assets_index\nFROM dim_household_social ds\nINNER JOIN fact_household_consumption fc ON ds.household_id = fc.household_id\nINNER JOIN dim_village_infrastructure vi ON fc.geography_id = vi.geography_id\nWHERE ds.household_assets_index > 10\n  AND ds.caste_religion_group_8_category IN ('Muslim', 'OBC')\n  AND (vi.village_health_facility_available_indicator = 1\n       OR fc.monthly_consumption_per_capita > 3667)\nORDER BY ds.household_assets_index DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "3012cd8e",
+      "question": "按其种姓/宗教类别和资产指数分类，提供家中有未在校就读儿童的家庭的平均社会身份编号。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.CASTE_RELIGION_GROUP_8_CATEGORY, T1.HOUSEHOLD_ASSETS_INDEX, AVG(T1.SOCIAL_ID) FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_EDUCATION_CHILD AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CHILD_SCHOOL_ENROLLMENT_STATUS = '-1' GROUP BY T1.CASTE_RELIGION_GROUP_8_CATEGORY, T1.HOUSEHOLD_ASSETS_INDEX ORDER BY T1.CASTE_RELIGION_GROUP_8_CATEGORY",
+      "predicted_sql": "SELECT AVG(DISTINCT T1.social_id),\n       T1.caste_religion_group_8_category,\n       T1.household_assets_index\nFROM dim_household_social AS T1\nJOIN dim_education_child AS T2 ON T1.household_id = T2.household_id\nWHERE T1.caste_religion_group_8_category = 'Muslim'\n  AND T1.household_assets_index IS NOT NULL\n  AND T2.child_school_enrollment_status != 'Enrolled'\nGROUP BY T1.caste_religion_group_8_category, T1.household_assets_index",
+      "error_info": "invalid input syntax for type bigint: \"Enrolled\"\nLINE 8:   AND T2.child_school_enrollment_status != 'Enrolled'\n                                                   ^\n"
+    },
+    {
+      "instance_id": "2e736d46",
+      "question": "对于当前未在校就读的儿童，按种姓/宗教群体和家庭资产指数分组显示平均教育ID，并按社会类别排序。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.HOUSEHOLD_ASSETS_INDEX, AVG(T1.CHILD_EDUCATION_ID) FROM DIM_EDUCATION_CHILD T1 JOIN DIM_HOUSEHOLD_SOCIAL T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.CHILD_SCHOOL_ENROLLMENT_STATUS = '-1' GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.HOUSEHOLD_ASSETS_INDEX ORDER BY T2.CASTE_RELIGION_GROUP_8_CATEGORY ASC",
+      "predicted_sql": "SELECT dim_household_social.caste_religion_group_8_category, dim_household_social.household_assets_index, AVG(dim_education_child.child_education_id) AS avg_education_id\nFROM dim_education_child\nJOIN dim_household_social ON dim_education_child.household_id = dim_household_social.household_id\nWHERE dim_education_child.child_school_enrollment_status = 'Not enrolled'\nGROUP BY dim_household_social.caste_religion_group_8_category, dim_household_social.household_assets_index\nORDER BY dim_household_social.caste_religion_group_8_category",
+      "error_info": "invalid input syntax for type bigint: \"Not enrolled\"\nLINE 4: ..._education_child.child_school_enrollment_status = 'Not enrol...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "565304fa",
+      "question": "找出资产指数排名为17且有子女学校入学状态为未知或未说明的家庭的家庭ID。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_EDUCATION_CHILD AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.HOUSEHOLD_ASSETS_INDEX = '17' AND T2.CHILD_SCHOOL_ENROLLMENT_STATUS = '-1' GROUP BY T1.HOUSEHOLD_ID",
+      "predicted_sql": "SELECT DISTINCT T1.household_id\nFROM dim_household_social AS T1\nJOIN dim_education_child AS T2 ON T1.household_id = T2.household_id\nWHERE T1.caste_religion_group_8_category = 'Christian'\nAND T1.household_assets_index = 17\nAND T2.child_school_enrollment_status IN ('Unknown', 'Not specified')",
+      "error_info": "invalid input syntax for type bigint: \"Unknown\"\nLINE 6: AND T2.child_school_enrollment_status IN ('Unknown', 'Not sp...\n                                                  ^\n"
+    },
+    {
+      "instance_id": "8a7c69ea",
+      "question": "找出所有资产指数为27的家庭的ID，排除任何子女入学状态未知的家庭，并按升序列出。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '27' AND T1.HOUSEHOLD_ID NOT IN (SELECT HOUSEHOLD_ID FROM DIM_EDUCATION_CHILD WHERE CHILD_SCHOOL_ENROLLMENT_STATUS = '-1') GROUP BY T1.HOUSEHOLD_ID ORDER BY T1.HOUSEHOLD_ID ASC",
+      "predicted_sql": "SELECT DISTINCT dim_household_social.household_id\nFROM dim_household_social\nLEFT JOIN dim_education_child ON dim_household_social.household_id = dim_education_child.household_id\nWHERE dim_household_social.household_assets_index = 27\n  AND (dim_education_child.child_school_enrollment_status IS NULL OR dim_education_child.child_school_enrollment_status != 'unknown')\nORDER BY dim_household_social.household_id ASC",
+      "error_info": "invalid input syntax for type bigint: \"unknown\"\nLINE 5: ...education_child.child_school_enrollment_status != 'unknown')\n                                                             ^\n"
+    },
+    {
+      "instance_id": "962070d7",
+      "question": "找出asset index为27且包含儿童，其enrollment status当前未记录或缺失的家庭。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_EDUCATION_CHILD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '27' AND T3.CHILD_SCHOOL_ENROLLMENT_STATUS = '-1';",
+      "predicted_sql": "SELECT DISTINCT dim_household_social.household_id\nFROM dim_household_social\nJOIN dim_education_child ON dim_household_social.household_id = dim_education_child.household_id\nWHERE dim_household_social.household_assets_index = 27\n  AND (dim_education_child.child_school_enrollment_status IS NULL\n       OR dim_education_child.child_school_enrollment_status = '')",
+      "error_info": "invalid input syntax for type bigint: \"\"\nLINE 6: ... OR dim_education_child.child_school_enrollment_status = '')\n                                                                    ^\n"
+    },
+    {
+      "instance_id": "1a6ea6be",
+      "question": "识别资产指数大于10且至少有一名目前未在校就读儿童的家庭，并按其财富水平排序。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_EDUCATION_CHILD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX > '10' AND T3.CHILD_SCHOOL_ENROLLMENT_STATUS = '-1' GROUP BY T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX HAVING COUNT(T3.CHILD_EDUCATION_ID) >= 1 ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+      "predicted_sql": "SELECT\n    S.caste_religion_group_8_category,\n    AVG(S.social_id) AS avg_social_id,\n    SUM(H.household_number_of_animal_care_workers) AS total_animal_care_workers\nFROM dim_household_social S\nJOIN dim_household H ON S.household_id = H.household_id\nWHERE S.household_assets_index > 10\n  AND EXISTS (\n    SELECT 1\n    FROM dim_education_child C\n    WHERE C.household_id = H.household_id\n      AND C.child_school_enrollment_status = '未在校就读'\n  )\nGROUP BY S.caste_religion_group_8_category\nORDER BY S.caste_religion_group_8_category",
+      "error_info": "invalid input syntax for type bigint: \"未在校就读\"\nLINE 12:       AND C.child_school_enrollment_status = '未在校就读'\n                                                      ^\n"
+    },
+    {
+      "instance_id": "906dc566",
+      "question": "识别所有属于最高资产指数类别的家庭，或其子女当前入学状态尚未记录的家庭。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT DISTINCT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_EDUCATION_CHILD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '10' OR T3.CHILD_SCHOOL_ENROLLMENT_STATUS = '-1'",
+      "predicted_sql": "SELECT DISTINCT h.household_id\nFROM dim_household h\nLEFT JOIN dim_household_social hs ON h.household_id = hs.household_id\nLEFT JOIN dim_education_child ec ON h.household_id = ec.household_id\nWHERE hs.household_assets_index = (\n    SELECT MAX(household_assets_index)\n    FROM dim_household_social\n)\nOR ec.child_school_enrollment_status IS NULL\nORDER BY h.household_id",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "08d0677f",
+      "question": "找出所有资产指数类别最高且至少有一名儿童在校就读的家庭，并按家庭ID排序。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 LEFT JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN DIM_EDUCATION_CHILD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '10' GROUP BY T1.HOUSEHOLD_ID HAVING COUNT(T3.CHILD_SCHOOL_ENROLLMENT_STATUS) >= 1 OR T1.HOUSEHOLD_ID IN (SELECT HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL WHERE HOUSEHOLD_ASSETS_INDEX = '10') ORDER BY T1.HOUSEHOLD_ID ASC",
+      "predicted_sql": "SELECT DISTINCT h.household_id\nFROM dim_household h\nINNER JOIN dim_household_social hs ON h.household_id = hs.household_id\nINNER JOIN dim_education_child ec ON h.household_id = ec.household_id\nWHERE hs.household_assets_index = (\n    SELECT MAX(household_assets_index)\n    FROM dim_household_social\n)\nAND ec.child_school_enrollment_status = 'enrolled'\nORDER BY h.household_id",
+      "error_info": "invalid input syntax for type bigint: \"enrolled\"\nLINE 9: AND ec.child_school_enrollment_status = 'enrolled'\n                                                ^\n"
+    },
+    {
+      "instance_id": "db3bd75d",
+      "question": "列出资产指数较高且具有特定社会网络联系的 OBC 家庭的 ID，并按资产财富从高到低排序。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' AND T2.HOUSEHOLD_ASSETS_INDEX > '10' AND T2.SOCIAL_NETWORK_CONTACT_2_TYPE = '1' ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+      "predicted_sql": "SELECT household_id\nFROM dim_household_social\nWHERE caste_religion_group_8_category = 'OBC'\n  AND household_assets_index > 10\n  AND social_network_contact_2_type IS NOT NULL\nORDER BY household_assets_index DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "52ebce1e",
+      "question": "按种姓和宗教群体分类，提供平均家庭收入、未偿还贷款总额以及动物护理工作者总人数的明细。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, AVG(CAST(T3.HOUSEHOLD_TOTAL_INCOME AS NUMERIC)), SUM(CAST(T3.HOUSEHOLD_TOTAL_OUTSTANDING_LOANS_RS AS NUMERIC)), SUM(CAST(T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS AS NUMERIC)) FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_LIVELIHOOD_INCOME AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY",
+      "predicted_sql": "SELECT T1.caste_religion_group_8_category,\n       AVG(T3.household_total_income) AS avg_household_total_income,\n       SUM(T3.household_total_outstanding_loans_rs) AS total_outstanding_loans,\n       SUM(T2.household_number_of_animal_care_workers) AS total_animal_care_workers\nFROM dim_household_social AS T1\nJOIN dim_household AS T2 ON T1.household_id = T2.household_id\nJOIN dim_livelihood_income AS T3 ON T2.household_id = T3.household_id\nWHERE T1.caste_religion_group_8_category = 'OBC'\n  AND T1.household_assets_index > 10\nGROUP BY T1.caste_religion_group_8_category",
+      "error_info": null
+    },
+    {
+      "instance_id": "a15d93e7",
+      "question": "按种姓和宗教群体分别列出各组的家庭平均收入、未偿还贷款总额以及动物护理工作者人数。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, AVG(CAST(T3.HOUSEHOLD_TOTAL_INCOME AS NUMERIC)), SUM(CAST(T3.HOUSEHOLD_TOTAL_OUTSTANDING_LOANS_RS AS NUMERIC)), COUNT(T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS) FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_LIVELIHOOD_INCOME AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY ORDER BY T2.CASTE_RELIGION_GROUP_8_CATEGORY",
+      "predicted_sql": "SELECT\n    T1.caste_religion_group_8_category,\n    AVG(T3.household_total_income),\n    SUM(T3.household_total_outstanding_loans_rs),\n    SUM(T2.household_number_of_animal_care_workers)\nFROM dim_household_social AS T1\nJOIN dim_household AS T2 ON T1.household_id = T2.household_id\nJOIN dim_livelihood_income AS T3 ON T2.household_id = T3.household_id\nJOIN fact_household_consumption AS T4 ON T2.household_id = T4.household_id\nWHERE T1.caste_religion_group_8_category = 'OBC'\n    AND T1.household_assets_index > 10\n    AND T4.monthly_total_consumption_expenditure_rs > 300\nGROUP BY T1.caste_religion_group_8_category\nORDER BY T1.caste_religion_group_8_category",
+      "error_info": null
+    },
+    {
+      "instance_id": "667db15d",
+      "question": "按平均家庭户数排序，提供不同种姓和宗教群体的家庭户数及收入统计明细。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, AVG(T3.HOUSEHOLD_ID), SUM(T3.INCOME_ID), SUM(T1.HOUSEHOLD_ID) FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID INNER JOIN DIM_LIVELIHOOD_INCOME AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY HAVING COUNT(T1.HOUSEHOLD_ID) > 0 ORDER BY AVG(T3.HOUSEHOLD_ID) DESC",
+      "predicted_sql": "SELECT T1.caste_religion_group_8_category,\n       COUNT(DISTINCT T1.household_id) AS household_count,\n       AVG(T2.household_total_income) AS avg_income,\n       SUM(T2.household_total_income) AS total_income\nFROM dim_household_social AS T1\nJOIN dim_livelihood_income AS T2 ON T1.household_id = T2.household_id\nGROUP BY T1.caste_religion_group_8_category\nORDER BY household_count DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "f2b3ef63",
+      "question": "提供所有 OBC 家庭的家庭 ID 及其未偿还贷款总额，并按资产指数从高到低排序。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_TOTAL_OUTSTANDING_LOANS_RS FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_LIVELIHOOD_INCOME AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' ORDER BY T1.HOUSEHOLD_ASSETS_INDEX DESC",
+      "predicted_sql": "SELECT T1.household_id, SUM(T2.household_total_outstanding_loans_rs) AS total_outstanding_loans\nFROM dim_household_social AS T1\nJOIN dim_livelihood_income AS T2 ON T1.household_id = T2.household_id\nWHERE T1.caste_religion_group_8_category = 'OBC'\nGROUP BY T1.household_id, T1.household_assets_index\nORDER BY T1.household_assets_index DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "2cf34a67",
+      "question": "按资产指数识别最富有的前10个OBC家庭，并显示其未偿还贷款总额。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_TOTAL_OUTSTANDING_LOANS_RS FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_LIVELIHOOD_INCOME AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' ORDER BY T1.HOUSEHOLD_ASSETS_INDEX DESC LIMIT 10",
+      "predicted_sql": "SELECT\n    fhc.household_id,\n    dhs.household_assets_index,\n    SUM(dli.household_total_outstanding_loans_rs) AS total_outstanding_loans_rs\nFROM fact_household_consumption AS fhc\nJOIN dim_household_social AS dhs ON fhc.household_id = dhs.household_id\nJOIN dim_livelihood_income AS dli ON fhc.household_id = dli.household_id\nWHERE dhs.caste_religion_group_8_category = 'OBC'\n    AND fhc.monthly_total_consumption_expenditure_rs > 300\nGROUP BY fhc.household_id, dhs.household_assets_index\nORDER BY dhs.household_assets_index DESC\nLIMIT 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "105fb1f7",
+      "question": "提供从事商业活动子类型40且目前有未偿还贷款的家庭的家庭资产指数和社会—宗教类别。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ASSETS_INDEX, T1.CASTE_RELIGION_GROUP_8_CATEGORY FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_LIVELIHOOD_INCOME AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.BUSINESS_1_ACTIVITY_SUBTYPE = '40' AND T2.HOUSEHOLD_TOTAL_OUTSTANDING_LOANS_RS > '0';",
+      "predicted_sql": "SELECT dim_household_social.household_id, dim_household_social.household_assets_index, dim_household_social.caste_religion_group_8_category\nFROM dim_household_social\nJOIN dim_livelihood_income ON dim_household_social.household_id = dim_livelihood_income.household_id\nWHERE dim_livelihood_income.business_1_activity_subtype = 40\nAND dim_livelihood_income.household_total_outstanding_loans_rs > 0\nAND dim_household_social.caste_religion_group_8_category = 'Christian'\nORDER BY dim_household_social.household_assets_index DESC\nLIMIT 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "fab98bd3",
+      "question": "按资产指数和种姓—宗教群体分类，提供涉及活动子类型40且有未偿还贷款的家庭明细。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.HOUSEHOLD_ASSETS_INDEX, T2.CASTE_RELIGION_GROUP_8_CATEGORY, COUNT(*) FROM DIM_LIVELIHOOD_INCOME AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.BUSINESS_1_ACTIVITY_SUBTYPE = '40' AND T1.HOUSEHOLD_TOTAL_OUTSTANDING_LOANS_RS > '0' GROUP BY T2.HOUSEHOLD_ASSETS_INDEX, T2.CASTE_RELIGION_GROUP_8_CATEGORY ORDER BY T2.HOUSEHOLD_ASSETS_INDEX ASC",
+      "predicted_sql": "SELECT DISTINCT T3.household_person_case_id, T1.household_assets_index, T1.caste_religion_group_8_category, T2.household_total_outstanding_loans_rs\nFROM dim_household_social AS T1\nJOIN dim_household AS T3 ON T1.household_id = T3.household_id\nJOIN dim_livelihood_income AS T2 ON T3.household_id = T2.household_id\nWHERE T1.caste_religion_group_8_category = 'Christian'\nAND T2.business_1_activity_subtype = 40\nAND T2.household_total_outstanding_loans_rs > 0\nORDER BY T1.household_assets_index DESC\nLIMIT 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "18f440ca",
+      "question": "按资产指数和社会群体，细分统计同时从事商业活动且目前仍有未偿还贷款的家庭户数。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.HOUSEHOLD_ASSETS_INDEX, T2.CASTE_RELIGION_GROUP_8_CATEGORY, COUNT(T1.HOUSEHOLD_ID) FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID INNER JOIN DIM_LIVELIHOOD_INCOME AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T3.BUSINESS_1_ACTIVITY_SUBTYPE IS NOT NULL AND T3.HOUSEHOLD_TOTAL_OUTSTANDING_LOANS_RS > '0' GROUP BY T2.HOUSEHOLD_ASSETS_INDEX, T2.CASTE_RELIGION_GROUP_8_CATEGORY HAVING COUNT(T1.HOUSEHOLD_ID) >= 1 ORDER BY T2.CASTE_RELIGION_GROUP_8_CATEGORY DESC",
+      "predicted_sql": "SELECT\n    dim_household_social.household_assets_index,\n    dim_household_social.caste_religion_group_8_category,\n    COUNT(DISTINCT dim_household.household_id) AS household_count\nFROM dim_household\nJOIN dim_household_social\n    ON dim_household.household_id = dim_household_social.household_id\nJOIN dim_livelihood_income\n    ON dim_household.household_id = dim_livelihood_income.household_id\nWHERE dim_household_social.caste_religion_group_8_category = 'Christian'\n    AND dim_livelihood_income.business_1_activity_subtype IS NOT NULL\n    AND dim_livelihood_income.household_total_outstanding_loans_rs > 0\nGROUP BY\n    dim_household_social.household_assets_index,\n    dim_household_social.caste_religion_group_8_category\nORDER BY dim_household_social.household_assets_index DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "8839b1e9",
+      "question": "找出所有资产指数为27且没有任何动物护理工作人员的家庭，并按其ID排序。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '27' AND T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS = '0' GROUP BY T1.HOUSEHOLD_ID HAVING SUM(T1.HOUSEHOLD_ID) >= 1 ORDER BY T1.HOUSEHOLD_ID ASC",
+      "predicted_sql": "SELECT T1.household_id,\n       T1.household_number_of_animal_care_workers,\n       T3.date_of_gauna\nFROM dim_household AS T1\nJOIN dim_household_social AS T2 ON T1.household_id = T2.household_id\nJOIN dim_household_marital AS T3 ON T1.household_id = T3.household_id\nWHERE T2.household_assets_index = 27\n  AND T2.caste_religion_group_8_category = 'Christian'\n  AND T1.household_number_of_animal_care_workers = 0\nORDER BY T1.household_id",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "be907e24",
+      "question": "识别资产指数大于10且从事商业活动子类型40的基督教家庭的家庭ID。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_LIVELIHOOD_INCOME AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' AND T2.HOUSEHOLD_ASSETS_INDEX > '10' AND T3.BUSINESS_1_ACTIVITY_SUBTYPE = '40'",
+      "predicted_sql": "SELECT T1.household_id\nFROM dim_household_social AS T1\nJOIN dim_livelihood_income AS T2 ON T1.household_id = T2.household_id\nWHERE T1.household_assets_index > 10\n  AND T2.business_1_activity_subtype = 40\n  AND T1.caste_religion_group_8_category = 'Christian'",
+      "error_info": null
+    },
+    {
+      "instance_id": "4f9e4ad6",
+      "question": "找出所有资产指数大于10且至少参与一项商业活动的基督教家庭，并按其资产指数降序排序。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_LIVELIHOOD_INCOME AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' AND T2.HOUSEHOLD_ASSETS_INDEX > '10' GROUP BY T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX HAVING COUNT(T3.BUSINESS_1_ACTIVITY_SUBTYPE) >= 1 ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+      "predicted_sql": "SELECT\n    dhs.household_id,\n    dhs.household_assets_index\nFROM dim_household_social dhs\nJOIN dim_livelihood_income dli\n    ON dhs.household_id = dli.household_id\nWHERE dhs.household_assets_index > 10\n    AND dhs.caste_religion_group_8_category = 'Christian'\n    AND dli.business_1_activity_subtype IS NOT NULL\nORDER BY dhs.household_assets_index DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "f9899e65",
+      "question": "找出所有属于穆斯林社会群体或参与业务活动子类型40的家庭，并按其ID排序。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_LIVELIHOOD_INCOME AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Muslim' OR T3.BUSINESS_1_ACTIVITY_SUBTYPE = '40' ORDER BY T1.HOUSEHOLD_ID",
+      "predicted_sql": "SELECT dim_household.household_id\nFROM dim_household\nINNER JOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nINNER JOIN dim_livelihood_income ON dim_household.household_id = dim_livelihood_income.household_id\nWHERE dim_household_social.caste_religion_group_8_category = '穆斯林'\n   OR dim_livelihood_income.business_1_activity_subtype = 40\nORDER BY dim_household.household_id",
+      "error_info": null
+    },
+    {
+      "instance_id": "d34f7175",
+      "question": "提供位于Maharashtra的rural家庭的家庭编号及其每月非食品支出金额。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T1.MONTHLY_NON_FOOD_EXPENDITURE_RS FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.STATE = 'Maharashtra' AND T2.CENSUS_2001_URBAN_RURAL = 'Rural'",
+      "predicted_sql": "SELECT T1.household_id, T1.monthly_non_food_expenditure_rs\nFROM fact_household_consumption AS T1\nJOIN dim_geography_hierarchy AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_household_social AS T3 ON T1.household_id = T3.household_id\nJOIN dim_household_marital AS T4 ON T1.household_id = T4.household_id\nWHERE T2.state = 'Maharashtra'\n  AND T2.census_2001_urban_rural = 'rural'\n  AND T3.household_assets_index = 27\n  AND T4.date_of_gauna IS NOT NULL",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "8934e8ac",
+      "question": "列出state为Maharashtra的rural地区各家庭的家庭编号及其每月非食品支出。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T1.MONTHLY_NON_FOOD_EXPENDITURE_RS FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.STATE = 'Maharashtra' AND T2.CENSUS_2001_URBAN_RURAL = 'Rural'",
+      "predicted_sql": "SELECT DISTINCT dim_household.household_id, fact_household_consumption.monthly_non_food_expenditure_rs\nFROM dim_household\nINNER JOIN fact_household_consumption ON dim_household.household_id = fact_household_consumption.household_id\nINNER JOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nWHERE dim_geography_hierarchy.state = 'Maharashtra'\n  AND dim_geography_hierarchy.census_2001_urban_rural = 'rural'\nORDER BY dim_household.household_id",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "1d002667",
+      "question": "按每月非食品总支出对Maharashtra的rural家庭进行排序，从支出最高的家庭开始。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, SUM(T2.MONTHLY_NON_FOOD_EXPENDITURE_RS) FROM DIM_HOUSEHOLD AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_GEOGRAPHY_HIERARCHY AS T3 ON T2.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T3.STATE = 'Maharashtra' AND T3.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T1.HOUSEHOLD_ID ORDER BY SUM(T2.MONTHLY_NON_FOOD_EXPENDITURE_RS) DESC",
+      "predicted_sql": "SELECT DISTINCT fact_household_consumption.*\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_household_social ON fact_household_consumption.household_id = dim_household_social.household_id\nJOIN dim_household_marital ON fact_household_consumption.household_id = dim_household_marital.household_id\nWHERE dim_geography_hierarchy.state = 'Maharashtra'\nAND dim_geography_hierarchy.census_2001_urban_rural = 'rural'\nAND dim_household_marital.date_of_gauna IS NOT NULL\nORDER BY dim_household_social.household_assets_index DESC, fact_household_consumption.household_id",
+      "error_info": "for SELECT DISTINCT, ORDER BY expressions must appear in select list\nLINE 9: ORDER BY dim_household_social.household_assets_index DESC, f...\n                 ^\n"
+    },
+    {
+      "instance_id": "9132a51f",
+      "question": "按州以及城乡分类，提供人均月均消费和非食品支出的明细。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.STATE, T1.CENSUS_2001_URBAN_RURAL, AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA), AVG(T2.MONTHLY_NON_FOOD_EXPENDITURE_RS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE, T1.CENSUS_2001_URBAN_RURAL",
+      "predicted_sql": "SELECT DISTINCT T2.state,\n       T2.census_2001_urban_rural,\n       AVG(T1.monthly_consumption_per_capita) AS monthly_consumption_per_capita,\n       AVG(T1.monthly_non_food_expenditure_rs) AS monthly_non_food_expenditure_rs\nFROM fact_household_consumption AS T1\nJOIN dim_geography_hierarchy AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_household AS hh ON T1.household_id = hh.household_id\nLEFT JOIN dim_household_social AS hs ON hh.household_id = hs.household_id\nLEFT JOIN dim_household_marital AS hm ON hh.household_id = hm.household_id\nWHERE hs.household_assets_index = '27' OR hm.date_of_gauna IS NOT NULL\nGROUP BY T2.state, T2.census_2001_urban_rural\nORDER BY T2.state, T2.census_2001_urban_rural",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "234a5b39",
+      "question": "根据2001年人口普查，按邦别细分列出人均月消费和非食品支出的平均值，并比较城乡地区。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.STATE, T1.CENSUS_2001_URBAN_RURAL, AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA), AVG(T2.MONTHLY_NON_FOOD_EXPENDITURE_RS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE, T1.CENSUS_2001_URBAN_RURAL ORDER BY T1.STATE ASC",
+      "predicted_sql": "SELECT\n    T2.state,\n    T2.census_2001_urban_rural,\n    AVG(T1.monthly_consumption_per_capita),\n    AVG(T1.monthly_non_food_expenditure_rs)\nFROM fact_household_consumption AS T1\nJOIN dim_geography_hierarchy AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_household AS hh ON T1.household_id = hh.household_id\nJOIN dim_household_social AS soc ON hh.household_id = soc.household_id\nJOIN dim_household_marital AS mar ON hh.household_id = mar.household_id\nWHERE soc.household_assets_index = 27 OR mar.date_of_gauna IS NOT NULL\nGROUP BY T2.state, T2.census_2001_urban_rural",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "99cd5acd",
+      "question": "按农村家庭平均每月非食品支出对各州进行排名，从最高的开始。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.STATE, AVG(T1.MONTHLY_NON_FOOD_EXPENDITURE_RS) FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T2.STATE ORDER BY AVG(T1.MONTHLY_NON_FOOD_EXPENDITURE_RS) DESC",
+      "predicted_sql": "SELECT dim_geography_hierarchy.state,\n       AVG(fact_household_consumption.monthly_non_food_expenditure_rs) as avg_non_food_expenditure\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = '农村'\n  AND fact_household_consumption.household_id IN (\n      SELECT DISTINCT household_id\n      FROM dim_household_social\n      WHERE household_assets_index = '27'\n      UNION\n      SELECT DISTINCT household_id\n      FROM dim_household_marital\n      WHERE date_of_gauna IS NOT NULL\n  )\nGROUP BY dim_geography_hierarchy.state\nORDER BY avg_non_food_expenditure DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "4398e9a5",
+      "question": "按农村地区家庭平均每月非食品支出对各邦进行排名，仅显示有记录消费数据的邦。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.STATE, AVG(T1.MONTHLY_NON_FOOD_EXPENDITURE_RS) FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 INNER JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN DIM_HOUSEHOLD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T2.STATE HAVING COUNT(T1.HOUSEHOLD_ID) > 0 ORDER BY AVG(T1.MONTHLY_NON_FOOD_EXPENDITURE_RS) DESC",
+      "predicted_sql": "SELECT dim_geography_hierarchy.state,\n       AVG(fact_household_consumption.monthly_non_food_expenditure_rs) as avg_non_food_expenditure\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'Rural'\n  AND fact_household_consumption.monthly_non_food_expenditure_rs IS NOT NULL\nGROUP BY dim_geography_hierarchy.state\nHAVING COUNT(fact_household_consumption.monthly_non_food_expenditure_rs) > 0\nORDER BY avg_non_food_expenditure DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "f6f5311b",
+      "question": "列出Uttar Pradesh中支出最高的前10个rural家庭的每月非食品支出和工人数。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.MONTHLY_NON_FOOD_EXPENDITURE_RS, T2.HOUSEHOLD_NUMBER_OF_WORKERS FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 JOIN DIM_HOUSEHOLD AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_GEOGRAPHY_HIERARCHY AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T3.STATE = 'Uttar Pradesh' AND T3.CENSUS_2001_URBAN_RURAL = 'Rural' ORDER BY T1.MONTHLY_NON_FOOD_EXPENDITURE_RS DESC LIMIT 10",
+      "predicted_sql": "SELECT T3.monthly_non_food_expenditure_rs, T4.household_number_of_workers\nFROM dim_geography_hierarchy AS T1\nJOIN fact_household_consumption AS T3 ON T1.geography_id = T3.geography_id\nJOIN dim_household AS T4 ON T3.household_id = T4.household_id\nWHERE T1.state = 'Uttar Pradesh'\n  AND T1.census_2001_urban_rural = 'rural'\nORDER BY T3.monthly_non_food_expenditure_rs DESC\nLIMIT 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "9f444cde",
+      "question": "列出Uttar Pradesh中支出最高的前10个rural家庭的每月非食品支出和工人数。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.MONTHLY_NON_FOOD_EXPENDITURE_RS, T2.HOUSEHOLD_NUMBER_OF_WORKERS FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 JOIN DIM_HOUSEHOLD AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_GEOGRAPHY_HIERARCHY AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T3.STATE = 'Uttar Pradesh' AND T3.CENSUS_2001_URBAN_RURAL = 'Rural' ORDER BY T1.MONTHLY_NON_FOOD_EXPENDITURE_RS DESC LIMIT 10",
+      "predicted_sql": "SELECT fact_household_consumption.monthly_non_food_expenditure_rs, dim_household.household_number_of_workers\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_household ON fact_household_consumption.household_id = dim_household.household_id\nWHERE dim_geography_hierarchy.state = 'Uttar Pradesh'\n  AND dim_geography_hierarchy.census_2001_urban_rural = 'rural'\nORDER BY fact_household_consumption.monthly_total_consumption_expenditure_rs DESC\nLIMIT 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "11e70460",
+      "question": "根据2001年人口普查分类，比较城镇和农村家庭的月均非食品支出和人均消费。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.CENSUS_2001_URBAN_RURAL, AVG(T0.MONTHLY_NON_FOOD_EXPENDITURE_RS), AVG(T0.MONTHLY_CONSUMPTION_PER_CAPITA) FROM FACT_HOUSEHOLD_CONSUMPTION T0 JOIN DIM_GEOGRAPHY_HIERARCHY T1 ON T0.GEOGRAPHY_ID = T1.GEOGRAPHY_ID GROUP BY T1.CENSUS_2001_URBAN_RURAL",
+      "predicted_sql": "SELECT\n    dgh.census_2001_urban_rural,\n    AVG(fhc.monthly_non_food_expenditure_rs) AS avg_monthly_non_food_expenditure,\n    AVG(fhc.monthly_consumption_per_capita) AS avg_monthly_consumption_per_capita\nFROM fact_household_consumption fhc\nJOIN dim_geography_hierarchy dgh ON fhc.geography_id = dgh.geography_id\nJOIN dim_household dh ON fhc.household_id = dh.household_id\nJOIN dim_household_social dhs ON dh.household_id = dhs.household_id\nWHERE dhs.caste_religion_group_8_category = 'OBC'\n    AND dhs.household_assets_index = (\n        SELECT MAX(household_assets_index)\n        FROM dim_household_social\n        WHERE caste_religion_group_8_category = 'OBC'\n    )\nGROUP BY dgh.census_2001_urban_rural",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "64fc570d",
+      "question": "比较城乡地区平均每月非食品支出和人均消费，并按非食品支出从高到低排序。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.CENSUS_2001_URBAN_RURAL, AVG(T0.MONTHLY_NON_FOOD_EXPENDITURE_RS), AVG(T0.MONTHLY_CONSUMPTION_PER_CAPITA) FROM FACT_HOUSEHOLD_CONSUMPTION AS T0 JOIN DIM_GEOGRAPHY_HIERARCHY AS T1 ON T0.GEOGRAPHY_ID = T1.GEOGRAPHY_ID GROUP BY T1.CENSUS_2001_URBAN_RURAL ORDER BY AVG(T0.MONTHLY_NON_FOOD_EXPENDITURE_RS) DESC",
+      "predicted_sql": "SELECT\n    T2.census_2001_urban_rural,\n    AVG(T1.monthly_non_food_expenditure_rs) AS avg_non_food_expenditure,\n    AVG(T1.monthly_consumption_per_capita) AS avg_consumption_per_capita\nFROM fact_household_consumption AS T1\nJOIN dim_geography_hierarchy AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_household_social AS T3 ON T1.household_id = T3.household_id\nWHERE T3.caste_religion_group_8_category = 'OBC'\n    AND T3.household_assets_index = (\n        SELECT MAX(household_assets_index)\n        FROM dim_household_social\n        WHERE caste_religion_group_8_category = 'OBC'\n    )\nGROUP BY T2.census_2001_urban_rural\nORDER BY avg_non_food_expenditure DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "044dcd8f",
+      "question": "确定 urban households 的 maximum monthly non-food expenditure 不超过 5,000 rupees 的 states。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.STATE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Urban' GROUP BY T1.STATE HAVING MAX(T2.MONTHLY_NON_FOOD_EXPENDITURE_RS) <= 5000",
+      "predicted_sql": "SELECT T1.state, MAX(T2.monthly_non_food_expenditure_rs) AS max_non_food\nFROM dim_geography_hierarchy AS T1\nJOIN fact_household_consumption AS T2 ON T1.geography_id = T2.geography_id\nWHERE T1.census_2001_urban_rural = 'urban'\nGROUP BY T1.state\nHAVING MAX(T2.monthly_non_food_expenditure_rs) <= 5000",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "20170f0c",
+      "question": "确定 urban households 的 maximum monthly non-food expenditure 不超过 5,000 rupees 的 states。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.STATE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Urban' GROUP BY T1.STATE HAVING MAX(T2.MONTHLY_NON_FOOD_EXPENDITURE_RS) <= 5000",
+      "predicted_sql": "SELECT dim_geography_hierarchy.state\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'urban'\nGROUP BY dim_geography_hierarchy.state\nHAVING MAX(fact_household_consumption.monthly_non_food_expenditure_rs) <= 5000\nORDER BY dim_geography_hierarchy.state",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "5c857067",
+      "question": "找出Rural地区中每月家庭最低支出低于500卢比、但最高non-food expenditure超过2,000卢比的district代码。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.DISTRICT_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T1.DISTRICT_CODE HAVING MIN(T2.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) < 500 AND MAX(T2.MONTHLY_NON_FOOD_EXPENDITURE_RS) > 2000",
+      "predicted_sql": "SELECT dim_geography_hierarchy.district_code\nFROM dim_geography_hierarchy\nJOIN fact_household_consumption ON dim_geography_hierarchy.geography_id = fact_household_consumption.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'Rural'\nGROUP BY dim_geography_hierarchy.district_code\nHAVING MIN(fact_household_consumption.monthly_total_consumption_expenditure_rs) < 500\n   AND MAX(fact_household_consumption.monthly_non_food_expenditure_rs) > 2000",
+      "error_info": null
+    },
+    {
+      "instance_id": "41a7fd0e",
+      "question": "找出rural districts的代码：其中至少有一个家庭的每月总支出低于500卢比，而另一个家庭的非食品支出超过2,000卢比。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.DISTRICT_CODE FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T2.DISTRICT_CODE HAVING MIN(T1.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) < 500 AND MAX(T1.MONTHLY_NON_FOOD_EXPENDITURE_RS) > 2000",
+      "predicted_sql": "SELECT dim_geography_hierarchy.district_code\nFROM dim_geography_hierarchy\nJOIN fact_household_consumption ON dim_geography_hierarchy.geography_id = fact_household_consumption.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'rural'\nGROUP BY dim_geography_hierarchy.district_code\nHAVING COUNT(DISTINCT CASE WHEN fact_household_consumption.monthly_total_consumption_expenditure_rs < 500\n                           THEN fact_household_consumption.household_id END) >= 1\n   AND COUNT(DISTINCT CASE WHEN fact_household_consumption.monthly_non_food_expenditure_rs > 2000\n                           THEN fact_household_consumption.household_id END) >= 1",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "d5d1557a",
+      "question": "找出那些至少有一个家庭每月总支出少于500卢比、同时也至少有一个家庭每月非食品支出超过2,000卢比的rural district的district code，并按district code排序。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.DISTRICT_CODE FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T2.DISTRICT_CODE HAVING SUM(CASE WHEN T1.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS < 500 THEN 1 ELSE 0 END) >= 1 AND MAX(T1.MONTHLY_NON_FOOD_EXPENDITURE_RS) > 2000 ORDER BY T2.DISTRICT_CODE ASC",
+      "predicted_sql": "SELECT DISTINCT dim_geography_hierarchy.district_code\nFROM dim_geography_hierarchy\nINNER JOIN fact_household_consumption ON dim_geography_hierarchy.geography_id = fact_household_consumption.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'rural'\nGROUP BY dim_geography_hierarchy.district_code\nHAVING\n    COUNT(DISTINCT CASE WHEN fact_household_consumption.monthly_total_consumption_expenditure_rs < 500 THEN fact_household_consumption.household_id END) >= 1\n    AND COUNT(DISTINCT CASE WHEN fact_household_consumption.monthly_non_food_expenditure_rs > 2000 THEN fact_household_consumption.household_id END) >= 1\nORDER BY dim_geography_hierarchy.district_code",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "eb0de056",
+      "question": "找出家庭每月支出超过50,000卢比或雇用五名动物护理工人的州和地区代码。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.STATE, T1.DISTRICT_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD AS T3 ON T2.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS > 50000 OR T3.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS = '5';",
+      "predicted_sql": "SELECT\n    dim_geography_hierarchy.state,\n    dim_geography_hierarchy.district_code,\n    dim_household_social.household_id,\n    dim_household_social.household_assets_index\nFROM fact_household_consumption\nJOIN dim_household ON fact_household_consumption.household_id = dim_household.household_id\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_household_social ON fact_household_consumption.household_id = dim_household_social.household_id\nWHERE (fact_household_consumption.monthly_total_consumption_expenditure_rs > 50000\n    OR dim_household.household_number_of_animal_care_workers = 5)\n    AND dim_household_social.caste_religion_group_8_category IN ('Christian', 'Muslim')\nORDER BY dim_household_social.household_assets_index DESC\nLIMIT 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "06426722",
+      "question": "找出家庭每月支出超过60,000卢比或雇用五名动物护理工人的州和地区代码。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT DISTINCT T1.STATE, T1.DISTRICT_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD AS T3 ON T2.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS > 60000 OR T3.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS = '5';",
+      "predicted_sql": "SELECT DISTINCT\n    dgh.state,\n    dgh.district_code\nFROM",
+      "error_info": "syntax error at end of input\nLINE 4: FROM\n            ^\n"
+    },
+    {
+      "instance_id": "5ecd9202",
+      "question": "识别属于第17资产指数组且被归类为OBC的家庭的家庭ID。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL WHERE CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' AND HOUSEHOLD_ASSETS_INDEX = '17';",
+      "predicted_sql": "SELECT dim_household_social.caste_religion_group_8_category,\n       dim_household_social.household_assets_index,\n       AVG(dim_household_social.social_id) AS avg_social_id\nFROM dim_household_social\nJOIN dim_education_child ON dim_household_social.household_id = dim_education_child.household_id\nWHERE dim_household_social.household_assets_index = 17\n  AND dim_household_social.caste_religion_group_8_category = 'OBC'\n  AND dim_education_child.child_school_enrollment_status = 'not enrolled'\nGROUP BY dim_household_social.caste_religion_group_8_category,\n         dim_household_social.household_assets_index",
+      "error_info": "invalid input syntax for type bigint: \"not enrolled\"\nLINE 8: ..._education_child.child_school_enrollment_status = 'not enrol...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "b835d830",
+      "question": "每个种姓和宗教群体在大米、小麦和豆类上的平均总支出是多少？",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, AVG(T1.CONSUMPTION_RICE_EXPENDITURE_RS + T1.CONSUMPTION_WHEAT_EXPENDITURE_RS + T1.CONSUMPTION_PULSES_EXPENDITURE_RS) FROM FACT_FOOD_CONSUMPTION AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY",
+      "predicted_sql": "SELECT\n    dim_household_social.caste_religion_group_8_category,\n    dim_household_social.household_assets_index,\n    AVG(fact_food_consumption.consumption_rice_expenditure_rs +\n        fact_food_consumption.consumption_wheat_expenditure_rs +\n        fact_food_consumption.consumption_pulses_expenditure_rs) AS average_total_expenditure\nFROM dim_household_social\nJOIN fact_food_consumption ON dim_household_social.household_id = fact_food_consumption.household_id\nJOIN dim_education_child ON dim_household_social.household_id = dim_education_child.household_id\nWHERE dim_education_child.child_school_enrollment_status = 2\nGROUP BY\n    dim_household_social.caste_religion_group_8_category,\n    dim_household_social.household_assets_index\nORDER BY dim_household_social.caste_religion_group_8_category",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "73f2d9f1",
+      "question": "按主食谷物（具体为大米、小麦和豆类）的平均总支出，对不同种姓和宗教群体进行排名。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, AVG(T1.CONSUMPTION_RICE_EXPENDITURE_RS + T1.CONSUMPTION_WHEAT_EXPENDITURE_RS + T1.CONSUMPTION_PULSES_EXPENDITURE_RS) FROM FACT_FOOD_CONSUMPTION AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY ORDER BY AVG(T1.CONSUMPTION_RICE_EXPENDITURE_RS + T1.CONSUMPTION_WHEAT_EXPENDITURE_RS + T1.CONSUMPTION_PULSES_EXPENDITURE_RS) DESC",
+      "predicted_sql": "SELECT dim_household_social.caste_religion_group_8_category,\n       AVG(fact_food_consumption.consumption_rice_expenditure_rs +\n           fact_food_consumption.consumption_wheat_expenditure_rs +\n           fact_food_consumption.consumption_pulses_expenditure_rs) AS avg_staple_expenditure\nFROM fact_food_consumption\nJOIN dim_household_social ON fact_food_consumption.household_id = dim_household_social.household_id\nGROUP BY dim_household_social.caste_religion_group_8_category\nORDER BY avg_staple_expenditure DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "97b68e44",
+      "question": "按各家庭在大米和豆类上的总合计支出从高到低进行排名。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT HOUSEHOLD_ID, SUM(CONSUMPTION_RICE_EXPENDITURE_RS + CONSUMPTION_PULSES_EXPENDITURE_RS) FROM FACT_FOOD_CONSUMPTION JOIN DIM_HOUSEHOLD USING (HOUSEHOLD_ID) GROUP BY HOUSEHOLD_ID ORDER BY SUM(CONSUMPTION_RICE_EXPENDITURE_RS + CONSUMPTION_PULSES_EXPENDITURE_RS) DESC",
+      "predicted_sql": "SELECT fact_food_consumption.household_id,\n       SUM(fact_food_consumption.consumption_rice_expenditure_rs + fact_food_consumption.consumption_pulses_expenditure_rs) as total_expenditure\nFROM fact_food_consumption\nWHERE fact_food_consumption.household_id IN (\n    SELECT DISTINCT dim_household_social.household_id\n    FROM dim_household_social\n    JOIN dim_education_child ON dim_household_social.household_id = dim_education_child.household_id\n    WHERE dim_household_social.household_assets_index = 27\n      AND dim_education_child.child_school_enrollment_status = -1\n)\nGROUP BY fact_food_consumption.household_id\nORDER BY total_expenditure DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "b1890cab",
+      "question": "列出在大米、小麦和豆类等主食上的总支出最高的十个家庭的ID及其社会群体类别。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.CASTE_RELIGION_GROUP_8_CATEGORY, (T1.CONSUMPTION_RICE_EXPENDITURE_RS + T1.CONSUMPTION_WHEAT_EXPENDITURE_RS + T1.CONSUMPTION_PULSES_EXPENDITURE_RS) FROM FACT_FOOD_CONSUMPTION AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID ORDER BY (T1.CONSUMPTION_RICE_EXPENDITURE_RS + T1.CONSUMPTION_WHEAT_EXPENDITURE_RS + T1.CONSUMPTION_PULSES_EXPENDITURE_RS) DESC LIMIT 10",
+      "predicted_sql": "SELECT DISTINCT dim_household_social.household_id, dim_household_social.caste_religion_group_8_category\nFROM dim_household_social\nJOIN fact_food_consumption ON dim_household_social.household_id = fact_food_consumption.household_id\nWHERE dim_household_social.household_assets_index = 17\n  AND EXISTS (\n    SELECT 1\n    FROM dim_education_child\n    WHERE dim_education_child.household_id = dim_household_social.household_id\n      AND dim_education_child.child_school_enrollment_status = -1\n  )\nGROUP BY dim_household_social.household_id, dim_household_social.caste_religion_group_8_category\nORDER BY SUM(fact_food_consumption.consumption_rice_expenditure_rs +\n             fact_food_consumption.consumption_wheat_expenditure_rs +\n             fact_food_consumption.consumption_pulses_expenditure_rs) DESC\nLIMIT 10",
+      "error_info": "for SELECT DISTINCT, ORDER BY expressions must appear in select list\nLINE 12: ORDER BY SUM(fact_food_consumption.consumption_rice_expendit...\n                  ^\n"
+    },
+    {
+      "instance_id": "1f847b64",
+      "question": "找出在大米、小麦和豆类上的总支出最高的前10个家庭，并包含其各自的种姓或宗教群体类别。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.CASTE_RELIGION_GROUP_8_CATEGORY, SUM(T1.CONSUMPTION_RICE_EXPENDITURE_RS + T1.CONSUMPTION_WHEAT_EXPENDITURE_RS + T1.CONSUMPTION_PULSES_EXPENDITURE_RS) FROM FACT_FOOD_CONSUMPTION AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID GROUP BY T1.HOUSEHOLD_ID, T2.CASTE_RELIGION_GROUP_8_CATEGORY ORDER BY SUM(T1.CONSUMPTION_RICE_EXPENDITURE_RS + T1.CONSUMPTION_WHEAT_EXPENDITURE_RS + T1.CONSUMPTION_PULSES_EXPENDITURE_RS) DESC LIMIT 10",
+      "predicted_sql": "SELECT\n    dim_household.household_id,\n    dim_household_social.caste_religion_group_8_category,\n    SUM(\n        COALESCE(fact_food_consumption.consumption_rice_expenditure_rs, 0) +\n        COALESCE(fact_food_consumption.consumption_wheat_expenditure_rs, 0) +\n        COALESCE(fact_food_consumption.consumption_pulses_expenditure_rs, 0)\n    ) as total_expenditure\nFROM dim_household\nJOIN fact_food_consumption ON dim_household.household_id = fact_food_consumption.household_id\nJOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nGROUP BY\n    dim_household.household_id,\n    dim_household_social.caste_religion_group_8_category\nORDER BY total_expenditure DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "52385ad2",
+      "question": "按caste和最高rice支出排序，分别列出不同社会群体和资产水平在rice和豆类上的总支出明细。",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.HOUSEHOLD_ASSETS_INDEX, SUM(T3.CONSUMPTION_RICE_EXPENDITURE_RS), SUM(T3.CONSUMPTION_PULSES_EXPENDITURE_RS) FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID INNER JOIN FACT_FOOD_CONSUMPTION AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.HOUSEHOLD_ASSETS_INDEX ORDER BY T2.CASTE_RELIGION_GROUP_8_CATEGORY ASC, SUM(T3.CONSUMPTION_RICE_EXPENDITURE_RS) DESC",
+      "predicted_sql": "SELECT\n    hs.caste_religion_group_8_category,\n    SUM(fc.consumption_rice_expenditure_rs) AS total_rice_expenditure,\n    SUM(fc.consumption_pulses_expenditure_rs) AS total_pulses_expenditure\nFROM dim_household_social hs\nJOIN dim_education_child ec ON hs.household_id = ec.household_id\nJOIN fact_food_consumption fc ON hs.household_id = fc.household_id\nWHERE hs.household_assets_index = 27\n    AND ec.child_school_enrollment_status = -1\nGROUP BY hs.caste_religion_group_8_category\nORDER BY hs.caste_religion_group_8_category,\n    SUM(fc.consumption_rice_expenditure_rs) DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "4ee96af4",
+      "question": "找出所有至少有一名动物护理工作人员且社会资产指数为27的家庭。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '27' AND T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS >= '1';",
+      "predicted_sql": "SELECT dim_household.household_id\nFROM dim_household\nINNER JOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nWHERE dim_household.household_number_of_animal_care_workers >= 1\n  AND dim_household_social.household_assets_index = 27",
+      "error_info": null
+    },
+    {
+      "instance_id": "2fef3613",
+      "question": "找出所有至少有五名动物护理工作人员且资产指数为17的家庭，并按其ID排序。",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '17' AND T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS >= '5' ORDER BY T1.HOUSEHOLD_ID",
+      "predicted_sql": "SELECT DISTINCT dim_household.household_id\nFROM dim_household\nJOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nWHERE dim_household.household_number_of_animal_care_workers >= 5\n  AND dim_household_social.household_assets_index = 17\nORDER BY dim_household.household_id",
+      "error_info": null
+    }
+  ]
+}

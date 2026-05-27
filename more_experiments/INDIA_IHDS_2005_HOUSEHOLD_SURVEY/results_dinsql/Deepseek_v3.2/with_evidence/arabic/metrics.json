@@ -1,0 +1,909 @@
+{
+  "summary": {
+    "total": 100,
+    "execution_correct": 38,
+    "execution_accuracy": 0.38
+  },
+  "results": [
+    {
+      "instance_id": "db637eb6",
+      "question": "قدّم معرّف الأسرة، ومؤشر الأصول، ونوع جهة الاتصال الثانوية في الشبكة الاجتماعية لجميع الأسر التي تنتمي إلى فئة OBC.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT HOUSEHOLD_ID, HOUSEHOLD_ASSETS_INDEX, SOCIAL_NETWORK_CONTACT_2_TYPE FROM DIM_HOUSEHOLD_SOCIAL WHERE CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC';",
+      "predicted_sql": "SELECT household_id, household_assets_index, social_network_contact_2_type\nFROM dim_household_social\nWHERE caste_religion_group_8_category = 'OBC'",
+      "error_info": null
+    },
+    {
+      "instance_id": "21e0ce63",
+      "question": "اعرض معرّفات الأسر، ومؤشرات الأصول، وأنواع جهات الاتصال الثانوية في الشبكة الاجتماعية لجميع الأسر ضمن فئة OBC، مرتبةً من أدنى مؤشر أصول إلى أعلى مؤشر أصول.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' ORDER BY T2.HOUSEHOLD_ASSETS_INDEX ASC",
+      "predicted_sql": "SELECT household_id, household_assets_index, social_network_contact_2_type\nFROM dim_household_social\nWHERE caste_religion_group_8_category = 'OBC'\nORDER BY household_assets_index ASC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "c8f78b4a",
+      "question": "قدّم مؤشر الأصول وأنواع جهات الاتصال في الشبكة الاجتماعية الثانوية للأسر المسيحية، مرتبة من الأعلى إلى الأدنى ثراءً.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' GROUP BY T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE HAVING COUNT(T3.CONSUMPTION_ID) >= 0 ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+      "predicted_sql": "SELECT household_assets_index, social_network_contact_2_type\nFROM dim_household_social\nWHERE caste_religion_group_8_category = 'Christian'\nORDER BY household_assets_index DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "a1d8e0fc",
+      "question": "قدّم asset index وأنواع جهات الاتصال الثانوية في الشبكة الاجتماعية للأسر من فئة OBC التي لديها استهلاك مرافق مسجّل، مرتبة حسب حالتها من حيث الثروة.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN FACT_UTILITY_CONSUMPTION AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' GROUP BY T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE HAVING COUNT(T3.UTILITY_ID) >= 1 ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+      "predicted_sql": "SELECT dim_household_social.household_assets_index, dim_household_social.social_network_contact_2_type\nFROM dim_household_social\nINNER JOIN fact_utility_consumption ON dim_household_social.household_id = fact_utility_consumption.household_id\nWHERE dim_household_social.caste_religion_group_8_category = 'OBC'\nORDER BY dim_household_social.household_assets_index DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "490d74ea",
+      "question": "قدّم مؤشر الأصول وأنواع جهات الاتصال في الشبكة الاجتماعية الثانوية للأسر المسلمة، مرتبة من الأعلى إلى الأدنى ثراءً.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN FACT_FOOD_CONSUMPTION AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Muslim' GROUP BY T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE HAVING COUNT(T3.FOOD_CONSUMPTION_ID) >= 0 ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+      "predicted_sql": "SELECT household_assets_index, social_network_contact_2_type\nFROM dim_household_social\nWHERE caste_religion_group_8_category = 'Muslim'\nORDER BY household_assets_index DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "8ed8a672",
+      "question": "قدّم تفصيلاً لمتوسط الإنفاق الشهري للأسر وإجمالي عدد الأسر، مُصنَّفًا حسب أنواع جهات الاتصال في الشبكات الاجتماعية والمجموعات الدينية أو الطبقية، ومرتّبًا من الأعلى إلى الأدنى إنفاقًا.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.SOCIAL_NETWORK_CONTACT_2_TYPE, AVG(T1.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS), COUNT(T1.HOUSEHOLD_ID) FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN DIM_HOUSEHOLD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.SOCIAL_NETWORK_CONTACT_2_TYPE HAVING COUNT(T1.HOUSEHOLD_ID) > 0 ORDER BY AVG(T1.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) DESC",
+      "predicted_sql": "SELECT\n    T1.social_network_contact_2_type,\n    T1.caste_religion_group_8_category,\n    AVG(T2.monthly_total_consumption_expenditure_rs) AS average_monthly_expenditure,\n    COUNT(DISTINCT T1.household_id) AS total_household_count\nFROM dim_household_social AS T1\nJOIN fact_household_consumption AS T2 ON T1.household_id = T2.household_id\nJOIN dim_geography_hierarchy AS T3 ON T2.geography_id = T3.geography_id\nWHERE T1.caste_religion_group_8_category IN ('High caste', 'Muslim', 'Sikh, Jain', 'Dalit', 'OBC', 'Christian', 'Adivasi', 'Brahmin')\nGROUP BY T1.social_network_contact_2_type, T1.caste_religion_group_8_category\nORDER BY AVG(T2.monthly_total_consumption_expenditure_rs) DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "c175575e",
+      "question": "حدد الأسر التي لديها مؤشر أصول مرتفع وتستخدم النوع الأول من جهات الاتصال ضمن الشبكة الاجتماعية.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.SOCIAL_NETWORK_CONTACT_2_TYPE = '1' AND T2.HOUSEHOLD_ASSETS_INDEX >= '27' GROUP BY T1.HOUSEHOLD_ID",
+      "predicted_sql": "SELECT\n    dhs.caste_religion_group_8_category,\n    AVG(fhc.monthly_consumption_per_capita) AS average_monthly_per_capita_consumption,\n    COUNT(DISTINCT dhs.household_id) AS total_number_of_households\nFROM dim_household_social dhs\nLEFT JOIN fact_household_consumption fhc ON dhs.household_id = fhc.household_id\nWHERE dhs.household_assets_index = 'high'\n    AND dhs.social_network_contact_2_type = 1\nGROUP BY dhs.caste_religion_group_8_category",
+      "error_info": "invalid input syntax for type bigint: \"high\"\nLINE 7: WHERE dhs.household_assets_index = 'high'\n                                           ^\n"
+    },
+    {
+      "instance_id": "6abea354",
+      "question": "حدد households التي لديها asset index يساوي 27 ونوع محدد من social network contact، مرتبة حسب total monthly consumption expenditure.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '27' AND T2.SOCIAL_NETWORK_CONTACT_2_TYPE = '1' GROUP BY T1.HOUSEHOLD_ID HAVING COUNT(T2.SOCIAL_ID) >= 1 ORDER BY SUM(T3.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) DESC;",
+      "predicted_sql": "SELECT\n    T1.caste_religion_group_8_category,\n    T1.social_network_contact_2_type,\n    AVG(T2.monthly_total_consumption_expenditure_rs) AS average_spending,\n    COUNT(DISTINCT T1.household_id) AS household_count\nFROM dim_household_social AS T1\nJOIN fact_household_consumption AS T2 ON T1.household_id = T2.household_id\nWHERE T1.household_assets_index = 27\n  AND T1.social_network_contact_2_type = 'specific_type'\nGROUP BY T1.caste_religion_group_8_category, T1.social_network_contact_2_type\nORDER BY average_spending DESC",
+      "error_info": "invalid input syntax for type double precision: \"specific_type\"\nLINE 9:   AND T1.social_network_contact_2_type = 'specific_type'\n                                                 ^\n"
+    },
+    {
+      "instance_id": "705af9c7",
+      "question": "اعرض معرّفات الأسر وفئاتها الطبقية أو الدينية المقابلة لها، مرتبة حسب مؤشر الأصول.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT HOUSEHOLD_ID, CASTE_RELIGION_GROUP_8_CATEGORY FROM DIM_HOUSEHOLD_SOCIAL ORDER BY HOUSEHOLD_ASSETS_INDEX;",
+      "predicted_sql": "SELECT household_id, caste_religion_group_8_category\nFROM dim_household_social\nWHERE household_assets_index = 27\n  AND social_network_contact_2_type IN (0, 1, -1)\nORDER BY household_assets_index",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "51085f79",
+      "question": "حدد أعلى 10 أسر مسيحية ذات أعلى درجات في مؤشر الأصول.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC LIMIT 10",
+      "predicted_sql": "SELECT household_id, household_assets_index\nFROM dim_household_social\nWHERE caste_religion_group_8_category = 'Christian'\nAND social_network_contact_2_type = 1\nAND household_assets_index > 10\nORDER BY household_assets_index DESC\nLIMIT 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "47e7c1a0",
+      "question": "حدد أعلى 10 أسر مسلمة من حيث متوسط الإنفاق الشهري، وتحديدًا تلك التي يتجاوز إنفاقها المتوسط الوطني العام.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, AVG(T2.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) FROM DIM_HOUSEHOLD AS T1 INNER JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN DIM_HOUSEHOLD_SOCIAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T3.CASTE_RELIGION_GROUP_8_CATEGORY = 'Muslim' GROUP BY T1.HOUSEHOLD_ID HAVING AVG(T2.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) > (SELECT AVG(MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) FROM FACT_HOUSEHOLD_CONSUMPTION) ORDER BY AVG(T2.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) DESC LIMIT 10",
+      "predicted_sql": "SELECT dim_household_social.household_id, fact_household_consumption.monthly_total_consumption_expenditure_rs\nFROM dim_household_social\nJOIN fact_household_consumption ON dim_household_social.household_id = fact_household_consumption.household_id\nWHERE dim_household_social.caste_religion_group_8_category = 'Muslim'\n  AND dim_household_social.household_assets_index = 27\n  AND dim_household_social.social_network_contact_2_type = 0  -- Replace 0 with actual value if known\n  AND fact_household_consumption.monthly_total_consumption_expenditure_rs > (\n    SELECT AVG(monthly_total_consumption_expenditure_rs) FROM fact_household_consumption\n  )\nORDER BY fact_household_consumption.monthly_total_consumption_expenditure_rs DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "b88f6a77",
+      "question": "قدّم الطائفة أو الجماعة الدينية، وasset index للأسرة، وأنواع جهات الاتصال في الشبكة الاجتماعية لجميع الأسر التي أُقيمت فيها مراسم Gauna، مرتبة حسب asset index.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE FROM DIM_HOUSEHOLD_MARITAL AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.DATE_OF_GAUNA IS NOT NULL GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.HOUSEHOLD_ASSETS_INDEX, T2.SOCIAL_NETWORK_CONTACT_2_TYPE ORDER BY T2.HOUSEHOLD_ASSETS_INDEX",
+      "predicted_sql": "SELECT T1.household_id,\n       T1.caste_religion_group_8_category,\n       T1.household_assets_index,\n       T1.social_network_contact_2_type\nFROM dim_household_social AS T1\nJOIN dim_household_marital AS T2 ON T1.household_id = T2.household_id\nWHERE T2.date_of_gauna IS NOT NULL\nORDER BY T1.household_assets_index",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "8492d41f",
+      "question": "اعرض معرّفات الأسر التي تنتمي إلى فئة OBC ولديها جهة اتصال أساسية في الشبكة الاجتماعية، مرتبة ترتيبًا عدديًا.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' AND T2.SOCIAL_NETWORK_CONTACT_2_TYPE = '1' ORDER BY T1.HOUSEHOLD_ID ASC",
+      "predicted_sql": "SELECT household_id\nFROM dim_household_social\nWHERE caste_religion_group_8_category = 'OBC'\n  AND social_network_contact_2_type IS NOT NULL\nORDER BY household_id ASC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "099f1ade",
+      "question": "حدد جميع الأسر التي تم تحديدها على أنها Muslim أو التي لديها تاريخ مسجل لـ Gauna.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_HOUSEHOLD_MARITAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.CASTE_RELIGION_GROUP_8_CATEGORY = 'Muslim' OR T2.DATE_OF_GAUNA IS NOT NULL",
+      "predicted_sql": "SELECT DISTINCT dim_household_social.household_id\nFROM dim_household_social\nLEFT JOIN dim_household_marital ON dim_household_social.household_id = dim_household_marital.household_id\nWHERE dim_household_social.caste_religion_group_8_category = 'Muslim'\n   OR dim_household_marital.date_of_gauna IS NOT NULL",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "76dd0073",
+      "question": "حدد جميع الأسر التي تم تحديدها على أنها Christian أو التي لديها تاريخ Gauna مسجل، مرتبة حسب معرّف الأسرة ID.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 LEFT JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN DIM_HOUSEHOLD_MARITAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' OR T3.DATE_OF_GAUNA IS NOT NULL GROUP BY T1.HOUSEHOLD_ID ORDER BY T1.HOUSEHOLD_ID ASC",
+      "predicted_sql": "SELECT DISTINCT T1.household_id\nFROM dim_household AS T1\nLEFT JOIN dim_household_social AS T2 ON T1.household_id = T2.household_id\nLEFT JOIN dim_household_marital AS T3 ON T1.household_id = T3.household_id\nWHERE T2.caste_religion_group_8_category = 'Christian' OR T3.date_of_gauna IS NOT NULL\nORDER BY T1.household_id",
+      "error_info": null
+    },
+    {
+      "instance_id": "d520a0c9",
+      "question": "حدد معرّفات القرى Rural في Tamil Nadu التي لديها إمكانية الوصول إلى مياه الشرب ولكنها تفتقر إلى المرافق الصحية، مرتبة حسب المعرّف الجغرافي ID الخاص بها.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.GEOGRAPHY_ID FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.STATE = 'Tamil Nadu' AND T1.CENSUS_2001_URBAN_RURAL = 'Rural' AND T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '0' AND T2.VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR = '1' ORDER BY T1.GEOGRAPHY_ID",
+      "predicted_sql": "SELECT dim_geography_hierarchy.geography_id\nFROM dim_geography_hierarchy\nJOIN dim_village_infrastructure ON dim_village_infrastructure.geography_id = dim_geography_hierarchy.geography_id\nWHERE dim_geography_hierarchy.state = 'Tamil Nadu'\n  AND dim_geography_hierarchy.census_2001_urban_rural = 'Rural'\n  AND dim_village_infrastructure.village_drinking_water_available_indicator = 'Yes'\n  AND dim_village_infrastructure.village_health_facility_available_indicator = 'No'\nORDER BY dim_geography_hierarchy.geography_id",
+      "error_info": "invalid input syntax for type double precision: \"Yes\"\nLINE 6: ...structure.village_drinking_water_available_indicator = 'Yes'\n                                                                  ^\n"
+    },
+    {
+      "instance_id": "ca663f58",
+      "question": "قدّم تفصيلاً حسب الولاية والقرية لتوافر خدمات الرعاية الصحية، مع إظهار متوسط الاستهلاك الشهري للفرد وإجمالي الإنفاق غير الغذائي.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT AVG(T1.MONTHLY_CONSUMPTION_PER_CAPITA), SUM(T1.MONTHLY_NON_FOOD_EXPENDITURE_RS), T2.STATE, T3.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR FROM FACT_HOUSEHOLD_CONSUMPTION T1 JOIN DIM_GEOGRAPHY_HIERARCHY T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_VILLAGE_INFRASTRUCTURE T3 ON T2.GEOGRAPHY_ID = T3.GEOGRAPHY_ID GROUP BY T2.STATE, T3.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR",
+      "predicted_sql": "WITH national_average AS (\n    SELECT AVG(monthly_total_consumption_expenditure_rs) AS avg_national_consumption\n    FROM fact_household_consumption\n)\nSELECT\n    dgh.state,\n    dgh.psu_village_or_neighborhood_code,\n    dvi.village_health_facility_available_indicator,\n    AVG(fhc.monthly_consumption_per_capita) AS avg_monthly_consumption_per_capita,\n    SUM(fhc.monthly_non_food_expenditure_rs) AS total_non_food_expenditure\nFROM dim_geography_hierarchy dgh\nJOIN dim_village_infrastructure dvi ON dgh.geography_id = dvi.geography_id\nJOIN fact_household_consumption fhc ON dgh.geography_id = fhc.geography_id\nJOIN dim_household_social dhs ON fhc.household_id = dhs.household_id\nCROSS JOIN national_average na\nWHERE dhs.caste_religion_group_8_category = 'Muslim'\n    AND fhc.monthly_total_consumption_expenditure_rs > na.avg_national_consumption\nGROUP BY\n    dgh.state,\n    dgh.psu_village_or_neighborhood_code,\n    dvi.village_health_facility_available_indicator\nORDER BY fhc.monthly_total_consumption_expenditure_rs DESC\nLIMIT 10",
+      "error_info": "column \"fhc.monthly_total_consumption_expenditure_rs\" must appear in the GROUP BY clause or be used in an aggregate function\nLINE 22: ORDER BY fhc.monthly_total_consumption_expenditure_rs DESC\n                  ^\n"
+    },
+    {
+      "instance_id": "0d11cbfc",
+      "question": "قدّم تفصيلاً حسب الولاية وتوافر المرافق الصحية لمتوسط الاستهلاك الشهري للفرد وإجمالي الإنفاق غير الغذائي، مع التركيز فقط على المناطق التي يتجاوز فيها متوسط الاستهلاك 329، وترتيب النتائج حسب إجمالي الإنفاق.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.STATE, T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR, AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA), SUM(T3.MONTHLY_NON_FOOD_EXPENDITURE_RS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 INNER JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID GROUP BY T1.STATE, T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR HAVING AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA) > 329 ORDER BY SUM(T3.MONTHLY_NON_FOOD_EXPENDITURE_RS) DESC",
+      "predicted_sql": "SELECT dim_geography_hierarchy.state,\n       dim_village_infrastructure.village_health_facility_available_indicator,\n       AVG(fact_household_consumption.monthly_consumption_per_capita) AS avg_monthly_consumption_per_capita,\n       SUM(fact_household_consumption.monthly_non_food_expenditure_rs) AS total_monthly_non_food_expenditure\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nWHERE fact_household_consumption.monthly_consumption_per_capita > 329\nGROUP BY dim_geography_hierarchy.state,\n         dim_village_infrastructure.village_health_facility_available_indicator\nORDER BY SUM(fact_household_consumption.monthly_total_consumption_expenditure_rs) DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "c4a941e4",
+      "question": "حدد الرموز الخاصة بالأحياء الريفية أو القرى التي يتوفر فيها كلٌّ من مرفق صحي ومدرسة.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' AND T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' AND T2.VILLAGE_SCHOOL_AVAILABLE_INDICATOR = '1'",
+      "predicted_sql": "SELECT DISTINCT T1.psu_village_or_neighborhood_code\nFROM dim_geography_hierarchy AS T1\nJOIN dim_village_infrastructure AS T2 ON T1.geography_id = T2.geography_id\nWHERE T1.census_2001_urban_rural = 'rural'\n  AND T2.village_health_facility_available_indicator = 1\n  AND T2.village_school_available_indicator = 1\nORDER BY T1.psu_village_or_neighborhood_code",
+      "error_info": null
+    },
+    {
+      "instance_id": "571ef167",
+      "question": "حدد الرموز الخاصة بالقرى الريفية أو الأحياء التي يتوفر فيها كلٌّ من مدرسة ومرفق صحي.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' AND T2.VILLAGE_SCHOOL_AVAILABLE_INDICATOR = '1' AND T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' GROUP BY T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE",
+      "predicted_sql": "SELECT DISTINCT dim_geography_hierarchy.psu_village_or_neighborhood_code\nFROM dim_geography_hierarchy\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'rural'\n  AND dim_village_infrastructure.village_school_available_indicator = 1\n  AND dim_village_infrastructure.village_health_facility_available_indicator = 1\nORDER BY dim_geography_hierarchy.psu_village_or_neighborhood_code",
+      "error_info": null
+    },
+    {
+      "instance_id": "b0e06805",
+      "question": "رتّب الولايات حسب متوسط استهلاكها الشهري للفرد في الأسر الريفية، مع تضمين الولايات التي لديها بيانات استهلاك مسجّلة فقط.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.STATE, AVG(T1.MONTHLY_CONSUMPTION_PER_CAPITA) FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 INNER JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN DIM_HOUSEHOLD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T2.STATE HAVING COUNT(T1.CONSUMPTION_ID) > 0 ORDER BY AVG(T1.MONTHLY_CONSUMPTION_PER_CAPITA) DESC",
+      "predicted_sql": "SELECT dim_geography_hierarchy.state,\n       AVG(fact_household_consumption.monthly_consumption_per_capita) AS avg_monthly_consumption\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_household_social ON fact_household_consumption.household_id = dim_household_social.household_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'rural'\n  AND dim_household_social.caste_religion_group_8_category = 'OBC'\n  AND dim_household_social.social_network_contact_2_type = 1\nGROUP BY dim_geography_hierarchy.state\nORDER BY avg_monthly_consumption DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "f4ecfd72",
+      "question": "حدّد أفضل 10 أحياء rural في Uttar Pradesh ذات أعلى متوسط monthly per capita consumption، مع بيان ما إذا كان لكل منها إمكانية الوصول إلى مرفق صحي في village.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE, T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR, AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T1.STATE = 'Uttar Pradesh' AND T1.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE, T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR ORDER BY AVG(T3.MONTHLY_CONSUMPTION_PER_CAPITA) DESC LIMIT 10",
+      "predicted_sql": "SELECT DISTINCT T1.psu_village_or_neighborhood_code,\n       AVG(T2.monthly_consumption_per_capita) AS avg_monthly_consumption_per_capita,\n       MAX(T3.village_health_facility_available_indicator) AS village_health_facility_available_indicator\nFROM dim_geography_hierarchy AS T1\nJOIN fact_household_consumption AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_village_infrastructure AS T3 ON T1.geography_id = T3.geography_id\nJOIN dim_household AS hh ON T2.household_id = hh.household_id\nJOIN dim_household_social AS hs ON hh.household_id = hs.household_id\nWHERE T1.state = 'Uttar Pradesh'\n  AND T1.census_2001_urban_rural = 'rural'\n  AND hs.caste_religion_group_8_category = 'OBC'\n  AND hs.social_network_contact_2_type = 1\nGROUP BY T1.psu_village_or_neighborhood_code\nORDER BY avg_monthly_consumption_per_capita DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "cabd0d93",
+      "question": "قدّم أفضل 10 أحياء rural في Uttar Pradesh ذات أعلى متوسط monthly per capita consumption، مع بيان ما إذا كان لدى كل منها مرفق صحي في village.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE, AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA), T3.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_VILLAGE_INFRASTRUCTURE AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T1.STATE = 'Uttar Pradesh' AND T1.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T1.PSU_VILLAGE_OR_NEIGHBORHOOD_CODE, T3.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR ORDER BY AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA) DESC LIMIT 10",
+      "predicted_sql": "SELECT T2.psu_village_or_neighborhood_code,\n       AVG(T1.monthly_consumption_per_capita) AS avg_monthly_consumption_per_capita,\n       CASE WHEN MAX(T3.village_health_facility_available_indicator) = 1 THEN 'Yes' ELSE 'No' END AS has_health_facility\nFROM fact_household_consumption AS T1\nJOIN dim_geography_hierarchy AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_village_infrastructure AS T3 ON T2.geography_id = T3.geography_id\nWHERE T2.state = 'Uttar Pradesh'\n  AND T2.census_2001_urban_rural = 'rural'\nGROUP BY T2.psu_village_or_neighborhood_code\nORDER BY AVG(T1.monthly_consumption_per_capita) DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "69255140",
+      "question": "احسب متوسط الاستهلاك الشهري للفرد لكل ولاية وكل مقاطعة، مع التركيز فقط على القرى التي لديها مرافق صحية.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.STATE, T1.DISTRICT_CODE, AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_VILLAGE_INFRASTRUCTURE AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T3.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' GROUP BY T1.STATE, T1.DISTRICT_CODE",
+      "predicted_sql": "SELECT\n    AVG(fact_household_consumption.monthly_consumption_per_capita) AS avg_monthly_consumption_per_capita,\n    dim_geography_hierarchy.state,\n    dim_geography_hierarchy.district_code\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nJOIN dim_household ON fact_household_consumption.household_id = dim_household.household_id\nJOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nJOIN dim_household_marital ON dim_household.household_id = dim_household_marital.household_id\nWHERE dim_village_infrastructure.village_health_facility_available_indicator = 1\n    AND (dim_household_social.caste_religion_group_8_category = 'Muslim'\n         OR dim_household_marital.date_of_gauna IS NOT NULL)\nGROUP BY dim_geography_hierarchy.state, dim_geography_hierarchy.district_code",
+      "error_info": null
+    },
+    {
+      "instance_id": "6c68ace6",
+      "question": "احسب متوسط monthly per capita consumption لكل district وstate، مع التركيز فقط على المناطق التي تتوفر فيها مرافق صحية في village.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.STATE, T1.DISTRICT_CODE, AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_VILLAGE_INFRASTRUCTURE AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T3.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' GROUP BY T1.STATE, T1.DISTRICT_CODE",
+      "predicted_sql": "SELECT\n    AVG(DISTINCT T1.monthly_consumption_per_capita),\n    T2.district_code,\n    T2.state\nFROM fact_household_consumption AS T1\nJOIN dim_geography_hierarchy AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_village_infrastructure AS T3 ON T2.geography_id = T3.geography_id\nJOIN dim_household_social AS T4 ON T1.household_id = T4.household_id\nJOIN dim_household_marital AS T5 ON T1.household_id = T5.household_id\nWHERE T3.village_health_facility_available_indicator = 1\n  AND (T4.caste_religion_group_8_category = 'Christian' OR T5.date_of_gauna IS NOT NULL)\nGROUP BY T2.state, T2.district_code\nORDER BY T2.state, T2.district_code",
+      "error_info": null
+    },
+    {
+      "instance_id": "ffa1a484",
+      "question": "حدد رموز المناطق التي تضم قرى ريفية تتوفر فيها مرافق صحية ولكن لا تتوفر فيها مياه الشرب.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.DISTRICT_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T1.DISTRICT_CODE HAVING COUNT(CASE WHEN T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' THEN 1 END) > 0 AND COUNT(CASE WHEN T2.VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR = '1' THEN 1 END) = 0",
+      "predicted_sql": "SELECT dim_geography_hierarchy.geography_id\nFROM dim_geography_hierarchy\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'rural'\n  AND dim_village_infrastructure.village_health_facility_available_indicator = 'yes'\n  AND dim_village_infrastructure.village_drinking_water_available_indicator = 'no'",
+      "error_info": "invalid input syntax for type double precision: \"yes\"\nLINE 5: ...tructure.village_health_facility_available_indicator = 'yes'\n                                                                  ^\n"
+    },
+    {
+      "instance_id": "1c5b8848",
+      "question": "حدد رموز المقاطعات التي تضم قرى ريفية لديها إمكانية الوصول إلى المرافق الصحية ولكن لا تتوفر فيها مياه شرب، مرتبة حسب رمز المقاطعة.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.DISTRICT_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T1.DISTRICT_CODE HAVING SUM(CASE WHEN T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN T2.VILLAGE_DRINKING_WATER_AVAILABLE_INDICATOR = '1' THEN 1 ELSE 0 END) = 0 ORDER BY T1.DISTRICT_CODE ASC",
+      "predicted_sql": "SELECT DISTINCT T1.district_code\nFROM dim_geography_hierarchy AS T1\nJOIN dim_village_infrastructure AS T2 ON T1.geography_id = T2.geography_id\nWHERE T1.census_2001_urban_rural = 'Rural'\n  AND T2.village_health_facility_available_indicator = '1'\n  AND T2.village_drinking_water_available_indicator = '0'\nORDER BY T1.district_code",
+      "error_info": null
+    },
+    {
+      "instance_id": "3b1c9aff",
+      "question": "حدد معرّفات المناطق الجغرافية للقرى الريفية التي لديها إمكانية الوصول إلى كلٍّ من المدرسة والمرفق الصحي.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.GEOGRAPHY_ID FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' AND T2.VILLAGE_SCHOOL_AVAILABLE_INDICATOR = '1' AND T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1'",
+      "predicted_sql": "SELECT T1.geography_id\nFROM dim_geography_hierarchy AS T1\nJOIN dim_village_infrastructure AS T2 ON T1.geography_id = T2.geography_id\nWHERE T1.state = 'Tamil Nadu'\n  AND T1.census_2001_urban_rural = 'Rural'\n  AND T2.village_school_available_indicator = '1'\n  AND T2.village_health_facility_available_indicator = '1'\nORDER BY T1.geography_id",
+      "error_info": null
+    },
+    {
+      "instance_id": "6701182a",
+      "question": "حدد جميع المناطق الريفية التي تتوفر فيها كلٌّ من المرافق التعليمية والمرافق الصحية، مرتبة حسب معرّفها الجغرافي.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.GEOGRAPHY_ID FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' AND T2.VILLAGE_SCHOOL_AVAILABLE_INDICATOR = '1' AND T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' GROUP BY T1.GEOGRAPHY_ID ORDER BY T1.GEOGRAPHY_ID ASC",
+      "predicted_sql": "SELECT T1.geography_id\nFROM dim_geography_hierarchy AS T1\nJOIN dim_village_infrastructure AS T2 ON T1.geography_id = T2.geography_id\nWHERE T1.state = 'Tamil Nadu'\n  AND T1.census_2001_urban_rural = 'Rural'\n  AND T2.village_school_available_indicator = '1'\n  AND T2.village_health_facility_available_indicator = '1'\nORDER BY T1.geography_id",
+      "error_info": null
+    },
+    {
+      "instance_id": "93782300",
+      "question": "حدد معرّفات القرى الريفية التي تضمّ كلاً من مدرسة ومرفقًا صحيًا، والتي سُجِّل لها أيضًا إدخال واحد على الأقل لاستهلاك الأسر المعيشية، مرتبةً ترتيبًا عدديًا.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.GEOGRAPHY_ID FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' AND T2.VILLAGE_SCHOOL_AVAILABLE_INDICATOR = '1' AND T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' GROUP BY T1.GEOGRAPHY_ID HAVING COUNT(T3.CONSUMPTION_ID) >= 1 ORDER BY T1.GEOGRAPHY_ID ASC",
+      "predicted_sql": "SELECT DISTINCT dim_geography_hierarchy.geography_id\nFROM dim_geography_hierarchy\nJOIN dim_village_infrastructure\n    ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nJOIN fact_household_consumption\n    ON dim_geography_hierarchy.geography_id = fact_household_consumption.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'rural'\n  AND dim_village_infrastructure.village_school_available_indicator = 1\n  AND dim_village_infrastructure.village_health_facility_available_indicator = 1\nGROUP BY dim_geography_hierarchy.geography_id\nORDER BY dim_geography_hierarchy.geography_id",
+      "error_info": null
+    },
+    {
+      "instance_id": "7259cbe2",
+      "question": "حدّد المناطق الجغرافية التي إما لديها إمكانية الوصول إلى المرافق الصحية القروية أو تُبلّغ عن استهلاك شهري للفرد يتجاوز 5,000.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.GEOGRAPHY_ID FROM DIM_VILLAGE_INFRASTRUCTURE AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' OR T2.MONTHLY_CONSUMPTION_PER_CAPITA > 5000",
+      "predicted_sql": "SELECT\n    dgh.state,\n    CASE\n        WHEN dvi.village_health_facility_available_indicator = '1' THEN 'available'\n        WHEN dvi.village_health_facility_available_indicator = '0' THEN 'not available'\n        ELSE dvi.village_health_facility_available_indicator\n    END AS health_facility_available,\n    AVG(fhc.monthly_consumption_per_capita) AS avg_per_capita_consumption,\n    SUM(fhc.monthly_non_food_expenditure_rs) AS total_non_food_spending\nFROM dim_geography_hierarchy dgh\nJOIN dim_village_infrastructure dvi ON dgh.geography_id = dvi.geography_id\nJOIN fact_household_consumption fhc ON dgh.geography_id = fhc.geography_id\nWHERE dvi.village_health_facility_available_indicator IN ('0', '1')\n    AND (dvi.village_health_facility_available_indicator = '1'\n         OR fhc.monthly_consumption_per_capita > 5000)\nGROUP BY dgh.state,\n    CASE\n        WHEN dvi.village_health_facility_available_indicator = '1' THEN 'available'\n        WHEN dvi.village_health_facility_available_indicator = '0' THEN 'not available'\n        ELSE dvi.village_health_facility_available_indicator\n    END\nORDER BY dgh.state, health_facility_available",
+      "error_info": "invalid input syntax for type double precision: \"available\"\nLINE 4: ...ge_health_facility_available_indicator = '1' THEN 'available...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "9d718365",
+      "question": "حدد المعرّفات الجغرافية للمناطق التي يوجد فيها إما مرفق صحي في village أو monthly per capita consumption يتجاوز 3,667، مع التأكد من تضمين المواقع التي لديها على الأقل سجل استهلاك واحد.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.GEOGRAPHY_ID FROM DIM_GEOGRAPHY_HIERARCHY AS T1 LEFT JOIN DIM_VILLAGE_INFRASTRUCTURE AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID LEFT JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T2.VILLAGE_HEALTH_FACILITY_AVAILABLE_INDICATOR = '1' OR T3.MONTHLY_CONSUMPTION_PER_CAPITA > 3667 GROUP BY T1.GEOGRAPHY_ID HAVING COUNT(T3.CONSUMPTION_ID) >= 1 ORDER BY T1.GEOGRAPHY_ID ASC",
+      "predicted_sql": "SELECT dim_geography_hierarchy.geography_id\nFROM dim_geography_hierarchy\nJOIN fact_household_consumption ON dim_geography_hierarchy.geography_id = fact_household_consumption.geography_id\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nWHERE dim_village_infrastructure.village_health_facility_available_indicator = 1\n   OR fact_household_consumption.monthly_consumption_per_capita > 3667\nGROUP BY dim_geography_hierarchy.geography_id,\n         dim_geography_hierarchy.state,\n         dim_village_infrastructure.village_health_facility_available_indicator\nHAVING AVG(fact_household_consumption.monthly_consumption_per_capita) > 329\nORDER BY SUM(fact_household_consumption.monthly_non_food_expenditure_rs) DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "6493ceb6",
+      "question": "قدّم قائمة بمعرّفات الأسر المصنّفة على أنها من فئة OBC والتي لديها مؤشر أصول مسجّل، مرتّبة حسب معرّفها.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' AND T2.HOUSEHOLD_ASSETS_INDEX IS NOT NULL ORDER BY T1.HOUSEHOLD_ID",
+      "predicted_sql": "SELECT dim_household.household_id\nFROM dim_household\nJOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nWHERE dim_household_social.caste_religion_group_8_category = 'OBC'\n  AND dim_household_social.household_assets_index IS NOT NULL\nORDER BY dim_household.household_id",
+      "error_info": null
+    },
+    {
+      "instance_id": "bda085ac",
+      "question": "قدّم قائمة بمعرّفات الأسر للعائلات المسلمة التي لديها مؤشر أصول مسجّل، مرتبة حسب معرّفها.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Muslim' AND T2.HOUSEHOLD_ASSETS_INDEX IS NOT NULL ORDER BY T1.HOUSEHOLD_ID",
+      "predicted_sql": "SELECT T1.household_id\nFROM dim_household AS T1\nJOIN dim_household_social AS T2 ON T1.household_id = T2.household_id\nWHERE T2.caste_religion_group_8_category = 'Muslim'\n  AND T2.household_assets_index IS NOT NULL\nORDER BY T1.household_id",
+      "error_info": null
+    },
+    {
+      "instance_id": "83910589",
+      "question": "قدّم مؤشر الأصول ومتوسط الإنفاق الشهري للأسر المسيحية التي تنفق في المتوسط أكثر من 300 روبية شهريًا، مرتبةً من أعلى إلى أدنى حسب مؤشر الأصول.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX, AVG(T3.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN FACT_HOUSEHOLD_CONSUMPTION AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' AND T2.HOUSEHOLD_ASSETS_INDEX IS NOT NULL GROUP BY T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX HAVING AVG(T3.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) > 300 ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+      "predicted_sql": "SELECT dim_household_social.household_assets_index,\n       AVG(fact_household_consumption.monthly_total_consumption_expenditure_rs) as avg_monthly_expenditure\nFROM dim_household_social\nJOIN fact_household_consumption ON dim_household_social.household_id = fact_household_consumption.household_id\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nWHERE dim_household_social.caste_religion_group_8_category = 'Christian'\n  AND dim_geography_hierarchy.census_2001_urban_rural = 'Rural'\n  AND dim_village_infrastructure.village_health_facility_available_indicator = 1\n  AND dim_village_infrastructure.village_school_available_indicator = 1\nGROUP BY dim_household_social.household_assets_index\nHAVING AVG(fact_household_consumption.monthly_total_consumption_expenditure_rs) > 300\nORDER BY dim_household_social.household_assets_index DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "14917044",
+      "question": "لكل فئة طبقية وكل جماعة دينية، اعرض متوسط مؤشر أصول الأسرة وإجمالي عدد العاملين في رعاية الحيوانات، مرتبة من الأعلى إلى الأدنى حسب متوسط الثروة.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, AVG(CAST(T2.HOUSEHOLD_ASSETS_INDEX AS NUMERIC)), SUM(CAST(T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS AS NUMERIC)) FROM DIM_HOUSEHOLD T1 JOIN DIM_HOUSEHOLD_SOCIAL T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY ORDER BY AVG(CAST(T2.HOUSEHOLD_ASSETS_INDEX AS NUMERIC)) DESC",
+      "predicted_sql": "SELECT\n    dim_household_social.caste_religion_group_8_category,\n    AVG(dim_household_social.household_assets_index) AS average_assets_index,\n    SUM(dim_household.household_number_of_animal_care_workers) AS total_animal_care_workers\nFROM dim_household_social\nJOIN dim_household ON dim_household_social.household_id = dim_household.household_id\nJOIN fact_household_consumption ON dim_household.household_id = fact_household_consumption.household_id\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'Rural'\nGROUP BY dim_household_social.caste_religion_group_8_category\nORDER BY AVG(dim_household_social.household_assets_index) DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "4bdaef0f",
+      "question": "قدّم تفصيلاً لمتوسط المعرّف الاجتماعي وإجمالي عدد العاملين في رعاية الحيوانات، مُجمَّعًا حسب فئة الطبقة/الدين ونوع جهة الاتصال في الشبكة الاجتماعية، لجميع الأسر التي لديها أفراد مسجَّلون، مع الترتيب حسب أعلى متوسط للمعرّف الاجتماعي.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.SOCIAL_NETWORK_CONTACT_2_TYPE, AVG(T2.SOCIAL_ID), SUM(CAST(T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS AS NUMERIC)) FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.SOCIAL_NETWORK_CONTACT_2_TYPE HAVING COUNT(T1.HOUSEHOLD_PERSON_CASE_ID) > 0 ORDER BY AVG(T2.SOCIAL_ID) DESC",
+      "predicted_sql": "SELECT\n    dim_household_social.caste_religion_group_8_category,\n    dim_household_social.social_network_contact_2_type,\n    AVG(dim_household_social.household_assets_index) AS average_social_identifier,\n    SUM(dim_household.household_number_of_animal_care_workers) AS total_animal_care_workers\nFROM dim_household_social\nJOIN dim_household ON dim_household_social.household_id = dim_household.household_id\nWHERE dim_household.household_person_case_id IS NOT NULL\nGROUP BY\n    dim_household_social.caste_religion_group_8_category,\n    dim_household_social.social_network_contact_2_type\nORDER BY average_social_identifier DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "aa7dc679",
+      "question": "حدّد جميع الأسر التي تنتمي إلى فئة OBC والتي لديها مؤشر أصول أكبر من 10.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' AND T2.HOUSEHOLD_ASSETS_INDEX > '10'",
+      "predicted_sql": "SELECT household_id\nFROM dim_household_social\nWHERE caste_religion_group_8_category = 'OBC'\n  AND household_assets_index > 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "7f1d4779",
+      "question": "اعرض مُعرّفات الأسر وفئاتها الخاصة بالطبقة الاجتماعية أو المجموعة الدينية، مرتبة من الأعلى إلى الأدنى بناءً على مؤشر الأصول الخاص بها.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT HOUSEHOLD_ID, CASTE_RELIGION_GROUP_8_CATEGORY FROM DIM_HOUSEHOLD_SOCIAL ORDER BY HOUSEHOLD_ASSETS_INDEX DESC;",
+      "predicted_sql": "SELECT\n    fhc.household_id,\n    dhs.caste_religion_group_8_category,\n    dgh.psu_village_or_neighborhood_code,\n    AVG(fhc.monthly_consumption_per_capita) AS avg_consumption,\n    CASE\n        WHEN dvi.village_health_facility_available_indicator > 0 THEN 'Yes'\n        ELSE 'No'\n    END AS health_facility_access\nFROM fact_household_consumption AS fhc\nJOIN dim_geography_hierarchy AS dgh ON fhc.geography_id = dgh.geography_id\nJOIN dim_village_infrastructure AS dvi ON dgh.geography_id = dvi.geography_id\nJOIN dim_household_social AS dhs ON fhc.household_id = dhs.household_id\nWHERE dgh.state = 'Uttar Pradesh'\n    AND dgh.census_2001_urban_rural = 'Rural'\nGROUP BY\n    dgh.psu_village_or_neighborhood_code,\n    fhc.household_id,\n    dhs.caste_religion_group_8_category,\n    dvi.village_health_facility_available_indicator\nORDER BY avg_consumption DESC\nLIMIT 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "1ccaf231",
+      "question": "حدد أعلى 10 أسر مسيحية تمتلك أعلى مؤشر للأصول.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL WHERE CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' ORDER BY HOUSEHOLD_ASSETS_INDEX DESC LIMIT 10;",
+      "predicted_sql": "SELECT dh.household_id, ds.household_assets_index\nFROM dim_household_social ds\nJOIN dim_household dh ON ds.household_id = dh.household_id\nJOIN fact_household_consumption fc ON dh.household_id = fc.household_id\nJOIN dim_geography_hierarchy dg ON fc.geography_id = dg.geography_id\nWHERE ds.caste_religion_group_8_category = 'Christian'\nAND dg.state = 'Uttar Pradesh'\nAND dg.census_2001_urban_rural = 'Rural'\nORDER BY ds.household_assets_index DESC\nLIMIT 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "98f0a045",
+      "question": "حدد معرّفات الحالات للأسر المسيحية العشر ذات أعلى درجات مؤشر الأصول.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_PERSON_CASE_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC LIMIT 10",
+      "predicted_sql": "SELECT DISTINCT dim_household.household_person_case_id\nFROM dim_household_social\nJOIN dim_household ON dim_household_social.household_id = dim_household.household_id\nWHERE dim_household_social.caste_religion_group_8_category = 'Christian'\nORDER BY dim_household_social.household_assets_index DESC\nLIMIT 10",
+      "error_info": "for SELECT DISTINCT, ORDER BY expressions must appear in select list\nLINE 5: ORDER BY dim_household_social.household_assets_index DESC\n                 ^\n"
+    },
+    {
+      "instance_id": "0c9fb70c",
+      "question": "حدد أعلى 10 أسر مسيحية ذات أعلى مؤشرات للأصول، واعرض متوسط إجمالي إنفاقها الاستهلاكي الشهري.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, AVG(T2.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) FROM DIM_HOUSEHOLD AS T1 INNER JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN DIM_HOUSEHOLD_SOCIAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T3.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' GROUP BY T1.HOUSEHOLD_ID HAVING COUNT(T3.SOCIAL_ID) >= 1 ORDER BY MAX(T3.HOUSEHOLD_ASSETS_INDEX) DESC LIMIT 10",
+      "predicted_sql": "SELECT\n    dim_household_social.household_id,\n    dim_household_social.household_assets_index,\n    AVG(fact_household_consumption.monthly_total_consumption_expenditure_rs) as avg_monthly_consumption\nFROM dim_household_social\nJOIN fact_household_consumption ON dim_household_social.household_id = fact_household_consumption.household_id\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nWHERE dim_household_social.caste_religion_group_8_category = 'Christian'\n    AND dim_village_infrastructure.village_health_facility_available_indicator = 1\n    AND dim_geography_hierarchy.census_2001_urban_rural = 'Rural'\nGROUP BY dim_household_social.household_id, dim_household_social.household_assets_index\nORDER BY dim_household_social.household_assets_index DESC\nLIMIT 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "f21079ed",
+      "question": "قدّم عدد العاملين في رعاية الحيوانات وتواريخ Gauna لجميع الأسر Christian.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS, T3.DATE_OF_GAUNA FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_HOUSEHOLD_MARITAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian';",
+      "predicted_sql": "SELECT\n    dim_geography_hierarchy.state,\n    dim_geography_hierarchy.district_code,\n    AVG(fact_household_consumption.monthly_consumption_per_capita) AS avg_monthly_consumption_per_capita\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_village_infrastructure ON dim_geography_hierarchy.geography_id = dim_village_infrastructure.geography_id\nWHERE dim_village_infrastructure.village_health_facility_available_indicator = 1\nGROUP BY dim_geography_hierarchy.state, dim_geography_hierarchy.district_code\nORDER BY dim_geography_hierarchy.state, dim_geography_hierarchy.district_code",
+      "error_info": null
+    },
+    {
+      "instance_id": "aa876f79",
+      "question": "قدّم عدد العاملين في رعاية الحيوانات وتواريخ Gauna للأسر Christian.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS, T3.DATE_OF_GAUNA FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_HOUSEHOLD_MARITAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' GROUP BY T3.DATE_OF_GAUNA, T2.CASTE_RELIGION_GROUP_8_CATEGORY, T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS ORDER BY T2.CASTE_RELIGION_GROUP_8_CATEGORY DESC",
+      "predicted_sql": "SELECT DISTINCT dim_household.household_number_of_animal_care_workers, dim_household_marital.date_of_gauna\nFROM dim_household\nJOIN dim_household_marital ON dim_household.household_id = dim_household_marital.household_id\nJOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nWHERE dim_household_social.caste_religion_group_8_category = 'Christian'",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "1cbbf0d2",
+      "question": "حدد معرّفات الأسر للعائلات التي لديها مؤشر أصول الأسرة المعيشية بقيمة 27 ولديها تاريخ مسجّل لمراسم Gauna.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_HOUSEHOLD_MARITAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.HOUSEHOLD_ASSETS_INDEX = '27' AND T2.DATE_OF_GAUNA IS NOT NULL",
+      "predicted_sql": "SELECT DISTINCT T1.household_id\nFROM dim_household_social AS T1\nJOIN dim_household_marital AS T2 ON T1.household_id = T2.household_id\nWHERE T1.household_assets_index = 27\n  AND T2.date_of_gauna IS NOT NULL",
+      "error_info": null
+    },
+    {
+      "instance_id": "49f1774f",
+      "question": "حدد معرّفات الأسر للأسر الأكثر ثراءً، استنادًا إلى asset index، حيث احتفل فرد واحد على الأقل بمراسم Gauna، مرتبة حسب ID.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_HOUSEHOLD_MARITAL AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = (SELECT MAX(HOUSEHOLD_ASSETS_INDEX) FROM DIM_HOUSEHOLD_SOCIAL) GROUP BY T1.HOUSEHOLD_ID HAVING COUNT(T3.DATE_OF_GAUNA) >= 1 ORDER BY T1.HOUSEHOLD_ID ASC",
+      "predicted_sql": "SELECT dim_household.household_id\nFROM dim_household\nJOIN dim_household_social ON dim_household_social.household_id = dim_household.household_id\nJOIN dim_household_marital ON dim_household_marital.household_id = dim_household.household_id\nWHERE dim_household_marital.date_of_gauna IS NOT NULL\nORDER BY dim_household_social.household_assets_index DESC, dim_household.household_id",
+      "error_info": null
+    },
+    {
+      "instance_id": "a29f6fad",
+      "question": "حدد جميع الأسر المعيشية التي لديها إما asset index بقيمة 27 أو تاريخ مسجل لمراسم Gauna.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT DISTINCT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_HOUSEHOLD_MARITAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.HOUSEHOLD_ASSETS_INDEX = '27' OR T2.DATE_OF_GAUNA IS NOT NULL",
+      "predicted_sql": "SELECT DISTINCT T1.household_id\nFROM dim_household AS T1\nWHERE EXISTS (\n    SELECT 1 FROM dim_household_social AS T2\n    WHERE T1.household_id = T2.household_id\n    AND T2.household_assets_index = 27\n) OR EXISTS (\n    SELECT 1 FROM dim_household_marital AS T3\n    WHERE T1.household_id = T3.household_id\n    AND T3.date_of_gauna IS NOT NULL\n)",
+      "error_info": null
+    },
+    {
+      "instance_id": "a6ae852e",
+      "question": "قدّم تفصيلاً لإجمالي عدد سجلات أصول الأسر المعيشية وأعداد العمال لكل فئة من فئات الطبقات الاجتماعية والمجموعات الدينية.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.CASTE_RELIGION_GROUP_8_CATEGORY, COUNT(T1.HOUSEHOLD_ASSETS_INDEX), COUNT(T2.HOUSEHOLD_NUMBER_OF_WORKERS) FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_HOUSEHOLD AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID GROUP BY T1.CASTE_RELIGION_GROUP_8_CATEGORY",
+      "predicted_sql": "SELECT count(dim_household_social.household_id), sum(dim_household.household_number_of_workers), dim_household_social.caste_religion_group_8_category\nFROM dim_household_social\nJOIN dim_household ON dim_household_social.household_id = dim_household.household_id\nGROUP BY dim_household_social.caste_religion_group_8_category",
+      "error_info": null
+    },
+    {
+      "instance_id": "82810052",
+      "question": "حدد معرّفات الأسر للعائلات المنتمية إلى فئة OBC والتي تقع ضمن أعلى شريحة في مؤشر الأصول.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL WHERE CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' AND HOUSEHOLD_ASSETS_INDEX = '10';",
+      "predicted_sql": "SELECT DISTINCT household_id\nFROM dim_household_social\nWHERE caste_religion_group_8_category = 'OBC'\n  AND household_assets_index = (\n    SELECT MAX(household_assets_index)\n    FROM dim_household_social\n    WHERE caste_religion_group_8_category = 'OBC'\n  )\nORDER BY household_id",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "b46106b7",
+      "question": "اعرض معرّفات الأسر وفئاتها الخاصة بالطبقة الاجتماعية أو المجموعة الدينية، مرتبة من الأعلى إلى الأدنى بناءً على مؤشر الأصول.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT HOUSEHOLD_ID, CASTE_RELIGION_GROUP_8_CATEGORY FROM DIM_HOUSEHOLD_SOCIAL ORDER BY HOUSEHOLD_ASSETS_INDEX DESC;",
+      "predicted_sql": "SELECT DISTINCT\n    h.household_id,\n    s.caste_religion_group_8_category\nFROM dim_household h\nJOIN dim_household_social s ON h.household_id = s.household_id\nJOIN fact_household_consumption fhc ON h.household_id = fhc.household_id\nJOIN dim_geography_hierarchy gh ON fhc.geography_id = gh.geography_id\nLEFT JOIN dim_village_infrastructure vi ON gh.geography_id = vi.geography_id\nWHERE (vi.village_health_facility_available_indicator = 1\n       OR fhc.monthly_consumption_per_capita > 5000)\nORDER BY s.household_assets_index DESC",
+      "error_info": "for SELECT DISTINCT, ORDER BY expressions must appear in select list\nLINE 11: ORDER BY s.household_assets_index DESC\n                  ^\n"
+    },
+    {
+      "instance_id": "8253a6c1",
+      "question": "اعرض معرّفات الأسر والفئات المقابلة لها من حيث الطبقة الاجتماعية أو المجموعة الدينية، مرتبةً من أعلى إلى أدنى وفقًا لمؤشر أصول الأسرة.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.CASTE_RELIGION_GROUP_8_CATEGORY FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+      "predicted_sql": "SELECT DISTINCT geography_id\nFROM dim_village_infrastructure\nWHERE village_health_facility_available_indicator = 1\nUNION\nSELECT DISTINCT geography_id\nFROM fact_household_consumption\nWHERE monthly_consumption_per_capita > 3667\nORDER BY geography_id ASC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "536be16d",
+      "question": "اعرض أعلى 10 معرّفات للأسر ومؤشرات الأصول الخاصة بها للأسر المسلمة أو أسر فئة OBC التي لديها مؤشر أصول أكبر من 10، مرتبة من الأعلى إلى الأدنى.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY IN ('OBC', 'Muslim') GROUP BY T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX HAVING MAX(T2.HOUSEHOLD_ASSETS_INDEX) > '10' ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC LIMIT 10",
+      "predicted_sql": "SELECT\n    h.household_id,\n    s.household_assets_index\nFROM",
+      "error_info": "syntax error at end of input\nLINE 4: FROM\n            ^\n"
+    },
+    {
+      "instance_id": "3012cd8e",
+      "question": "قدّم متوسط المعرّف الاجتماعي للأسر التي لديها أطفال غير ملتحقين حاليًا بالمدرسة، مُفصّلًا حسب فئة الطائفة/الدين ومؤشر الأصول.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.CASTE_RELIGION_GROUP_8_CATEGORY, T1.HOUSEHOLD_ASSETS_INDEX, AVG(T1.SOCIAL_ID) FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_EDUCATION_CHILD AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CHILD_SCHOOL_ENROLLMENT_STATUS = '-1' GROUP BY T1.CASTE_RELIGION_GROUP_8_CATEGORY, T1.HOUSEHOLD_ASSETS_INDEX ORDER BY T1.CASTE_RELIGION_GROUP_8_CATEGORY",
+      "predicted_sql": "SELECT\n    dim_household_social.caste_religion_group_8_category,\n    dim_household_social.household_assets_index,\n    AVG(dim_household_social.household_assets_index) AS average_assets_index\nFROM dim_household_social\nINNER JOIN dim_education_child ON dim_household_social.household_id = dim_education_child.household_id\nWHERE dim_education_child.child_school_enrollment_status = 'Not enrolled'\n    AND dim_household_social.caste_religion_group_8_category = 'Muslim'\n    AND dim_household_social.household_assets_index IS NOT NULL\nGROUP BY\n    dim_household_social.caste_religion_group_8_category,\n    dim_household_social.household_assets_index\nORDER BY\n    dim_household_social.caste_religion_group_8_category,\n    dim_household_social.household_assets_index DESC",
+      "error_info": "invalid input syntax for type bigint: \"Not enrolled\"\nLINE 7: ..._education_child.child_school_enrollment_status = 'Not enrol...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "2e736d46",
+      "question": "بالنسبة للأطفال غير الملتحقين حاليًا بالمدرسة، اعرض متوسط مُعرّف التعليم مُصنَّفًا حسب مجموعة الطبقة/الدين ومؤشر أصول الأسرة، ومرتَّبًا حسب الفئة الاجتماعية.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.HOUSEHOLD_ASSETS_INDEX, AVG(T1.CHILD_EDUCATION_ID) FROM DIM_EDUCATION_CHILD T1 JOIN DIM_HOUSEHOLD_SOCIAL T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.CHILD_SCHOOL_ENROLLMENT_STATUS = '-1' GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.HOUSEHOLD_ASSETS_INDEX ORDER BY T2.CASTE_RELIGION_GROUP_8_CATEGORY ASC",
+      "predicted_sql": "SELECT AVG(dim_education_child.child_education_id), dim_household_social.caste_religion_group_8_category, dim_household_social.household_assets_index\nFROM dim_education_child\nJOIN dim_household_social ON dim_education_child.household_id = dim_household_social.household_id\nWHERE dim_education_child.child_school_enrollment_status = 'not enrolled'\nGROUP BY dim_household_social.caste_religion_group_8_category, dim_household_social.household_assets_index\nORDER BY dim_household_social.caste_religion_group_8_category",
+      "error_info": "invalid input syntax for type bigint: \"not enrolled\"\nLINE 4: ..._education_child.child_school_enrollment_status = 'not enrol...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "565304fa",
+      "question": "حدد معرّفات الأسر للعائلات المصنّفة عند مؤشر الأصول 17 التي لديها أطفال بحالة تسجيل مدرسي غير معروفة أو غير محددة.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_EDUCATION_CHILD AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.HOUSEHOLD_ASSETS_INDEX = '17' AND T2.CHILD_SCHOOL_ENROLLMENT_STATUS = '-1' GROUP BY T1.HOUSEHOLD_ID",
+      "predicted_sql": "SELECT dim_household.household_id\nFROM dim_household\nJOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nJOIN dim_education_child ON dim_household.household_id = dim_education_child.household_id\nWHERE dim_household_social.caste_religion_group_8_category = 'Christian'\n  AND dim_household_social.household_assets_index IS NOT NULL\n  AND dim_education_child.child_school_enrollment_status IN ('unknown', 'unspecified')\nORDER BY dim_household.household_id",
+      "error_info": "invalid input syntax for type bigint: \"unknown\"\nLINE 7: ...ducation_child.child_school_enrollment_status IN ('unknown',...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "8a7c69ea",
+      "question": "حدد معرّفات جميع الأسر التي لديها مؤشر أصول بقيمة 27، مع استبعاد أي أسر يكون لدى الأطفال فيها حالة تسجيل مدرسي غير معروفة، واعرضها بترتيب تصاعدي.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '27' AND T1.HOUSEHOLD_ID NOT IN (SELECT HOUSEHOLD_ID FROM DIM_EDUCATION_CHILD WHERE CHILD_SCHOOL_ENROLLMENT_STATUS = '-1') GROUP BY T1.HOUSEHOLD_ID ORDER BY T1.HOUSEHOLD_ID ASC",
+      "predicted_sql": "SELECT dim_household_social.household_id\nFROM dim_household_social\nWHERE dim_household_social.household_assets_index = 27\n  AND dim_household_social.household_id NOT IN (\n    SELECT dim_education_child.household_id\n    FROM dim_education_child\n    WHERE dim_education_child.child_school_enrollment_status = 'غير معروفة'\n  )\nORDER BY dim_household_social.household_id ASC",
+      "error_info": "invalid input syntax for type bigint: \"غير معروفة\"\nLINE 7: ..._education_child.child_school_enrollment_status = 'غير معروف...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "962070d7",
+      "question": "حدد الأسر التي لديها مؤشر أصول بقيمة 27 وتشمل أطفالًا تكون حالة التحاقهم بالمدرسة غير مسجلة حاليًا أو مفقودة.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_EDUCATION_CHILD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '27' AND T3.CHILD_SCHOOL_ENROLLMENT_STATUS = '-1';",
+      "predicted_sql": "SELECT DISTINCT dim_household_social.household_id\nFROM dim_household_social\nJOIN dim_education_child ON dim_household_social.household_id = dim_education_child.household_id\nWHERE dim_household_social.household_assets_index = 27\n  AND (dim_education_child.child_school_enrollment_status = 'not currently registered'\n       OR dim_education_child.child_school_enrollment_status = 'missing')",
+      "error_info": "invalid input syntax for type bigint: \"not currently registered\"\nLINE 5: ..._education_child.child_school_enrollment_status = 'not curre...\n                                                             ^\n"
+    },
+    {
+      "instance_id": "1a6ea6be",
+      "question": "حدّد الأسر التي لديها مؤشر أصول أكبر من 10 ولديها طفل واحد على الأقل غير ملتحق حاليًا بالمدرسة، مرتبة حسب مستوى ثروتها.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_EDUCATION_CHILD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX > '10' AND T3.CHILD_SCHOOL_ENROLLMENT_STATUS = '-1' GROUP BY T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX HAVING COUNT(T3.CHILD_EDUCATION_ID) >= 1 ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+      "predicted_sql": "SELECT\n    T1.caste_religion_group_8_category,\n    AVG(T1.social_id) AS avg_social_id,\n    SUM(T3.household_number_of_animal_care_workers) AS total_animal_care_workers\nFROM dim_household_social AS T1\nJOIN dim_education_child AS T2 ON T1.household_id = T2.household_id\nJOIN dim_household AS T3 ON T1.household_id = T3.household_id\nWHERE T1.household_assets_index > 10\n    AND T2.child_school_enrollment_status = 'Not enrolled'\nGROUP BY T1.caste_religion_group_8_category\nORDER BY T1.caste_religion_group_8_category DESC",
+      "error_info": "invalid input syntax for type bigint: \"Not enrolled\"\nLINE 9:     AND T2.child_school_enrollment_status = 'Not enrolled'\n                                                    ^\n"
+    },
+    {
+      "instance_id": "906dc566",
+      "question": "حدد جميع الأسر التي تقع إما ضمن أعلى فئة في مؤشر الأصول أو لديها أطفال لم تُسجَّل حالة التحاقهم بالمدرسة حاليًا.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT DISTINCT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_EDUCATION_CHILD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '10' OR T3.CHILD_SCHOOL_ENROLLMENT_STATUS = '-1'",
+      "predicted_sql": "SELECT DISTINCT h.household_id\nFROM dim_household h\nLEFT JOIN dim_household_social hs ON h.household_id = hs.household_id\nLEFT JOIN dim_education_child ec ON h.household_id = ec.household_id\nWHERE hs.household_assets_index = (SELECT MAX(household_assets_index) FROM dim_household_social)\n   OR ec.child_school_enrollment_status IS NULL\nORDER BY h.household_id",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "08d0677f",
+      "question": "حدد جميع الأسر المعيشية ضمن أعلى فئة في مؤشر الأصول التي لديها طفل واحد على الأقل مسجل في المدرسة، مرتبة حسب معرّف الأسرة المعيشية.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 LEFT JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID LEFT JOIN DIM_EDUCATION_CHILD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '10' GROUP BY T1.HOUSEHOLD_ID HAVING COUNT(T3.CHILD_SCHOOL_ENROLLMENT_STATUS) >= 1 OR T1.HOUSEHOLD_ID IN (SELECT HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL WHERE HOUSEHOLD_ASSETS_INDEX = '10') ORDER BY T1.HOUSEHOLD_ID ASC",
+      "predicted_sql": "SELECT DISTINCT dim_household.household_id\nFROM dim_household\nJOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nJOIN dim_education_child ON dim_household.household_id = dim_education_child.household_id\nWHERE dim_household_social.household_assets_index = (\n    SELECT MAX(household_assets_index)\n    FROM dim_household_social\n)\nAND dim_education_child.child_school_enrollment_status = 'Enrolled'\nORDER BY dim_household.household_id",
+      "error_info": "invalid input syntax for type bigint: \"Enrolled\"\nLINE 9: ..._education_child.child_school_enrollment_status = 'Enrolled'\n                                                             ^\n"
+    },
+    {
+      "instance_id": "db3bd75d",
+      "question": "اعرض معرّفات أُسر فئة OBC التي لديها مؤشر أصول مرتفع وجهات اتصال محددة في الشبكة الاجتماعية، مرتبة من الأعلى إلى الأدنى من حيث ثروة الأصول.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' AND T2.HOUSEHOLD_ASSETS_INDEX > '10' AND T2.SOCIAL_NETWORK_CONTACT_2_TYPE = '1' ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+      "predicted_sql": "SELECT dim_household_social.household_id\nFROM dim_household_social\nWHERE dim_household_social.caste_religion_group_8_category = 'OBC'\n  AND dim_household_social.household_assets_index > 10\n  AND dim_household_social.social_network_contact_2_type IS NOT NULL\nORDER BY dim_household_social.household_assets_index DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "52ebce1e",
+      "question": "قدّم تفصيلاً حسب فئة الطبقة الاجتماعية والمجموعة الدينية يوضح متوسط دخل الأسرة، وإجمالي القروض المستحقة، وإجمالي عدد العاملين في رعاية الحيوانات.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, AVG(CAST(T3.HOUSEHOLD_TOTAL_INCOME AS NUMERIC)), SUM(CAST(T3.HOUSEHOLD_TOTAL_OUTSTANDING_LOANS_RS AS NUMERIC)), SUM(CAST(T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS AS NUMERIC)) FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_LIVELIHOOD_INCOME AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY",
+      "predicted_sql": "SELECT T1.caste_religion_group_8_category,\n       AVG(T3.household_total_income) AS average_household_total_income,\n       SUM(T3.household_total_outstanding_loans_rs) AS total_outstanding_loans,\n       SUM(T2.household_number_of_animal_care_workers) AS total_animal_care_workers\nFROM dim_household_social AS T1\nJOIN dim_household AS T2 ON T1.household_id = T2.household_id\nJOIN dim_livelihood_income AS T3 ON T2.household_id = T3.household_id\nWHERE T1.caste_religion_group_8_category = 'OBC'\n  AND T1.household_assets_index > 10\nGROUP BY T1.caste_religion_group_8_category",
+      "error_info": null
+    },
+    {
+      "instance_id": "a15d93e7",
+      "question": "قدّم تفصيلاً حسب مجموعة الطبقة الاجتماعية والدين يوضح متوسط دخل الأسرة، وإجمالي القروض المستحقة، وعدد العاملين في رعاية الحيوانات لكل مجموعة.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, AVG(CAST(T3.HOUSEHOLD_TOTAL_INCOME AS NUMERIC)), SUM(CAST(T3.HOUSEHOLD_TOTAL_OUTSTANDING_LOANS_RS AS NUMERIC)), COUNT(T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS) FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_LIVELIHOOD_INCOME AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY ORDER BY T2.CASTE_RELIGION_GROUP_8_CATEGORY",
+      "predicted_sql": "SELECT T1.caste_religion_group_8_category,\n       AVG(T3.household_total_income) AS avg_household_total_income,\n       SUM(T3.household_total_outstanding_loans_rs) AS total_outstanding_loans,\n       SUM(T2.household_number_of_animal_care_workers) AS total_animal_care_workers\nFROM dim_household_social AS T1\nJOIN dim_household AS T2 ON T1.household_id = T2.household_id\nJOIN dim_livelihood_income AS T3 ON T2.household_id = T3.household_id\nJOIN fact_household_consumption AS T4 ON T2.household_id = T4.household_id\nWHERE T1.caste_religion_group_8_category = 'OBC'\n      AND T1.household_assets_index > 10\n      AND T4.monthly_total_consumption_expenditure_rs > 300\nGROUP BY T1.caste_religion_group_8_category\nORDER BY T1.caste_religion_group_8_category",
+      "error_info": null
+    },
+    {
+      "instance_id": "667db15d",
+      "question": "قدّم تفصيلاً لإحصاءات الأسر والدخل عبر مختلف الفئات الطبقية والمجموعات الدينية، مرتبةً حسب متوسط عدد الأسر لديها.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, AVG(T3.HOUSEHOLD_ID), SUM(T3.INCOME_ID), SUM(T1.HOUSEHOLD_ID) FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID INNER JOIN DIM_LIVELIHOOD_INCOME AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY HAVING COUNT(T1.HOUSEHOLD_ID) > 0 ORDER BY AVG(T3.HOUSEHOLD_ID) DESC",
+      "predicted_sql": "SELECT T1.caste_religion_group_8_category,\n       COUNT(DISTINCT T1.household_id) AS household_count,\n       AVG(T2.household_total_income) AS avg_income,\n       AVG(T1.household_assets_index) AS avg_assets_index\nFROM dim_household_social AS T1\nJOIN dim_livelihood_income AS T2 ON T1.household_id = T2.household_id\nGROUP BY T1.caste_religion_group_8_category\nORDER BY household_count DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "f2b3ef63",
+      "question": "قدّم معرّفات الأسر وإجمالي مبالغ القروض المستحقة لجميع الأسر من فئة OBC، مرتبة من أعلى إلى أدنى حسب مؤشر الأصول.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_TOTAL_OUTSTANDING_LOANS_RS FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_LIVELIHOOD_INCOME AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' ORDER BY T1.HOUSEHOLD_ASSETS_INDEX DESC",
+      "predicted_sql": "SELECT dim_household_social.household_id, dim_livelihood_income.household_total_outstanding_loans_rs\nFROM dim_household_social\nJOIN dim_livelihood_income ON dim_household_social.household_id = dim_livelihood_income.household_id\nWHERE dim_household_social.caste_religion_group_8_category = 'OBC'\nORDER BY dim_household_social.household_assets_index DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "2cf34a67",
+      "question": "حدد أعلى 10 أسر من فئة OBC الأكثر ثراءً بحسب مؤشر الأصول، وأظهر إجمالي مبالغ القروض المستحقة عليها.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.HOUSEHOLD_TOTAL_OUTSTANDING_LOANS_RS FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_LIVELIHOOD_INCOME AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' ORDER BY T1.HOUSEHOLD_ASSETS_INDEX DESC LIMIT 10",
+      "predicted_sql": "SELECT\n    fact_household_consumption.household_id,\n    dim_household_social.household_assets_index,\n    SUM(dim_livelihood_income.household_total_outstanding_loans_rs) as total_outstanding_loans\nFROM fact_household_consumption\nJOIN dim_household_social ON fact_household_consumption.household_id = dim_household_social.household_id\nJOIN dim_livelihood_income ON fact_household_consumption.household_id = dim_livelihood_income.household_id\nWHERE dim_household_social.caste_religion_group_8_category = 'OBC'\n    AND fact_household_consumption.monthly_total_consumption_expenditure_rs > 300\nGROUP BY\n    fact_household_consumption.household_id,\n    dim_household_social.household_assets_index\nORDER BY dim_household_social.household_assets_index DESC\nLIMIT 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "105fb1f7",
+      "question": "قدّم مؤشر أصول الأسرة والفئة الاجتماعية-الدينية للأسر التي تشارك في نشاط تجاري من النوع الفرعي 40 ولديها حاليًا قروض مستحقة.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ASSETS_INDEX, T1.CASTE_RELIGION_GROUP_8_CATEGORY FROM DIM_HOUSEHOLD_SOCIAL AS T1 JOIN DIM_LIVELIHOOD_INCOME AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.BUSINESS_1_ACTIVITY_SUBTYPE = '40' AND T2.HOUSEHOLD_TOTAL_OUTSTANDING_LOANS_RS > '0';",
+      "predicted_sql": "SELECT dim_household_social.household_id, dim_household_social.household_assets_index\nFROM dim_household_social\nJOIN dim_livelihood_income ON dim_household_social.household_id = dim_livelihood_income.household_id\nWHERE dim_livelihood_income.business_1_activity_subtype = 40\n  AND dim_livelihood_income.household_total_outstanding_loans_rs > 0\n  AND dim_household_social.caste_religion_group_8_category = 'Christian'\nORDER BY dim_household_social.household_assets_index DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "fab98bd3",
+      "question": "قدّم تفصيلاً للأسر التي لديها قروض مستحقة والمتورطة في النشاط الفرعي 40، مصنّفة حسب مؤشر الأصول لديها ومجموعة الطبقة الاجتماعية-الدينية.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.HOUSEHOLD_ASSETS_INDEX, T2.CASTE_RELIGION_GROUP_8_CATEGORY, COUNT(*) FROM DIM_LIVELIHOOD_INCOME AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T1.BUSINESS_1_ACTIVITY_SUBTYPE = '40' AND T1.HOUSEHOLD_TOTAL_OUTSTANDING_LOANS_RS > '0' GROUP BY T2.HOUSEHOLD_ASSETS_INDEX, T2.CASTE_RELIGION_GROUP_8_CATEGORY ORDER BY T2.HOUSEHOLD_ASSETS_INDEX ASC",
+      "predicted_sql": "SELECT DISTINCT T1.household_person_case_id,\n       T3.household_assets_index,\n       T3.caste_religion_group_8_category\nFROM dim_household AS T1\nJOIN dim_livelihood_income AS T2 ON T1.household_id = T2.household_id\nJOIN dim_household_social AS T3 ON T1.household_id = T3.household_id\nWHERE T2.business_1_activity_subtype = 40\n  AND T2.household_total_outstanding_loans_rs > 0\n  AND T3.caste_religion_group_8_category = 'Christian'\nORDER BY T3.household_assets_index DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "18f440ca",
+      "question": "قدّم تفصيلاً لعدد الأسر حسب مؤشر الأصول والفئة الاجتماعية للأسر التي تمارس أنشطة تجارية وتحمل حالياً قروضاً مستحقة.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.HOUSEHOLD_ASSETS_INDEX, T2.CASTE_RELIGION_GROUP_8_CATEGORY, COUNT(T1.HOUSEHOLD_ID) FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID INNER JOIN DIM_LIVELIHOOD_INCOME AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T3.BUSINESS_1_ACTIVITY_SUBTYPE IS NOT NULL AND T3.HOUSEHOLD_TOTAL_OUTSTANDING_LOANS_RS > '0' GROUP BY T2.HOUSEHOLD_ASSETS_INDEX, T2.CASTE_RELIGION_GROUP_8_CATEGORY HAVING COUNT(T1.HOUSEHOLD_ID) >= 1 ORDER BY T2.CASTE_RELIGION_GROUP_8_CATEGORY DESC",
+      "predicted_sql": "SELECT\n    T1.household_assets_index,\n    T1.caste_religion_group_8_category,\n    COUNT(DISTINCT T1.household_id) AS household_count,\n    AVG(T3.monthly_total_consumption_expenditure_rs) AS average_monthly_total_consumption_expenditure\nFROM dim_household_social AS T1\nJOIN dim_livelihood_income AS T2 ON T1.household_id = T2.household_id\nJOIN fact_household_consumption AS T3 ON T1.household_id = T3.household_id\nWHERE T1.caste_religion_group_8_category = 'Christian'\n    AND T2.business_1_activity_subtype IS NOT NULL\n    AND T2.household_total_outstanding_loans_rs > 0\nGROUP BY T1.household_assets_index, T1.caste_religion_group_8_category\nORDER BY T1.household_assets_index DESC\nLIMIT 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "8839b1e9",
+      "question": "حدد جميع الأسر التي لديها مؤشر أصول بقيمة 27 ولا يوجد لديها أي عاملين في رعاية الحيوانات، مرتبة حسب المعرّف الخاص بها.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '27' AND T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS = '0' GROUP BY T1.HOUSEHOLD_ID HAVING SUM(T1.HOUSEHOLD_ID) >= 1 ORDER BY T1.HOUSEHOLD_ID ASC",
+      "predicted_sql": "SELECT T1.household_id, T1.household_number_of_animal_care_workers, T3.date_of_gauna\nFROM dim_household AS T1\nJOIN dim_household_social AS T2 ON T1.household_id = T2.household_id\nJOIN dim_household_marital AS T3 ON T1.household_id = T3.household_id\nWHERE T2.household_assets_index = 27\n  AND T1.household_number_of_animal_care_workers = 0\n  AND T2.caste_religion_group_8_category = 'Christian'\nORDER BY T1.household_id",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "be907e24",
+      "question": "حدد معرّفات الأسر للعائلات المسيحية التي تمتلك مؤشر أصول أكبر من 10 وتشارك في نشاط تجاري من النوع الفرعي 40.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_LIVELIHOOD_INCOME AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' AND T2.HOUSEHOLD_ASSETS_INDEX > '10' AND T3.BUSINESS_1_ACTIVITY_SUBTYPE = '40'",
+      "predicted_sql": "SELECT DISTINCT dim_household.household_id\nFROM dim_household_social\nJOIN dim_household ON dim_household_social.household_id = dim_household.household_id\nJOIN dim_livelihood_income ON dim_household.household_id = dim_livelihood_income.household_id\nWHERE dim_household_social.caste_religion_group_8_category = 'Christian'\n  AND dim_household_social.household_assets_index > 10\n  AND dim_livelihood_income.business_1_activity_subtype = 40\nORDER BY dim_household.household_id DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "4f9e4ad6",
+      "question": "حدّد جميع الأسر المسيحية التي لديها مؤشر أصول أكبر من 10 وتشارك في نشاط تجاري واحد على الأقل، مرتبةً حسب مؤشر الأصول ترتيبًا تنازليًا.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_LIVELIHOOD_INCOME AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Christian' AND T2.HOUSEHOLD_ASSETS_INDEX > '10' GROUP BY T1.HOUSEHOLD_ID, T2.HOUSEHOLD_ASSETS_INDEX HAVING COUNT(T3.BUSINESS_1_ACTIVITY_SUBTYPE) >= 1 ORDER BY T2.HOUSEHOLD_ASSETS_INDEX DESC",
+      "predicted_sql": "SELECT DISTINCT dim_household_social.household_id, dim_household_social.household_assets_index\nFROM dim_household_social\nJOIN dim_livelihood_income ON dim_household_social.household_id = dim_livelihood_income.household_id\nWHERE dim_household_social.caste_religion_group_8_category = 'Christian'\n  AND dim_household_social.household_assets_index > 10\n  AND dim_livelihood_income.business_1_activity_subtype IS NOT NULL\nORDER BY dim_household_social.household_assets_index DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "f9899e65",
+      "question": "حدد جميع الأسر التي إما تنتمي إلى الفئة الاجتماعية المسلمة أو تشارك في النشاط التجاري من النوع الفرعي 40، مرتبة حسب المعرّف الخاص بها.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_LIVELIHOOD_INCOME AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CASTE_RELIGION_GROUP_8_CATEGORY = 'Muslim' OR T3.BUSINESS_1_ACTIVITY_SUBTYPE = '40' ORDER BY T1.HOUSEHOLD_ID",
+      "predicted_sql": "SELECT dim_household.household_id\nFROM dim_household\nJOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nJOIN dim_livelihood_income ON dim_household.household_id = dim_livelihood_income.household_id\nJOIN dim_household_marital ON dim_household.household_id = dim_household_marital.household_id\nWHERE dim_household_social.caste_religion_group_8_category = 'Muslim'\n   OR dim_livelihood_income.business_1_activity_subtype = 40\n   AND dim_household_social.household_assets_index = 27\n   AND dim_household_marital.date_of_gauna IS NOT NULL\nGROUP BY dim_household.household_id\nHAVING COUNT(dim_household_marital.marital_id) = 1\nORDER BY dim_household.household_id",
+      "error_info": null
+    },
+    {
+      "instance_id": "d34f7175",
+      "question": "قدّم معرّفات الأسر ومبالغ الإنفاق الشهري على السلع غير الغذائية للأسر Rural الواقعة في Maharashtra.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T1.MONTHLY_NON_FOOD_EXPENDITURE_RS FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.STATE = 'Maharashtra' AND T2.CENSUS_2001_URBAN_RURAL = 'Rural'",
+      "predicted_sql": "SELECT T1.household_id, T2.monthly_non_food_expenditure_rs\nFROM dim_household AS T1\nJOIN fact_household_consumption AS T2 ON T1.household_id = T2.household_id\nJOIN dim_geography_hierarchy AS T3 ON T2.geography_id = T3.geography_id\nJOIN dim_household_social AS T4 ON T1.household_id = T4.household_id\nJOIN dim_household_marital AS T5 ON T1.household_id = T5.household_id\nWHERE T3.state = 'Maharashtra'\n  AND T3.census_2001_urban_rural = 'Rural'\n  AND T4.household_assets_index = 27\n  AND T5.date_of_gauna IS NOT NULL",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "8934e8ac",
+      "question": "اعرض معرّفات الأسر ونفقاتها الشهرية غير الغذائية في المناطق rural في state Maharashtra.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T1.MONTHLY_NON_FOOD_EXPENDITURE_RS FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.STATE = 'Maharashtra' AND T2.CENSUS_2001_URBAN_RURAL = 'Rural'",
+      "predicted_sql": "SELECT dim_household.household_id, fact_household_consumption.monthly_non_food_expenditure_rs\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_household ON fact_household_consumption.household_id = dim_household.household_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'rural'\nAND dim_geography_hierarchy.state = 'Maharashtra'",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "1d002667",
+      "question": "رتّب الأسر rural في Maharashtra حسب إجمالي إنفاقها الشهري غير الغذائي، بدءًا من الأعلى إنفاقًا.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, SUM(T2.MONTHLY_NON_FOOD_EXPENDITURE_RS) FROM DIM_HOUSEHOLD AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_GEOGRAPHY_HIERARCHY AS T3 ON T2.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T3.STATE = 'Maharashtra' AND T3.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T1.HOUSEHOLD_ID ORDER BY SUM(T2.MONTHLY_NON_FOOD_EXPENDITURE_RS) DESC",
+      "predicted_sql": "SELECT T1.household_id, T1.monthly_non_food_expenditure_rs\nFROM fact_household_consumption AS T1\nJOIN dim_geography_hierarchy AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_household_social AS T3 ON T1.household_id = T3.household_id\nJOIN dim_household_marital AS T4 ON T1.household_id = T4.household_id\nWHERE T2.census_2001_urban_rural = 'rural'\n  AND T2.state = 'Maharashtra'\n  AND T4.date_of_gauna IS NOT NULL\nORDER BY T1.monthly_non_food_expenditure_rs DESC, T1.household_id",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "9132a51f",
+      "question": "قدّم تفصيلاً حسب الولاية والتصنيف الحضري/الريفي لمتوسط الاستهلاك الشهري للفرد والنفقات غير الغذائية.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.STATE, T1.CENSUS_2001_URBAN_RURAL, AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA), AVG(T2.MONTHLY_NON_FOOD_EXPENDITURE_RS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE, T1.CENSUS_2001_URBAN_RURAL",
+      "predicted_sql": "SELECT T2.state,\n       T2.census_2001_urban_rural,\n       AVG(T1.monthly_consumption_per_capita),\n       AVG(T1.monthly_non_food_expenditure_rs)\nFROM fact_household_consumption AS T1\nJOIN dim_geography_hierarchy AS T2 ON T1.geography_id = T2.geography_id\nJOIN dim_household AS hh ON T1.household_id = hh.household_id\nLEFT JOIN dim_household_social AS soc ON hh.household_id = soc.household_id\nLEFT JOIN dim_household_marital AS mar ON hh.household_id = mar.household_id\nWHERE (soc.household_assets_index = '27' OR mar.date_of_gauna IS NOT NULL)\nGROUP BY T2.state, T2.census_2001_urban_rural",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "234a5b39",
+      "question": "قدّم تفصيلاً حسب الولاية لمتوسط الاستهلاك الشهري للفرد ونفقات غير الغذاء، مع مقارنة بين المناطق الحضرية والريفية استنادًا إلى تعداد عام 2001.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.STATE, T1.CENSUS_2001_URBAN_RURAL, AVG(T2.MONTHLY_CONSUMPTION_PER_CAPITA), AVG(T2.MONTHLY_NON_FOOD_EXPENDITURE_RS) FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID GROUP BY T1.STATE, T1.CENSUS_2001_URBAN_RURAL ORDER BY T1.STATE ASC",
+      "predicted_sql": "SELECT\n    dim_geography_hierarchy.state,\n    dim_geography_hierarchy.census_2001_urban_rural,\n    AVG(fact_household_consumption.monthly_consumption_per_capita) AS avg_monthly_consumption_per_capita,\n    AVG(fact_household_consumption.monthly_non_food_expenditure_rs) AS avg_monthly_non_food_expenditure\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nWHERE fact_household_consumption.household_id IN (\n    SELECT DISTINCT dim_household.household_id\n    FROM dim_household\n    LEFT JOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\n    LEFT JOIN dim_household_marital ON dim_household.household_id = dim_household_marital.household_id\n    WHERE dim_household_social.household_assets_index = 27\n       OR dim_household_marital.date_of_gauna IS NOT NULL\n)\nGROUP BY dim_geography_hierarchy.state, dim_geography_hierarchy.census_2001_urban_rural\nORDER BY dim_geography_hierarchy.state, dim_geography_hierarchy.census_2001_urban_rural",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "99cd5acd",
+      "question": "رتّب الولايات حسب متوسط إنفاقها الشهري على السلع غير الغذائية للأسر الريفية، بدءًا من الأعلى.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.STATE, AVG(T1.MONTHLY_NON_FOOD_EXPENDITURE_RS) FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T2.STATE ORDER BY AVG(T1.MONTHLY_NON_FOOD_EXPENDITURE_RS) DESC",
+      "predicted_sql": "SELECT dim_geography_hierarchy.state, AVG(fact_household_consumption.monthly_non_food_expenditure_rs) AS avg_non_food_expenditure\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'Rural'\n  AND fact_household_consumption.household_id IN (\n    SELECT DISTINCT household_id FROM dim_household_social WHERE household_assets_index = '27'\n    UNION\n    SELECT DISTINCT household_id FROM dim_household_marital WHERE date_of_gauna IS NOT NULL\n  )\nGROUP BY dim_geography_hierarchy.state\nORDER BY avg_non_food_expenditure DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "4398e9a5",
+      "question": "رتّب الولايات حسب متوسط إنفاق الأسر الشهري على السلع غير الغذائية في المناطق الريفية، مع إظهار الولايات التي لديها بيانات استهلاك مسجّلة فقط.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.STATE, AVG(T1.MONTHLY_NON_FOOD_EXPENDITURE_RS) FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 INNER JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID INNER JOIN DIM_HOUSEHOLD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T2.STATE HAVING COUNT(T1.HOUSEHOLD_ID) > 0 ORDER BY AVG(T1.MONTHLY_NON_FOOD_EXPENDITURE_RS) DESC",
+      "predicted_sql": "SELECT dim_geography_hierarchy.state, AVG(fact_household_consumption.monthly_non_food_expenditure_rs)\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'rural'\nGROUP BY dim_geography_hierarchy.state\nORDER BY AVG(fact_household_consumption.monthly_non_food_expenditure_rs) DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "f6f5311b",
+      "question": "اعرض الإنفاق الشهري غير الغذائي وعدد العاملين لأعلى 10 أسر rural في Uttar Pradesh من حيث أعلى إنفاق.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.MONTHLY_NON_FOOD_EXPENDITURE_RS, T2.HOUSEHOLD_NUMBER_OF_WORKERS FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 JOIN DIM_HOUSEHOLD AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_GEOGRAPHY_HIERARCHY AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T3.STATE = 'Uttar Pradesh' AND T3.CENSUS_2001_URBAN_RURAL = 'Rural' ORDER BY T1.MONTHLY_NON_FOOD_EXPENDITURE_RS DESC LIMIT 10",
+      "predicted_sql": "SELECT fact_household_consumption.monthly_non_food_expenditure_rs, dim_household.household_number_of_workers\nFROM fact_household_consumption\nJOIN dim_household ON fact_household_consumption.household_id = dim_household.household_id\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nWHERE dim_geography_hierarchy.state = 'Uttar Pradesh'\nAND dim_geography_hierarchy.census_2001_urban_rural = 'rural'\nORDER BY fact_household_consumption.monthly_total_consumption_expenditure_rs DESC\nLIMIT 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "9f444cde",
+      "question": "اعرض الإنفاق الشهري غير الغذائي وعدد العاملين لأعلى 10 أسر rural في Uttar Pradesh ذات أعلى مستويات الإنفاق.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.MONTHLY_NON_FOOD_EXPENDITURE_RS, T2.HOUSEHOLD_NUMBER_OF_WORKERS FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 JOIN DIM_HOUSEHOLD AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID JOIN DIM_GEOGRAPHY_HIERARCHY AS T3 ON T1.GEOGRAPHY_ID = T3.GEOGRAPHY_ID WHERE T3.STATE = 'Uttar Pradesh' AND T3.CENSUS_2001_URBAN_RURAL = 'Rural' ORDER BY T1.MONTHLY_NON_FOOD_EXPENDITURE_RS DESC LIMIT 10",
+      "predicted_sql": "SELECT\n    dim_household_social.caste_religion_group_8_category,\n    AVG(fact_household_consumption.monthly_consumption_per_capita) AS avg_per_capita_consumption,\n    SUM(fact_household_consumption.monthly_total_consumption_expenditure_rs) AS total_household_expenditure,\n    COUNT(DISTINCT dim_household_social.household_id) AS household_count\nFROM fact_household_consumption\nJOIN dim_household ON fact_household_consumption.household_id = dim_household.household_id\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_household_social ON fact_household_consumption.household_id = dim_household_social.household_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'rural'\n    AND dim_geography_hierarchy.state = 'Uttar Pradesh'\nGROUP BY dim_household_social.caste_religion_group_8_category\nHAVING COUNT(DISTINCT dim_household_social.household_id) > 1\nORDER BY avg_per_capita_consumption DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "11e70460",
+      "question": "قارن متوسط الإنفاق الشهري غير الغذائي ومتوسط الاستهلاك للفرد بين الأسر الحضرية والريفية استنادًا إلى تصنيفات تعداد عام 2001.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.CENSUS_2001_URBAN_RURAL, AVG(T0.MONTHLY_NON_FOOD_EXPENDITURE_RS), AVG(T0.MONTHLY_CONSUMPTION_PER_CAPITA) FROM FACT_HOUSEHOLD_CONSUMPTION T0 JOIN DIM_GEOGRAPHY_HIERARCHY T1 ON T0.GEOGRAPHY_ID = T1.GEOGRAPHY_ID GROUP BY T1.CENSUS_2001_URBAN_RURAL",
+      "predicted_sql": "SELECT\n    dim_geography_hierarchy.census_2001_urban_rural,\n    AVG(fact_household_consumption.monthly_non_food_expenditure_rs) AS avg_monthly_non_food_expenditure,\n    AVG(fact_household_consumption.monthly_consumption_per_capita) AS avg_monthly_consumption_per_capita\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy\n    ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_household_social\n    ON fact_household_consumption.household_id = dim_household_social.household_id\nWHERE dim_household_social.caste_religion_group_8_category = 'OBC'\n    AND dim_household_social.household_assets_index = (\n        SELECT MAX(household_assets_index)\n        FROM dim_household_social\n        WHERE caste_religion_group_8_category = 'OBC'\n    )\nGROUP BY dim_geography_hierarchy.census_2001_urban_rural",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "64fc570d",
+      "question": "قارن متوسط الإنفاق الشهري غير الغذائي ومتوسط الاستهلاك للفرد بين المناطق الحضرية والريفية، مرتبة حسب أعلى إنفاق غير غذائي.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.CENSUS_2001_URBAN_RURAL, AVG(T0.MONTHLY_NON_FOOD_EXPENDITURE_RS), AVG(T0.MONTHLY_CONSUMPTION_PER_CAPITA) FROM FACT_HOUSEHOLD_CONSUMPTION AS T0 JOIN DIM_GEOGRAPHY_HIERARCHY AS T1 ON T0.GEOGRAPHY_ID = T1.GEOGRAPHY_ID GROUP BY T1.CENSUS_2001_URBAN_RURAL ORDER BY AVG(T0.MONTHLY_NON_FOOD_EXPENDITURE_RS) DESC",
+      "predicted_sql": "SELECT\n    AVG(fact_household_consumption.monthly_non_food_expenditure_rs) AS avg_non_food_expenditure,\n    AVG(fact_household_consumption.monthly_consumption_per_capita) AS avg_consumption_per_capita,\n    dim_geography_hierarchy.census_2001_urban_rural\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nJOIN dim_household_social ON fact_household_consumption.household_id = dim_household_social.household_id\nWHERE dim_household_social.caste_religion_group_8_category = 'OBC'\n    AND dim_household_social.household_assets_index = (\n        SELECT MAX(household_assets_index)\n        FROM dim_household_social\n        WHERE caste_religion_group_8_category = 'OBC'\n    )\nGROUP BY dim_geography_hierarchy.census_2001_urban_rural\nORDER BY AVG(fact_household_consumption.monthly_non_food_expenditure_rs) DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "044dcd8f",
+      "question": "حدد الولايات التي لا يتجاوز فيها الحد الأقصى للإنفاق الشهري غير الغذائي للأسر الحضرية 5,000 روبية.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.STATE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Urban' GROUP BY T1.STATE HAVING MAX(T2.MONTHLY_NON_FOOD_EXPENDITURE_RS) <= 5000",
+      "predicted_sql": "SELECT dim_geography_hierarchy.state\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'urban'\nGROUP BY dim_geography_hierarchy.state\nHAVING MAX(fact_household_consumption.monthly_non_food_expenditure_rs) <= 5000",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "20170f0c",
+      "question": "حدد الولايات التي لا يتجاوز فيها الحد الأقصى للإنفاق الشهري غير الغذائي للأسر الحضرية 5,000 روبية.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.STATE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Urban' GROUP BY T1.STATE HAVING MAX(T2.MONTHLY_NON_FOOD_EXPENDITURE_RS) <= 5000",
+      "predicted_sql": "SELECT dim_geography_hierarchy.state\nFROM fact_household_consumption\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'urban'\nGROUP BY dim_geography_hierarchy.state\nHAVING MAX(fact_household_consumption.monthly_non_food_expenditure_rs) <= 5000",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "5c857067",
+      "question": "حدّد رموز district للمناطق Rural حيث يكون الحد الأدنى للإنفاق الشهري للأسرة أقل من 500 روبية، بينما يتجاوز الحد الأقصى للإنفاق غير الغذائي 2,000 روبية.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.DISTRICT_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T1.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T1.DISTRICT_CODE HAVING MIN(T2.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) < 500 AND MAX(T2.MONTHLY_NON_FOOD_EXPENDITURE_RS) > 2000",
+      "predicted_sql": "SELECT dim_geography_hierarchy.district_code\nFROM dim_geography_hierarchy\nJOIN fact_household_consumption ON dim_geography_hierarchy.geography_id = fact_household_consumption.geography_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'Rural'\nGROUP BY dim_geography_hierarchy.district_code\nHAVING MIN(fact_household_consumption.monthly_total_consumption_expenditure_rs) < 500\n   AND MAX(fact_household_consumption.monthly_non_food_expenditure_rs) > 2000",
+      "error_info": null
+    },
+    {
+      "instance_id": "41a7fd0e",
+      "question": "حدّد الرموز الخاصة بـ rural districts حيث توجد على الأقل أسرة واحدة يقل إجمالي إنفاقها الشهري عن 500 روبية، بينما توجد أسرة أخرى يتجاوز إنفاقها غير الغذائي 2,000 روبية.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.DISTRICT_CODE FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID WHERE T2.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T2.DISTRICT_CODE HAVING MIN(T1.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS) < 500 AND MAX(T1.MONTHLY_NON_FOOD_EXPENDITURE_RS) > 2000",
+      "predicted_sql": "SELECT DISTINCT dim_geography_hierarchy.district_code\nFROM dim_geography_hierarchy\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'rural'\n  AND EXISTS (\n    SELECT 1\n    FROM fact_household_consumption\n    WHERE fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\n      AND fact_household_consumption.monthly_total_consumption_expenditure_rs < 500\n  )\n  AND EXISTS (\n    SELECT 1\n    FROM fact_household_consumption\n    WHERE fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\n      AND fact_household_consumption.monthly_non_food_expenditure_rs > 2000\n  )",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "d5d1557a",
+      "question": "حدّد رموز rural districts التي يوجد فيها على الأقل أسرة واحدة تنفق أقل من 500 روبية شهريًا إجمالًا، وفي الوقت نفسه يوجد فيها على الأقل أسرة واحدة يتجاوز إنفاقها الشهري على غير الغذاء 2,000 روبية، مرتبة حسب district code.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.DISTRICT_CODE FROM FACT_HOUSEHOLD_CONSUMPTION AS T1 JOIN DIM_GEOGRAPHY_HIERARCHY AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.CENSUS_2001_URBAN_RURAL = 'Rural' GROUP BY T2.DISTRICT_CODE HAVING SUM(CASE WHEN T1.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS < 500 THEN 1 ELSE 0 END) >= 1 AND MAX(T1.MONTHLY_NON_FOOD_EXPENDITURE_RS) > 2000 ORDER BY T2.DISTRICT_CODE ASC",
+      "predicted_sql": "SELECT dim_geography_hierarchy.district_code\nFROM dim_geography_hierarchy\nJOIN fact_household_consumption ON dim_geography_hierarchy.geography_id = fact_household_consumption.geography_id\nJOIN dim_household_social ON fact_household_consumption.household_id = dim_household_social.household_id\nWHERE dim_geography_hierarchy.census_2001_urban_rural = 'rural'\n  AND dim_household_social.caste_religion_group_8_category IN ('Christian', 'Muslim')\nGROUP BY dim_geography_hierarchy.district_code\nHAVING COUNT(CASE WHEN fact_household_consumption.monthly_total_consumption_expenditure_rs < 500 THEN 1 END) >= 1\n   AND COUNT(CASE WHEN fact_household_consumption.monthly_non_food_expenditure_rs > 2000 THEN 1 END) >= 1\nORDER BY dim_geography_hierarchy.district_code",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "eb0de056",
+      "question": "حدّد الولايات ورموز district التي تنفق فيها الأسر أكثر من 50,000 روبية شهريًا أو توظّف 5 عاملين في رعاية الحيوانات.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.STATE, T1.DISTRICT_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD AS T3 ON T2.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS > 50000 OR T3.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS = '5';",
+      "predicted_sql": "SELECT DISTINCT T4.household_id, T4.household_assets_index\nFROM fact_household_consumption AS T1\nJOIN dim_household AS T2 ON T1.household_id = T2.household_id\nJOIN dim_geography_hierarchy AS T3 ON T1.geography_id = T3.geography_id\nJOIN dim_household_social AS T4 ON T1.household_id = T4.household_id\nWHERE (T1.monthly_total_consumption_expenditure_rs > 50000\n   OR T2.household_number_of_animal_care_workers >= 5)\n   AND T4.caste_religion_group_8_category IN ('Christian', 'Muslim')\nORDER BY T4.household_assets_index DESC\nLIMIT 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "06426722",
+      "question": "حدّد الولايات ورموز district التي تنفق فيها الأسر أكثر من 60,000 روبية شهريًا أو توظّف 5 عمّال لرعاية الحيوانات.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT DISTINCT T1.STATE, T1.DISTRICT_CODE FROM DIM_GEOGRAPHY_HIERARCHY AS T1 JOIN FACT_HOUSEHOLD_CONSUMPTION AS T2 ON T1.GEOGRAPHY_ID = T2.GEOGRAPHY_ID JOIN DIM_HOUSEHOLD AS T3 ON T2.HOUSEHOLD_ID = T3.HOUSEHOLD_ID WHERE T2.MONTHLY_TOTAL_CONSUMPTION_EXPENDITURE_RS > 60000 OR T3.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS = '5';",
+      "predicted_sql": "SELECT DISTINCT dim_geography_hierarchy.state, dim_geography_hierarchy.district_code\nFROM fact_household_consumption\nJOIN dim_household ON fact_household_consumption.household_id = dim_household.household_id\nJOIN dim_geography_hierarchy ON fact_household_consumption.geography_id = dim_geography_hierarchy.geography_id\nWHERE fact_household_consumption.monthly_total_consumption_expenditure_rs > 60000\n   OR dim_household.household_number_of_animal_care_workers = 5\nORDER BY dim_geography_hierarchy.state, dim_geography_hierarchy.district_code",
+      "error_info": null
+    },
+    {
+      "instance_id": "5ecd9202",
+      "question": "حدد معرّفات الأسر للعائلات المصنفة ضمن فئة OBC والتي تندرج تحت المجموعة السابعة عشرة لمؤشر الأصول.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT HOUSEHOLD_ID FROM DIM_HOUSEHOLD_SOCIAL WHERE CASTE_RELIGION_GROUP_8_CATEGORY = 'OBC' AND HOUSEHOLD_ASSETS_INDEX = '17';",
+      "predicted_sql": "SELECT DISTINCT dhs.household_id\nFROM dim_household_social dhs\nINNER JOIN dim_education_child dec ON dhs.household_id = dec.household_id\nWHERE dhs.caste_religion_group_8_category = 'OBC'\n  AND dhs.household_assets_index = 17\n  AND dec.child_school_enrollment_status = 'not enrolled'",
+      "error_info": "invalid input syntax for type bigint: \"not enrolled\"\nLINE 6:   AND dec.child_school_enrollment_status = 'not enrolled'\n                                                   ^\n"
+    },
+    {
+      "instance_id": "b835d830",
+      "question": "ما هو متوسط الإنفاق الإجمالي على الأرز والقمح والبقوليات لكل مجموعة من مجموعات الطبقات الاجتماعية والأديان؟",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, AVG(T1.CONSUMPTION_RICE_EXPENDITURE_RS + T1.CONSUMPTION_WHEAT_EXPENDITURE_RS + T1.CONSUMPTION_PULSES_EXPENDITURE_RS) FROM FACT_FOOD_CONSUMPTION AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY",
+      "predicted_sql": "SELECT\n    dim_household_social.caste_religion_group_8_category,\n    dim_household_social.household_assets_index,\n    AVG(fact_food_consumption.consumption_rice_expenditure_rs +\n        fact_food_consumption.consumption_wheat_expenditure_rs +\n        fact_food_consumption.consumption_pulses_expenditure_rs) as avg_total_expenditure\nFROM fact_food_consumption\nJOIN dim_household_social ON fact_food_consumption.household_id = dim_household_social.household_id\nJOIN dim_education_child ON fact_food_consumption.household_id = dim_education_child.household_id\nWHERE dim_education_child.child_school_enrollment_status = 2\nGROUP BY\n    dim_household_social.caste_religion_group_8_category,\n    dim_household_social.household_assets_index\nORDER BY dim_household_social.caste_religion_group_8_category",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "73f2d9f1",
+      "question": "رتّب مجموعات الطبقات الاجتماعية والأديان المختلفة حسب متوسط إجمالي إنفاقها على الحبوب الأساسية، وتحديدًا الأرز والقمح والبقوليات.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, AVG(T1.CONSUMPTION_RICE_EXPENDITURE_RS + T1.CONSUMPTION_WHEAT_EXPENDITURE_RS + T1.CONSUMPTION_PULSES_EXPENDITURE_RS) FROM FACT_FOOD_CONSUMPTION AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY ORDER BY AVG(T1.CONSUMPTION_RICE_EXPENDITURE_RS + T1.CONSUMPTION_WHEAT_EXPENDITURE_RS + T1.CONSUMPTION_PULSES_EXPENDITURE_RS) DESC",
+      "predicted_sql": "SELECT dim_household_social.caste_religion_group_8_category,\n       AVG(fact_food_consumption.consumption_rice_expenditure_rs +\n           fact_food_consumption.consumption_wheat_expenditure_rs +\n           fact_food_consumption.consumption_pulses_expenditure_rs) as avg_grain_expenditure\nFROM dim_household_social\nJOIN fact_food_consumption ON dim_household_social.household_id = fact_food_consumption.household_id\nGROUP BY dim_household_social.caste_religion_group_8_category\nORDER BY avg_grain_expenditure DESC",
+      "error_info": null
+    },
+    {
+      "instance_id": "97b68e44",
+      "question": "رتّب جميع الأسر حسب إجمالي إنفاقها المشترك على الأرز والبقوليات، من الأعلى إلى الأدنى.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT HOUSEHOLD_ID, SUM(CONSUMPTION_RICE_EXPENDITURE_RS + CONSUMPTION_PULSES_EXPENDITURE_RS) FROM FACT_FOOD_CONSUMPTION JOIN DIM_HOUSEHOLD USING (HOUSEHOLD_ID) GROUP BY HOUSEHOLD_ID ORDER BY SUM(CONSUMPTION_RICE_EXPENDITURE_RS + CONSUMPTION_PULSES_EXPENDITURE_RS) DESC",
+      "predicted_sql": "SELECT DISTINCT fact_food_consumption.household_id,\n       (fact_food_consumption.consumption_rice_expenditure_rs + fact_food_consumption.consumption_pulses_expenditure_rs) as total_rice_pulses_expenditure\nFROM fact_food_consumption\nJOIN dim_household_social ON fact_food_consumption.household_id = dim_household_social.household_id\nJOIN dim_education_child ON fact_food_consumption.household_id = dim_education_child.household_id\nWHERE dim_household_social.household_assets_index = 27\n  AND dim_education_child.child_school_enrollment_status = -1\nORDER BY total_rice_pulses_expenditure DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "b1890cab",
+      "question": "اعرض معرّفات وفئات المجموعات الاجتماعية للأسر العشر ذات أعلى إجمالي إنفاق على المواد الأساسية مثل الأرز والقمح والبقوليات.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.CASTE_RELIGION_GROUP_8_CATEGORY, (T1.CONSUMPTION_RICE_EXPENDITURE_RS + T1.CONSUMPTION_WHEAT_EXPENDITURE_RS + T1.CONSUMPTION_PULSES_EXPENDITURE_RS) FROM FACT_FOOD_CONSUMPTION AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID ORDER BY (T1.CONSUMPTION_RICE_EXPENDITURE_RS + T1.CONSUMPTION_WHEAT_EXPENDITURE_RS + T1.CONSUMPTION_PULSES_EXPENDITURE_RS) DESC LIMIT 10",
+      "predicted_sql": "SELECT T1.household_id, T1.caste_religion_group_8_category\nFROM dim_household_social AS T1\nJOIN fact_food_consumption AS T2 ON T1.household_id = T2.household_id\nWHERE T1.household_assets_index = 17\n  AND EXISTS (\n    SELECT 1\n    FROM dim_education_child AS T3\n    WHERE T3.household_id = T1.household_id\n      AND T3.child_school_enrollment_status = -1\n  )\nGROUP BY T1.household_id, T1.caste_religion_group_8_category\nORDER BY SUM(T2.consumption_rice_expenditure_rs + T2.consumption_wheat_expenditure_rs + T2.consumption_pulses_expenditure_rs) DESC\nLIMIT 10",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "1f847b64",
+      "question": "حدد أعلى 10 أسر من حيث إجمالي الإنفاق على الأرز والقمح والبقوليات، مع تضمين الفئة الطبقية أو الدينية الخاصة بكل منها.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID, T2.CASTE_RELIGION_GROUP_8_CATEGORY, SUM(T1.CONSUMPTION_RICE_EXPENDITURE_RS + T1.CONSUMPTION_WHEAT_EXPENDITURE_RS + T1.CONSUMPTION_PULSES_EXPENDITURE_RS) FROM FACT_FOOD_CONSUMPTION AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID GROUP BY T1.HOUSEHOLD_ID, T2.CASTE_RELIGION_GROUP_8_CATEGORY ORDER BY SUM(T1.CONSUMPTION_RICE_EXPENDITURE_RS + T1.CONSUMPTION_WHEAT_EXPENDITURE_RS + T1.CONSUMPTION_PULSES_EXPENDITURE_RS) DESC LIMIT 10",
+      "predicted_sql": "SELECT\n    fact_food_consumption.household_id,\n    dim_household_social.caste_religion_group_8_category,\n    (fact_food_consumption.consumption_rice_expenditure_rs +\n     fact_food_consumption.consumption_wheat_expenditure_rs +\n     fact_food_consumption.consumption_pulses_expenditure_rs) AS total_expenditure\nFROM fact_food_consumption\nJOIN dim_household_social ON fact_food_consumption.household_id = dim_household_social.household_id\nORDER BY total_expenditure DESC\nLIMIT 10",
+      "error_info": null
+    },
+    {
+      "instance_id": "52385ad2",
+      "question": "قدّم تفصيلاً لإجمالي الإنفاق على الأرز والبقوليات لمختلف الفئات الاجتماعية ومستويات الأصول، مرتّبًا حسب الفئة الطبقية وأعلى إنفاق على الأرز.",
+      "exact_match": null,
+      "exec_match": 0,
+      "gold_sql": "SELECT T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.HOUSEHOLD_ASSETS_INDEX, SUM(T3.CONSUMPTION_RICE_EXPENDITURE_RS), SUM(T3.CONSUMPTION_PULSES_EXPENDITURE_RS) FROM DIM_HOUSEHOLD AS T1 INNER JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID INNER JOIN FACT_FOOD_CONSUMPTION AS T3 ON T1.HOUSEHOLD_ID = T3.HOUSEHOLD_ID GROUP BY T2.CASTE_RELIGION_GROUP_8_CATEGORY, T2.HOUSEHOLD_ASSETS_INDEX ORDER BY T2.CASTE_RELIGION_GROUP_8_CATEGORY ASC, SUM(T3.CONSUMPTION_RICE_EXPENDITURE_RS) DESC",
+      "predicted_sql": "SELECT\n    dim_household_social.caste_religion_group_8_category,\n    SUM(fact_food_consumption.consumption_rice_expenditure_rs) AS total_rice_expenditure,\n    SUM(fact_food_consumption.consumption_pulses_expenditure_rs) AS total_pulses_expenditure\nFROM fact_food_consumption\nJOIN dim_household_social ON fact_food_consumption.household_id = dim_household_social.household_id\nJOIN dim_education_child ON dim_household_social.household_id = dim_education_child.household_id\nWHERE dim_household_social.household_assets_index = 27\n    AND dim_education_child.child_school_enrollment_status = -1\nGROUP BY dim_household_social.caste_religion_group_8_category\nORDER BY dim_household_social.caste_religion_group_8_category,\n    total_rice_expenditure DESC",
+      "error_info": "Result mismatch"
+    },
+    {
+      "instance_id": "4ee96af4",
+      "question": "حدد جميع الأسر التي لديها عامل واحد على الأقل في رعاية الحيوانات وasset index يساوي 27.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '27' AND T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS >= '1';",
+      "predicted_sql": "SELECT DISTINCT dim_household.household_id\nFROM dim_household\nINNER JOIN dim_household_social\nON dim_household.household_id = dim_household_social.household_id\nWHERE dim_household.household_number_of_animal_care_workers >= 1\nAND dim_household_social.household_assets_index = 27\nORDER BY dim_household.household_id",
+      "error_info": null
+    },
+    {
+      "instance_id": "2fef3613",
+      "question": "حدد جميع الأسر التي لديها ما لا يقل عن خمسة عاملين في رعاية الحيوانات ومؤشر أصول يبلغ 17، مرتبة حسب المعرّف الخاص بها.",
+      "exact_match": null,
+      "exec_match": 1,
+      "gold_sql": "SELECT T1.HOUSEHOLD_ID FROM DIM_HOUSEHOLD AS T1 JOIN DIM_HOUSEHOLD_SOCIAL AS T2 ON T1.HOUSEHOLD_ID = T2.HOUSEHOLD_ID WHERE T2.HOUSEHOLD_ASSETS_INDEX = '17' AND T1.HOUSEHOLD_NUMBER_OF_ANIMAL_CARE_WORKERS >= '5' ORDER BY T1.HOUSEHOLD_ID",
+      "predicted_sql": "SELECT dim_household.household_id\nFROM dim_household\nJOIN dim_household_social ON dim_household.household_id = dim_household_social.household_id\nWHERE dim_household.household_number_of_animal_care_workers >= 5\n  AND dim_household_social.household_assets_index = 17\nORDER BY dim_household.household_id",
+      "error_info": null
+    }
+  ]
+}
