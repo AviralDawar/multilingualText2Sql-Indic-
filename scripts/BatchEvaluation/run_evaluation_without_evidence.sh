@@ -26,7 +26,7 @@ MODELS=(
 )
 
 # Workers for parallel API generation
-WORKERS=10
+WORKERS=6
 
 # Check for API Key
 if [ -z "$OPENROUTER_API_KEY" ]; then
