@@ -83,9 +83,9 @@ def sample_tasks(db_name: str, task_files: List[Path], sample_size: int = 100) -
 def run_evaluation(db_name: str, sampled_dir: Path, args):
     print(f"\n>>> Evaluating {db_name} with model {args.model}...")
     
-    # Model-specific output folder
     model_slug = args.model.replace("/", "_").replace("-", "_").replace(".", "_")
-    eval_output_dir = OUTPUT_DIR / db_name / f"eval_files_oneshot_{model_slug}"
+    folder_suffix = "_no_evidence" if args.disable_knowledge else ""
+    eval_output_dir = OUTPUT_DIR / db_name / f"eval_files_oneshot_{model_slug}{folder_suffix}"
     eval_output_dir.mkdir(parents=True, exist_ok=True)
 
     cmd = [
@@ -122,10 +122,10 @@ def run_evaluation(db_name: str, sampled_dir: Path, args):
         if found:
             knowledge_file = Path(found[0])
 
-    if knowledge_file:
+    if knowledge_file and not args.disable_knowledge:
         cmd += ["--knowledge", str(knowledge_file)]
 
-    if args.use_lang_knowledge:
+    if args.use_lang_knowledge and not args.disable_knowledge:
         # Automatically find the language-specific knowledge directory for this DB
         lang_k_dir = None
         for p in (PROJECT_ROOT / "evidence_files").iterdir():
@@ -166,9 +166,10 @@ def get_db_from_file_path(file_path: Path) -> str:
         pass
     return "Unknown_DB"
 
-def parse_results(db_name: str, model_slug: str, target_file_stems: Set[str] = None) -> Dict[str, str]:
+def parse_results(db_name: str, model_slug: str, target_file_stems: Set[str] = None, disable_knowledge: bool = False) -> Dict[str, str]:
     """Parse results for a DB from its model-specific eval folder."""
-    eval_dir = OUTPUT_DIR / db_name / f"eval_files_oneshot_{model_slug}"
+    folder_suffix = "_no_evidence" if disable_knowledge else ""
+    eval_dir = OUTPUT_DIR / db_name / f"eval_files_oneshot_{model_slug}{folder_suffix}"
     if not eval_dir.exists():
         print(f"Warning: Eval directory not found for {db_name}: {eval_dir}")
         return {}
@@ -218,6 +219,7 @@ def main():
     parser.add_argument("--files", help="Comma-separated list of specific task/sampled JSONL file paths to evaluate")
     parser.add_argument("--require-evidence", action="store_true", help="Pass --require-evidence to oneshot evaluator")
     parser.add_argument("--use-lang-knowledge", action="store_true", help="Pass language-specific evidence flag to oneshot evaluator")
+    parser.add_argument("--disable-knowledge", action="store_true", help="Do not pass global or language-specific knowledge files to prompt")
     parser.add_argument("--pg-db", default="mydb", help="PostgreSQL database name where benchmark schemas are located")
     args = parser.parse_args()
 
@@ -249,7 +251,7 @@ def main():
                 run_evaluation(db_name, f, args)
             
             # Aggregate stats specifically for these files
-            all_stats[db_name] = parse_results(db_name, model_slug, target_stems)
+            all_stats[db_name] = parse_results(db_name, model_slug, target_stems, disable_knowledge=args.disable_knowledge)
     else:
         if args.dbs:
             dbs_to_run = [db.strip() for db in args.dbs.split(",")]
@@ -266,40 +268,64 @@ def main():
                 continue
             
             run_evaluation(db_name, sampled_dir, args)
-            all_stats[db_name] = parse_results(db_name, model_slug)
+            all_stats[db_name] = parse_results(db_name, model_slug, disable_knowledge=args.disable_knowledge)
 
-    # Generate/Update model-specific results file incrementally
     if all_stats:
-        results_file = PROJECT_ROOT / f"results_{model_slug}.md"
+        suffix = "_no_evidence" if args.disable_knowledge else ""
+        results_file = PROJECT_ROOT / f"results_{model_slug}{suffix}.md"
+        
+        # Load existing results from file if it exists to prevent overwriting other DBs
+        existing_stats = {}
+        if results_file.exists():
+            try:
+                with open(results_file, "r") as infile:
+                    for line in infile:
+                        # Parse table row: e.g. "| DB | Lang | KFile | Results |"
+                        parts = [p.strip() for p in line.split("|")]
+                        if len(parts) >= 5 and parts[0] == "" and parts[-1] == "":
+                            db = parts[1]
+                            lang = parts[2]
+                            k_file = parts[3]
+                            res = parts[4]
+                            # Skip header, separator, and empty rows
+                            if db and db not in ["Database", "---"] and lang:
+                                if db not in existing_stats:
+                                    existing_stats[db] = {}
+                                existing_stats[db][lang] = (k_file, res)
+            except Exception as e:
+                print(f"Warning: Could not parse existing results file: {e}")
+
+        # Merge new statistics into existing stats
+        for db, langs_dict in all_stats.items():
+            if db not in existing_stats:
+                existing_stats[db] = {}
+            for lang, res_str in langs_dict.items():
+                k_file = "N/A"
+                if res_str != "N/A":
+                    if args.use_lang_knowledge and lang != "English":
+                        k_file = f"{db}_evidence_{lang.lower()}.json"
+                    else:
+                        k_file = f"{db}_evidence.json"
+                existing_stats[db][lang] = (k_file, res_str)
+
+        # Write all statistics back to the markdown file in sorted order
         with open(results_file, "w") as f:
             f.write(f"# Text2SQL Evaluation Results: {args.model}\n")
-            if args.files:
-                f.write("*(Evaluated specific custom files)*\n\n")
-            else:
-                f.write("*(Sampled 100 questions per DB)*\n\n")
+            f.write("*(Evaluated custom/sampled files - Progressively updated)*\n\n")
             f.write("| Database | Language | Knowledge File | Results (EM, EX) |\n")
             f.write("| --- | --- | --- | --- |\n")
             
-            for db in sorted(all_stats.keys()):
+            for db in sorted(existing_stats.keys()):
+                # Dynamic compilation of language list to maintain original Indic ordering first, then others
                 langs = ["English", "Hindi Romanized", "Hindi", "Bengali", "Tamil", "Telugu", "Marathi"]
-                for l in all_stats[db].keys():
+                for l in sorted(existing_stats[db].keys()):
                     if l not in langs:
                         langs.append(l)
                         
                 for lang in langs:
-                    res = all_stats[db].get(lang, "N/A")
-                    if res == "N/A" and args.files:
-                        # Only show language rows that actually have results when running specific files
-                        continue
-                    
-                    k_file = "N/A"
-                    if res != "N/A":
-                        if args.use_lang_knowledge and lang != "English":
-                            k_file = f"{db}_evidence_{lang.lower()}.json"
-                        else:
-                            k_file = f"{db}_evidence.json"
-                            
-                    f.write(f"| {db} | {lang} | {k_file} | {res} |\n")
+                    if lang in existing_stats[db]:
+                        k_file, res = existing_stats[db][lang]
+                        f.write(f"| {db} | {lang} | {k_file} | {res} |\n")
         
         print(f"Incremental results saved to {results_file}")
     
