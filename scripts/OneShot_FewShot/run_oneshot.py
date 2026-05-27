@@ -173,9 +173,9 @@ def build_system_prompt() -> str:
 Your task is to translate a natural language question into a syntactically correct PostgreSQL query based on the provided database schema.
 
 ### LANGUAGE & TRANSLATION RULES:
-1. The input question may be in English OR an Indic language (e.g., Hindi, Bengali, Tamil, Telugu, etc.).
+1. The input question may be in English OR a target foreign language (e.g., Hindi, Bengali, Spanish, Arabic, Chinese, French, Korean, Italian, etc.).
 2. Regardless of the input language, you MUST comprehend the question's intent and generate the SQL query targeting the provided English database schema.
-3. If the question contains specific entity names in an Indic language (e.g., city names, states, categories), implicitly translate or transliterate them to match the exact English string literals found in the database schema or sample data.
+3. If the question contains specific entity names in a foreign language (e.g., city names, states, categories), implicitly translate or transliterate them to match the exact English string literals found in the database schema or sample data.
 
 ### POSTGRESQL RULES:
 1. DO NOT use double quotes (") for table and column names unless they strictly require it (e.g., they contain spaces). If you must use double quotes, you MUST use lowercase for the identifier (e.g., "dim_state"."state_name") because tables and columns in this PostgreSQL database are stored as lowercase. It is safest to leave identifiers unquoted so Postgres automatically folds them to lowercase.
@@ -290,7 +290,7 @@ def main():
     parser.add_argument("--model", default="claude-3-5-haiku-20241022")
     parser.add_argument("--api-key")
     parser.add_argument("--pg-config")
-    parser.add_argument("--pg-db", default="indicdb")
+    parser.add_argument("--pg-db", default="mydb")
     parser.add_argument("--limit", type=int)
     parser.add_argument("--workers", type=int, default=10)
     parser.add_argument("--require-evidence", action="store_true", help="Only process tasks that have corresponding evidence")
@@ -324,7 +324,7 @@ def main():
         
         # Determine language for dynamic knowledge loading
         lang = "english"
-        for l in ["hindi", "bengali", "tamil", "telugu", "marathi", "hinglish"]:
+        for l in ["hindi", "bengali", "tamil", "telugu", "marathi", "hinglish", "spanish", "arabic", "korean", "italian", "french", "chinese"]:
             if f"_{l}.jsonl" in in_file.name.lower():
                 lang = l
                 break

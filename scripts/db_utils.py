@@ -59,7 +59,8 @@ def get_connection(config: dict, database: str = None):
         port=config.get('port', 5432),
         user=config['user'],
         password=config['password'],
-        database=database or config.get('database', 'postgres')
+        database=database or config.get('database', 'postgres'),
+        connect_timeout=3
     )
     # Set autocommit to False by default (explicit commit required)
     conn.autocommit = False
@@ -141,7 +142,8 @@ def create_database(config: dict, database_name: str):
         port=config.get('port', 5432),
         user=config['user'],
         password=config['password'],
-        database='postgres'
+        database='postgres',
+        connect_timeout=3
     )
     conn.autocommit = True  # CREATE DATABASE cannot run inside a transaction
 

@@ -97,7 +97,7 @@ def run_evaluation(db_name: str, sampled_dir: Path, args):
         "--provider", args.provider,
         "--model", args.model,
         "--workers", str(args.workers),
-        "--pg-db", "indicdb"
+        "--pg-db", args.pg_db
     ]
     
     if args.api_key:
@@ -147,7 +147,26 @@ def run_evaluation(db_name: str, sampled_dir: Path, args):
         print(f"Error evaluating {db_name} (Exit code {result.returncode})")
     return result
 
-def parse_results(db_name: str, model_slug: str) -> Dict[str, str]:
+def get_db_from_file_path(file_path: Path) -> str:
+    """Extract database name from a given file path based on directory hierarchy or name matches."""
+    resolved = file_path.resolve()
+    for parent in resolved.parents:
+        if parent.name in ["sampled_tasks", "task_files", "sampled_tasks_evaluated", "eval_files_oneshot"]:
+            return parent.parent.name
+    all_dbs_sorted = sorted(DATABASES, key=len, reverse=True)
+    for db in all_dbs_sorted:
+        if db in str(resolved):
+            return db
+    parts = resolved.parts
+    try:
+        idx = parts.index("output")
+        if idx + 1 < len(parts):
+            return parts[idx + 1]
+    except ValueError:
+        pass
+    return "Unknown_DB"
+
+def parse_results(db_name: str, model_slug: str, target_file_stems: Set[str] = None) -> Dict[str, str]:
     """Parse results for a DB from its model-specific eval folder."""
     eval_dir = OUTPUT_DIR / db_name / f"eval_files_oneshot_{model_slug}"
     if not eval_dir.exists():
@@ -156,9 +175,15 @@ def parse_results(db_name: str, model_slug: str) -> Dict[str, str]:
     
     stats = {}
     for f in eval_dir.glob("*_evaluated.jsonl"):
+        # If filtering by specific target stems, ensure the evaluated file corresponds to one
+        if target_file_stems:
+            stem_without_eval = f.stem[:-10] if f.stem.endswith("_evaluated") else f.stem
+            if stem_without_eval not in target_file_stems:
+                continue
+
         # Identify language from filename
         lang = "English"
-        for l in ["hindi", "bengali", "tamil", "telugu", "marathi", "hinglish"]:
+        for l in ["hindi", "bengali", "tamil", "telugu", "marathi", "hinglish", "spanish", "arabic", "korean", "italian", "french", "chinese"]:
             if l in f.name.lower():
                 lang = "Hindi Romanized" if l == "hinglish" else l.capitalize()
                 break
@@ -190,8 +215,10 @@ def main():
     parser.add_argument("--api-key")
     parser.add_argument("--limit", type=int, help="Limit number of DBs for testing")
     parser.add_argument("--dbs", help="Comma-separated list of DB names to run")
+    parser.add_argument("--files", help="Comma-separated list of specific task/sampled JSONL file paths to evaluate")
     parser.add_argument("--require-evidence", action="store_true", help="Pass --require-evidence to oneshot evaluator")
     parser.add_argument("--use-lang-knowledge", action="store_true", help="Pass language-specific evidence flag to oneshot evaluator")
+    parser.add_argument("--pg-db", default="mydb", help="PostgreSQL database name where benchmark schemas are located")
     args = parser.parse_args()
 
     if not args.api_key and not os.environ.get("OPENROUTER_API_KEY"):
@@ -200,36 +227,70 @@ def main():
         exit(1)
 
     all_stats = {}
-    if args.dbs:
-        dbs_to_run = [db.strip() for db in args.dbs.split(",")]
-    else:
-        dbs_to_run = DATABASES[:args.limit] if args.limit else DATABASES
     model_slug = args.model.replace("/", "_").replace("-", "_").replace(".", "_")
 
-    for db_name in dbs_to_run:
-        task_files = get_task_files(db_name)
-        if not task_files:
-            continue
-        
-        sampled_dir = sample_tasks(db_name, task_files)
-        if not sampled_dir:
-            continue
-        
-        run_evaluation(db_name, sampled_dir, args)
-        all_stats[db_name] = parse_results(db_name, model_slug)
+    if args.files:
+        # Group files by database name
+        files_to_run = [Path(f.strip()) for f in args.files.split(",")]
+        db_to_files = {}
+        for f in files_to_run:
+            if not f.exists():
+                print(f"Warning: File not found: {f}")
+                continue
+            db_name = get_db_from_file_path(f)
+            if db_name not in db_to_files:
+                db_to_files[db_name] = []
+            db_to_files[db_name].append(f)
 
-        # Generate/Update model-specific results file incrementally
+        for db_name, files in db_to_files.items():
+            print(f"\n>>> Running specific files for database: {db_name}")
+            target_stems = {f.stem for f in files}
+            for f in files:
+                run_evaluation(db_name, f, args)
+            
+            # Aggregate stats specifically for these files
+            all_stats[db_name] = parse_results(db_name, model_slug, target_stems)
+    else:
+        if args.dbs:
+            dbs_to_run = [db.strip() for db in args.dbs.split(",")]
+        else:
+            dbs_to_run = DATABASES[:args.limit] if args.limit else DATABASES
+
+        for db_name in dbs_to_run:
+            task_files = get_task_files(db_name)
+            if not task_files:
+                continue
+            
+            sampled_dir = sample_tasks(db_name, task_files)
+            if not sampled_dir:
+                continue
+            
+            run_evaluation(db_name, sampled_dir, args)
+            all_stats[db_name] = parse_results(db_name, model_slug)
+
+    # Generate/Update model-specific results file incrementally
+    if all_stats:
         results_file = PROJECT_ROOT / f"results_{model_slug}.md"
         with open(results_file, "w") as f:
             f.write(f"# Text2SQL Evaluation Results: {args.model}\n")
-            f.write(f"*(Sampled 100 questions per DB - Updated after {db_name})*\n\n")
+            if args.files:
+                f.write("*(Evaluated specific custom files)*\n\n")
+            else:
+                f.write("*(Sampled 100 questions per DB)*\n\n")
             f.write("| Database | Language | Knowledge File | Results (EM, EX) |\n")
             f.write("| --- | --- | --- | --- |\n")
             
             for db in sorted(all_stats.keys()):
                 langs = ["English", "Hindi Romanized", "Hindi", "Bengali", "Tamil", "Telugu", "Marathi"]
+                for l in all_stats[db].keys():
+                    if l not in langs:
+                        langs.append(l)
+                        
                 for lang in langs:
                     res = all_stats[db].get(lang, "N/A")
+                    if res == "N/A" and args.files:
+                        # Only show language rows that actually have results when running specific files
+                        continue
                     
                     k_file = "N/A"
                     if res != "N/A":
