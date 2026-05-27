@@ -1,15 +1,52 @@
 import argparse
 import json
 import os
+import socket
 import sys
 import time
+from pathlib import Path
 from typing import Dict, Any, Optional, List
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from urllib import error, request
 
-import requests
-from tqdm import tqdm
+try:
+    from tqdm import tqdm
+except ImportError:
+    def tqdm(iterable, **kwargs):
+        return iterable
 
 DEFAULT_SIX_LANGUAGES = ["Tamil", "Bengali", "Marathi", "Telugu", "Hindi", "Hinglish"]
+OCA_BASE_URL = "https://code-internal.aiservice.us-chicago-1.oci.oraclecloud.com/20250206/app/litellm"
+OCA_RESPONSES_URL = f"{OCA_BASE_URL}/responses"
+CODEX_AUTH_FILE = Path.home() / ".codex" / "auth.json"
+CODEX_INSTALLATION_ID_FILE = Path.home() / ".codex" / "installation_id"
+
+
+def load_oca_auth():
+    auth = json.loads(CODEX_AUTH_FILE.read_text(encoding="utf-8"))
+    token = auth["OPENAI_API_KEY"]
+    installation_id = CODEX_INSTALLATION_ID_FILE.read_text(encoding="utf-8").strip()
+    return token, installation_id
+
+
+def iter_sse_events(body: str):
+    for line in body.splitlines():
+        if not line.startswith("data: "):
+            continue
+        data = line.removeprefix("data: ").strip()
+        if not data or data == "[DONE]":
+            continue
+        yield json.loads(data)
+
+
+def extract_output_text(body: str) -> str:
+    parts = []
+    for event in iter_sse_events(body):
+        if event.get("type") == "response.output_text.delta":
+            parts.append(event.get("delta", ""))
+        elif event.get("type") == "response.output_text.done" and not parts:
+            parts.append(event.get("text", ""))
+    return "".join(parts).strip()
 
 
 # ---------------------------------------------------------------------------
@@ -44,6 +81,8 @@ class OpenRouterBackend:
         self.base_url = "https://openrouter.ai/api/v1/chat/completions"
 
     def translate(self, system_prompt: str, user_prompt: str) -> str:
+        import requests
+
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
@@ -68,9 +107,67 @@ class OpenRouterBackend:
         return response.json()["choices"][0]["message"]["content"].strip()
 
 
+class OCABackend:
+    """OCA Responses API backend, matching the AI4Law translation scripts."""
+
+    def __init__(self, model: str, api_key: Optional[str] = None):
+        self.model = model
+        self.api_key = api_key
+
+    def translate(self, system_prompt: str, user_prompt: str) -> str:
+        token, installation_id = load_oca_auth()
+        if self.api_key:
+            token = self.api_key
+
+        prompt = f"{system_prompt}\n\n{user_prompt}"
+        payload = {
+            "model": self.model,
+            "input": prompt,
+            "stream": True,
+            "max_output_tokens": 1000,
+            "temperature": 0.2,
+        }
+
+        req = request.Request(
+            OCA_RESPONSES_URL,
+            data=json.dumps(payload).encode("utf-8"),
+            method="POST",
+            headers={
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json",
+                "Accept": "text/event-stream",
+                "client": "codex-cli",
+                "client-version": "0",
+                "OpenAI-Beta": "responses=2026-02-06",
+                "x-codex-installation-id": installation_id,
+            },
+        )
+
+        for attempt in range(3):
+            try:
+                with request.urlopen(req, timeout=180) as resp:
+                    body = resp.read().decode("utf-8", errors="replace")
+                text = extract_output_text(body)
+                if not text:
+                    raise RuntimeError(f"Empty OCA response body: {body[:500]}")
+                return text
+            except error.HTTPError as exc:
+                body = exc.read().decode("utf-8", errors="replace")
+                if attempt == 2:
+                    raise RuntimeError(f"OCA API error: HTTP {exc.code} {exc.reason}: {body}") from exc
+            except (error.URLError, socket.timeout, RuntimeError) as exc:
+                if attempt == 2:
+                    raise RuntimeError(f"OCA API error after retries: {exc}") from exc
+            time.sleep(5 * (2**attempt))
+
+        raise RuntimeError("OCA API error: exhausted retries")
+
+
 def create_backend(provider: str, model: str, api_key: Optional[str] = None):
     """Factory: create the right backend based on --provider flag."""
-    if provider == "openrouter":
+    if provider == "oca":
+        return OCABackend(model=model, api_key=api_key)
+    elif provider == "openrouter":
         key = api_key or os.environ.get("OPENROUTER_API_KEY")
         if not key:
             print("Error: OPENROUTER_API_KEY not found. Set via --api-key or environment variable.")
@@ -226,12 +323,12 @@ def main():
         action="store_true",
         help="Translate into 6 languages",
     )
-    parser.add_argument("--model", default="claude-3-5-haiku-20241022", help="Model name")
+    parser.add_argument("--model", default="gpt-5.4", help="Model name")
     parser.add_argument(
         "--provider",
-        default="anthropic",
-        choices=["anthropic", "openrouter"],
-        help="API provider: 'anthropic' or 'openrouter'",
+        default="oca",
+        choices=["oca", "anthropic", "openrouter"],
+        help="API provider: 'oca', 'anthropic', or 'openrouter'",
     )
     parser.add_argument("--api-key", default=None, help="API key")
     parser.add_argument("--start_index", type=int, default=0, help="Start index")
