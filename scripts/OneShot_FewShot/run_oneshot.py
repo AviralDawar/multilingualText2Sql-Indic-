@@ -273,7 +273,7 @@ def process_task(task_data):
     return {
         'pair_id': pair_id, 'question': question, 'gold_sql': gold_sql,
         'predicted_sql': pred_sql, 'raw_output': raw_output,
-        'em': em, 'ex': ex, 'error': ex_err or llm_err
+        'em': em, 'ex': ex, 'error': llm_err or ex_err
     }
 
 
@@ -350,11 +350,35 @@ def main():
             tasks = [t for t in tasks if context['knowledge_map'].get(t.get('pair_id'), '').strip()]
             logger.info(f"Filtered tasks based on evidence: {original_len} -> {len(tasks)}")
         
+        # Incremental Resumption Logic
+        existing_pairs = set()
+        if out_file.exists():
+            with open(out_file, "r", encoding="utf-8") as f:
+                for line in f:
+                    if line.strip():
+                        try:
+                            data = json.loads(line)
+                            if data.get('pair_id'):
+                                existing_pairs.add(data.get('pair_id'))
+                        except Exception:
+                            pass
+            logger.info(f"Found {len(existing_pairs)} existing evaluated tasks in {out_file.name}")
+            
+            if len(existing_pairs) >= len(tasks):
+                logger.info(f"File {out_file.name} is already complete. Skipping.")
+                continue
+                
+            original_tasks_len = len(tasks)
+            tasks = [t for t in tasks if t.get('pair_id') not in existing_pairs]
+            logger.info(f"Resuming: filtered evaluated tasks: {original_tasks_len} -> {len(tasks)}")
+        
         if not tasks:
-            logger.warning(f"No tasks to process for {in_file.name} after evidence filtering. Skipping.")
+            logger.warning(f"No tasks to process for {in_file.name}. Skipping.")
             continue
 
         results, em_total, ex_total = [], 0, 0
+        is_resume = len(existing_pairs) > 0
+        
         with ThreadPoolExecutor(max_workers=args.workers) as executor:
             futures = [executor.submit(process_task, (t, i, args, context)) for i, t in enumerate(tasks)]
             for future in tqdm(as_completed(futures), total=len(tasks), desc=in_file.name):
@@ -362,7 +386,10 @@ def main():
                 results.append(res)
                 em_total += res['em']
                 ex_total += res['ex']
-                with open(out_file, 'a' if len(results) > 1 else 'w', encoding='utf-8') as f:
+                
+                # Use append 'a' for resume runs or subsequent rows of fresh runs; 'w' for the first row of fresh runs
+                mode = 'a' if (is_resume or len(results) > 1) else 'w'
+                with open(out_file, mode, encoding='utf-8') as f:
                     f.write(json.dumps(res, ensure_ascii=False) + '\n')
 
         logger.info(f"Done: {in_file.name} | EM: {em_total}/{len(tasks)} | EX: {ex_total}/{len(tasks)}")

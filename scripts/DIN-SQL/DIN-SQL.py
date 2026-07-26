@@ -1083,12 +1083,23 @@ def main() -> None:
     print(f"Loaded {len(df)} questions")
     rate_limiter = RateLimiter(args.max_requests_per_minute)
     indexed_rows = list(df.iterrows())
-    indexed_erows = list(edf.iterrows())
+    
+    # Map evidence by pair_id to avoid misalignment if files are sorted differently
+    evidence_map = {}
+    for _, erow in edf.iterrows():
+        pair_id = str(erow.get("pair_id", "")).strip()
+        if pair_id:
+            evidence_map[pair_id] = erow
+
     ordered_results: dict[int, dict[str, str]] = {}
 
     with ThreadPoolExecutor(max_workers=max(1, args.max_workers)) as executor:
         future_to_meta = {}
-        for (idx, row), (_, evidence_row) in zip(indexed_rows, indexed_erows):
+        for idx, row in indexed_rows:
+            pair_id = str(row.get("pair_id", "")).strip()
+            # Fallback to the row itself if no evidence is found (e.g. evidence file doesn't have it)
+            evidence_row = evidence_map.get(pair_id, row)
+
             future = executor.submit(
                 process_question,
                 args,
